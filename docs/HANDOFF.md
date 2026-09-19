@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Integration checkpoint, September 19
+
+Merged the remote factorization/editor contribution with supplied bordered
+marked arcs, preserving both. The tutorial now has 18 SVG/TikZ figures and
+23 executable Python recipes; the marked-arc example is figure 18. Fixed the
+missing TypeIBoundary import in the earlier factorization recipe. Browser
+image decoding and portable-site local links pass. Eight editor JS tests pass.
+All 212 Python tests pass. The first combined run had one Windows
+connection-abort in an HTTP origin-rejection test; both its focused suite and
+the complete suite passed on rerun.
+The repeated one-time 9:16 automation was deleted; do not reschedule it.
+Older checkpoints below describe validation at their respective commits.
+
+
 ## Bordered marked-arc display and active scope
 
 Heegaard, bridge, trisection and Kirby families are deferred until a concrete
@@ -7,12 +21,58 @@ use case and excluded from core display completion. Updated controlling plan.
 Bordered reference families now accept `.with_curves(MarkedArc(...))` for
 supplied straight arcs in either clear mark band. Selection hides reference
 members without dropping arcs or marks. Unknown endpoints, cross-band paths,
-intervening marks, intersections and overlaps are rejected. Tutorial figure 16
+intervening marks, intersections and overlaps are rejected. Tutorial figure 18
 shows mixed boundaries and upper/lower arcs, with and without guides.
 Validation: 158 tests pass; sixteen SVG/TikZ tutorial figures regenerate.
 General bordered DiskRoute bindings remain unfinished: the saved cusp-chart
 prototype is not certified and has not been applied. Next: route locators and
 supplied factor/action views, plus a justified boundary mesh construction.
+
+## Local browser editor, September 13
+
+Added an immutable version-1 `DiagramDocument` JSON recipe API and a dependency-
+free, loopback-only browser editor. The editor supports horizontal planar point/
+boundary rows, arc/loop itineraries, signed braid words, transported strand IDs,
+labels, whole-recipe undo/redo, JSON open/save, and SVG/TikZ/reproducible-Python
+downloads. All geometry remains in the existing library. See [EDITOR.md](EDITOR.md)
+for usage, schema limits, security boundaries, and the manual acceptance checklist.
+
+The original 171 Python tests plus 36 document/HTTP tests pass (207 total), as do
+8 JavaScript controller tests using a minimal DOM double. Both document
+kinds reproduce exact SVG/TikZ output when their generated Python is run. The
+hosted browser could not open the local URL (`ERR_BLOCKED_BY_CLIENT`), so visual,
+pointer, and file-dialog testing remains pending. Do not describe this as a
+visually verified or release-ready editor. No Godot or Tiny Bubbles Lab deployment
+is included in this contribution.
+
+## Ordered factor/action diagrams, September 13
+
+New presentation APIs: `FactorPanel` stores a distinct factor ID, support panel,
+nonzero signed exponent, optional complete braid block, group label and supplied
+after-state. `FactorizationDiagram` lays out application-ordered rows bottom to
+top by default and prints their right-to-left product. An optional braid column
+is continuous across rows; strand colors/endpoint IDs are transported without
+resetting at a factor boundary. Crossings stay compact within tall rows. Complete
+supplied state sequences form a second surface column. Missing states/blocks,
+duplicate factor IDs and noncontiguous groups are rejected.
+
+`BraidDiagram(direction="bottom-to-top")` adds upward traversal while preserving
+the original fixed sign convention: positive means upper-left over upper-right.
+Words are never reversed, simplified or exponentiated by these drawing APIs.
+The existing top-to-bottom default and all prior tutorial SVG/TikZ files are
+unchanged. Support geometry, cut itineraries, colors and visibility are reused.
+
+Tutorial figures 16/17 demonstrate grouped planar factors with an adjacent braid
+and bordered support/action-state panels. The LaTeX gallery now fits both page
+dimensions, avoiding overflow from tall figures. Validation: 171 tests pass
+(18 new), 17 SVG/TikZ tutorial recipes regenerate, the 17-page TikZ gallery
+compiles without overfull boxes, and the portable documentation site's local
+links pass. SVG and compiled TikZ examples were visually inspected.
+
+These changes do not compute actions, certify braid lifts or equivalences, or
+complete the bordered cut-system mesh. No Tiny Bubbles Lab deployment is part
+of this branch. The drawing examples are supplied data, not verification of a
+new mathematical relation.
 
 ## Tutorial site and catalog, September 13
 
