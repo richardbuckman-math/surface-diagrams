@@ -500,7 +500,28 @@ not a universal <code>signature()</code> accepting every diagram. Natural accomp
 outputs include Euler characteristic and, within a specified handle model,
 homology and a fundamental-group presentation. Which other invariants follow
 must be stated with their assumptions. None of these are implemented by this tutorial.</p>
-<h2>15. What to work on next</h2>
+<h2>15. Supplied marked arcs on bordered surfaces</h2>
+<p>Add straight <code>MarkedArc</code> objects to a bordered reference family. Each arc stays
+in the clear upper or lower band containing both endpoints. The reference
+members remain guides, so an arc may cross them. Use <code>select()</code> to hide all
+reference members while retaining the supplied arcs and marked points.</p>
+<pre><code class="language-python">from surface_diagrams import GenusSurface, TypeIBoundary, BoundaryPair, MarkedArc
+
+marked = GenusSurface(2, type_i=(TypeIBoundary(6),),
+                      type_ii=(BoundaryPair(&#39;left&#39;),), marks=(&#39;P&#39;,&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;))
+reference = marked.with_reference_arcs(mark_positions={
+    &#39;P&#39;:(-35,30), &#39;Q&#39;:(35,30), &#39;R&#39;:(-35,-30), &#39;S&#39;:(35,-30)})
+arcs = reference.with_curves(MarkedArc(&#39;P&#39;,&#39;Q&#39;), MarkedArc(&#39;R&#39;,&#39;S&#39;))
+save_svg(arcs, &#39;bordered-marked-arcs.svg&#39;)
+save_tikz(arcs.select(), &#39;bordered-marked-arcs.tikz&#39;)
+</code></pre>
+<p><img src="../examples/output/tutorial/16-bordered-marked-arcs.svg" alt="Bordered marked arcs with and without reference guides"></p>
+<p>Unknown endpoints, duplicate arc IDs, intervening marks, crossing or overlapping
+arcs, and endpoints in opposite bands are rejected. Consecutive arcs may share
+an endpoint. These are supplied solid presentation arcs, not computed images
+or cut-disk routes; general bordered routing and certified Type I/II bindings
+remain unfinished. All four viewing directions and both exporters are supported.</p>
+<h2>16. What to work on next</h2>
 <table>
 <thead>
 <tr>
@@ -522,7 +543,7 @@ must be stated with their assumptions. None of these are implemented by this tut
 </tr>
 <tr>
 <td>Next</td>
-<td>Complete exports and requested additional diagram-family visualizations with supplied data</td>
+<td>Complete exports and polish core surface, braid and factorization displays</td>
 </tr>
 <tr>
 <td>Later</td>
@@ -533,6 +554,8 @@ must be stated with their assumptions. None of these are implemented by this tut
 coordinate engine, cover solver or theorem about uniqueness is not a prerequisite
 for drawing a supplied configuration. See the <a href="IMPLEMENTATION_PLAN.md">controlling plan</a>
 for the current visualization-first order.</p>
+<p>Heegaard, bridge, trisection and Kirby diagram families are deferred until a
+concrete use case arises and are excluded from the core display scope.</p>
 <p>Even-wrap visibility now changes exactly on the projected line through the hole
 cusps, matching the neighboring odd cuts. The transition is not the horizontal
 y=0 line. Type I/II boundary and marked-point cut arcs are to lie in the vertical

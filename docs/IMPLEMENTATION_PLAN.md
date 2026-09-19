@@ -11,6 +11,13 @@ Read the [tutorial](TUTORIAL.md), [architecture](ARCHITECTURE.md),
 [P0-P8 visual plan](archive/IMPLEMENTATION_PLAN-visual-cycle-2026-09-12.md) preserves
 reference-specific acceptance criteria. Preserve all original reference SVGs.
 
+## Active display scope (September 13)
+
+Heegaard, bridge, trisection/relative, and Kirby diagram families are deferred
+until Richard supplies a concrete use case. Do not implement or count them
+toward completion of the core display work. V4 currently means export parity
+and polish for surfaces, relations, braids and Lefschetz-fibration presentations.
+
 ## Surface spacing guideline (Richard's latest refinement)
 
 Use roughly comparable visible widths for the strips between consecutive genus
@@ -61,7 +68,7 @@ substitutions, cut-system images and cover correspondences.
 | V1: planar diagrams | Left/right boundary anchors for curved arcs, intersecting families, colored cut systems, labels and input previews | Point-to-point, boundary-to-point and boundary-to-boundary examples; standard endpoints at left/right rims; preserve route and color identities |
 | V2: nonplanar diagrams | Finish standard Type I/II cut bindings and routes; smooth practical route drawing; more accessible numbered-side locators | All requested standard templates carry their cuts and curves with correct front/back geometry; both surface and cut-disk previews agree |
 | V3: factors and visual transformations | Thesis-style vertical factor/action rows, adjacent braid/base/lifted views, supplied Hurwitz/substitution/cyclic-move sequences | Stable factor IDs, grouping and cut colors across rows; explicit multiplication convention; accurate supplied correspondences |
-| V4: exports and further visual families | SVG/TikZ parity for shipped visuals; requested Heegaard, bridge, trisection/relative and Kirby data/drawing examples | Each diagram family has the necessary labels, crossings, framing or boundary data; representability is distinguished from validity/equivalence |
+| V4: exports and display polish | SVG/TikZ parity for the core surface, braid and factorization visuals | Necessary labels, crossings and boundary data are retained; representability is distinguished from validity/equivalence |
 
 V1-V3 can be improved incrementally together when a single worked example needs
 them. Calculations must not pull effort away from unfinished requested visuals.

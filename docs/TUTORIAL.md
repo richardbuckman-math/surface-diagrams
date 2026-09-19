@@ -565,20 +565,50 @@ outputs include Euler characteristic and, within a specified handle model,
 homology and a fundamental-group presentation. Which other invariants follow
 must be stated with their assumptions. None of these are implemented by this tutorial.
 
-## 15. What to work on next
+## 15. Supplied marked arcs on bordered surfaces
+
+Add straight `MarkedArc` objects to a bordered reference family. Each arc stays
+in the clear upper or lower band containing both endpoints. The reference
+members remain guides, so an arc may cross them. Use `select()` to hide all
+reference members while retaining the supplied arcs and marked points.
+
+```python
+from surface_diagrams import GenusSurface, TypeIBoundary, BoundaryPair, MarkedArc
+
+marked = GenusSurface(2, type_i=(TypeIBoundary(6),),
+                      type_ii=(BoundaryPair('left'),), marks=('P','Q','R','S'))
+reference = marked.with_reference_arcs(mark_positions={
+    'P':(-35,30), 'Q':(35,30), 'R':(-35,-30), 'S':(35,-30)})
+arcs = reference.with_curves(MarkedArc('P','Q'), MarkedArc('R','S'))
+save_svg(arcs, 'bordered-marked-arcs.svg')
+save_tikz(arcs.select(), 'bordered-marked-arcs.tikz')
+```
+
+![Bordered marked arcs with and without reference guides](../examples/output/tutorial/16-bordered-marked-arcs.svg)
+
+Unknown endpoints, duplicate arc IDs, intervening marks, crossing or overlapping
+arcs, and endpoints in opposite bands are rejected. Consecutive arcs may share
+an endpoint. These are supplied solid presentation arcs, not computed images
+or cut-disk routes; general bordered routing and certified Type I/II bindings
+remain unfinished. All four viewing directions and both exporters are supported.
+
+## 16. What to work on next
 
 | Priority | Deliverable |
 | --- | --- |
 | First | Stronger intersecting-family layouts, stable visual IDs and rainbow legends |
 | Next | Finish standard Type I/II cut-system and route drawings; easier route locators and input previews |
 | Next | Refine thesis-style vertical factor/action rows and braid correspondences; supplied Hurwitz/substitution sequences |
-| Next | Complete exports and requested additional diagram-family visualizations with supplied data |
+| Next | Complete exports and polish core surface, braid and factorization displays |
 | Later | Automatic actions/equality and rewrite checks; homology/basis/fundamental-group calculations; Lefschetz invariants |
 
 The shared mathematical records can grow as these drawings need them. A general
 coordinate engine, cover solver or theorem about uniqueness is not a prerequisite
 for drawing a supplied configuration. See the [controlling plan](IMPLEMENTATION_PLAN.md)
 for the current visualization-first order.
+
+Heegaard, bridge, trisection and Kirby diagram families are deferred until a
+concrete use case arises and are excluded from the core display scope.
 
 Even-wrap visibility now changes exactly on the projected line through the hole
 cusps, matching the neighboring odd cuts. The transition is not the horizontal

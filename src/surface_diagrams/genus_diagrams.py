@@ -20,6 +20,18 @@ class BorderedReferenceDiagram:
     pair_bank: str = "a"
     mark_positions: tuple = ()
     selection: tuple = None
+    curves: tuple = ()
+
+    def with_curves(self, *curves):
+        """Add supplied straight MarkedArcs within a clear upper or lower band.
+
+        Reference members are guides, not obstacles. This does not construct
+        a cut-disk itinerary or certify a mapping-class action.
+        """
+        from dataclasses import replace
+        if any(not isinstance(curve, MarkedArc) for curve in curves):
+            raise TypeError('bordered supplied curves must be MarkedArc objects')
+        return replace(self, curves=self.curves+tuple(curves))
 
     @property
     def member_numbers(self):
@@ -166,9 +178,9 @@ class BorderedReferenceDiagram:
                 for value in point: _number(value,'mark coordinate')
             for name,point in positions.items():
                 x,y=point
-                if not (abs(x)<surface.genus*surface.handle_spacing/2-radius
+                if not (abs(x)<surface.genus*surface.handle_spacing/2-max(radius,style.curve_width/2)
                         and hole_height+radius+style.curve_width<abs(y)
-                        <surface.height*.44*.99-radius-style.outline_width/2):
+                        <surface.height*.44*.99-radius-max(style.outline_width,style.curve_width)/2):
                     raise ItineraryError('mark must lie in the clear upper or lower vertical-plane band')
                 for other,q in positions.items():
                     if other!=name and hypot(x-q[0],y-q[1])<=2*radius:
@@ -208,12 +220,46 @@ class BorderedReferenceDiagram:
                 raise ValueError('selected reference member is not available')
             paths=list(base.paths)+[path for number in self.selection for path in members[number]]
             texts=mark_labels+[label for number in self.selection for label in member_labels[number]]
+        paths.extend(_bordered_marked_arcs(self.curves, positions, style))
         return replace(base,paths=tuple(paths),texts=tuple(texts),ellipses=tuple(ellipses))
 
 
     def _repr_svg_(self):
         from .svg import render_svg
         return render_svg(self)
+
+
+def _bordered_marked_arcs(arcs, positions, style):
+    """Both endpoints lie in the already-checked convex mark bands."""
+    from .disk_routes import _orient
+    if any(not isinstance(arc, MarkedArc) for arc in arcs):
+        raise TypeError('bordered supplied curves must be MarkedArc objects')
+    if len({arc.id for arc in arcs}) != len(arcs):
+        raise ValueError('marked arc IDs must be distinct')
+    segments, paths = [], []
+    for arc in arcs:
+        if arc.start not in positions or arc.end not in positions:
+            raise ValueError('unknown marked arc endpoint')
+        a,b=positions[arc.start],positions[arc.end]
+        if a[1]*b[1] <= 0:
+            raise ItineraryError('bordered marked arc endpoints must lie in the same upper or lower band')
+        # Mark placement is checked with reference-curve clearance; wider route
+        # strokes also need clearance from the band's edges. Reuse the existing
+        # position constraints rather than extrapolating across holes.
+        for name,point in positions.items():
+            if name not in (arc.start,arc.end) and _segment_distance(point,a,b)<=style.marked_point_radius+style.curve_width/2:
+                raise ItineraryError('straight marked arc meets another mark; use consecutive marks')
+        for c,d in segments:
+            o=(_orient(a,b,c),_orient(a,b,d),_orient(c,d,a),_orient(c,d,b))
+            if o[0]*o[1]<-1e-10 and o[2]*o[3]<-1e-10:
+                raise ItineraryError('supplied bordered marked arcs intersect; use separate panels')
+            if max(abs(v) for v in o)<1e-8:
+                axis=0 if abs(b[0]-a[0])>=abs(b[1]-a[1]) else 1
+                if min(max(a[axis],b[axis]),max(c[axis],d[axis]))-max(min(a[axis],b[axis]),min(c[axis],d[axis]))>1e-8:
+                    raise ItineraryError('supplied bordered marked arcs overlap')
+        segments.append((a,b))
+        paths.append(Path((('M',*a),('L',*b)),style.curve_color,style.curve_width,'surface-route'))
+    return paths
 
 
 def _path_segments(commands):
@@ -343,10 +389,12 @@ class NamedCut:
 
 @dataclass(frozen=True)
 class MarkedArc:
-    """A straight visual arc between automatic genus marks in the clear upper band.
+    """A straight visual arc between genus marks in a clear surface band.
 
     This is a supplied presentation arc, not a cut-disk itinerary. DiskRoute
     remains available when a particular winding/crossing sequence is required.
+    Closed surfaces use automatic upper-band marks; bordered reference families
+    accept explicit upper or lower marks, with each arc confined to one band.
     """
     start: str
     end: str

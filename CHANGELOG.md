@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Draw supplied marked arcs in clear upper/lower bands on bordered surfaces,
+  retaining marks and arcs when reference guides are hidden.
+- Validate endpoints, intervening marks, intersections and overlapping arcs.
+- Add mixed-boundary marked-arc tutorial figure 16 in SVG and TikZ.
+- Defer Heegaard, bridge, trisection and Kirby families until a concrete use case.
+
 ## 0.1.0a3
 
 - Support opposite-end Type I and Type II reference families in all four views,

@@ -107,6 +107,16 @@ def examples():
     )), Style()
 
 
+    marked = GenusSurface(2,type_i=(TypeIBoundary(6),),type_ii=(BoundaryPair('left'),),
+                          marks=('P','Q','R','S')).with_reference_arcs(
+                              mark_positions={'P':(-35,30),'Q':(35,30),'R':(-35,-30),'S':(35,-30)})
+    arcs = marked.with_curves(MarkedArc('P','Q'),MarkedArc('R','S'))
+    yield '16-bordered-marked-arcs', Figure((
+        (Panel(arcs, 'Supplied upper and lower marked arcs with reference guides'),),
+        (Panel(arcs.select(), 'Same arcs and marks; reference members hidden'),),
+    )), Style()
+
+
 def main(out=None):
     out = Path(out) if out else Path(__file__).parent/'output'/'tutorial'
     out.mkdir(parents=True, exist_ok=True)

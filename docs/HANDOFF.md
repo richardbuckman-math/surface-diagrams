@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Bordered marked-arc display and active scope
+
+Heegaard, bridge, trisection and Kirby families are deferred until a concrete
+use case and excluded from core display completion. Updated controlling plan.
+Bordered reference families now accept `.with_curves(MarkedArc(...))` for
+supplied straight arcs in either clear mark band. Selection hides reference
+members without dropping arcs or marks. Unknown endpoints, cross-band paths,
+intervening marks, intersections and overlaps are rejected. Tutorial figure 16
+shows mixed boundaries and upper/lower arcs, with and without guides.
+Validation: 158 tests pass; sixteen SVG/TikZ tutorial figures regenerate.
+General bordered DiskRoute bindings remain unfinished: the saved cusp-chart
+prototype is not certified and has not been applied. Next: route locators and
+supplied factor/action views, plus a justified boundary mesh construction.
+
 ## Tutorial site and catalog, September 13
 
 Interrupted mixed-boundary batch verified: 153 tests pass and all 15 tutorial
