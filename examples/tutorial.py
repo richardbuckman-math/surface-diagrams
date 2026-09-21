@@ -135,7 +135,7 @@ def examples():
                               mark_positions={'P':(-35,30),'Q':(35,30),'R':(-35,-30),'S':(35,-30)})
     arcs = marked.with_curves(MarkedArc('P','Q'),MarkedArc('R','S'))
     yield '18-bordered-marked-arcs', Figure((
-        (Panel(arcs, 'Supplied upper and lower marked arcs with reference guides'),),
+        (Panel(arcs.with_labels(reference=False), 'Supplied marked arcs; colored guides without reference numbers'),),
         (Panel(arcs.select(), 'Same arcs and marks; reference members hidden'),),
     )), Style()
 

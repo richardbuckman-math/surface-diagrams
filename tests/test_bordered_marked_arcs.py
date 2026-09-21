@@ -54,3 +54,14 @@ class BorderedMarkedArcTests(unittest.TestCase):
             render_svg(family.with_curves(MarkedArc('P','missing')))
         with self.assertRaisesRegex(ValueError,'distinct'):
             render_svg(family.with_curves(MarkedArc('P','Q'),MarkedArc('P','Q')))
+
+    def test_reference_numbers_can_be_hidden_without_changing_geometry(self):
+        family=self.family({'P':(-35,30),'Q':(35,30)}).with_curves(MarkedArc('P','Q'))
+        for selected in (family, family.select(2,7), family.select()):
+            original=layout(selected,Style())
+            quiet=layout(selected.with_labels(reference=False),Style())
+            self.assertEqual(quiet.paths,original.paths)
+            self.assertEqual(quiet.ellipses,original.ellipses)
+            self.assertEqual([label.text for label in quiet.texts],['P','Q'])
+            self.assertEqual(layout(selected.with_labels(reference=False).with_labels(),Style()),original)
+        with self.assertRaises(TypeError): family.with_labels(reference='no')

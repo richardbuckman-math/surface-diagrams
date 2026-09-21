@@ -21,6 +21,7 @@ class BorderedReferenceDiagram:
     mark_positions: tuple = ()
     selection: tuple = None
     curves: tuple = ()
+    show_reference_labels: bool = True
 
     def with_curves(self, *curves):
         """Add supplied straight MarkedArcs within a clear upper or lower band.
@@ -32,6 +33,13 @@ class BorderedReferenceDiagram:
         if any(not isinstance(curve, MarkedArc) for curve in curves):
             raise TypeError('bordered supplied curves must be MarkedArc objects')
         return replace(self, curves=self.curves+tuple(curves))
+
+    def with_labels(self, *, reference=True):
+        """Show or hide reference numbers while retaining marked-point names."""
+        from dataclasses import replace
+        if type(reference) is not bool:
+            raise TypeError('reference must be a boolean')
+        return replace(self, show_reference_labels=reference)
 
     @property
     def member_numbers(self):
@@ -220,6 +228,8 @@ class BorderedReferenceDiagram:
                 raise ValueError('selected reference member is not available')
             paths=list(base.paths)+[path for number in self.selection for path in members[number]]
             texts=mark_labels+[label for number in self.selection for label in member_labels[number]]
+        if not self.show_reference_labels:
+            texts=mark_labels
         paths.extend(_bordered_marked_arcs(self.curves, positions, style))
         return replace(base,paths=tuple(paths),texts=tuple(texts),ellipses=tuple(ellipses))
 

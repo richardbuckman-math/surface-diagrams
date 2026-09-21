@@ -574,7 +574,10 @@ must be stated with their assumptions. None of these are implemented by this tut
 <p>Add straight <code>MarkedArc</code> objects to a bordered reference family. Each arc stays
 in the clear upper or lower band containing both endpoints. The reference
 members remain guides, so an arc may cross them. Use <code>select()</code> to hide all
-reference members while retaining the supplied arcs and marked points.</p>
+reference members while retaining the supplied arcs and marked points.
+For a less crowded diagram, <code>arcs.with_labels(reference=False)</code> keeps the
+colored reference curves but hides their numbers; marked-point names remain.
+Call <code>.with_labels()</code> to restore the numbers.</p>
 <pre><code class="language-python">from surface_diagrams import GenusSurface, TypeIBoundary, BoundaryPair, MarkedArc
 
 marked = GenusSurface(2, type_i=(TypeIBoundary(6),),

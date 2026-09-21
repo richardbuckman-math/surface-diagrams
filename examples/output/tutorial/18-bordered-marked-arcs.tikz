@@ -12,8 +12,8 @@
 \definecolor{sdcolor8}{HTML}{FF00D4}
 \definecolor{sdcolor9}{HTML}{006FFF}
 \begin{tikzpicture}[x=0.75bp,y=0.75bp,line cap=round,line join=round]
-\path[use as bounding box] (-192,-240.5) rectangle (192,240.5);
-\clip (-192,-240.5) rectangle (192,240.5);
+\path[use as bounding box] (-204,-240.5) rectangle (204,240.5);
+\clip (-204,-240.5) rectangle (204,240.5);
 % surface-outline
 \draw[draw=sdcolor0,line width=1.125bp] (-130.9,108.75) .. controls (-130.9,122.004833996) and (-138.779788403,132.75) .. (-148.5,132.75);
 % surface-outline
@@ -146,22 +146,11 @@
 \path[fill=sdcolor9,draw=none,line width=0bp] (-35,-161.75) ellipse [x radius=4,y radius=4];
 % marked-point
 \path[fill=sdcolor9,draw=none,line width=0bp] (35,-161.75) ellipse [x radius=4,y radius=4];
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (-107.332460537,114.545222) {1};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (-55,136.45) {2};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0.9322071,115.20102) {3};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (55,136.45) {4};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (117.064667638,127.155798) {5};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-140.5,127.303820471) {6};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor7,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-140.5,91.991401529) {7};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,141.75) {P};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,131.599555679) {8};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (43,141.75) {Q};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (43,131.599555679) {9};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,81.75) {R};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,85.9004443206) {10};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (43,81.75) {S};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (43,85.9004443206) {11};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,216.5) {Supplied upper and lower marked arcs with reference guides};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,216.5) {Supplied marked arcs; colored guides without reference numbers};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,-98.75) {P};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (43,-98.75) {Q};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor9,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-27,-158.75) {R};

@@ -1,5 +1,16 @@
 # Handoff: surface-diagrams
 
+## Overnight batch 1, September 21
+
+Added `family.with_labels(reference=False)` to hide reference numbers while
+retaining colored guides and marked-point names. `.with_labels()` restores
+numbers; selection and supplied arcs preserve this setting. Tutorial figure 18
+now demonstrates the cleaner display. SVG was visually inspected; all 18
+SVG/TikZ figures regenerate. Six marked-arc and eleven boundary-anchor tests
+pass. Next small batch: editor browser verification or supplied intersecting
+marked arcs (currently rejected), with explicit presentation-only semantics.
+
+
 ## Integration checkpoint, September 19
 
 Merged the remote factorization/editor contribution with supplied bordered

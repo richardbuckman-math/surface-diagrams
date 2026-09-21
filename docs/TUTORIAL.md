@@ -655,6 +655,9 @@ Add straight `MarkedArc` objects to a bordered reference family. Each arc stays
 in the clear upper or lower band containing both endpoints. The reference
 members remain guides, so an arc may cross them. Use `select()` to hide all
 reference members while retaining the supplied arcs and marked points.
+For a less crowded diagram, `arcs.with_labels(reference=False)` keeps the
+colored reference curves but hides their numbers; marked-point names remain.
+Call `.with_labels()` to restore the numbers.
 
 ```python
 from surface_diagrams import GenusSurface, TypeIBoundary, BoundaryPair, MarkedArc
