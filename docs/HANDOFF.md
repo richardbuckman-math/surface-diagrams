@@ -1,5 +1,14 @@
 # Handoff: surface-diagrams
 
+## Requested next braid view, September 21
+
+Added the user-linked Tiny Bubbles Lab factor-5 braid display to the V3 plan as
+an optional renderer alongside the current view. Inspect the exact reference
+before choosing implementation details: retrieval was blocked today. Preserve
+braid signs, strand identities, direction and factor-panel integration. See the
+new next-task section in IMPLEMENTATION_PLAN.md for the link and acceptance work.
+
+
 ## Overnight batch 5, September 21
 
 Clarified stale tutorial claims about Type II/marked-point reference spokes.

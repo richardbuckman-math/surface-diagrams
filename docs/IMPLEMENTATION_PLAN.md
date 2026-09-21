@@ -108,6 +108,27 @@ presentations; automatic transformations and certified lifts remain later work.
 Curved circular-boundary arcs now use exact left/right rim anchors, with optional
 `start_side` and `end_side` controls and analytical endpoint-hole clearance checks.
 
+## Next V3 task: optional Tiny Bubbles Lab braid display
+
+Richard requested this additional braid-display option on September 21:
+[Tiny Bubbles Lab, simplified crossing audit, factor 5](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
+
+Schedule this with the next braid/factorization visualization work, ahead of
+calculation engines. First inspect the referenced factor-5 display and its
+available implementation to identify the geometry, crossing treatment, labels,
+and any interaction it actually uses. Retrieval was blocked (HTTP 403 and browser
+tool failure) when this task was recorded; do not infer its design from the URL.
+
+Implement the observed presentation as an optional braid view, retaining the
+existing display default. Reuse signed braid words, strand identities/colors,
+application direction and factor IDs, so the same data can drive both views.
+Include it in standalone braid examples and adjacent factorization panels where
+appropriate. Confirm sign and endpoint conventions against the reference, and
+show both display options in the tutorial. Verify SVG/TikZ parity for static
+features; document any interactive-only behavior explicitly. Check reuse rights
+before incorporating external source or assets. This is a rendering task, not
+a request to add automatic braid simplification or equality calculations.
+
 ## Endpoint and identity requirements
 
 Most ordinary arcs join marked points. Cut systems additionally need
