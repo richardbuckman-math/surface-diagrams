@@ -693,6 +693,23 @@ crossing_arcs = crossing_family.with_curves(
 save_svg(crossing_arcs.select(), 'bordered-intersections.svg')
 ```
 
+To inspect a crossing, draw each arc separately on the **same** marked surface,
+then place the overlay below them. Reusing `crossing_family` keeps point positions,
+view direction and surface geometry identical in every row:
+
+```python
+comparison = Figure((
+    (Panel(crossing_family.with_curves(MarkedArc('P','Q')).select(), 'Arc P-Q'),),
+    (Panel(crossing_family.with_curves(MarkedArc('R','S')).select(), 'Arc R-S'),),
+    (Panel(crossing_arcs.select(), 'Both arcs on the same surface'),),
+))
+save_svg(comparison, 'bordered-arc-comparison.svg')
+save_tikz(comparison, 'bordered-arc-comparison.tikz')
+```
+
+These rows isolate the inputs; they are not successive images under a mapping
+class. An action-state sequence must supply its actual intermediate curves.
+
 ![Supplied intersecting bordered marked arcs](../examples/output/tutorial/19-bordered-intersecting-arcs.svg)
 
 ## 16. What to work on next

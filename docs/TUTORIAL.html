@@ -605,6 +605,19 @@ crossing_arcs = crossing_family.with_curves(
     MarkedArc(&#39;P&#39;,&#39;Q&#39;), MarkedArc(&#39;R&#39;,&#39;S&#39;), allow_intersections=True)
 save_svg(crossing_arcs.select(), &#39;bordered-intersections.svg&#39;)
 </code></pre>
+<p>To inspect a crossing, draw each arc separately on the <strong>same</strong> marked surface,
+then place the overlay below them. Reusing <code>crossing_family</code> keeps point positions,
+view direction and surface geometry identical in every row:</p>
+<pre><code class="language-python">comparison = Figure((
+    (Panel(crossing_family.with_curves(MarkedArc(&#39;P&#39;,&#39;Q&#39;)).select(), &#39;Arc P-Q&#39;),),
+    (Panel(crossing_family.with_curves(MarkedArc(&#39;R&#39;,&#39;S&#39;)).select(), &#39;Arc R-S&#39;),),
+    (Panel(crossing_arcs.select(), &#39;Both arcs on the same surface&#39;),),
+))
+save_svg(comparison, &#39;bordered-arc-comparison.svg&#39;)
+save_tikz(comparison, &#39;bordered-arc-comparison.tikz&#39;)
+</code></pre>
+<p>These rows isolate the inputs; they are not successive images under a mapping
+class. An action-state sequence must supply its actual intermediate curves.</p>
 <p><img src="../examples/output/tutorial/19-bordered-intersecting-arcs.svg" alt="Supplied intersecting bordered marked arcs"></p>
 <h2>16. What to work on next</h2>
 <table>

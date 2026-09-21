@@ -5,8 +5,34 @@
 \definecolor{sdcolor1}{HTML}{FF00D4}
 \definecolor{sdcolor2}{HTML}{006FFF}
 \begin{tikzpicture}[x=0.75bp,y=0.75bp,line cap=round,line join=round]
-\path[use as bounding box] (-210,-92.25) rectangle (210,92.25);
-\clip (-210,-92.25) rectangle (210,92.25);
+\path[use as bounding box] (-210,-276.75) rectangle (210,276.75);
+\clip (-210,-276.75) rectangle (210,276.75);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-148.5,173) .. controls (-148.5,197) and (-132,217) .. (-110,217);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-148.5,173) .. controls (-148.5,149) and (-132,129) .. (-110,129);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-110,217) .. controls (-36.6666666667,216.56) and (36.6666666667,216.56) .. (110,217);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-110,129) .. controls (-36.6666666667,129.44) and (36.6666666667,129.44) .. (110,129);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,198) .. controls (129.8,198) and (130.9,217) .. (110,217);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,148) .. controls (129.8,148) and (130.9,129) .. (110,129);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (-88,170.8) .. controls (-78.1,188.4) and (-31.9,188.4) .. (-22,170.8);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (-83.764921075,175.76188) .. controls (-71.5,160.9) and (-38.5,160.9) .. (-24.370664725,174.00892);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (22,170.8) .. controls (31.9,188.4) and (78.1,188.4) .. (88,170.8);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (26.235078925,175.76188) .. controls (38.5,160.9) and (71.5,160.9) .. (85.629335275,174.00892);
+% type-i-boundary
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,148) .. controls (151.951779686,148) and (154.75,159.192881254) .. (154.75,173) .. controls (154.75,186.807118746) and (151.951779686,198) .. (148.5,198);
+% type-i-boundary
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,148) .. controls (145.048220314,148) and (142.25,159.192881254) .. (142.25,173) .. controls (142.25,186.807118746) and (145.048220314,198) .. (148.5,198);
+% surface-route
+\draw[draw=sdcolor1,line width=1.5bp] (-50,201) -- (50,209);
 % surface-outline
 \draw[draw=sdcolor0,line width=1.125bp] (-148.5,-11.5) .. controls (-148.5,12.5) and (-132,32.5) .. (-110,32.5);
 % surface-outline
@@ -32,9 +58,43 @@
 % type-i-boundary
 \draw[draw=sdcolor0,line width=1.125bp] (148.5,-36.5) .. controls (145.048220314,-36.5) and (142.25,-25.3071187458) .. (142.25,-11.5) .. controls (142.25,2.30711874577) and (145.048220314,13.5) .. (148.5,13.5);
 % surface-route
-\draw[draw=sdcolor1,line width=1.5bp] (-50,16.5) -- (50,24.5);
-% surface-route
 \draw[draw=sdcolor1,line width=1.5bp] (-25,24.5) -- (25,16.5);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-148.5,-196) .. controls (-148.5,-172) and (-132,-152) .. (-110,-152);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-148.5,-196) .. controls (-148.5,-220) and (-132,-240) .. (-110,-240);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-110,-152) .. controls (-36.6666666667,-152.44) and (36.6666666667,-152.44) .. (110,-152);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (-110,-240) .. controls (-36.6666666667,-239.56) and (36.6666666667,-239.56) .. (110,-240);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,-171) .. controls (129.8,-171) and (130.9,-152) .. (110,-152);
+% surface-outline
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,-221) .. controls (129.8,-221) and (130.9,-240) .. (110,-240);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (-88,-198.2) .. controls (-78.1,-180.6) and (-31.9,-180.6) .. (-22,-198.2);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (-83.764921075,-193.23812) .. controls (-71.5,-208.1) and (-38.5,-208.1) .. (-24.370664725,-194.99108);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (22,-198.2) .. controls (31.9,-180.6) and (78.1,-180.6) .. (88,-198.2);
+% handle
+\draw[draw=sdcolor0,line width=1.125bp] (26.235078925,-193.23812) .. controls (38.5,-208.1) and (71.5,-208.1) .. (85.629335275,-194.99108);
+% type-i-boundary
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,-221) .. controls (151.951779686,-221) and (154.75,-209.807118746) .. (154.75,-196) .. controls (154.75,-182.192881254) and (151.951779686,-171) .. (148.5,-171);
+% type-i-boundary
+\draw[draw=sdcolor0,line width=1.125bp] (148.5,-221) .. controls (145.048220314,-221) and (142.25,-209.807118746) .. (142.25,-196) .. controls (142.25,-182.192881254) and (145.048220314,-171) .. (148.5,-171);
+% surface-route
+\draw[draw=sdcolor1,line width=1.5bp] (-50,-168) -- (50,-160);
+% surface-route
+\draw[draw=sdcolor1,line width=1.5bp] (-25,-160) -- (25,-168);
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (-50,201) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (50,209) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (-25,209) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (25,201) ellipse [x radius=4,y radius=4];
 % marked-point
 \path[fill=sdcolor2,draw=none,line width=0bp] (-50,16.5) ellipse [x radius=4,y radius=4];
 % marked-point
@@ -43,10 +103,28 @@
 \path[fill=sdcolor2,draw=none,line width=0bp] (-25,24.5) ellipse [x radius=4,y radius=4];
 % marked-point
 \path[fill=sdcolor2,draw=none,line width=0bp] (25,16.5) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (-50,-168) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (50,-160) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (-25,-160) ellipse [x radius=4,y radius=4];
+% marked-point
+\path[fill=sdcolor2,draw=none,line width=0bp] (25,-168) ellipse [x radius=4,y radius=4];
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,204) {P};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,212) {Q};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,212) {R};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,204) {S};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,252.75) {First supplied arc: P-Q};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,19.5) {P};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,27.5) {Q};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,27.5) {R};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,19.5) {S};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,68.25) {Transverse intersection of P-Q and R-S; no over/under convention};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,68.25) {Second supplied arc: R-S};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,-165) {P};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,-157) {Q};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,-157) {R};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,-165) {S};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,-116.25) {Transverse intersection of P-Q and R-S; no over/under convention};
 \end{tikzpicture}
 \endgroup

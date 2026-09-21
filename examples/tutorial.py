@@ -144,6 +144,8 @@ def examples():
         mark_positions={'P':(-50,28),'Q':(50,36),'R':(-25,36),'S':(25,28)})
     crossing_arcs = crossing_family.with_curves(MarkedArc('P','Q'),MarkedArc('R','S'),allow_intersections=True)
     yield '19-bordered-intersecting-arcs', Figure((
+        (Panel(crossing_family.with_curves(MarkedArc('P','Q')).select(), 'First supplied arc: P-Q'),),
+        (Panel(crossing_family.with_curves(MarkedArc('R','S')).select(), 'Second supplied arc: R-S'),),
         (Panel(crossing_arcs.select(), 'Transverse intersection of P-Q and R-S; no over/under convention'),),
     )), Style()
 

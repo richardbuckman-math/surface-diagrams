@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## Overnight batch 3, September 21
+
+Tutorial figure 19 now isolates P-Q and R-S before showing their overlay on
+identical surface geometry. Added a runnable comparison recipe and clarified
+that these are input comparisons, not computed action states. All 25 tutorial
+Python blocks pass; 19 SVG/TikZ figures regenerate and the new stack was visually
+inspected. No library code changed. Next: editor visual verification or explicit
+curve colors for bordered marked-arc overlays.
+
+
 ## Overnight batch 2, September 21
 
 Bordered `.with_curves(..., allow_intersections=True)` now permits transverse
