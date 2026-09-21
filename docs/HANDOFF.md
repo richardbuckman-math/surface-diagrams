@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## Overnight batch 5, September 21
+
+Clarified stale tutorial claims about Type II/marked-point reference spokes.
+Added current boundary support and remaining variants to the plan, preserving
+earlier checkpoints as history. Certified bordered cut systems and general
+DiskRoutes remain unsupported. Documentation-only; rebuilt tutorial HTML and
+checked portable-site links. Morning wrap-up: check remote CI, summarize the
+five overnight batches, and delete the overnight automation at 8:05 a.m. Eastern.
+
+
 ## Overnight batch 4, September 21
 
 `MarkedArc` accepts optional validated hex `color`; omitted colors inherit

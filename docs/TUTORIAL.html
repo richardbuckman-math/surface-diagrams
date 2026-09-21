@@ -460,9 +460,10 @@ check their product.</p>
 <p>A side Type II pair and a Type I rim on the opposite end can be combined with
 top/bottom pairs and explicit marks. IDs and colors persist in all four views:</p>
 <p><img src="../examples/output/tutorial/15-mixed-boundary-views.svg" alt="Mixed boundary reference family in all four views"></p>
-<p>These are exact drawing attachment points, ready for the remaining reference-arc bindings.
-The guide does not yet draw a full bordered cut system or place marked-point
-spokes. Those remain unfinished; <code>cut_system()</code> still rejects bordered surfaces.</p>
+<p><code>boundary_guide()</code> identifies exact rim attachment points; <code>with_reference_arcs()</code>
+draws the supported reference families and explicit marked-point spokes shown
+above. These presentation drawings do not supply a certified cut-disk chart:
+<code>cut_system()</code> still rejects bordered surfaces.</p>
 <pre><code class="language-python">from surface_diagrams import TypeIBoundary, BoundaryPair
 bordered = GenusSurface(2, type_i=(TypeIBoundary(6),))
 paired = GenusSurface(2, type_ii=(BoundaryPair(&quot;left&quot;), BoundaryPair(&quot;top&quot;)))
@@ -470,8 +471,9 @@ save_svg(Figure(((Panel(bordered, &quot;One Type I boundary&quot;),),
                  (Panel(paired, &quot;Four Type II boundaries&quot;),))), &quot;templates.svg&quot;)
 </code></pre>
 <p><img src="../examples/output/tutorial/10-boundary-surface-templates.svg" alt="Standard higher-genus boundary templates"></p>
-<p>Boundary outlines work. <strong>Cut-system/route binding on these Type I/II surfaces
-is still unsupported.</strong> Finishing it is ahead of the calculation engine. The
+<p>Boundary outlines and supported reference drawings work. <strong>Certified cut-system
+binding and general DiskRoute routing on Type I/II surfaces remain unsupported.</strong>
+Finishing them is ahead of the calculation engine. The
 experimental cusp patch is not part of the public API.</p>
 <p>A vertical sequence of nonplanar panels uses the same <code>Figure</code> recipe as the
 planar case. Supply each intermediate curve system and its labels. Automatically

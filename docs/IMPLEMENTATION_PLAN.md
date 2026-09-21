@@ -179,6 +179,8 @@ visibility on the projected line through the hole cusps, matching their odd
 neighbors, rather than at y=0. This affects presentation visibility only and
 preserves supplied curve itineraries and the checked cellulation.
 
+### Earlier incremental checkpoints (superseded by the current status below)
+
 Boundary-plane progress: exact named rim attachments and their labeled guide are
 implemented in all views. Next bind connecting reference arcs and marked-point
 spokes to those attachments, then complete the bordered cellulation.
@@ -194,3 +196,16 @@ mesh bindings remain distinct from these presentation diagrams.
 Standard top/bottom Type II spokes and one inner-bank pair per side now have
 supplied drawings. Remaining boundary variants and marked-point spokes must be
 bound explicitly; the reference renderer no longer relies on a closed mesh.
+
+### Current boundary-plane status, September 21
+
+All Type I slot reference families, top/bottom Type II spokes, one inner-bank
+Type II pair per side, opposite-end Type I/II combinations, and explicit marked
+spokes are implemented in all four views. Selection and optional number labels
+preserve geometry. Supplied straight MarkedArcs support explicit colors and
+opt-in transverse intersections in clear upper/lower mark bands.
+
+Remaining presentation variants: outer-bank side spokes, repeated pairs on the
+same side, and a Type I rim sharing an end with a Type II pair. General bordered
+DiskRoutes and the certified bordered mesh remain unfinished. Presentation
+support does not imply automatic actions or a certified cut system.

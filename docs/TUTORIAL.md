@@ -541,9 +541,10 @@ top/bottom pairs and explicit marks. IDs and colors persist in all four views:
 
 ![Mixed boundary reference family in all four views](../examples/output/tutorial/15-mixed-boundary-views.svg)
 
-These are exact drawing attachment points, ready for the remaining reference-arc bindings.
-The guide does not yet draw a full bordered cut system or place marked-point
-spokes. Those remain unfinished; `cut_system()` still rejects bordered surfaces.
+`boundary_guide()` identifies exact rim attachment points; `with_reference_arcs()`
+draws the supported reference families and explicit marked-point spokes shown
+above. These presentation drawings do not supply a certified cut-disk chart:
+`cut_system()` still rejects bordered surfaces.
 
 
 ```python
@@ -556,8 +557,9 @@ save_svg(Figure(((Panel(bordered, "One Type I boundary"),),
 
 ![Standard higher-genus boundary templates](../examples/output/tutorial/10-boundary-surface-templates.svg)
 
-Boundary outlines work. **Cut-system/route binding on these Type I/II surfaces
-is still unsupported.** Finishing it is ahead of the calculation engine. The
+Boundary outlines and supported reference drawings work. **Certified cut-system
+binding and general DiskRoute routing on Type I/II surfaces remain unsupported.**
+Finishing them is ahead of the calculation engine. The
 experimental cusp patch is not part of the public API.
 
 A vertical sequence of nonplanar panels uses the same `Figure` recipe as the
