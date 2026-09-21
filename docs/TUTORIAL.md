@@ -673,11 +673,27 @@ save_tikz(arcs.select(), 'bordered-marked-arcs.tikz')
 
 ![Bordered marked arcs with and without reference guides](../examples/output/tutorial/18-bordered-marked-arcs.svg)
 
-Unknown endpoints, duplicate arc IDs, intervening marks, crossing or overlapping
-arcs, and endpoints in opposite bands are rejected. Consecutive arcs may share
+Unknown endpoints, duplicate arc IDs, intervening marks, overlapping arcs,
+and endpoints in opposite bands are rejected. Crossings are rejected by default. Consecutive arcs may share
 an endpoint. These are supplied solid presentation arcs, not computed images
 or cut-disk routes; general bordered routing and certified Type I/II bindings
 remain unfinished. All four viewing directions and both exporters are supported.
+
+For a supplied intersecting family, opt in explicitly. These are transverse
+surface intersections, with no braid over/under convention and no computed action.
+The option survives `.select()` and subsequent `.with_curves()` calls; use
+`allow_intersections=False` to restore disjointness checking.
+
+```python
+crossing_family = GenusSurface(2, type_i=(TypeIBoundary(6),),
+    marks=('P','Q','R','S')).with_reference_arcs(mark_positions={
+        'P':(-50,28), 'Q':(50,36), 'R':(-25,36), 'S':(25,28)})
+crossing_arcs = crossing_family.with_curves(
+    MarkedArc('P','Q'), MarkedArc('R','S'), allow_intersections=True)
+save_svg(crossing_arcs.select(), 'bordered-intersections.svg')
+```
+
+![Supplied intersecting bordered marked arcs](../examples/output/tutorial/19-bordered-intersecting-arcs.svg)
 
 ## 16. What to work on next
 

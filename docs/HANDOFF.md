@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Overnight batch 2, September 21
+
+Bordered `.with_curves(..., allow_intersections=True)` now permits transverse
+marked-arc overlays, retaining straight paths in all four views. Default
+disjointness checking remains; overlaps and intervening marks remain invalid.
+Selection and later additions retain the option; explicit False restores checks.
+This is supplied surface geometry, without braid over/under data or computed
+actions. Tutorial figure 19 was visually inspected; all 19 SVG/TikZ figures
+regenerate, 24 tutorial snippets and eight focused marked-arc tests pass.
+Next small batch: editor browser verification, or clearer curve identity/color
+controls for supplied bordered families. Keep certified routing separate.
+
+
 ## Overnight batch 1, September 21
 
 Added `family.with_labels(reference=False)` to hide reference numbers while

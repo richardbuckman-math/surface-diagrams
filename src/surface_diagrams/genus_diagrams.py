@@ -22,17 +22,25 @@ class BorderedReferenceDiagram:
     selection: tuple = None
     curves: tuple = ()
     show_reference_labels: bool = True
+    allow_intersections: bool = False
 
-    def with_curves(self, *curves):
+    def with_curves(self, *curves, allow_intersections=None):
         """Add supplied straight MarkedArcs within a clear upper or lower band.
 
+        Set allow_intersections=True for transverse crossings without over/under
+        information. Overlapping segments and intervening marks remain invalid.
         Reference members are guides, not obstacles. This does not construct
         a cut-disk itinerary or certify a mapping-class action.
         """
         from dataclasses import replace
         if any(not isinstance(curve, MarkedArc) for curve in curves):
             raise TypeError('bordered supplied curves must be MarkedArc objects')
-        return replace(self, curves=self.curves+tuple(curves))
+        if allow_intersections is None:
+            allow_intersections = self.allow_intersections
+        if type(allow_intersections) is not bool:
+            raise TypeError('allow_intersections must be a boolean')
+        return replace(self, curves=self.curves+tuple(curves),
+                       allow_intersections=allow_intersections)
 
     def with_labels(self, *, reference=True):
         """Show or hide reference numbers while retaining marked-point names."""
@@ -230,7 +238,7 @@ class BorderedReferenceDiagram:
             texts=mark_labels+[label for number in self.selection for label in member_labels[number]]
         if not self.show_reference_labels:
             texts=mark_labels
-        paths.extend(_bordered_marked_arcs(self.curves, positions, style))
+        paths.extend(_bordered_marked_arcs(self.curves, positions, style, self.allow_intersections))
         return replace(base,paths=tuple(paths),texts=tuple(texts),ellipses=tuple(ellipses))
 
 
@@ -239,7 +247,7 @@ class BorderedReferenceDiagram:
         return render_svg(self)
 
 
-def _bordered_marked_arcs(arcs, positions, style):
+def _bordered_marked_arcs(arcs, positions, style, allow_intersections=False):
     """Both endpoints lie in the already-checked convex mark bands."""
     from .disk_routes import _orient
     if any(not isinstance(arc, MarkedArc) for arc in arcs):
@@ -261,8 +269,8 @@ def _bordered_marked_arcs(arcs, positions, style):
                 raise ItineraryError('straight marked arc meets another mark; use consecutive marks')
         for c,d in segments:
             o=(_orient(a,b,c),_orient(a,b,d),_orient(c,d,a),_orient(c,d,b))
-            if o[0]*o[1]<-1e-10 and o[2]*o[3]<-1e-10:
-                raise ItineraryError('supplied bordered marked arcs intersect; use separate panels')
+            if not allow_intersections and o[0]*o[1]<-1e-10 and o[2]*o[3]<-1e-10:
+                raise ItineraryError('supplied bordered marked arcs intersect; set allow_intersections=True for an overlay')
             if max(abs(v) for v in o)<1e-8:
                 axis=0 if abs(b[0]-a[0])>=abs(b[1]-a[1]) else 1
                 if min(max(a[axis],b[axis]),max(c[axis],d[axis]))-max(min(a[axis],b[axis]),min(c[axis],d[axis]))>1e-8:

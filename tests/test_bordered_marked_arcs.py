@@ -65,3 +65,24 @@ class BorderedMarkedArcTests(unittest.TestCase):
             self.assertEqual([label.text for label in quiet.texts],['P','Q'])
             self.assertEqual(layout(selected.with_labels(reference=False).with_labels(),Style()),original)
         with self.assertRaises(TypeError): family.with_labels(reference='no')
+
+    def test_opt_in_crossings_preserve_straight_paths_in_all_views(self):
+        for vertical in ('above','below'):
+            for horizontal in ('left','right'):
+                family=self.family({'P':(-50,28),'Q':(50,36),'R':(-25,36),'S':(25,28)},
+                                   view_vertical=vertical,view_horizontal=horizontal)
+                diagram=family.with_curves(MarkedArc('P','Q'),allow_intersections=True).with_curves(MarkedArc('R','S'))
+                paths=[p for p in layout(diagram.select(),Style()).paths if p.role=='surface-route']
+                self.assertEqual([p.commands for p in paths],[
+                    (('M',-50,28),('L',50,36)),(('M',-25,36),('L',25,28))])
+                self.assertIn('surface-route',render_tikz(diagram))
+                with self.assertRaises(ItineraryError): render_svg(diagram.with_curves(allow_intersections=False))
+        with self.assertRaises(TypeError): family.with_curves(allow_intersections='yes')
+
+    def test_intersection_option_does_not_allow_overlap_or_intervening_marks(self):
+        family=self.family({'P':(-35,30),'Q':(35,30)})
+        with self.assertRaisesRegex(ItineraryError,'overlap'):
+            render_svg(family.with_curves(MarkedArc('P','Q','a'),MarkedArc('Q','P','b'),allow_intersections=True))
+        family=self.family({'P':(-40,30),'Q':(0,30),'R':(40,30)})
+        with self.assertRaisesRegex(ItineraryError,'another mark'):
+            render_svg(family.with_curves(MarkedArc('P','R'),allow_intersections=True))
