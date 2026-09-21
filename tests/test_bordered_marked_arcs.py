@@ -86,3 +86,13 @@ class BorderedMarkedArcTests(unittest.TestCase):
         family=self.family({'P':(-40,30),'Q':(0,30),'R':(40,30)})
         with self.assertRaisesRegex(ItineraryError,'another mark'):
             render_svg(family.with_curves(MarkedArc('P','R'),allow_intersections=True))
+
+    def test_explicit_color_survives_selection_and_style_changes(self):
+        arc=MarkedArc('P','Q',color='#d73027')
+        family=self.family({'P':(-35,30),'Q':(35,30)}).with_curves(arc)
+        for diagram in (family, family.select(), family.with_labels(reference=False)):
+            paths=[p for p in layout(diagram,Style(curve_color='#23964f')).paths if p.role=='surface-route']
+            self.assertEqual(paths[0].stroke,'#d73027')
+            self.assertIn('#d73027',render_svg(diagram))
+            self.assertIn('D73027',render_tikz(diagram).upper())
+        with self.assertRaises(ValueError): MarkedArc('P','Q',color='red')

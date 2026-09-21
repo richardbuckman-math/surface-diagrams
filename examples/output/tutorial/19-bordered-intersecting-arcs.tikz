@@ -2,8 +2,9 @@
 % 19-bordered-intersecting-arcs
 \begingroup
 \definecolor{sdcolor0}{HTML}{000000}
-\definecolor{sdcolor1}{HTML}{FF00D4}
-\definecolor{sdcolor2}{HTML}{006FFF}
+\definecolor{sdcolor1}{HTML}{D73027}
+\definecolor{sdcolor2}{HTML}{168AAD}
+\definecolor{sdcolor3}{HTML}{006FFF}
 \begin{tikzpicture}[x=0.75bp,y=0.75bp,line cap=round,line join=round]
 \path[use as bounding box] (-210,-276.75) rectangle (210,276.75);
 \clip (-210,-276.75) rectangle (210,276.75);
@@ -58,7 +59,7 @@
 % type-i-boundary
 \draw[draw=sdcolor0,line width=1.125bp] (148.5,-36.5) .. controls (145.048220314,-36.5) and (142.25,-25.3071187458) .. (142.25,-11.5) .. controls (142.25,2.30711874577) and (145.048220314,13.5) .. (148.5,13.5);
 % surface-route
-\draw[draw=sdcolor1,line width=1.5bp] (-25,24.5) -- (25,16.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-25,24.5) -- (25,16.5);
 % surface-outline
 \draw[draw=sdcolor0,line width=1.125bp] (-148.5,-196) .. controls (-148.5,-172) and (-132,-152) .. (-110,-152);
 % surface-outline
@@ -86,45 +87,45 @@
 % surface-route
 \draw[draw=sdcolor1,line width=1.5bp] (-50,-168) -- (50,-160);
 % surface-route
-\draw[draw=sdcolor1,line width=1.5bp] (-25,-160) -- (25,-168);
+\draw[draw=sdcolor2,line width=1.5bp] (-25,-160) -- (25,-168);
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-50,201) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-50,201) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (50,209) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (50,209) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-25,209) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-25,209) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (25,201) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (25,201) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-50,16.5) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-50,16.5) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (50,24.5) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (50,24.5) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-25,24.5) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-25,24.5) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (25,16.5) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (25,16.5) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-50,-168) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-50,-168) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (50,-160) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (50,-160) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (-25,-160) ellipse [x radius=4,y radius=4];
+\path[fill=sdcolor3,draw=none,line width=0bp] (-25,-160) ellipse [x radius=4,y radius=4];
 % marked-point
-\path[fill=sdcolor2,draw=none,line width=0bp] (25,-168) ellipse [x radius=4,y radius=4];
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,204) {P};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,212) {Q};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,212) {R};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,204) {S};
+\path[fill=sdcolor3,draw=none,line width=0bp] (25,-168) ellipse [x radius=4,y radius=4];
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,204) {P};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,212) {Q};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,212) {R};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,204) {S};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,252.75) {First supplied arc: P-Q};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,19.5) {P};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,27.5) {Q};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,27.5) {R};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,19.5) {S};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,19.5) {P};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,27.5) {Q};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,27.5) {R};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,19.5) {S};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,68.25) {Second supplied arc: R-S};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,-165) {P};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,-157) {Q};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,-157) {R};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,-165) {S};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-42,-165) {P};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (58,-157) {Q};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-17,-157) {R};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (33,-165) {S};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (0,-116.25) {Transverse intersection of P-Q and R-S; no over/under convention};
 \end{tikzpicture}
 \endgroup

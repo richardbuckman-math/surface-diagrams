@@ -1,5 +1,16 @@
 # Handoff: surface-diagrams
 
+## Overnight batch 4, September 21
+
+`MarkedArc` accepts optional validated hex `color`; omitted colors inherit
+Style.curve_color. Closed and bordered renderers honor it, including selections
+and overlays. Tutorial figure 19 keeps P-Q red and R-S blue across all panels.
+Nine focused marked-arc tests and 25 tutorial snippets pass; closed-surface
+explicit/inherited color SVG/TikZ exports were checked separately. Regenerated
+19 figure pairs and visually inspected the comparison. Next: editor visual
+verification or improve marked-point label placement near the outer contour.
+
+
 ## Overnight batch 3, September 21
 
 Tutorial figure 19 now isolates P-Q and R-S before showing their overlay on

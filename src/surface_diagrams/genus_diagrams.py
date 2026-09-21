@@ -276,7 +276,7 @@ def _bordered_marked_arcs(arcs, positions, style, allow_intersections=False):
                 if min(max(a[axis],b[axis]),max(c[axis],d[axis]))-max(min(a[axis],b[axis]),min(c[axis],d[axis]))>1e-8:
                     raise ItineraryError('supplied bordered marked arcs overlap')
         segments.append((a,b))
-        paths.append(Path((('M',*a),('L',*b)),style.curve_color,style.curve_width,'surface-route'))
+        paths.append(Path((('M',*a),('L',*b)),arc.color if arc.color is not None else style.curve_color,style.curve_width,'surface-route'))
     return paths
 
 
@@ -417,8 +417,12 @@ class MarkedArc:
     start: str
     end: str
     id: str = None
+    color: str = None
 
     def __post_init__(self):
+        if self.color is not None:
+            from .model import Style
+            Style(curve_color=self.color)
         if self.id is None:
             object.__setattr__(self,'id',f'{self.start}-{self.end}')
         if any(not isinstance(s,str) or not s for s in (self.start,self.end,self.id)):
@@ -528,7 +532,7 @@ class GenusDiagram:
                     if hi-lo>1e-8:
                         raise ItineraryError('straight marked arcs overlap')
             drawn_arcs.append((a,b))
-            paths.append(Path((('M',*a),('L',*b)),style.curve_color,style.curve_width,'surface-route'))
+            paths.append(Path((('M',*a),('L',*b)),arc.color if arc.color is not None else style.curve_color,style.curve_width,'surface-route'))
         atlas.family(routes,intersections=self.intersections)
         for route in routes:
             pieces=binding.project(route)

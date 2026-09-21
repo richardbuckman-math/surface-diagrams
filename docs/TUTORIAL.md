@@ -689,7 +689,7 @@ crossing_family = GenusSurface(2, type_i=(TypeIBoundary(6),),
     marks=('P','Q','R','S')).with_reference_arcs(mark_positions={
         'P':(-50,28), 'Q':(50,36), 'R':(-25,36), 'S':(25,28)})
 crossing_arcs = crossing_family.with_curves(
-    MarkedArc('P','Q'), MarkedArc('R','S'), allow_intersections=True)
+    MarkedArc('P','Q',color='#d73027'), MarkedArc('R','S',color='#168aad'), allow_intersections=True)
 save_svg(crossing_arcs.select(), 'bordered-intersections.svg')
 ```
 
@@ -699,13 +699,17 @@ view direction and surface geometry identical in every row:
 
 ```python
 comparison = Figure((
-    (Panel(crossing_family.with_curves(MarkedArc('P','Q')).select(), 'Arc P-Q'),),
-    (Panel(crossing_family.with_curves(MarkedArc('R','S')).select(), 'Arc R-S'),),
+    (Panel(crossing_family.with_curves(MarkedArc('P','Q',color='#d73027')).select(), 'Arc P-Q'),),
+    (Panel(crossing_family.with_curves(MarkedArc('R','S',color='#168aad')).select(), 'Arc R-S'),),
     (Panel(crossing_arcs.select(), 'Both arcs on the same surface'),),
 ))
 save_svg(comparison, 'bordered-arc-comparison.svg')
 save_tikz(comparison, 'bordered-arc-comparison.tikz')
 ```
+
+`MarkedArc(..., color='#d73027')` keeps an arc's color fixed across panels,
+even when the figure style changes. Omit `color` to use `Style.curve_color`.
+Both closed and bordered genus presentations support these colors in SVG and TikZ.
 
 These rows isolate the inputs; they are not successive images under a mapping
 class. An action-state sequence must supply its actual intermediate curves.

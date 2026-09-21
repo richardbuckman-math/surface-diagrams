@@ -12,7 +12,7 @@
 <path class="handle" d="M 236.235078925 100.98812 C 248.5 115.85 281.5 115.85 295.629335275 102.74108" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 128.75 C 361.951779686 128.75 364.75 117.557118746 364.75 103.75 C 364.75 89.9428812542 361.951779686 78.75 358.5 78.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 128.75 C 355.048220314 128.75 352.25 117.557118746 352.25 103.75 C 352.25 89.9428812542 355.048220314 78.75 358.5 78.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path class="surface-route" d="M 160 75.75 L 260 67.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="surface-route" d="M 160 75.75 L 260 67.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 61.5 288.25 C 61.5 264.25 78 244.25 100 244.25" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 61.5 288.25 C 61.5 312.25 78 332.25 100 332.25" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 100 244.25 C 173.333333333 244.69 246.666666667 244.69 320 244.25" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -25,7 +25,7 @@
 <path class="handle" d="M 236.235078925 285.48812 C 248.5 300.35 281.5 300.35 295.629335275 287.24108" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 313.25 C 361.951779686 313.25 364.75 302.057118746 364.75 288.25 C 364.75 274.442881254 361.951779686 263.25 358.5 263.25" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 313.25 C 355.048220314 313.25 352.25 302.057118746 352.25 288.25 C 352.25 274.442881254 355.048220314 263.25 358.5 263.25" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path class="surface-route" d="M 185 252.25 L 235 260.25" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="surface-route" d="M 185 252.25 L 235 260.25" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 61.5 472.75 C 61.5 448.75 78 428.75 100 428.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 61.5 472.75 C 61.5 496.75 78 516.75 100 516.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="surface-outline" d="M 100 428.75 C 173.333333333 429.19 246.666666667 429.19 320 428.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -38,8 +38,8 @@
 <path class="handle" d="M 236.235078925 469.98812 C 248.5 484.85 281.5 484.85 295.629335275 471.74108" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 497.75 C 361.951779686 497.75 364.75 486.557118746 364.75 472.75 C 364.75 458.942881254 361.951779686 447.75 358.5 447.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="type-i-boundary" d="M 358.5 497.75 C 355.048220314 497.75 352.25 486.557118746 352.25 472.75 C 352.25 458.942881254 355.048220314 447.75 358.5 447.75" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path class="surface-route" d="M 160 444.75 L 260 436.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path class="surface-route" d="M 185 436.75 L 235 444.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="surface-route" d="M 160 444.75 L 260 436.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="surface-route" d="M 185 436.75 L 235 444.75" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle class="marked-point" cx="160" cy="75.75" r="4" fill="#006fff"/>
 <circle class="marked-point" cx="260" cy="67.75" r="4" fill="#006fff"/>
 <circle class="marked-point" cx="185" cy="67.75" r="4" fill="#006fff"/>
