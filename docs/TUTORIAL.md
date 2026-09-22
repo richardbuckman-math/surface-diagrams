@@ -356,13 +356,15 @@ save_svg(genus_two.with_cut_system(), "standard-genus-cuts.svg")
 
 ![Numbered rainbow standard chains on genus one, two and three](../examples/output/tutorial/07-standard-genus-cuts.svg)
 
-The default view is **above/right**. Odd cuts are solid below and dashed above;
-even cuts closely surround the holes, solid above and dashed below. The below
-view reverses those visibility conventions.
+The default view is **above/right**, with closed reference curves drawn solid.
+Use `with_cut_system(closed_curve_style="split")` or
+`with_curves(NamedCut(2), closed_curve_style="split")` to retain rear corridor
+dashing. The enclosing loops remain solid because they do not cross a silhouette
+edge. Explicit `DiskRoute` visibility still follows its supplied mesh itinerary.
 
 The current standard system is a numbered **2g+1 filling chain**, not a collection
 of g disjoint Heegaard meridians. Its members intersect, and its complement has
-two disks. `with_cut_system()` colors its numbered members consistently. Dashed portions follow the odd/even visibility convention above. Reversing the view must not rename the cuts.
+two disks. `with_cut_system()` colors its numbered members consistently. The optional corridor dashing follows the chosen viewpoint. Reversing the view must not rename the cuts.
 
 The current checked closed-surface route binding covers the standard genus 1-7
 presentations. `view_vertical="above"` or `"below"`, and
@@ -509,8 +511,9 @@ Closed reference curves default to solid. Use
 `with_reference_arcs(closed_curve_style="split")` to dash rear corridor halves.
 The hole-enclosing loops stay solid in either mode: their present paths do not
 cross a silhouette edge, so a solid/dashed transition there would be misleading.
-This option applies to this supplied reference API; the older checked
-`with_cut_system()` presentation has not yet been migrated.
+The same option is available on `with_cut_system()` and `with_curves()` for
+closed named reference curves. Mesh-bound marked points retain their existing
+positions until their presentation is migrated.
 
 Marks split the perimeter into consecutive arcs. Automatic positions place a
 single unpaired mark on the symmetry axis and consecutive pairs above/below

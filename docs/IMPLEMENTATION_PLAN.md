@@ -40,9 +40,8 @@ After this correction continue V1-V3 visual work; calculation engines remain lat
 Further confirmed presentation requirements: default above/right view; planar
 reference cuts are straight consecutive symmetry-axis intervals, including the
 outer end intervals (only the first starts at the left boundary); even genus
-cuts closely follow the holes rather than large enclosing ellipses. In the
-above view, odd cuts are solid below/dashed above, while even cuts are solid
-above/dashed below. Straight mark-to-mark visual arcs take precedence over the
+cuts closely follow the holes rather than large enclosing ellipses. Closed reference curves default to solid. The optional split style dashes rear
+corridor halves; enclosing loops remain solid without invented transitions. Straight mark-to-mark visual arcs take precedence over the
 bent diagnostic-disk projection when no explicit itinerary is being requested.
 Keep explicit DiskRoute inputs faithful to their supplied itineraries.
 
@@ -239,9 +238,10 @@ and paired marks, and solid enclosing loops. The split option retains rear
 corridor dashing only. Explicit supplied mark coordinates remain supported.
 Selection, labels, SVG and TikZ share the same geometry. Figure 15 is rebuilt.
 
-Next: migrate the older checked closed-surface `GenusDiagram` display to this
-visibility/mark convention while preserving its abstract cellulation and explicit
-DiskRoute itineraries. Add an edge-crossing version of enclosing loops if a split
+The checked closed-surface `GenusDiagram` now shares the solid/split reference
+style while preserving mesh walks, labels and explicit DiskRoute visibility.
+Next: migrate its mesh-bound mark display to the symmetry convention while
+preserving its abstract cellulation and explicit DiskRoute endpoints. Add an edge-crossing version of enclosing loops if a split
 wrap display is needed; never reuse the old arbitrary cusp-plane transition.
 Repeated pairs on one side, a Type I rim sharing an end with a Type II pair,
 general bordered DiskRoutes and the certified bordered mesh remain unfinished.

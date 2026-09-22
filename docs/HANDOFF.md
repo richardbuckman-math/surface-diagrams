@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## Closed-surface reference visibility, September 22 evening batch
+
+Extended solid-default closed reference styling to GenusDiagram, exposed through
+with_cut_system(closed_curve_style="solid"|"split") and with_curves(...).
+Split retains the mesh's rear corridor halves; enclosing loops stay solid.
+Removed the arbitrary cusp-plane splitter. Styling preserves every directed
+mesh segment, labels, mark positions, parent numbering and explicit DiskRoute
+output. Chained with_curves retains the chosen style.
+
+Validation: focused tests cover all four views, segment/label preservation,
+option validation and unchanged explicit route output. Regenerated genus-chain,
+named-member and tutorial SVG/TikZ assets; inspected the genus 1/2/3 tutorial
+raster on white. Tutorial HTML and site/local links rebuilt. Unrelated route
+asset regeneration produced tiny numeric differences, which were discarded.
+The full Python suite passed (223 tests); git diff --check passed.
+
+Next bounded step: design the migration of mesh-bound marks and reference arcs
+to symmetric perimeter/axial positions without moving explicit DiskRoute endpoints
+or misrepresenting the checked cut system. This batch changes visibility only;
+old mesh mark spokes and stroke-edge clearance are still outstanding.
+Usage at start: 43% weekly used, 0% five-hour used; mid-batch 44% and 8%.
+Rough run allowance was about three weekly percentage points (42 available
+above the reserve, about 14 six-hour runs until reset). No reset credits used.
+
+
 ## Surface-slice reference drawings, September 22 user correction
 
 Richard clarified figure 15: keep curves inside the outline; no arc ends in

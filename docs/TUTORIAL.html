@@ -299,12 +299,14 @@ Hurwitz move, substitution or equality algorithm is implemented by these panels.
 save_svg(genus_two.with_cut_system(), &quot;standard-genus-cuts.svg&quot;)
 </code></pre>
 <p><img src="../examples/output/tutorial/07-standard-genus-cuts.svg" alt="Numbered rainbow standard chains on genus one, two and three"></p>
-<p>The default view is <strong>above/right</strong>. Odd cuts are solid below and dashed above;
-even cuts closely surround the holes, solid above and dashed below. The below
-view reverses those visibility conventions.</p>
+<p>The default view is <strong>above/right</strong>, with closed reference curves drawn solid.
+Use <code>with_cut_system(closed_curve_style=&quot;split&quot;)</code> or
+<code>with_curves(NamedCut(2), closed_curve_style=&quot;split&quot;)</code> to retain rear corridor
+dashing. The enclosing loops remain solid because they do not cross a silhouette
+edge. Explicit <code>DiskRoute</code> visibility still follows its supplied mesh itinerary.</p>
 <p>The current standard system is a numbered <strong>2g+1 filling chain</strong>, not a collection
 of g disjoint Heegaard meridians. Its members intersect, and its complement has
-two disks. <code>with_cut_system()</code> colors its numbered members consistently. Dashed portions follow the odd/even visibility convention above. Reversing the view must not rename the cuts.</p>
+two disks. <code>with_cut_system()</code> colors its numbered members consistently. The optional corridor dashing follows the chosen viewpoint. Reversing the view must not rename the cuts.</p>
 <p>The current checked closed-surface route binding covers the standard genus 1-7
 presentations. <code>view_vertical=&quot;above&quot;</code> or <code>&quot;below&quot;</code>, and
 <code>view_horizontal=&quot;left&quot;</code> or <code>&quot;right&quot;</code>, select the viewpoint. Genus holes are not
@@ -435,8 +437,9 @@ save_svg(top_pairs.with_reference_arcs(), &quot;type-ii-perimeter.svg&quot;)
 <code>with_reference_arcs(closed_curve_style=&quot;split&quot;)</code> to dash rear corridor halves.
 The hole-enclosing loops stay solid in either mode: their present paths do not
 cross a silhouette edge, so a solid/dashed transition there would be misleading.
-This option applies to this supplied reference API; the older checked
-<code>with_cut_system()</code> presentation has not yet been migrated.</p>
+The same option is available on <code>with_cut_system()</code> and <code>with_curves()</code> for
+closed named reference curves. Mesh-bound marked points retain their existing
+positions until their presentation is migrated.</p>
 <p>Marks split the perimeter into consecutive arcs. Automatic positions place a
 single unpaired mark on the symmetry axis and consecutive pairs above/below
 at matching x coordinates. For an odd count, the first name is the axial mark.</p>

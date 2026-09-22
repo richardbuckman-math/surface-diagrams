@@ -515,9 +515,16 @@ class GenusDiagram:
     curves: tuple = ()
     show_cuts: bool = False
     intersections: tuple = ()
+    closed_curve_style: str = "solid"
+
+    def __post_init__(self):
+        if self.closed_curve_style not in ('solid','split'):
+            raise ValueError("closed_curve_style must be 'solid' or 'split'")
 
     def with_curves(self, *curves, intersections=()):
-        return GenusDiagram(self.surface,self.curves+tuple(curves),self.show_cuts,self.intersections+tuple(intersections))
+        from dataclasses import replace
+        return replace(self,curves=self.curves+tuple(curves),
+                       intersections=self.intersections+tuple(intersections))
 
     def drawing(self, style):
         binding=genus_binding(self.surface)
@@ -555,14 +562,12 @@ class GenusDiagram:
                 if i==0 and triangle.curved:
                     pts=tuple(cubic_point(triangle.curved,t/12) for t in range(13))
                 pieces.append((triangle.sheet,pts))
-            # Visibility changes on the same cusp plane as the adjacent odd cuts.
-            # The projected cusp line can be tilted and need not lie at y=0.
-            if number%2 == 0 and parent.kind == 'closed':
-                handle = presentation(self.surface).handles[number-1]
-                left, right = handle[0][1:], handle[-1][-2:]
-                sign=1 if self.surface.view_vertical == 'above' else -1
-                pieces=_cusp_visibility(pieces,left,right,sign)
-            _append_paths(paths,pieces,color,style.curve_width,'named-cut')
+            # Styling must not change the mesh walk or invent visibility
+            # transitions on enclosing loops which never reach a silhouette.
+            displayed=pieces
+            if parent.kind=='closed' and (number%2==0 or self.closed_curve_style=='solid'):
+                displayed=[('front',pts) for _,pts in pieces]
+            _append_paths(paths,displayed,color,style.curve_width,'named-cut')
             if self.show_cuts:
                 front=[p for sheet,pts in pieces if sheet=='front' for p in pts]
                 if parent.kind == 'arc':
@@ -620,26 +625,6 @@ class GenusDiagram:
     def _repr_svg_(self):
         from .svg import render_svg
         return render_svg(self)
-
-
-def _cusp_visibility(pieces, left, right, sign):
-    """Split presentation polylines exactly where they cross the cusp plane."""
-    def distance(point):
-        x,y=point
-        plane_y=left[1]+(right[1]-left[1])*(x-left[0])/(right[0]-left[0])
-        return sign*(y-plane_y)
-    result=[]
-    for _,points in pieces:
-        for a,b in zip(points,points[1:]):
-            da,db=distance(a),distance(b)
-            if da*db < 0:
-                t=da/(da-db)
-                crossing=(a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1]))
-                result.extend((('front' if da>0 else 'back',(a,crossing)),
-                               ('front' if db>0 else 'back',(crossing,b))))
-            else:
-                result.append(('front' if da+db>=0 else 'back',(a,b)))
-    return result
 
 
 def _append_paths(paths,pieces,color,width,role):

@@ -22,23 +22,12 @@ class ReferenceAppearanceTests(unittest.TestCase):
         self.assertEqual(len({p.stroke for p in paths}),5)
         self.assertFalse(PlanarSurface.row('').with_cut_system().curves)
 
-    def test_tight_even_cuts_and_opposite_visibility_in_both_views(self):
+    def test_tight_even_cuts_and_solid_default_in_both_views(self):
         for view,sign in (('above',1),('below',-1)):
             surface=GenusSurface(2,view_vertical=view)
             for number in (1,2,3,4,5):
                 paths=[p for p in layout(surface.with_curves(NamedCut(number)),Style()).paths if p.role=='named-cut']
-                self.assertEqual({p.dashed for p in paths},{False,True})
-                for p in paths:
-                    mean_y=sum(c[-1] for c in p.commands)/len(p.commands)
-                    if number%2:
-                        self.assertEqual(p.dashed, mean_y*sign>0)
-                    else:
-                        handle=presentation(surface).handles[number-1]
-                        a,b=handle[0][1:],handle[-1][-2:]
-                        def height(x): return a[1]+(b[1]-a[1])*(x-a[0])/(b[0]-a[0])
-                        for command in p.commands:
-                            x,y=command[-2:]
-                            self.assertGreaterEqual((y-height(x))*sign*(-1 if p.dashed else 1),-1e-8)
+                self.assertEqual({p.dashed for p in paths},{False})
             curves=[p for p in layout(surface.with_curves(NamedCut(2)),Style()).paths if p.role=='named-cut']
             points=[c[1:] for p in curves for c in p.commands]
             hole= presentation(surface).handles[:2]
@@ -49,24 +38,35 @@ class ReferenceAppearanceTests(unittest.TestCase):
             self.assertLess(max(x for x,y in points)-max(x for x,y in hole_points),surface.handle_spacing*.05)
             self.assertLess(max(y for x,y in points)-max(y for x,y in hole_points),surface.handle_spacing*.08)
 
-    def test_even_cut_transitions_align_with_cusps_in_all_views(self):
+    def test_split_style_keeps_wraps_solid_and_preserves_walks_in_all_views(self):
         for vertical in ('above','below'):
             for horizontal in ('left','right'):
                 surface=GenusSurface(2,view_vertical=vertical,view_horizontal=horizontal)
-                paths=[p for p in layout(surface.with_curves(NamedCut(2)),Style()).paths if p.role=='named-cut']
-                handle=presentation(surface).handles[1]
-                a,b=handle[0][1:],handle[-1][-2:]
-                transitions=[]
-                for p in paths:
-                    for q in paths:
-                        if p.dashed==q.dashed: continue
-                        for point in (p.commands[0][1:],p.commands[-1][-2:]):
-                            if any(_near(point,end) for end in (q.commands[0][1:],q.commands[-1][-2:])):
-                                transitions.append(point)
-                self.assertTrue(transitions)
-                self.assertEqual(len({tuple(round(v,7) for v in p) for p in transitions}),2)
-                for x,y in transitions:
-                    self.assertAlmostEqual(y,a[1]+(b[1]-a[1])*(x-a[0])/(b[0]-a[0]),places=7)
+                solid=layout(surface.with_cut_system(),Style())
+                diagram=surface.with_cut_system(closed_curve_style='split').with_curves(NamedCut(2))
+                self.assertEqual(diagram.closed_curve_style,'split')
+                split=layout(diagram,Style())
+                self.assertEqual(solid.texts,split.texts)
+                for color in {p.stroke for p in solid.paths if p.role=='named-cut'}:
+                    a=[p for p in solid.paths if p.role=='named-cut' and p.stroke==color]
+                    b=[p for p in split.paths if p.role=='named-cut' and p.stroke==color]
+                    # Path breaks may change, but every directed segment stays.
+                    def segments(paths):
+                        return [(u[-2:],v[-2:]) for p in paths for u,v in zip(p.commands,p.commands[1:])]
+                    self.assertEqual(segments(a),segments(b))
+                wraps=layout(surface.with_curves(NamedCut(2),closed_curve_style='split'),Style())
+                self.assertFalse(any(p.dashed for p in wraps.paths if p.role=='named-cut'))
+                self.assertEqual(sum(p.dashed for p in split.paths if p.role=='named-cut'),3)
+        with self.assertRaises(ValueError): GenusSurface().with_cut_system(closed_curve_style='bad')
+
+    def test_style_does_not_change_explicit_disk_routes(self):
+        from surface_diagrams.disk_routes import DiskRoute, Crossing
+        route=DiskRoute((Crossing('front.3.0.0.s0',.23),Crossing('front.126.2.1.s0',.63)),id='long')
+        surface=GenusSurface(2)
+        a=layout(surface.with_curves(route),Style())
+        b=layout(surface.with_curves(route,closed_curve_style='split'),Style())
+        self.assertEqual(a,b)
+        self.assertTrue(any(p.dashed for p in a.paths if p.role=='surface-route'))
 
     def test_straight_marked_arc_uses_actual_endpoints_and_rejects_obstacles(self):
         surface=GenusSurface(2,marks=('P','Q'))

@@ -140,14 +140,15 @@ class GenusSurface:
         from .genus_mesh import genus_binding
         return genus_binding(self).system
 
-    def with_cut_system(self):
+    def with_cut_system(self, *, closed_curve_style="solid"):
         """Display the numbered standard chain (closed surfaces currently supported)."""
         from .genus_diagrams import GenusDiagram
-        return GenusDiagram(self,show_cuts=True)
+        return GenusDiagram(self,show_cuts=True,closed_curve_style=closed_curve_style)
 
-    def with_curves(self, *curves, intersections=()):
+    def with_curves(self, *curves, intersections=(), closed_curve_style="solid"):
         from .genus_diagrams import GenusDiagram
-        return GenusDiagram(self,tuple(curves),intersections=tuple(intersections))
+        return GenusDiagram(self,tuple(curves),intersections=tuple(intersections),
+                            closed_curve_style=closed_curve_style)
 
     @property
     def width(self):
