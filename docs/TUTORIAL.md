@@ -237,6 +237,25 @@ a real gap, so the image remains transparent. `BraidDiagram(3, ())` draws three
 straight strands. This API draws the word and tracks strands; it does not solve
 braid equality or derive a covering correspondence.
 
+Choose `crossing_style="smooth"` for cubic crossings with vertical joins. The
+default remains `"straight"`. Both styles preserve signs, transparent underpass
+gaps, strand colors and endpoint identities, and export to SVG and TikZ.
+
+```python
+smooth_braid = BraidDiagram(6, (2, 3)*6, crossing_style="smooth")
+save_svg(smooth_braid, "smooth-braid.svg")
+```
+
+![The same braid with straight and smooth crossing geometry](../examples/output/tutorial/20-braid-crossing-styles.svg)
+
+For a continuous braid beside factor rows, set
+`FactorizationDiagram(..., braid_crossing_style="smooth")`. This is the first
+static rendering option informed by the
+[Tiny Bubbles Lab factor-5 display](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
+Generator labels, highlighted atom bands and interactive zoom controls from that
+reference are not part of this option yet. JSON recipes accept
+`braid.crossing_style`, but the browser editor does not yet offer a style selector.
+
 Use `BraidDiagram(3, (1, 2), direction="bottom-to-top")` to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use
 the same **upper-end** convention: a positive crossing followed upward takes the

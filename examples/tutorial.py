@@ -150,6 +150,12 @@ def examples():
     )), Style()
 
 
+    yield '20-braid-crossing-styles', Figure(((
+        Panel(BraidDiagram(6, (2, 3)*6), 'Straight crossings (default)'),
+        Panel(BraidDiagram(6, (2, 3)*6, crossing_style='smooth'), 'Smooth crossings (optional)'),
+    ),)), Style()
+
+
 def main(out=None):
     out = Path(out) if out else Path(__file__).parent/'output'/'tutorial'
     out.mkdir(parents=True, exist_ok=True)

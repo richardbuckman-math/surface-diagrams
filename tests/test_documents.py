@@ -179,6 +179,16 @@ class DocumentTests(unittest.TestCase):
         self.assertEqual(document.to_dict()['braid']['word'], [1, -1, 2, -2])
         self.assertEqual(len(document.preview()['steps']), 4)
 
+    def test_smooth_braid_style_round_trips(self):
+        data = self.recipe('braid'); data['braid']['crossing_style'] = 'smooth'
+        document = DiagramDocument.from_dict(data)
+        self.assertEqual(document, DiagramDocument.from_json(document.to_json()))
+        self.assertEqual(document.to_dict()['braid']['crossing_style'], 'smooth')
+        self.assertIn('.. controls', document.render_tikz())
+        data['braid']['crossing_style'] = 'invalid'
+        with self.assertRaises(ValueError):
+            DiagramDocument.from_dict(data)
+
     def test_generic_serializers_share_document_geometry_and_style(self):
         document = example_document()
         self.assertEqual(render_svg(document, title=document.title), document.render_svg())

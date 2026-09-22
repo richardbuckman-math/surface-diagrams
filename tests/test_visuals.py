@@ -83,6 +83,30 @@ class VisualsTest(unittest.TestCase):
         ET.fromstring(render_svg(figure))
         self.assertIn('braid-strand', render_tikz(figure))
 
+    def test_smooth_braids_preserve_signs_endpoints_colors_and_exports(self):
+        for direction in ('top-to-bottom', 'bottom-to-top'):
+            for sign in (1, -1):
+                plain = BraidDiagram(3, (sign, -sign, 2), direction=direction)
+                smooth = replace(plain, crossing_style='smooth')
+                a, b = layout(plain, Style()), layout(smooth, Style())
+                self.assertEqual(a.texts, b.texts)
+                for old, new in zip(a.paths, b.paths):
+                    self.assertEqual(old.stroke, new.stroke)
+                    self.assertEqual(old.commands[0], new.commands[0])
+                    self.assertEqual(old.commands[-1][-2:], new.commands[-1][-2:])
+                    self.assertEqual(sum(c[0]=='M' for c in old.commands),
+                                     sum(c[0]=='M' for c in new.commands))
+                    curves = [c for c in new.commands if c[0]=='C']
+                    if curves:
+                        self.assertEqual(curves[0][1], new.commands[0][1])
+                        self.assertEqual(curves[-1][3], curves[-1][5])
+                ET.fromstring(render_svg(smooth))
+                self.assertIn('.. controls', render_tikz(smooth))
+        self.assertEqual(layout(BraidDiagram(3), Style()),
+                         layout(BraidDiagram(3, crossing_style='smooth'), Style()))
+        with self.assertRaises(ValueError):
+            BraidDiagram(3, crossing_style='unknown')
+
     def test_circle_panels_clip_in_both_exports(self):
         circle = PlanarSurface.row('BP', spacing=60, height=140, margin=60).with_curves(Arc(1,2))
         figure = Figure(((Panel(circle, 'boundary to point', Style(boundary_shape='circle')),),))

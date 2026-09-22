@@ -72,6 +72,7 @@ class FactorizationDiagram:
     braid_spacing: float = 30
     colors: tuple = RAINBOW
     gap: float = 24
+    braid_crossing_style: str = 'straight'
 
     def __post_init__(self):
         object.__setattr__(self, 'factors', tuple(self.factors))
@@ -88,7 +89,8 @@ class FactorizationDiagram:
         # not expose a previously hidden invalid color/spacing configuration.
         object.__setattr__(self, 'colors', tuple(self.colors))
         BraidDiagram(1 if self.strands is None else self.strands,
-                     spacing=self.braid_spacing, colors=self.colors)
+                     spacing=self.braid_spacing, colors=self.colors,
+                     crossing_style=self.braid_crossing_style)
         if self.strands is None:
             if any(f.braid_word is not None for f in self.factors):
                 raise ValueError('set strands when supplying braid words')
@@ -202,7 +204,8 @@ class FactorizationDiagram:
 
         if braid_width:
             braid_paths, order = _braid_paths(self.strands, crossings, ys,
-                                             self.braid_spacing, self.colors, style)
+                                             self.braid_spacing, self.colors, style,
+                                             self.braid_crossing_style)
             labels = _braid_labels(self.strands, order, ys[0], ys[-1], self.braid_spacing, self.colors)
             braid = _shift(Drawing(braid_width, body_height, (), braid_paths, labels), braid_x, 0)
             paths.extend(braid.paths)

@@ -110,6 +110,14 @@ Curved circular-boundary arcs now use exact left/right rim anchors, with optiona
 
 ## Next V3 task: optional Tiny Bubbles Lab braid display
 
+September 22 checkpoint: the reference is now inspected in the in-app browser.
+Smooth cubic crossings with vertical joins and split underpasses are available
+through `crossing_style="smooth"` and factor-panel `braid_crossing_style`.
+Tutorial figure 20 compares styles. Remaining parts of the observed display:
+generator labels, atom highlighting, endpoint badges, scroll/zoom controls,
+and optional editor integration. Implement these incrementally; the first
+geometry option does not claim to reproduce the complete reference UI.
+
 Richard requested this additional braid-display option on September 21:
 [Tiny Bubbles Lab, simplified crossing audit, factor 5](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
 

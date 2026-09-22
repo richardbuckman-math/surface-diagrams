@@ -54,6 +54,22 @@ class FactorizationTest(unittest.TestCase):
                 upper = max(endpoints, key=lambda point: point[1])
                 self.assertEqual(upper[0] > 0, word[0] > 0)
 
+    def test_smooth_factor_braids_keep_continuous_identity_and_connectors(self):
+        a = self.drawing()
+        b = self.drawing(replace(self.diagram, braid_crossing_style='smooth'))
+        self.assertEqual(a.texts, b.texts)
+        old = [p for p in a.paths if p.role == 'braid-strand']
+        new = [p for p in b.paths if p.role == 'braid-strand']
+        self.assertTrue(any(c[0]=='C' for p in new for c in p.commands))
+        for p, q in zip(old, new):
+            self.assertEqual(p.stroke, q.stroke)
+            self.assertEqual(p.commands[0], q.commands[0])
+            self.assertEqual(p.commands[-1][-2:], q.commands[-1][-2:])
+            if len(p.commands)==2 and p.commands[0][1]==p.commands[-1][1]:
+                self.assertEqual(p, q)
+        with self.assertRaises(ValueError):
+            replace(self.diagram, braid_crossing_style='unknown')
+
     def test_braid_word_is_not_reversed_cancelled_or_repeated_by_exponent(self):
         factor = replace(self.a, exponent=3, braid_word=(1, -1, 2))
         diagram = FactorizationDiagram((factor,), strands=3)

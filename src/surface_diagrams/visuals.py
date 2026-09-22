@@ -106,6 +106,8 @@ class BraidDiagram:
     starts at the bottom instead. Neither option reverses or simplifies word.
     Consequently, following +i upward takes the lower-left strand UNDER the
     lower-right strand. Changing direction does not mirror crossing signs.
+    crossing_style='smooth' uses cubic crossings with vertical end tangents;
+    the default 'straight' retains the original piecewise-linear drawing.
     """
     strands: int
     word: tuple = ()
@@ -113,6 +115,7 @@ class BraidDiagram:
     step: float = 36
     colors: tuple = RAINBOW
     direction: str = 'top-to-bottom'
+    crossing_style: str = 'straight'
 
     def __post_init__(self):
         if type(self.strands) is not int or self.strands < 1:
@@ -129,6 +132,8 @@ class BraidDiagram:
             Style(curve_color=color)
         if self.direction not in ('top-to-bottom', 'bottom-to-top'):
             raise ValueError('direction must be top-to-bottom or bottom-to-top')
+        if self.crossing_style not in ('straight', 'smooth'):
+            raise ValueError('crossing_style must be straight or smooth')
 
     def drawing(self, style):
         levels = max(1, len(self.word))
@@ -138,7 +143,7 @@ class BraidDiagram:
         sign = 1 if self.direction == 'bottom-to-top' else -1
         ys = tuple(sign*(-h/2+i*self.step) for i in range(levels+1))
         paths, order = _braid_paths(self.strands, self.word or (None,), ys,
-                                    self.spacing, self.colors, style)
+                                    self.spacing, self.colors, style, self.crossing_style)
         texts = _braid_labels(self.strands, order, ys[0], ys[-1], self.spacing, self.colors)
         return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding,
                        h+40+2*style.padding, (), tuple(paths), tuple(texts))
@@ -148,7 +153,7 @@ class BraidDiagram:
         return render_svg(self)
 
 
-def _braid_paths(strands, crossings, ys, spacing, colors, style):
+def _braid_paths(strands, crossings, ys, spacing, colors, style, crossing_style='straight'):
     """One continuous braid through caller-supplied levels, in traversal order.
 
     None is a straight connector (not a crossing or an algebraic cancellation).
@@ -169,9 +174,26 @@ def _braid_paths(strands, crossings, ys, spacing, colors, style):
             def point(t):
                 return x0+(x1-x0)*t, y0+(y1-y0)*t
             commands = [('M', x0, y0)]
-            if under:
-                commands.extend((('L', *point(.5-gap)), ('M', *point(.5+gap))))
-            commands.append(('L', x1, y1))
+            if crossing_style == 'smooth' and dest != pos:
+                # x eases between columns while y advances linearly. Restrict
+                # the same cubic on each side of the transparent underpass.
+                def curve(t):
+                    return x0+(x1-x0)*(3*t*t-2*t*t*t), y0+(y1-y0)*t
+                def tangent(t):
+                    return (x1-x0)*6*t*(1-t), y1-y0
+                intervals = ((0, .5-gap), (.5+gap, 1)) if under else ((0, 1),)
+                for a, b in intervals:
+                    p, q = curve(a), curve(b)
+                    da, db = tangent(a), tangent(b)
+                    scale = (b-a)/3
+                    if a:
+                        commands.append(('M', *p))
+                    commands.append(('C', p[0]+scale*da[0], p[1]+scale*da[1],
+                                     q[0]-scale*db[0], q[1]-scale*db[1], *q))
+            else:
+                if under:
+                    commands.extend((('L', *point(.5-gap)), ('M', *point(.5+gap))))
+                commands.append(('L', x1, y1))
             paths.append(Path(tuple(commands), colors[identity % len(colors)],
                               style.curve_width, 'braid-strand'))
         if crossing is not None:

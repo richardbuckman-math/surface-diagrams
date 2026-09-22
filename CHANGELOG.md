@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add optional smooth cubic braid crossings for standalone and factor-panel
+  braids, preserving signs, identities, gaps and SVG/TikZ geometry.
+
 - Draw supplied marked arcs in clear upper/lower bands on bordered surfaces,
   retaining marks and arcs when reference guides are hidden.
 - Validate endpoints, intervening marks, intersections and overlapping arcs.

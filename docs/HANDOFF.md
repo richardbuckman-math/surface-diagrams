@@ -1,5 +1,41 @@
 # Handoff: surface-diagrams
 
+## Paced continuation and smooth braid crossings, September 22
+
+Recurring continuation is active every six hours in task
+01a09c1a-c080-7ed2-900a-739fd9cd2c0a. Read account usage at each run; reserve
+15% weekly for interactive use and share the remainder across scheduled runs
+until reset. Do not consume reset credits. Continue one bounded useful batch.
+
+The braid derivation is complete as an explicit local-move certificate in
+`.preview/braid-six-seven-proof.html`, with JSON and a complete move table.
+An independent verifier checks the supplied SVG transcription and all 2,486
+elementary moves (19 sphere substitutions), without a normal-form oracle.
+Endpoint: `(sigma_4 sigma_5)^3 (sigma_1 sigma_2)^-3`, two complementary triple
+twists. This is identity in the sphere mapping class group but the nontrivial
+central element in the spherical braid group. Do not restart this research.
+
+Tiny Bubbles Lab's factor-5 reference now loads in the in-app browser, although
+web retrieval still fails. Observed: cubic S crossings with vertical end
+tangents and uniform crossing height, underpass gaps, persistent colors,
+numbered endpoint badges, right-hand generator labels, atom shading, scrolling
+and zoom. Its cubic has linear vertical position and smoothstep horizontal
+position. No third-party code/assets were copied.
+
+Implemented the first static increment: `BraidDiagram(crossing_style="smooth")`
+and `FactorizationDiagram(braid_crossing_style="smooth")`. Defaults remain
+straight. Tutorial figure 20 compares the same six-strand word. Next bounded
+batch: generator labels/atom annotation for the optional braid view, then
+an editor style selector. JSON documents already preserve `crossing_style`;
+keep browser-only zoom distinct from exports.
+
+Validation: all 219 Python tests and eight editor JS tests pass; all twenty
+SVG/TikZ tutorial figures regenerate; portable-site links pass. Visually
+inspected the straight/smooth comparison. Initial suite failures exposed a
+missing JSON field allowance (fixed) and relative PYTHONPATH in subprocess
+tests (rerun with absolute repository src path). No remaining failures.
+
+
 ## Requested next braid view, September 21
 
 Added the user-linked Tiny Bubbles Lab factor-5 braid display to the V3 plan as
