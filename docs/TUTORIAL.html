@@ -417,44 +417,41 @@ attachment = boundary_surface.boundary_anchor(&quot;fixed-6&quot;, &quot;a&quot;
 save_svg(end_bordered.with_reference_arcs(), &quot;end-boundary-reference.svg&quot;)
 save_tikz(end_bordered.with_reference_arcs(), &quot;end-boundary-reference.tikz&quot;)
 </code></pre>
-<p>The end members become two arcs from the rim&#39;s vertical-plane attachments to
-the neighboring genus cusp; internal chain members keep their IDs and colors.
-Any combination of Type I slots also works. A cusp boundary opens that corridor
-member into two arcs. Its even wrap uses a rounded enclosure of the actual hole
-and rim, with a small clearance, so it cannot run through the newly opened rim. This is a supplied reference drawing, not a certified
-bordered <code>CutSystem</code> or a chart in which <code>DiskRoute</code> can yet be evaluated.
-Top/bottom Type II pairs also have vertical-plane spokes:</p>
+<p>The end members attach to the front and rear of the rim, as a vertical
+slice through the handle would. Internal chain members keep their IDs and colors.
+An opened genus cusp uses a rounded enclosure around its actual hole and rim.
+These are supplied reference drawings, not certified bordered <code>CutSystem</code> charts.</p>
+<p>Type II reference arcs connect boundaries along the perimeter. They never end
+on the middle of another curve. A side-pair connection continues across the
+axis and crosses the left/right end loop; upper and lower arcs follow the
+outline inward, connecting consecutive rims. <code>pair_bank</code> is retained for source
+compatibility, but both banks participate in the perimeter family.</p>
 <pre><code class="language-python">from surface_diagrams import BoundaryPair
 top_pairs = GenusSurface(2, type_ii=(BoundaryPair(&quot;top&quot;),))
-save_svg(top_pairs.with_reference_arcs(pair_bank=&quot;a&quot;), &quot;type-ii-spokes.svg&quot;)
+save_svg(top_pairs.with_reference_arcs(), &quot;type-ii-perimeter.svg&quot;)
 </code></pre>
-<p>Each spoke goes from bank <code>a</code> (or <code>b</code>) to the first reference member directly
-inward from that anchor. It ends on that member&#39;s actual line or cubic and
-inherits its visible/hidden style. New spoke colors and numbers follow boundary
-order. One Type II pair at each side is supported too, using its inner bank <code>a</code>.
-Its curved spoke joins the midpoint of the upper/lower outer corridor member;
-the curve starts tangent to the inward direction so it stays away from the collar.
-Side-pair bank <code>b</code>, multiple pairs on the same side, a Type I rim and Type II pair on the same end, remain unsupported. The reference
-drawing is independent of the closed-surface mesh, including at the taller
-height used by side pairs.</p>
-<p><img src="../examples/output/tutorial/12-bordered-reference-families.svg" alt="Type I reference arcs and Type II vertical-plane spokes"></p>
-<p>Marked points can be placed explicitly in the clear upper/lower parts of the
-vertical plane. The positions belong to this supplied reference drawing; they
-do not replace the automatic positions in the separate mesh-based API.</p>
+<p><img src="../examples/output/tutorial/12-bordered-reference-families.svg" alt="Type I front/rear attachments and Type II perimeter arcs"></p>
+<p>Closed reference curves default to solid. Use
+<code>with_reference_arcs(closed_curve_style=&quot;split&quot;)</code> to dash rear corridor halves.
+The hole-enclosing loops stay solid in either mode: their present paths do not
+cross a silhouette edge, so a solid/dashed transition there would be misleading.
+This option applies to this supplied reference API; the older checked
+<code>with_cut_system()</code> presentation has not yet been migrated.</p>
+<p>Marks split the perimeter into consecutive arcs. Automatic positions place a
+single unpaired mark on the symmetry axis and consecutive pairs above/below
+at matching x coordinates. For an odd count, the first name is the axial mark.</p>
 <pre><code class="language-python">marked_border = GenusSurface(2, type_i=(TypeIBoundary(6),), marks=(&quot;P&quot;, &quot;Q&quot;))
-marked_reference = marked_border.with_reference_arcs(
-    mark_positions={&quot;P&quot;: (-35, 30), &quot;Q&quot;: (35, -30)}
-)
+marked_reference = marked_border.with_reference_arcs()
 save_svg(marked_reference, &quot;bordered-marked-reference.svg&quot;)
 </code></pre>
-<p><img src="../examples/output/tutorial/13-bordered-marked-reference.svg" alt="Explicit marked points and vertical-plane reference spokes"></p>
-<p>Supply every surface mark ID exactly once. Each vertical spoke reaches the first
-reference member toward the symmetry axis. Marks must stay above/below the hole
-and rim band, inside the main body&#39;s upper/lower contour, and clear of other
-marks and spokes. Invalid positions raise an explanation rather than moving
-marks automatically. Colors and spoke numbers follow <code>surface.marks</code> order,
-independently of dictionary order. The supplied drawing still does not provide a
-certified marked bordered cellulation.</p>
+<p><img src="../examples/output/tutorial/13-bordered-marked-reference.svg" alt="Symmetric marks splitting perimeter reference arcs"></p>
+<p>For a deliberately supplied placement, <code>mark_positions</code> accepts every mark ID
+exactly once and preserves those coordinates. The nearby perimeter deforms
+through the marks instead of adding spokes. Such explicit positions override
+the automatic symmetry convention. Points outside the surface, inside genus
+openings, or overlapping another mark are rejected. Automatic axial placement
+requires an available end. These drawings still do not certify a marked
+bordered cellulation or change the separate mesh-based mark-placement API.</p>
 <p>Use <code>.select(...)</code> to isolate existing reference members for factor panels:</p>
 <pre><code class="language-python">family = end_bordered.with_reference_arcs()
 factor_panels = Figure((
@@ -467,15 +464,16 @@ save_svg(factor_panels, &quot;bordered-factor-panels.svg&quot;)
 <p><img src="../examples/output/tutorial/14-bordered-factor-panels.svg" alt="Vertical factor panels on a bordered surface"></p>
 <p><code>family.member_numbers</code> lists the available member numbers. Selection preserves
 geometry, colors and all marked points. An opened odd member includes both of its
-boundary arcs; an even member is its closed wrap. Boundary and marked spokes
-retain their later numbers. An empty selection leaves the surface and marks.
+boundary arcs; an even member is its closed wrap. Perimeter arcs receive later
+numbers, each split at a mark creating another member. These replace the old
+spoke numbers; query the family rather than reusing those numbers. An empty selection leaves the surface and marks.
 This draws supplied support curves and labels; it does not apply the factors or
 check their product.</p>
 <p>A side Type II pair and a Type I rim on the opposite end can be combined with
 top/bottom pairs and explicit marks. IDs and colors persist in all four views:</p>
 <p><img src="../examples/output/tutorial/15-mixed-boundary-views.svg" alt="Mixed boundary reference family in all four views"></p>
 <p><code>boundary_guide()</code> identifies exact rim attachment points; <code>with_reference_arcs()</code>
-draws the supported reference families and explicit marked-point spokes shown
+draws the supported reference curves and perimeter arcs shown
 above. These presentation drawings do not supply a certified cut-disk chart:
 <code>cut_system()</code> still rejects bordered surfaces.</p>
 <pre><code class="language-python">from surface_diagrams import TypeIBoundary, BoundaryPair

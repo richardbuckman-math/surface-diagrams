@@ -81,17 +81,16 @@ def examples():
 
     yield '12-bordered-reference-families', Figure((
         (Panel(GenusSurface(2,type_i=(TypeIBoundary(1),TypeIBoundary(6))).with_reference_arcs(),
-               'Type I end boundaries: vertical-plane reference arcs'),),
+               'Type I end boundaries: front/rear reference arcs'),),
         (Panel(GenusSurface(2,type_i=(TypeIBoundary(2),TypeIBoundary(3),TypeIBoundary(4))).with_reference_arcs(),
                'Type I cusp boundaries: attached arcs and close rim enclosures'),),
         (Panel(GenusSurface(2,type_ii=(BoundaryPair('top'),)).with_reference_arcs(),
-               'Type II top/bottom boundaries: vertical-plane spokes'),),
+               'Type II top/bottom boundaries: perimeter arcs'),),
         (Panel(GenusSurface(2,type_ii=(BoundaryPair('left'),BoundaryPair('top'))).with_reference_arcs(),
-               'Type II side and top/bottom pairs: inner-bank spokes'),),
+               'Type II side and top/bottom pairs: continuous perimeter arcs'),),
     )), Style()
     marked = GenusSurface(2,type_i=(TypeIBoundary(6),),marks=('P','Q'))
-    yield '13-bordered-marked-reference', marked.with_reference_arcs(
-        mark_positions={'P':(-35,30),'Q':(35,-30)}), Style()
+    yield '13-bordered-marked-reference', marked.with_reference_arcs(), Style()
     family = GenusSurface(2,type_i=(TypeIBoundary(6),)).with_reference_arcs()
     yield '14-bordered-factor-panels', Figure((
         (Panel(family.select(2), 'Factor 1: positive twist supported on member 2'),),
@@ -101,8 +100,7 @@ def examples():
     yield '15-mixed-boundary-views', Figure(tuple(
         tuple(Panel(GenusSurface(3,type_i=(TypeIBoundary(8),),
                     type_ii=(BoundaryPair('left'),BoundaryPair('top'),BoundaryPair('top')),
-                    marks=('M',),view_vertical=vertical,view_horizontal=horizontal).with_reference_arcs(
-                        mark_positions={'M':(0,45)}), f'{vertical} / {horizontal}')
+                    marks=('M',),view_vertical=vertical,view_horizontal=horizontal).with_reference_arcs(), f'{vertical} / {horizontal}')
               for horizontal in ('left','right'))
         for vertical in ('above','below')
     )), Style()

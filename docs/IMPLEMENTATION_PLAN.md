@@ -204,14 +204,14 @@ geometry is correct; compile examples when a TeX toolchain is available. Keep
 unsupported cases explicit. Continue scoped commits and pushes under Richard's
 standing authorization, and update HANDOFF.md with actual progress.
 
-## Confirmed cusp-plane convention
+## Surface-slice convention (September 22, supersedes cusp-plane styling)
 
-Type I/II boundary and marked-point reference arcs must lie in the vertical
-plane. Bind their endpoints to the actual boundary/mark geometry in that plane;
-do not fan them through an arbitrary surface chart. Even genus wraps change
-visibility on the projected line through the hole cusps, matching their odd
-neighbors, rather than at y=0. This affects presentation visibility only and
-preserves supplied curve itineraries and the checked cellulation.
+Arcs and curves must remain within the surface outline. An arc may cross a
+curve but cannot end in its interior. Type I handle-return arcs use front/rear
+rim points. Type II connections form continuous boundary-to-boundary perimeter
+arcs, including the side-pair arc crossing the outer closed loop. Marks split
+these arcs: a lone mark lies on the axis, paired marks above/below. Closed curves
+may be solid; visibility changes must occur only at actual silhouette edges.
 
 ### Earlier incremental checkpoints (superseded by the current status below)
 
@@ -231,15 +231,17 @@ Standard top/bottom Type II spokes and one inner-bank pair per side now have
 supplied drawings. Remaining boundary variants and marked-point spokes must be
 bound explicitly; the reference renderer no longer relies on a closed mesh.
 
-### Current boundary-plane status, September 21
+### Current boundary presentation status, September 22
 
-All Type I slot reference families, top/bottom Type II spokes, one inner-bank
-Type II pair per side, opposite-end Type I/II combinations, and explicit marked
-spokes are implemented in all four views. Selection and optional number labels
-preserve geometry. Supplied straight MarkedArcs support explicit colors and
-opt-in transverse intersections in clear upper/lower mark bands.
+`with_reference_arcs()` now follows the surface-slice convention: front/rear
+Type I attachments, continuous inward-offset perimeter arcs, automatic axial
+and paired marks, and solid enclosing loops. The split option retains rear
+corridor dashing only. Explicit supplied mark coordinates remain supported.
+Selection, labels, SVG and TikZ share the same geometry. Figure 15 is rebuilt.
 
-Remaining presentation variants: outer-bank side spokes, repeated pairs on the
-same side, and a Type I rim sharing an end with a Type II pair. General bordered
-DiskRoutes and the certified bordered mesh remain unfinished. Presentation
-support does not imply automatic actions or a certified cut system.
+Next: migrate the older checked closed-surface `GenusDiagram` display to this
+visibility/mark convention while preserving its abstract cellulation and explicit
+DiskRoute itineraries. Add an edge-crossing version of enclosing loops if a split
+wrap display is needed; never reuse the old arbitrary cusp-plane transition.
+Repeated pairs on one side, a Type I rim sharing an end with a Type II pair,
+general bordered DiskRoutes and the certified bordered mesh remain unfinished.

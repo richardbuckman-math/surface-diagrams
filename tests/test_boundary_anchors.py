@@ -47,9 +47,9 @@ class BoundaryAnchorTests(unittest.TestCase):
                 self.assertEqual(len(arcs),4)
                 self.assertEqual(sum(p.dashed for p in arcs),2)
                 endpoints={p.commands[0][1:] for p in arcs}|{p.commands[-1][-2:] for p in arcs}
-                self.assertTrue({a.point for a in surface.boundary_anchors()} <= endpoints)
+                self.assertTrue({r.point(0,sign*r.depth) for r in presentation(surface).rims for sign in (-1,1)} <= endpoints)
                 outline=presentation(surface)
-                self.assertEqual(endpoints - {a.point for a in surface.boundary_anchors()},
+                self.assertEqual(endpoints - {r.point(0,sign*r.depth) for r in presentation(surface).rims for sign in (-1,1)},
                     {outline.handles[1][0][1:],outline.handles[-1][-1][-2:]})
                 self.assertIn('boundary-reference-arc',render_tikz(surface.with_reference_arcs()))
                 with self.assertRaises(NotImplementedError): surface.cut_system()
@@ -65,7 +65,7 @@ class BoundaryAnchorTests(unittest.TestCase):
             arcs=[p for p in drawing.paths if p.role=='boundary-reference-arc']
             self.assertEqual(len(arcs),6)
             ends={p.commands[0][1:] for p in arcs}|{p.commands[-1][-2:] for p in arcs}
-            self.assertEqual(ends,{a.point for a in surface.boundary_anchors()})
+            self.assertEqual(ends,{r.point(0,sign*r.depth) for r in presentation(surface).rims for sign in (-1,1)})
             for number in (2,4):
                 wrap=[p for p in drawing.paths if p.role=='named-cut' and p.stroke==RAINBOW[number-1]]
                 points=[cmd[-2:] for p in wrap for cmd in p.commands]
@@ -92,27 +92,22 @@ class BoundaryAnchorTests(unittest.TestCase):
                                 self.assertGreater(max(p[1] for p in points),y)
                             start=command[-2:]
 
-    def test_top_bottom_pair_spokes_hit_the_actual_chain(self):
-        from surface_diagrams.genus_diagrams import _vertical_hits
+    def test_top_bottom_perimeter_arcs_end_only_at_rims(self):
         for view in ('above','below'):
             for bank in ('a','b'):
                 surface=GenusSurface(2,type_i=(TypeIBoundary(2),),
                     type_ii=(BoundaryPair('top'),),view_vertical=view)
                 d=layout(surface.with_reference_arcs(pair_bank=bank),Style())
-                spokes=[p for p in d.paths if p.role=='boundary-reference-spoke']
-                self.assertEqual(len(spokes),2)
-                anchors={surface.boundary_anchor(f'pair-1-{side}',bank).point for side in ('upper','lower')}
-                self.assertEqual({p.commands[0][1:] for p in spokes},anchors)
-                chain=[p for p in d.paths if p.role in ('named-cut','boundary-reference-arc')]
-                for spoke in spokes:
-                    a,b=spoke.commands[0][1:],spoke.commands[-1][1:]
-                    self.assertAlmostEqual(a[0],b[0])
-                    self.assertGreater(abs(a[1]),abs(b[1]))
-                    self.assertTrue(any(abs(b[0]-hit[0])+abs(b[1]-hit[1])<1e-7
-                                        for p in chain for hit in _vertical_hits(p.commands,a[0])))
-                self.assertIn('boundary-reference-spoke',render_tikz(surface.with_reference_arcs(pair_bank=bank)))
+                arcs=[p for p in d.paths if p.role=='boundary-reference-perimeter']
+                self.assertEqual(len(arcs),2)
+                anchors={p for r in presentation(surface).rims if r.role=='type-ii-boundary' for p in r.anchors}
+                endpoints=[p.commands[i][-2:] for p in arcs for i in (0,-1)]
+                self.assertEqual(set(endpoints),anchors)
+                self.assertEqual(len(endpoints),len(anchors))
+                self.assertFalse(any('spoke' in p.role for p in d.paths))
+                self.assertIn('boundary-reference-perimeter',render_tikz(surface.with_reference_arcs()))
         with self.assertRaises(ValueError):
-            render_svg(GenusSurface(type_ii=(BoundaryPair('top'),)).with_reference_arcs(pair_bank='front'))
+            render_svg(GenusSurface().with_reference_arcs(pair_bank='front'))
 
     def test_vertical_cubic_hit_is_not_a_sampled_approximation(self):
         from surface_diagrams.genus_diagrams import _vertical_hits
@@ -121,68 +116,57 @@ class BoundaryAnchorTests(unittest.TestCase):
         self.assertAlmostEqual(hit[0],1.5,places=12)
         self.assertAlmostEqual(hit[1],.75,places=12)
 
-    def test_side_pair_spokes_use_inner_rim_banks_and_actual_midpoints(self):
-        from surface_diagrams.mesh_atlas import cubic_point
+    def test_side_pair_connection_is_continuous_across_axis(self):
         for side in ('left','right'):
             for view in ('above','below'):
                 surface=GenusSurface(2,type_ii=(BoundaryPair(side),),view_vertical=view)
                 d=layout(surface.with_reference_arcs(),Style())
-                spokes=[p for p in d.paths if p.role=='boundary-reference-spoke']
-                self.assertEqual(len(spokes),2)
-                expected={surface.boundary_anchor(f'pair-1-{sign}','a').point for sign in ('upper','lower')}
-                self.assertEqual({p.commands[0][1:] for p in spokes},expected)
-                mids=[]
-                for path in d.paths:
-                    if path.role=='named-cut' and len(path.commands)==2 and path.commands[1][0]=='C':
-                        cmd=path.commands[1]
-                        mids.append(cubic_point((path.commands[0][1:],cmd[1:3],cmd[3:5],cmd[-2:]),.5))
-                for spoke in spokes:
-                    self.assertIn(spoke.commands[-1][-2:],mids)
-                    self.assertEqual(spoke.commands[1][0],'C')
-                self.assertIn('boundary-reference-spoke',render_svg(surface.with_reference_arcs()))
-        with self.assertRaises(NotImplementedError):
-            render_svg(GenusSurface(type_ii=(BoundaryPair('left'),)).with_reference_arcs(pair_bank='b'))
+                anchors={surface.boundary_anchor(f'pair-1-{sign}','a').point for sign in ('upper','lower')}
+                arcs=[p for p in d.paths if p.role=='boundary-reference-perimeter']
+                inner=[p for p in arcs if {p.commands[0][1:],p.commands[-1][-2:]}==anchors]
+                self.assertEqual(len(inner),1)
+                self.assertTrue(any(abs(c[-1])<1e-8 for c in inner[0].commands[1:-1]))
+                self.assertEqual(len(arcs),2)
 
     def test_reference_presentation_does_not_require_closed_mesh(self):
         from unittest.mock import patch
         surface=GenusSurface(2,type_ii=(BoundaryPair('left'),))
         with patch('surface_diagrams.genus_diagrams.genus_binding',side_effect=AssertionError('mesh requested')):
-            self.assertIn('boundary-reference-spoke',render_svg(surface.with_reference_arcs()))
+            self.assertIn('boundary-reference-perimeter',render_svg(surface.with_reference_arcs()))
 
-    def test_explicit_plane_marks_keep_ids_and_make_vertical_spokes(self):
+    def test_marks_split_perimeter_and_preserve_explicit_coordinates(self):
         surface=GenusSurface(2,type_i=(TypeIBoundary(6),),marks=('P','Q'))
         positions={'Q':(35.,-30.),'P':(-35.,30.)}
         d=layout(surface.with_reference_arcs(mark_positions=positions),Style())
         marks=[e for e in d.ellipses if e.role=='marked-point']
         self.assertEqual([(e.x,e.y) for e in marks],[positions['P'],positions['Q']])
-        spokes=[p for p in d.paths if p.role=='mark-reference-spoke']
-        self.assertEqual(len(spokes),2)
-        for p in spokes: self.assertAlmostEqual(p.commands[0][1],p.commands[1][1])
-        self.assertIn('mark-reference-spoke',render_tikz(surface.with_reference_arcs(mark_positions=positions)))
-        with self.assertRaises(ValueError): render_svg(surface.with_reference_arcs())
-        for points in ({'P':(-35.,0.),'Q':(35.,30.)},
+        arcs=[p for p in d.paths if p.role=='boundary-reference-perimeter']
+        ends=[p.commands[i][-2:] for p in arcs for i in (0,-1)]
+        for point in positions.values(): self.assertEqual(ends.count(point),2)
+        self.assertFalse(any('spoke' in p.role for p in d.paths))
+        auto=layout(surface.with_reference_arcs(),Style())
+        a,b=[(e.x,e.y) for e in auto.ellipses if e.role=='marked-point']
+        self.assertEqual(a,(b[0],-b[1]))
+        for points in ({'P':(-1000.,0.),'Q':(35.,30.)},
                        {'P':(-35.,30.),'Q':(-35.,30.)}):
             with self.assertRaises(ValueError): render_svg(surface.with_reference_arcs(mark_positions=points))
-        pair=GenusSurface(2,type_ii=(BoundaryPair('top'),),marks=('P',))
-        with self.assertRaises(ValueError):
-            render_svg(pair.with_reference_arcs(mark_positions={'P':(-22.,30.)}))
 
     def test_member_selection_keeps_geometry_colors_and_marks(self):
         from surface_diagrams.visuals import RAINBOW
         family=GenusSurface(2,type_i=(TypeIBoundary(6),),marks=('P',)).with_reference_arcs(
             mark_positions={'P':(-35,30)})
         full=layout(family,Style())
-        self.assertEqual(family.member_numbers,(1,2,3,4,5,6))
+        self.assertEqual(family.member_numbers,(1,2,3,4,5,6,7))
         selected=layout(family.select(2),Style())
         self.assertEqual([p for p in selected.paths if p.role=='named-cut'],
                          [p for p in full.paths if p.role=='named-cut' and p.stroke==RAINBOW[1]])
         self.assertEqual(selected.ellipses,full.ellipses)
         self.assertEqual({t.text for t in selected.texts},{'P','2'})
         spoke=layout(family.select(6),Style())
-        self.assertEqual(sum(p.role=='mark-reference-spoke' for p in spoke.paths),1)
+        self.assertEqual(sum(p.role=='boundary-reference-perimeter' for p in spoke.paths),1)
         empty=layout(family.select(),Style())
         self.assertFalse(any('reference' in p.role or p.role=='named-cut' for p in empty.paths))
-        for numbers in ((0,),(7,),(True,),(2,2)):
+        for numbers in ((0,),(8,),(True,),(2,2)):
             with self.assertRaises(ValueError): family.select(*numbers)
 
     def test_opposite_end_mixed_reference_family_in_four_views(self):
@@ -192,15 +176,68 @@ class BoundaryAnchorTests(unittest.TestCase):
                 surface=GenusSurface(3,type_i=(TypeIBoundary(8),),
                     type_ii=(BoundaryPair('left'),BoundaryPair('top'),BoundaryPair('top')),
                     marks=('M',),view_vertical=vertical,view_horizontal=horizontal)
-                family=surface.with_reference_arcs(mark_positions={'M':(0,45)})
+                family=surface.with_reference_arcs()
                 drawing=layout(family,Style())
-                self.assertEqual(sum(p.role=='boundary-reference-spoke' for p in drawing.paths),6)
-                self.assertEqual(sum(p.role=='mark-reference-spoke' for p in drawing.paths),1)
-                self.assertEqual(family.member_numbers,tuple(range(1,15)))
+                self.assertEqual(sum(p.role=='boundary-reference-perimeter' for p in drawing.paths),8)
+                self.assertFalse(any('spoke' in p.role for p in drawing.paths))
+                mark,=drawing.ellipses
+                self.assertAlmostEqual(mark.y,0)
+                self.assertEqual(family.member_numbers,tuple(range(1,16)))
                 ids=tuple(a.id for a in surface.boundary_anchors())
                 if expected is None: expected=ids
                 self.assertEqual(ids,expected)
-                self.assertIn('boundary-reference-spoke',render_tikz(family))
+                self.assertIn('boundary-reference-perimeter',render_tikz(family))
         with self.assertRaises(NotImplementedError):
             render_svg(GenusSurface(2,type_i=(TypeIBoundary(1),),
                 type_ii=(BoundaryPair('left'),)).with_reference_arcs())
+
+    def test_closed_curve_visibility_has_no_invented_wrap_transitions(self):
+        from surface_diagrams.visuals import RAINBOW
+        for view in ('above','below'):
+            surface=GenusSurface(3,type_i=(TypeIBoundary(8),),view_vertical=view)
+            solid=layout(surface.with_reference_arcs(),Style())
+            self.assertFalse(any(p.dashed for p in solid.paths if p.role=='named-cut'))
+            split=layout(surface.with_reference_arcs(closed_curve_style='split'),Style())
+            for number in (2,4,6):
+                wraps=[p for p in split.paths if p.role=='named-cut' and p.stroke==RAINBOW[number-1]]
+                self.assertEqual(len(wraps),1)
+                self.assertFalse(wraps[0].dashed)
+                self.assertEqual(wraps[0].commands[0][-2:],wraps[0].commands[-1][-2:])
+            odd=[p for p in split.paths if p.role=='named-cut' and p.dashed]
+            self.assertEqual(len(odd),3)
+        with self.assertRaises(ValueError): GenusSurface().with_reference_arcs(closed_curve_style='invalid')
+
+    def test_mixed_perimeter_never_leaves_outer_silhouette(self):
+        from surface_diagrams.mesh_atlas import cubic_point, _segment_distance
+        def points(commands):
+            result=[commands[0][-2:]]
+            for cmd in commands[1:]:
+                if cmd[0]=='C':
+                    curve=(result[-1],cmd[1:3],cmd[3:5],cmd[-2:])
+                    result.extend(cubic_point(curve,i/80) for i in range(1,81))
+                else: result.append(cmd[-2:])
+            return result
+        for side in ('left','right'):
+            surface=GenusSurface(3,type_i=(TypeIBoundary(8 if side=='left' else 1),),
+                type_ii=(BoundaryPair(side),BoundaryPair('top'),BoundaryPair('top')))
+            outline=presentation(surface)
+            chunks=[points(c) for c in outline.contours]+[points(r.half(1)) for r in outline.rims]
+            edges=[(a,b) for chunk in chunks for a,b in zip(chunk,chunk[1:])]
+            drawing=layout(surface.with_reference_arcs(),Style())
+            for path in drawing.paths:
+                if path.role not in ('boundary-reference-perimeter','named-cut','boundary-reference-arc'): continue
+                for x,y in points(path.commands):
+                    inside=sum((a[1]>y)!=(b[1]>y) and a[0]+(y-a[1])*(b[0]-a[0])/(b[1]-a[1])>x
+                               for a,b in edges)%2
+                    self.assertTrue(inside or min(_segment_distance((x,y),a,b) for a,b in edges)<.015,
+                                    (side,path.role,x,y))
+
+    def test_marks_without_outer_rims_keep_member_count_and_closed_perimeter(self):
+        for marks in (('M',),('P','Q'),('M','P','Q')):
+            family=GenusSurface(2,marks=marks).with_reference_arcs()
+            drawing=layout(family,Style())
+            arcs=[p for p in drawing.paths if p.role=='boundary-reference-perimeter']
+            self.assertEqual(len(arcs),len(marks))
+            locations={(e.x,e.y) for e in drawing.ellipses}
+            self.assertTrue(all(p.commands[0][-2:] in locations and p.commands[-1][-2:] in locations for p in arcs))
+            self.assertEqual(len(family.member_numbers),5+len(marks))

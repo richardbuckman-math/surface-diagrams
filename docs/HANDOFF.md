@@ -1,5 +1,43 @@
 # Handoff: surface-diagrams
 
+## Surface-slice reference drawings, September 22 user correction
+
+Richard clarified figure 15: keep curves inside the outline; no arc ends in
+another curve's interior; use front/rear Type I attachments; connect Type II
+boundaries along the perimeter; place an unpaired mark on the axis and paired
+marks symmetrically above/below. Visibility changes belong at real edges.
+This supersedes the historical cusp-plane and spoke conventions below.
+
+Implemented in `with_reference_arcs()`: replaced all Type II/mark spokes by
+continuous inward-offset contour paths terminating only at rims or marks.
+The left-pair arc crosses the end loop continuously; figure 15 has three top
+and three bottom connections plus the left connection split at axial M.
+Type I return arcs meet front/rear rim extrema. Closed loops default to solid;
+`closed_curve_style="split"` dashes rear corridor halves, while enclosing loops
+remain solid because their present geometry never crosses an edge. Automatic
+mark pairs share x coordinates. Explicit supplied coordinates are preserved,
+with local perimeter deformation and validation. Straight supplied MarkedArcs
+retain their clear-band guard. Reference numbers after 2g+1 now identify the
+perimeter segments; callers should query member_numbers instead of old IDs.
+`pair_bank` remains accepted for compatibility but no longer chooses spokes.
+
+Validation: 222 Python tests passed; nine supplied marked-arc tests passed again
+after restoring the convex-band guard. Updated tests check front/rear rim
+endpoints, continuous side connections, mark incidence, symmetry, closed-loop
+visibility, selection and sampled containment in the actual outer silhouette.
+Regenerated SVG/TikZ tutorials, visually inspected figures 13 and 15 on white,
+rebuilt tutorial HTML and site, and passed the site's local-link validation.
+`git diff --check` passed. The containment test checks path geometry at default
+styles, not a universal stroke-clipping certificate for arbitrary custom styles.
+
+Next: migrate the separate checked closed-surface `GenusDiagram` presentation
+(its old cusp-plane visibility and mesh mark placements) to the same visual
+convention without altering the abstract cellulation or supplied DiskRoutes.
+If split enclosing loops are wanted, design paths that actually reach silhouette
+edges; do not restore arbitrary dashed transitions on the current ellipses.
+The certified bordered mesh and general bordered DiskRoutes remain unfinished.
+
+
 ## Editor crossing-style selector, September 22 scheduled batch
 
 Added Straight/Smooth to the local editor's braid controls. Older recipes with
@@ -583,7 +621,7 @@ progress and exact next actions before stopping or handing off. Do not claim
 a stage complete until its acceptance tests and visual checks pass.
 ```
 
-## Confirmed cusp-plane convention
+## Historical cusp-plane convention (superseded September 22)
 
 Type I/II boundary and marked-point reference arcs must lie in the vertical
 plane. Bind their endpoints to the actual boundary/mark geometry in that plane;

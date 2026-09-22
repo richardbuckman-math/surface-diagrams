@@ -11,7 +11,7 @@ from .disk_routes import DiskRoute, ItineraryError
 
 @dataclass(frozen=True)
 class BorderedReferenceDiagram:
-    """Supplied vertical-plane reference arcs for Type I and top/bottom Type II.
+    """Supplied closed curves and rim-to-rim perimeter reference arcs.
 
     This presentation is independent of the certified closed-surface mesh;
     it is not accepted as a CutSystem or as a DiskRoute chart binding.
@@ -23,6 +23,7 @@ class BorderedReferenceDiagram:
     curves: tuple = ()
     show_reference_labels: bool = True
     allow_intersections: bool = False
+    closed_curve_style: str = "solid"
 
     def with_curves(self, *curves, allow_intersections=None):
         """Add supplied straight MarkedArcs within a clear upper or lower band.
@@ -51,7 +52,9 @@ class BorderedReferenceDiagram:
 
     @property
     def member_numbers(self):
-        return tuple(range(1,2*self.surface.genus+2+2*len(self.surface.type_ii)+len(self.surface.marks)))
+        last=2*self.surface.genus+2
+        outer=sum(b.slot in (1,last) for b in self.surface.type_i)+2*len(self.surface.type_ii)
+        return tuple(range(1,last+outer+len(self.surface.marks)))
 
     def select(self, *numbers):
         """Isolate numbered members without rerouting or reassigning colors."""
@@ -69,15 +72,13 @@ class BorderedReferenceDiagram:
         side_pairs=[pair.side for pair in surface.type_ii if pair.side in ('left','right')]
         if len(side_pairs)!=len(set(side_pairs)):
             raise NotImplementedError('one Type II pair per side is currently supported')
-        if side_pairs and self.pair_bank!='a':
-            raise NotImplementedError('side Type II spokes currently use inner bank a')
         if any((fixed.slot==1 and 'left' in side_pairs) or (fixed.slot==last and 'right' in side_pairs)
                for fixed in surface.type_i):
             raise NotImplementedError('a Type I rim and Type II pair on the same end need separate binding')
         if self.pair_bank not in ('a','b'):
             raise ValueError("pair_bank must be 'a' or 'b'")
         positions=dict(self.mark_positions)
-        if set(positions)!=set(surface.marks):
+        if positions and set(positions)!=set(surface.marks):
             raise ValueError('provide mark_positions for exactly the surface mark IDs')
         outline=presentation(surface)
         base=outline.drawing(style)
@@ -87,12 +88,16 @@ class BorderedReferenceDiagram:
 
         def endpoint(slot, bank):
             if f'fixed-{slot}' in rims:
-                return surface.boundary_anchor(f'fixed-{slot}',bank).point
+                rim=rims[f'fixed-{slot}']
+                return rim.point(0, rim.depth*(-1 if bank=='a' else 1))
             if slot in (1,last):
                 tips=[path[0][1:] for path in outline.contours if abs(path[0][2])<1e-9]
                 tips += [command[-2:] for path in outline.contours for command in path[1:]
                          if abs(command[-1])<1e-9]
-                return (min(tips) if slot==1 else max(tips))
+                x,y=min(tips) if slot==1 else max(tips)
+                # Leave stroke clearance at the silhouette's turning point.
+                clearance=0 if self.closed_curve_style=='split' else (style.outline_width+style.curve_width)/2+.25
+                return x+(1 if slot==1 else -1)*clearance,y
             hole=(slot-2)//2
             far=outline.handles[2*hole+1]
             return far[0][1:] if slot%2==0 else far[-1][-2:]
@@ -114,7 +119,8 @@ class BorderedReferenceDiagram:
                     commands=(('M',*start),('C',start[0]+width/3,start[1]+lift,
                                 end[0]-width/3,end[1]+lift,*end))
                     paths.append(Path(commands,color,style.curve_width,
-                                      'boundary-reference-arc' if bordered else 'named-cut',sign==vy))
+                                      'boundary-reference-arc' if bordered else 'named-cut',
+                                      sign==vy and (bordered or self.closed_curve_style=='split')))
                 texts.append(Text((start[0]+end[0])/2,(start[1]+end[1])/2+4*vy,
                                   str(number),color,10))
             elif any(f'fixed-{slot}' in rims for slot in (number,number+1)):
@@ -132,10 +138,7 @@ class BorderedReferenceDiagram:
                         ys.extend((-rim.radius,rim.radius))
                 gap=surface.handle_spacing*.035
                 points=_rounded_enclosure(min(xs),max(xs),min(ys),max(ys),gap)
-                def plane_point(slot):
-                    rim=rims.get(f'fixed-{slot}')
-                    return (rim.x,rim.y) if rim else endpoint(slot,'a')
-                pieces=_cusp_visibility((('front',points),),plane_point(number),plane_point(number+1),vy)
+                pieces=(('front',points),)
                 _append_paths(paths,pieces,color,style.curve_width,'named-cut')
                 texts.append(Text((min(xs)+max(xs))/2,max(ys)+gap+9,str(number),color,10))
             else:
@@ -143,94 +146,30 @@ class BorderedReferenceDiagram:
                 radius=surface.handle_spacing*.335
                 ry=min(surface.height*.17,surface.handle_spacing*.17)
                 points=_ellipse_reference(center,radius,ry)
-                far=outline.handles[number-1]
-                pieces=_cusp_visibility((('front',points),),far[0][1:],far[-1][-2:],vy)
+                pieces=(('front',points),)
                 _append_paths(paths,pieces,color,style.curve_width,'named-cut')
                 texts.append(Text(center,ry+9,str(number),color,10))
             members[number]=tuple(paths[begin:])
             member_labels[number]=tuple(texts[label_begin:])
-        chain=tuple(p for p in paths if p.role in ('named-cut','boundary-reference-arc'))
-        for index,rim in enumerate(r for r in outline.rims if r.role=='type-ii-boundary'):
-            start=surface.boundary_anchor(rim.id,self.pair_bank).point
-            if rim.normal[0]:
-                number=1 if rim.x<0 else last-1
-                upper=rim.y>0
-                def midpoint(path):
-                    command=path.commands[1]
-                    return cubic_point((path.commands[0][1:],command[1:3],command[3:5],command[-2:]),.5)
-                target=(max if upper else min)(members[number],key=lambda path:midpoint(path)[1])
-                end=midpoint(target)
-                inward=end[0]-start[0]
-                commands=(('M',*start),('C',start[0]+.7*inward,start[1],
-                            end[0],end[1]+.3*(start[1]-end[1]),*end))
-                dashed=target.dashed
-            else:
-                hits=[]
-                for path in chain:
-                    for point in _vertical_hits(path.commands,start[0]):
-                        if rim.y*(start[1]-point[1])>1e-8:
-                            hits.append((abs(start[1]-point[1]),point,path.dashed))
-                if not hits:
-                    raise ItineraryError('Type II spoke misses the reference chain; change pair placement or bank')
-                _,end,dashed=min(hits,key=lambda item:item[0])
-                commands=(('M',*start),('L',*end))
+        perimeter, positions = _reference_perimeter(outline, surface, positions, style)
+        ellipses=list(base.ellipses)
+        for index, points in enumerate(perimeter):
             number=last+index
             color=RAINBOW[(number-1)%len(RAINBOW)]
-            paths.append(Path(commands,color,style.curve_width,'boundary-reference-spoke',dashed))
-            texts.append(Text(start[0]+8,(start[1]+end[1])/2,str(number),color,9))
-            members[number]=(paths[-1],)
-            member_labels[number]=(texts[-1],)
-        ellipses=list(base.ellipses)
-        if positions:
-            from .model import _number
-            from math import hypot
+            path=Path((('M',*points[0]),)+tuple(('L',*p) for p in points[1:]),
+                      color,style.curve_width,'boundary-reference-perimeter')
+            paths.append(path)
+            x,y=points[len(points)//2]
+            label=Text(x,y+(-9 if y>=0 else 9),str(number),color,9)
+            texts.append(label)
+            members[number]=(path,)
+            member_labels[number]=(label,)
+        for name in surface.marks:
+            x,y=positions[name]
             radius=style.marked_point_radius
-            hole_height=max(abs(value) for path in outline.handles for command in path for value in command[2::2])
-            for rim in outline.rims:
-                if rim.role=='type-i-boundary' and rim.id not in ('fixed-1',f'fixed-{last}'):
-                    hole_height=max(hole_height,rim.radius)
-            for point in positions.values():
-                if len(point)!=2: raise ValueError('mark position must contain x and y')
-                for value in point: _number(value,'mark coordinate')
-            for name,point in positions.items():
-                x,y=point
-                if not (abs(x)<surface.genus*surface.handle_spacing/2-max(radius,style.curve_width/2)
-                        and hole_height+radius+style.curve_width<abs(y)
-                        <surface.height*.44*.99-radius-max(style.outline_width,style.curve_width)/2):
-                    raise ItineraryError('mark must lie in the clear upper or lower vertical-plane band')
-                for other,q in positions.items():
-                    if other!=name and hypot(x-q[0],y-q[1])<=2*radius:
-                        raise ItineraryError('marked points overlap; separate their positions')
-                for path in paths:
-                    if path.role not in ('named-cut','boundary-reference-arc','boundary-reference-spoke'): continue
-                    if any(_segment_distance(point,a,b)<=radius+path.stroke_width/2+error
-                           for a,b,error in _path_segments(path.commands)):
-                        raise ItineraryError('marked point overlaps an existing reference curve or spoke')
-            count=sum(r.role=='type-ii-boundary' for r in outline.rims)
-            for index,name in enumerate(surface.marks):
-                start=positions[name]
-                hits=[(abs(start[1]-point[1]),point,path.dashed) for path in chain
-                      for point in _vertical_hits(path.commands,start[0])
-                      if start[1]*(start[1]-point[1])>1e-8]
-                if not hits: raise ItineraryError('marked-point spoke misses the reference chain')
-                _,end,dashed=min(hits,key=lambda item:item[0])
-                if any(other!=name and _segment_distance(q,start,end)<=radius+style.curve_width/2
-                       for other,q in positions.items()):
-                    raise ItineraryError('marked-point spoke meets another mark; separate their positions')
-                for path in paths:
-                    if path.role not in ('boundary-reference-spoke','mark-reference-spoke'): continue
-                    if any(min(start[1],end[1])+1e-8<hit[1]<max(start[1],end[1])-1e-8
-                           for hit in _vertical_hits(path.commands,start[0])):
-                        raise ItineraryError('marked-point spoke crosses an existing spoke; change mark position')
-                number=last+count+index
-                color=RAINBOW[(number-1)%len(RAINBOW)]
-                paths.append(Path((('M',*start),('L',*end)),color,style.curve_width,'mark-reference-spoke',dashed))
-                ellipses.append(Ellipse(*start,radius,radius,style.marked_point_color,'none',0,'marked-point'))
-                texts.append(Text(start[0]+8,start[1]+3,name,style.marked_point_color,9))
-                mark_labels.append(texts[-1])
-                texts.append(Text(start[0]+8,(start[1]+end[1])/2,str(number),color,9))
-                members[number]=(paths[-1],)
-                member_labels[number]=(texts[-1],)
+            ellipses.append(Ellipse(x,y,radius,radius,style.marked_point_color,'none',0,'marked-point'))
+            mark_labels.append(Text(x+8,y-10 if abs(y)<1e-8 else y+3,name,style.marked_point_color,9))
+        texts.extend(mark_labels)
         if self.selection is not None:
             if any(number not in members for number in self.selection):
                 raise ValueError('selected reference member is not available')
@@ -238,6 +177,19 @@ class BorderedReferenceDiagram:
             texts=mark_labels+[label for number in self.selection for label in member_labels[number]]
         if not self.show_reference_labels:
             texts=mark_labels
+        if self.curves:
+            # Straight supplied segments need a convex surface band; endpoint
+            # containment alone cannot rule out crossing a genus opening.
+            hole_height=max(abs(v) for h in outline.handles for c in h for v in c[2::2])
+            hole_height=max([hole_height]+[r.radius for r in outline.rims
+                            if r.role=='type-i-boundary' and r.id not in ('fixed-1',f'fixed-{last}')])
+            clearance=max(style.marked_point_radius,style.curve_width/2)
+            used={name for curve in self.curves for name in (curve.start,curve.end)}
+            for name in used & positions.keys():
+                x,y=positions[name]
+                if not (abs(x)<surface.genus*surface.handle_spacing/2-clearance
+                        and hole_height+clearance<abs(y)<surface.height*.44*.99-clearance):
+                    raise ItineraryError('straight marked arc needs a clear upper or lower band')
         paths.extend(_bordered_marked_arcs(self.curves, positions, style, self.allow_intersections))
         return replace(base,paths=tuple(paths),texts=tuple(texts),ellipses=tuple(ellipses))
 
@@ -245,6 +197,132 @@ class BorderedReferenceDiagram:
     def _repr_svg_(self):
         from .svg import render_svg
         return render_svg(self)
+
+
+def _reference_perimeter(outline, surface, positions, style):
+    """Follow the actual outer contour, stopping only at rims and marks.
+
+    The inward offset preserves the necks and concave side recesses. Using the
+    contour graph, rather than spokes to the chain, also joins the two halves
+    of a side-pair arc across the symmetry axis.
+    """
+    from math import hypot
+    from .model import _number
+    last=2*surface.genus+2
+    rims=[r for r in outline.rims if r.role=='type-ii-boundary' or r.id in ('fixed-1',f'fixed-{last}')]
+    if not rims and not surface.marks:
+        return (), {}
+    anchors=[p for r in rims for p in r.anchors]
+    def samples(commands):
+        result=[commands[0][1:]]
+        for cmd in commands[1:]:
+            if cmd[0]=='C':
+                curve=(result[-1],cmd[1:3],cmd[3:5],cmd[5:7])
+                result.extend(cubic_point(curve,i/32) for i in range(1,33))
+            else:
+                result.append(cmd[-2:])
+        return result
+    chunks=[samples(c) for c in outline.contours]
+    edges=[(a,b) for chunk in chunks for a,b in zip(chunk,chunk[1:])]
+    edges.extend(r.anchors for r in rims)
+    def inside(p):
+        x,y=p
+        return sum((a[1]>y)!=(b[1]>y) and
+                   a[0]+(y-a[1])*(b[0]-a[0])/(b[1]-a[1])>x
+                   for a,b in edges)%2==1
+    # Assemble through ordinary contour joins; rims terminate an arc.
+    chains=[]
+    while chunks:
+        chain=chunks.pop(0)
+        changed=True
+        while changed:
+            changed=False
+            for reverse in (False,True):
+                if reverse: chain.reverse()
+                if not any(_near(chain[-1],a) for a in anchors):
+                    for i,chunk in enumerate(chunks):
+                        if _near(chain[-1],chunk[-1]): chunk=list(reversed(chunk))
+                        if _near(chain[-1],chunk[0]):
+                            chain.extend(chunk[1:]); chunks.pop(i); changed=True; break
+                if reverse: chain.reverse()
+        chains.append(chain)
+    inset=(style.outline_width+style.curve_width)/2+5
+    offset=[]
+    for chain in chains:
+        result=[]
+        closed=_near(chain[0],chain[-1])
+        for i,p in enumerate(chain):
+            if any(_near(p,a) for a in anchors):
+                result.append(p); continue
+            a,b=(chain[-2],chain[1]) if closed and i in (0,len(chain)-1) else (chain[max(0,i-1)],chain[min(len(chain)-1,i+1)])
+            dx,dy=b[0]-a[0],b[1]-a[1]
+            length=hypot(dx,dy)
+            normal=(-dy/length,dx/length)
+            # Taper only near the actual rim endpoint, never near a join.
+            gap=min([inset]+[hypot(p[0]-q[0],p[1]-q[1])*.35 for q in anchors])
+            candidates=[(p[0]+sign*gap*normal[0],p[1]+sign*gap*normal[1]) for sign in (1,-1)]
+            result.append(next((q for q in candidates if inside(q)),p))
+        offset.append(result)
+    # Deterministic traversal and numbering independent of the viewing tilt.
+    chains=sorted(offset,key=lambda pts:(min(p[0] for p in pts),-sum(p[1] for p in pts)/len(pts)))
+    if not positions:
+        positions={}
+        available=[p for chain in chains for p in chain[1:-1]]
+        names=list(surface.marks)
+        if len(names)%2:
+            # The left end of the horizontal slice, slightly inside the edge.
+            candidates=[p for p in available if abs(p[1])<1e-7]
+            if not candidates:
+                raise ItineraryError('automatic axial mark needs an unoccupied end; supply mark_positions')
+            positions[names.pop(0)]=min(candidates)
+        pairs=len(names)//2
+        for i in range(pairs):
+            target=(i-(pairs-1)/2)*surface.handle_spacing
+            upper=min((p for p in available if p[1]>surface.height*.2),key=lambda p:abs(p[0]-target))
+            positions[names[2*i]]=upper
+            positions[names[2*i+1]]=(upper[0],-upper[1])
+    for name,p in positions.items():
+        if len(p)!=2: raise ValueError('mark position must contain x and y')
+        for value in p: _number(value,'mark coordinate')
+        if not inside(p): raise ItineraryError('marked point must lie inside the surface outline')
+        for other,q in positions.items():
+            if name!=other and hypot(p[0]-q[0],p[1]-q[1])<=2*style.marked_point_radius:
+                raise ItineraryError('marked points overlap; separate their positions')
+        # Reject points inside the displayed genus openings.
+        for i in range(surface.genus):
+            near,far=map(samples,outline.handles[2*i:2*i+2])
+            polygon=near+list(reversed(far))
+            x,y=p
+            if sum((a[1]>y)!=(b[1]>y) and a[0]+(y-a[1])*(b[0]-a[0])/(b[1]-a[1])>x
+                   for a,b in zip(polygon,polygon[1:]+polygon[:1]))%2:
+                raise ItineraryError('marked point lies in a genus opening')
+    assignments={i:[] for i in range(len(chains))}
+    for name,p in positions.items():
+        _,ci,pi=min((hypot(p[0]-q[0],p[1]-q[1]),ci,pi)
+                    for ci,chain in enumerate(chains) for pi,q in enumerate(chain[1:-1],1))
+        assignments[ci].append((pi,name,p))
+    result=[]
+    for ci,chain in enumerate(chains):
+        marks=sorted(assignments[ci])
+        # Explicit coordinates deform the local perimeter smoothly instead of
+        # adding a spur which ends on another curve. Marks split the arc itself.
+        if len({pi for pi,_,_ in marks})!=len(marks):
+            raise ItineraryError('marks project to the same perimeter location; separate their positions')
+        controls=[(0,(0,0))]+[(pi,(p[0]-chain[pi][0],p[1]-chain[pi][1])) for pi,_,p in marks]+[(len(chain)-1,(0,0))]
+        original=list(chain)
+        for (a,da),(b,db) in zip(controls,controls[1:]):
+            for j in range(a,b+1):
+                t=(j-a)/(b-a); t=t*t*(3-2*t)
+                chain[j]=tuple(original[j][k]+(1-t)*da[k]+t*db[k] for k in (0,1))
+        for pi,_,p in marks: chain[pi]=p
+        if any(not inside(p) for p in chain[1:-1]):
+            raise ItineraryError('marked perimeter arc leaves the surface; change mark_positions')
+        splits=[0]+[pi for pi,_,_ in marks]+[len(chain)-1]
+        pieces=[chain[a:b+1] for a,b in zip(splits,splits[1:])]
+        if _near(chain[0],chain[-1]) and marks:
+            pieces=[pieces[-1]+pieces[0][1:]]+pieces[1:-1]
+        result.extend(pieces)
+    return tuple(result),positions
 
 
 def _bordered_marked_arcs(arcs, positions, style, allow_intersections=False):
