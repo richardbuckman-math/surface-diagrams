@@ -254,7 +254,7 @@ static rendering option informed by the
 [Tiny Bubbles Lab factor-5 display](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
 Generator labels, highlighted atom bands and interactive zoom controls from that
 reference are not part of this option yet. JSON recipes accept
-`braid.crossing_style`, but the browser editor does not yet offer a style selector.
+`braid.crossing_style`; the browser editor exposes it as **Crossing style**.
 
 Use `BraidDiagram(3, (1, 2), direction="bottom-to-top")` to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use

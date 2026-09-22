@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Editor crossing-style selector, September 22 scheduled batch
+
+Added Straight/Smooth to the local editor's braid controls. Older recipes with
+no crossing_style show Straight; changing style preserves the signed word.
+Undo/redo and save/reopen retain the choice. Nine controller tests pass, including
+the new backward-compatibility/history/save regression. Browser-verified the
+actual selector, smooth rendering in both traversal directions, and undo/redo
+against the local Python server. This verifies this flow, not the entire editor
+manual acceptance checklist. No Python geometry changed in this batch.
+
+Next bounded increment: optional right-hand generator labels for standalone
+and factor-aligned braids; then supplied atom highlighting. Preserve export
+parity and keep annotations independent of mathematical equality checking.
+
+
 ## Paced continuation and smooth braid crossings, September 22
 
 Recurring continuation is active every six hours in task

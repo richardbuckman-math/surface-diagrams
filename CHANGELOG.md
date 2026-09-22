@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Expose straight/smooth braid crossing styles in the local editor, with
+  undo/redo and JSON save/reopen support.
+
 - Add optional smooth cubic braid crossings for standalone and factor-panel
   braids, preserving signs, identities, gaps and SVG/TikZ geometry.
 

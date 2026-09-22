@@ -118,6 +118,11 @@ generator labels, atom highlighting, endpoint badges, scroll/zoom controls,
 and optional editor integration. Implement these incrementally; the first
 geometry option does not claim to reproduce the complete reference UI.
 
+The September 22 scheduled batch exposes Straight/Smooth in the local editor.
+Its selected value, undo/redo and both traversal directions were browser-checked;
+controller coverage includes old recipes and JSON save/reopen. Generator labels
+and atom highlighting remain the next static display increments.
+
 Richard requested this additional braid-display option on September 21:
 [Tiny Bubbles Lab, simplified crossing audit, factor 5](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
 

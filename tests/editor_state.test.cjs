@@ -141,6 +141,28 @@ test('stale render response cannot overwrite a newer edit', async () => {
   assert.equal(app.nodes.export.disabled, true);
 });
 
+test('crossing style defaults for old recipes, undoes, and survives save/reopen', async () => {
+  const app = await setup();
+  app.nodes['new-braid'].click();
+  assert.equal(app.nodes['braid-crossing-style'].value, 'straight');
+  const word = app.value('recipe.braid.word');
+  app.nodes['braid-crossing-style'].value = 'smooth';
+  app.nodes['braid-crossing-style'].listeners.change();
+  assert.equal(app.value('recipe.braid.crossing_style'), 'smooth');
+  assert.deepEqual(app.value('recipe.braid.word'), word);
+  app.nodes.undo.click();
+  assert.equal(app.nodes['braid-crossing-style'].value, 'straight');
+  app.nodes.redo.click();
+  assert.equal(app.nodes['braid-crossing-style'].value, 'smooth');
+  app.nodes.save.click();
+  const saved = app.downloads[0];
+  app.nodes['new-planar'].click();
+  app.nodes.file.files = [{size: saved.length, text: async () => saved}];
+  await app.nodes.file.onchange();
+  assert.equal(app.nodes['braid-crossing-style'].value, 'smooth');
+  assert.deepEqual(app.value('recipe.braid.word'), word);
+});
+
 test('save and reopen retain an editable recipe; invalid upload preserves it', async () => {
   const app = await setup();
   app.nodes.save.click();

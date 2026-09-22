@@ -61,6 +61,11 @@ Append a generator, change its sign, move it earlier/later in the word, or delet
 it. Empty words produce straight identity strands. Colors follow transported
 strand identities rather than resetting at each crossing.
 
+Choose **Crossing style → Smooth** for cubic crossings with vertical joins, or
+**Straight** for the original drawing. This changes only presentation: the signed
+word and strand identities stay the same. Undo/Redo and saved JSON preserve the
+choice, as do SVG, TikZ and Python exports. Older recipes default to Straight.
+
 The editor initially reads the supplied word bottom to top; the original
 top-to-bottom presentation is also selectable. **The sign convention does not
 change with direction:** positive means upper-left over upper-right, so in
