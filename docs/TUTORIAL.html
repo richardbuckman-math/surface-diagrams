@@ -216,9 +216,16 @@ save_svg(smooth_braid, &quot;smooth-braid.svg&quot;)
 <code>FactorizationDiagram(..., braid_crossing_style=&quot;smooth&quot;)</code>. This is the first
 static rendering option informed by the
 <a href="https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5">Tiny Bubbles Lab factor-5 display</a>.
-Generator labels, highlighted atom bands and interactive zoom controls from that
-reference are not part of this option yet. JSON recipes accept
-<code>braid.crossing_style</code>; the browser editor exposes it as <strong>Crossing style</strong>.</p>
+Add <code>show_generators=True</code> to <code>BraidDiagram</code> for right-hand labels such as
+<code>s2</code> and <code>s2^-1</code>, aligned with each crossing. Use
+<code>braid_show_generators=True</code> on <code>FactorizationDiagram</code> for the same labels
+beside factor blocks. Labels follow the supplied traversal order, skip identity
+blocks and connectors, and work with straight or smooth crossings in SVG and
+TikZ. They do not change the braid. Highlighted atom bands and interactive zoom
+controls remain pending. JSON recipes accept
+<code>braid.crossing_style</code>; the browser editor exposes it as <strong>Crossing style</strong>.
+Generator labels are currently a Python API option; recipe/editor controls are
+not yet available.</p>
 <p>Use <code>BraidDiagram(3, (1, 2), direction=&quot;bottom-to-top&quot;)</code> to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use
 the same <strong>upper-end</strong> convention: a positive crossing followed upward takes the

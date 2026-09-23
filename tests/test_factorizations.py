@@ -28,6 +28,25 @@ class FactorizationTest(unittest.TestCase):
             self.assertIn('Application order: '+direction, texts)
             self.assertIn('[b]^-1 * [a]', texts)
 
+    def test_generator_labels_skip_identity_blocks_and_row_connectors(self):
+        identity=replace(self.a,id='identity',braid_word=())
+        for direction in ('bottom-to-top','top-to-bottom'):
+            diagram=replace(self.diagram,factors=(self.a,identity,self.b),direction=direction,
+                            braid_crossing_style='smooth',braid_show_generators=True)
+            d=self.drawing(diagram)
+            labels=[t for t in d.texts if t.text in ('s1','s2^-1')]
+            self.assertEqual([t.text for t in labels],['s1','s2^-1'])
+            self.assertEqual(labels[0].y<labels[1].y,direction=='bottom-to-top')
+            paths=[p for p in d.paths if p.role=='braid-strand']
+            levels=[paths[i:i+3] for i in range(0,len(paths),3)]
+            crossing_levels=[level for level in levels if any(c[0]=='C' for p in level for c in p.commands)]
+            self.assertEqual(len(crossing_levels),2)
+            for label,level in zip(labels,crossing_levels):
+                a,b=level[0].commands[0][-1],level[0].commands[-1][-1]
+                self.assertAlmostEqual(label.y+3,(a+b)/2)
+                self.assertLess(label.x+len(label.text)*3,d.width/2)
+        with self.assertRaises(TypeError): replace(self.diagram,braid_show_generators=1)
+
     def test_continuous_braid_transports_colors_across_rows_and_gap(self):
         paths = [p for p in self.drawing().paths if p.role == 'braid-strand']
         levels = [paths[i:i+3] for i in range(0, len(paths), 3)]

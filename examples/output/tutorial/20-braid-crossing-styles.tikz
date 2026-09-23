@@ -9,152 +9,152 @@
 \definecolor{sdcolor5}{HTML}{5254C8}
 \definecolor{sdcolor6}{HTML}{000000}
 \begin{tikzpicture}[x=0.75bp,y=0.75bp,line cap=round,line join=round]
-\path[use as bounding box] (-201,-271.5) rectangle (201,271.5);
-\clip (-201,-271.5) rectangle (201,271.5);
+\path[use as bounding box] (-234,-271.5) rectangle (234,271.5);
+\clip (-234,-271.5) rectangle (234,271.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,204.5) -- (-174,168.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,204.5) -- (-207,168.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-144,204.5) -- (-114,168.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-177,204.5) -- (-147,168.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-114,204.5) -- (-125.8,190.34) (-132.2,182.66) -- (-144,168.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-147,204.5) -- (-158.8,190.34) (-165.2,182.66) -- (-177,168.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-84,204.5) -- (-84,168.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-117,204.5) -- (-117,168.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,204.5) -- (-54,168.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,204.5) -- (-87,168.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,204.5) -- (-24,168.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,204.5) -- (-57,168.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,168.5) -- (-174,132.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,168.5) -- (-207,132.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-144,168.5) -- (-144,132.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-177,168.5) -- (-177,132.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-114,168.5) -- (-84,132.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-147,168.5) -- (-117,132.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-84,168.5) -- (-95.8,154.34) (-102.2,146.66) -- (-114,132.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-117,168.5) -- (-128.8,154.34) (-135.2,146.66) -- (-147,132.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,168.5) -- (-54,132.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,168.5) -- (-87,132.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,168.5) -- (-24,132.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,168.5) -- (-57,132.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,132.5) -- (-174,96.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,132.5) -- (-207,96.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-144,132.5) -- (-114,96.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-177,132.5) -- (-147,96.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-114,132.5) -- (-125.8,118.34) (-132.2,110.66) -- (-144,96.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-147,132.5) -- (-158.8,118.34) (-165.2,110.66) -- (-177,96.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-84,132.5) -- (-84,96.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-117,132.5) -- (-117,96.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,132.5) -- (-54,96.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,132.5) -- (-87,96.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,132.5) -- (-24,96.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,132.5) -- (-57,96.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,96.5) -- (-174,60.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,96.5) -- (-207,60.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-144,96.5) -- (-144,60.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-177,96.5) -- (-177,60.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-114,96.5) -- (-84,60.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-147,96.5) -- (-117,60.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-84,96.5) -- (-95.8,82.34) (-102.2,74.66) -- (-114,60.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-117,96.5) -- (-128.8,82.34) (-135.2,74.66) -- (-147,60.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,96.5) -- (-54,60.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,96.5) -- (-87,60.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,96.5) -- (-24,60.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,96.5) -- (-57,60.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,60.5) -- (-174,24.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,60.5) -- (-207,24.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-144,60.5) -- (-114,24.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-177,60.5) -- (-147,24.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-114,60.5) -- (-125.8,46.34) (-132.2,38.66) -- (-144,24.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-147,60.5) -- (-158.8,46.34) (-165.2,38.66) -- (-177,24.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-84,60.5) -- (-84,24.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-117,60.5) -- (-117,24.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,60.5) -- (-54,24.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,60.5) -- (-87,24.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,60.5) -- (-24,24.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,60.5) -- (-57,24.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,24.5) -- (-174,-11.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,24.5) -- (-207,-11.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-144,24.5) -- (-144,-11.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-177,24.5) -- (-177,-11.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-114,24.5) -- (-84,-11.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-147,24.5) -- (-117,-11.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-84,24.5) -- (-95.8,10.34) (-102.2,2.66) -- (-114,-11.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-117,24.5) -- (-128.8,10.34) (-135.2,2.66) -- (-147,-11.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,24.5) -- (-54,-11.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,24.5) -- (-87,-11.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,24.5) -- (-24,-11.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,24.5) -- (-57,-11.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-11.5) -- (-174,-47.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-11.5) -- (-207,-47.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-144,-11.5) -- (-114,-47.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-177,-11.5) -- (-147,-47.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-114,-11.5) -- (-125.8,-25.66) (-132.2,-33.34) -- (-144,-47.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-147,-11.5) -- (-158.8,-25.66) (-165.2,-33.34) -- (-177,-47.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-84,-11.5) -- (-84,-47.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-117,-11.5) -- (-117,-47.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-11.5) -- (-54,-47.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-11.5) -- (-87,-47.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-11.5) -- (-24,-47.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-11.5) -- (-57,-47.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-47.5) -- (-174,-83.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-47.5) -- (-207,-83.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-144,-47.5) -- (-144,-83.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-177,-47.5) -- (-177,-83.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-114,-47.5) -- (-84,-83.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-147,-47.5) -- (-117,-83.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-84,-47.5) -- (-95.8,-61.66) (-102.2,-69.34) -- (-114,-83.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-117,-47.5) -- (-128.8,-61.66) (-135.2,-69.34) -- (-147,-83.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-47.5) -- (-54,-83.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-47.5) -- (-87,-83.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-47.5) -- (-24,-83.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-47.5) -- (-57,-83.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-83.5) -- (-174,-119.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-83.5) -- (-207,-119.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-144,-83.5) -- (-114,-119.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-177,-83.5) -- (-147,-119.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-114,-83.5) -- (-125.8,-97.66) (-132.2,-105.34) -- (-144,-119.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-147,-83.5) -- (-158.8,-97.66) (-165.2,-105.34) -- (-177,-119.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-84,-83.5) -- (-84,-119.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-117,-83.5) -- (-117,-119.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-83.5) -- (-54,-119.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-83.5) -- (-87,-119.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-83.5) -- (-24,-119.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-83.5) -- (-57,-119.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-119.5) -- (-174,-155.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-119.5) -- (-207,-155.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-144,-119.5) -- (-144,-155.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-177,-119.5) -- (-177,-155.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-114,-119.5) -- (-84,-155.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-147,-119.5) -- (-117,-155.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-84,-119.5) -- (-95.8,-133.66) (-102.2,-141.34) -- (-114,-155.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-117,-119.5) -- (-128.8,-133.66) (-135.2,-141.34) -- (-147,-155.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-119.5) -- (-54,-155.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-119.5) -- (-87,-155.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-119.5) -- (-24,-155.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-119.5) -- (-57,-155.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-155.5) -- (-174,-191.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-155.5) -- (-207,-191.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-144,-155.5) -- (-114,-191.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-177,-155.5) -- (-147,-191.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-114,-155.5) -- (-125.8,-169.66) (-132.2,-177.34) -- (-144,-191.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-147,-155.5) -- (-158.8,-169.66) (-165.2,-177.34) -- (-177,-191.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-84,-155.5) -- (-84,-191.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-117,-155.5) -- (-117,-191.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-155.5) -- (-54,-191.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-155.5) -- (-87,-191.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-155.5) -- (-24,-191.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-155.5) -- (-57,-191.5);
 % braid-strand
-\draw[draw=sdcolor0,line width=1.5bp] (-174,-191.5) -- (-174,-227.5);
+\draw[draw=sdcolor0,line width=1.5bp] (-207,-191.5) -- (-207,-227.5);
 % braid-strand
-\draw[draw=sdcolor1,line width=1.5bp] (-144,-191.5) -- (-144,-227.5);
+\draw[draw=sdcolor1,line width=1.5bp] (-177,-191.5) -- (-177,-227.5);
 % braid-strand
-\draw[draw=sdcolor3,line width=1.5bp] (-114,-191.5) -- (-84,-227.5);
+\draw[draw=sdcolor3,line width=1.5bp] (-147,-191.5) -- (-117,-227.5);
 % braid-strand
-\draw[draw=sdcolor2,line width=1.5bp] (-84,-191.5) -- (-95.8,-205.66) (-102.2,-213.34) -- (-114,-227.5);
+\draw[draw=sdcolor2,line width=1.5bp] (-117,-191.5) -- (-128.8,-205.66) (-135.2,-213.34) -- (-147,-227.5);
 % braid-strand
-\draw[draw=sdcolor4,line width=1.5bp] (-54,-191.5) -- (-54,-227.5);
+\draw[draw=sdcolor4,line width=1.5bp] (-87,-191.5) -- (-87,-227.5);
 % braid-strand
-\draw[draw=sdcolor5,line width=1.5bp] (-24,-191.5) -- (-24,-227.5);
+\draw[draw=sdcolor5,line width=1.5bp] (-57,-191.5) -- (-57,-227.5);
 % braid-strand
 \draw[draw=sdcolor0,line width=1.5bp] (27,204.5) -- (27,168.5);
 % braid-strand
@@ -299,19 +299,19 @@
 \draw[draw=sdcolor4,line width=1.5bp] (147,-191.5) -- (147,-227.5);
 % braid-strand
 \draw[draw=sdcolor5,line width=1.5bp] (177,-191.5) -- (177,-227.5);
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-174,212.5) {1};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-174,-241.5) {1};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-144,212.5) {2};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-144,-241.5) {2};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-114,212.5) {3};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-114,-241.5) {3};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-84,212.5) {4};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-84,-241.5) {4};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-54,212.5) {5};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-54,-241.5) {5};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-24,212.5) {6};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-24,-241.5) {6};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (-99,247.5) {Straight crossings (default)};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-207,212.5) {1};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-207,-241.5) {1};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-177,212.5) {2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-177,-241.5) {2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-147,212.5) {3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor2,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-147,-241.5) {3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-117,212.5) {4};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor3,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-117,-241.5) {4};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-87,212.5) {5};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-87,-241.5) {5};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-57,212.5) {6};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (-57,-241.5) {6};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (-132,247.5) {Straight crossings (default)};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (27,212.5) {1};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor0,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (27,-241.5) {1};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor1,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (57,212.5) {2};
@@ -324,6 +324,18 @@
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor4,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (147,-241.5) {5};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (177,212.5) {6};
 \node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor5,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (177,-241.5) {6};
-\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (102,247.5) {Smooth crossings (optional)};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,183.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,147.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,111.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,75.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,39.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,3.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-32.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-68.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-104.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-140.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-176.5) {s2};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{6.75bp}{8.1bp}\selectfont] at (195,-212.5) {s3};
+\node[anchor=base,inner sep=0pt,outer sep=0pt,text=sdcolor6,font=\rmfamily\fontsize{7.5bp}{9bp}\selectfont] at (102,247.5) {Smooth crossings with generator labels};
 \end{tikzpicture}
 \endgroup

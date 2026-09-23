@@ -83,6 +83,25 @@ class VisualsTest(unittest.TestCase):
         ET.fromstring(render_svg(figure))
         self.assertIn('braid-strand', render_tikz(figure))
 
+    def test_generator_labels_follow_signed_word_without_changing_strands(self):
+        from dataclasses import replace
+        for direction in ('top-to-bottom','bottom-to-top'):
+            for crossing_style in ('straight','smooth'):
+                plain=BraidDiagram(12,(10,-2,1),direction=direction,crossing_style=crossing_style)
+                labelled=replace(plain,show_generators=True)
+                a,b=layout(plain,Style()),layout(labelled,Style())
+                self.assertEqual(a.paths,b.paths)
+                self.assertEqual(a.texts,b.texts[:len(a.texts)])
+                labels=b.texts[len(a.texts):]
+                self.assertEqual([t.text for t in labels],['s10','s2^-1','s1'])
+                self.assertEqual(labels[0].y<labels[-1].y,direction=='bottom-to-top')
+                self.assertTrue(all(t.x>11*plain.spacing/2 for t in labels))
+                self.assertTrue(all(t.x+len(t.text)*3<b.width/2 for t in labels))
+                self.assertIn('s2^-1',render_svg(labelled))
+                self.assertIn('s10',render_tikz(labelled))
+        self.assertEqual(layout(BraidDiagram(2),Style()),layout(BraidDiagram(2,show_generators=True),Style()))
+        with self.assertRaises(TypeError): BraidDiagram(2,show_generators='yes')
+
     def test_smooth_braids_preserve_signs_endpoints_colors_and_exports(self):
         for direction in ('top-to-bottom', 'bottom-to-top'):
             for sign in (1, -1):

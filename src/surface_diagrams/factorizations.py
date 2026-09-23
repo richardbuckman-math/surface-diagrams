@@ -9,7 +9,7 @@ from dataclasses import dataclass, replace
 from .model import _number
 from .primitives import Drawing, Path, Text
 from .visuals import (Panel, Figure, BraidDiagram, RAINBOW, _shift,
-                      _braid_paths, _braid_labels)
+                      _braid_paths, _braid_labels, _braid_generator_labels)
 
 
 @dataclass(frozen=True)
@@ -64,6 +64,7 @@ class FactorizationDiagram:
     supply its full braid_word, including () for an identity block. This draws
     an asserted correspondence, without checking a lift or equality. To show
     action states, supply initial_state AND a state for every factor.
+    braid_show_generators labels crossings to the right, skipping connectors.
     """
     factors: tuple
     strands: object = None
@@ -73,6 +74,7 @@ class FactorizationDiagram:
     colors: tuple = RAINBOW
     gap: float = 24
     braid_crossing_style: str = 'straight'
+    braid_show_generators: bool = False
 
     def __post_init__(self):
         object.__setattr__(self, 'factors', tuple(self.factors))
@@ -90,7 +92,8 @@ class FactorizationDiagram:
         object.__setattr__(self, 'colors', tuple(self.colors))
         BraidDiagram(1 if self.strands is None else self.strands,
                      spacing=self.braid_spacing, colors=self.colors,
-                     crossing_style=self.braid_crossing_style)
+                     crossing_style=self.braid_crossing_style,
+                     show_generators=self.braid_show_generators)
         if self.strands is None:
             if any(f.braid_word is not None for f in self.factors):
                 raise ValueError('set strands when supplying braid words')
@@ -152,6 +155,10 @@ class FactorizationDiagram:
         column_gap = 24
         braid_width = (max(self.braid_spacing, (self.strands-1)*self.braid_spacing)+32
                        if self.strands is not None else 0)
+        if braid_width and self.braid_show_generators:
+            word=tuple(c for block in words for c in block)
+            _,margin=_braid_generator_labels(self.strands,word,tuple(range(len(word)+1)),self.braid_spacing,style)
+            braid_width += 2*margin
         width = group_width+support_width
         if state_width:
             width += column_gap+state_width
@@ -207,6 +214,8 @@ class FactorizationDiagram:
                                              self.braid_spacing, self.colors, style,
                                              self.braid_crossing_style)
             labels = _braid_labels(self.strands, order, ys[0], ys[-1], self.braid_spacing, self.colors)
+            if self.braid_show_generators:
+                labels += _braid_generator_labels(self.strands,crossings,ys,self.braid_spacing,style)[0]
             braid = _shift(Drawing(braid_width, body_height, (), braid_paths, labels), braid_x, 0)
             paths.extend(braid.paths)
             texts.extend(braid.texts)

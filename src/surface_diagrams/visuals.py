@@ -108,6 +108,7 @@ class BraidDiagram:
     lower-right strand. Changing direction does not mirror crossing signs.
     crossing_style='smooth' uses cubic crossings with vertical end tangents;
     the default 'straight' retains the original piecewise-linear drawing.
+    show_generators adds plain-text sN / sN^-1 labels to the right of crossings.
     """
     strands: int
     word: tuple = ()
@@ -116,6 +117,7 @@ class BraidDiagram:
     colors: tuple = RAINBOW
     direction: str = 'top-to-bottom'
     crossing_style: str = 'straight'
+    show_generators: bool = False
 
     def __post_init__(self):
         if type(self.strands) is not int or self.strands < 1:
@@ -134,6 +136,8 @@ class BraidDiagram:
             raise ValueError('direction must be top-to-bottom or bottom-to-top')
         if self.crossing_style not in ('straight', 'smooth'):
             raise ValueError('crossing_style must be straight or smooth')
+        if type(self.show_generators) is not bool:
+            raise TypeError('show_generators must be a boolean')
 
     def drawing(self, style):
         levels = max(1, len(self.word))
@@ -145,7 +149,9 @@ class BraidDiagram:
         paths, order = _braid_paths(self.strands, self.word or (None,), ys,
                                     self.spacing, self.colors, style, self.crossing_style)
         texts = _braid_labels(self.strands, order, ys[0], ys[-1], self.spacing, self.colors)
-        return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding,
+        labels, margin = _braid_generator_labels(self.strands, self.word, ys, self.spacing, style) if self.show_generators else ((),0)
+        texts += labels
+        return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding+2*margin,
                        h+40+2*style.padding, (), tuple(paths), tuple(texts))
 
     def _repr_svg_(self):
@@ -199,6 +205,18 @@ def _braid_paths(strands, crossings, ys, spacing, colors, style, crossing_style=
         if crossing is not None:
             order[left], order[left+1] = order[left+1], order[left]
     return tuple(paths), tuple(order)
+
+
+def _braid_generator_labels(strands, crossings, ys, spacing, style):
+    """Plain-text signed generators at actual crossings, never connector levels."""
+    labels=[(i,f's{abs(c)}'+('^-1' if c<0 else ''))
+            for i,c in enumerate(crossings) if c is not None]
+    if not labels:
+        return (),0
+    width=max(len(label) for _,label in labels)*6
+    x=(strands-1)*spacing/2+12+width/2
+    return tuple(Text(x,(ys[i]+ys[i+1])/2-3,label,style.outline_color,9)
+                 for i,label in labels),width+16
 
 
 def _braid_labels(strands, order, entry, exit, spacing, colors):

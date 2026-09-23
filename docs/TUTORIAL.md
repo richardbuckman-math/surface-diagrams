@@ -252,9 +252,16 @@ For a continuous braid beside factor rows, set
 `FactorizationDiagram(..., braid_crossing_style="smooth")`. This is the first
 static rendering option informed by the
 [Tiny Bubbles Lab factor-5 display](https://tiny-bubbles-lab.joshgay.chatgpt.site/research-journal/2026-09-09-simplified-crossing-audit/#factor-5).
-Generator labels, highlighted atom bands and interactive zoom controls from that
-reference are not part of this option yet. JSON recipes accept
+Add `show_generators=True` to `BraidDiagram` for right-hand labels such as
+`s2` and `s2^-1`, aligned with each crossing. Use
+`braid_show_generators=True` on `FactorizationDiagram` for the same labels
+beside factor blocks. Labels follow the supplied traversal order, skip identity
+blocks and connectors, and work with straight or smooth crossings in SVG and
+TikZ. They do not change the braid. Highlighted atom bands and interactive zoom
+controls remain pending. JSON recipes accept
 `braid.crossing_style`; the browser editor exposes it as **Crossing style**.
+Generator labels are currently a Python API option; recipe/editor controls are
+not yet available.
 
 Use `BraidDiagram(3, (1, 2), direction="bottom-to-top")` to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use

@@ -245,3 +245,10 @@ preserving its abstract cellulation and explicit DiskRoute endpoints. Add an edg
 wrap display is needed; never reuse the old arbitrary cusp-plane transition.
 Repeated pairs on one side, a Type I rim sharing an end with a Type II pair,
 general bordered DiskRoutes and the certified bordered mesh remain unfinished.
+
+### Braid annotation progress, September 23
+
+Optional right-hand signed generator labels now work for standalone and
+factor-aligned braids in both traversal directions and SVG/TikZ. Python options:
+show_generators and braid_show_generators. Recipe/editor controls and atom
+highlighting are next; they do not depend on the mathematical action engine.

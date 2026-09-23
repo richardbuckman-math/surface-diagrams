@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## Optional braid generator labels, September 23 scheduled batch
+
+Added BraidDiagram(show_generators=True) and
+FactorizationDiagram(braid_show_generators=True). Plain-text sN / sN^-1 labels
+sit to the right of each actual crossing in traversal order. They work with
+straight/smooth crossings and both directions, skip empty blocks/connectors,
+and reserve horizontal space in SVG/TikZ. Defaults leave existing output alone.
+No strand paths, colors, signs, endpoint identities or words change.
+
+Validation: 28 focused visual/factorization tests pass, including mixed signs,
+multiple-digit indices, both directions/styles, unchanged standalone paths,
+label alignment in factor rows, identity blocks and boolean validation.
+Regenerated tutorial figure 20 and its TikZ counterpart; visually inspected it
+and a factor-aligned example with positive, identity and negative blocks.
+Rebuilt tutorial HTML and site; local links and git diff --check pass.
+
+Next braid increment: recipe persistence and editor toggle for generator labels;
+then supplied atom highlighting. Mesh-bound mark symmetry and invalid reference
+spokes remain the separate larger surface-display task from the last checkpoint.
+Do not move explicit DiskRoute endpoints as a cosmetic shortcut.
+Usage: 46% weekly / 0% five-hour used at start; 47% / 7% at midpoint.
+About 39 weekly percentage points remained above the reserve for roughly 13
+six-hour runs. Stopped after one bounded increment; no reset credits used.
+
+
 ## Closed-surface reference visibility, September 22 evening batch
 
 Extended solid-default closed reference styling to GenusDiagram, exposed through

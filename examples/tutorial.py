@@ -150,7 +150,7 @@ def examples():
 
     yield '20-braid-crossing-styles', Figure(((
         Panel(BraidDiagram(6, (2, 3)*6), 'Straight crossings (default)'),
-        Panel(BraidDiagram(6, (2, 3)*6, crossing_style='smooth'), 'Smooth crossings (optional)'),
+        Panel(BraidDiagram(6, (2, 3)*6, crossing_style='smooth', show_generators=True), 'Smooth crossings with generator labels'),
     ),)), Style()
 
 
