@@ -19,7 +19,7 @@ Configuration follows https://docs.gitlab.com/user/project/pages/ .
 1. Update `pyproject.toml`, the site version and `CHANGELOG.md` together.
 2. Run the full tests, regenerate tutorial figures, build the site, and check CI.
 3. Commit the reviewed changes, then tag with `v` plus the package version
-   (for this batch, `v0.1.0a3`) and push the commit and tag.
+   (for this batch, `v0.1.0a4`) and push the commit and tag.
 4. The GitHub release workflow builds wheel/source archives, checks metadata,
    and attaches them to an alpha prerelease. It does not publish to PyPI.
 

@@ -259,3 +259,10 @@ Tutorial figure 21 now demonstrates the reference API's axial, paired and
 combined marks in above/below views, with runnable recipes and a clear boundary
 between presentation diagrams and mesh-bound route charts. Exhaustive mark-count
 checks for genus 1-3 cover all four views. The mesh migration remains pending.
+
+### Versioned distribution, September 23
+
+0.1.0a4 collects the editor, ordered factorization panels and September display
+improvements. Changelog describes compatibility changes and remaining limits.
+Release tags publish checked wheel/source archives as GitHub prereleases;
+PyPI publication is not configured. Core surface rendering remains in progress.

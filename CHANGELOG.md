@@ -1,18 +1,35 @@
 # Changelog
 
-## Unreleased
+## 0.1.0a4 — 2026-09-23
 
-- Expose straight/smooth braid crossing styles in the local editor, with
-  undo/redo and JSON save/reopen support.
+- Add a local browser editor with versioned JSON recipes, undo/redo, and
+  reproducible SVG, TikZ and Python exports.
+- Add application-ordered factorization panels, supplied action states and
+  continuous factor-aligned braids. These display supplied data without
+  computing actions, lifts or equality.
+- Add optional smooth braid crossings and signed generator labels, with editor
+  controls and JSON save/reopen support. Fix generator-label recipe round trips.
+- Replace bordered reference spokes by continuous perimeter arcs ending at rims
+  or marks. Type I handle-return arcs attach at front/rear rim points.
+- Add automatic axial and symmetric paired marks in the reference presentation.
+- Default closed reference curves to solid; optional rear corridor dashing no
+  longer creates arbitrary visibility transitions on enclosing loops.
+- Support supplied colored marked arcs, optional transverse intersections,
+  reference-member selection and optional number labels.
+- Expand the tutorial/gallery to 21 SVG/TikZ examples, including four-view
+  mixed boundaries, symmetric genus marks and smooth labelled braids.
 
-- Add optional smooth cubic braid crossings for standalone and factor-panel
-  braids, preserving signs, identities, gaps and SVG/TikZ geometry.
+### Compatibility and remaining work
 
-- Draw supplied marked arcs in clear upper/lower bands on bordered surfaces,
-  retaining marks and arcs when reference guides are hidden.
-- Validate endpoints, intervening marks, intersections and overlapping arcs.
-- Add mixed-boundary marked-arc tutorial figure 16 in SVG and TikZ.
-- Defer Heegaard, bridge, trisection and Kirby families until a concrete use case.
+- Perimeter reference members replace the old boundary/mark spokes. Their
+  numbers after 2g+1 have changed; use `member_numbers` rather than old IDs.
+- Closed reference curves now default to solid. Set `closed_curve_style="split"`
+  for rear corridor dashing; enclosing loops stay solid in either mode.
+- The separate checked mesh still uses its original marked-point locations and
+  spokes. Explicit DiskRoute endpoints and itineraries are unchanged.
+- General bordered DiskRoutes and the certified bordered mesh remain unfinished.
+  Catalog derivations/factorizations remain placeholders. Heegaard, bridge,
+  trisection and Kirby families are deferred until a concrete use case.
 
 ## 0.1.0a3
 

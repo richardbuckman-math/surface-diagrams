@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## Versioned alpha release batch, September 23 afternoon
+
+Prepared 0.1.0a4: synchronized pyproject.toml, release-page version and release
+instructions. Rewrote the release notes around the completed editor, ordered
+factor panels, supplied action states, smooth/labelled braids, perimeter arcs,
+symmetric reference marks and 21-example gallery. Documented changed perimeter
+member numbering and solid defaults, and retained explicit mesh/catalog limits.
+
+Local validation: 227 Python tests, 10 editor-controller tests, regenerated
+21 SVG/TikZ tutorials without fixture changes, rebuilt site/local link check,
+and visual inspection of the release page. No library geometry changed.
+The local Python lacks the build frontend; the existing release workflow builds
+wheel/source archives and validates metadata using build/twine on Python 3.12.
+
+Publishing sequence: push version commit, verify Tests and Documentation CI,
+then tag v0.1.0a4 and verify the Release workflow plus wheel/source assets at
+https://github.com/richardbuckman-math/surface-diagrams/releases/tag/v0.1.0a4 .
+If interrupted, inspect that exact release before retrying; never move a tag.
+Next development: mesh-bound mark/reference-spoke presentation remains primary
+surface work; supplied braid atom highlighting is the next braid refinement.
+Keep Heegaard/bridge/trisection/Kirby deferred. Usage began at 59% weekly, 0%
+five-hour; midpoint 60% / 7%, preserving the 15% reserve. No reset credits used.
+
+
 ## Symmetric marked-surface gallery, September 23 morning batch
 
 Added tutorial figure 21 (SVG and TikZ): closed genus-two reference drawings
