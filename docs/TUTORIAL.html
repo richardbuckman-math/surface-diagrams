@@ -224,8 +224,8 @@ blocks and connectors, and work with straight or smooth crossings in SVG and
 TikZ. They do not change the braid. Highlighted atom bands and interactive zoom
 controls remain pending. JSON recipes accept
 <code>braid.crossing_style</code>; the browser editor exposes it as <strong>Crossing style</strong>.
-Generator labels are currently a Python API option; recipe/editor controls are
-not yet available.</p>
+Recipes also accept the boolean <code>braid.show_generators</code> (default <code>false</code>) and
+preserve it through save/reopen and exports. An editor toggle is still pending.</p>
 <p>Use <code>BraidDiagram(3, (1, 2), direction=&quot;bottom-to-top&quot;)</code> to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use
 the same <strong>upper-end</strong> convention: a positive crossing followed upward takes the

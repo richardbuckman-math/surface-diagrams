@@ -98,7 +98,7 @@ def _normalize(data):
     _unique(result['labels'], 'labels')
     if not planar:
         braid = data['braid']
-        _keys(braid, {'strands', 'word', 'spacing', 'step', 'colors', 'direction', 'crossing_style'}, {'strands', 'word'}, 'braid')
+        _keys(braid, {'strands', 'word', 'spacing', 'step', 'colors', 'direction', 'crossing_style', 'show_generators'}, {'strands', 'word'}, 'braid')
         if type(braid['strands']) is not int or not 1 <= braid['strands'] <= 32:
             raise ValueError('braid.strands must be an integer between 1 and 32')
         _list(braid['word'], 'braid.word', 128)
@@ -108,7 +108,8 @@ def _normalize(data):
             spacing=_bounded(braid.get('spacing', 40), 'braid.spacing', 5, 300),
             step=_bounded(braid.get('step', 48), 'braid.step', 5, 300), colors=tuple(colors),
             direction=braid.get('direction', 'bottom-to-top'),
-            crossing_style=braid.get('crossing_style', 'straight'))
+            crossing_style=braid.get('crossing_style', 'straight'),
+            show_generators=braid.get('show_generators', False))
         result['braid'] = asdict(obj)
     else:
         surface = data['surface']

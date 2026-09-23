@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## CI recipe-schema regression fix, September 23
+
+User reported failed Tests run 35814966482 on b854881; Documentation deployed
+successfully. Reproduced locally: 225 tests, three errors and one failure,
+all from `braid: unknown fields ['show_generators']`. BraidDiagram's new field
+was serialized by dataclasses.asdict, but documents._normalize still rejected
+it. The earlier focused visual tests missed this integration dependency.
+
+Added optional boolean show_generators to braid recipe validation and passed it
+through construction. Old recipes default false; new ones retain the option.
+Regression covers old/new JSON round trips, rendered inverse label and invalid
+values. Document tests (25), editor-controller tests (9), and the full Python
+suite (226 tests) pass locally. Remote CI will be checked after pushing.
+
+Future additions to serialized drawing dataclasses must check recipe schemas,
+round trips and generated Python, not just geometry tests. Next feature remains
+the editor checkbox; recipe persistence is now implemented.
+
+
 ## Optional braid generator labels, September 23 scheduled batch
 
 Added BraidDiagram(show_generators=True) and

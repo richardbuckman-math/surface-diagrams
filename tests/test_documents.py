@@ -189,6 +189,21 @@ class DocumentTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             DiagramDocument.from_dict(data)
 
+    def test_braid_generator_labels_round_trip_and_default_off(self):
+        data=self.recipe('braid')
+        legacy=DiagramDocument.from_dict(data)
+        self.assertFalse(legacy.to_dict()['braid']['show_generators'])
+        self.assertEqual(legacy,DiagramDocument.from_json(legacy.to_json()))
+        data['braid']['word']=[1,-2]
+        data['braid']['show_generators']=True
+        document=DiagramDocument.from_dict(data)
+        self.assertEqual(document,DiagramDocument.from_json(document.to_json()))
+        self.assertIn('s2^-1',document.render_svg())
+        for invalid in (1,'true',None):
+            data['braid']['show_generators']=invalid
+            with self.assertRaises((ValueError,TypeError)):
+                DiagramDocument.from_dict(data)
+
     def test_generic_serializers_share_document_geometry_and_style(self):
         document = example_document()
         self.assertEqual(render_svg(document, title=document.title), document.render_svg())
