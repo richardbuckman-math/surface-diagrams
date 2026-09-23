@@ -1,5 +1,27 @@
 # Handoff: surface-diagrams
 
+## Symmetric marked-surface gallery, September 23 morning batch
+
+Added tutorial figure 21 (SVG and TikZ): closed genus-two reference drawings
+with one axial mark, a symmetric pair, and an axial mark plus pair, from above
+and below. Reference numbers are hidden to focus the comparison on marks.
+Tutorial gives executable recipes, selection for marks-only drawings, and
+explains that this reference presentation does not migrate mesh-bound marks
+or convert explicit DiskRoutes. No library geometry or certified topology changed.
+
+Fifteen boundary/reference tests pass. New regression covers every automatic
+mark count for genus 1-3 in all four views: symmetric pairs, axial odd mark,
+member counts and exactly two perimeter incidences per mark. Regenerated all
+21 tutorial figures, visually inspected figure 21, rebuilt tutorial HTML and
+site with local links checked. git diff --check passes.
+
+Next surface increment: resolve how the checked mesh display exposes its legacy
+mark spokes without presenting them as the requested curve-complex reference
+family; do not move explicit route endpoints. Atom highlighting and releases
+remain separate outstanding work. Usage began at 55% weekly / 0% five-hour;
+30 percentage points above the reserve shared across about 12 remaining runs.
+
+
 ## Editor generator-label toggle, September 23
 
 Added Show generator labels below Crossing style in the braid editor. It reads

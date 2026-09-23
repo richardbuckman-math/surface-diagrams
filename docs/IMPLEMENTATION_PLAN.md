@@ -252,3 +252,10 @@ Optional right-hand signed generator labels now work for standalone and
 factor-aligned braids in both traversal directions and SVG/TikZ. Python options:
 show_generators and braid_show_generators. Recipes preserve braid.show_generators;
 the editor now provides an undoable generator-label checkbox. Atom highlighting is next; they do not depend on the mathematical action engine.
+
+### Symmetric mark gallery, September 23
+
+Tutorial figure 21 now demonstrates the reference API's axial, paired and
+combined marks in above/below views, with runnable recipes and a clear boundary
+between presentation diagrams and mesh-bound route charts. Exhaustive mark-count
+checks for genus 1-3 cover all four views. The mesh migration remains pending.

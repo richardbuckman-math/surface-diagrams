@@ -153,6 +153,15 @@ def examples():
         Panel(BraidDiagram(6, (2, 3)*6, crossing_style='smooth', show_generators=True), 'Smooth crossings with generator labels'),
     ),)), Style()
 
+    yield '21-symmetric-genus-marks', Figure(tuple(
+        tuple(Panel(GenusSurface(2, marks=marks, view_vertical=view).with_reference_arcs().with_labels(reference=False),
+                    f'{caption}; view from {view}')
+              for marks,caption in ((('M',),'One axial mark'),
+                                    (('P','Q'),'One symmetric pair'),
+                                    (('M','P','Q'),'Axial mark and pair')))
+        for view in ('above','below')
+    )), Style()
+
 
 def main(out=None):
     out = Path(out) if out else Path(__file__).parent/'output'/'tutorial'

@@ -241,3 +241,26 @@ class BoundaryAnchorTests(unittest.TestCase):
             locations={(e.x,e.y) for e in drawing.ellipses}
             self.assertTrue(all(p.commands[0][-2:] in locations and p.commands[-1][-2:] in locations for p in arcs))
             self.assertEqual(len(family.member_numbers),5+len(marks))
+
+    def test_automatic_reference_marks_are_symmetric_through_maximum_count(self):
+        for genus in (1,2,3):
+            for count in range(1,2*genus+2):
+                for vertical in ('above','below'):
+                    for horizontal in ('left','right'):
+                        names=tuple(f'M{i}' for i in range(count))
+                        family=GenusSurface(genus,marks=names,view_vertical=vertical,
+                                            view_horizontal=horizontal).with_reference_arcs()
+                        drawing=layout(family,Style())
+                        marks=[(e.x,e.y) for e in drawing.ellipses if e.role=='marked-point']
+                        self.assertEqual(len(marks),count)
+                        if count%2:
+                            self.assertAlmostEqual(marks[0][1],0)
+                            marks=marks[1:]
+                        for a,b in zip(marks[::2],marks[1::2]):
+                            self.assertEqual(a,(b[0],-b[1]))
+                            self.assertGreater(a[1],0)
+                        arcs=[p for p in drawing.paths if p.role=='boundary-reference-perimeter']
+                        self.assertEqual(len(arcs),count)
+                        ends=[p.commands[i][-2:] for p in arcs for i in (0,-1)]
+                        for e in drawing.ellipses:
+                            self.assertEqual(ends.count((e.x,e.y)),2)

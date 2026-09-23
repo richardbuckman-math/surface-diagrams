@@ -535,6 +535,32 @@ save_svg(marked_reference, "bordered-marked-reference.svg")
 
 ![Symmetric marks splitting perimeter reference arcs](../examples/output/tutorial/13-bordered-marked-reference.svg)
 
+The same symmetry convention is available on **closed** genus surfaces:
+
+```python
+axial = GenusSurface(2, marks=("M",)).with_reference_arcs()
+paired = GenusSurface(2, marks=("P", "Q")).with_reference_arcs()
+combined = GenusSurface(2, marks=("M", "P", "Q")).with_reference_arcs()
+save_svg(combined, "symmetric-genus-marks.svg")
+# Keep the marks and outline, hiding the reference curves:
+save_svg(combined.select(), "marked-surface-only.svg")
+```
+
+![Axial and paired marks on closed surfaces, above and below](../examples/output/tutorial/21-symmetric-genus-marks.svg)
+
+For three marks, the first name is the axial point and the remaining two form
+the upper/lower pair. Reversing the view keeps their names and positions. Reference numbers are
+hidden in this comparison with `.with_labels(reference=False)`.
+Each mark divides the continuous perimeter into two incident arcs; there is no
+spoke ending on a closed curve. The figure shows reference curves, not a
+certified cut-system decomposition or a computed mapping-class action.
+
+Use this reference API when preparing symmetric marked-surface illustrations.
+The older `with_cut_system()` and `with_curves(DiskRoute(...))` views still use
+mesh-bound mark positions. Switching between the two views is not a route
+conversion: an explicit route must retain its mesh endpoints until that
+migration is implemented.
+
 For a deliberately supplied placement, `mark_positions` accepts every mark ID
 exactly once and preserves those coordinates. The nearby perimeter deforms
 through the marks instead of adding spokes. Such explicit positions override
