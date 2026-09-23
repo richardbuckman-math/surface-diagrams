@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Editor generator-label toggle, September 23
+
+Added Show generator labels below Crossing style in the braid editor. It reads
+and writes braid.show_generators, defaults off for old recipes, preserves the
+signed word and supports undo/redo plus save/reopen. Ten controller tests pass.
+Verified the real checkbox and smooth labelled braid in the local editor on
+port 8765, including a negative generator. Tutorial instructions updated.
+The preceding recipe-schema fix f442f2d passed all GitHub jobs (Python 3.9/3.12,
+controller, LaTeX and documentation); its local suite passed 226 Python tests.
+
+Next: supplied atom highlighting for the optional braid view, or the separately
+tracked mesh-mark migration. Keep exact DiskRoute endpoints unchanged during
+surface presentation work. Check remote CI after every pushed batch.
+
+
 ## CI recipe-schema regression fix, September 23
 
 User reported failed Tests run 35814966482 on b854881; Documentation deployed

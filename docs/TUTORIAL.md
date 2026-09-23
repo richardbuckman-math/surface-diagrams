@@ -261,7 +261,8 @@ TikZ. They do not change the braid. Highlighted atom bands and interactive zoom
 controls remain pending. JSON recipes accept
 `braid.crossing_style`; the browser editor exposes it as **Crossing style**.
 Recipes also accept the boolean `braid.show_generators` (default `false`) and
-preserve it through save/reopen and exports. An editor toggle is still pending.
+preserve it through save/reopen and exports. In the editor, enable **Show
+generator labels** below Crossing style; the change supports undo and redo.
 
 Use `BraidDiagram(3, (1, 2), direction="bottom-to-top")` to traverse the supplied
 word upward instead. The first entry is now the bottom crossing. Signs still use

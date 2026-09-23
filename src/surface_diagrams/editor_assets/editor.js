@@ -201,6 +201,7 @@ function sync() {
     $("strands").value = recipe.braid.strands; $("word").value = recipe.braid.word.join(", ");
     $("braid-direction").value = recipe.braid.direction; $("braid-spacing").value = recipe.braid.spacing; $("braid-step").value = recipe.braid.step;
     $("braid-crossing-style").value = recipe.braid.crossing_style || "straight";
+    $("braid-generators").checked = recipe.braid.show_generators === true;
   }
   syncLists(); saveStateLabel(); $("recipe").textContent = JSON.stringify(recipe, null, 2);
 }
@@ -395,6 +396,7 @@ $("delete-curve").onclick = () => { const next = clone(recipe); next.curves = ne
 for (const [id, key] of [["strands", "strands"], ["braid-spacing", "spacing"], ["braid-step", "step"]]) change(id, next => next.braid[key] = number(id));
 change("word", next => next.braid.word = integers($("word").value)); change("braid-direction", next => next.braid.direction = $("braid-direction").value);
 change("braid-crossing-style", next => next.braid.crossing_style = $("braid-crossing-style").value);
+change("braid-generators", next => next.braid.show_generators = $("braid-generators").checked);
 $("append-generator").onclick = () => { try { const next = clone(recipe); next.braid.word.push(number("generator")); selectedStep = next.braid.word.length-1; commit(next); } catch (error) { showError(error.message); } };
 $("invert-crossing").onclick = () => { const next = clone(recipe); next.braid.word[selectedStep] *= -1; commit(next); };
 $("delete-crossing").onclick = () => { const next = clone(recipe); next.braid.word.splice(selectedStep, 1); commit(next); };

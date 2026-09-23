@@ -163,6 +163,28 @@ test('crossing style defaults for old recipes, undoes, and survives save/reopen'
   assert.deepEqual(app.value('recipe.braid.word'), word);
 });
 
+test('generator labels default off, undo/redo, and survive save/reopen', async () => {
+  const app = await setup();
+  app.nodes['new-braid'].click();
+  assert.equal(app.nodes['braid-generators'].checked, false);
+  const word = app.value('recipe.braid.word');
+  app.nodes['braid-generators'].checked = true;
+  app.nodes['braid-generators'].listeners.change();
+  assert.equal(app.value('recipe.braid.show_generators'), true);
+  assert.deepEqual(app.value('recipe.braid.word'), word);
+  app.nodes.undo.click();
+  assert.equal(app.nodes['braid-generators'].checked, false);
+  app.nodes.redo.click();
+  assert.equal(app.nodes['braid-generators'].checked, true);
+  app.nodes.save.click();
+  const saved = app.downloads[0];
+  app.nodes['new-planar'].click();
+  app.nodes.file.files = [{size: saved.length, text: async () => saved}];
+  await app.nodes.file.onchange();
+  assert.equal(app.nodes['braid-generators'].checked, true);
+  assert.deepEqual(app.value('recipe.braid.word'), word);
+});
+
 test('save and reopen retain an editable recipe; invalid upload preserves it', async () => {
   const app = await setup();
   app.nodes.save.click();

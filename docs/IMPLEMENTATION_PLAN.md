@@ -251,4 +251,4 @@ general bordered DiskRoutes and the certified bordered mesh remain unfinished.
 Optional right-hand signed generator labels now work for standalone and
 factor-aligned braids in both traversal directions and SVG/TikZ. Python options:
 show_generators and braid_show_generators. Recipes preserve braid.show_generators;
-the editor toggle and atom highlighting are next; they do not depend on the mathematical action engine.
+the editor now provides an undoable generator-label checkbox. Atom highlighting is next; they do not depend on the mathematical action engine.
