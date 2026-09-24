@@ -266,3 +266,6 @@ checks for genus 1-3 cover all four views. The mesh migration remains pending.
 improvements. Changelog describes compatibility changes and remaining limits.
 Release tags publish checked wheel/source archives as GitHub prereleases;
 PyPI publication is not configured. Core surface rendering remains in progress.
+
+Explicit perimeter deformations now reject genus-opening crossings and missing
+stroke clearance (September 24). The mesh-mark migration is still pending.

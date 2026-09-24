@@ -264,3 +264,16 @@ class BoundaryAnchorTests(unittest.TestCase):
                         ends=[p.commands[i][-2:] for p in arcs for i in (0,-1)]
                         for e in drawing.ellipses:
                             self.assertEqual(ends.count((e.x,e.y)),2)
+
+    def test_explicit_marks_cannot_drag_perimeter_through_a_genus_opening(self):
+        from surface_diagrams.disk_routes import ItineraryError
+        for vertical in ('above','below'):
+            for horizontal in ('left','right'):
+                surface=GenusSurface(2,type_i=(TypeIBoundary(6),),marks=('P','Q'),
+                                     view_vertical=vertical,view_horizontal=horizontal)
+                # Both endpoints lie on the body, but the interpolated arc
+                # formerly crossed the left opening between those endpoints.
+                with self.assertRaisesRegex(ItineraryError,'perimeter arc meets a genus opening'):
+                    render_svg(surface.with_reference_arcs(mark_positions={'P':(8,-9),'Q':(-97,.5)}))
+                valid=surface.with_reference_arcs(mark_positions={'P':(-35,30),'Q':(35,-30)})
+                self.assertIn('boundary-reference-perimeter',render_svg(valid))

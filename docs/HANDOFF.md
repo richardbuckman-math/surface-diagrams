@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## Explicit perimeter opening guard, September 24
+
+Fixed a reproduced rendering error: on genus two with Type I boundary 6,
+P=(8,-9), Q=(-97,0.5) are legal marked endpoints, but the deformed solid
+perimeter entered the left genus opening. Explicit placements now validate
+all perimeter segments against handle curves using conservative cubic error
+bounds and half the curve stroke width. Crossings/touches/insufficient clearance
+raise an explanatory ItineraryError; no route is silently moved. Bounding-box
+rejection keeps checks cheap. Automatic perimeter placement is unchanged.
+
+Sixteen reference tests pass, including this regression in all four views;
+nine supplied marked-arc tests also pass. Tutorial regeneration leaves the
+21 SVG/TikZ fixtures unchanged. The pre-fix reproduction and valid tutorial
+mark drawing were visually inspected. All 228 Python tests pass (126 seconds); the
+tutorial HTML and site build pass, including local-link checks.
+
+The previous v0.1.0a4 release is confirmed published with wheel/source assets;
+its Release, Tests and Documentation workflows passed. This fix is Unreleased.
+Next: mesh-mark/reference-spoke migration remains open. This guard is only for
+explicit perimeter deformations, not a global clipping or bordered-mesh solution.
+Usage began 65% weekly / 4% five-hour, reached 68% / 23%; stop at this checkpoint
+to preserve remaining scheduled shares and the 15% weekly reserve.
+
+
 ## Versioned alpha release batch, September 23 afternoon
 
 Prepared 0.1.0a4: synchronized pyproject.toml, release-page version and release

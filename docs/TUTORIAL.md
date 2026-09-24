@@ -565,7 +565,9 @@ For a deliberately supplied placement, `mark_positions` accepts every mark ID
 exactly once and preserves those coordinates. The nearby perimeter deforms
 through the marks instead of adding spokes. Such explicit positions override
 the automatic symmetry convention. Points outside the surface, inside genus
-openings, or overlapping another mark are rejected. Automatic axial placement
+openings, or overlapping another mark are rejected. A deformed perimeter arc
+that crosses or lacks stroke clearance from a genus opening is also rejected;
+move the supplied marks into a clear upper/lower band. Automatic axial placement
 requires an available end. These drawings still do not certify a marked
 bordered cellulation or change the separate mesh-based mark-placement API.
 

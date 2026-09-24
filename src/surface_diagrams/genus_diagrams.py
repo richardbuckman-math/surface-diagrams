@@ -208,6 +208,7 @@ def _reference_perimeter(outline, surface, positions, style):
     """
     from math import hypot
     from .model import _number
+    supplied_positions=bool(positions)
     last=2*surface.genus+2
     rims=[r for r in outline.rims if r.role=='type-ii-boundary' or r.id in ('fixed-1',f'fixed-{last}')]
     if not rims and not surface.marks:
@@ -302,6 +303,10 @@ def _reference_perimeter(outline, surface, positions, style):
                     for ci,chain in enumerate(chains) for pi,q in enumerate(chain[1:-1],1))
         assignments[ci].append((pi,name,p))
     result=[]
+    # Perimeter arcs are solid surface paths. A legal marked endpoint alone
+    # does not guarantee that deforming the path to it avoids a handle opening.
+    handle_edges=[edge for commands in outline.handles for edge in _path_segments(commands)]
+    from .disk_routes import _orient
     for ci,chain in enumerate(chains):
         marks=sorted(assignments[ci])
         # Explicit coordinates deform the local perimeter smoothly instead of
@@ -317,6 +322,19 @@ def _reference_perimeter(outline, surface, positions, style):
         for pi,_,p in marks: chain[pi]=p
         if any(not inside(p) for p in chain[1:-1]):
             raise ItineraryError('marked perimeter arc leaves the surface; change mark_positions')
+        if marks and supplied_positions:
+            for a,b in zip(chain,chain[1:]):
+                for c,d,error in handle_edges:
+                    margin=error+style.curve_width/2
+                    if any(max(a[k],b[k])+margin<min(c[k],d[k]) or
+                           max(c[k],d[k])+margin<min(a[k],b[k]) for k in (0,1)):
+                        continue
+                    o=(_orient(a,b,c),_orient(a,b,d),_orient(c,d,a),_orient(c,d,b))
+                    crossing=o[0]*o[1]<0 and o[2]*o[3]<0
+                    distance=min(_segment_distance(a,c,d),_segment_distance(b,c,d),
+                                 _segment_distance(c,a,b),_segment_distance(d,a,b))
+                    if crossing or distance<=margin:
+                        raise ItineraryError('marked perimeter arc meets a genus opening; change mark_positions')
         splits=[0]+[pi for pi,_,_ in marks]+[len(chain)-1]
         pieces=[chain[a:b+1] for a,b in zip(splits,splits[1:])]
         if _near(chain[0],chain[-1]) and marks:

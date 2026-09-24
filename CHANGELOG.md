@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Reject explicit marked-point placements that bend a solid perimeter arc
+  through or too close to a genus opening, even when its endpoints are valid.
+
 ## 0.1.0a4 — 2026-09-23
 
 - Add a local browser editor with versioned JSON recipes, undo/redo, and
