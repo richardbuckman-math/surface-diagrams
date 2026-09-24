@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Reproducible placement troubleshooting, September 24 morning
+
+Added a runnable tutorial example for the explicit perimeter opening guard:
+the invalid two-mark placement prints the expected error, and a corrected
+upper/lower placement saves a valid SVG. Explains render-time validation,
+stroke clearance, automatic placement and the difference between a rejected
+drawing and an impossible abstract arc. Executed the exact Markdown code;
+visually inspected the corrected SVG through a white-background raster.
+Regenerated tutorial HTML; site build and local-link checks pass. No library
+code changed. Prior db985b8 Tests and Documentation workflows both succeeded.
+Next: migrate mesh-bound marks and reference spokes coherently with explicit
+route endpoints; do not move marks cosmetically while retaining old endpoints.
+Usage moved from 69% to 70% weekly and 1% to 4% five-hour; this small documentation
+batch preserves the weekly reserve and remaining six-hour run shares.
+
 ## Explicit perimeter opening guard, September 24
 
 Fixed a reproduced rendering error: on genus two with Type I boundary 6,

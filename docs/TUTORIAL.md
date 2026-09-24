@@ -571,6 +571,37 @@ move the supplied marks into a clear upper/lower band. Automatic axial placement
 requires an available end. These drawings still do not certify a marked
 bordered cellulation or change the separate mesh-based mark-placement API.
 
+### Troubleshooting a perimeter that meets a genus opening
+
+A mark can lie on the surface while the arc leading to it crosses a hole.
+The following minimal example reproduces that distinction. Validation happens
+when the diagram is rendered, so keep the render call inside the `try` block.
+
+```python
+from surface_diagrams import GenusSurface, TypeIBoundary, render_svg, save_svg
+from surface_diagrams.disk_routes import ItineraryError
+
+surface = GenusSurface(2, type_i=(TypeIBoundary(6),), marks=("P", "Q"))
+try:
+    render_svg(surface.with_reference_arcs(
+        mark_positions={"P": (8, -9), "Q": (-97, 0.5)}))
+except ItineraryError as error:
+    print(error)
+# marked perimeter arc meets a genus opening; change mark_positions
+
+corrected = surface.with_reference_arcs(
+    mark_positions={"P": (-35, 30), "Q": (35, -30)})
+save_svg(corrected, "clear-marked-perimeter.svg")
+```
+
+The corrected example puts the marks in the clear upper and lower bands.
+Alternatively, omit `mark_positions` to use the automatic symmetric placement.
+This check prevents a misleading surface illustration; it does not prove that
+an abstract arc is impossible or search for a different route in its isotopy
+class. A near miss can also fail when the visible stroke would overlap a hole.
+If reporting another failure, include the genus, boundary types, mark coordinates,
+view directions and any custom stroke width so the placement can be reproduced.
+
 Use `.select(...)` to isolate existing reference members for factor panels:
 
 ```python
