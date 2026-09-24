@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Mesh endpoint migration guard, September 24 evening
+
+Added a final-drawing regression covering explicit P-to-Q and Q-to-P DiskRoutes
+in all four genus-two views. It compares rendered path endpoints to the rendered
+mark centers and verifies continuity between path pieces. The older test only
+compared projection coordinates in the default view; this protects the boundary
+between mesh projection and display during the planned migration. All five
+genus-mark tests pass (24 seconds). Visually inspected a four-view route sheet
+in .preview/mesh-mark-endpoints.svg/png. No rendering behavior changed: marks
+still use the legacy upper band, and the symmetric placement work is unfinished.
+Next: change the mesh embedding and mark vertices together, retaining these
+endpoint/continuity checks and the existing certified-complement checks. Do not
+replace displayed marks independently of explicit route endpoints or merely
+hide reference spokes. Usage 72% to 73% weekly; preserve the 15% reserve.
+
 ## Signed braid reading gallery, September 24 midday
 
 Added figure 22 with the same non-palindromic signed word (1,-2,-1) drawn

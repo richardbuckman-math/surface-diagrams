@@ -1,6 +1,7 @@
 import unittest
 from dataclasses import replace
-from surface_diagrams import GenusSurface, render_svg
+from surface_diagrams import GenusSurface, Style, render_svg
+from surface_diagrams.layout import layout
 from surface_diagrams.cut_systems import validate_cut_system
 from surface_diagrams.genus_mesh import genus_binding
 from surface_diagrams.disk_routes import DiskRoute, MarkPoint
@@ -57,3 +58,22 @@ class GenusMarkTests(unittest.TestCase):
         for marks in (('P','P'),('',),(1,),('a','b','c','d')):
             with self.assertRaises(ValueError):
                 GenusSurface(1,marks=marks)
+
+    def test_rendered_routes_meet_displayed_marks_in_every_view(self):
+        for vertical in ('above','below'):
+            for horizontal in ('left','right'):
+                for start,end in (('P','Q'),('Q','P')):
+                    with self.subTest(vertical=vertical,horizontal=horizontal,start=start):
+                        surface=GenusSurface(2,marks=('P','Q'),
+                            view_vertical=vertical,view_horizontal=horizontal)
+                        route=DiskRoute((),MarkPoint(start),MarkPoint(end),id='between-marks')
+                        drawing=layout(surface.with_curves(route),Style())
+                        marks=[(e.x,e.y) for e in drawing.ellipses if e.role=='marked-point']
+                        paths=[p for p in drawing.paths if p.role=='surface-route']
+                        self.assertEqual(len(marks),2)
+                        self.assertTrue(paths)
+                        expected=marks if start=='P' else marks[::-1]
+                        self.assertTrue(_near(paths[0].commands[0][-2:],expected[0]))
+                        self.assertTrue(_near(paths[-1].commands[-1][-2:],expected[1]))
+                        for a,b in zip(paths,paths[1:]):
+                            self.assertTrue(_near(a.commands[-1][-2:],b.commands[0][-2:]))
