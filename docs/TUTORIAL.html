@@ -232,6 +232,20 @@ word upward instead. The first entry is now the bottom crossing. Signs still use
 the same <strong>upper-end</strong> convention: a positive crossing followed upward takes the
 lower-left strand under the lower-right strand. Direction changes neither the
 sign of a generator nor the supplied word; it is not a mirror-image operation.</p>
+<p>For example, these panels both read <code>s1, s2^-1, s1^-1</code> in their indicated
+direction. Endpoint numbers and colors track the starting strand identities.
+The negative labels stay negative when reading upward; do not invert the word
+merely because the drawing runs in the other direction.</p>
+<pre><code class="language-python">signed_word = (1, -2, -1)
+comparison = Figure(((
+    Panel(BraidDiagram(3, signed_word, direction=&quot;top-to-bottom&quot;,
+                       crossing_style=&quot;smooth&quot;, show_generators=True), &quot;Read downward&quot;),
+    Panel(BraidDiagram(3, signed_word, direction=&quot;bottom-to-top&quot;,
+                       crossing_style=&quot;smooth&quot;, show_generators=True), &quot;Read upward&quot;),
+),))
+save_svg(comparison, &quot;signed-braid-directions.svg&quot;)
+</code></pre>
+<p><img src="../examples/output/tutorial/22-signed-braid-directions.svg" alt="Signed generators in downward and upward traversal"></p>
 <p>Write down your multiplication convention alongside a factorization. If the
 rows are operations f1 then f2 in chronological order and maps compose
 right-to-left, the final action is f2<em>f1. A literal word f1</em>f2 is a different

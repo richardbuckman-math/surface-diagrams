@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 219" width="432" height="219" role="img">
+<title>22-signed-braid-directions</title>
+<path class="braid-strand" d="M 81 67 C 81 79 111 91 111 103" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 111 67 C 111 71.72 106.358666667 76.44 100.727182222 81.16 M 91.2728177778 88.84 C 85.6413333333 93.56 81 98.28 81 103" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 141 67 L 141 103" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 81 103 L 81 139" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 111 103 C 111 107.72 115.641333333 112.44 121.272817778 117.16 M 130.727182222 124.84 C 136.358666667 129.56 141 134.28 141 139" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 141 103 C 141 115 111 127 111 139" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 81 139 C 81 143.72 85.6413333333 148.44 91.2728177778 153.16 M 100.727182222 160.84 C 106.358666667 165.56 111 170.28 111 175" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 111 139 C 111 151 81 163 81 175" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 141 139 L 141 175" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 297 175 C 297 170.28 301.641333333 165.56 307.272817778 160.84 M 316.727182222 153.16 C 322.358666667 148.44 327 143.72 327 139" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 327 175 C 327 163 297 151 297 139" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 357 175 L 357 139" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 297 139 L 297 103" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 327 139 C 327 127 357 115 357 103" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 357 139 C 357 134.28 352.358666667 129.56 346.727182222 124.84 M 337.272817778 117.16 C 331.641333333 112.44 327 107.72 327 103" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 297 103 C 297 91 327 79 327 67" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 327 103 C 327 98.28 322.358666667 93.56 316.727182222 88.84 M 307.272817778 81.16 C 301.641333333 76.44 297 71.72 297 67" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 357 103 L 357 67" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="81" y="59" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="81" y="189" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="111" y="59" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="111" y="189" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="141" y="59" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="141" y="189" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="168" y="88" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="168" y="124" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="168" y="160" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1^-1</text>
+<text x="111" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward: s1, s2^-1, s1^-1</text>
+<text x="297" y="189" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="297" y="59" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="327" y="189" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="327" y="59" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="357" y="189" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="357" y="59" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="384" y="160" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="384" y="124" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="384" y="88" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1^-1</text>
+<text x="327" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read upward: s1, s2^-1, s1^-1</text>
+</svg>

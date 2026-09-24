@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## Signed braid reading gallery, September 24 midday
+
+Added figure 22 with the same non-palindromic signed word (1,-2,-1) drawn
+downward and upward. Smooth crossings, signed labels and endpoint identities
+make the fixed upper-end crossing convention visible. Tutorial includes a
+runnable comparison and explains that upward traversal does not invert signs.
+Regenerated 22 SVG/TikZ examples and the TeX gallery; visually inspected figure
+22. Eight visualization tests, tutorial HTML build and site/local-link checks
+pass. No library behavior changed. Usage 70% to 71% weekly, 2% to 6% five-hour.
+Next core work remains coherent mesh-mark/reference-spoke migration; optional
+braid atom highlighting remains pending. Keep deferred diagram families deferred.
+
 ## Reproducible placement troubleshooting, September 24 morning
 
 Added a runnable tutorial example for the explicit perimeter opening guard:

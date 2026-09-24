@@ -163,6 +163,16 @@ def examples():
     )), Style()
 
 
+    yield '22-signed-braid-directions', Figure(((
+        Panel(BraidDiagram(3, (1, -2, -1), direction='top-to-bottom',
+                           crossing_style='smooth', show_generators=True),
+              'Read downward: s1, s2^-1, s1^-1'),
+        Panel(BraidDiagram(3, (1, -2, -1), direction='bottom-to-top',
+                           crossing_style='smooth', show_generators=True),
+              'Read upward: s1, s2^-1, s1^-1'),
+    ),)), Style()
+
+
 def main(out=None):
     out = Path(out) if out else Path(__file__).parent/'output'/'tutorial'
     out.mkdir(parents=True, exist_ok=True)
