@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## Editor crossing highlight control, September 25 morning
+
+Added an inspector checkbox for persistent exported crossing highlights, synced
+with the selected crossing and disabled for the empty word. Earlier/Later now
+transports highlights with the moved crossings. All 12 editor tests pass,
+including toggle, movement, undo/redo, JSON save/reopen and empty-word behavior.
+Browser inspection at localhost confirmed the checkbox and moved highlight
+render correctly. Tutorial updated; factor-panel highlights remain next.
+
+
 ## Crossing highlights and revised pacing, September 25
 
 User explicitly replaced the 15% reserve with a plan to use all available quota

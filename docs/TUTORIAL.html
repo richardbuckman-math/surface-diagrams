@@ -225,7 +225,10 @@ TikZ. They do not change the braid. Standalone braids also accept
 <code>highlight_crossings=(1, 3)</code> to outline selected word positions, counted from 1
 in traversal order. JSON recipes use <code>braid.highlight_crossings: [1, 3]</code>.
 These outlines preserve strand colors and transparent underpasses. Highlights
-for factor panels and an editor selection control remain pending, as does zoom. JSON recipes accept
+for factor panels remain pending. In the editor Crossing inspector, select a
+crossing and enable <strong>Highlight selected crossing in exports</strong>. Earlier/Later
+moves its highlight with it; deletion removes that highlight. The setting
+supports undo/redo and JSON save/reopen. JSON recipes accept
 <code>braid.crossing_style</code>; the browser editor exposes it as <strong>Crossing style</strong>.
 Recipes also accept the boolean <code>braid.show_generators</code> (default <code>false</code>) and
 preserve it through save/reopen and exports. In the editor, enable <strong>Show

@@ -146,7 +146,8 @@ function syncLists() {
     const step = preview && valid && preview.steps[selectedStep];
     $("strand-transport").textContent = step ? `Entry IDs: ${step.entry.join(" ")}\nExit IDs: ${step.exit.join(" ")}` :
       recipe.braid.word.length ? "Select a valid crossing to inspect transported strand identities." : "Empty word: straight identity strands.";
-    for (const id of ["crossing-up", "crossing-down", "invert-crossing", "delete-crossing"])
+    $("highlight-crossing").checked = (recipe.braid.highlight_crossings || []).includes(selectedStep+1);
+    for (const id of ["crossing-up", "crossing-down", "invert-crossing", "delete-crossing", "highlight-crossing"])
       $(id).disabled = !recipe.braid.word.length;
     $("crossing-up").disabled ||= selectedStep === 0;
     $("crossing-down").disabled ||= selectedStep === recipe.braid.word.length-1;
@@ -397,6 +398,12 @@ for (const [id, key] of [["strands", "strands"], ["braid-spacing", "spacing"], [
 change("word", next => { next.braid.word = integers($("word").value); next.braid.highlight_crossings = (next.braid.highlight_crossings || []).filter(i => i <= next.braid.word.length); }); change("braid-direction", next => next.braid.direction = $("braid-direction").value);
 change("braid-crossing-style", next => next.braid.crossing_style = $("braid-crossing-style").value);
 change("braid-generators", next => next.braid.show_generators = $("braid-generators").checked);
+change("highlight-crossing", next => {
+  const positions = new Set(next.braid.highlight_crossings || []);
+  if ($("highlight-crossing").checked) positions.add(selectedStep+1);
+  else positions.delete(selectedStep+1);
+  next.braid.highlight_crossings = [...positions].sort((a,b) => a-b);
+});
 $("append-generator").onclick = () => { try { const next = clone(recipe); next.braid.word.push(number("generator")); selectedStep = next.braid.word.length-1; commit(next); } catch (error) { showError(error.message); } };
 $("invert-crossing").onclick = () => { const next = clone(recipe); next.braid.word[selectedStep] *= -1; commit(next); };
 $("delete-crossing").onclick = () => { const next = clone(recipe); next.braid.word.splice(selectedStep, 1); next.braid.highlight_crossings = (next.braid.highlight_crossings || []).filter(i => i !== selectedStep+1).map(i => i > selectedStep+1 ? i-1 : i); commit(next); };
@@ -404,6 +411,8 @@ for (const [id, offset] of [["crossing-up", -1], ["crossing-down", 1]]) $(id).on
   const next = clone(recipe), other = selectedStep+offset;
   if (other < 0 || other >= next.braid.word.length) return;
   [next.braid.word[selectedStep], next.braid.word[other]] = [next.braid.word[other], next.braid.word[selectedStep]];
+  next.braid.highlight_crossings = (next.braid.highlight_crossings || []).map(i =>
+    i === selectedStep+1 ? other+1 : i === other+1 ? selectedStep+1 : i).sort((a,b) => a-b);
   selectedStep = other; commit(next);
 };
 for (const key of ["text", "x", "y", "size", "color"]) change("label-"+key, next => {

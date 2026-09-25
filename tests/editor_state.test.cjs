@@ -185,6 +185,35 @@ test('generator labels default off, undo/redo, and survive save/reopen', async (
   assert.deepEqual(app.value('recipe.braid.word'), word);
 });
 
+test('crossing highlight control follows selection, moves, undo and save/reopen', async () => {
+  const app = await setup();
+  app.nodes['new-braid'].click();
+  assert.equal(app.nodes['highlight-crossing'].checked, false);
+  app.nodes['highlight-crossing'].checked = true;
+  app.nodes['highlight-crossing'].listeners.change();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [1]);
+  app.nodes['crossing-down'].click();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [2]);
+  assert.equal(app.nodes['highlight-crossing'].checked, true);
+  app.nodes.undo.click();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [1]);
+  app.nodes.redo.click();
+  app.nodes.save.click();
+  const saved = app.downloads[0];
+  app.nodes['new-planar'].click();
+  app.nodes.file.files = [{size: saved.length, text: async () => saved}];
+  await app.nodes.file.onchange();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [2]);
+  app.run('selectedStep = 1; syncLists();');
+  assert.equal(app.nodes['highlight-crossing'].checked, true);
+  app.nodes['highlight-crossing'].checked = false;
+  app.nodes['highlight-crossing'].listeners.change();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), []);
+  app.nodes.word.value = '';
+  app.nodes.word.listeners.change();
+  assert.equal(app.nodes['highlight-crossing'].disabled, true);
+});
+
 test('shortening a highlighted braid preserves valid positions and supports undo', async () => {
   const app = await setup();
   app.nodes['new-braid'].click();
