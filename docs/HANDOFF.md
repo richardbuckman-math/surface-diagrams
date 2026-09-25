@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## Alpha 5 release batch, September 25 afternoon
+
+Prepared v0.1.0a5 with standalone and factor-local crossing highlights, the
+editor highlight control and perimeter-opening placement validation. Updated
+package/site versions and release instructions; normalized legacy dash bytes
+in CHANGELOG.md to valid UTF-8. All 232 Python tests (120 seconds), 12 editor
+tests and the site/link build pass. Regenerating 22 SVG/TikZ figures leaves
+them unchanged from the visually inspected implementation batches.
+Publish the version tag through the existing checked release workflow and verify
+its wheel/source assets. Next core task is the certified perimeter reference
+system's endpoint incidence and cut-disk topology, not further highlight work.
+
 ## Factor-local crossing highlights, September 25 midday
 
 FactorPanel now accepts highlight_crossings, using unique 1-based positions in

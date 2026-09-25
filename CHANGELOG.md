@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.0a5 - 2026-09-25
+
 - Extend crossing highlights to factor-local braid positions and add an editor
   checkbox with undo/redo and highlights that follow reordered crossings.
 
@@ -11,7 +13,7 @@
 - Reject explicit marked-point placements that bend a solid perimeter arc
   through or too close to a genus opening, even when its endpoints are valid.
 
-## 0.1.0a4 — 2026-09-23
+## 0.1.0a4 â€” 2026-09-23
 
 - Add a local browser editor with versioned JSON recipes, undo/redo, and
   reproducible SVG, TikZ and Python exports.
