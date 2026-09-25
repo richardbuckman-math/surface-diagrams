@@ -351,6 +351,14 @@ that band. For a specific winding/crossing sequence use <code>DiskRoute</code> w
 <code>MarkPoint</code> endpoints instead; it preserves its chart itinerary and can bend.
 These are distinct inputs: a supplied straight visual arc is not silently
 substituted for an explicitly specified disk route.</p>
+<p>The older marked <code>with_cut_system()</code> view includes <strong>auxiliary chart cuts</strong>
+from marks to existing cuts. Those branches help open the mesh into route charts;
+they are not additional valid arcs in a curve-complex illustration. Hiding or
+moving a branch does not change the underlying chart or its route coordinates.
+For symmetric marked-surface illustrations, use <code>with_reference_arcs()</code> as shown
+below. For an existing explicit mesh route, use <code>with_curves(route)</code> to display
+the route at its actual endpoints without showing the auxiliary cuts. Conversion
+between the two reference systems is not yet implemented.</p>
 <h2>10. Find the inputs for a general genus route</h2>
 <p><code>DiskRoute</code> describes a route through the disks obtained by cutting. It uses a
 more detailed locator than the planar integer intervals:</p>

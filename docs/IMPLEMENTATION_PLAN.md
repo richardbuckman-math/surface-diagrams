@@ -269,3 +269,21 @@ PyPI publication is not configured. Core surface rendering remains in progress.
 
 Explicit perimeter deformations now reject genus-opening crossings and missing
 stroke clearance (September 24). The mesh-mark migration is still pending.
+
+### Mesh-mark migration dependency, September 25
+
+The remaining migration is topological as well as geometric. `genus_mesh.py`
+chooses front-sheet quad centers, then `mesh_marks.mark_mesh` adds a shortest
+mesh-edge walk from each mark to an eligible existing cut vertex. Each walk is
+registered as a ParentCut plus Attachment and contributes to the cut-edge set.
+The certified complement depends on these branches: the existing omitted-spoke
+test demonstrates that removing one leaves an interior mark and fails certification.
+
+Therefore moving mesh mark vertices together with route endpoints is necessary
+but insufficient to satisfy the requested absence of branches ending on curves.
+Implement a separate certified perimeter-based marked reference system before
+claiming this migration complete. It must supply valid parent endpoints, rebuilt
+cut disks and an explicit route-coordinate conversion (or a clear separate API).
+Keep legacy DiskRoutes bound to their existing atlas until conversion exists.
+Validate complement topology, side pairings, endpoint incidence and all-view
+rendered continuity; never obtain the new system by merely hiding attachments.

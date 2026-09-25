@@ -423,6 +423,15 @@ that band. For a specific winding/crossing sequence use `DiskRoute` with
 These are distinct inputs: a supplied straight visual arc is not silently
 substituted for an explicitly specified disk route.
 
+The older marked `with_cut_system()` view includes **auxiliary chart cuts**
+from marks to existing cuts. Those branches help open the mesh into route charts;
+they are not additional valid arcs in a curve-complex illustration. Hiding or
+moving a branch does not change the underlying chart or its route coordinates.
+For symmetric marked-surface illustrations, use `with_reference_arcs()` as shown
+below. For an existing explicit mesh route, use `with_curves(route)` to display
+the route at its actual endpoints without showing the auxiliary cuts. Conversion
+between the two reference systems is not yet implemented.
+
 ## 10. Find the inputs for a general genus route
 
 `DiskRoute` describes a route through the disks obtained by cutting. It uses a

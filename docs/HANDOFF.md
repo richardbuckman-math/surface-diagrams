@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## Mesh migration dependency clarified, September 25
+
+Inspected genus_mesh mark-site selection and mesh_marks.mark_mesh. The earlier
+next-step wording understated the task: spokes are registered ParentCuts and
+Attachments, not display decorations. Existing certification explicitly depends
+on them. Updated the implementation plan with the required separate certified
+perimeter system and route conversion, and the tutorial with the distinction
+between auxiliary chart cuts and valid curve-complex arcs. Use reference arcs
+for presentation; retain the old atlas for existing DiskRoutes. No geometry was
+changed. Next substantive step: design the perimeter system's parent endpoint
+incidence and cut-disk topology before changing mark coordinates.
+
 ## Mesh endpoint migration guard, September 24 evening
 
 Added a final-drawing regression covering explicit P-to-Q and Q-to-P DiskRoutes
