@@ -112,7 +112,7 @@ def examples():
     b = PlanarDiagram(small, (ColoredCurve('c2', Arc(2,3), RAINBOW[4]),))
     yield '16-ordered-factorization', FactorizationDiagram((
         FactorPanel('a', Panel(a, 'Half twist on c1'), braid_word=(1,), group='block A'),
-        FactorPanel('b', Panel(b, 'Inverse half twist on c2'), exponent=-1, braid_word=(-2,), group='block A'),
+        FactorPanel('b', Panel(b, 'Inverse half twist on c2'), exponent=-1, braid_word=(-2,), group='block A', highlight_crossings=(1,)),
         FactorPanel('a-again', Panel(a, 'Same support c1; distinct factor ID'), braid_word=(1,), group='block B'),
     ), strands=3, braid_spacing=36), Style()
 

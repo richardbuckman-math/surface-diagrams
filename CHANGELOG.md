@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Extend crossing highlights to factor-local braid positions and add an editor
+  checkbox with undo/redo and highlights that follow reordered crossings.
+
 - Add optional standalone braid crossing outlines with `highlight_crossings`,
   using 1-based word positions in either direction, with SVG/TikZ and JSON support.
 

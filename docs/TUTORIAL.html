@@ -225,7 +225,9 @@ TikZ. They do not change the braid. Standalone braids also accept
 <code>highlight_crossings=(1, 3)</code> to outline selected word positions, counted from 1
 in traversal order. JSON recipes use <code>braid.highlight_crossings: [1, 3]</code>.
 These outlines preserve strand colors and transparent underpasses. Highlights
-for factor panels remain pending. In the editor Crossing inspector, select a
+also work in factor panels: set <code>FactorPanel(..., highlight_crossings=(1,))</code>
+to outline the first crossing in that factor&#39;s supplied <code>braid_word</code>. Positions
+are local to the factor; identity blocks and connectors cannot be highlighted. In the editor Crossing inspector, select a
 crossing and enable <strong>Highlight selected crossing in exports</strong>. Earlier/Later
 moves its highlight with it; deletion removes that highlight. The setting
 supports undo/redo and JSON save/reopen. JSON recipes accept

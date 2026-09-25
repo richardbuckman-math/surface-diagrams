@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Factor-local crossing highlights, September 25 midday
+
+FactorPanel now accepts highlight_crossings, using unique 1-based positions in
+its supplied braid word. Shared outline geometry serves standalone and aligned
+braids. Connector padding, identity blocks and initial-state rows are excluded
+from indexing. Tests cover both directions, unchanged strands/labels, initial
+states, invalid indices, duplicate positions and SVG/TikZ exports. Focused suites:
+21 factorization and 9 visualization tests pass. Visually inspected a three-factor
+example including an identity block. Gallery 16 demonstrates a highlighted factor.
+Full suite: 232 Python tests pass; tutorial HTML/site/link builds pass.
+Next: release the completed highlights together after checking CI;
+the certified perimeter reference system remains the larger core geometry task.
+
+
 ## Editor crossing highlight control, September 25 morning
 
 Added an inspector checkbox for persistent exported crossing highlights, synced

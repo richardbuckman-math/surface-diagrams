@@ -3,6 +3,7 @@
 <path class="arc" d="M 163 633.75 L 208 633.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="arc" d="M 208 422.25 L 253 422.25" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="arc" d="M 163 210.75 L 208 210.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-highlight" d="M 365 419.25 L 449 419.25 L 449 387.25 L 365 387.25 Z " fill="none" stroke="#8b6b00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="braid-strand" d="M 371 708.5 L 371 632.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="braid-strand" d="M 407 708.5 L 407 632.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path class="braid-strand" d="M 443 708.5 L 443 632.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

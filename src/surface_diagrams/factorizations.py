@@ -9,7 +9,7 @@ from dataclasses import dataclass, replace
 from .model import _number
 from .primitives import Drawing, Path, Text
 from .visuals import (Panel, Figure, BraidDiagram, RAINBOW, _shift,
-                      _braid_paths, _braid_labels, _braid_generator_labels)
+                      _braid_paths, _braid_labels, _braid_generator_labels, _braid_highlights)
 
 
 @dataclass(frozen=True)
@@ -21,6 +21,7 @@ class FactorPanel:
     by the caller. () explicitly supplies a straight block; None supplies none.
     state is an optional supplied image AFTER this factor, not a computed image.
     group is a plain-text label for a contiguous block of factors.
+    highlight_crossings contains unique 1-based positions within braid_word.
     """
     id: str
     support: Panel
@@ -28,8 +29,10 @@ class FactorPanel:
     braid_word: object = None
     state: object = None
     group: str = ''
+    highlight_crossings: tuple = ()
 
     def __post_init__(self):
+        object.__setattr__(self, 'highlight_crossings', tuple(self.highlight_crossings))
         if not isinstance(self.id, str) or not self.id.strip() or self.id.splitlines() != [self.id]:
             raise ValueError('factor ID must be nonempty single-line text')
         if not isinstance(self.support, Panel):
@@ -42,6 +45,11 @@ class FactorPanel:
                 raise ValueError('braid_word must contain nonzero signed integer positions')
         if self.state is not None and not isinstance(self.state, Panel):
             raise TypeError('state must be a Panel or None')
+        if any(type(i) is not int or not 1 <= i <= len(self.braid_word or ())
+               for i in self.highlight_crossings):
+            raise ValueError('highlight_crossings must contain 1-based positions in this factor braid_word')
+        if len(set(self.highlight_crossings)) != len(self.highlight_crossings):
+            raise ValueError('highlight_crossings must not repeat positions')
         if not isinstance(self.group, str) or (self.group and
                 (not self.group.strip() or self.group.splitlines() != [self.group])):
             raise ValueError('group must be single-line text')
@@ -176,7 +184,7 @@ class FactorizationDiagram:
         state_x = support_x+support_width/2+column_gap+state_width/2
         braid_x = width/2-braid_width/2
         ellipses, paths, texts, bands = [], [], [], []
-        crossings, ys = [], [edge]
+        crossings, ys, highlighted = [], [edge], []
         for index, ((support, state), word, height) in enumerate(zip(rows, words, heights)):
             exit_edge = edge+sign*height
             center = (edge+exit_edge)/2
@@ -194,6 +202,7 @@ class FactorizationDiagram:
                 if inset > 0:
                     crossings.append(None)
                     ys.append(start)
+                highlighted.extend(len(crossings)+i for i in self.factors[index-int(self.initial_state is not None)].highlight_crossings)
                 crossings.extend(word)
                 ys.extend(start+sign*step*(i+1) for i in range(len(word)))
                 if inset > 0:
@@ -216,7 +225,8 @@ class FactorizationDiagram:
             labels = _braid_labels(self.strands, order, ys[0], ys[-1], self.braid_spacing, self.colors)
             if self.braid_show_generators:
                 labels += _braid_generator_labels(self.strands,crossings,ys,self.braid_spacing,style)[0]
-            braid = _shift(Drawing(braid_width, body_height, (), braid_paths, labels), braid_x, 0)
+            highlights = _braid_highlights(self.strands, ys, self.braid_spacing, highlighted)
+            braid = _shift(Drawing(braid_width, body_height, (), highlights+braid_paths, labels), braid_x, 0)
             paths.extend(braid.paths)
             texts.extend(braid.texts)
             # Short ticks outside the strands show exactly which row each

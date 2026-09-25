@@ -159,22 +159,27 @@ class BraidDiagram:
         texts = _braid_labels(self.strands, order, ys[0], ys[-1], self.spacing, self.colors)
         labels, margin = _braid_generator_labels(self.strands, self.word, ys, self.spacing, style) if self.show_generators else ((),0)
         texts += labels
-        # Outline only: leave underpass gaps and strand colors unobscured.
-        half=(self.strands-1)*self.spacing/2+6
-        bands=[]
-        for index in self.highlight_crossings:
-            low,high=sorted((ys[index-1],ys[index]))
-            inset=min(2,self.step/10)
-            low+=inset
-            high-=inset
-            bands.append(Path((('M',-half,low),('L',half,low),('L',half,high),
-                               ('L',-half,high),('Z',)), '#8b6b00', .8, 'braid-highlight'))
+        bands=_braid_highlights(self.strands,ys,self.spacing,self.highlight_crossings)
         return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding+2*margin+(14 if bands else 0),
                        h+40+2*style.padding, (), tuple(bands)+tuple(paths), tuple(texts))
 
     def _repr_svg_(self):
         from .svg import render_svg
         return render_svg(self)
+
+
+def _braid_highlights(strands, ys, spacing, positions):
+    """Outline selected 1-based intervals, leaving underpasses transparent."""
+    half=(strands-1)*spacing/2+6
+    bands=[]
+    for index in positions:
+        low,high=sorted((ys[index-1],ys[index]))
+        inset=min(2,(high-low)/10)
+        low+=inset
+        high-=inset
+        bands.append(Path((('M',-half,low),('L',half,low),('L',half,high),
+                           ('L',-half,high),('Z',)), '#8b6b00', .8, 'braid-highlight'))
+    return tuple(bands)
 
 
 def _braid_paths(strands, crossings, ys, spacing, colors, style, crossing_style='straight'):

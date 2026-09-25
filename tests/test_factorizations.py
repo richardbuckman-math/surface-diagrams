@@ -9,6 +9,31 @@ from surface_diagrams.layout import layout
 
 
 class FactorizationTest(unittest.TestCase):
+    def test_factor_highlights_skip_identity_connectors_and_preserve_strands(self):
+        for direction in ('top-to-bottom','bottom-to-top'):
+            factors=(replace(self.a,braid_word=(1,-2)),replace(self.b,braid_word=()),
+                     replace(self.a,id='c',braid_word=(-1,)))
+            plain=FactorizationDiagram(factors,strands=3,direction=direction,braid_show_generators=True)
+            marked=replace(plain,factors=(replace(factors[0],highlight_crossings=(2,)),
+                                         factors[1],replace(factors[2],highlight_crossings=(1,))))
+            a,b=self.drawing(plain),self.drawing(marked)
+            self.assertEqual(a.paths,tuple(p for p in b.paths if p.role!='braid-highlight'))
+            self.assertEqual(a.texts,b.texts)
+            boxes=[p for p in b.paths if p.role=='braid-highlight']
+            self.assertEqual(len(boxes),2)
+            for box,label in zip(boxes,('s2^-1','s1^-1')):
+                center=(box.commands[0][2]+box.commands[2][2])/2
+                self.assertAlmostEqual(center,next(t.y for t in b.texts if t.text==label)+3)
+            self.assertEqual(boxes[0].commands[0][2]<boxes[1].commands[0][2],direction=='bottom-to-top')
+            self.assertIn('braid-highlight',render_svg(marked))
+            self.assertIn('braid-highlight',render_tikz(marked))
+            with_states=replace(marked,initial_state=self.a.support,
+                                factors=tuple(replace(f,state=f.support) for f in marked.factors))
+            self.assertEqual(sum(p.role=='braid-highlight' for p in self.drawing(with_states).paths),2)
+        for word,positions in (((),(1,)),(None,(1,)),((1,),(2,)),((1,),(1,1)),((1,),(True,))):
+            with self.assertRaises(ValueError):
+                replace(self.a,braid_word=word,highlight_crossings=positions)
+
     def setUp(self):
         self.surface = PlanarSurface.row('PPP', spacing=60, height=140, margin=60)
         self.a = FactorPanel('a', Panel(self.surface.with_curves(Arc(1, 2)), 'Arc (1,2)'), braid_word=(1,))
