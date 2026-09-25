@@ -185,6 +185,19 @@ test('generator labels default off, undo/redo, and survive save/reopen', async (
   assert.deepEqual(app.value('recipe.braid.word'), word);
 });
 
+test('shortening a highlighted braid preserves valid positions and supports undo', async () => {
+  const app = await setup();
+  app.nodes['new-braid'].click();
+  app.run('recipe.braid.word = [1, -2, -1]; recipe.braid.highlight_crossings = [1, 3]; selectedStep = 0;');
+  app.nodes['delete-crossing'].click();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [2]);
+  app.nodes.undo.click();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [1, 3]);
+  app.nodes.word.value = '1';
+  app.nodes.word.listeners.change();
+  assert.deepEqual(app.value('recipe.braid.highlight_crossings'), [1]);
+});
+
 test('save and reopen retain an editable recipe; invalid upload preserves it', async () => {
   const app = await setup();
   app.nodes.save.click();

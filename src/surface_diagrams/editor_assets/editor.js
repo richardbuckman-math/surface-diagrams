@@ -394,12 +394,12 @@ for (const [id, field, type] of [["curve-id", "id", "text"], ["curve-color", "co
 }
 $("delete-curve").onclick = () => { const next = clone(recipe); next.curves = next.curves.filter(c => c.id !== selectedCurve); selectedCurve = null; commit(next); };
 for (const [id, key] of [["strands", "strands"], ["braid-spacing", "spacing"], ["braid-step", "step"]]) change(id, next => next.braid[key] = number(id));
-change("word", next => next.braid.word = integers($("word").value)); change("braid-direction", next => next.braid.direction = $("braid-direction").value);
+change("word", next => { next.braid.word = integers($("word").value); next.braid.highlight_crossings = (next.braid.highlight_crossings || []).filter(i => i <= next.braid.word.length); }); change("braid-direction", next => next.braid.direction = $("braid-direction").value);
 change("braid-crossing-style", next => next.braid.crossing_style = $("braid-crossing-style").value);
 change("braid-generators", next => next.braid.show_generators = $("braid-generators").checked);
 $("append-generator").onclick = () => { try { const next = clone(recipe); next.braid.word.push(number("generator")); selectedStep = next.braid.word.length-1; commit(next); } catch (error) { showError(error.message); } };
 $("invert-crossing").onclick = () => { const next = clone(recipe); next.braid.word[selectedStep] *= -1; commit(next); };
-$("delete-crossing").onclick = () => { const next = clone(recipe); next.braid.word.splice(selectedStep, 1); commit(next); };
+$("delete-crossing").onclick = () => { const next = clone(recipe); next.braid.word.splice(selectedStep, 1); next.braid.highlight_crossings = (next.braid.highlight_crossings || []).filter(i => i !== selectedStep+1).map(i => i > selectedStep+1 ? i-1 : i); commit(next); };
 for (const [id, offset] of [["crossing-up", -1], ["crossing-down", 1]]) $(id).onclick = () => {
   const next = clone(recipe), other = selectedStep+offset;
   if (other < 0 || other >= next.braid.word.length) return;

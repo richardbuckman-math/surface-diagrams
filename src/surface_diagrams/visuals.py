@@ -109,6 +109,8 @@ class BraidDiagram:
     crossing_style='smooth' uses cubic crossings with vertical end tangents;
     the default 'straight' retains the original piecewise-linear drawing.
     show_generators adds plain-text sN / sN^-1 labels to the right of crossings.
+    highlight_crossings outlines selected 1-based word positions without
+    changing crossings or strand colors.
     """
     strands: int
     word: tuple = ()
@@ -118,6 +120,7 @@ class BraidDiagram:
     direction: str = 'top-to-bottom'
     crossing_style: str = 'straight'
     show_generators: bool = False
+    highlight_crossings: tuple = ()
 
     def __post_init__(self):
         if type(self.strands) is not int or self.strands < 1:
@@ -138,6 +141,11 @@ class BraidDiagram:
             raise ValueError('crossing_style must be straight or smooth')
         if type(self.show_generators) is not bool:
             raise TypeError('show_generators must be a boolean')
+        object.__setattr__(self, 'highlight_crossings', tuple(self.highlight_crossings))
+        if any(type(i) is not int or not 1 <= i <= len(self.word) for i in self.highlight_crossings):
+            raise ValueError('highlight_crossings must contain 1-based positions in the word')
+        if len(set(self.highlight_crossings)) != len(self.highlight_crossings):
+            raise ValueError('highlight_crossings must not repeat positions')
 
     def drawing(self, style):
         levels = max(1, len(self.word))
@@ -151,8 +159,18 @@ class BraidDiagram:
         texts = _braid_labels(self.strands, order, ys[0], ys[-1], self.spacing, self.colors)
         labels, margin = _braid_generator_labels(self.strands, self.word, ys, self.spacing, style) if self.show_generators else ((),0)
         texts += labels
-        return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding+2*margin,
-                       h+40+2*style.padding, (), tuple(paths), tuple(texts))
+        # Outline only: leave underpass gaps and strand colors unobscured.
+        half=(self.strands-1)*self.spacing/2+6
+        bands=[]
+        for index in self.highlight_crossings:
+            low,high=sorted((ys[index-1],ys[index]))
+            inset=min(2,self.step/10)
+            low+=inset
+            high-=inset
+            bands.append(Path((('M',-half,low),('L',half,low),('L',half,high),
+                               ('L',-half,high),('Z',)), '#8b6b00', .8, 'braid-highlight'))
+        return Drawing(max(self.spacing, (self.strands-1)*self.spacing)+2*style.padding+2*margin+(14 if bands else 0),
+                       h+40+2*style.padding, (), tuple(bands)+tuple(paths), tuple(texts))
 
     def _repr_svg_(self):
         from .svg import render_svg

@@ -11,6 +11,14 @@ from surface_diagrams.documents import MAX_DOCUMENT_BYTES, example_document
 
 
 class DocumentTests(unittest.TestCase):
+    def test_braid_highlights_survive_json_round_trip(self):
+        data=example_document('braid').to_dict()
+        data['braid']['highlight_crossings']=[1]
+        document=DiagramDocument.from_dict(data)
+        restored=DiagramDocument.from_json(document.to_json())
+        self.assertEqual(document,restored)
+        self.assertIn('braid-highlight',restored.render_svg())
+
     def recipe(self, kind='planar'):
         return example_document(kind).to_dict()
 

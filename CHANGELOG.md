@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add optional standalone braid crossing outlines with `highlight_crossings`,
+  using 1-based word positions in either direction, with SVG/TikZ and JSON support.
+
 - Reject explicit marked-point placements that bend a solid perimeter arc
   through or too close to a genus opening, even when its endpoints are valid.
 

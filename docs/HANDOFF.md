@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## Crossing highlights and revised pacing, September 25
+
+User explicitly replaced the 15% reserve with a plan to use all available quota
+productively before weekly reset. Updated the active six-hour heartbeat prompt;
+it now distributes the full remaining allowance and removes both old 15% cutoffs.
+At this turn's start 25% weekly remained; reset September 26 at 09:18 Eastern.
+
+Implemented optional standalone BraidDiagram.highlight_crossings: unique 1-based
+word positions produce outline-only bands behind strands in either direction.
+The recipe schema accepts and round-trips the selection. SVG/TikZ use the same
+paths; default output is unchanged. Gallery 22 now highlights the first crossing
+in both directions. Visually inspected the regenerated figure. Focused validation:
+9 visualization tests and 26 document tests pass; tutorial/site/link builds pass.
+All 231 Python tests pass. Editor word shortening prunes out-of-range highlights;
+deleting a crossing removes its highlight and shifts later positions. All 11
+editor tests pass, including deletion, word shortening and undo of highlights. Factor-panel highlights and
+editor selection controls remain next; mesh topology work remains as below.
+
 ## Mesh migration dependency clarified, September 25
 
 Inspected genus_mesh mark-site selection and mesh_marks.mark_mesh. The earlier

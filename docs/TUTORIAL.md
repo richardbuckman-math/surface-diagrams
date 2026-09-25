@@ -257,8 +257,11 @@ Add `show_generators=True` to `BraidDiagram` for right-hand labels such as
 `braid_show_generators=True` on `FactorizationDiagram` for the same labels
 beside factor blocks. Labels follow the supplied traversal order, skip identity
 blocks and connectors, and work with straight or smooth crossings in SVG and
-TikZ. They do not change the braid. Highlighted atom bands and interactive zoom
-controls remain pending. JSON recipes accept
+TikZ. They do not change the braid. Standalone braids also accept
+`highlight_crossings=(1, 3)` to outline selected word positions, counted from 1
+in traversal order. JSON recipes use `braid.highlight_crossings: [1, 3]`.
+These outlines preserve strand colors and transparent underpasses. Highlights
+for factor panels and an editor selection control remain pending, as does zoom. JSON recipes accept
 `braid.crossing_style`; the browser editor exposes it as **Crossing style**.
 Recipes also accept the boolean `braid.show_generators` (default `false`) and
 preserve it through save/reopen and exports. In the editor, enable **Show
@@ -272,6 +275,7 @@ sign of a generator nor the supplied word; it is not a mirror-image operation.
 
 For example, these panels both read `s1, s2^-1, s1^-1` in their indicated
 direction. Endpoint numbers and colors track the starting strand identities.
+The first crossing is outlined in both panels.
 The negative labels stay negative when reading upward; do not invert the word
 merely because the drawing runs in the other direction.
 
@@ -279,9 +283,11 @@ merely because the drawing runs in the other direction.
 signed_word = (1, -2, -1)
 comparison = Figure(((
     Panel(BraidDiagram(3, signed_word, direction="top-to-bottom",
-                       crossing_style="smooth", show_generators=True), "Read downward"),
+                       crossing_style="smooth", show_generators=True,
+                       highlight_crossings=(1,)), "Read downward"),
     Panel(BraidDiagram(3, signed_word, direction="bottom-to-top",
-                       crossing_style="smooth", show_generators=True), "Read upward"),
+                       crossing_style="smooth", show_generators=True,
+                       highlight_crossings=(1,)), "Read upward"),
 ),))
 save_svg(comparison, "signed-braid-directions.svg")
 ```

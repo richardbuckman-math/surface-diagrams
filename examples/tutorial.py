@@ -165,10 +165,10 @@ def examples():
 
     yield '22-signed-braid-directions', Figure(((
         Panel(BraidDiagram(3, (1, -2, -1), direction='top-to-bottom',
-                           crossing_style='smooth', show_generators=True),
+                           crossing_style='smooth', show_generators=True, highlight_crossings=(1,)),
               'Read downward: s1, s2^-1, s1^-1'),
         Panel(BraidDiagram(3, (1, -2, -1), direction='bottom-to-top',
-                           crossing_style='smooth', show_generators=True),
+                           crossing_style='smooth', show_generators=True, highlight_crossings=(1,)),
               'Read upward: s1, s2^-1, s1^-1'),
     ),)), Style()
 

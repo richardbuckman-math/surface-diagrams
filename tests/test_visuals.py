@@ -8,6 +8,22 @@ from surface_diagrams.layout import layout
 
 
 class VisualsTest(unittest.TestCase):
+    def test_crossing_highlights_follow_word_positions_without_changing_braid(self):
+        for direction in ('top-to-bottom','bottom-to-top'):
+            for crossing_style in ('straight','smooth'):
+                plain=BraidDiagram(3,(1,-2,-1),direction=direction,crossing_style=crossing_style)
+                marked=replace(plain,highlight_crossings=(1,3))
+                a,b=layout(plain,Style()),layout(marked,Style())
+                self.assertEqual(a.paths,b.paths[2:])
+                self.assertEqual(a.texts,b.texts)
+                centers=[sum(c[2] for c in p.commands[:4])/4 for p in b.paths[:2]]
+                self.assertEqual(centers[0]<centers[1],direction=='bottom-to-top')
+                self.assertIn('braid-highlight',render_svg(marked))
+                self.assertIn('braid-highlight',render_tikz(marked))
+        for positions in ((0,),(4,),(True,),(1,1)):
+            with self.assertRaises(ValueError):
+                BraidDiagram(3,(1,-2,-1),highlight_crossings=positions)
+
     def setUp(self):
         self.surface = PlanarSurface.row('PPPP', spacing=60, height=210, margin=65)
 
