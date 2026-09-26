@@ -55,3 +55,20 @@ For the confirmed factor 9 itinerary, the result is
 The action sends x1 to x1 and x2 to t x4 t^-1 for this same ray word t.
 This verifies the endpoint/transport-word comparison under the stated convention;
 other factors and the geometric action replay still need checking.
+
+## Closed support curves
+
+`loop_ray_word(points, loop)` reads a closed itinerary against the same upward
+rays. For example, `Loop((2, 5))` on six points gives `(3, 4, 5)`. The output
+retains a traversal and starting cut. `free_homotopy_key(word)` removes cyclic
+conjugation and identifies reversed traversal for an unoriented closed path.
+It does not certify that an arbitrary supplied itinerary is embedded, calculate
+a Dehn twist, or apply sphere relations. Canonicalization currently examines all
+cyclic rotations and is intended for manageable support words, not huge outputs.
+
+`act_on_loop_word(strands, braid, word)` substitutes Artin images and returns
+the exact reduced based word. Comparing its `free_homotopy_key` with the original
+tests the closed-path class in this algebraic convention. Keep the based word:
+a disk full twist can change it by conjugation while leaving the closed-path
+class unchanged. Thus agreement of closed curves alone is insufficient for the
+disk identity check; based reference data must remain available.

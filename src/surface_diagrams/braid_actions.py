@@ -101,6 +101,62 @@ def arc_ray_word(points, arc):
     return reduce_word(letters)
 
 
+def loop_ray_word(points, loop):
+    """Read a closed Loop against upward rays, starting at its first cut.
+
+    The returned word retains a chosen traversal/base cut. Use
+    free_homotopy_key to compare unbased unoriented loop words. This does not
+    validate embeddedness or calculate the Dehn twist about the loop.
+    """
+    from .curves import Loop
+    if type(points) is not int or points < 1:
+        raise ValueError('points must be a positive integer')
+    if not isinstance(loop,Loop):
+        raise TypeError('loop must be a Loop')
+    if any(c > points for c in loop.cuts):
+        raise ValueError('cut index exceeds the marked row')
+    letters=[]
+    for index,(a,b) in enumerate(zip(loop.cuts,loop.cuts[1:]+loop.cuts[:1])):
+        if (index%2==0) != loop.start_up:
+            continue
+        letters.extend(range(a+1,b+1) if a<b else (-j for j in range(a,b,-1)))
+    return reduce_word(letters)
+
+
+def free_homotopy_key(word):
+    """Canonical free-group conjugacy key, identifying reversed orientation.
+
+    This is for unoriented closed paths in the punctured disk, not based loops
+    or braid equality. It does not quotient out the outer boundary word.
+    """
+    word=reduce_word(word)
+    start,end=0,len(word)
+    while end-start>1 and word[start]==-word[end-1]:
+        start+=1
+        end-=1
+    word=word[start:end]
+    if not word:
+        return ()
+    reverse=inverse_word(word)
+    return min(w[i:]+w[:i] for w in (word,reverse) for i in range(len(w)))
+
+
+def act_on_loop_word(strands, braid, word):
+    """Substitute exact Artin images into a supplied free-group loop word.
+
+    Returns a based word; free_homotopy_key deliberately remains a separate
+    operation so boundary twisting is not silently discarded.
+    """
+    images=artin_action(strands,braid)
+    word=reduce_word(word)
+    if any(abs(i)>strands for i in word):
+        raise ValueError('loop letter exceeds the free-group rank')
+    def letters():
+        for i in word:
+            yield from images[i-1] if i>0 else inverse_word(images[-i-1])
+    return reduce_word(letters())
+
+
 def hurwitz_move(factors, index, *, inverse=False):
     """Move an adjacent pair at zero-based index, preserving concatenation.
 

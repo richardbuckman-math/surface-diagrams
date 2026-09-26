@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Closed-loop ray words and actions, September 26 evening
+
+Added loop_ray_word, free_homotopy_key (unoriented free-group conjugacy key),
+and act_on_loop_word (exact substitution preserving based words). Eleven focused
+action tests pass; the full suite passes all 243 tests (154 seconds). Coverage:
+base-cut shifts, reversal, enclosed punctures, invalid cuts,
+conjugation invariance and boundary full-twist visibility in based versus closed
+path data. The latter prevents silently declaring disk identity from fixed
+closed curves. Canonicalization checks all rotations; do not feed enormous words
+without improving its algorithm. No general Dehn-twist or geometric image
+renderer is claimed. Visually checked two base-cut descriptions of the same loop
+in .preview/closed-loop-base-cuts.svg/png. Next: use these encodings to compare
+closed factors from the PDF with their braid blocks; retain based arc information
+for the user's disk-versus-sphere identity comparison.
+
 ## Factor 9 relative-path comparison, September 26
 
 Added arc_ray_word for point-to-point Arc itineraries, counting directed crossings

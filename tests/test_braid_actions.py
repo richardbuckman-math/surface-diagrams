@@ -1,11 +1,39 @@
 import unittest
 from surface_diagrams.braid_actions import (artin_action, reduce_word, inverse_word,
     hurwitz_move, action_checkpoints, conjugate_factors)
-from surface_diagrams.braid_actions import arc_ray_word
-from surface_diagrams import Arc
+from surface_diagrams.braid_actions import arc_ray_word, loop_ray_word, free_homotopy_key
+from surface_diagrams.braid_actions import act_on_loop_word
+from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_boundary_twist_is_visible_based_but_not_on_closed_curve_class(self):
+        original=loop_ray_word(3,Loop((0,2)))
+        image=act_on_loop_word(3,(1,2)*3,original)
+        self.assertNotEqual(image,original)
+        self.assertEqual(free_homotopy_key(image),free_homotopy_key(original))
+        self.assertEqual(act_on_loop_word(3,(1,-2),(-1,)),inverse_word(artin_action(3,(1,-2))[0]))
+        with self.assertRaises(ValueError): act_on_loop_word(3,(),(4,))
+
+    def test_loop_words_preserve_punctures_and_ignore_base_cut(self):
+        loop=Loop((0,6,5,1))
+        key=free_homotopy_key(loop_ray_word(6,loop))
+        for shift in range(4):
+            rotated=Loop(loop.cuts[shift:]+loop.cuts[:shift],start_up=shift%2==0)
+            self.assertEqual(free_homotopy_key(loop_ray_word(6,rotated)),key)
+        reversed_loop=Loop((0,1,5,6),start_up=False)
+        self.assertEqual(loop_ray_word(6,reversed_loop),inverse_word(loop_ray_word(6,loop)))
+        self.assertEqual(loop_ray_word(6,Loop((2,5))),(3,4,5))
+        self.assertNotEqual(free_homotopy_key((1,2,3)),free_homotopy_key(()))
+        with self.assertRaises(ValueError): loop_ray_word(5,loop)
+
+    def test_closed_path_key_removes_conjugation_not_based_action(self):
+        word=(1,2,-3)
+        g=(3,2)
+        self.assertEqual(free_homotopy_key(g+word+inverse_word(g)),free_homotopy_key(word))
+        self.assertEqual(free_homotopy_key(inverse_word(word)),free_homotopy_key(word))
+        self.assertNotEqual(free_homotopy_key((1,2)),free_homotopy_key((1,3)))
+
     def test_confirmed_factor_nine_ray_word_matches_conjugated_meridians(self):
         arc=Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down')
         transport=arc_ray_word(6,arc)
