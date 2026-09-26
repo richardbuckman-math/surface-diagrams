@@ -1,8 +1,30 @@
 import unittest
-from surface_diagrams.braid_actions import artin_action, reduce_word, inverse_word, hurwitz_move
+from surface_diagrams.braid_actions import (artin_action, reduce_word, inverse_word,
+    hurwitz_move, action_checkpoints, conjugate_factors)
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_checkpoints_retain_identity_and_empty_factors(self):
+        factors=((1,-2),(),(2,-1))
+        history=action_checkpoints(3,factors)
+        self.assertEqual(len(history),4)
+        for i,state in enumerate(history):
+            self.assertEqual(state,artin_action(3,sum(factors[:i],())))
+        self.assertEqual(history[1],history[2])
+        self.assertEqual(history[0],history[-1])
+        self.assertNotEqual(history[0],history[1])
+        with self.assertRaises(ValueError): action_checkpoints(3,((3,),))
+
+    def test_global_conjugation_changes_product_as_declared(self):
+        factors=((1,),(-2,),())
+        g=(2,1)
+        changed=conjugate_factors(factors,g)
+        expected=g+sum(factors,())+inverse_word(g)
+        self.assertEqual(artin_action(3,sum(changed,())),artin_action(3,expected))
+        self.assertNotEqual(artin_action(3,expected),artin_action(3,sum(factors,())))
+        self.assertEqual(conjugate_factors(changed,inverse_word(g)),factors)
+        self.assertEqual(changed[-1],())
+
     def test_relations_and_inverse(self):
         self.assertEqual(artin_action(3,(1,2,1)),artin_action(3,(2,1,2)))
         self.assertEqual(artin_action(4,(1,3)),artin_action(4,(3,1)))

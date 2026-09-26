@@ -31,6 +31,12 @@ reported as identity. No sphere quotient is applied by this module. Images
 can become very long; this is a correctness-first implementation, not yet a
 compressed representation or a graphical proof certificate.
 
+`action_checkpoints(strands, factors)` returns the identity state followed by
+each concatenated-prefix action, including checkpoints for empty factors.
+`conjugate_factors(factors, g)` replaces every factor f by g f g^-1. Its total
+product is g P g^-1, generally not P; inverse conjugation restores the original
+freely reduced factors. Neither operation computes new planar support curves.
+
 The six-strand PDF/braid correspondence remains provisional until the support
 curves are checked against the earlier transcription. Matching the final group
 action alone would not verify every individual factor correspondence.

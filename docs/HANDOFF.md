@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Factor checkpoints and global conjugation, September 26
+
+Added action_checkpoints (identity plus every prefix, immutable snapshots) and
+conjugate_factors (explicit g f g^-1). Six action tests pass, including prefix
+comparison, empty factors, return to identity, conjugation's expected changed
+product and inverse operation. Shared incremental action avoids replaying prefixes.
+Extracted factors from SVG section-rule boundaries and verified concatenation
+matches the prior word exactly: lengths 12,9,5,22,12,13,11,18,15,16,13,18,14.
+Generated .preview/disk-factor-checkpoints.html and JSON with all 14 states.
+The report explicitly labels algebraic prefix order and provisional PDF matching;
+it is not a geometric reference-arc replay. Next: establish geometric action
+conventions and check factor 9 against its 15-letter braid block.
+
 ## Exact disk action foundation, September 26
 
 Latest user priority is a trustworthy factorization/action explorer, including

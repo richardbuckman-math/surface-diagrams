@@ -30,6 +30,12 @@ def artin_action(strands, word):
     if type(strands) is not int or strands < 1:
         raise ValueError('strands must be a positive integer')
     images=[(i,) for i in range(1,strands+1)]
+    return _extend_action(images,word)
+
+
+def _extend_action(images, word):
+    images=list(images)
+    strands=len(images)
     for letter in word:
         if type(letter) is not int or not 1 <= abs(letter) < strands:
             raise ValueError('crossing index must be nonzero and smaller than strands')
@@ -38,6 +44,31 @@ def artin_action(strands, word):
         images[i:i+2]=(reduce_word(u+v+inverse_word(u)),u) if letter>0 else (
             v,reduce_word(inverse_word(v)+u+v))
     return tuple(images)
+
+
+def action_checkpoints(strands, factors):
+    """Identity followed by the action of each concatenated factor prefix.
+
+    This uses the same right-composition convention as artin_action. Empty
+    factors retain a checkpoint. Earlier snapshots are immutable tuples.
+    """
+    current=artin_action(strands,())
+    result=[current]
+    for factor in factors:
+        current=_extend_action(current,factor)
+        result.append(current)
+    return tuple(result)
+
+
+def conjugate_factors(factors, conjugator):
+    """Replace every f by g f g^-1, so the product becomes g P g^-1.
+
+    This changes the product by conjugation, not by a product-preserving move.
+    Only free cancellation is performed; support curves are not computed.
+    """
+    g=reduce_word(conjugator)
+    gi=inverse_word(g)
+    return tuple(reduce_word(g+reduce_word(factor)+gi) for factor in factors)
 
 
 def hurwitz_move(factors, index, *, inverse=False):
