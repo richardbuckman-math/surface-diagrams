@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## Exact disk action foundation, September 26
+
+Latest user priority is a trustworthy factorization/action explorer, including
+disk and sphere comparison, Hurwitz moves, conjugation and later substitutions.
+Confirmed: positive half twists on arcs; positive Dehn twists on closed curves;
+written 2 means squared Dehn twist; factors applied 1 through 13; sphere target
+is Mod(S^2,6). Disk outer boundary fixed. PDF is provisionally the earlier braid,
+not yet checked factor by factor. Do not silently promote that match to verified.
+Confirmed factor 9: Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down'). Its SVG at
+.preview/factor-nine-confirmed.svg was rendered and visually inspected; it
+matches the broad nested shape on the PDF, but no braid conversion is claimed.
+
+Added braid_actions.py with reduced free-group words, explicit Artin action,
+and forward/inverse Hurwitz operations preserving concatenated product. Four
+tests cover braid relations, inverses, nontrivial boundary full twist, Hurwitz
+inverses/product preservation and invalid inputs. docs/BRAID_ACTIONS.md records
+the composition convention and its still-unresolved mapping to geometric base
+loops/application order. Earlier 178-letter transcription has nonidentity disk
+action, image lengths 2609,3157,8037,8259,13589,5999, saved in ignored preview JSON.
+This is algebraic groundwork, not the requested visual action replay yet.
+Next: fix geometric action conventions, derive/check factor 9's braid, then
+produce per-factor reference-system images with inspectable transformations.
+Validation: all 236 Python tests pass (96 seconds).
+Alpha 5 release is published with wheel/source assets and all workflows green.
+
 ## Alpha 5 release batch, September 25 afternoon
 
 Prepared v0.1.0a5 with standalone and factor-local crossing highlights, the
