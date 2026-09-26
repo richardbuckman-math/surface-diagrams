@@ -1,9 +1,27 @@
 import unittest
 from surface_diagrams.braid_actions import (artin_action, reduce_word, inverse_word,
     hurwitz_move, action_checkpoints, conjugate_factors)
+from surface_diagrams.braid_actions import arc_ray_word
+from surface_diagrams import Arc
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_confirmed_factor_nine_ray_word_matches_conjugated_meridians(self):
+        arc=Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down')
+        transport=arc_ray_word(6,arc)
+        self.assertEqual(transport,(-4,-3,2,3,4,-5,-4,-3,-2,3,4,3))
+        g=(-2,-3,4,2,-3,-2,-2)
+        images=artin_action(6,g)
+        self.assertEqual(images[0],(1,))
+        self.assertEqual(images[1],reduce_word(transport+(4,)+inverse_word(transport)))
+        reverse=Arc(4,1,tuple(reversed(arc.cuts)),direction='up')
+        self.assertEqual(arc_ray_word(6,reverse),inverse_word(transport))
+
+    def test_ray_word_side_and_direction(self):
+        self.assertEqual(arc_ray_word(4,Arc(1,4,direction='up')),(2,3))
+        self.assertEqual(arc_ray_word(4,Arc(1,4,direction='down')),())
+        with self.assertRaises(ValueError): arc_ray_word(4,Arc(0,3))
+
     def test_checkpoints_retain_identity_and_empty_factors(self):
         factors=((1,-2),(),(2,-1))
         history=action_checkpoints(3,factors)

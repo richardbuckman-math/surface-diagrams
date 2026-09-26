@@ -40,3 +40,18 @@ freely reduced factors. Neither operation computes new planar support curves.
 The six-strand PDF/braid correspondence remains provisional until the support
 curves are checked against the earlier transcription. Matching the final group
 action alone would not verify every individual factor correspondence.
+
+## Arc ray words
+
+`arc_ray_word(points, arc)` reads a point-to-point Arc against upward rays.
+An upper segment crossing ray j left-to-right contributes j; crossing it
+right-to-left contributes -j. Lower segments contribute no letters, and endpoint
+rays at the endpoints are excluded. Reversing the arc inverts this word.
+This is relative path data, not a general arc-to-braid conversion.
+
+For the confirmed factor 9 itinerary, the result is
+(-4,-3,2,3,4,-5,-4,-3,-2,3,4,3). The earlier SVG block has the exact form
+`g + (1,) + inverse_word(g)`, with g=(-2,-3,4,2,-3,-2,-2).
+The action sends x1 to x1 and x2 to t x4 t^-1 for this same ray word t.
+This verifies the endpoint/transport-word comparison under the stated convention;
+other factors and the geometric action replay still need checking.

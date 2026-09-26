@@ -71,6 +71,36 @@ def conjugate_factors(factors, conjugator):
     return tuple(reduce_word(g+reduce_word(factor)+gi) for factor in factors)
 
 
+def arc_ray_word(points, arc):
+    """Read an Arc against upward vertical rays from the marked points.
+
+    Crossing a ray left-to-right contributes +j, right-to-left -j. Endpoint
+    rays are excluded at the endpoint itself. This is a relative path encoding,
+    not a Dehn-twist automorphism or a conversion to braid generators.
+    Only point-to-point arcs on a row of punctures are supported.
+    """
+    from .curves import Arc
+    if type(points) is not int or points < 2:
+        raise ValueError('points must be an integer at least two')
+    if not isinstance(arc,Arc):
+        raise TypeError('arc must be an Arc')
+    if not 1 <= arc.start <= points or not 1 <= arc.end <= points:
+        raise ValueError('arc endpoints must be marked points')
+    if any(c > points for c in arc.cuts):
+        raise ValueError('cut index exceeds the marked row')
+    if arc.start_side is not None or arc.end_side is not None:
+        raise ValueError('boundary rim endpoints are not supported')
+    # Points are at 2j; gap c is at 2c+1, including exterior gaps 0,n.
+    locations=(2*arc.start,)+tuple(2*c+1 for c in arc.cuts)+(2*arc.end,)
+    letters=[]
+    for index,(a,b) in enumerate(zip(locations,locations[1:])):
+        if (index%2==0) != arc.initial_up:
+            continue
+        crossed=[j for j in range(1,points+1) if min(a,b)<2*j<max(a,b)]
+        letters.extend(crossed if a<b else [-j for j in reversed(crossed)])
+    return reduce_word(letters)
+
+
 def hurwitz_move(factors, index, *, inverse=False):
     """Move an adjacent pair at zero-based index, preserving concatenation.
 

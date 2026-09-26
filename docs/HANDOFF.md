@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## Factor 9 relative-path comparison, September 26
+
+Added arc_ray_word for point-to-point Arc itineraries, counting directed crossings
+of upward puncture rays. Factor 9 gives t=(-4,-3,2,3,4,-5,-4,-3,-2,3,4,3).
+Its SVG block is exactly g sigma1 g^-1 with g=(-2,-3,4,2,-3,-2,-2).
+Verified A(g)(x1)=x1 and A(g)(x2)=t x4 t^-1. This is exact endpoint/ray-word
+agreement, not verification of all factors or the geometric action convention.
+Eight action tests pass, including reversal and upper/lower ray conventions.
+The full suite passes all 240 tests (87 seconds).
+Created .preview/factor-nine-check.html with the confirmed arc, upward rays and
+a segment-by-segment table; visually inspected the diagram. Next: extend this
+ray encoding to closed support curves, then compare remaining factors and build
+geometric action replay. Full global order/sign calibration remains explicit.
+
+
 ## Factor checkpoints and global conjugation, September 26
 
 Added action_checkpoints (identity plus every prefix, immutable snapshots) and
