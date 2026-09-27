@@ -8,6 +8,28 @@ from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_closed_path_key_matches_exhaustive_short_word_oracle(self):
+        from itertools import product
+        def oracle(word):
+            word=reduce_word(word)
+            while len(word)>1 and word[0]==-word[-1]:
+                word=word[1:-1]
+            if not word:
+                return ()
+            return min(w[i:]+w[:i] for w in (word,inverse_word(word))
+                       for i in range(len(w)))
+        for length in range(7):
+            for word in product((-2,-1,1,2),repeat=length):
+                self.assertEqual(free_homotopy_key(word),oracle(word),word)
+
+    def test_closed_path_key_handles_long_periodic_and_nearly_periodic_words(self):
+        periodic=(1,2)*25000
+        self.assertEqual(free_homotopy_key(periodic),(-2,-1)*25000)
+        almost=(1,)*50000+(2,)
+        expected=(-2,)+(-1,)*50000
+        self.assertEqual(free_homotopy_key(almost),expected)
+        self.assertEqual(free_homotopy_key((3,)+almost+(-3,)),expected)
+
     def test_checked_substitution_splits_squared_three_point_twist(self):
         twist=(3,4)*3
         factors=((1,),twist*2,(-1,))

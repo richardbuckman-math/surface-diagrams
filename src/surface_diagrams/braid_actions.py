@@ -123,6 +123,30 @@ def loop_ray_word(points, loop):
     return reduce_word(letters)
 
 
+def _least_rotation(word):
+    """Lexicographically least cyclic rotation using linear candidate elimination."""
+    n=len(word)
+    i,j,offset=0,1,0
+    while i<n and j<n and offset<n:
+        a,b=word[(i+offset)%n],word[(j+offset)%n]
+        if a==b:
+            offset+=1
+            continue
+        # A losing start and the next offset starts cannot be minimal: each
+        # shares the compared prefix and loses to the corresponding other start.
+        if a>b:
+            i+=offset+1
+            if i<=j:
+                i=j+1
+        else:
+            j+=offset+1
+            if j<=i:
+                j=i+1
+        offset=0
+    start=min(i,j)
+    return word[start:]+word[:start]
+
+
 def free_homotopy_key(word):
     """Canonical free-group conjugacy key, identifying reversed orientation.
 
@@ -138,7 +162,7 @@ def free_homotopy_key(word):
     if not word:
         return ()
     reverse=inverse_word(word)
-    return min(w[i:]+w[:i] for w in (word,reverse) for i in range(len(w)))
+    return min(_least_rotation(word),_least_rotation(reverse))
 
 
 def act_on_loop_word(strands, braid, word):

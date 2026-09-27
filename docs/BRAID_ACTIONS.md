@@ -63,8 +63,9 @@ rays. For example, `Loop((2, 5))` on six points gives `(3, 4, 5)`. The output
 retains a traversal and starting cut. `free_homotopy_key(word)` removes cyclic
 conjugation and identifies reversed traversal for an unoriented closed path.
 It does not certify that an arbitrary supplied itinerary is embedded, calculate
-a Dehn twist, or apply sphere relations. Canonicalization currently examines all
-cyclic rotations and is intended for manageable support words, not huge outputs.
+a Dehn twist, or apply sphere relations. Canonicalization uses linear-time
+rotation comparison, so long action images do not require constructing every
+cyclic rotation. The exact key is unchanged, including for periodic words.
 
 `act_on_loop_word(strands, braid, word)` substitutes Artin images and returns
 the exact reduced based word. Comparing its `free_homotopy_key` with the original

@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Long closed-curve comparisons, September 27 morning
+
+Replaced exhaustive cyclic-rotation construction in free_homotopy_key with
+linear candidate elimination. Exact keys agree with an exhaustive oracle on
+every word of length 0 through 6 over four signed letters; periodic and nearly
+periodic 50,000-letter cases also pass. All 247 Python tests pass.
+The five adjacent-pair loops under the earlier SVG braid give based lengths
+2182, 8476, 8156, 13470, 7614; all five closed classes change in the disk
+convention. Local key calculations took under 0.03 seconds each, saved in
+.preview/closed-curve-comparison.json. This uses the earlier SVG, not a newly
+verified PDF transcription. No rendering geometry changed; geometric replay
+remains outstanding. Next: compare the remaining supplied support encodings,
+retaining based data for the disk identity test.
+
 ## Checked substitutions and seven squared-twist splits, September 27
 
 Added substitute_factors with exact Artin-action comparison of a selected slice.
