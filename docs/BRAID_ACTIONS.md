@@ -72,3 +72,17 @@ tests the closed-path class in this algebraic convention. Keep the based word:
 a disk full twist can change it by conjugation while leaving the closed-path
 class unchanged. Thus agreement of closed curves alone is insufficient for the
 disk identity check; based reference data must remain available.
+
+## Checked substitutions
+
+`substitute_factors(strands, factors, start, stop, replacement)` accepts a
+replacement only if its exact Artin action agrees with the selected factor
+slice. Indices are zero-based and stop is excluded. An empty replacement permits
+checked cancellation. The operation validates disk braid equality, not a sphere
+relation or a boundary-framed lantern relation; supplying such a substitution
+requires its own conventions and encoding first. It does not discover relations.
+
+Run `python examples/verified_twist_split.py` to draw the independently checked
+replacement `(sigma3 sigma4)^6` by two copies of `(sigma3 sigma4)^3`.
+The diagram renderer still displays supplied support curves; equality checking
+happens in the substitution function before the example is drawn.

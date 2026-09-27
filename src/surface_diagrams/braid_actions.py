@@ -172,3 +172,26 @@ def hurwitz_move(factors, index, *, inverse=False):
     pair=(reduce_word(u+v+inverse_word(u)),u) if inverse else (
         v,reduce_word(inverse_word(v)+u+v))
     return factors[:index]+pair+factors[index+2:]
+
+
+def substitute_factors(strands, factors, start, stop, replacement):
+    """Replace a nonempty factor slice only when its exact disk action agrees.
+
+    start/stop are zero-based, with stop excluded. Empty replacement permits
+    checked cancellation. This validates disk braid equality, not a sphere or
+    boundary-framed mapping-class relation. No relation is discovered for you.
+    """
+    factors=tuple(tuple(word) for word in factors)
+    replacement=tuple(tuple(word) for word in replacement)
+    if type(start) is not int or type(stop) is not int or not 0 <= start < stop <= len(factors):
+        raise ValueError('start/stop must select a nonempty factor slice')
+    # Validate original letters before reduction, including untouched factors.
+    for word in factors+replacement:
+        for i in word:
+            if type(i) is not int or type(strands) is not int or not 1 <= abs(i) < strands:
+                raise ValueError('crossing index must be nonzero and smaller than strands')
+    before=artin_action(strands,(i for word in factors[start:stop] for i in word))
+    after=artin_action(strands,(i for word in replacement for i in word))
+    if before != after:
+        raise ValueError('replacement does not preserve the exact disk braid action')
+    return factors[:start]+tuple(reduce_word(word) for word in replacement)+factors[stop:]

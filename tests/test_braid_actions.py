@@ -3,10 +3,27 @@ from surface_diagrams.braid_actions import (artin_action, reduce_word, inverse_w
     hurwitz_move, action_checkpoints, conjugate_factors)
 from surface_diagrams.braid_actions import arc_ray_word, loop_ray_word, free_homotopy_key
 from surface_diagrams.braid_actions import act_on_loop_word
+from surface_diagrams.braid_actions import substitute_factors
 from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_checked_substitution_splits_squared_three_point_twist(self):
+        twist=(3,4)*3
+        factors=((1,),twist*2,(-1,))
+        result=substitute_factors(6,factors,1,2,(twist,twist))
+        self.assertEqual(result,((1,),twist,twist,(-1,)))
+        self.assertEqual(artin_action(6,sum(result,())),artin_action(6,sum(factors,())))
+        self.assertEqual(substitute_factors(3,((1,2,1),),0,1,((2,1,2),)),((2,1,2),))
+        self.assertEqual(substitute_factors(3,((1,),(-1,)),0,2,()),())
+
+    def test_substitution_rejects_same_permutation_and_invalid_hidden_letters(self):
+        with self.assertRaisesRegex(ValueError,'exact disk braid action'):
+            substitute_factors(3,((1,1),),0,1,())
+        with self.assertRaises(ValueError): substitute_factors(3,((1,),(4,-4)),0,1,((1,),))
+        with self.assertRaises(ValueError): substitute_factors(3,((1,),),0,0,())
+        with self.assertRaises(ValueError): substitute_factors(3,((1,),),True,1,())
+
     def test_boundary_twist_is_visible_based_but_not_on_closed_curve_class(self):
         original=loop_ray_word(3,Loop((0,2)))
         image=act_on_loop_word(3,(1,2)*3,original)

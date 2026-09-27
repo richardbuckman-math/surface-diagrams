@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## Checked substitutions and seven squared-twist splits, September 27
+
+Added substitute_factors with exact Artin-action comparison of a selected slice.
+Rejects incorrect replacements even when permutation agrees; validates untouched
+input letters too. All 245 Python tests pass (117 seconds). Thirteen focused tests cover square splitting, braid
+relation replacement, cancellation, invalid slice and invalid hidden letters.
+Applied separately to original SVG factors 1,4,5,8,10,12,13, each with a conjugated
+12-letter alternating triple-twist core: seven verified splits yield 20 factors.
+Saved the result to .preview/six-seven-squared-twists-split.json. PDF correspondence
+of remaining support curves stays provisional. Added runnable
+examples/verified_twist_split.py; visually inspected the first split alongside
+its support curve and continuous braid. Renderer footer remains explicit that
+it does not check equality; the separate substitution operation does that first.
+Next: compare the remaining support encodings, and retain the distinction between
+disk-equality substitutions and sphere/boundary-framed relations.
+
 ## Closed-loop ray words and actions, September 26 evening
 
 Added loop_ray_word, free_homotopy_key (unoriented free-group conjugacy key),
