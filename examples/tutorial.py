@@ -7,6 +7,31 @@ from surface_diagrams import (
 )
 from surface_diagrams.genus_diagrams import NamedCut, MarkedArc
 from surface_diagrams.disk_routes import DiskRoute, Crossing, CutAtlas
+from surface_diagrams.braid_actions import artin_action, hurwitz_move
+
+
+def checked_hurwitz_example():
+    """Show a computed move, checking products independently before rendering."""
+    original=((1,),(2,))
+    moved=hurwitz_move(original,0)
+    restored=hurwitz_move(moved,0,inverse=True)
+    expected=artin_action(3,sum(original,()))
+    rows=[]
+    for label,factors in (('Start',original),('Hurwitz move',moved),('Inverse move',restored)):
+        product=sum(factors,())
+        if artin_action(3,product)!=expected:
+            raise ValueError('Hurwitz example failed exact product verification')
+        panels=[]
+        for index,word in enumerate(factors):
+            panels.append(Panel(BraidDiagram(3,word,crossing_style='smooth',
+                show_generators=True),f'{label}: factor {index+1}\n{word}'))
+        panels.append(Panel(BraidDiagram(3,product,crossing_style='smooth',
+            show_generators=True,highlight_crossings=tuple(range(1,len(factors[0])+1))),
+            'Full product: exact action checked\nGold outline marks the first factor'))
+        rows.append(tuple(panels))
+    if restored!=original:
+        raise ValueError('Inverse move did not restore the factors')
+    return Figure(tuple(rows))
 
 
 def examples():
@@ -171,6 +196,9 @@ def examples():
                            crossing_style='smooth', show_generators=True, highlight_crossings=(1,)),
               'Read upward: s1, s2^-1, s1^-1'),
     ),)), Style()
+
+
+    yield '23-checked-hurwitz-move', checked_hurwitz_example(), Style()
 
 
 def main(out=None):

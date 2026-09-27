@@ -728,7 +728,27 @@ Both closed and bordered genus presentations support these colors in SVG and Tik
 <p>These rows isolate the inputs; they are not successive images under a mapping
 class. An action-state sequence must supply its actual intermediate curves.</p>
 <p><img src="../examples/output/tutorial/19-bordered-intersecting-arcs.svg" alt="Supplied intersecting bordered marked arcs"></p>
-<h2>16. What to work on next</h2>
+<h2>16. A checked Hurwitz move</h2>
+<p>For adjacent factors, the implemented forward move is
+<code>(u, v) -&gt; (v, v^-1 u v)</code>. With <code>u=(1,)</code> and <code>v=(2,)</code>, this gives
+<code>((2,), (-2, 1, 2))</code>. The full braid word changes from <code>(1, 2)</code> to
+<code>(2, -2, 1, 2)</code>: the first two crossings cancel. The inverse move restores
+the original factors.</p>
+<p><img src="../examples/output/tutorial/23-checked-hurwitz-move.svg" alt="Checked Hurwitz move and inverse"></p>
+<p>Each row shows the two factors separately and then their continuous product.
+Read downward; colors restart at the top of each separate diagram. The gold
+outline in the product identifies its first factor. The tutorial generator
+checks the exact Artin action of each product before exporting this figure.
+This verifies disk-braid equality, not a sphere relation. These are braid
+drawings; transformed planar support curves are not yet computed.</p>
+<pre><code class="language-python">from surface_diagrams.braid_actions import hurwitz_move, artin_action
+
+factors = ((1,), (2,))
+moved = hurwitz_move(factors, 0)
+assert artin_action(3, sum(factors, ())) == artin_action(3, sum(moved, ()))
+assert hurwitz_move(moved, 0, inverse=True) == factors
+</code></pre>
+<h2>17. What to work on next</h2>
 <table>
 <thead>
 <tr>

@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Checked Hurwitz tutorial, September 27 afternoon
+
+Added tutorial figure 23: a computed Hurwitz move on ((1,), (2,)) and its
+inverse, showing each factor and the continuous product. Gold outlines identify
+the first factor in each product. Generation checks exact Artin actions for all
+three rows and checks restoration of the original factors before export.
+All 23 tutorial SVG/TikZ figures regenerate, the HTML/site build passes local
+link checks, and all 15 braid-action tests pass. Visually inspected the new PNG:
+labels, inverse crossing and first-factor outlines are clear. This illustrates
+braid manipulation only; no transformed planar support curve is asserted.
+Next: add geometric support correspondence to this small checked example before
+attempting a full six-point action replay; remaining PDF support encodings still
+need comparison.
+
 ## Long closed-curve comparisons, September 27 morning
 
 Replaced exhaustive cyclic-rotation construction in free_homotopy_key with

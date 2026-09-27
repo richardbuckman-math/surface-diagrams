@@ -844,7 +844,33 @@ class. An action-state sequence must supply its actual intermediate curves.
 
 ![Supplied intersecting bordered marked arcs](../examples/output/tutorial/19-bordered-intersecting-arcs.svg)
 
-## 16. What to work on next
+## 16. A checked Hurwitz move
+
+For adjacent factors, the implemented forward move is
+`(u, v) -> (v, v^-1 u v)`. With `u=(1,)` and `v=(2,)`, this gives
+`((2,), (-2, 1, 2))`. The full braid word changes from `(1, 2)` to
+`(2, -2, 1, 2)`: the first two crossings cancel. The inverse move restores
+the original factors.
+
+![Checked Hurwitz move and inverse](../examples/output/tutorial/23-checked-hurwitz-move.svg)
+
+Each row shows the two factors separately and then their continuous product.
+Read downward; colors restart at the top of each separate diagram. The gold
+outline in the product identifies its first factor. The tutorial generator
+checks the exact Artin action of each product before exporting this figure.
+This verifies disk-braid equality, not a sphere relation. These are braid
+drawings; transformed planar support curves are not yet computed.
+
+```python
+from surface_diagrams.braid_actions import hurwitz_move, artin_action
+
+factors = ((1,), (2,))
+moved = hurwitz_move(factors, 0)
+assert artin_action(3, sum(factors, ())) == artin_action(3, sum(moved, ()))
+assert hurwitz_move(moved, 0, inverse=True) == factors
+```
+
+## 17. What to work on next
 
 | Priority | Deliverable |
 | --- | --- |

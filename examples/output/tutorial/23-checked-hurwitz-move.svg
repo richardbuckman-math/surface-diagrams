@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 614 666" width="614" height="666" role="img">
+<title>23-checked-hurwitz-move</title>
+<path class="braid-strand" d="M 54 100 C 54 112 84 124 84 136" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 84 100 C 84 104.72 79.3586666667 109.44 73.7271822222 114.16 M 64.2728177778 121.84 C 58.6413333333 126.56 54 131.28 54 136" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 114 100 L 114 136" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 238 100 L 238 136" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 268 100 C 268 112 298 124 298 136" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 298 100 C 298 104.72 293.358666667 109.44 287.727182222 114.16 M 278.272817778 121.84 C 272.641333333 126.56 268 131.28 268 136" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-highlight" d="M 455 116 L 527 116 L 527 84 L 455 84 Z " fill="none" stroke="#8b6b00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 82 C 461 94 491 106 491 118" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 82 C 491 86.72 486.358666667 91.44 480.727182222 96.16 M 471.272817778 103.84 C 465.641333333 108.56 461 113.28 461 118" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 82 L 521 118" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 118 L 461 154" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 118 C 491 130 521 142 521 154" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 118 C 521 122.72 516.358666667 127.44 510.727182222 132.16 M 501.272817778 139.84 C 495.641333333 144.56 491 149.28 491 154" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 54 334 L 54 370" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 84 334 C 84 346 114 358 114 370" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 114 334 C 114 338.72 109.358666667 343.44 103.727182222 348.16 M 94.2728177778 355.84 C 88.6413333333 360.56 84 365.28 84 370" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 238 298 L 238 334" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 268 298 C 268 302.72 272.641333333 307.44 278.272817778 312.16 M 287.727182222 319.84 C 293.358666667 324.56 298 329.28 298 334" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 298 298 C 298 310 268 322 268 334" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 238 334 C 238 346 268 358 268 370" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 268 334 C 268 338.72 263.358666667 343.44 257.727182222 348.16 M 248.272817778 355.84 C 242.641333333 360.56 238 365.28 238 370" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 298 334 L 298 370" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 238 370 L 238 406" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 268 370 C 268 382 298 394 298 406" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 298 370 C 298 374.72 293.358666667 379.44 287.727182222 384.16 M 278.272817778 391.84 C 272.641333333 396.56 268 401.28 268 406" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-highlight" d="M 455 314 L 527 314 L 527 282 L 455 282 Z " fill="none" stroke="#8b6b00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 280 L 461 316" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 280 C 491 292 521 304 521 316" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 280 C 521 284.72 516.358666667 289.44 510.727182222 294.16 M 501.272817778 301.84 C 495.641333333 306.56 491 311.28 491 316" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 316 L 461 352" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 316 C 491 320.72 495.641333333 325.44 501.272817778 330.16 M 510.727182222 337.84 C 516.358666667 342.56 521 347.28 521 352" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 316 C 521 328 491 340 491 352" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 352 C 461 364 491 376 491 388" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 352 C 491 356.72 486.358666667 361.44 480.727182222 366.16 M 471.272817778 373.84 C 465.641333333 378.56 461 383.28 461 388" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 352 L 521 388" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 388 L 461 424" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 388 C 491 400 521 412 521 424" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 388 C 521 392.72 516.358666667 397.44 510.727182222 402.16 M 501.272817778 409.84 C 495.641333333 414.56 491 419.28 491 424" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 54 568 C 54 580 84 592 84 604" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 84 568 C 84 572.72 79.3586666667 577.44 73.7271822222 582.16 M 64.2728177778 589.84 C 58.6413333333 594.56 54 599.28 54 604" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 114 568 L 114 604" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 238 568 L 238 604" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 268 568 C 268 580 298 592 298 604" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 298 568 C 298 572.72 293.358666667 577.44 287.727182222 582.16 M 278.272817778 589.84 C 272.641333333 594.56 268 599.28 268 604" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-highlight" d="M 455 584 L 527 584 L 527 552 L 455 552 Z " fill="none" stroke="#8b6b00" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 550 C 461 562 491 574 491 586" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 550 C 491 554.72 486.358666667 559.44 480.727182222 564.16 M 471.272817778 571.84 C 465.641333333 576.56 461 581.28 461 586" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 550 L 521 586" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 461 586 L 461 622" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 491 586 C 491 598 521 610 521 622" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 521 586 C 521 590.72 516.358666667 595.44 510.727182222 600.16 M 501.272817778 607.84 C 495.641333333 612.56 491 617.28 491 622" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="54" y="92" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="54" y="150" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="84" y="92" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="84" y="150" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="114" y="92" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="114" y="150" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="132" y="121" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="84" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Start: factor 1</text>
+<text x="84" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(1,)</text>
+<text x="238" y="92" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="238" y="150" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="268" y="92" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="268" y="150" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="298" y="92" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="298" y="150" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="316" y="121" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="268" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Start: factor 2</text>
+<text x="268" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(2,)</text>
+<text x="461" y="74" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="461" y="168" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="74" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="168" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="74" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="168" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="539" y="103" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="539" y="139" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="491" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Full product: exact action checked</text>
+<text x="491" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Gold outline marks the first factor</text>
+<text x="54" y="326" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="54" y="384" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="84" y="326" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="84" y="384" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="114" y="326" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="114" y="384" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="132" y="355" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="84" y="222" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Hurwitz move: factor 1</text>
+<text x="84" y="237" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(2,)</text>
+<text x="238" y="290" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="238" y="420" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="268" y="290" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="268" y="420" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="298" y="290" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="298" y="420" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="325" y="319" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="325" y="355" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="325" y="391" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="268" y="222" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Hurwitz move: factor 2</text>
+<text x="268" y="237" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(-2, 1, 2)</text>
+<text x="461" y="272" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="461" y="438" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="272" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="438" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="272" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="438" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="548" y="301" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="548" y="337" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="548" y="373" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="548" y="409" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="491" y="222" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Full product: exact action checked</text>
+<text x="491" y="237" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Gold outline marks the first factor</text>
+<text x="54" y="560" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="54" y="618" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="84" y="560" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="84" y="618" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="114" y="560" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="114" y="618" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="132" y="589" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="84" y="492" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Inverse move: factor 1</text>
+<text x="84" y="507" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(1,)</text>
+<text x="238" y="560" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="238" y="618" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="268" y="560" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="268" y="618" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="298" y="560" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="298" y="618" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="316" y="589" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="268" y="492" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Inverse move: factor 2</text>
+<text x="268" y="507" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">(2,)</text>
+<text x="461" y="542" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="461" y="636" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="542" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="491" y="636" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="542" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="521" y="636" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="539" y="571" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="539" y="607" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="491" y="492" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Full product: exact action checked</text>
+<text x="491" y="507" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Gold outline marks the first factor</text>
+</svg>
