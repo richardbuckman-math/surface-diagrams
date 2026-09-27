@@ -8,6 +8,16 @@ from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_hurwitz_support_distinguishes_upper_and_lower_arc(self):
+        moved=hurwitz_move(((1,),(2,)),0)
+        self.assertEqual(moved,((2,),(-2,1,2)))
+        images=artin_action(3,(-2,))
+        self.assertEqual(images[0],(1,))
+        lower=arc_ray_word(3,Arc(1,3,direction='down'))
+        upper=arc_ray_word(3,Arc(1,3,direction='up'))
+        self.assertEqual(images[1],reduce_word(lower+(3,)+inverse_word(lower)))
+        self.assertNotEqual(images[1],reduce_word(upper+(3,)+inverse_word(upper)))
+
     def test_closed_path_key_matches_exhaustive_short_word_oracle(self):
         from itertools import product
         def oracle(word):

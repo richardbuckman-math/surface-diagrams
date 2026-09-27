@@ -748,6 +748,18 @@ moved = hurwitz_move(factors, 0)
 assert artin_action(3, sum(factors, ())) == artin_action(3, sum(moved, ()))
 assert hurwitz_move(moved, 0, inverse=True) == factors
 </code></pre>
+<h3>The support arcs in this example</h3>
+<p><img src="../examples/output/tutorial/24-hurwitz-support-arcs.svg" alt="Support arcs before and after a Hurwitz move"></p>
+<p>The initial factors twist along the adjacent arcs 1-2 and 2-3. After the move,
+the first arc is 2-3 and the second joins 1 to 3 <strong>below</strong> point 2. Its braid
+word is <code>(-2, 1, 2)</code>, the conjugate of <code>(1,)</code> by <code>(-2,)</code>.</p>
+<p>There is a separate path check behind this supplied drawing: the Artin action
+of <code>(-2,)</code> sends <code>x1</code> to <code>x1</code> and <code>x2</code> to <code>x3</code>. The lower arc crosses no upward
+puncture rays and has empty transport word, giving precisely these endpoint
+meridians. The upper arc would cross ray 2 and give <code>x2 x3 x2^-1</code> instead,
+so it would fail this check. Generation verifies this comparison as well as
+product equality. This is one checked support example, not a general algorithm
+for drawing the image of an arbitrary arc.</p>
 <h2>17. What to work on next</h2>
 <table>
 <thead>

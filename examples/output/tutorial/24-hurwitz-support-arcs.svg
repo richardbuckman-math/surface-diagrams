@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 843 461.5" width="843" height="461.5" role="img">
+<title>24-hurwitz-support-arcs</title>
+<path class="arc" d="M 69.75 132.75 L 119.75 132.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 291.5 114.75 C 291.5 126.75 321.5 138.75 321.5 150.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 321.5 114.75 C 321.5 119.47 316.858666667 124.19 311.227182222 128.91 M 301.772817778 136.59 C 296.141333333 141.31 291.5 146.03 291.5 150.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 351.5 114.75 L 351.5 150.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" d="M 523.25 132.75 L 573.25 132.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 713 114.75 L 713 150.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 743 114.75 C 743 126.75 773 138.75 773 150.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 773 114.75 C 773 119.47 768.358666667 124.19 762.727182222 128.91 M 753.272817778 136.59 C 747.641333333 141.31 743 146.03 743 150.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" d="M 119.75 363.5 L 169.75 363.5" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 291.5 345.5 L 291.5 381.5" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 321.5 345.5 C 321.5 357.5 351.5 369.5 351.5 381.5" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 351.5 345.5 C 351.5 350.22 346.858666667 354.94 341.227182222 359.66 M 331.772817778 367.34 C 326.141333333 372.06 321.5 376.78 321.5 381.5" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" d="M 473.25 363.5 A 50 31.3157894737 0 0 0 573.25 363.5" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 713 309.5 L 713 345.5" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 743 309.5 C 743 314.22 747.641333333 318.94 753.272817778 323.66 M 762.727182222 331.34 C 768.358666667 336.06 773 340.78 773 345.5" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 773 309.5 C 773 321.5 743 333.5 743 345.5" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 713 345.5 C 713 357.5 743 369.5 743 381.5" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 743 345.5 C 743 350.22 738.358666667 354.94 732.727182222 359.66 M 723.272817778 367.34 C 717.641333333 372.06 713 376.78 713 381.5" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 773 345.5 L 773 381.5" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 713 381.5 L 713 417.5" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 743 381.5 C 743 393.5 773 405.5 773 417.5" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 773 381.5 C 773 386.22 768.358666667 390.94 762.727182222 395.66 M 753.272817778 403.34 C 747.641333333 408.06 743 412.78 743 417.5" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse class="outer-boundary" cx="119.75" cy="132.75" rx="95" ry="70" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="69.75" cy="132.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="119.75" cy="132.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="169.75" cy="132.75" r="4" fill="#006fff"/>
+<ellipse class="outer-boundary" cx="523.25" cy="132.75" rx="95" ry="70" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="473.25" cy="132.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="523.25" cy="132.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="573.25" cy="132.75" r="4" fill="#006fff"/>
+<ellipse class="outer-boundary" cx="119.75" cy="363.5" rx="95" ry="70" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="69.75" cy="363.5" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="119.75" cy="363.5" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="169.75" cy="363.5" r="4" fill="#006fff"/>
+<ellipse class="outer-boundary" cx="523.25" cy="363.5" rx="95" ry="70" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="473.25" cy="363.5" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="523.25" cy="363.5" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="573.25" cy="363.5" r="4" fill="#006fff"/>
+<text x="119.75" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Before: factor 1</text>
+<text x="119.75" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Half twist: points 1 and 2</text>
+<text x="291.5" y="106.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="291.5" y="164.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="321.5" y="106.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="321.5" y="164.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="351.5" y="106.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="351.5" y="164.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="369.5" y="135.75" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="321.5" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Braid word: (1,)</text>
+<text x="321.5" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+<text x="523.25" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">After Hurwitz move: factor 1</text>
+<text x="523.25" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Half twist: points 2 and 3</text>
+<text x="713" y="106.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="713" y="164.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="743" y="106.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="743" y="164.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="773" y="106.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="773" y="164.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="791" y="135.75" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="743" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Braid word: (2,)</text>
+<text x="743" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+<text x="119.75" y="251.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Before: factor 2</text>
+<text x="119.75" y="266.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Half twist: points 2 and 3</text>
+<text x="291.5" y="337.5" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="291.5" y="395.5" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="321.5" y="337.5" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="321.5" y="395.5" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="351.5" y="337.5" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="351.5" y="395.5" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="369.5" y="366.5" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="321.5" y="251.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Braid word: (2,)</text>
+<text x="321.5" y="266.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+<text x="523.25" y="251.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">After Hurwitz move: factor 2</text>
+<text x="523.25" y="266.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Half twist: points 1 and 3</text>
+<text x="713" y="301.5" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="713" y="431.5" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="743" y="301.5" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="743" y="431.5" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="773" y="301.5" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="773" y="431.5" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="800" y="330.5" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="800" y="366.5" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="800" y="402.5" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="743" y="251.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Braid word: (-2, 1, 2)</text>
+<text x="743" y="266.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+</svg>

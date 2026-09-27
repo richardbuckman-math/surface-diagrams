@@ -7,7 +7,8 @@ from surface_diagrams import (
 )
 from surface_diagrams.genus_diagrams import NamedCut, MarkedArc
 from surface_diagrams.disk_routes import DiskRoute, Crossing, CutAtlas
-from surface_diagrams.braid_actions import artin_action, hurwitz_move
+from surface_diagrams.braid_actions import (artin_action, hurwitz_move,
+    arc_ray_word, reduce_word, inverse_word)
 
 
 def checked_hurwitz_example():
@@ -32,6 +33,32 @@ def checked_hurwitz_example():
     if restored!=original:
         raise ValueError('Inverse move did not restore the factors')
     return Figure(tuple(rows))
+
+
+def checked_hurwitz_support_example():
+    """A supplied support arc checked against the two transported meridians."""
+    original=((1,),(2,))
+    moved=hurwitz_move(original,0)
+    transported=Arc(1,3,direction='down')
+    transport=arc_ray_word(3,transported)
+    images=artin_action(3,(-2,))
+    if images[0]!=(1,) or images[1]!=reduce_word(transport+(3,)+inverse_word(transport)):
+        raise ValueError('Supplied support does not match transported meridians')
+    if moved!=((2,),(-2,1,2)) or artin_action(3,sum(original,()))!=artin_action(3,sum(moved,())):
+        raise ValueError('Support example failed braid verification')
+    surface=PlanarSurface.row('PPP',spacing=50,height=140,margin=45)
+    panels=[]
+    for label,words,arcs in (
+        ('Before',original,(Arc(1,2),Arc(2,3))),
+        ('After Hurwitz move',moved,(Arc(2,3),transported)),
+    ):
+        panels.append(tuple((
+            Panel(surface.with_curves(arc),
+                  f'{label}: factor {i+1}\nHalf twist: points {arc.start} and {arc.end}'),
+            Panel(BraidDiagram(3,word,crossing_style='smooth',show_generators=True),
+                  f'Braid word: {word}\nRead downward'),
+        ) for i,(word,arc) in enumerate(zip(words,arcs))))
+    return Figure(tuple(panels[0][i]+panels[1][i] for i in range(2)))
 
 
 def examples():
@@ -199,6 +226,7 @@ def examples():
 
 
     yield '23-checked-hurwitz-move', checked_hurwitz_example(), Style()
+    yield '24-hurwitz-support-arcs', checked_hurwitz_support_example(), Style()
 
 
 def main(out=None):

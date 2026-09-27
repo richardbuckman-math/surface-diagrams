@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Hurwitz support correspondence, September 27 evening
+
+Tutorial figure 24 pairs the support arcs for ((1,), (2,)) and its Hurwitz
+move ((2,), (-2,1,2)) with their individual downward-read braids. The supplied
+conjugated support is Arc(1,3,direction='down'). Generation verifies that its
+empty ray transport matches A(-2)(x1)=x1 and A(-2)(x2)=x3, plus product equality.
+A regression test rejects the upper arc's different transport word. All 16
+braid-action tests pass; 24 tutorial SVG/TikZ figures regenerate; site and HTML
+builds pass link checks. Visually inspected the final four-column SVG raster.
+This is a checked small support example, not automatic geometric action replay.
+Next: extend transport comparisons to a nonempty-ray support before attempting
+the remaining six-point PDF factors. Keep factor-order conventions explicit.
+
 ## Checked Hurwitz tutorial, September 27 afternoon
 
 Added tutorial figure 23: a computed Hurwitz move on ((1,), (2,)) and its
