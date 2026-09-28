@@ -20,18 +20,20 @@ class ArcTransportAudit:
     transport: tuple
     actual: tuple
     expected: tuple
+    start_path: tuple = ()
 
     @property
     def matches(self):
         return self.actual == self.expected
 
 
-def audit_arc_transport(points, conjugator, generator, arc):
-    """Compare A(g)(x_i,x_(i+1)) with (x_start,t x_end t^-1).
+def audit_arc_transport(points, conjugator, generator, arc, *, start_path=()):
+    """Compare A(g)(x_i,x_(i+1)) with p(x_start,t x_end t^-1)p^-1.
 
     Here t is the supplied arc's ray word, i is a positive generator index,
-    and g is the conjugator in g sigma_i g^-1. This restricted audit assumes
-    the first endpoint's meridian needs no base-path conjugation. It returns
+    and g is the conjugator in g sigma_i g^-1. The supplied start_path p is
+    a free-group word, not a braid word; its default is the empty base path.
+    It returns
     both pairs for inspection; it neither reconstructs arcs nor verifies an
     entire factorization, sphere relation, or arbitrary support equivalence.
     """
@@ -39,8 +41,14 @@ def audit_arc_transport(points, conjugator, generator, arc):
     if type(generator) is not int or not 1 <= generator < points:
         raise ValueError('generator must be a positive index smaller than points')
     images=artin_action(points,conjugator)
-    expected=((arc.start,),reduce_word(transport+(arc.end,)+inverse_word(transport)))
-    return ArcTransportAudit(transport,images[generator-1:generator+1],expected)
+    start_path=tuple(start_path)
+    if any(type(i) is not int or not 1 <= abs(i) <= points for i in start_path):
+        raise ValueError('start_path letters must be nonzero integers within the free-group rank')
+    start_path=reduce_word(start_path)
+    back=inverse_word(start_path)
+    expected=(reduce_word(start_path+(arc.start,)+back),
+              reduce_word(start_path+transport+(arc.end,)+inverse_word(transport)+back))
+    return ArcTransportAudit(transport,images[generator-1:generator+1],expected,start_path)
 
 
 def reduce_word(word):

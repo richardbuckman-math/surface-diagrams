@@ -9,6 +9,24 @@ from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_transport_audit_retains_boundary_base_path(self):
+        arc=Arc(1,2)
+        full_twist=(1,2)*3
+        self.assertFalse(audit_arc_transport(3,full_twist,1,arc).matches)
+        audit=audit_arc_transport(3,full_twist,1,arc,start_path=(1,2,3))
+        self.assertTrue(audit.matches)
+        self.assertEqual(audit.start_path,(1,2,3))
+        self.assertNotEqual(audit.actual,((1,),(2,)))
+        upper=audit_arc_transport(3,full_twist+(2,),1,Arc(1,3,direction='up'),
+                                  start_path=(1,2,3))
+        self.assertTrue(upper.matches)
+        self.assertEqual(upper.transport,(2,))
+        self.assertFalse(audit_arc_transport(3,full_twist,1,arc,start_path=(1,2)).matches)
+        self.assertEqual(audit_arc_transport(3,(),1,arc,start_path=(3,-3)).start_path,())
+        for path in ((4,-4),(0,),(True,)):
+            with self.assertRaises(ValueError):
+                audit_arc_transport(3,(),1,arc,start_path=path)
+
     def test_transport_audit_exposes_evidence_and_mismatches(self):
         upper=Arc(1,3,direction='up')
         audit=audit_arc_transport(3,(2,),1,upper)

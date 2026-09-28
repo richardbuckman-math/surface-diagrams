@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## Explicit starting base paths, September 28 afternoon
+
+Extended audit_arc_transport with keyword start_path (a free-group word, not
+a braid). Both expected endpoint meridians are conjugated by this supplied path;
+the frozen evidence retains its reduced value. Validation rejects out-of-rank
+letters before cancellation. Regression cases cover a boundary full twist,
+incorrect/default paths, and nonempty start and arc transport together. All 20
+focused tests and all 252 Python tests pass (210 seconds). Factor 9 still matches with the default empty path; regenerated
+its SVG/TikZ/JSON and visually inspected the unchanged arc/braid comparison.
+Next: compare additional supplied supports using explicit base paths; do not
+infer a general geometric reconstruction or complete PDF verification from this API.
+
 ## Reusable anchored transport audit, September 28 morning
 
 Added audit_arc_transport and frozen ArcTransportAudit evidence: transport,

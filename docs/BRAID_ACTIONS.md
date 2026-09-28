@@ -61,11 +61,17 @@ other factors and the geometric action replay still need checking.
 `audit_arc_transport(points, conjugator, generator, arc)` compares the images
 of `x_i, x_(i+1)` under the conjugator with `x_start, t x_end t^-1`, where
 `t` is the supplied arc's ray word and `i=generator` is positive. The frozen
-result exposes `transport`, `actual`, `expected`, and the computed `matches`
+result exposes `transport`, `start_path`, `actual`, `expected`, and the computed `matches`
 property. Invalid inputs raise errors; a well-formed mismatch returns evidence.
 
-This is an **anchored** comparison: it assumes the first meridian has no
-base-path conjugation. A mismatch can therefore mean those base-path assumptions
+The optional keyword `start_path=p` conjugates both expected meridians by p.
+It is a free-group word, not a braid word; the default is empty. For example,
+`audit_arc_transport(3, (1,2)*3, 1, Arc(1,2), start_path=(1,2,3))`
+matches the full twist's boundary conjugation. The same call with an empty
+start path fails, so this check retains based information even when a support
+arc itself is unchanged. The path is supplied explicitly, not inferred.
+
+This is an **anchored** comparison. A mismatch can mean those base-path assumptions
 do not fit; it is not a universal disproof of support equivalence. Matching does
 not certify embeddedness or verify an entire factorization. No arc is reconstructed.
 
