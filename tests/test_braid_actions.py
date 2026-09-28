@@ -5,10 +5,22 @@ from surface_diagrams.braid_actions import arc_ray_word, loop_ray_word, free_hom
 from surface_diagrams.braid_actions import act_on_loop_word
 from surface_diagrams.braid_actions import substitute_factors
 from surface_diagrams.braid_actions import audit_arc_transport
+from surface_diagrams.braid_actions import arc_ray_segments
 from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_ray_segments_preserve_empty_steps_and_crossing_order(self):
+        arc=Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down')
+        segments=arc_ray_segments(6,arc)
+        self.assertEqual(segments,((),(-4,-3),(),(2,3,4),(),(-5,-4,-3,-2),(),(3,4),(),(3,)))
+        self.assertEqual(reduce_word(sum(segments,())),arc_ray_word(6,arc))
+        reverse=Arc(4,1,tuple(reversed(arc.cuts)),direction='up')
+        self.assertEqual(arc_ray_segments(6,reverse),
+                         tuple(inverse_word(s) for s in reversed(segments)))
+        self.assertEqual(arc_ray_segments(3,Arc(1,2)),((),))
+        with self.assertRaises(ValueError): arc_ray_segments(3,Arc(0,2))
+
     def test_transport_audit_retains_boundary_base_path(self):
         arc=Arc(1,2)
         full_twist=(1,2)*3

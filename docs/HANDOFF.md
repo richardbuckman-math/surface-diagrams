@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Segment-by-segment factor-9 report, September 28 evening
+
+Added arc_ray_segments, retaining every segment's unreduced ray contribution,
+including empty steps. arc_ray_word now flattens and reduces these contributions.
+The factor-9 example writes an HTML report beside SVG/TikZ/JSON with ten segment
+rows, side-of-row and gap/point endpoints, plus expandable actual/expected words.
+Browser visual inspection confirmed the table and evidence expansion; temporary
+server stopped. All 253 tests pass (153 seconds), including reversal/order and
+empty-segment regression coverage. Run python examples/audit_factor_nine.py and
+open .preview/factor-nine-transport-audit.html to reproduce it.
+Next: add selected-segment highlighting to correlate this table with the drawing;
+the report still checks supplied support data, not automatic geometric replay.
+
 ## Explicit starting base paths, September 28 afternoon
 
 Extended audit_arc_transport with keyword start_path (a free-group word, not

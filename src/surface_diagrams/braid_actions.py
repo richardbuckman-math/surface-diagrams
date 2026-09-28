@@ -122,6 +122,16 @@ def arc_ray_word(points, arc):
     not a Dehn-twist automorphism or a conversion to braid generators.
     Only point-to-point arcs on a row of punctures are supported.
     """
+    return reduce_word(letter for segment in arc_ray_segments(points,arc) for letter in segment)
+
+
+def arc_ray_segments(points, arc):
+    """Return unreduced ray letters for each segment, retaining empty segments.
+
+    Entry zero starts at the first endpoint; successive entries start at each
+    cut. Lower segments have empty words. Flatten and freely reduce these
+    contributions to obtain arc_ray_word. Uses the same input validation.
+    """
     from .curves import Arc
     if type(points) is not int or points < 2:
         raise ValueError('points must be an integer at least two')
@@ -135,13 +145,14 @@ def arc_ray_word(points, arc):
         raise ValueError('boundary rim endpoints are not supported')
     # Points are at 2j; gap c is at 2c+1, including exterior gaps 0,n.
     locations=(2*arc.start,)+tuple(2*c+1 for c in arc.cuts)+(2*arc.end,)
-    letters=[]
+    segments=[]
     for index,(a,b) in enumerate(zip(locations,locations[1:])):
         if (index%2==0) != arc.initial_up:
+            segments.append(())
             continue
         crossed=[j for j in range(1,points+1) if min(a,b)<2*j<max(a,b)]
-        letters.extend(crossed if a<b else [-j for j in reversed(crossed)])
-    return reduce_word(letters)
+        segments.append(tuple(crossed if a<b else [-j for j in reversed(crossed)]))
+    return tuple(segments)
 
 
 def loop_ray_word(points, loop):

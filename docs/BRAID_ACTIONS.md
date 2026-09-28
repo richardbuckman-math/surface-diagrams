@@ -49,6 +49,11 @@ right-to-left contributes -j. Lower segments contribute no letters, and endpoint
 rays at the endpoints are excluded. Reversing the arc inverts this word.
 This is relative path data, not a general arc-to-braid conversion.
 
+`arc_ray_segments(points, arc)` retains each segment's unreduced contribution,
+including empty tuples for lower segments and segments crossing no rays.
+There are `len(arc.cuts)+1` entries. Concatenate them and freely reduce to get
+`arc_ray_word`; reversing traversal reverses their order and inverts each word.
+
 For the confirmed factor 9 itinerary, the result is
 (-4,-3,2,3,4,-5,-4,-3,-2,3,4,3). The earlier SVG block has the exact form
 `g + (1,) + inverse_word(g)`, with g=(-2,-3,4,2,-3,-2,-2).
@@ -76,7 +81,8 @@ do not fit; it is not a universal disproof of support equivalence. Matching does
 not certify embeddedness or verify an entire factorization. No arc is reconstructed.
 
 Run `python examples/audit_factor_nine.py` for the confirmed factor-9 itinerary.
-It writes a supplied-arc/braid comparison in SVG and TikZ and exact JSON evidence
+It writes an HTML segment table with expandable endpoint evidence, a supplied-arc/braid
+comparison in SVG and TikZ, and exact JSON evidence
 to `.preview/factor-nine-transport-audit.*`. The other PDF factors remain provisional.
 
 ## Closed support curves
