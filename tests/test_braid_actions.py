@@ -4,10 +4,35 @@ from surface_diagrams.braid_actions import (artin_action, reduce_word, inverse_w
 from surface_diagrams.braid_actions import arc_ray_word, loop_ray_word, free_homotopy_key
 from surface_diagrams.braid_actions import act_on_loop_word
 from surface_diagrams.braid_actions import substitute_factors
+from surface_diagrams.braid_actions import audit_arc_transport
 from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_transport_audit_exposes_evidence_and_mismatches(self):
+        upper=Arc(1,3,direction='up')
+        audit=audit_arc_transport(3,(2,),1,upper)
+        self.assertTrue(audit.matches)
+        self.assertEqual(audit.transport,(2,))
+        self.assertEqual(audit.actual,((1,),(2,3,-2)))
+        self.assertEqual(audit.expected,audit.actual)
+        wrong=audit_arc_transport(3,(-2,),1,upper)
+        self.assertFalse(wrong.matches)
+        self.assertEqual(wrong.actual,((1,),(3,)))
+        self.assertEqual(wrong.expected,audit.expected)
+        self.assertFalse(audit_arc_transport(3,(),1,Arc(2,3)).matches)
+        self.assertTrue(audit_arc_transport(3,(),2,Arc(2,3)).matches)
+        for index in (0,-1,3,True):
+            with self.assertRaises(ValueError): audit_arc_transport(3,(),index,upper)
+        with self.assertRaises(ValueError): audit_arc_transport(3,(3,),1,upper)
+
+    def test_transport_audit_accepts_confirmed_factor_nine(self):
+        arc=Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down')
+        audit=audit_arc_transport(6,(-2,-3,4,2,-3,-2,-2),1,arc)
+        self.assertTrue(audit.matches)
+        self.assertEqual(audit.transport,(-4,-3,2,3,4,-5,-4,-3,-2,3,4,3))
+        self.assertFalse(audit_arc_transport(6,(),1,arc).matches)
+
     def test_positive_conjugation_matches_nonempty_upper_transport(self):
         upper=arc_ray_word(3,Arc(1,3,direction='up'))
         self.assertEqual(upper,(2,))

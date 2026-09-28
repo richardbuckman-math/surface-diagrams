@@ -7,6 +7,41 @@ base loops before interpreting images as a geometric action.
 No sphere quotient or conversion from planar arc itineraries is performed.
 """
 
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class ArcTransportAudit:
+    """Exact evidence for an anchored endpoint-meridian comparison.
+
+    A mismatch is not a general disproof of support equivalence: the chosen
+    base paths must have this anchored form. No embeddedness is certified.
+    """
+    transport: tuple
+    actual: tuple
+    expected: tuple
+
+    @property
+    def matches(self):
+        return self.actual == self.expected
+
+
+def audit_arc_transport(points, conjugator, generator, arc):
+    """Compare A(g)(x_i,x_(i+1)) with (x_start,t x_end t^-1).
+
+    Here t is the supplied arc's ray word, i is a positive generator index,
+    and g is the conjugator in g sigma_i g^-1. This restricted audit assumes
+    the first endpoint's meridian needs no base-path conjugation. It returns
+    both pairs for inspection; it neither reconstructs arcs nor verifies an
+    entire factorization, sphere relation, or arbitrary support equivalence.
+    """
+    transport=arc_ray_word(points,arc)
+    if type(generator) is not int or not 1 <= generator < points:
+        raise ValueError('generator must be a positive index smaller than points')
+    images=artin_action(points,conjugator)
+    expected=((arc.start,),reduce_word(transport+(arc.end,)+inverse_word(transport)))
+    return ArcTransportAudit(transport,images[generator-1:generator+1],expected)
+
 
 def reduce_word(word):
     """Freely reduce a word in nonzero signed integer letters."""

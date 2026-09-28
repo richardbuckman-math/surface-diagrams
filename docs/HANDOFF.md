@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## Reusable anchored transport audit, September 28 morning
+
+Added audit_arc_transport and frozen ArcTransportAudit evidence: transport,
+actual/expected endpoint meridian pairs and matches. The scope is deliberately
+anchored; mismatches can reflect base-path assumptions, not general inequivalence.
+Tutorial examples 24/25 now use it. examples/audit_factor_nine.py applies it to
+the confirmed itinerary and writes SVG/TikZ plus exact JSON evidence under
+.preview/factor-nine-transport-audit.*. Visually inspected the supplied arc and
+braid comparison. All 251 Python tests pass (93 seconds), including 19 focused
+action tests. All 25 tutorial exports regenerate unchanged; site link checks pass.
+Next: extend the audit to explicit start-base-path data, with tests for transported
+first meridians, before interpreting mismatches for other PDF support curves.
+General geometric reconstruction and the remaining PDF correspondences are pending.
+
 ## Nonempty support transport, September 28
 
 Added tutorial figure 25 comparing upper/lower 1-to-3 support arcs with

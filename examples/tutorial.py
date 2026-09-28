@@ -8,7 +8,7 @@ from surface_diagrams import (
 from surface_diagrams.genus_diagrams import NamedCut, MarkedArc
 from surface_diagrams.disk_routes import DiskRoute, Crossing, CutAtlas
 from surface_diagrams.braid_actions import (artin_action, hurwitz_move,
-    arc_ray_word, reduce_word, inverse_word)
+    audit_arc_transport, inverse_word)
 
 
 def checked_hurwitz_example():
@@ -40,9 +40,7 @@ def checked_hurwitz_support_example():
     original=((1,),(2,))
     moved=hurwitz_move(original,0)
     transported=Arc(1,3,direction='down')
-    transport=arc_ray_word(3,transported)
-    images=artin_action(3,(-2,))
-    if images[0]!=(1,) or images[1]!=reduce_word(transport+(3,)+inverse_word(transport)):
+    if not audit_arc_transport(3,(-2,),1,transported).matches:
         raise ValueError('Supplied support does not match transported meridians')
     if moved!=((2,),(-2,1,2)) or artin_action(3,sum(original,()))!=artin_action(3,sum(moved,())):
         raise ValueError('Support example failed braid verification')
@@ -67,10 +65,9 @@ def checked_conjugate_support_example():
     rows=[]
     for g,direction,expected in (((-2,),'down',()),((2,),'up',(2,))):
         arc=Arc(1,3,direction=direction)
-        transport=arc_ray_word(3,arc)
-        images=artin_action(3,g)
-        if (transport!=expected or images[0]!=(1,) or
-                images[1]!=reduce_word(transport+(3,)+inverse_word(transport))):
+        audit=audit_arc_transport(3,g,1,arc)
+        transport=audit.transport
+        if transport!=expected or not audit.matches:
             raise ValueError('Conjugate support failed its endpoint transport check')
         word=g+(1,)+inverse_word(g)
         rows.append((

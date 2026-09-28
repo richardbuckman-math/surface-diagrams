@@ -56,6 +56,23 @@ The action sends x1 to x1 and x2 to t x4 t^-1 for this same ray word t.
 This verifies the endpoint/transport-word comparison under the stated convention;
 other factors and the geometric action replay still need checking.
 
+## Reusable endpoint transport audit
+
+`audit_arc_transport(points, conjugator, generator, arc)` compares the images
+of `x_i, x_(i+1)` under the conjugator with `x_start, t x_end t^-1`, where
+`t` is the supplied arc's ray word and `i=generator` is positive. The frozen
+result exposes `transport`, `actual`, `expected`, and the computed `matches`
+property. Invalid inputs raise errors; a well-formed mismatch returns evidence.
+
+This is an **anchored** comparison: it assumes the first meridian has no
+base-path conjugation. A mismatch can therefore mean those base-path assumptions
+do not fit; it is not a universal disproof of support equivalence. Matching does
+not certify embeddedness or verify an entire factorization. No arc is reconstructed.
+
+Run `python examples/audit_factor_nine.py` for the confirmed factor-9 itinerary.
+It writes a supplied-arc/braid comparison in SVG and TikZ and exact JSON evidence
+to `.preview/factor-nine-transport-audit.*`. The other PDF factors remain provisional.
+
 ## Closed support curves
 
 `loop_ray_word(points, loop)` reads a closed itinerary against the same upward
