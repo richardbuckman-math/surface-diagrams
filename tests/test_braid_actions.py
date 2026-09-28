@@ -8,6 +8,17 @@ from surface_diagrams import Arc, Loop
 
 
 class BraidActionTests(unittest.TestCase):
+    def test_positive_conjugation_matches_nonempty_upper_transport(self):
+        upper=arc_ray_word(3,Arc(1,3,direction='up'))
+        self.assertEqual(upper,(2,))
+        images=artin_action(3,(2,))
+        self.assertEqual(images[0],(1,))
+        self.assertEqual(images[1],reduce_word(upper+(3,)+inverse_word(upper)))
+        # Same endpoint permutation does not determine the supported twist.
+        above=artin_action(3,(2,1,-2))
+        below=artin_action(3,(-2,1,2))
+        self.assertNotEqual(above,below)
+
     def test_hurwitz_support_distinguishes_upper_and_lower_arc(self):
         moved=hurwitz_move(((1,),(2,)),0)
         self.assertEqual(moved,((2,),(-2,1,2)))

@@ -886,6 +886,18 @@ so it would fail this check. Generation verifies this comparison as well as
 product equality. This is one checked support example, not a general algorithm
 for drawing the image of an arbitrary arc.
 
+### Same endpoints, different paths
+
+![Upper and lower conjugate supports](../examples/output/tutorial/25-conjugate-support-paths.svg)
+
+Changing the conjugator from `(-2,)` to `(2,)` changes the support from below
+point 2 to above it. The upper arc has ray word `(2,)`, and the endpoint image
+is now `x2 x3 x2^-1`. Both half twists exchange points 1 and 3, but their exact
+disk actions differ. Thus endpoint permutation alone cannot check your drawing.
+This example checks both transport words and the unequal braid actions before
+exporting. It supplies a small nonempty-path comparison for auditing the sign
+and side conventions used in more complicated support drawings.
+
 ## 17. What to work on next
 
 | Priority | Deliverable |

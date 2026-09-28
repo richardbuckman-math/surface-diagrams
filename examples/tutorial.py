@@ -61,6 +61,29 @@ def checked_hurwitz_support_example():
     return Figure(tuple(panels[0][i]+panels[1][i] for i in range(2)))
 
 
+def checked_conjugate_support_example():
+    """Compare two conjugates with the same endpoints but different support paths."""
+    surface=PlanarSurface.row('PPP',spacing=55,height=150,margin=45)
+    rows=[]
+    for g,direction,expected in (((-2,),'down',()),((2,),'up',(2,))):
+        arc=Arc(1,3,direction=direction)
+        transport=arc_ray_word(3,arc)
+        images=artin_action(3,g)
+        if (transport!=expected or images[0]!=(1,) or
+                images[1]!=reduce_word(transport+(3,)+inverse_word(transport))):
+            raise ValueError('Conjugate support failed its endpoint transport check')
+        word=g+(1,)+inverse_word(g)
+        rows.append((
+            Panel(surface.with_curves(arc),
+                  f'Support passes {"below" if direction=="down" else "above"} point 2\nRay word: {transport}'),
+            Panel(BraidDiagram(3,word,crossing_style='smooth',show_generators=True),
+                  f'Conjugate half twist: {word}\nRead downward'),
+        ))
+    if artin_action(3,(-2,1,2))==artin_action(3,(2,1,-2)):
+        raise ValueError('Distinct supported twists unexpectedly agree')
+    return Figure(tuple(rows))
+
+
 def examples():
     row = PlanarSurface.row('PPPPPP', spacing=55, height=210, margin=60)
     guides = Style(show_guides=True)
@@ -227,6 +250,7 @@ def examples():
 
     yield '23-checked-hurwitz-move', checked_hurwitz_example(), Style()
     yield '24-hurwitz-support-arcs', checked_hurwitz_support_example(), Style()
+    yield '25-conjugate-support-paths', checked_conjugate_support_example(), Style()
 
 
 def main(out=None):

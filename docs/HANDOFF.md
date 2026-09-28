@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Nonempty support transport, September 28
+
+Added tutorial figure 25 comparing upper/lower 1-to-3 support arcs with
+conjugates (2,1,-2) and (-2,1,2). Generation verifies both meridian transport
+comparisons and that the exact braid actions differ despite identical endpoint
+permutations. The upper arc's nonempty ray word (2,) gives x2 x3 x2^-1.
+All 17 focused braid-action tests pass. All 25 SVG/TikZ tutorial figures
+regenerate; HTML and site builds pass link checks. Visually inspected the new
+comparison: arcs remain within the outline and signed generator labels are clear.
+Next: use these calibrated examples to factor out a reusable transport audit,
+then apply it to the confirmed factor 9 and remaining supplied support data.
+General geometric action/reconstruction remains unfinished.
+
 ## Hurwitz support correspondence, September 27 evening
 
 Tutorial figure 24 pairs the support arcs for ((1,), (2,)) and its Hurwitz

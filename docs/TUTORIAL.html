@@ -760,6 +760,15 @@ meridians. The upper arc would cross ray 2 and give <code>x2 x3 x2^-1</code> ins
 so it would fail this check. Generation verifies this comparison as well as
 product equality. This is one checked support example, not a general algorithm
 for drawing the image of an arbitrary arc.</p>
+<h3>Same endpoints, different paths</h3>
+<p><img src="../examples/output/tutorial/25-conjugate-support-paths.svg" alt="Upper and lower conjugate supports"></p>
+<p>Changing the conjugator from <code>(-2,)</code> to <code>(2,)</code> changes the support from below
+point 2 to above it. The upper arc has ray word <code>(2,)</code>, and the endpoint image
+is now <code>x2 x3 x2^-1</code>. Both half twists exchange points 1 and 3, but their exact
+disk actions differ. Thus endpoint permutation alone cannot check your drawing.
+This example checks both transport words and the unequal braid actions before
+exporting. It supplies a small nonempty-path comparison for auditing the sign
+and side conventions used in more complicated support drawings.</p>
 <h2>17. What to work on next</h2>
 <table>
 <thead>

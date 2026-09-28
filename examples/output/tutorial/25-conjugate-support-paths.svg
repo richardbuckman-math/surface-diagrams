@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.5 475" width="477.5" height="475" role="img">
+<title>25-conjugate-support-paths</title>
+<path class="arc" d="M 69.75 137.75 A 55 35.0625 0 0 0 179.75 137.75" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 83.75 L 333.5 119.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 83.75 C 363.5 88.47 368.141333333 93.19 373.772817778 97.91 M 383.227182222 105.59 C 388.858666667 110.31 393.5 115.03 393.5 119.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 83.75 C 393.5 95.75 363.5 107.75 363.5 119.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 119.75 C 333.5 131.75 363.5 143.75 363.5 155.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 119.75 C 363.5 124.47 358.858666667 129.19 353.227182222 133.91 M 343.772817778 141.59 C 338.141333333 146.31 333.5 151.03 333.5 155.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 119.75 L 393.5 155.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 155.75 L 333.5 191.75" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 155.75 C 363.5 167.75 393.5 179.75 393.5 191.75" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 155.75 C 393.5 160.47 388.858666667 165.19 383.227182222 169.91 M 373.772817778 177.59 C 368.141333333 182.31 363.5 187.03 363.5 191.75" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" d="M 69.75 375.25 A 55 35.0625 0 0 1 179.75 375.25" fill="none" stroke="#ff00d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 321.25 L 333.5 357.25" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 321.25 C 363.5 333.25 393.5 345.25 393.5 357.25" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 321.25 C 393.5 325.97 388.858666667 330.69 383.227182222 335.41 M 373.772817778 343.09 C 368.141333333 347.81 363.5 352.53 363.5 357.25" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 357.25 C 333.5 369.25 363.5 381.25 363.5 393.25" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 357.25 C 363.5 361.97 358.858666667 366.69 353.227182222 371.41 M 343.772817778 379.09 C 338.141333333 383.81 333.5 388.53 333.5 393.25" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 357.25 L 393.5 393.25" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 333.5 393.25 L 333.5 429.25" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 363.5 393.25 C 363.5 397.97 368.141333333 402.69 373.772817778 407.41 M 383.227182222 415.09 C 388.858666667 419.81 393.5 424.53 393.5 429.25" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 393.5 393.25 C 393.5 405.25 363.5 417.25 363.5 429.25" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse class="outer-boundary" cx="124.75" cy="137.75" rx="100" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="69.75" cy="137.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="124.75" cy="137.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="179.75" cy="137.75" r="4" fill="#006fff"/>
+<ellipse class="outer-boundary" cx="124.75" cy="375.25" rx="100" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="69.75" cy="375.25" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="124.75" cy="375.25" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="179.75" cy="375.25" r="4" fill="#006fff"/>
+<text x="124.75" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Support passes below point 2</text>
+<text x="124.75" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Ray word: ()</text>
+<text x="333.5" y="75.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="333.5" y="205.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="363.5" y="75.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="363.5" y="205.75" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="393.5" y="75.75" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="393.5" y="205.75" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="420.5" y="104.75" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="420.5" y="140.75" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="420.5" y="176.75" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="363.5" y="24" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Conjugate half twist: (-2, 1, 2)</text>
+<text x="363.5" y="39" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+<text x="124.75" y="261.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Support passes above point 2</text>
+<text x="124.75" y="276.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Ray word: (2,)</text>
+<text x="333.5" y="313.25" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="333.5" y="443.25" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="363.5" y="313.25" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="363.5" y="443.25" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="393.5" y="313.25" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="393.5" y="443.25" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="420.5" y="342.25" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2</text>
+<text x="420.5" y="378.25" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+<text x="420.5" y="414.25" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s2^-1</text>
+<text x="363.5" y="261.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Conjugate half twist: (2, 1, -2)</text>
+<text x="363.5" y="276.5" fill="#000000" font-size="10" font-family="serif" text-anchor="middle">Read downward</text>
+</svg>
