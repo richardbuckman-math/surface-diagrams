@@ -41,7 +41,11 @@ Select a row to use the split menu:
 
 Combine joins a selected factor with its following neighbor when they are
 verified powers of the same supported twist. Two identical half twists combine
-into a Dehn twist. Other combinations are rejected without changing the state.
+into a Dehn twist. It can also recombine three neighboring pairwise twists into
+a three-point twist when their exact product matches the marked-point lantern
+candidate. Select the first of the three and choose **Combine neighbors**.
+This reverses a lantern split, including after a common conjugation. Other
+combinations are rejected without changing the state.
 General daisy and framed-boundary substitutions are not implemented.
 
 Undo/redo retain up to 60 states. Reset is undoable. Save JSON preserves exact

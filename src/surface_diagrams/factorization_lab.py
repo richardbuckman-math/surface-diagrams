@@ -104,7 +104,7 @@ class LabServer(ThreadingHTTPServer):
                 message=f'Split {factors[i].id}; replacement passed exact disk-action verification.'
             elif op=='combine':
                 result=combine_factors(factors,i)
-                message='Combined adjacent powers; exact disk action verified.'
+                message='Combined neighboring factors; exact disk action verified.'
             elif op=='reset': result=initial_factors(); message='Restored original factorization. Undo is available.'
             elif op=='import': result=import_factors(payload.get('document')); message='Loaded saved exploration; exact product agrees with the starting factorization.'
             else: raise ValueError('Unknown operation')

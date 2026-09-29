@@ -109,18 +109,24 @@ def split_factor(factors,index,kind):
 def combine_factors(factors,index):
     if not 0<=index<len(factors)-1: raise ValueError('Select a factor with a following neighbor')
     a,b=factors[index:index+2]
-    if (a.first,a.points,a.half)!=(b.first,b.points,b.half):
-        raise ValueError('Combine currently needs two powers of the same supported twist')
     unit_a=replace(a,power=1)
     unit_b=replace(b,power=1)
-    if exact_action(unit_a.word)!=exact_action(unit_b.word):
-        raise ValueError('These neighbors have different supports')
-    total=a.power+b.power
-    combined=replace(a,id=f'{a.id}+{b.id}',power=total)
-    if a.half and total%2==0:
-        combined=replace(combined,half=False,power=total//2)
-    checked((a,b),(combined,))
-    result=tuple(factors[:index])+(combined,)+tuple(factors[index+2:])
+    same=(a.first,a.points,a.half)==(b.first,b.points,b.half)
+    if same and exact_action(unit_a.word)==exact_action(unit_b.word):
+        consumed=2; total=a.power+b.power
+        combined=replace(a,id=f'{a.id}+{b.id}',power=total)
+        if a.half and total%2==0:
+            combined=replace(combined,half=False,power=total//2)
+    else:
+        triple=factors[index:index+3]
+        if len(triple)!=3 or a.first>4 or any(f.half or f.points!=2 or f.power!=1 for f in triple):
+            raise ValueError('Combine needs equal neighboring powers or a verified three-factor marked-point lantern')
+        combined=Factor('+'.join(f.id for f in triple),a.conjugator,a.first,3)
+        if exact_action(product(triple))!=exact_action(combined.word):
+            raise ValueError('These three neighbors do not match the marked-point lantern candidate')
+        consumed=3
+    checked(factors[index:index+consumed],(combined,))
+    result=tuple(factors[:index])+(combined,)+tuple(factors[index+consumed:])
     validate_size(result)
     return result
 

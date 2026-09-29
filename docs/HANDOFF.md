@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## September 29 morning: inverse lantern combine
+
+Combine neighbors now recognizes three adjacent unit pairwise twists whose
+exact product equals the marked-point lantern candidate, in addition to equal
+neighboring powers. A conjugated lantern split can therefore be reversed.
+Every accepted replacement is checked by exact Artin action; wrong ordering is
+covered by rejection tests. Browser round trip: 14 factors -> lantern split 16
+-> combine 14, returning to 178 letters and matching support boundary checks.
+All 13 focused lab tests pass; the previous full suite had 267 passing tests.
+Support-audit commit 0f17741 passed both remote workflows. No general daisy or
+framed-boundary substitution was added. Next: keep improving embedded support
+geometry (boundary-word agreement alone does not rule out sampling crossings).
+
 ## September 29 morning: compare drawn support classes against exact action
 
 Added factorization_audit.py: read upward puncture-ray crossings from coordinates
