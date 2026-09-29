@@ -17,9 +17,10 @@ where = ["src"]
 [project.scripts]
 surface-diagrams = "surface_diagrams.__main__:main"
 surface-diagrams-editor = "surface_diagrams.editor:main"
+surface-diagrams-factorization = "surface_diagrams.factorization_lab:main"
 
 [tool.setuptools.package-data]
-surface_diagrams = ["editor_assets/*.html", "editor_assets/*.css", "editor_assets/*.js"]
+surface_diagrams = ["editor_assets/*.html", "editor_assets/*.css", "editor_assets/*.js", "lab_assets/*.html", "lab_assets/*.css", "lab_assets/*.js"]
 
 [tool.setuptools.data-files]
 "share/surface-diagrams/latex" = ["latex/surface-diagrams.sty", "latex/README.md"]

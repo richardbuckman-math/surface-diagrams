@@ -1,5 +1,9 @@
 # Surface diagrams
 
+The [interactive factorization prototype](docs/FACTORIZATION_LAB.md) opens with
+`python -m surface_diagrams.factorization_lab`: drag factors through Hurwitz moves,
+inspect a continuous braid, split checked twists, combine, and undo.
+
 Browse the [tutorial and gallery](https://richardbuckman-math.github.io/surface-diagrams/)
 and planned relation and Lefschetz-fibration catalog. See
 [publishing and releases](docs/RELEASING.md) for preview and deployment.

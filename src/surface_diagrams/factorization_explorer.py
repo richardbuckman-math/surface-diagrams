@@ -1,0 +1,143 @@
+"""Exact factor records and checked local rewrites for the six-point prototype."""
+from dataclasses import dataclass, replace, asdict
+from .braid_actions import reduce_word, inverse_word, artin_action
+from .braid_actions import _extend_action
+
+
+def exact_action(word):
+    images=tuple((i,) for i in range(1,7))
+    for letter in word:
+        images=_extend_action(images,(letter,))
+        if sum(map(len,images))>400000:
+            raise ValueError('Exact verification reached the prototype word limit; operation was not applied')
+    return images
+
+
+@dataclass(frozen=True)
+class Factor:
+    id: str
+    conjugator: tuple
+    first: int
+    points: int
+    power: int = 1
+    half: bool = False
+
+    @property
+    def core(self):
+        if self.half:
+            return (self.first,)*self.power
+        return tuple(range(self.first,self.first+self.points-1))*(self.points*self.power)
+
+    @property
+    def word(self):
+        return reduce_word(self.conjugator+self.core+inverse_word(self.conjugator))
+
+    @property
+    def label(self):
+        return ('Half twist' if self.half else f'{self.points}-point twist')+(f' × {self.power}' if self.power!=1 else '')
+
+
+def initial_factors():
+    # Conjugate cores extracted from the user's earlier 178-letter SVG.
+    data=[((),3,3,2,False),((5,-3,-3,4),3,2,1,True),
+          ((3,2),1,2,1,True),((-1,-2,-3,2,-3),4,3,2,False),
+          ((),2,3,2,False),((-5,-5,-2,-3,-3,4),3,2,1,True),
+          ((-5,-2,-3,4,-3),2,2,1,True),((-2,-3,4),2,3,2,False),
+          ((-2,-3,4,2,-3,-2,-2),1,2,1,True),((-2,-3),4,3,2,False),
+          ((-5,-5,4,3,1,-2),1,2,1,True),((-5,4,3),1,3,2,False),
+          ((-5,),3,3,2,False)]
+    return tuple(Factor(f'F{i+1}',*values) for i,values in enumerate(data))
+
+
+def product(factors):
+    return tuple(i for f in factors for i in f.word)
+
+
+def checked(before,after):
+    if sum(len(f.word) for f in after)>3500 or len(after)>80:
+        raise ValueError('This prototype limits a state to 80 factors and 3500 braid letters. Undo or simplify first.')
+    if exact_action(product(before))!=exact_action(product(after)):
+        raise ValueError('Exact disk action verification failed; operation was not applied')
+    return tuple(after)
+
+
+def move_factor(factors,source,target):
+    """Dragged factor remains unchanged; it conjugates each crossed factor."""
+    factors=list(factors)
+    if type(source) is not int or type(target) is not int or not 0<=source<len(factors) or not 0<=target<len(factors):
+        raise ValueError('Choose two valid factor positions')
+    while source<target:
+        u,v=factors[source:source+2]
+        changed=replace(v,conjugator=reduce_word(u.word+v.conjugator))
+        factors[source:source+2]=checked((u,v),(changed,u))
+        source+=1
+    while source>target:
+        v,u=factors[source-1:source+1]
+        changed=replace(v,conjugator=reduce_word(inverse_word(u.word)+v.conjugator))
+        factors[source-1:source+1]=checked((v,u),(u,changed))
+        source-=1
+    if sum(len(f.word) for f in factors)>3500:
+        raise ValueError('Braid is too large for this prototype; use a shorter move')
+    return tuple(factors)
+
+
+def split_factor(factors,index,kind):
+    f=factors[index]
+    if kind=='powers' and f.power>1:
+        replacements=tuple(replace(f,id=f'{f.id}.{i+1}',power=1) for i in range(f.power))
+    elif kind=='halves' and not f.half and f.points==2:
+        replacements=tuple(replace(f,id=f'{f.id}.h{i+1}',half=True,power=1) for i in range(2*f.power))
+    elif kind=='lantern' and not f.half and f.points==3:
+        i=f.first
+        replacements=tuple(Factor(f'{f.id}.L{repeat+1}.{j+1}',reduce_word(f.conjugator+g),a,2)
+            for repeat in range(f.power) for j,(g,a) in enumerate((((),i),((i+1,),i),((),i+1))))
+    else:
+        raise ValueError('That split is not available for this factor')
+    checked((f,),replacements)
+    result=tuple(factors[:index])+replacements+tuple(factors[index+1:])
+    if len(result)>80: raise ValueError('Factor limit reached')
+    return result
+
+
+def combine_factors(factors,index):
+    if not 0<=index<len(factors)-1: raise ValueError('Select a factor with a following neighbor')
+    a,b=factors[index:index+2]
+    if (a.first,a.points,a.half)!=(b.first,b.points,b.half):
+        raise ValueError('Combine currently needs two powers of the same supported twist')
+    unit_a=replace(a,power=1)
+    unit_b=replace(b,power=1)
+    if exact_action(unit_a.word)!=exact_action(unit_b.word):
+        raise ValueError('These neighbors have different supports')
+    total=a.power+b.power
+    combined=replace(a,id=f'{a.id}+{b.id}',power=total)
+    if a.half and total%2==0:
+        combined=replace(combined,half=False,power=total//2)
+    checked((a,b),(combined,))
+    return tuple(factors[:index])+(combined,)+tuple(factors[index+2:])
+
+
+def export_factors(factors):
+    return {'format':'surface-diagrams-factorization-v1','strands':6,
+            'source':'Earlier BraidSixSeven SVG; remaining PDF support correspondence provisional',
+            'factors':[dict(asdict(f),word=f.word) for f in factors]}
+
+
+def import_factors(document):
+    if not isinstance(document,dict) or document.get('format')!='surface-diagrams-factorization-v1' or document.get('strands')!=6:
+        raise ValueError('Choose a six-strand Factorization Lab JSON file')
+    rows=document.get('factors')
+    if not isinstance(rows,list) or not 1<=len(rows)<=80: raise ValueError('Expected 1 to 80 factors')
+    factors=[]; ids=set()
+    for row in rows:
+        if not isinstance(row,dict): raise ValueError('Invalid factor record')
+        identity=row.get('id'); g=row.get('conjugator'); first=row.get('first'); count=row.get('points'); power=row.get('power'); half=row.get('half')
+        if not isinstance(identity,str) or not 1<=len(identity)<=250 or identity in ids: raise ValueError('Factor IDs must be distinct short strings')
+        ids.add(identity)
+        if not isinstance(g,list) or len(g)>1500 or any(type(i) is not int or not 1<=abs(i)<=5 for i in g): raise ValueError('Invalid conjugator')
+        if type(first) is not int or type(count) is not int or not 2<=count<=6 or not 1<=first<=7-count: raise ValueError('Invalid support interval')
+        if type(power) is not int or not 1<=power<=32 or type(half) is not bool or (half and count!=2): raise ValueError('Invalid twist power or type')
+        f=Factor(identity,reduce_word(g),first,count,power,half)
+        if 'word' in row and row['word']!=list(f.word): raise ValueError('Saved braid word disagrees with its factor record')
+        factors.append(f)
+    # Import only an equivalent exploration of the supplied starting product.
+    return checked(initial_factors(),factors)

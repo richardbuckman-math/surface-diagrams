@@ -1,5 +1,38 @@
 # Handoff: surface-diagrams
 
+## TOP PRIORITY: interactive factorization lab, September 29 overnight
+
+User superseded weekly pacing: work productively through remaining weekly quota
+today, prioritizing a working drag/drop (6,7) factorization prototype by morning.
+Updated recurring automation prompt to this priority; still six-hour ACTIVE.
+
+New runnable app: python -m surface_diagrams.factorization_lab --port 8017.
+Local browser UI stacks 13 planar supports beside a single continuous colored
+braid, with blue dotted separators. Actual native browser drag F1 over F2 worked;
+arrow moves use the same path. Dragged factor stays unchanged while crossed
+factors are conjugated (down inverse Hurwitz, up forward). Every local algebraic
+rewrite is checked via bounded exact Artin actions. Initial 13 words match the
+earlier SVG factor-by-factor (178 letters). Square split/combine and marked-point
+lantern split were exercised in browser. Half-twist splits, undo/redo, reset,
+JSON save/reopen with exact product verification, and SVG export are implemented.
+All 261 tests pass (89 seconds), including seven new lab tests. JS syntax checked.
+
+Files: factorization_explorer.py (records/operations), factorization_geometry.py
+(sampled support deformations and continuous braid), factorization_lab.py (local
+server), lab_assets/ (UI). Docs: FACTORIZATION_LAB.md. Package assets and command
+entry point added. Default prototype remains alpha5/unreleased code.
+
+IMPORTANT LIMITATION / NEXT WORK: supports are numerical homeomorphism previews,
+not certified itinerary reconstruction or PDF verification. Direct triple-twist
+blocks fixed the first F1-over-F2 sampling failure; F1 moved over three factors
+also renders. More complex F9 crossing F7 can still exceed the 200k sample cap
+and show an explicit unavailable-preview message; exact braid remains usable.
+Improve this robustness before adding peripheral examples. No general daisy or
+framed-boundary lantern implementation. Combine currently equal adjacent powers.
+The original PDF correspondence beyond confirmed items stays provisional.
+The five-hour allowance approached exhaustion during this run; weekly allowance
+still had about 48% left. Resume productively after reset, not old reserve pacing.
+
 ## Selectable factor-9 segments, September 29
 
 The HTML audit now has a labeled segment selector. It highlights the chosen
