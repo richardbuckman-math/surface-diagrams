@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## Selectable factor-9 segments, September 29
+
+The HTML audit now has a labeled segment selector. It highlights the chosen
+rendered arc piece and matching table row, with a live textual description.
+Overlays reuse the exported SVG arc commands instead of approximating geometry.
+Browser checks covered segment 6 visually, segment 10, and clearing selection.
+The new report regression verifies exact command reconstruction and segment
+continuity; it and all 21 braid-action tests pass. Reproduce with
+python examples/audit_factor_nine.py. Temporary inspection server stopped.
+Next: expose the same segment-selection affordance for user-supplied itineraries
+rather than keeping it specific to factor 9. General action replay remains pending.
+
 ## Segment-by-segment factor-9 report, September 28 evening
 
 Added arc_ray_segments, retaining every segment's unreduced ray contribution,

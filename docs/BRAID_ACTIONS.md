@@ -81,7 +81,8 @@ do not fit; it is not a universal disproof of support equivalence. Matching does
 not certify embeddedness or verify an entire factorization. No arc is reconstructed.
 
 Run `python examples/audit_factor_nine.py` for the confirmed factor-9 itinerary.
-It writes an HTML segment table with expandable endpoint evidence, a supplied-arc/braid
+It writes an HTML segment table with selectable drawing highlights and expandable
+endpoint evidence, a supplied-arc/braid
 comparison in SVG and TikZ, and exact JSON evidence
 to `.preview/factor-nine-transport-audit.*`. The other PDF factors remain provisional.
 
