@@ -4,7 +4,7 @@ Exact word algebra is separate. Curves are numerical representatives obtained
 by compactly supported half rotations, not certified itinerary reconstruction.
 """
 from functools import lru_cache
-from math import sin,cos,pi,hypot,ceil
+from math import sin,cos,pi,hypot,ceil,sqrt
 from .model import Style
 from .visuals import _braid_paths, RAINBOW
 
@@ -66,6 +66,44 @@ def simplify(points,tolerance=.001):
     return tuple(points[i] for i in sorted(keep))
 
 
+def deform_polyline(points,block):
+    """Sample only portions inside the moving disk; its exterior is fixed.
+
+    Intersect each chord with the disk before sampling. Long, complicated
+    portions outside this particular twist need no new vertices at all.
+    This remains a numerical polyline preview, not a topological certificate.
+    """
+    center,inner,outer,angle=block
+    dense=[]; chunks=[]; samples=0
+    resolution=.02/(1+abs(angle)/pi/4)
+    for a,b in zip(points,points[1:]):
+        dense.append(regional_turn(a,*block))
+        dx,dy=b[0]-a[0],b[1]-a[1]
+        length2=dx*dx+dy*dy
+        if not length2: continue
+        projection=-((a[0]-center)*dx+a[1]*dy)/length2
+        distance2=(a[0]-center+projection*dx)**2+(a[1]+projection*dy)**2
+        if distance2>=outer*outer: continue
+        radius=sqrt((outer*outer-distance2)/length2)
+        lo,hi=max(0.,projection-radius),min(1.,projection+radius)
+        if hi<=lo: continue
+        steps=max(1,ceil((hi-lo)*sqrt(length2)/resolution))
+        for k in range(steps+1):
+            t=lo+(hi-lo)*k/steps
+            if 0<t<1:
+                dense.append(regional_turn((a[0]+t*dx,a[1]+t*dy),*block))
+        samples+=steps+1
+        if len(dense)>12000:
+            reduced=simplify(dense,.0015)
+            chunks.extend(reduced[:-1]); dense=[reduced[-1]]
+        if len(chunks)>200000 or samples>2000000:
+            raise ValueError('Support preview exceeded its sampling limit; exact braid is still available')
+    dense.append(regional_turn(points[-1],*block))
+    chunks.extend(simplify(dense,.0015))
+    # Chunk boundaries remain vertices: do not compound simplification error.
+    return tuple(chunks)
+
+
 @lru_cache(maxsize=256)
 def support_points(first,count,half,conjugator):
     if half:
@@ -75,17 +113,7 @@ def support_points(first,count,half,conjugator):
         rx=(count-1)/2+.27
         points=tuple((center+rx*cos(2*pi*t/100),.28*sin(2*pi*t/100)) for t in range(101))
     for block in reversed(geometric_blocks(conjugator)):
-        dense=[]
-        for a,b in zip(points,points[1:]):
-            resolution=.02/(1+abs(block[3])/pi/4)
-            steps=max(1,ceil(hypot(b[0]-a[0],b[1]-a[1])/resolution))
-            for k in range(steps):
-                t=k/steps
-                dense.append(regional_turn((a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])),*block))
-                if len(dense)>200000:
-                    raise ValueError('Support preview exceeded its sampling limit; exact braid is still available')
-        dense.append(regional_turn(points[-1],*block))
-        points=simplify(dense,.0015)
+        points=deform_polyline(points,block)
     return points
 
 

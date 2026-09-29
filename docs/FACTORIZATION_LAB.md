@@ -37,11 +37,20 @@ factor records and words; Open JSON validates the records and verifies equality
 with the starting product before loading. Save SVG exports the current paired
 surface/braid view. Save work before stopping the server; its history is in memory.
 
+Select a factor and choose **Inspect support** for a larger drawing with 1×–8×
+zoom, scrolling, and the full exact braid word and conjugator. Escape or Close
+returns to the stacked view. The inspector keeps strokes thin while enlarging
+the drawing, making nearby strands easier to distinguish.
+
 ## Geometric preview limits
 
 The support curves are numerical representatives produced by local half
 rotations applied to standard arcs or enclosing curves. Complete triple twists
 use a direct local full rotation to reduce unnecessary geometric stretching.
+Sampling is restricted to the disk where each local rotation moves points, and
+dense sections are simplified in bounded chunks. This permits the previously
+failing F9-over-F7 move to display both affected supports; particularly crowded
+representatives can still take several seconds and benefit from the inspector.
 This is separate from the exact algebraic verification; the numerical drawings
 are not certified normal forms or automatically recovered PDF itineraries.
 Small upper/lower cases calibrate the sign convention. Complicated moves can

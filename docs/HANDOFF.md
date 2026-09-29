@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## September 29 morning: complicated support rendering and inspector
+
+The previous prototype commit 18ddbd6 passed both remote Tests and Documentation.
+Support deformation now clips sampling to each moving disk and simplifies dense
+sections in bounded chunks. F9 moved from position 9 to 7 now renders both crossed
+supports instead of failing for F7 (about 19 seconds for F7, 5 for F8 locally).
+This is still a sampled representative: crowded paths are not certified isotopy
+normal forms. No claim of general reliable itinerary reconstruction is made.
+Added Inspect support: a modal with 1x-8x zoom, scrollable thin-stroke drawing, and
+full exact word/conjugator. Browser inspection exercised F9 up twice, both new
+previews, inspector zoom and word disclosure. Test exploration is saved in
+.preview/lab-inspector-checkpoint.json; test server 8018 holds revision 2. Main
+8017 server has not been restarted or its user state modified in this increment.
+All 263 tests pass (122 seconds) with absolute PYTHONPATH; two earlier subprocess
+failures were solely caused by a relative PYTHONPATH in the test invocation.
+Next: persist/recover work robustly, make exports retain preview warnings, and
+improve support readability/topological validation beyond numerical sampling.
 ## TOP PRIORITY: interactive factorization lab, September 29 overnight
 
 User superseded weekly pacing: work productively through remaining weekly quota

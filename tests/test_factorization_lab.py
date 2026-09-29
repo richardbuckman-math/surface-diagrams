@@ -5,7 +5,8 @@ from urllib.request import Request,urlopen
 from urllib.error import HTTPError
 from surface_diagrams.factorization_explorer import (Factor,initial_factors,product,exact_action,
     move_factor,split_factor,combine_factors,import_factors,export_factors)
-from surface_diagrams.factorization_geometry import support_points,turn,braid_svg,row_height
+from surface_diagrams.factorization_geometry import support_points,turn,braid_svg,row_height,deform_polyline
+from math import pi
 from surface_diagrams.factorization_lab import LabServer
 
 
@@ -60,6 +61,23 @@ class FactorizationLabTests(unittest.TestCase):
         document['factors'][0]['conjugator']=[9,-9]
         with self.assertRaises(ValueError): import_factors(document)
 
+    def test_local_deformation_samples_crossing_chords_and_fixes_exterior(self):
+        block=(0.,.55,.95,-pi)
+        outside=((-1000.,2.),(1000.,2.))
+        self.assertEqual(deform_polyline(outside,block),outside)
+        # Both endpoints are outside, but the chord crosses the moving disk.
+        crossing=deform_polyline(((-2.,0.),(2.,0.)),block)
+        self.assertEqual(crossing[0],(-2.,0.))
+        self.assertEqual(crossing[-1],(2.,0.))
+        self.assertGreater(max(y for x,y in crossing),.2)
+        self.assertLess(min(y for x,y in crossing),-.2)
+
+    def test_factor_nine_over_seven_retains_support_preview(self):
+        factors=move_factor(initial_factors(),8,6)
+        for f in factors[7:9]:
+            points=support_points(f.first,f.points,f.half,f.conjugator)
+            self.assertGreater(len(points),2)
+            self.assertTrue(all(((50+x*48-170)/164)**2+((y*48)/84)**2<1 for x,y in points))
     def test_continuous_braid_has_factor_separators_and_total_height(self):
         f=initial_factors(); svg=braid_svg(f)
         self.assertEqual(svg.count('stroke-dasharray'),12)

@@ -12,6 +12,7 @@ function controls(){
  if(!picker.options.length){const o=document.createElement('option');o.textContent='No available split';picker.append(o);}
  picker.disabled=busy||!f?.splits.length;$('split').disabled=picker.disabled;
  $('combine').disabled=busy||!f||selected>=state.factors.length-1;
+ $('inspect').disabled=busy||!f;
 }
 function choose(index){selected=index;document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));controls();}
 function paint(){
@@ -44,6 +45,27 @@ async function action(payload,next=selected){
 }
 function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+function inspectZoom(){
+ const viewport=$('inspect-viewport'),drawing=$('inspect-drawing');
+ const cx=drawing.offsetWidth>viewport.clientWidth?(viewport.scrollLeft+viewport.clientWidth/2)/drawing.offsetWidth:.5;
+ const cy=drawing.offsetHeight>viewport.clientHeight?(viewport.scrollTop+viewport.clientHeight/2)/drawing.offsetHeight:.5;
+ const scale=Number($('zoom').value);
+ drawing.style.width=(680*scale)+'px';drawing.style.height=(352*scale)+'px';
+ viewport.scrollTo(cx*drawing.offsetWidth-viewport.clientWidth/2,cy*drawing.offsetHeight-viewport.clientHeight/2);
+}
+$('inspect').onclick=()=>{
+ const f=state.factors[selected];
+ $('inspect-title').textContent=`${f.id} · ${f.label}`;
+ $('inspect-drawing').replaceChildren();
+ if(f.svg){$('inspect-drawing').innerHTML=f.svg;$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
+ else $('inspect-drawing').textContent=f.warning;
+ $('inspect-word').textContent='Braid: '+f.word.join(' ');
+ $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
+ $('zoom').value='1';inspectZoom();$('inspector').showModal();
+ $('inspect-viewport').scrollTo(0,0);
+};
+$('zoom').onchange=inspectZoom;
+$('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
 $('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json','six-seven-factorization.json');
