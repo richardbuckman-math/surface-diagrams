@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## September 29 morning: compare drawn support classes against exact action
+
+Added factorization_audit.py: read upward puncture-ray crossings from coordinates
+rounded exactly as the SVG, normalize the closed-support class (or arc neighborhood
+boundary), and compare to the exact Artin image of the core enclosing loop.
+All 13 initial factors plus both supports in F9-over-F7 agree, including rounded
+coordinates. Each row now reports agreement/mismatch/unavailable; inspector shows
+both normalized words and the limitation: agreement does NOT certify embeddedness
+or resolve PDF correspondence. SVG exports retain the check. A wrong-side arc
+regression fails the comparison; a puncture collision is flagged unavailable.
+All 267 tests pass (117 seconds). Browser inspected F9 and both matching words.
+6759742 durable-session commit passed both remote CI workflows. Main 8017 still
+needs restart with its session file to receive this backend audit implementation;
+all main workspace edits are now durably saved. Next: inverse lantern combining,
+then improve embedded representatives without conflating homotopy with embedding.
+
 ## September 29 morning: durable sessions and complete SVG exports
 
 Added --session FILE to the lab. It saves every accepted edit and undo/redo

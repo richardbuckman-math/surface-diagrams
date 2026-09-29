@@ -58,6 +58,15 @@ zoom, scrolling, and the full exact braid word and conjugator. Escape or Close
 returns to the stacked view. The inspector keeps strokes thin while enlarging
 the drawing, making nearby strands easier to distinguish.
 
+Each row also reports a boundary-word comparison. The program reads upward
+puncture-ray crossings from the actual rounded SVG polyline and compares its
+free homotopy class with the exact Artin image of the standard enclosing loop.
+For a half-twist arc, it compares the boundary of the arc's neighborhood.
+The inspector's **Boundary-word comparison** disclosure shows both normalized
+words. Disagreement or a puncture collision is explicitly flagged, and exports
+retain the result. Agreement checks the represented boundary class; it does
+not certify embeddedness, separation of nearby strands, or PDF correspondence.
+
 ## Geometric preview limits
 
 The support curves are numerical representatives produced by local half

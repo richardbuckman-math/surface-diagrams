@@ -155,6 +155,7 @@ def braid_svg(factors):
 
 def factorization_svg(factors):
     """Portable paired export, retaining numerical-preview labels and failures."""
+    from .factorization_audit import support_audit
     height=sum(row_height(f) for f in factors)
     body=[]; y=0
     for f in factors:
@@ -162,8 +163,12 @@ def factorization_svg(factors):
         body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
         try:
-            svg=support_svg(f).replace('<svg ','<svg width="340" height="176" ',1)
-            body.append(f'<g transform="translate(0 30)">{svg}</g>')
+            svg=support_svg(f).replace('<svg ','<svg width="340" height="166" ',1)
+            audit=support_audit(f)
+            check='Boundary word agrees' if audit['matches'] is True else 'Preview check failed' if audit['matches'] is False else 'Preview check unavailable'
+            color='#476b58' if audit['matches'] is True else '#a14b20'
+            body.append(f'<desc>{escape(audit["message"])}</desc><text x="12" y="34" font-family="sans-serif" font-size="10" fill="{color}">{check}</text>')
+            body.append(f'<g transform="translate(0 38)">{svg}</g>')
         except ValueError as error:
             body.append(f'<desc>{escape(str(error))}</desc><text x="12" y="80" fill="#a14b20" '
                         'font-family="sans-serif" font-size="12">Support preview unavailable.</text>'

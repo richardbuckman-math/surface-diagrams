@@ -29,7 +29,10 @@ function paint(){
   head.append(title,buttons);const support=document.createElement('div');support.className='support';
   if(f.svg)support.innerHTML=f.svg;else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
   const word=document.createElement('div');word.className='word';word.textContent=f.word.join(' ');word.title=word.textContent;
-  card.append(head,support,word);card.onclick=()=>choose(i);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(i);}};
+  const audit=document.createElement('div');audit.className='support-check '+(f.audit?.status||'unavailable');
+  audit.textContent=f.audit?.matches===true?'Boundary word agrees':f.audit?.matches===false?'Preview check failed':'Preview check unavailable';
+  audit.title=f.audit?.message||'No support audit available';
+  card.append(head,audit,support,word);card.onclick=()=>choose(i);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(i);}};
   card.ondragstart=e=>{if(busy){e.preventDefault();return;}dragged=i;choose(i);e.dataTransfer.setData('text/plain',String(i));e.dataTransfer.effectAllowed='move';card.classList.add('dragging');};
   card.ondragover=e=>{if(dragged===null||busy)return;e.preventDefault();e.dataTransfer.dropEffect='move';card.classList.add('drop-target');};
   card.ondragleave=()=>card.classList.remove('drop-target');
@@ -45,7 +48,6 @@ async function action(payload,next=selected){
  catch(e){status(e.message,true);}finally{busy=false;document.body.classList.remove('busy');controls();}
 }
 function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 function inspectZoom(){
  const viewport=$('inspect-viewport'),drawing=$('inspect-drawing');
  const cx=drawing.offsetWidth>viewport.clientWidth?(viewport.scrollLeft+viewport.clientWidth/2)/drawing.offsetWidth:.5;
@@ -62,6 +64,9 @@ $('inspect').onclick=()=>{
  else $('inspect-drawing').textContent=f.warning;
  $('inspect-word').textContent='Braid: '+f.word.join(' ');
  $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
+ $('inspect-audit').textContent=f.audit?.message||'No support audit available.';
+ $('inspect-actual').textContent='Sampled boundary class: '+(f.audit?.actual?.join(' ')||'unavailable');
+ $('inspect-expected').textContent='Exact transported class: '+(f.audit?.expected?.join(' ')||'unavailable');
  $('zoom').value='1';inspectZoom();$('inspector').showModal();
  $('inspect-viewport').scrollTo(0,0);
 };

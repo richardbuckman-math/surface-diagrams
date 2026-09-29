@@ -14,6 +14,7 @@ from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
 from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
+from .factorization_audit import support_audit
 
 
 class LabServer(ThreadingHTTPServer):
@@ -69,7 +70,7 @@ class LabServer(ThreadingHTTPServer):
             if not f.half and f.points==2: options.append(['halves','Split into half twists'])
             if not f.half and f.points==3: options.append(['lantern','Lantern: three pairwise twists (marked points)'])
             rows.append(dict(asdict(f),word=f.word,label=f.label,svg=svg,warning=warning,
-                             height=row_height(f),splits=options))
+                             height=row_height(f),splits=options,audit=support_audit(f)))
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=self.message,

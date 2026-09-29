@@ -12,6 +12,7 @@ from surface_diagrams.factorization_explorer import (Factor,initial_factors,prod
 from surface_diagrams.factorization_geometry import support_points,turn,braid_svg,row_height,deform_polyline,factorization_svg
 from math import pi
 from surface_diagrams.factorization_lab import LabServer
+from surface_diagrams.factorization_audit import support_audit,audit_points,polyline_ray_word
 
 
 class FactorizationLabTests(unittest.TestCase):
@@ -82,6 +83,21 @@ class FactorizationLabTests(unittest.TestCase):
             points=support_points(f.first,f.points,f.half,f.conjugator)
             self.assertGreater(len(points),2)
             self.assertTrue(all(((50+x*48-170)/164)**2+((y*48)/84)**2<1 for x,y in points))
+            self.assertTrue(support_audit(f)['matches'])
+
+    def test_support_audit_checks_drawn_class_and_detects_wrong_geometry(self):
+        for f in initial_factors():
+            self.assertTrue(support_audit(f)['matches'],f.id)
+        f=Factor('arc',(2,),1,2,half=True)
+        correct=support_points(1,2,True,(2,))
+        wrong=tuple((x,-y) for x,y in correct)
+        self.assertTrue(audit_points(f,correct)['matches'])
+        self.assertFalse(audit_points(f,wrong)['matches'])
+        self.assertEqual(audit_points(f,((0.,0.),(2.,0.)))['status'],'unavailable')
+        # A ray through a polyline vertex counts once; reversing inverts the word.
+        points=((-0.5,1.),(0.,1.),(.5,1.))
+        self.assertEqual(polyline_ray_word(points),(1,))
+        self.assertEqual(polyline_ray_word(points[::-1]),(-1,))
     def test_continuous_braid_has_factor_separators_and_total_height(self):
         f=initial_factors(); svg=braid_svg(f)
         self.assertEqual(svg.count('stroke-dasharray'),12)
