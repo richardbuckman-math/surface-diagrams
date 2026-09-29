@@ -4,25 +4,60 @@ from dataclasses import asdict
 from http.server import ThreadingHTTPServer
 from importlib import resources
 import json
+import os
+from pathlib import Path
 import secrets
+import tempfile
 import threading
 import webbrowser
+from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
 from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors
-from .factorization_geometry import support_svg,braid_svg,row_height
+from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 
 
 class LabServer(ThreadingHTTPServer):
     daemon_threads=True
-    def __init__(self,port=0):
+    def __init__(self,port=0,session_path=None):
+        self.session_path=Path(session_path).expanduser().resolve() if session_path else None
+        history=[initial_factors()]; position=0
+        if self.session_path and self.session_path.exists():
+            if self.session_path.stat().st_size>16*1024*1024:
+                raise ValueError('Session file exceeds 16 MiB')
+            saved=json.loads(self.session_path.read_text(encoding='utf-8'))
+            if not isinstance(saved,dict) or saved.get('format')!='surface-diagrams-session-v1':
+                raise ValueError('Not a Factorization Lab session file')
+            entries=saved.get('history'); position=saved.get('position')
+            if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
+                raise ValueError('Invalid session history')
+            history=[import_factors(entry) for entry in entries]
         super().__init__(('127.0.0.1',port),LabHandler)
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
         self.lock=threading.Lock()
-        self.history=[initial_factors()]; self.position=0; self.revision=0
-        self.message='Loaded 13 factors / 178 braid letters from the earlier SVG.'
+        self.history=history; self.position=position; self.revision=0
+        self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
+                      else 'Loaded 13 factors / 178 braid letters from the earlier SVG.')
+        if self.session_path:
+            try: self.save_session()
+            except Exception:
+                self.server_close(); raise
     @property
     def url(self): return f'http://127.0.0.1:{self.server_port}'
+    def save_session(self):
+        if self.session_path is None: return
+        document=dict(format='surface-diagrams-session-v1',position=self.position,
+                      history=[export_factors(factors) for factors in self.history])
+        temporary=None
+        try:
+            with tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',dir=self.session_path.parent,
+                                             prefix=self.session_path.name+'.',suffix='.tmp',delete=False) as stream:
+                temporary=Path(stream.name)
+                json.dump(document,stream)
+                stream.flush(); os.fsync(stream.fileno())
+            os.replace(temporary,self.session_path)
+        finally:
+            if temporary is not None and temporary.exists(): temporary.unlink()
     def state(self):
         factors=self.history[self.position]
         rows=[]
@@ -36,9 +71,18 @@ class LabServer(ThreadingHTTPServer):
             rows.append(dict(asdict(f),word=f.word,label=f.label,svg=svg,warning=warning,
                              height=row_height(f),splits=options))
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
+                    persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=self.message,
                     export=export_factors(factors))
     def mutate(self,payload):
+        previous=(self.history,self.position,self.revision,self.message)
+        try:
+            self._mutate(payload)
+            self.save_session()
+        except Exception:
+            self.history,self.position,self.revision,self.message=previous
+            raise
+    def _mutate(self,payload):
         if payload.get('revision')!=self.revision: raise ValueError('State changed; reload before editing')
         op=payload.get('op'); factors=self.history[self.position]
         if op=='undo':
@@ -72,6 +116,14 @@ class LabServer(ThreadingHTTPServer):
 class LabHandler(EditorHandler):
     def do_GET(self):
         if not self._local_request(): return
+        if urlsplit(self.path).path=='/api/export.svg':
+            try: revision=int(parse_qs(urlsplit(self.path).query)['revision'][0])
+            except (KeyError,ValueError): self._error(400,'Supply the current revision'); return
+            with self.server.lock:
+                if revision!=self.server.revision:
+                    self._error(409,'State changed; reload before exporting'); return
+                svg=factorization_svg(self.server.history[self.server.position])
+            self._reply(200,svg,'image/svg+xml; charset=utf-8'); return
         if self.path=='/api/state':
             with self.server.lock: data=self.server.state()
             self._reply(200,json.dumps(data)); return
@@ -99,15 +151,19 @@ class LabHandler(EditorHandler):
             self._reply(200,json.dumps(data))
         except (ValueError,TypeError,IndexError,OverflowError) as error:
             self._error(400,str(error))
+        except OSError:
+            self._error(503,'Could not save the session file; operation was not applied. Check available disk space and file permissions.')
 
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port',type=int,default=0)
     parser.add_argument('--no-browser',action='store_true')
+    parser.add_argument('--session',type=Path,help='Save and reopen this workspace file, including undo/redo history')
     args=parser.parse_args(argv)
     if not 0<=args.port<=65535: parser.error('port must be between 0 and 65535')
-    server=LabServer(args.port)
+    try: server=LabServer(args.port,args.session)
+    except (ValueError,OSError) as error: parser.error(str(error))
     print(server.url,flush=True)
     if not args.no_browser: webbrowser.open(server.url)
     try: server.serve_forever()

@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## September 29 morning: durable sessions and complete SVG exports
+
+Added --session FILE to the lab. It saves every accepted edit and undo/redo
+position by atomic replacement, reopens and exactly verifies all history states,
+and rolls back an edit if saving fails. Existing invalid files are not overwritten.
+State limits now also protect reopening (powers, IDs, conjugator size, whole-state
+letter counts after splits). SVG exports retain numerical-preview labels and
+explicit missing-support warnings; a stale revision cannot export the wrong state.
+All 266 tests pass (117 seconds); browser smoke test split F1, restarted the test
+server, reopened 14 factors, and successfully undid back to 13 with redo available.
+Main user server 8017 was confirmed untouched (revision 0, no undo) before upgrade.
+It now runs with --session .preview/factorization-workspace.json, exec session
+21178, and tab 4 is retained. Restart with that same session argument to preserve
+work. Temporary test servers 8018/8019 and tabs 5/6 are agent-only checks.
+Geometry/inspector commit 7fd221a passed both remote CI workflows.
+Next: compare numerical support ray words to exact transported curve classes;
+rendering successfully is not by itself a guarantee that sampled geometry is right.
+
 ## September 29 morning: complicated support rendering and inspector
 
 The previous prototype commit 18ddbd6 passed both remote Tests and Documentation.

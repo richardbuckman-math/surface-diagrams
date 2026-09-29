@@ -53,9 +53,17 @@ def product(factors):
     return tuple(i for f in factors for i in f.word)
 
 
-def checked(before,after):
-    if sum(len(f.word) for f in after)>3500 or len(after)>80:
+def validate_size(factors):
+    if sum(len(f.word) for f in factors)>3500 or len(factors)>80:
         raise ValueError('This prototype limits a state to 80 factors and 3500 braid letters. Undo or simplify first.')
+    if any(len(f.conjugator)>1500 or f.power>32 or len(f.id)>250 for f in factors):
+        raise ValueError('Factor record exceeds the saved-workspace limit. Undo or simplify first.')
+    if len({f.id for f in factors})!=len(factors):
+        raise ValueError('This operation would duplicate a factor ID; rename the records in a saved file first.')
+
+
+def checked(before,after):
+    validate_size(after)
     if exact_action(product(before))!=exact_action(product(after)):
         raise ValueError('Exact disk action verification failed; operation was not applied')
     return tuple(after)
@@ -76,8 +84,7 @@ def move_factor(factors,source,target):
         changed=replace(v,conjugator=reduce_word(inverse_word(u.word)+v.conjugator))
         factors[source-1:source+1]=checked((v,u),(u,changed))
         source-=1
-    if sum(len(f.word) for f in factors)>3500:
-        raise ValueError('Braid is too large for this prototype; use a shorter move')
+    validate_size(factors)
     return tuple(factors)
 
 
@@ -95,7 +102,7 @@ def split_factor(factors,index,kind):
         raise ValueError('That split is not available for this factor')
     checked((f,),replacements)
     result=tuple(factors[:index])+replacements+tuple(factors[index+1:])
-    if len(result)>80: raise ValueError('Factor limit reached')
+    validate_size(result)
     return result
 
 
@@ -113,7 +120,9 @@ def combine_factors(factors,index):
     if a.half and total%2==0:
         combined=replace(combined,half=False,power=total//2)
     checked((a,b),(combined,))
-    return tuple(factors[:index])+(combined,)+tuple(factors[index+2:])
+    result=tuple(factors[:index])+(combined,)+tuple(factors[index+2:])
+    validate_size(result)
+    return result
 
 
 def export_factors(factors):

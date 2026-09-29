@@ -16,6 +16,7 @@ function controls(){
 }
 function choose(index){selected=index;document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));controls();}
 function paint(){
+ $('storage-status').textContent=state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
  selected=Math.min(selected,state.factors.length-1);
  $('count').textContent=`${state.factors.length} factors · ${state.factors.reduce((n,f)=>n+f.word.length,0)} letters`;
  $('factors').replaceChildren();
@@ -71,5 +72,11 @@ $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').va
 $('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json','six-seven-factorization.json');
 $('open').onclick=()=>$('file').click();
 $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;if(file.size>250000)throw new Error('Choose a JSON file smaller than 250 KB');const document=JSON.parse(await file.text());await action({op:'import',document},0);}catch(e){status(e.message,true);}finally{$('file').value='';}};
-$('svg').onclick=()=>{let y=0;const height=state.factors.reduce((n,f)=>n+f.height,0);let body='';for(const f of state.factors){body+=`<text x="12" y="${y+20}" font-family="sans-serif" font-size="13">${esc(f.id+' · '+f.label)}</text><g transform="translate(0 ${y+30})">${f.svg.replace('<svg ','<svg width="340" height="176" ')}</g>`;y+=f.height;}body+=`<g transform="translate(360 0)">${state.braid}</g>`;download(`<svg xmlns="http://www.w3.org/2000/svg" width="620" height="${height}" viewBox="0 0 620 ${height}"><rect width="100%" height="100%" fill="white"/>${body}</svg>`,'image/svg+xml','six-seven-factorization.svg');};
+$('svg').onclick=async()=>{
+ if(busy||!state)return;
+ try{const response=await fetch('/api/export.svg?revision='+state.revision);
+  if(!response.ok){const data=await response.json();throw new Error(data.error);}
+  download(await response.text(),'image/svg+xml','six-seven-factorization.svg');
+ }catch(error){status(error.message,true);}
+};
 fetch('/api/state').then(r=>{if(!r.ok)throw new Error('Could not load the lab');return r.json();}).then(data=>{state=data;paint();}).catch(e=>status(e.message,true));

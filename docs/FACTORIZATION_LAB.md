@@ -7,6 +7,18 @@ $env:PYTHONPATH='C:/GitHub/surface-diagrams/src'
 python -m surface_diagrams.factorization_lab --port 8017
 ```
 
+For a durable workspace that automatically saves every edit and undo/redo step:
+
+```powershell
+python -m surface_diagrams.factorization_lab --port 8017 --session .preview/my-factorization-session.json
+```
+
+Use an existing parent directory. Reusing the same file reopens the exploration
+and its undo history after verifying every saved state's exact product. Writes
+replace the session file atomically; a save failure rejects the edit and leaves
+the previous state available. An invalid existing file is never overwritten.
+The page states whether the current server is saving a session file.
+
 The browser opens a local interface with the 13 original factors from the
 178-letter `BraidSixSeven.svg`. The source words match the earlier transcription
 factor by factor. The remaining PDF support correspondence is still provisional.
@@ -35,7 +47,11 @@ General daisy and framed-boundary substitutions are not implemented.
 Undo/redo retain up to 60 states. Reset is undoable. Save JSON preserves exact
 factor records and words; Open JSON validates the records and verifies equality
 with the starting product before loading. Save SVG exports the current paired
-surface/braid view. Save work before stopping the server; its history is in memory.
+surface/braid view, including labels for numerical previews and any missing
+preview. Without `--session`, save work before stopping the server; history is
+kept only in memory. A JSON factor export holds the current factorization;
+the session file holds the whole undo/redo workspace and is reopened via
+`--session`, rather than the Open JSON button.
 
 Select a factor and choose **Inspect support** for a larger drawing with 1×–8×
 zoom, scrolling, and the full exact braid word and conjugator. Escape or Close

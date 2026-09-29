@@ -4,6 +4,7 @@ Exact word algebra is separate. Curves are numerical representatives obtained
 by compactly supported half rotations, not certified itinerary reconstruction.
 """
 from functools import lru_cache
+from html import escape
 from math import sin,cos,pi,hypot,ceil,sqrt
 from .model import Style
 from .visuals import _braid_paths, RAINBOW
@@ -150,3 +151,27 @@ def braid_svg(factors):
         svg.append(f'<path d="M 12 {y} H 228" stroke="#2563eb" stroke-width="1.3" stroke-dasharray="3 5"/>')
     svg.append('</svg>')
     return ''.join(svg)
+
+
+def factorization_svg(factors):
+    """Portable paired export, retaining numerical-preview labels and failures."""
+    height=sum(row_height(f) for f in factors)
+    body=[]; y=0
+    for f in factors:
+        label=f'{f.id} · {f.label}'
+        body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
+                    f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
+        try:
+            svg=support_svg(f).replace('<svg ','<svg width="340" height="176" ',1)
+            body.append(f'<g transform="translate(0 30)">{svg}</g>')
+        except ValueError as error:
+            body.append(f'<desc>{escape(str(error))}</desc><text x="12" y="80" fill="#a14b20" '
+                        'font-family="sans-serif" font-size="12">Support preview unavailable.</text>'
+                        '<text x="12" y="100" font-family="sans-serif" font-size="12">Exact braid remains in the right column.</text>')
+        body.append('</g>'); y+=row_height(f)
+    body.append(f'<g transform="translate(360 0)">{braid_svg(factors)}</g>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="620" height="{height+28}" viewBox="0 0 620 {height+28}">'
+            '<title>Factorization Lab paired export</title><rect width="100%" height="100%" fill="white"/>'
+            '<text x="12" y="18" font-family="sans-serif" font-size="12" fill="#526880">'
+            'Numerical support previews · exact braid words</text><g transform="translate(0 28)">'
+            +''.join(body)+'</g></svg>')
