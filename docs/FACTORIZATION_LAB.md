@@ -48,43 +48,56 @@ This reverses a lantern split, including after a common conjugation. Other
 combinations are rejected without changing the state.
 General daisy and framed-boundary substitutions are not implemented.
 
-Undo/redo retain up to 60 states. Reset is undoable. Save JSON preserves exact
-factor records and words; Open JSON validates the records and verifies equality
+Undo/redo retain up to 60 states. Reset is undoable. Export JSON preserves exact
+factor records and words; Load JSON validates the records and verifies equality
 with the starting product before loading. Save SVG exports the current paired
-surface/braid view, including labels for numerical previews and any missing
+surface/braid view, including shared support checks and any missing
 preview. Without `--session`, save work before stopping the server; history is
 kept only in memory. A JSON factor export holds the current factorization;
 the session file holds the whole undo/redo workspace and is reopened via
-`--session`, rather than the Open JSON button.
+`--session`, rather than the Load JSON button.
 
 Select a factor and choose **Inspect support** for a larger drawing with 1×–8×
 zoom, scrolling, and the full exact braid word and conjugator. Escape or Close
 returns to the stacked view. The inspector keeps strokes thin while enlarging
 the drawing, making nearby strands easier to distinguish.
 
-Each row also reports a boundary-word comparison. The program reads upward
-puncture-ray crossings from the actual rounded SVG polyline and compares its
-free homotopy class with the exact Artin image of the standard enclosing loop.
-For a half-twist arc, it compares the boundary of the arc's neighborhood.
-The inspector's **Boundary-word comparison** disclosure shows both normalized
-words. Disagreement or a puncture collision is explicitly flagged, and exports
-retain the result. Agreement checks the represented boundary class; it does
-not certify embeddedness, separation of nearby strands, or PDF correspondence.
+Each row reports the boundary class of its recovered `Arc` or `Loop`, compared
+with the exact Artin image of the standard enclosing loop. The inspector shows
+the itinerary and both normalized boundary words. Half twists use the boundary
+of the arc's neighborhood. Drawing uses `PlanarSurface.with_curves` and the
+existing SVG renderer, including its noninterleaving and clearance checks.
 
-## Geometric preview limits
+## Shared support and mapping-class API
 
-The support curves are numerical representatives produced by local half
-rotations applied to standard arcs or enclosing curves. Complete triple twists
-use a direct local full rotation to reduce unnecessary geometric stretching.
-Sampling is restricted to the disk where each local rotation moves points, and
-dense sections are simplified in bounded chunks. This permits the previously
-failing F9-over-F7 move to display both affected supports; particularly crowded
-representatives can still take several seconds and benefit from the inspector.
-This is separate from the exact algebraic verification; the numerical drawings
-are not certified normal forms or automatically recovered PDF itineraries.
-Small upper/lower cases calibrate the sign convention. Complicated moves can
-exceed the sampling budget; that row then states that the preview is unavailable,
-while its exact braid remains usable. Undo can restore the previous drawing.
+`ConjugatedTwist` stores a standard core and its conjugator independently of
+factor IDs and browser state. `support_curve` recovers an ordinary library
+`Arc`/`Loop` for the six-marked-point prototype; `support_drawing` uses the shared
+surface renderer. The initial F9 recovers exactly the user's confirmed itinerary.
+Numerical deformation currently proposes the cut itinerary, but its boundary
+class must agree exactly before rendering. Ambiguous recovery, routing limits,
+and clearance failures are reported explicitly; there is no sampled-SVG fallback.
+This does not establish correspondence with every drawing in the original PDF.
+
+After a Hurwitz move, each crossed factor is simplified automatically. The dragged
+factor stays unchanged. **Simplify factors** applies the same bounded search to
+all current factors, with undo. Search uses braid relations, commuting letters,
+and verified removal of conjugator suffixes which stabilize or relocate the
+standard core. It preserves half-twist / Dehn-twist type, support size, and power.
+The core's position may change. Every local rewrite is verified, including exact Artin checks of core transports.
+This avoids expanding an enormous common conjugator just to verify a short
+rewrite. Factorization replacements retain their complete-product action check.
+This is a bounded search for a shorter representative, not a global shortest-word
+claim. For example, F1 dragged past F2 now leaves an 11-letter half twist instead
+of the raw 33-letter conjugation.
+
+```python
+from surface_diagrams import ConjugatedTwist, simplify_twist, support_drawing
+
+twist = ConjugatedTwist((1, 2), first=1, points=2, half=True)
+shorter = simplify_twist(twist)  # standard half twist at position 2
+svg = support_drawing(shorter)
+```
 
 The prototype caps states at 80 factors and 3500 braid letters, and stops exact
 verification if free-group images exceed its computation limit. It never labels

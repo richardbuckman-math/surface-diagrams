@@ -19,3 +19,8 @@ __all__ += ["FactorPanel", "FactorizationDiagram"]
 
 from .documents import DiagramDocument
 __all__ += ["DiagramDocument"]
+
+from .mapping_classes import ConjugatedTwist
+from .twist_simplify import simplify_twist
+from .twist_supports import support_curve, support_drawing
+__all__ += ["ConjugatedTwist", "simplify_twist", "support_curve", "support_drawing"]

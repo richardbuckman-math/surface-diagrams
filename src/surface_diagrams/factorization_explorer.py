@@ -1,16 +1,7 @@
 """Exact factor records and checked local rewrites for the six-point prototype."""
 from dataclasses import dataclass, replace, asdict
-from .braid_actions import reduce_word, inverse_word, artin_action
-from .braid_actions import _extend_action
-
-
-def exact_action(word):
-    images=tuple((i,) for i in range(1,7))
-    for letter in word:
-        images=_extend_action(images,(letter,))
-        if sum(map(len,images))>400000:
-            raise ValueError('Exact verification reached the prototype word limit; operation was not applied')
-    return images
+from .braid_actions import reduce_word, inverse_word
+from .mapping_classes import ConjugatedTwist,exact_action
 
 
 @dataclass(frozen=True)
@@ -23,14 +14,16 @@ class Factor:
     half: bool = False
 
     @property
+    def mapping_class(self):
+        return ConjugatedTwist(self.conjugator,self.first,self.points,self.power,self.half)
+
+    @property
     def core(self):
-        if self.half:
-            return (self.first,)*self.power
-        return tuple(range(self.first,self.first+self.points-1))*(self.points*self.power)
+        return self.mapping_class.core
 
     @property
     def word(self):
-        return reduce_word(self.conjugator+self.core+inverse_word(self.conjugator))
+        return self.mapping_class.word
 
     @property
     def label(self):
@@ -76,16 +69,22 @@ def move_factor(factors,source,target):
         raise ValueError('Choose two valid factor positions')
     while source<target:
         u,v=factors[source:source+2]
-        changed=replace(v,conjugator=reduce_word(u.word+v.conjugator))
+        changed=simplify_factor(replace(v,conjugator=reduce_word(u.word+v.conjugator)))
         factors[source:source+2]=checked((u,v),(changed,u))
         source+=1
     while source>target:
         v,u=factors[source-1:source+1]
-        changed=replace(v,conjugator=reduce_word(inverse_word(u.word)+v.conjugator))
+        changed=simplify_factor(replace(v,conjugator=reduce_word(inverse_word(u.word)+v.conjugator)))
         factors[source-1:source+1]=checked((v,u),(u,changed))
         source-=1
     validate_size(factors)
     return tuple(factors)
+
+
+def simplify_factor(factor):
+    from .twist_simplify import simplify_twist
+    simplified=simplify_twist(factor.mapping_class)
+    return replace(factor,conjugator=simplified.conjugator,first=simplified.first)
 
 
 def split_factor(factors,index,kind):

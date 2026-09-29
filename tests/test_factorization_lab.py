@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
+from itertools import product as cartesian_product
 from xml.etree import ElementTree as ET
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError
@@ -13,6 +14,7 @@ from surface_diagrams.factorization_geometry import support_points,turn,braid_sv
 from math import pi
 from surface_diagrams.factorization_lab import LabServer
 from surface_diagrams.factorization_audit import support_audit,audit_points,polyline_ray_word
+from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_curve,support_drawing
 
 
 class FactorizationLabTests(unittest.TestCase):
@@ -43,6 +45,51 @@ class FactorizationLabTests(unittest.TestCase):
         half=split_factor((Factor('P',(3,),1,2),),0,'halves')
         self.assertEqual(combine_factors(half,0)[0].word,Factor('P',(3,),1,2).word)
         with self.assertRaises(ValueError): combine_factors(initial_factors(),0)
+
+    def test_shared_renderer_recovers_confirmed_itinerary_and_elliptic_paths(self):
+        f=initial_factors()[8]
+        self.assertEqual(support_curve(f.mapping_class),Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down'))
+        self.assertIsInstance(support_curve(initial_factors()[0].mapping_class),Loop)
+        svg=support_drawing(f.mapping_class)
+        root=ET.fromstring(svg)
+        arc=root.find("{http://www.w3.org/2000/svg}path[@class='arc']")
+        self.assertIsNotNone(arc)
+        self.assertIn('A ',arc.attrib['d'])
+
+    def test_simplification_preserves_twist_type_and_can_change_core(self):
+        examples=(ConjugatedTwist((1,2),1,2,half=True),
+                  ConjugatedTwist((1,2,1,-2,-1),2,2,half=True),
+                  ConjugatedTwist((2,2),1,3,2))
+        for twist in examples:
+            reduced=simplify_twist(twist)
+            self.assertEqual(exact_action(reduced.word),exact_action(twist.word))
+            self.assertEqual((reduced.points,reduced.power,reduced.half),(twist.points,twist.power,twist.half))
+            self.assertLess(len(reduced.conjugator),len(twist.conjugator))
+        shifted=simplify_twist(examples[0])
+        self.assertEqual((shifted.conjugator,shifted.first),((),2))
+        factors=initial_factors(); moved=move_factor(factors,0,1)
+        self.assertEqual(moved[1],factors[0])
+        self.assertEqual(len(moved[0].word),11)
+        self.assertEqual(exact_action(product(moved)),exact_action(product(factors)))
+        # The long common conjugator need not be expanded to verify commuting
+        # local rewrites; it centralizes this disjoint standard half twist.
+        large=ConjugatedTwist((1,-2)*15,4,2,half=True)
+        self.assertEqual(simplify_twist(large).conjugator,())
+
+    def test_order_propagation_agrees_with_unpruned_small_route_search(self):
+        from surface_diagrams.curves import route,RoutingError
+        from surface_diagrams import PlanarSurface,Style
+        base=PlanarSurface.row('PPPP',spacing=50,height=180,margin=50)
+        def accepted(curve):
+            try: route(base.with_curves(curve),Style()); return True
+            except RoutingError:return False
+        for cuts in cartesian_product(range(5),repeat=4):
+            try:curve=Loop(cuts)
+            except ValueError:continue
+            optimized=accepted(curve)
+            with patch('surface_diagrams.curves._forced_orders',return_value={}):
+                reference=accepted(curve)
+            self.assertEqual(optimized,reference,cuts)
 
     def test_geometric_sign_and_inverse(self):
         below=support_points(1,2,True,(-2,))
@@ -118,7 +165,7 @@ class FactorizationLabTests(unittest.TestCase):
         self.assertIn('Support preview unavailable',text)
         self.assertIn('sampling limit',text)
         self.assertIn('<test & twist>',text)
-        self.assertIn('Numerical support previews',text)
+        self.assertIn('Shared Arc/Loop supports',text)
         self.assertIn('Continuous six-strand braid',svg)
 
     def test_server_undo_revision_and_rejected_mutation(self):

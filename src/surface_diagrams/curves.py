@@ -5,7 +5,6 @@ advertised as a complete implementation of any named Thurston coordinate system.
 """
 
 from dataclasses import dataclass
-from itertools import permutations
 from math import acos, cos, sin, pi, sqrt
 from typing import Optional
 
@@ -143,6 +142,63 @@ def _conflict(a, b):
     return (l < s < r < t or s < l < t < r or (l == s and r == t))
 
 
+def _forced_orders(groups,edges,fixed,xs):
+    """Propagate pair orders along nested same-side segments.
+
+    Segments joining the same two cut intervals have opposite endpoint orders.
+    Segments sharing only one interval can force its order outright. These
+    relations constrain the existing search; its geometric checks still decide.
+    """
+    node_cut={node:cut for cut,nodes in groups.items() for node in nodes}
+    representatives=dict(fixed)
+    for cut,nodes in groups.items():
+        representatives.update((node,(xs[cut]+xs[cut+1])/2) for node in nodes)
+    graph={}; values={}; queue=[]
+    def key(a,b): return (min(a,b),max(a,b))
+    def pin(a,b):
+        k=key(a,b); value=a<b
+        if k in values and values[k]!=value: return False
+        if k not in values: values[k]=value;queue.append(k)
+        return True
+    for i,(a,b,side) in enumerate(edges):
+        for c,d,other in edges[i+1:]:
+            if side is None or side!=other or len({a,b,c,d})<4: continue
+            shared={node_cut[n] for n in (a,b) if n in node_cut}&{node_cut[n] for n in (c,d) if n in node_cut}
+            if len(shared)==2:
+                left,right=sorted(shared)
+                u=next(n for n in (a,b) if node_cut[n]==left);v=next(n for n in (c,d) if node_cut[n]==left)
+                r=next(n for n in (a,b) if node_cut[n]==right);s=next(n for n in (c,d) if node_cut[n]==right)
+                k,l=key(u,v),key(r,s); parity=1^(u>v)^(r>s)
+                graph.setdefault(k,[]).append((l,parity));graph.setdefault(l,[]).append((k,parity))
+            elif len(shared)==1:
+                cut=next(iter(shared));pair=[n for n in (a,b,c,d) if node_cut.get(n)==cut]
+                if len(pair)!=2: continue
+                u,v=pair;allowed=[]
+                for low,high in ((u,v),(v,u)):
+                    p=dict(representatives)
+                    p[low]=xs[cut]+(xs[cut+1]-xs[cut])/3
+                    p[high]=xs[cut]+2*(xs[cut+1]-xs[cut])/3
+                    if not _conflict((p[a],p[b],side),(p[c],p[d],side)): allowed.append((low,high))
+                if len(allowed)==1 and not pin(*allowed[0]): return {}
+    while queue:
+        k=queue.pop()
+        for other,parity in graph.get(k,()):
+            value=bool(values[k]^parity)
+            if other in values:
+                if values[other]!=value:return {}
+            else:values[other]=value;queue.append(other)
+    before={node:set() for node in node_cut}
+    for (a,b),value in values.items():
+        before[b if value else a].add(a if value else b)
+    for nodes in groups.values():
+        remaining=set(nodes)
+        while remaining:
+            ready={node for node in remaining if not before[node].intersection(remaining)}
+            if not ready:return {}  # Retain the bounded general search on inconsistent deductions.
+            remaining-=ready
+    return before
+
+
 def route(surface, style, *, max_states=20000):
     """Return half-ellipses or straight segments, retaining every cut visit.
 
@@ -214,6 +270,7 @@ def route(surface, style, *, max_states=20000):
             raise RoutingError("too many visits in a cut interval; increase point spacing or reduce dot/curve sizes")
         slots[cut] = [left + (right - left) * (i + 1) / (len(nodes) + 1) for i in range(len(nodes))]
     states = 0
+    before=_forced_orders(groups,edges,fixed,xs)
     def valid_partial(positions):
         realized = [(positions[a], positions[b], up) for a, b, up in edges if a in positions and b in positions]
         return all(not _conflict(a, b) for i, a in enumerate(realized) for b in realized[i+1:])
@@ -224,7 +281,13 @@ def route(surface, style, *, max_states=20000):
         if index == len(ordered):
             return dict(positions)
         cut, nodes = ordered[index]
-        for order in permutations(nodes):
+        def orders(prefix,remaining):
+            if not remaining:
+                yield prefix;return
+            for node in remaining:
+                if before.get(node,set()).intersection(remaining):continue
+                yield from orders(prefix+(node,),tuple(n for n in remaining if n!=node))
+        for order in orders((),tuple(nodes)):
             states += 1
             if states > max_states:
                 raise RoutingError("route ordering search limit reached; this does not prove the curve impossible")

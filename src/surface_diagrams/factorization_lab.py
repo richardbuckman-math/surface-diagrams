@@ -12,7 +12,7 @@ import threading
 import webbrowser
 from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
-from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors
+from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 from .factorization_audit import support_audit
 
@@ -94,7 +94,7 @@ class LabServer(ThreadingHTTPServer):
             self.position+=1; self.message='Redid the operation.'
         else:
             i=payload.get('index')
-            if op not in ('reset','import') and (type(i) is not int or not 0<=i<len(factors)):
+            if op not in ('reset','import','simplify') and (type(i) is not int or not 0<=i<len(factors)):
                 raise ValueError('Choose a valid factor')
             if op=='move':
                 result=move_factor(factors,i,payload.get('target'))
@@ -106,6 +106,9 @@ class LabServer(ThreadingHTTPServer):
                 result=combine_factors(factors,i)
                 message='Combined neighboring factors; exact disk action verified.'
             elif op=='reset': result=initial_factors(); message='Restored original factorization. Undo is available.'
+            elif op=='simplify':
+                result=checked(factors,tuple(simplify_factor(f) for f in factors))
+                message='Simplified conjugated twists with a bounded search; exact actions verified. Global minimality is not asserted.'
             elif op=='import': result=import_factors(payload.get('document')); message='Loaded saved exploration; exact product agrees with the starting factorization.'
             else: raise ValueError('Unknown operation')
             self.history=self.history[:self.position+1]+[result]

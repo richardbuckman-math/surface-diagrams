@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Reuse shared Arc/Loop surface rendering in the lab, with exact class-checked
+  itinerary recovery and faster propagation of route ordering constraints.
+- Add reusable conjugated-twist records and verified bounded simplification,
+  including changes of standard core; automatically simplify crossed factors.
+- Clarify Export JSON / Load JSON and add Simplify factors for saved explorations.
+
 - Add the interactive (6,7) Factorization Lab: drag-and-drop checked Hurwitz
   moves, stacked planar supports and a continuous braid with factor separators.
 - Support checked square/half-twist/marked-point lantern splits, inverse lantern

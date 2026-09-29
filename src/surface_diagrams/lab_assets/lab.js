@@ -5,7 +5,7 @@ const status=(text,error=false)=>{ $('status').textContent=text; $('status').cla
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
- for(const id of ['reset','save','open','svg']) $(id).disabled=busy||!state;
+ for(const id of ['reset','save','open','svg','simplify']) $(id).disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
  for(const [value,label] of f?.splits||[]){const o=document.createElement('option');o.value=value;o.textContent=label;picker.append(o);}
@@ -65,7 +65,8 @@ $('inspect').onclick=()=>{
  $('inspect-word').textContent='Braid: '+f.word.join(' ');
  $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
  $('inspect-audit').textContent=f.audit?.message||'No support audit available.';
- $('inspect-actual').textContent='Sampled boundary class: '+(f.audit?.actual?.join(' ')||'unavailable');
+ $('inspect-itinerary').textContent=f.audit?.itinerary||'No accepted shared itinerary available.';
+ $('inspect-actual').textContent='Itinerary boundary class: '+(f.audit?.actual?.join(' ')||'unavailable');
  $('inspect-expected').textContent='Exact transported class: '+(f.audit?.expected?.join(' ')||'unavailable');
  $('zoom').value='1';inspectZoom();$('inspector').showModal();
  $('inspect-viewport').scrollTo(0,0);
@@ -73,6 +74,7 @@ $('inspect').onclick=()=>{
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);
+$('simplify').onclick=()=>action({op:'simplify'});
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
 $('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json','six-seven-factorization.json');
 $('open').onclick=()=>$('file').click();

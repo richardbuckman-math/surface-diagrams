@@ -1,10 +1,11 @@
-"""Sampled planar representatives and aligned continuous braid for the lab.
+"""Numerical itinerary proposals, shared support rendering, and aligned braid.
 
-Exact word algebra is separate. Curves are numerical representatives obtained
-by compactly supported half rotations, not certified itinerary reconstruction.
+The sampled deformation proposes topology; twist_supports verifies the recovered
+Arc/Loop class and draws it through the existing surface library.
 """
 from functools import lru_cache
 from html import escape
+import re
 from math import sin,cos,pi,hypot,ceil,sqrt
 from .model import Style
 from .visuals import _braid_paths, RAINBOW
@@ -119,10 +120,8 @@ def support_points(first,count,half,conjugator):
 
 
 def support_svg(factor):
-    points=support_points(factor.first,factor.points,factor.half,factor.conjugator)
-    path='M '+' L '.join(f'{50+x*48:.3f} {88-y*48:.3f}' for x,y in points)
-    dots=''.join(f'<circle cx="{50+i*48}" cy="88" r="3.5" fill="#1767cd"/><text x="{50+i*48}" y="106" text-anchor="middle" font-size="10" fill="#17416e">{i+1}</text>' for i in range(6))
-    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" role="img" aria-label="Numerical support representative"><ellipse cx="170" cy="88" rx="164" ry="84" fill="#fff" stroke="#475569"/><path d="{path}" fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linejoin="round"/>{dots}</svg>'
+    from .twist_supports import support_drawing
+    return support_drawing(factor.mapping_class)
 
 
 def row_height(factor):
@@ -163,7 +162,8 @@ def factorization_svg(factors):
         body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
         try:
-            svg=support_svg(f).replace('<svg ','<svg width="340" height="166" ',1)
+            svg=re.sub(r'width="[^"]*"','width="340"',support_svg(f),count=1)
+            svg=re.sub(r'height="[^"]*"','height="166"',svg,count=1)
             audit=support_audit(f)
             check='Boundary word agrees' if audit['matches'] is True else 'Preview check failed' if audit['matches'] is False else 'Preview check unavailable'
             color='#476b58' if audit['matches'] is True else '#a14b20'
@@ -178,5 +178,5 @@ def factorization_svg(factors):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="620" height="{height+28}" viewBox="0 0 620 {height+28}">'
             '<title>Factorization Lab paired export</title><rect width="100%" height="100%" fill="white"/>'
             '<text x="12" y="18" font-family="sans-serif" font-size="12" fill="#526880">'
-            'Numerical support previews · exact braid words</text><g transform="translate(0 28)">'
+            'Shared Arc/Loop supports · exact braid words</text><g transform="translate(0 28)">'
             +''.join(body)+'</g></svg>')

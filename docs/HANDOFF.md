@@ -1,5 +1,73 @@
 # Handoff: surface-diagrams
 
+## Final shared-renderer checkpoint, September 29
+
+All 270 tests pass (168s); after switching simplification's final proof to a
+locally verified rewrite chain, all 16 focused lab tests also pass. Full global
+factor expansion can exceed the limit for the user's current F7 even when a
+rewrite is small; the chain verifies each local braid rewrite/core transport
+instead. Complete factorization replacement remains checked by exact action.
+Read-only validation of the user's saved exploration: 398 -> 296 letters, same
+exact product. This has NOT yet been applied to the main session; Simplify factors
+is available. Saved main workspace has 15 history states (14 factors currently).
+Main server was restarted from that file, exec 82721, port 8017, preserving history.
+Numerical recovery now internally simplifies its proposal even for old records.
+Browser verified F1/F2 shortening and the difficult F9/F7 shared renderer with
+separated elliptic arcs. One Export JSON and one Load JSON button are present.
+The standalone test server 8020 (exec 9863/tab 7) still needs cleanup. Main tab 4
+needs reload to receive new UI; refresh only reads persisted server history.
+Next: verify remote CI and live main UI, then improve bounded simplification or
+reduce expensive itinerary recovery for the user's most complicated saved F7.
+No global shortest-conjugator claim. Five-hour allowance nearly exhausted.
+
+## September 29: shared Arc/Loop rendering and conjugated-twist simplification
+
+Implemented the user's new priority. Factor.mapping_class delegates to reusable
+ConjugatedTwist in mapping_classes.py; support_curve/support_drawing in
+ twist_supports.py recover verified Arc/Loop itineraries and call the existing
+PlanarSurface/render_svg pipeline. No handwritten support SVG fallback remains.
+Numerical deformation proposes topology only. Initial F9 recovers exactly the
+confirmed Arc(1,4,(4,2,1,4,5,1,2,4,2),direction='down').
+The shared router now propagates forced endpoint orders between same-side edges;
+all original noninterleaving/clearance checks remain. This makes the difficult
+F9-over-F7 support render too. A finite small-loop regression compares the
+optimized route search against the unpruned search. Public exports include
+ConjugatedTwist, simplify_twist, support_curve, support_drawing.
+Hurwitz moves simplify each crossed factor automatically while keeping the
+dragged factor unchanged. Simplify factors handles already-saved explorations.
+Bounded braid-relation/commutation/suffix-core transport search preserves type,
+support size and power, can change the standard core, and exactly verifies its
+result. No globally shortest claim. F1 crossing F2 reduces its new factor from
+33 letters to 11 (core 3 becomes core 5); total becomes 180 rather than 202.
+The source/UI have one export and one import action; relabeled Export JSON and
+Load JSON to make the distinction explicit. Browser checked the shortened move.
+Full suite 269 passed before one additional route regression; focused 16 tests
+then passed. Final full suite and difficult-move browser checks in progress.
+Main user server 8017 still runs the prior committed backend until deployment;
+its session file must be preserved. Test server 8020, exec 9863, tab 7 uses its
+own .preview/shared-support-session.json. Next: finish validation, push, then
+restart main with .preview/factorization-workspace.json and leave it open.
+
+## NEW USER PRIORITIES: shared support model and shorter conjugated factors
+
+User reports two Save JSON buttons. Current lab HTML has exactly one; inspect
+live UI before claiming a fix or deleting a different control.
+User requires left-hand support diagrams to use the established library arc and
+closed-curve rendering code. Current factorization_geometry.py is a bespoke
+sampled-path SVG renderer within the package, not the existing Arc/Loop rendering
+API. Build shared arc/closed-curve and mapping-class representations as needed;
+connect the prototype to those rather than maintaining parallel drawing logic.
+After Hurwitz moves, shorten the conjugated representation g T^k g^-1, preserving
+half twist / Dehn twist / squared Dehn twist type. The standard core T may change.
+Seek braid-relation cancellations within g and across core/inverse boundaries,
+not only adjacent inverse cancellation. Verify every accepted representative by
+exact Artin action; update both support and braid. Do not promise a globally
+shortest conjugator unless established; bounded verified simplification is a
+useful first increment. Preserve saved user workspace and migration compatibility.
+This takes priority over alpha6 release or unrelated display work. At this user
+turn five-hour usage is 99%; defer substantive implementation until reset rather
+than consuming reset credits. No implementation of these new requests yet.
+
 ## Active morning checkpoint (September 29)
 
 Main prototype: http://127.0.0.1:8017, browser tab 4 retained, exec session 43130.
