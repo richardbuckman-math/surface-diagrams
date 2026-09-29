@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## Active morning checkpoint (September 29)
+
+Main prototype: http://127.0.0.1:8017, browser tab 4 retained, exec session 43130.
+It now runs ALL morning changes with --session .preview/factorization-workspace.json.
+Use that file on restart: it preserves user work and undo history. Test-only
+servers 8018/8019 were stopped and their tabs closed. The final main browser
+screenshot confirms 13 original factors, boundary-word checks, Inspect support,
+Combine neighbors, and automatic saving. All four implementation batches are
+pushed; latest ee0d5f7 passed remote Tests and Documentation. Full suite 267 passed
+before inverse-combine; all 13 lab tests including its new round-trip/rejection
+assertions passed afterward, and final remote Tests passed. Remaining weekly
+allowance is about 32%, but this five-hour window is nearly exhausted. Keep
+working after reset under the user's all-quota-today instruction. Do not consume
+reset credits. Local wheel smoke attempt used Anaconda setuptools 58.0.4, below the declared
+>=61 build requirement; its UNKNOWN wheel is invalid and was NOT published.
+For alpha6 use an isolated PEP 517 build with supported setuptools, not direct
+build_meta under this older environment. Next: embedded support cleanup and/or an alpha6
+release of the now-usable prototype. No general daisy/boundary-framed substitution.
+
 ## September 29 morning: inverse lantern combine
 
 Combine neighbors now recognizes three adjacent unit pairwise twists whose

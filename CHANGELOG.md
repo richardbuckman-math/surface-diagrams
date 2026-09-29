@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Add the interactive (6,7) Factorization Lab: drag-and-drop checked Hurwitz
+  moves, stacked planar supports and a continuous braid with factor separators.
+- Support checked square/half-twist/marked-point lantern splits, inverse lantern
+  combining, equal-power combining, undo/redo, JSON reopening and SVG export.
+- Add durable session files with atomic saves and verified undo-history recovery.
+- Add zoomable support inspection and compare sampled SVG boundary words with
+  exact transported classes. This does not certify embeddedness or PDF identity.
+- Improve complicated numerical support deformation with local-disk sampling
+  and bounded chunks; retain explicit unavailable-preview messages on limits.
+
 ## 0.1.0a5 - 2026-09-25
 
 - Extend crossing highlights to factor-local braid positions and add an editor
