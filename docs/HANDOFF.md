@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## September 30: exact half-twist arc recovery
+
+Both support types now recover itineraries from exact supported boundary words.
+For half twists, compute transported endpoint labels and find x_a t x_b t^-1
+in a cyclic orientation of the neighborhood boundary. Convert t into ray runs,
+trim endpoint turns, and verify the resulting Arc boundary exactly. The shared
+route solver still checks rendering; no numerical sampling is used by lab
+supports. F9 exactly matches the user's confirmed itinerary. 864 small conjugated
+arcs were checked and rendered with sampling disabled. Browser inspected the
+complex F7 after F9 crosses F8 and F7: all 13 supports agree, total206 letters.
+Full suite274 passed. Large classes that provably cannot fit64 cut visits return
+an explicit drawing-limit message while retaining their exact class in inspector.
+Main server96870 currently runs the previous closed-loop-only batch and needs a
+restart after this commit, using the unchanged48-state workspace file. The live
+tab9 displays the persistent notice for history state35; no user states changed.
+Test server8021 exec28676/tab8 remains for validation. Previous c35232b remote
+Tests passed; Documentation build passed but deployment failed with GitHub500.
+Next push will retry Pages naturally. Next useful simplification: recognize an
+entire conjugator stabilizing a standard support, including central braid twists.
+
+
 ## September 30: exact boundary transport and closed support recovery
 
 Previous afdd0db push confirmed; remote Tests and Documentation passed.

@@ -101,6 +101,21 @@ class FactorizationLabTests(unittest.TestCase):
                 self.assertIsInstance(support_curve(twist),Loop)
                 self.assertIn('<svg',support_drawing(twist))
 
+    def test_exact_arc_recovery_uses_no_numerical_sampling(self):
+        from surface_diagrams.mapping_classes import supported_class
+        from surface_diagrams.braid_actions import arc_ray_word,inverse_word,free_homotopy_key
+        support_curve.cache_clear(); support_drawing.cache_clear()
+        with patch('surface_diagrams.factorization_geometry.support_points',side_effect=AssertionError('No sampling')):
+            for word in cartesian_product((1,-1,2,-2,3,-3),repeat=3):
+                for first in (1,2,3,4):
+                    twist=ConjugatedTwist(word,first,2,half=True)
+                    arc=support_curve(twist); path=arc_ray_word(6,arc)
+                    observed=(arc.start,)+path+(arc.end,)+inverse_word(path)
+                    self.assertEqual(free_homotopy_key(observed),supported_class(twist))
+                    self.assertIn('<svg',support_drawing(twist))
+        with self.assertRaisesRegex(ValueError,'64-cut'):
+            support_curve(ConjugatedTwist((1,-2)*6,1,2,half=True))
+
     def test_simplification_preserves_twist_type_and_can_change_core(self):
         examples=(ConjugatedTwist((1,2),1,2,half=True),
                   ConjugatedTwist((1,2,1,-2,-1),2,2,half=True),

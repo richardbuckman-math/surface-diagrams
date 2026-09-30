@@ -1,7 +1,7 @@
-"""Numerical itinerary proposals, shared support rendering, and aligned braid.
+"""Shared exact support rendering, aligned braid, and legacy numerical helpers.
 
-The sampled deformation proposes topology; twist_supports verifies the recovered
-Arc/Loop class and draws it through the existing surface library.
+The lab's supports use twist_supports to recover exact Arc/Loop itineraries.
+Sampled deformation is retained for independent diagnostics and existing callers.
 """
 from functools import lru_cache
 from html import escape
@@ -153,7 +153,7 @@ def braid_svg(factors):
 
 
 def factorization_svg(factors):
-    """Portable paired export, retaining numerical-preview labels and failures."""
+    """Portable paired export, retaining support verification labels and failures."""
     from .factorization_audit import support_audit
     height=sum(row_height(f) for f in factors)
     body=[]; y=0

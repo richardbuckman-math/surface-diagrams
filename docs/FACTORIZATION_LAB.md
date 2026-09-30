@@ -74,9 +74,10 @@ existing SVG renderer, including its noninterleaving and clearance checks.
 factor IDs and browser state. `support_curve` recovers an ordinary library
 `Arc`/`Loop` for the six-marked-point prototype; `support_drawing` uses the shared
 surface renderer. The initial F9 recovers exactly the user's confirmed itinerary.
-Closed curves now derive their cut itineraries directly from exact transported
-boundary words. Arcs still use numerical deformation to propose the cut itinerary;
-its boundary class must agree exactly before rendering. The exact check transports
+Arcs and closed curves now derive their cut itineraries directly from exact
+transported boundary words. For an arc, recovery finds the two endpoint meridians
+and the path between them in its neighborhood boundary word. Its boundary class
+must agree exactly before rendering. The exact check transports
 only the supported closed word, avoiding expansion of unrelated meridians. It
 retains the exact class in the inspector even when geometry recovery fails. Ambiguous recovery, routing limits,
 and clearance failures are reported explicitly; there is no sampled-SVG fallback.
