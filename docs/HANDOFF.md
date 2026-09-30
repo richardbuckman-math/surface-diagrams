@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## September 30: standard-support simplification and deployment
+
+8b17074 remote Tests and Documentation both passed; the previous GitHub500
+Pages failure was transient. Added exact standard-support recognition before
+bounded simplification: matching the supporting class of a positive twist (or
+two-point half-twist neighborhood) removes the full conjugator while preserving
+type and power. This is an exact mapping-class support argument, not a claim of
+global minimization. Regression checks central full braid conjugation for half,
+Dehn, and squared Dehn twists against full Artin actions with max_states=1.
+All20 lab tests pass. supported_class now caches128 results and uses the specific
+VerificationLimitError for its computational bound.
+Main server restarting under exec74000 from the unchanged48-state session,
+port8017, live tab9; it now includes exact arcs and this simplification. Startup
+rechecks all historical products and reports state35 as not reverified because
+of its bound. Test server8021 exec28676/tab8 needs cleanup after main inspection.
+Next substantive work: improve rendering beyond64 cut visits using a deliberate
+layout policy, or add a user-visible move/proof log; do not drop geometry checks.
+
+
 ## September 30: exact half-twist arc recovery
 
 Both support types now recover itineraries from exact supported boundary words.

@@ -4,6 +4,7 @@ The record retains the twist type and its core, independently of presentation
 IDs, browser state, and SVG rendering. Braid words compose as in braid_actions.
 """
 from dataclasses import dataclass
+from functools import lru_cache
 from .braid_actions import reduce_word,inverse_word,_extend_action,free_homotopy_key
 
 
@@ -11,6 +12,7 @@ class VerificationLimitError(ValueError):
     """An exact computation exhausted its bound, without proving inequality."""
 
 
+@lru_cache(maxsize=128)
 def supported_class(twist,strands=6):
     """Exact unoriented boundary class, without expanding unrelated meridians.
 
@@ -28,7 +30,7 @@ def supported_class(twist,strands=6):
                 yield from images[letter-1] if letter>0 else inverse_word(images[-letter-1])
         word=free_homotopy_key(letters())
         if len(word)>400000:
-            raise ValueError('Exact supported class reached the prototype word limit')
+            raise VerificationLimitError('Exact supported class reached the prototype word limit')
     return word
 
 

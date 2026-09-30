@@ -135,6 +135,12 @@ class FactorizationLabTests(unittest.TestCase):
         # local rewrites; it centralizes this disjoint standard half twist.
         large=ConjugatedTwist((1,-2)*15,4,2,half=True)
         self.assertEqual(simplify_twist(large).conjugator,())
+        central=tuple(range(1,6))*6
+        for points,half,power in ((2,True,1),(3,False,1),(3,False,2)):
+            twist=ConjugatedTwist(central,1,points,power,half)
+            simplified=simplify_twist(twist,max_states=1)
+            self.assertEqual(simplified.conjugator,())
+            self.assertEqual(exact_action(twist.word),exact_action(simplified.word))
 
     def test_order_propagation_agrees_with_unpruned_small_route_search(self):
         from surface_diagrams.curves import route,RoutingError

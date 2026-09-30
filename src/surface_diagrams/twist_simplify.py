@@ -7,7 +7,7 @@ from dataclasses import replace
 from functools import lru_cache
 from heapq import heappush,heappop
 from .braid_actions import reduce_word,inverse_word
-from .mapping_classes import ConjugatedTwist,exact_action
+from .mapping_classes import ConjugatedTwist,exact_action,supported_class,VerificationLimitError
 
 
 def _relations(strands):
@@ -35,6 +35,18 @@ def simplify_twist(twist,*,strands=6,max_states=256):
         raise ValueError('Twist lies outside the strand range')
     rules=_relations(strands)
     start=replace(twist,conjugator=reduce_word(twist.conjugator))
+    # In the punctured disk a positive twist is determined by its supporting
+    # curve (and power); a positive half twist by the two-point neighborhood.
+    # Thus an exact match to a standard support can remove the entire
+    # conjugator, even when bounded braid rewrites cannot expose cancellation.
+    if start.conjugator:
+        try:
+            boundary=supported_class(start,strands)
+            for first in range(1,strands-start.points+2):
+                standard=replace(start,conjugator=(),first=first)
+                if boundary==supported_class(standard,strands): return standard
+        except VerificationLimitError:
+            pass  # The existing bounded local rewrite proof remains available.
     def score(t): return (len(t.conjugator),len(t.word),t.conjugator,t.first)
     best=start; pending=[]; seen=set(); parents={}
     def add(g,first,parent=None,step=None):

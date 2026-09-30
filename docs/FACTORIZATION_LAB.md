@@ -112,3 +112,10 @@ A saved local session can reopen when an older history state exceeds the exact
 verification limit. A persistent notice identifies those states as not reverified;
 malformed records and proven mismatches still reject. Importing a JSON
 factorization continues to require a successful exact product check.
+
+Simplification also recognizes an exact standard support before the bounded
+rewrite search. A positive supported twist (with its type and power fixed) is
+determined by that support, so this can remove the entire conjugator, including
+a central full braid twist. A half twist uses its two-point neighborhood class.
+This shortcut uses exact support equality; lab replacements still receive their
+existing exact braid-action checks. The general search is not globally minimal.
