@@ -1,5 +1,32 @@
 # Handoff: surface-diagrams
 
+## Final September 30 checkpoint
+
+Full suite275 passed after the based-meridian fallback; JS syntax check passed
+for the added inspector core word. Inspector now spells out g · core · g^-1 and
+shows the standard core including its power. All48 saved states can verify,
+including35 (2.19s standalone). Main server70007 port8017 is starting with the
+unchanged persistent workspace. Test server8021 has been stopped; tab8 needs
+closure. Live tab9 should remain open after final reload/inspection. Final batch
+commit/push and remote checks pending. Weekly allowance last read96% used; finish
+verification before starting another substantial increment.
+
+
+## September 30: exact action fallback verifies history state35
+
+c7f8bfb Tests and Documentation passed remotely. Added an alternate exact Artin
+calculation when prefix images exceed400000 letters: transport each based
+meridian separately, applying generator substitutions in reverse order. This
+uses free reduction only, NEVER cyclic/free-homotopy reduction. Each intermediate
+meridian and the final image total retain the400000 bound. Differential tests
+compare216 words and a central full braid (explicitly nonidentity as a based
+action). All21 focused lab tests pass. Real saved history state35 now imports
+strictly and verifies in2.19seconds; no limited-session exception is needed for it.
+Main port8017 needs one final restart to remove the obsolete re-verification
+notice. Preserve all48 history entries and current position47. Next: confirm main
+UI says exact products verified, clean up8021/tab8, and check final remote CI.
+
+
 ## September 30: standard-support simplification and deployment
 
 8b17074 remote Tests and Documentation both passed; the previous GitHub500

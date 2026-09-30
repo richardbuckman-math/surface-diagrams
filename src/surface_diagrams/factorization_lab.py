@@ -79,7 +79,7 @@ class LabServer(ThreadingHTTPServer):
             if f.power>1: options.append(['powers',f'Split into {f.power} equal factors'])
             if not f.half and f.points==2: options.append(['halves','Split into half twists'])
             if not f.half and f.points==3: options.append(['lantern','Lantern: three pairwise twists (marked points)'])
-            rows.append(dict(asdict(f),word=f.word,label=f.label,svg=svg,warning=warning,
+            rows.append(dict(asdict(f),word=f.word,core=f.core,label=f.label,svg=svg,warning=warning,
                              height=row_height(f),splits=options,audit=support_audit(f)))
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,

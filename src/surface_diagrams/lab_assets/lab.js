@@ -64,6 +64,7 @@ $('inspect').onclick=()=>{
  else $('inspect-drawing').textContent=f.warning;
  $('inspect-word').textContent='Braid: '+f.word.join(' ');
  $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
+ $('inspect-core').textContent='Standard core (including power): '+f.core.join(' ');
  $('inspect-audit').textContent=f.audit?.message||'No support audit available.';
  $('inspect-itinerary').textContent=f.audit?.itinerary||'No accepted shared itinerary available.';
  $('inspect-actual').textContent='Itinerary boundary class: '+(f.audit?.actual?.join(' ')||'unavailable');

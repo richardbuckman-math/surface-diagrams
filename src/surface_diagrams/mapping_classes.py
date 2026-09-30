@@ -35,12 +35,44 @@ def supported_class(twist,strands=6):
 
 
 def exact_action(word,strands=6):
+    word=tuple(word)
+    if type(strands) is not int or strands<1:
+        raise ValueError('strands must be a positive integer')
+    if any(type(letter) is not int or not 1<=abs(letter)<strands for letter in word):
+        raise ValueError('crossing index must be nonzero and smaller than strands')
     images=tuple((i,) for i in range(1,strands+1))
     for letter in word:
         images=_extend_action(images,(letter,))
         if sum(map(len,images))>400000:
-            raise VerificationLimitError('Exact verification reached the prototype word limit; operation was not applied')
+            return _action_by_meridian(word,strands)
     return images
+
+
+def _action_by_meridian(word,strands):
+    """Equivalent based action, avoiding large intermediate prefix actions.
+
+    No cyclic reduction: base paths are essential for braid equality. Each
+    intermediate meridian and the final total retain the 400000-letter bound.
+    """
+    identity=tuple((i,) for i in range(1,strands+1))
+    substitutions={}
+    for crossing in set(word):
+        images=_extend_action(identity,(crossing,))
+        substitutions[crossing]={signed:images[signed-1] if signed>0 else inverse_word(images[-signed-1])
+                                for i in range(1,strands+1) for signed in (i,-i)}
+    result=[]; total=0
+    for meridian in range(1,strands+1):
+        current=(meridian,)
+        for crossing in reversed(word):
+            mapping=substitutions[crossing]
+            current=reduce_word(x for letter in current for x in mapping[letter])
+            if len(current)>400000:
+                raise VerificationLimitError('Exact verification reached the prototype word limit; operation was not applied')
+        total+=len(current)
+        if total>400000:
+            raise VerificationLimitError('Exact verification reached the prototype word limit; operation was not applied')
+        result.append(current)
+    return tuple(result)
 
 
 @dataclass(frozen=True)

@@ -119,3 +119,8 @@ determined by that support, so this can remove the entire conjugator, including
 a central full braid twist. A half twist uses its two-point neighborhood class.
 This shortcut uses exact support equality; lab replacements still receive their
 existing exact braid-action checks. The general search is not globally minimal.
+
+When growing prefix actions hit the computation bound, exact braid verification
+tries transporting each based meridian separately in reverse composition order.
+It retains base paths and never uses the unoriented curve-class comparison for
+braid equality. Intermediate words and final images remain bounded.

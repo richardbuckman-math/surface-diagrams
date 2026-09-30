@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Recover both arc and closed-curve supports directly from exact boundary words,
+  retaining the shared noninterleaving route checks and explicit drawing limits.
+- Recognize standard supports to remove complete stabilizing conjugators, and
+  show the standard core alongside its conjugator in the support inspector.
+- Retry large exact actions by transporting based meridians separately; preserve
+  session history with an explicit notice if verification still reaches a limit.
 - Reuse shared Arc/Loop surface rendering in the lab, with exact class-checked
   itinerary recovery and faster propagation of route ordering constraints.
 - Add reusable conjugated-twist records and verified bounded simplification,
@@ -13,10 +19,10 @@
 - Support checked square/half-twist/marked-point lantern splits, inverse lantern
   combining, equal-power combining, undo/redo, JSON reopening and SVG export.
 - Add durable session files with atomic saves and verified undo-history recovery.
-- Add zoomable support inspection and compare sampled SVG boundary words with
-  exact transported classes. This does not certify embeddedness or PDF identity.
-- Improve complicated numerical support deformation with local-disk sampling
-  and bounded chunks; retain explicit unavailable-preview messages on limits.
+- Add zoomable support inspection and compare itinerary boundary words with
+  exact transported classes. PDF correspondence remains provisional.
+- Retain numerical deformation helpers for independent diagnostics; the lab's
+  support rendering uses exact topology instead of numerical proposals.
 
 ## 0.1.0a5 - 2026-09-25
 

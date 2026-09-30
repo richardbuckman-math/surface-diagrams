@@ -18,6 +18,15 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_reverse_meridian_action_retains_based_paths_and_composition(self):
+        from surface_diagrams.mapping_classes import _action_by_meridian
+        for word in cartesian_product((1,-1,2,-2,3,-3),repeat=3):
+            self.assertEqual(_action_by_meridian(word,6),exact_action(word))
+        # Central braids preserve free curve classes but are NOT identity actions.
+        central=tuple(range(1,6))*6
+        self.assertEqual(_action_by_meridian(central,6),exact_action(central))
+        self.assertNotEqual(_action_by_meridian(central,6),exact_action(()))
+
     def test_session_reopens_with_explicit_limit_notice_but_rejects_mismatch(self):
         from surface_diagrams.mapping_classes import VerificationLimitError
         with TemporaryDirectory() as folder:
