@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## September 30 morning: preserve history on unchanged simplification
+
+Prior ccfc7c3 was pushed; Tests and Documentation passed. Live main tab9 was
+verified with all48 saved history states reopening exactly, and core inspector
+verified. Test tab8/server8021 were cleaned up. Those earlier pending items below
+are completed.
+New small interaction fix: Simplify factors does not append a duplicate state or
+truncate redo when no representative changes. It reports that no shorter form
+was found within the search bounds, preserving history. Regression exercises
+simplify at an earlier history position followed by redo. No layout change.
+At start weekly allowance98% used. Do not begin a large routing rewrite within
+this remainder. Next substantial increment: a deliberate layout policy beyond
+64 cut visits, retaining exact class and noninterleaving/clearance checks.
+
+
 ## Final September 30 checkpoint
 
 Full suite275 passed after the based-meridian fallback; JS syntax check passed

@@ -118,6 +118,10 @@ class LabServer(ThreadingHTTPServer):
             elif op=='reset': result=initial_factors(); message='Restored original factorization. Undo is available.'
             elif op=='simplify':
                 result=checked(factors,tuple(simplify_factor(f) for f in factors))
+                if result==factors:
+                    self.message='No shorter representatives found within the search bounds. Undo and redo history preserved.'
+                    self.revision+=1
+                    return
                 message='Simplified conjugated twists with a bounded search; exact actions verified. Global minimality is not asserted.'
             elif op=='import': result=import_factors(payload.get('document')); message='Loaded saved exploration; exact product agrees with the starting factorization.'
             else: raise ValueError('Unknown operation')

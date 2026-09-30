@@ -18,6 +18,21 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_unchanged_simplification_preserves_redo_history(self):
+        server=LabServer(0)
+        try:
+            factors=(initial_factors()[0],)
+            server.history=[factors,factors]; server.position=0
+            before=server.history
+            server.mutate(dict(op='simplify',revision=0))
+            self.assertIs(server.history,before)
+            self.assertEqual(server.position,0)
+            self.assertEqual(server.revision,1)
+            self.assertIn('No shorter representatives',server.message)
+            server.mutate(dict(op='redo',revision=1))
+            self.assertEqual(server.position,1)
+        finally: server.server_close()
+
     def test_reverse_meridian_action_retains_based_paths_and_composition(self):
         from surface_diagrams.mapping_classes import _action_by_meridian
         for word in cartesian_product((1,-1,2,-2,3,-3),repeat=3):
