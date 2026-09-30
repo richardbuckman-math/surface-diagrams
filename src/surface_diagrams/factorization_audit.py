@@ -62,20 +62,21 @@ def audit_points(factor,points):
 
 @lru_cache(maxsize=64)
 def support_audit(factor):
+    from .mapping_classes import supported_class
     from .twist_supports import support_curve,support_drawing
     from .curves import Arc
     from .braid_actions import arc_ray_word,loop_ray_word
+    expected=None
     try:
+        expected=supported_class(factor.mapping_class)
         curve=support_curve(factor.mapping_class)
         support_drawing(factor.mapping_class)  # Require the shared route solver to accept it.
         if isinstance(curve,Arc):
             word=arc_ray_word(6,curve)
             observed=(curve.start,)+word+(curve.end,)+inverse_word(word)
         else: observed=loop_ray_word(6,curve)
-        action=exact_action(factor.conjugator)
-        expected=tuple(letter for i in range(factor.first-1,factor.first+factor.points-1) for letter in action[i])
         return dict(status='match',matches=True,actual=free_homotopy_key(observed),
                     expected=free_homotopy_key(expected),itinerary=repr(curve),
                     message='Shared Arc/Loop itinerary agrees with the exact transported class; the surface router accepted its noninterleaving layout.')
     except ValueError as error:
-        return dict(status='unavailable',matches=None,actual=None,expected=None,message=str(error))
+        return dict(status='unavailable',matches=None,actual=None,expected=expected,message=str(error))

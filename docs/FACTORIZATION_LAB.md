@@ -74,8 +74,11 @@ existing SVG renderer, including its noninterleaving and clearance checks.
 factor IDs and browser state. `support_curve` recovers an ordinary library
 `Arc`/`Loop` for the six-marked-point prototype; `support_drawing` uses the shared
 surface renderer. The initial F9 recovers exactly the user's confirmed itinerary.
-Numerical deformation currently proposes the cut itinerary, but its boundary
-class must agree exactly before rendering. Ambiguous recovery, routing limits,
+Closed curves now derive their cut itineraries directly from exact transported
+boundary words. Arcs still use numerical deformation to propose the cut itinerary;
+its boundary class must agree exactly before rendering. The exact check transports
+only the supported closed word, avoiding expansion of unrelated meridians. It
+retains the exact class in the inspector even when geometry recovery fails. Ambiguous recovery, routing limits,
 and clearance failures are reported explicitly; there is no sampled-SVG fallback.
 This does not establish correspondence with every drawing in the original PDF.
 
@@ -103,3 +106,8 @@ The prototype caps states at 80 factors and 3500 braid letters, and stops exact
 verification if free-group images exceed its computation limit. It never labels
 a limit failure as a successful verification. The service binds to loopback,
 requires a session token for changes, and does not serve arbitrary local files.
+
+A saved local session can reopen when an older history state exceeds the exact
+verification limit. A persistent notice identifies those states as not reverified;
+malformed records and proven mismatches still reject. Importing a JSON
+factorization continues to require a successful exact product check.

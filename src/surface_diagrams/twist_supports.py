@@ -1,6 +1,7 @@
 """Recover shared Arc/Loop inputs, then use the established surface renderer.
 
-Numerical deformation only proposes an itinerary. Exact boundary-class agreement
+Closed loops come from exact words; numerical deformation proposes arc itineraries.
+Exact boundary-class agreement
 and the shared noninterleaving route solver must accept it before it is drawn.
 """
 from functools import lru_cache
@@ -11,11 +12,35 @@ from .svg import render_svg
 from .braid_actions import arc_ray_word,loop_ray_word,free_homotopy_key,inverse_word
 
 
+def loop_from_class(word):
+    """Propose a Loop directly from an unoriented free-group boundary word.
+
+    Consecutive ray crossings are upper segments; lower segments join their
+    endpoints. The shared route solver must still certify embeddedness.
+    """
+    word=free_homotopy_key(word)
+    if not word: raise ValueError('Empty boundary class has no essential loop')
+    runs=[]
+    for letter in word:
+        if runs and (runs[-1][-1]>0)==(letter>0) and letter==runs[-1][-1]+1:
+            runs[-1].append(letter)
+        else: runs.append([letter])
+    cuts=[]
+    for run in runs:
+        cuts.extend((run[0]-1,run[-1]) if run[0]>0 else (-run[0],-run[-1]-1))
+    curve=Loop(tuple(cuts),start_up=True)
+    if free_homotopy_key(loop_ray_word(6,curve))!=word:
+        raise ValueError('Exact loop itinerary failed its boundary-word check')
+    return curve
+
+
 @lru_cache(maxsize=64)
 def support_curve(twist):
     from .factorization_geometry import support_points
-    from .mapping_classes import exact_action
+    from .mapping_classes import supported_class
     from .twist_simplify import simplify_twist
+    if not twist.half:
+        return loop_from_class(supported_class(twist))
     # Old saved explorations may retain long words. Use a verified shorter
     # representative for recovery without changing that saved factor record.
     proposal=simplify_twist(twist)
@@ -50,9 +75,7 @@ def support_curve(twist):
         word=arc_ray_word(6,curve)
         observed=(curve.start,)+word+(curve.end,)+inverse_word(word)
     else: observed=loop_ray_word(6,curve)
-    action=exact_action(twist.conjugator)
-    expected=tuple(letter for i in range(twist.first-1,twist.first+twist.points-1) for letter in action[i])
-    if free_homotopy_key(observed)!=free_homotopy_key(expected):
+    if free_homotopy_key(observed)!=supported_class(twist):
         raise ValueError('Recovered itinerary disagrees with the exact supported class')
     return curve
 

@@ -18,6 +18,43 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_session_reopens_with_explicit_limit_notice_but_rejects_mismatch(self):
+        from surface_diagrams.mapping_classes import VerificationLimitError
+        with TemporaryDirectory() as folder:
+            path=Path(folder)/'session.json'
+            path.write_text(json.dumps(dict(format='surface-diagrams-session-v1',position=0,
+                history=[export_factors(initial_factors())])))
+            with patch('surface_diagrams.factorization_lab.checked',side_effect=VerificationLimitError('limit')):
+                server=LabServer(0,path)
+            try:
+                self.assertEqual(server.history[0],initial_factors())
+                self.assertIn('not reverified',server.verification_notice)
+                self.assertNotIn('exact products verified',server.message)
+            finally: server.server_close()
+            with patch('surface_diagrams.factorization_lab.checked',side_effect=ValueError('Product mismatch')):
+                with self.assertRaisesRegex(ValueError,'Product mismatch'): LabServer(0,path)
+
+    def test_supported_class_matches_full_action_without_unrelated_expansion(self):
+        from surface_diagrams.mapping_classes import supported_class
+        from surface_diagrams.braid_actions import free_homotopy_key
+        for word in cartesian_product((1,-1,2,-2,3,-3),repeat=3):
+            for first,points in ((1,2),(2,3)):
+                twist=ConjugatedTwist(word,first,points)
+                images=exact_action(word)
+                expected=tuple(x for image in images[first-1:first+points-1] for x in image)
+                self.assertEqual(supported_class(twist),free_homotopy_key(expected))
+        # Exponentially growing unrelated meridians must not hide a simple curve.
+        twist=ConjugatedTwist((1,-2)*20,4,2,half=True)
+        self.assertEqual(supported_class(twist),free_homotopy_key((4,5)))
+        with self.assertRaises(ValueError): supported_class(ConjugatedTwist((),6,2))
+        support_audit.cache_clear()
+        with patch('surface_diagrams.twist_supports.support_curve',side_effect=ValueError('Route unavailable')):
+            audit=support_audit(initial_factors()[0])
+        self.assertEqual(audit['status'],'unavailable')
+        self.assertIsNone(audit['matches'])
+        self.assertIsNotNone(audit['expected'])
+        support_audit.cache_clear()
+
     def test_initial_words_and_hurwitz_inverse_preserve_product(self):
         factors=initial_factors()
         self.assertEqual([len(f.word) for f in factors],[12,9,5,22,12,13,11,18,15,16,13,18,14])
@@ -55,6 +92,14 @@ class FactorizationLabTests(unittest.TestCase):
         arc=root.find("{http://www.w3.org/2000/svg}path[@class='arc']")
         self.assertIsNotNone(arc)
         self.assertIn('A ',arc.attrib['d'])
+
+    def test_closed_supports_are_reconstructed_without_numerical_sampling(self):
+        support_curve.cache_clear(); support_drawing.cache_clear()
+        with patch('surface_diagrams.factorization_geometry.support_points',side_effect=AssertionError('No sampling')):
+            for word in cartesian_product((1,-1,2,-2,3,-3),repeat=2):
+                twist=ConjugatedTwist(word,2,3)
+                self.assertIsInstance(support_curve(twist),Loop)
+                self.assertIn('<svg',support_drawing(twist))
 
     def test_simplification_preserves_twist_type_and_can_change_core(self):
         examples=(ConjugatedTwist((1,2),1,2,half=True),

@@ -4,7 +4,32 @@ The record retains the twist type and its core, independently of presentation
 IDs, browser state, and SVG rendering. Braid words compose as in braid_actions.
 """
 from dataclasses import dataclass
-from .braid_actions import reduce_word,inverse_word,_extend_action
+from .braid_actions import reduce_word,inverse_word,_extend_action,free_homotopy_key
+
+
+class VerificationLimitError(ValueError):
+    """An exact computation exhausted its bound, without proving inequality."""
+
+
+def supported_class(twist,strands=6):
+    """Exact unoriented boundary class, without expanding unrelated meridians.
+
+    Right composition applies the last generator first. Canonicalizing between
+    substitutions discards only conjugation and orientation of this closed path;
+    this function must not be used to test based actions or braid equality.
+    """
+    if type(strands) is not int or strands<2 or twist.first+twist.points-1>strands:
+        raise ValueError('Twist support exceeds the marked disk')
+    word=free_homotopy_key(tuple(range(twist.first,twist.first+twist.points)))
+    for crossing in reversed(twist.conjugator):
+        images=_extend_action(tuple((i,) for i in range(1,strands+1)),(crossing,))
+        def letters():
+            for letter in word:
+                yield from images[letter-1] if letter>0 else inverse_word(images[-letter-1])
+        word=free_homotopy_key(letters())
+        if len(word)>400000:
+            raise ValueError('Exact supported class reached the prototype word limit')
+    return word
 
 
 def exact_action(word,strands=6):
@@ -12,7 +37,7 @@ def exact_action(word,strands=6):
     for letter in word:
         images=_extend_action(images,(letter,))
         if sum(map(len,images))>400000:
-            raise ValueError('Exact verification reached the prototype word limit; operation was not applied')
+            raise VerificationLimitError('Exact verification reached the prototype word limit; operation was not applied')
     return images
 
 

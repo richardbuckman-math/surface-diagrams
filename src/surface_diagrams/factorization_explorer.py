@@ -136,7 +136,8 @@ def export_factors(factors):
             'factors':[dict(asdict(f),word=f.word) for f in factors]}
 
 
-def import_factors(document):
+def parse_factors(document):
+    """Validate saved records without asserting equality of their product."""
     if not isinstance(document,dict) or document.get('format')!='surface-diagrams-factorization-v1' or document.get('strands')!=6:
         raise ValueError('Choose a six-strand Factorization Lab JSON file')
     rows=document.get('factors')
@@ -153,5 +154,9 @@ def import_factors(document):
         f=Factor(identity,reduce_word(g),first,count,power,half)
         if 'word' in row and row['word']!=list(f.word): raise ValueError('Saved braid word disagrees with its factor record')
         factors.append(f)
+    return tuple(factors)
+
+
+def import_factors(document):
     # Import only an equivalent exploration of the supplied starting product.
-    return checked(initial_factors(),factors)
+    return checked(initial_factors(),parse_factors(document))

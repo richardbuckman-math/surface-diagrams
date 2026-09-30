@@ -15,13 +15,15 @@ from .editor import EditorHandler
 from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 from .factorization_audit import support_audit
+from .factorization_explorer import parse_factors
+from .mapping_classes import VerificationLimitError
 
 
 class LabServer(ThreadingHTTPServer):
     daemon_threads=True
     def __init__(self,port=0,session_path=None):
         self.session_path=Path(session_path).expanduser().resolve() if session_path else None
-        history=[initial_factors()]; position=0
+        history=[initial_factors()]; position=0; limited=[]
         if self.session_path and self.session_path.exists():
             if self.session_path.stat().st_size>16*1024*1024:
                 raise ValueError('Session file exceeds 16 MiB')
@@ -31,7 +33,12 @@ class LabServer(ThreadingHTTPServer):
             entries=saved.get('history'); position=saved.get('position')
             if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
                 raise ValueError('Invalid session history')
-            history=[import_factors(entry) for entry in entries]
+            history=[]
+            for index,entry in enumerate(entries):
+                factors=parse_factors(entry)
+                try: checked(initial_factors(),factors)
+                except VerificationLimitError: limited.append(index+1)
+                history.append(factors)
         super().__init__(('127.0.0.1',port),LabHandler)
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
@@ -39,6 +46,9 @@ class LabServer(ThreadingHTTPServer):
         self.history=history; self.position=position; self.revision=0
         self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
                       else 'Loaded 13 factors / 178 braid letters from the earlier SVG.')
+        self.verification_notice=('Saved history states '+', '.join(map(str,limited))+
+            ' reached the exact verification limit on reopening. Their product equality is not reverified; history is preserved.' if limited else '')
+        if limited: self.message='Reopened saved exploration and undo history.'
         if self.session_path:
             try: self.save_session()
             except Exception:
@@ -73,7 +83,7 @@ class LabServer(ThreadingHTTPServer):
                              height=row_height(f),splits=options,audit=support_audit(f)))
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,
-                    undo=self.position>0,redo=self.position<len(self.history)-1,message=self.message,
+                    undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
                     export=export_factors(factors))
     def mutate(self,payload):
         previous=(self.history,self.position,self.revision,self.message)

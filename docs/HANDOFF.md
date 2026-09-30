@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## September 30: exact boundary transport and closed support recovery
+
+Previous afdd0db push confirmed; remote Tests and Documentation passed.
+New supported_class transports only the closed support word, canonicalizing its
+free homotopy class between reversed Artin substitutions. This is NOT a braid
+equality test. Saved complex F7 yields its 1304-letter boundary class in 0.03s,
+without expanding unrelated meridians. Inspector retains the exact expected class
+even when geometry recovery fails. Closed twists now derive Loop cut itineraries
+directly from exact boundary words; arcs still use checked numerical proposals.
+Shared route solver remains mandatory for drawing. Browser checked initial
+supports and F1-over-F2, with separated diagrams and continuous braid.
+272 full tests passed before session recovery fix; 19 focused lab tests passed
+after it. Differential test compares 432 cases against full Artin images;
+36 transported loops render with numerical sampling disabled.
+Main saved session has 48 history states, position 47 (current original factors).
+Do not overwrite it using the older 15-state backup. Reopening exposed an older
+history state exceeding exact verification limits. Added a specific limit error:
+session reopening preserves such states with an explicit persistent notice;
+malformed data and proven product mismatch still reject. JSON import remains
+strict. Main startup under exec 96870 is rechecking the saved history.
+Next: verify reopened main UI and remote checks; then investigate exact recovery
+of half-twist arcs to reduce numerical recovery failures. Keep global shortest
+conjugator and general daisy claims out of the UI.
+
+
 ## Final shared-renderer checkpoint, September 29
 
 All 270 tests pass (168s); after switching simplification's final proof to a
