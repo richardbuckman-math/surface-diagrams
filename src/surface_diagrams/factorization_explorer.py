@@ -62,6 +62,36 @@ def checked(before,after):
     return tuple(after)
 
 
+def parse_global_conjugator(word):
+    if not isinstance(word,(list,tuple)) or len(word)>1500 or any(
+            type(i) is not int or not 1<=abs(i)<=5 for i in word):
+        raise ValueError('Global conjugator must contain at most 1500 signed generators 1..5')
+    return reduce_word(word)
+
+
+def checked_global_frame(factors,frame):
+    """Check a factorization against a globally conjugated starting product."""
+    frame=parse_global_conjugator(frame)
+    validate_size(factors)
+    expected=frame+product(initial_factors())+inverse_word(frame)
+    if exact_action(product(factors))!=exact_action(expected):
+        raise ValueError('Product does not match its saved global conjugation')
+    return tuple(factors)
+
+
+def global_conjugate_factors(factors,word):
+    """Apply one simultaneous conjugation and verify its exact disk action."""
+    word=parse_global_conjugator(word)
+    if not word:return tuple(factors)
+    result=tuple(simplify_factor(replace(f,conjugator=reduce_word(word+f.conjugator)))
+                 for f in factors)
+    validate_size(result)
+    expected=word+product(factors)+inverse_word(word)
+    if exact_action(product(result))!=exact_action(expected):
+        raise ValueError('Global conjugation failed exact disk-action verification')
+    return result
+
+
 def move_factor(factors,source,target):
     """Dragged factor remains unchanged; it conjugates each crossed factor."""
     factors=list(factors)

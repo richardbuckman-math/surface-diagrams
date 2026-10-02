@@ -9,7 +9,8 @@ from xml.etree import ElementTree as ET
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError
 from surface_diagrams.factorization_explorer import (Factor,initial_factors,product,exact_action,
-    move_factor,split_factor,combine_factors,import_factors,export_factors)
+    move_factor,split_factor,combine_factors,import_factors,export_factors,
+    global_conjugate_factors,checked_global_frame,parse_global_conjugator)
 from surface_diagrams.factorization_geometry import support_points,turn,braid_svg,row_height,deform_polyline,factorization_svg
 from math import pi
 from surface_diagrams.factorization_lab import LabServer
@@ -18,6 +19,48 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_global_conjugation_preserves_factor_types_and_checks_frame(self):
+        factors=initial_factors();word=(1,-2,3)
+        transformed=global_conjugate_factors(factors,word)
+        self.assertEqual([f.id for f in transformed],[f.id for f in factors])
+        self.assertEqual([(f.points,f.power,f.half) for f in transformed],
+                         [(f.points,f.power,f.half) for f in factors])
+        self.assertEqual(checked_global_frame(transformed,word),transformed)
+        with self.assertRaisesRegex(ValueError,'global conjugation'):
+            checked_global_frame(transformed,(-1,))
+        self.assertEqual(parse_global_conjugator([1,-1,2]),(2,))
+        with self.assertRaises(ValueError): parse_global_conjugator([6])
+
+    def test_global_frame_survives_undo_and_session_reopen(self):
+        with TemporaryDirectory() as folder:
+            path=Path(folder)/'global.json'
+            server=LabServer(session_path=path)
+            try:
+                server.mutate(dict(op='conjugate',word=[1,-2],revision=0))
+                self.assertEqual(server.frames[server.position],(1,-2))
+                changed=server.history[server.position]
+                server.mutate(dict(op='undo',revision=1))
+                self.assertEqual(server.frames[server.position],())
+                server.mutate(dict(op='redo',revision=2))
+                self.assertEqual(server.history[server.position],changed)
+                before=len(server.history)
+                server.mutate(dict(op='conjugate',word=[3,-3],revision=3))
+                self.assertEqual(len(server.history),before)
+                exported=json.loads(json.dumps(dict(export_factors(changed),global_conjugator=[1,-2])))
+                server.mutate(dict(op='import',document=exported,revision=4))
+                self.assertEqual(server.frames[server.position],(1,-2))
+            finally: server.server_close()
+            reopened=LabServer(session_path=path)
+            try:
+                self.assertEqual(reopened.frames[reopened.position],(1,-2))
+                self.assertEqual(reopened.history[reopened.position],changed)
+            finally: reopened.server_close()
+            saved=json.loads(path.read_text())
+            saved['frames'][-1]=[4]
+            path.write_text(json.dumps(saved))
+            with self.assertRaisesRegex(ValueError,'global conjugation'):
+                LabServer(session_path=path)
+
     def test_unchanged_simplification_preserves_redo_history(self):
         server=LabServer(0)
         try:

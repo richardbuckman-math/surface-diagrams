@@ -140,6 +140,14 @@ verification if free-group images exceed its computation limit. It never labels
 a limit failure as a successful verification. The service binds to loopback,
 requires a session token for changes, and does not serve arbitrary local files.
 
+Enter a signed braid word in **Global conjugation g** to replace each factor
+`F` by `g F g⁻¹`. This changes the complete disk product by conjugacy; it is
+not an exact-product-preserving Hurwitz move. The lab verifies the full new
+disk action and records the accumulated global frame alongside each undo state.
+Exported JSON includes `global_conjugator`, and import and session reopening
+check that the recorded frame accounts for the product. Simplification of the
+individual factors remains bounded and does not claim a shortest word.
+
 A saved local session can reopen when an older history state exceeds the exact
 verification limit. A persistent notice identifies those states as not reverified;
 malformed records and proven mismatches still reject. Importing a JSON

@@ -12,8 +12,8 @@ import threading
 import webbrowser
 from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
-from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked,product
-from .braid_actions import free_homotopy_key
+from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors
+from .braid_actions import free_homotopy_key,reduce_word
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
@@ -26,7 +26,7 @@ class LabServer(ThreadingHTTPServer):
     daemon_threads=True
     def __init__(self,port=0,session_path=None):
         self.session_path=Path(session_path).expanduser().resolve() if session_path else None
-        history=[initial_factors()]; position=0; limited=[]
+        history=[initial_factors()]; frames=[()]; position=0; limited=[]
         if self.session_path and self.session_path.exists():
             if self.session_path.stat().st_size>16*1024*1024:
                 raise ValueError('Session file exceeds 16 MiB')
@@ -36,17 +36,23 @@ class LabServer(ThreadingHTTPServer):
             entries=saved.get('history'); position=saved.get('position')
             if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
                 raise ValueError('Invalid session history')
-            history=[]
+            saved_frames=saved.get('frames',[[] for _ in entries])
+            if not isinstance(saved_frames,list) or len(saved_frames)!=len(entries):
+                raise ValueError('Invalid global conjugation history')
+            history=[];frames=[]
             for index,entry in enumerate(entries):
                 factors=parse_factors(entry)
-                try: checked(initial_factors(),factors)
+                frame=parse_global_conjugator(saved_frames[index])
+                try:
+                    if frame: checked_global_frame(factors,frame)
+                    else: checked(initial_factors(),factors)
                 except VerificationLimitError: limited.append(index+1)
-                history.append(factors)
+                history.append(factors);frames.append(frame)
         super().__init__(('127.0.0.1',port),LabHandler)
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
         self.lock=threading.Lock()
-        self.history=history; self.position=position; self.revision=0
+        self.history=history; self.frames=frames; self.position=position; self.revision=0
         self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
                       else 'Loaded 13 factors / 178 braid letters from the earlier SVG.')
         self.verification_notice=('Saved history states '+', '.join(map(str,limited))+
@@ -61,7 +67,8 @@ class LabServer(ThreadingHTTPServer):
     def save_session(self):
         if self.session_path is None: return
         document=dict(format='surface-diagrams-session-v1',position=self.position,
-                      history=[export_factors(factors) for factors in self.history])
+                      history=[export_factors(factors) for factors in self.history],
+                      frames=[list(frame) for frame in self.frames])
         temporary=None
         try:
             with tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',dir=self.session_path.parent,
@@ -87,7 +94,8 @@ class LabServer(ThreadingHTTPServer):
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
-                    export=export_factors(factors))
+                    frame=self.frames[self.position],
+                    export=dict(export_factors(factors),global_conjugator=self.frames[self.position]))
     def prefix_action(self,index):
         """Exact based meridian images on both sides of a selected factor."""
         from .based_cut_system import based_cut_system_drawing
@@ -117,16 +125,16 @@ class LabServer(ThreadingHTTPServer):
         return dict(sphere_inner_certificate(word),revision=self.revision,
                     chart_svg=chart_svg,chart_warning=chart_warning)
     def mutate(self,payload):
-        previous=(self.history,self.position,self.revision,self.message)
+        previous=(self.history,self.frames,self.position,self.revision,self.message)
         try:
             self._mutate(payload)
             self.save_session()
         except Exception:
-            self.history,self.position,self.revision,self.message=previous
+            self.history,self.frames,self.position,self.revision,self.message=previous
             raise
     def _mutate(self,payload):
         if payload.get('revision')!=self.revision: raise ValueError('State changed; reload before editing')
-        op=payload.get('op'); factors=self.history[self.position]
+        op=payload.get('op'); factors=self.history[self.position];frame=self.frames[self.position]
         if op=='undo':
             if self.position==0: raise ValueError('Nothing to undo')
             self.position-=1; self.message='Undid the previous operation.'
@@ -135,8 +143,9 @@ class LabServer(ThreadingHTTPServer):
             self.position+=1; self.message='Redid the operation.'
         else:
             i=payload.get('index')
-            if op not in ('reset','import','simplify') and (type(i) is not int or not 0<=i<len(factors)):
+            if op not in ('reset','import','simplify','conjugate') and (type(i) is not int or not 0<=i<len(factors)):
                 raise ValueError('Choose a valid factor')
+            next_frame=frame
             if op=='move':
                 result=move_factor(factors,i,payload.get('target'))
                 message=f'Moved {factors[i].id}; crossed factors conjugated. Every adjacent move passed exact disk-action checks.'
@@ -146,7 +155,17 @@ class LabServer(ThreadingHTTPServer):
             elif op=='combine':
                 result=combine_factors(factors,i)
                 message='Combined neighboring factors; exact disk action verified.'
-            elif op=='reset': result=initial_factors(); message='Restored original factorization. Undo is available.'
+            elif op=='reset':
+                result=initial_factors();next_frame=();message='Restored original factorization. Undo is available.'
+            elif op=='conjugate':
+                word=parse_global_conjugator(payload.get('word'))
+                if not word:
+                    self.message='The entered global conjugator reduces to the identity; history preserved.'
+                    self.revision+=1;return
+                result=global_conjugate_factors(factors,word)
+                next_frame=parse_global_conjugator(reduce_word(word+frame))
+                checked_global_frame(result,next_frame)
+                message='Globally conjugated every factor; the complete conjugated disk action was verified.'
             elif op=='simplify':
                 result=checked(factors,tuple(simplify_factor(f) for f in factors))
                 if result==factors:
@@ -154,10 +173,18 @@ class LabServer(ThreadingHTTPServer):
                     self.revision+=1
                     return
                 message='Simplified conjugated twists with a bounded search; exact actions verified. Global minimality is not asserted.'
-            elif op=='import': result=import_factors(payload.get('document')); message='Loaded saved exploration; exact product agrees with the starting factorization.'
+            elif op=='import':
+                document=payload.get('document')
+                result=parse_factors(document)
+                next_frame=parse_global_conjugator(document.get('global_conjugator',[]))
+                if next_frame: checked_global_frame(result,next_frame)
+                else: result=import_factors(document)
+                message='Loaded saved exploration; exact product and global frame verified.'
             else: raise ValueError('Unknown operation')
             self.history=self.history[:self.position+1]+[result]
-            if len(self.history)>60: self.history=self.history[-60:]
+            self.frames=self.frames[:self.position+1]+[next_frame]
+            if len(self.history)>60:
+                self.history=self.history[-60:];self.frames=self.frames[-60:]
             self.position=len(self.history)-1; self.message=message
         self.revision+=1
 

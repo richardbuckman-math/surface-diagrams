@@ -1,14 +1,28 @@
 # Handoff: surface-diagrams
 
+## October 2: checked global conjugation
+
+Added a Global conjugation input to the (6,7) lab. A signed braid word acts
+on every factor, and the server verifies the complete conjugated disk action.
+The accumulated frame is stored with each undo/redo state, in exported JSON,
+and in persistent sessions; import and reopen verify it against the original
+product. The old 48-state saved workspace was copied to a temporary file and
+reopened successfully with its position and history intact. Browser test on
+8025 applied `1 -2` (178 to 218 displayed letters), undid and redid it, and
+confirmed the exact sphere outer-action certificate still passes with an
+86-letter common whisker. The main user workspace remained untouched during
+the test. Full 288-test suite, JS syntax, and diff checks passed. Remote
+checks are pending. Next: commit/push this batch, verify CI, restart the saved
+main lab on 8017, then improve compressed
+late-prefix cut-system routing without drawing unverified arcs.
+
 ## October 2: export checked cut-system SVGs
 
-Commit 7eb52b9 (normalized sphere identity chart) was pushed; Tests and
-Documentation CI passed. The unchanged saved main workspace was reopened on
-8017 and the certificate/chart loaded correctly. Added Save SVG buttons to
-the two exact prefix cut-system panels and the normalized sphere chart;
-buttons remain disabled when a route or certificate is unavailable. Browser
-test server8025/tab17 confirmed all three controls enable with verified SVGs.
-JS syntax and diff checks passed. Commit/push, CI and main restart remain.
+Commit 029aabe was pushed; Tests and Documentation CI passed. The unchanged
+saved main workspace was reopened on 8017. Save SVG buttons in the two exact
+prefix cut-system panels and normalized sphere chart enable only when a
+verified drawing is available. Browser test server8025/tab17 confirmed all
+three controls enable with verified SVGs; JS syntax and diff checks passed.
 Next: a useful intermediate-prefix sphere chart needs a rigorous jointly
 noninterleaving route; the naive common-prefix normalization hit the route
 ordering search bound, so do not show it as verified yet.

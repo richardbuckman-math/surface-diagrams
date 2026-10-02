@@ -5,7 +5,7 @@ const status=(text,error=false)=>{ $('status').textContent=text; $('status').cla
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
- for(const id of ['reset','save','open','svg','simplify','sphere']) $(id).disabled=busy||!state;
+ for(const id of ['reset','save','open','svg','simplify','sphere','conjugate','global-word']) $(id).disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
  for(const [value,label] of f?.splits||[]){const o=document.createElement('option');o.value=value;o.textContent=label;picker.append(o);}
@@ -18,6 +18,8 @@ function controls(){
 function choose(index){selected=index;document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));controls();}
 function paint(){
  $('storage-status').textContent=state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
+ $('frame-status').textContent=state.frame?.length?`Global frame g = ${state.frame.join(' ')}`:'Global frame g = identity';
+ $('frame-status').title=$('frame-status').textContent;
  selected=Math.min(selected,state.factors.length-1);
  $('count').textContent=`${state.factors.length} factors · ${state.factors.reduce((n,f)=>n+f.word.length,0)} letters`;
  $('factors').replaceChildren();
@@ -153,6 +155,14 @@ $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);
 $('simplify').onclick=()=>action({op:'simplify'});
+$('conjugate').onclick=async()=>{
+ const raw=$('global-word').value.trim(),parts=raw?raw.split(/[\s,]+/):[];
+ if(parts.length>80||parts.some(part=>!/^[-+]?[1-5]$/.test(part))){status('Enter at most 80 signed braid generators from 1 to 5.',true);return;}
+ const revision=state.revision;
+ await action({op:'conjugate',word:parts.map(Number)});
+ if(state.revision!==revision)$('global-word').value='';
+};
+$('global-word').onkeydown=event=>{if(event.key==='Enter')$('conjugate').click();};
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
 $('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json','six-seven-factorization.json');
 $('open').onclick=()=>$('file').click();

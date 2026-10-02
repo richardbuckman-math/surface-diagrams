@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add checked global conjugation of every factor, with its braid frame retained
+  across undo/redo, JSON export/import, and persistent session reopening.
+
 - Export the verified before/after disk cut systems and normalized sphere
   identity chart as standalone SVGs from their inspectors.
 
