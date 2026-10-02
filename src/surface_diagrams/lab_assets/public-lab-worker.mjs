@@ -11,11 +11,17 @@ const start = (async () => {
  pyodide.runPython(await backendResponse.text());
  return pyodide;
 })();
+let sessionRestored = false;
 
 self.onmessage = async event => {
- const {id, path, method, body} = event.data;
+ const {id, path, method, body, savedSession} = event.data;
  try {
   const pyodide = await start;
+  if (!sessionRestored) {
+   pyodide.globals.set('saved_session_text', savedSession || '');
+   pyodide.runPython('restore_browser_session(saved_session_text)');
+   sessionRestored = true;
+  }
   pyodide.globals.set('request_path', path);
   pyodide.globals.set('request_method', method);
   pyodide.globals.set('request_body', body);

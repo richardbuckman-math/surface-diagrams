@@ -2,14 +2,23 @@
 // On GitHub Pages, the same Python lab runs in a browser worker. All requests
 // stay on this device; the local HTTP server still uses its ordinary API.
 window.surfaceLabPublic = true;
+window.surfaceLabStorageAvailable = true;
+const labStorageKey = 'surface-diagrams-six-seven-workspace-v1';
+let savedLabSession = '';
+try { savedLabSession = localStorage.getItem(labStorageKey) || ''; }
+catch (_) { window.surfaceLabStorageAvailable = false; }
 const labWorker = new Worker(new URL('public-lab-worker.mjs', document.currentScript.src), {type: 'module'});
 let nextLabRequest = 0;
 const pendingLabRequests = new Map();
 labWorker.onmessage = event => {
- const {id, status, body, mime} = event.data;
+ const {id, status, body, mime, session} = event.data;
  const pending = pendingLabRequests.get(id);
  if (!pending) return;
  pendingLabRequests.delete(id);
+ if (session && window.surfaceLabStorageAvailable) {
+  try { localStorage.setItem(labStorageKey, JSON.stringify(session)); }
+  catch (_) { window.surfaceLabStorageAvailable = false; }
+ }
  pending.resolve(new Response(body, {status, headers: {'Content-Type': mime}}));
 };
 labWorker.onerror = event => {
@@ -23,6 +32,6 @@ window.fetch = (input, options = {}) => {
  return new Promise((resolve, reject) => {
   const id = ++nextLabRequest;
   pendingLabRequests.set(id, {resolve, reject});
-  labWorker.postMessage({id, path, method: options.method || 'GET', body: options.body || ''});
+  labWorker.postMessage({id, path, method: options.method || 'GET', body: options.body || '', savedSession: savedLabSession});
  });
 };

@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## October 2: browser workspace persistence
+
+The public (6,7) lab now saves its complete 60-step undo/redo history and
+global frames in browser local storage after every accepted action. On reload,
+the browser adapter uses the same session validator as the local Python server;
+invalid saved data leaves the original factorization available with a warning.
+The UI distinguishes browser storage from a server session file and explicitly
+warns when storage is unavailable or full. A browser test on the local static
+build moved F1 past F2, refreshed the page, and reopened the checked two-step
+history with F2 first and Undo available; the restored page was visually
+inspected. The adapter test also reopened the saved session and checked
+invalid-data fallback; the local-link build and JS syntax checks passed. The
+290-test run had two generated-script failures because its relative PYTHONPATH
+did not survive a subprocess changing to a temporary directory; both passed
+when rerun with an absolute PYTHONPATH, and all 28 factorization tests passed.
+Next: deploy, verify remote CI and the public Pages URL. Longer-term work
+remains exact late cut-system geometry and verified substitutions.
+
 ## October 2: public (6,7) lab on GitHub Pages
 
 The interactive lab now has a static Pages build at `lab/index.html`. It runs

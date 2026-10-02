@@ -2,7 +2,7 @@
 import json
 from urllib.parse import parse_qs, urlsplit
 
-from surface_diagrams.factorization_lab import LabServer
+from surface_diagrams.factorization_lab import LabServer, validated_session_document
 from surface_diagrams.factorization_explorer import initial_factors
 from surface_diagrams.factorization_geometry import factorization_svg
 
@@ -19,6 +19,27 @@ lab.verification_notice = ''
 lab.token = 'browser-only'
 
 
+def restore_browser_session(text):
+    """Reopen only a valid saved workspace; never overwrite a fresh lab on error."""
+    if not text:
+        return
+    try:
+        if len(text) > 16*1024*1024:
+            raise ValueError('Saved browser workspace exceeds 16 MiB')
+        history,frames,operations,position,limited=validated_session_document(json.loads(text))
+    except (ValueError,TypeError,IndexError,KeyError,OverflowError) as error:
+        lab.message='Could not reopen the browser workspace: '+str(error)+'; loaded the original factorization.'
+        return
+    lab.history=history
+    lab.frames=frames
+    lab.operations=operations
+    lab.position=position
+    lab.message='Reopened saved browser exploration and undo history.'
+    if limited:
+        lab.verification_notice=('Saved history states '+', '.join(map(str,limited))+
+            ' reached the exact verification limit on reopening. Their product equality is not reverified; history is preserved.')
+
+
 def dispatch(path, method, body):
     """Return an HTTP-shaped response without any network or server writes."""
     try:
@@ -32,6 +53,8 @@ def dispatch(path, method, body):
                 raise ValueError('Expected an operation object')
             lab.mutate(payload)
             result = lab.state()
+            return json.dumps(dict(status=200, body=json.dumps(result),
+                                   session=lab.session_document(), mime='application/json'))
         elif method == 'GET' and route.path == '/api/prefix':
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reopen this inspector')

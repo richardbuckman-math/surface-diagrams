@@ -22,6 +22,32 @@ from .sphere_actions import sphere_inner_certificate
 from .sphere_cut_system import sphere_chart_drawing
 
 
+def validated_session_document(saved):
+    """Decode a workspace with the same checks for disk and browser storage."""
+    if not isinstance(saved,dict) or saved.get('format')!='surface-diagrams-session-v1':
+        raise ValueError('Not a Factorization Lab session file')
+    entries=saved.get('history'); position=saved.get('position')
+    if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
+        raise ValueError('Invalid session history')
+    saved_frames=saved.get('frames',[[] for _ in entries])
+    if not isinstance(saved_frames,list) or len(saved_frames)!=len(entries):
+        raise ValueError('Invalid global conjugation history')
+    operations=saved.get('operations',[f'Earlier saved state {i+1}' for i in range(len(entries))])
+    if (not isinstance(operations,list) or len(operations)!=len(entries) or
+            any(not isinstance(label,str) or not 1<=len(label)<=300 for label in operations)):
+        raise ValueError('Invalid operation history')
+    history=[];frames=[];limited=[]
+    for index,entry in enumerate(entries):
+        factors=parse_factors(entry)
+        frame=parse_global_conjugator(saved_frames[index])
+        try:
+            if frame: checked_global_frame(factors,frame)
+            else: checked(initial_factors(),factors)
+        except VerificationLimitError: limited.append(index+1)
+        history.append(factors);frames.append(frame)
+    return history,frames,operations,position,limited
+
+
 class LabServer(ThreadingHTTPServer):
     daemon_threads=True
     def __init__(self,port=0,session_path=None):
@@ -31,27 +57,7 @@ class LabServer(ThreadingHTTPServer):
             if self.session_path.stat().st_size>16*1024*1024:
                 raise ValueError('Session file exceeds 16 MiB')
             saved=json.loads(self.session_path.read_text(encoding='utf-8'))
-            if not isinstance(saved,dict) or saved.get('format')!='surface-diagrams-session-v1':
-                raise ValueError('Not a Factorization Lab session file')
-            entries=saved.get('history'); position=saved.get('position')
-            if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
-                raise ValueError('Invalid session history')
-            saved_frames=saved.get('frames',[[] for _ in entries])
-            if not isinstance(saved_frames,list) or len(saved_frames)!=len(entries):
-                raise ValueError('Invalid global conjugation history')
-            operations=saved.get('operations',[f'Earlier saved state {i+1}' for i in range(len(entries))])
-            if (not isinstance(operations,list) or len(operations)!=len(entries) or
-                    any(not isinstance(label,str) or not 1<=len(label)<=300 for label in operations)):
-                raise ValueError('Invalid operation history')
-            history=[];frames=[]
-            for index,entry in enumerate(entries):
-                factors=parse_factors(entry)
-                frame=parse_global_conjugator(saved_frames[index])
-                try:
-                    if frame: checked_global_frame(factors,frame)
-                    else: checked(initial_factors(),factors)
-                except VerificationLimitError: limited.append(index+1)
-                history.append(factors);frames.append(frame)
+            history,frames,operations,position,limited=validated_session_document(saved)
         super().__init__(('127.0.0.1',port),LabHandler)
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
@@ -71,9 +77,7 @@ class LabServer(ThreadingHTTPServer):
     def url(self): return f'http://127.0.0.1:{self.server_port}'
     def save_session(self):
         if self.session_path is None: return
-        document=dict(format='surface-diagrams-session-v1',position=self.position,
-                      history=[export_factors(factors) for factors in self.history],
-                      frames=[list(frame) for frame in self.frames],operations=self.operations)
+        document=self.session_document()
         temporary=None
         try:
             with tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',dir=self.session_path.parent,
@@ -84,6 +88,10 @@ class LabServer(ThreadingHTTPServer):
             os.replace(temporary,self.session_path)
         finally:
             if temporary is not None and temporary.exists(): temporary.unlink()
+    def session_document(self):
+        return dict(format='surface-diagrams-session-v1',position=self.position,
+                    history=[export_factors(factors) for factors in self.history],
+                    frames=[list(frame) for frame in self.frames],operations=self.operations)
     def state(self):
         factors=self.history[self.position]
         rows=[]
