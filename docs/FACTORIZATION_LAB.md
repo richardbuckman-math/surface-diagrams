@@ -71,7 +71,8 @@ images on both sides. The six colored arcs share a basepoint at the left outer
 rim. Each recovered arc's ray word is checked against the full exact meridian
 image before the shared surface router draws the family together. When a curve
 exceeds 768 cut visits or the family exceeds 1024 route nodes, the drawing is
-marked unavailable and the exact words remain accessible. These are disk
+marked unavailable and the exact words remain accessible. Each accepted
+before/after drawing has a **Save SVG** button for standalone inspection. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
 
@@ -85,7 +86,8 @@ the witness, abbreviated images, and a five-puncture chart in which removing
 the verified common basepoint path `w` returns all five visible arcs to the
 standard cut system. Puncture 6 is at infinity in that chart. The chart uses
 the shared noninterleaving Arc renderer and appears only after the exact
-inner-action certificate succeeds. Its JSON export contains every complete
+inner-action certificate succeeds. Its **Save SVG** button exports the chart;
+the JSON export contains every complete
 word and expected image. This is an action certificate, not the separate
 19-substitution braid-relations derivation: the outer action alone does not
 distinguish the central order-two spherical braid from the identity. It is

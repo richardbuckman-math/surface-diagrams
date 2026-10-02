@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## October 2: export checked cut-system SVGs
+
+Commit 7eb52b9 (normalized sphere identity chart) was pushed; Tests and
+Documentation CI passed. The unchanged saved main workspace was reopened on
+8017 and the certificate/chart loaded correctly. Added Save SVG buttons to
+the two exact prefix cut-system panels and the normalized sphere chart;
+buttons remain disabled when a route or certificate is unavailable. Browser
+test server8025/tab17 confirmed all three controls enable with verified SVGs.
+JS syntax and diff checks passed. Commit/push, CI and main restart remain.
+Next: a useful intermediate-prefix sphere chart needs a rigorous jointly
+noninterleaving route; the naive common-prefix normalization hit the route
+ordering search bound, so do not show it as verified yet.
+
 ## October 2: normalized sphere identity chart
 
 Commit 94575d0 (sphere outer-action certificate) was pushed; Tests and
@@ -12,7 +25,8 @@ together with the shared surface renderer. Puncture6 is at infinity. The
 sphere modal now shows this normalized standard fan, visually inspected in
 test browser port8025. It explicitly does not claim the disk arcs return or
 settle the central order-two spherical braid. Full286 tests, JS syntax and
-diff checks passed; commit/push, CI and main restart remain. Next: try a
+diff checks passed; commit 7eb52b9 was pushed and both CI checks passed.
+Main8017 reopened. Next: try a
 bounded sphere-chart normalization for intermediate prefixes while preserving
 the exact basepoint word and honest chart failures.
 

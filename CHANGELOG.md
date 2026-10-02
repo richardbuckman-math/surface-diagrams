@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Export the verified before/after disk cut systems and normalized sphere
+  identity chart as standalone SVGs from their inspectors.
+
 - Display the certified final sphere cut system in a five-puncture chart after
   removing the exact common basepoint whisker; the sixth puncture is at infinity.
 

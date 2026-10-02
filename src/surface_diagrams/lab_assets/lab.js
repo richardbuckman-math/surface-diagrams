@@ -1,5 +1,5 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='';
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 function controls(){
@@ -77,7 +77,8 @@ $('inspect').onclick=()=>{
 $('prefix').onclick=async()=>{
  const index=selected,revision=state.revision;
  $('prefix-title').textContent=`After ${state.factors[index].id} · exact prefix action`;
- prefixExport=null;$('save-prefix').disabled=true;
+ prefixExport=null;prefixSvgs={};$('save-prefix').disabled=true;
+ $('save-prefix-before').disabled=true;$('save-prefix-after').disabled=true;
  $('prefix-rows').replaceChildren();$('prefix-before').replaceChildren();$('prefix-after').replaceChildren();
  $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
  $('prefix-inspector').showModal();
@@ -92,7 +93,7 @@ $('prefix').onclick=async()=>{
   $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly.`;
   for(const side of ['before','after']){
    const drawing=$(`prefix-${side}`);
-   if(data[`${side}_svg`])drawing.innerHTML=data[`${side}_svg`];
+   if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
    else drawing.textContent=`Drawing unavailable: ${data[`${side}_warning`]}`;
   }
   const colors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
@@ -112,10 +113,11 @@ $('prefix').onclick=async()=>{
   }
  }catch(error){$('prefix-status').textContent=error.message;}
 };
-$('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json',`prefix-through-${prefixExport.factor}.json`);};
+$('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json','prefix-action.json');};
+for(const side of ['before','after'])$(`save-prefix-${side}`).onclick=()=>{if(prefixSvgs[side])download(prefixSvgs[side],'image/svg+xml',`cut-system-${side}.svg`);};
 $('close-prefix').onclick=()=>$('prefix-inspector').close();
 $('sphere').onclick=async()=>{
- const revision=state.revision;sphereExport=null;$('save-sphere').disabled=true;
+ const revision=state.revision;sphereExport=null;sphereChartSvg='';$('save-sphere').disabled=true;$('save-sphere-chart').disabled=true;
  $('sphere-status').textContent='Computing the exact sphere-quotient action…';
  $('sphere-disk').textContent='';$('sphere-whisker').textContent='';$('sphere-equations').replaceChildren();$('sphere-chart').replaceChildren();
  $('sphere-inspector').showModal();
@@ -133,7 +135,7 @@ $('sphere').onclick=async()=>{
    'The six-point disk action is also the identity.':
    'The six-point disk action is not the identity; the sphere relation changes the result.';
   $('sphere-whisker').textContent=data.certified?`Common whisker w (${data.conjugator.length} letters): ${data.conjugator.join(' ')||'identity'}`:'';
-  if(data.chart_svg)$('sphere-chart').innerHTML=data.chart_svg;
+  if(data.chart_svg){sphereChartSvg=data.chart_svg;$('sphere-chart').innerHTML=sphereChartSvg;$('save-sphere-chart').disabled=false;}
   else $('sphere-chart').textContent=`Identity chart unavailable: ${data.chart_warning}`;
   for(let i=0;i<6;i++){
    const row=document.createElement('p');row.className='full-word';
@@ -145,6 +147,7 @@ $('sphere').onclick=async()=>{
  }catch(error){$('sphere-status').textContent=error.message;}
 };
 $('save-sphere').onclick=()=>{if(sphereExport)download(JSON.stringify(sphereExport,null,2),'application/json','sphere-action-certificate.json');};
+$('save-sphere-chart').onclick=()=>{if(sphereChartSvg)download(sphereChartSvg,'image/svg+xml','sphere-identity-cut-system.svg');};
 $('close-sphere').onclick=()=>$('sphere-inspector').close();
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
