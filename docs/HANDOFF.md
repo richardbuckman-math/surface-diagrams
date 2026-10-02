@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## October 2: proof navigation
+
+The published proof now has a 19-entry jump index with move numbers, word
+lengths and return links. The verifier regenerated the page and again checked
+all 2,486 moves, the original SVG transcription, and SHA-256. Browser test
+clicked substitution 10 and reached its highlighted relator replacement.
+The previous proof-publishing commit ba1aab1 deployed successfully on Pages;
+Tests and Documentation CI passed. Next: publish this navigation increment,
+verify CI, then return to the interactive lab's late cut-system representation.
+
 ## October 2: published (6,7) sphere-braid proof
 
 Moved the completed 2,486-step proof from ignored previews into
