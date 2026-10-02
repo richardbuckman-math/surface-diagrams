@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Inspect the exact six-meridian disk action before and after any selected
+  factor, with a colored puncture permutation and downloadable full words.
+
 - Search exact support classes for shorter conjugated twist presentations while
   preserving type and power; keep all lab braid-action checks.
 

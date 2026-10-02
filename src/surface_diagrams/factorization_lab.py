@@ -12,11 +12,12 @@ import threading
 import webbrowser
 from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
-from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked
+from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked,product
+from .braid_actions import free_homotopy_key
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
-from .mapping_classes import VerificationLimitError
+from .mapping_classes import VerificationLimitError,exact_action
 
 
 class LabServer(ThreadingHTTPServer):
@@ -85,6 +86,21 @@ class LabServer(ThreadingHTTPServer):
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
                     export=export_factors(factors))
+    def prefix_action(self,index):
+        """Exact based meridian images on both sides of a selected factor."""
+        factors=self.history[self.position]
+        if type(index) is not int or not 0<=index<len(factors):
+            raise ValueError('Choose a valid factor position')
+        before=exact_action(product(factors[:index]))
+        after=exact_action(product(factors[:index+1]))
+        def punctures(images):
+            keys=tuple(free_homotopy_key(word) for word in images)
+            if any(len(key)!=1 for key in keys):
+                raise ValueError('Meridian images have no single puncture class')
+            return tuple(abs(key[0]) for key in keys)
+        return dict(factor=factors[index].id,index=index,revision=self.revision,
+                    before=before,after=after,before_punctures=punctures(before),
+                    after_punctures=punctures(after))
     def mutate(self,payload):
         previous=(self.history,self.position,self.revision,self.message)
         try:
@@ -134,6 +150,17 @@ class LabServer(ThreadingHTTPServer):
 class LabHandler(EditorHandler):
     def do_GET(self):
         if not self._local_request(): return
+        if urlsplit(self.path).path=='/api/prefix':
+            try:
+                query=parse_qs(urlsplit(self.path).query)
+                revision=int(query['revision'][0]); index=int(query['index'][0])
+                with self.server.lock:
+                    if revision!=self.server.revision:
+                        self._error(409,'State changed; reload before inspecting'); return
+                    data=self.server.prefix_action(index)
+            except (KeyError,ValueError,VerificationLimitError) as error:
+                self._error(400,str(error)); return
+            self._reply(200,json.dumps(data)); return
         if urlsplit(self.path).path=='/api/export.svg':
             try: revision=int(parse_qs(urlsplit(self.path).query)['revision'][0])
             except (KeyError,ValueError): self._error(400,'Supply the current revision'); return

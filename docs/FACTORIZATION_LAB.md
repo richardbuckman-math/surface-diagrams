@@ -62,6 +62,14 @@ zoom, scrolling, and the full exact braid word and conjugator. Escape or Close
 returns to the stacked view. The inspector keeps strokes thin while enlarging
 the drawing, making nearby strands easier to distinguish.
 
+**Inspect prefix action** shows the exact images of the six based meridians
+immediately before and after the selected factor. Colored numbers show the
+puncture permutation; the accompanying words preserve winding and base paths,
+so the permutation alone is never presented as an identity test. Long words are
+abbreviated on screen; **Save full exact words as JSON** exports all six complete
+images on both sides. These are disk actions, without a sphere quotient or a
+geometric cut-system drawing yet.
+
 Each row reports the boundary class of its recovered `Arc` or `Loop`, compared
 with the exact Artin image of the standard enclosing loop. The inspector shows
 the itinerary and both normalized boundary words. Half twists use the boundary

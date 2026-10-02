@@ -1,5 +1,5 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null;
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 function controls(){
@@ -13,6 +13,7 @@ function controls(){
  picker.disabled=busy||!f?.splits.length;$('split').disabled=picker.disabled;
  $('combine').disabled=busy||!f||selected>=state.factors.length-1;
  $('inspect').disabled=busy||!f;
+ $('prefix').disabled=busy||!f;
 }
 function choose(index){selected=index;document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));controls();}
 function paint(){
@@ -73,6 +74,38 @@ $('inspect').onclick=()=>{
  $('zoom').value='1';inspectZoom();$('inspector').showModal();
  $('inspect-viewport').scrollTo(0,0);
 };
+$('prefix').onclick=async()=>{
+ const index=selected,revision=state.revision;
+ $('prefix-title').textContent=`After ${state.factors[index].id} · exact prefix action`;
+ prefixExport=null;$('save-prefix').disabled=true;
+ $('prefix-rows').replaceChildren();$('prefix-status').textContent='Computing exact based meridian images…';
+ $('prefix-inspector').showModal();
+ try{
+  const response=await fetch(`/api/prefix?index=${index}&revision=${revision}`);
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.error);
+  if(state.revision!==revision)throw new Error('The factorization changed; reopen this inspector.');
+  prefixExport=data;$('save-prefix').disabled=false;
+  $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly.`;
+  const colors=['#b45309','#a21caf','#16815d','#1766ad','#854d0e','#6745b9'];
+  for(let i=0;i<6;i++){
+   const row=document.createElement('div');row.className='prefix-row';
+   const label=document.createElement('strong');label.textContent=`x${i+1}`;row.append(label);
+   for(const side of ['before','after']){
+    const cell=document.createElement('div');cell.className='prefix-cell';
+    const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=colors[data[`${side}_punctures`][i]-1];
+    dot.textContent=String(data[`${side}_punctures`][i]);
+    const word=data[side][i],shown=word.slice(0,64).join(' ');
+    const copy=document.createElement('span');copy.className='full-word';
+    copy.textContent=`${side}: ${shown}${word.length>64?' …':''} (${word.length} letters)`;
+    cell.append(dot,copy);row.append(cell);
+   }
+   $('prefix-rows').append(row);
+  }
+ }catch(error){$('prefix-status').textContent=error.message;}
+};
+$('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json',`prefix-through-${prefixExport.factor}.json`);};
+$('close-prefix').onclick=()=>$('prefix-inspector').close();
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);

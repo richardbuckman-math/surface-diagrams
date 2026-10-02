@@ -296,6 +296,12 @@ class FactorizationLabTests(unittest.TestCase):
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
         try:
             state=json.load(urlopen(server.url+'/api/state'))
+            prefix=json.load(urlopen(server.url+'/api/prefix?index=1&revision=0'))
+            self.assertEqual(prefix['factor'],'F2')
+            self.assertEqual(tuple(map(tuple,prefix['before'])),exact_action(product(initial_factors()[:1])))
+            self.assertEqual(tuple(map(tuple,prefix['after'])),exact_action(product(initial_factors()[:2])))
+            self.assertEqual(prefix['before_punctures'],[1,2,3,4,5,6])
+            self.assertEqual(prefix['after_punctures'],[1,2,6,4,5,3])
             def post(data,token=state['token']):
                 return urlopen(Request(server.url+'/api/action',data=json.dumps(data).encode(),
                     headers={'Content-Type':'application/json','X-Surface-Token':token}))
@@ -305,6 +311,10 @@ class FactorizationLabTests(unittest.TestCase):
             with self.assertRaises(HTTPError): post({'op':'reset','revision':0})
             with self.assertRaises(HTTPError): post({'op':'combine','index':4,'revision':1})
             self.assertEqual(server.revision,1)
+            with self.assertRaises(HTTPError) as error: urlopen(server.url+'/api/prefix?index=1&revision=0')
+            self.assertEqual(error.exception.code,409)
+            with self.assertRaises(HTTPError) as error: urlopen(server.url+'/api/prefix?index=99&revision=1')
+            self.assertEqual(error.exception.code,400)
             undone=json.load(post({'op':'undo','revision':1}))
             self.assertEqual(len(undone['factors']),13)
             self.assertTrue(undone['redo'])

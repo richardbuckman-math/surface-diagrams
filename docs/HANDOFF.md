@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 2: exact prefix-action inspector
+
+Commit 45e0803 rendered the historical 578-cut F7 support and shortened
+conjugated twists. It was pushed; Tests and Documentation GitHub checks passed.
+Main port 8017 reopened the untouched persistent 48-state workspace and
+visually displayed the original 13-factor, 178-letter state. The user-facing
+tab is marked as a deliverable.
+
+New in the next batch: a selected factor can show exact based images of all six
+meridians immediately before and after it, plus color-coded puncture
+permutations. The on-screen words abbreviate after64 letters; Save full exact
+words as JSON exports the complete computation. This is exact disk action,
+explicitly not a sphere quotient or yet a drawing of cut-system images. A
+revision check rejects stale reads. Full278 tests, JS syntax check and diff
+check passed. The test browser at port8025 showed F2's before/after images,
+permutation change, and enabled full-word JSON export. Need commit/push, verify CI and load
+the new UI on main8017. Next substantive step: geometric images of a chosen
+reference cut system at each prefix, with an explicit drawing convention.
+
 ## October 2: render the saved 578-cut F7 support
 
 Shared curves now allow768 cut visits and diagrams1024 route nodes. Lab spacing,
