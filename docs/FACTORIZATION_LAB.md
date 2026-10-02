@@ -67,8 +67,13 @@ immediately before and after the selected factor. Colored numbers show the
 puncture permutation; the accompanying words preserve winding and base paths,
 so the permutation alone is never presented as an identity test. Long words are
 abbreviated on screen; **Save full exact words as JSON** exports all six complete
-images on both sides. These are disk actions, without a sphere quotient or a
-geometric cut-system drawing yet.
+images on both sides. The six colored arcs share a basepoint at the left outer
+rim. Each recovered arc's ray word is checked against the full exact meridian
+image before the shared surface router draws the family together. When a curve
+exceeds 768 cut visits or the family exceeds 1024 route nodes, the drawing is
+marked unavailable and the exact words remain accessible. These are disk
+actions, without imposing the sphere relation; a final nontrivial disk action
+does not decide whether the factorization is the identity on the sphere.
 
 Each row reports the boundary class of its recovered `Arc` or `Loop`, compared
 with the exact Artin image of the standard enclosing loop. The inspector shows

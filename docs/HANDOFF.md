@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## October 2: based cut-system images in the prefix inspector
+
+The exact prefix-action inspector from dc605b1 is now live on the saved main
+workspace and both GitHub checks passed. This next batch recovers a based
+Arc(0,j) for each exact meridian image p x_j p^-1. The recovered ray word is
+checked against the full based image, then all six arcs are drawn together by
+the shared noninterleaving surface router with stable colors. The existing
+cut_systems.py cellulation module was preserved; this lives in the separate
+based_cut_system.py module. Browser test port8025 shows before/after F2 cut
+systems and exact colored meridian words. For F13, the browser shows honest
+768-cut warnings while preserving all exact words and their JSON export. The
+source factorization can route the complete family through prefix7; later
+prefixes exceed combined or per-arc limits. White-background raster previews
+of prefixes2 and5 were visually inspected. Full281 tests, JS syntax and diff
+check passed; commit/push, CI and main UI restart remain. Next: improve
+representation/compression of late based arcs without blindly raising route
+limits; separately study the sphere quotient needed for visual identity.
+
 ## October 2: exact prefix-action inspector
 
 Commit 45e0803 rendered the historical 578-cut F7 support and shortened
@@ -15,9 +33,9 @@ words as JSON exports the complete computation. This is exact disk action,
 explicitly not a sphere quotient or yet a drawing of cut-system images. A
 revision check rejects stale reads. Full278 tests, JS syntax check and diff
 check passed. The test browser at port8025 showed F2's before/after images,
-permutation change, and enabled full-word JSON export. Need commit/push, verify CI and load
-the new UI on main8017. Next substantive step: geometric images of a chosen
-reference cut system at each prefix, with an explicit drawing convention.
+permutation change, and enabled full-word JSON export. Commit dc605b1 was pushed,
+both GitHub checks passed, and main8017 reopened with the UI. The next
+substantive step is the based cut-system rendering described above.
 
 ## October 2: render the saved 578-cut F7 support
 

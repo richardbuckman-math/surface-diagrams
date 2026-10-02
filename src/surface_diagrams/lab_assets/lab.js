@@ -78,22 +78,30 @@ $('prefix').onclick=async()=>{
  const index=selected,revision=state.revision;
  $('prefix-title').textContent=`After ${state.factors[index].id} · exact prefix action`;
  prefixExport=null;$('save-prefix').disabled=true;
- $('prefix-rows').replaceChildren();$('prefix-status').textContent='Computing exact based meridian images…';
+ $('prefix-rows').replaceChildren();$('prefix-before').replaceChildren();$('prefix-after').replaceChildren();
+ $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
  $('prefix-inspector').showModal();
  try{
   const response=await fetch(`/api/prefix?index=${index}&revision=${revision}`);
   const data=await response.json();
   if(!response.ok)throw new Error(data.error);
   if(state.revision!==revision)throw new Error('The factorization changed; reopen this inspector.');
-  prefixExport=data;$('save-prefix').disabled=false;
+  prefixExport={factor:data.factor,index:data.index,revision:data.revision,before:data.before,
+    after:data.after,before_punctures:data.before_punctures,after_punctures:data.after_punctures};
+  $('save-prefix').disabled=false;
   $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly.`;
-  const colors=['#b45309','#a21caf','#16815d','#1766ad','#854d0e','#6745b9'];
+  for(const side of ['before','after']){
+   const drawing=$(`prefix-${side}`);
+   if(data[`${side}_svg`])drawing.innerHTML=data[`${side}_svg`];
+   else drawing.textContent=`Drawing unavailable: ${data[`${side}_warning`]}`;
+  }
+  const colors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
   for(let i=0;i<6;i++){
    const row=document.createElement('div');row.className='prefix-row';
    const label=document.createElement('strong');label.textContent=`x${i+1}`;row.append(label);
    for(const side of ['before','after']){
     const cell=document.createElement('div');cell.className='prefix-cell';
-    const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=colors[data[`${side}_punctures`][i]-1];
+    const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=colors[i];
     dot.textContent=String(data[`${side}_punctures`][i]);
     const word=data[side][i],shown=word.slice(0,64).join(' ');
     const copy=document.createElement('span');copy.className='full-word';

@@ -302,6 +302,9 @@ class FactorizationLabTests(unittest.TestCase):
             self.assertEqual(tuple(map(tuple,prefix['after'])),exact_action(product(initial_factors()[:2])))
             self.assertEqual(prefix['before_punctures'],[1,2,3,4,5,6])
             self.assertEqual(prefix['after_punctures'],[1,2,6,4,5,3])
+            self.assertIn('<svg',prefix['before_svg'])
+            self.assertIn('<svg',prefix['after_svg'])
+            self.assertEqual(prefix['before_warning'],'')
             def post(data,token=state['token']):
                 return urlopen(Request(server.url+'/api/action',data=json.dumps(data).encode(),
                     headers={'Content-Type':'application/json','X-Surface-Token':token}))

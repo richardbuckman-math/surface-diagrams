@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Draw six exact based meridian arcs together before and after the selected
+  factor when the shared noninterleaving router accepts them; retain exact
+  words and show an explicit warning when route limits are reached.
+
 - Inspect the exact six-meridian disk action before and after any selected
   factor, with a colored puncture permutation and downloadable full words.
 

@@ -88,6 +88,7 @@ class LabServer(ThreadingHTTPServer):
                     export=export_factors(factors))
     def prefix_action(self,index):
         """Exact based meridian images on both sides of a selected factor."""
+        from .based_cut_system import based_cut_system_drawing
         factors=self.history[self.position]
         if type(index) is not int or not 0<=index<len(factors):
             raise ValueError('Choose a valid factor position')
@@ -98,9 +99,15 @@ class LabServer(ThreadingHTTPServer):
             if any(len(key)!=1 for key in keys):
                 raise ValueError('Meridian images have no single puncture class')
             return tuple(abs(key[0]) for key in keys)
+        def drawing(images):
+            try: return based_cut_system_drawing(images),''
+            except ValueError as error: return '',str(error)
+        before_svg,before_warning=drawing(before)
+        after_svg,after_warning=drawing(after)
         return dict(factor=factors[index].id,index=index,revision=self.revision,
                     before=before,after=after,before_punctures=punctures(before),
-                    after_punctures=punctures(after))
+                    after_punctures=punctures(after),before_svg=before_svg,
+                    after_svg=after_svg,before_warning=before_warning,after_warning=after_warning)
     def mutate(self,payload):
         previous=(self.history,self.position,self.revision,self.message)
         try:
