@@ -177,6 +177,12 @@ attempts and two million pairwise crossing comparisons. Reaching a limit reports
 that the search is inconclusive; it does not assert that the curve is impossible.
 Dense cards show their cut count and recommend inspector zoom.
 
+The exact prefix-action inspector has Previous/Next controls to follow the
+cut system factor by factor. Each panel shows the six based arcs when the
+shared router accepts them; later steps retain all exact meridian words and
+disable SVG export for a drawing that could not be verified. In the supplied
+factorization, the six-arc drawing after F8 exceeds the 1024-node limit.
+
 After local braid rewrites, a bounded support-class search tries a shorter route
 back to a standard core. Accepted candidates keep twist type and power and pass
 an exact support comparison; lab operations still check exact braid actions.

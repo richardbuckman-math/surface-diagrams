@@ -1,5 +1,5 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='';
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0;
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 function controls(){
@@ -76,17 +76,24 @@ $('inspect').onclick=()=>{
  $('zoom').value='1';inspectZoom();$('inspector').showModal();
  $('inspect-viewport').scrollTo(0,0);
 };
-$('prefix').onclick=async()=>{
- const index=selected,revision=state.revision;
+$('prefix').onclick=()=>showPrefix(selected);
+async function showPrefix(index){
+ if(!state||index<0||index>=state.factors.length)return;
+ const revision=state.revision,request=++prefixRequest;
+ prefixIndex=index;choose(index);
  $('prefix-title').textContent=`After ${state.factors[index].id} · exact prefix action`;
+ $('prefix-position').textContent=`Factor ${index+1} of ${state.factors.length}`;
+ $('prefix-previous').disabled=index===0;
+ $('prefix-next').disabled=index===state.factors.length-1;
  prefixExport=null;prefixSvgs={};$('save-prefix').disabled=true;
  $('save-prefix-before').disabled=true;$('save-prefix-after').disabled=true;
  $('prefix-rows').replaceChildren();$('prefix-before').replaceChildren();$('prefix-after').replaceChildren();
  $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
- $('prefix-inspector').showModal();
+ if(!$('prefix-inspector').open)$('prefix-inspector').showModal();
  try{
   const response=await fetch(`/api/prefix?index=${index}&revision=${revision}`);
   const data=await response.json();
+  if(request!==prefixRequest)return;
   if(!response.ok)throw new Error(data.error);
   if(state.revision!==revision)throw new Error('The factorization changed; reopen this inspector.');
   prefixExport={factor:data.factor,index:data.index,revision:data.revision,before:data.before,
@@ -113,11 +120,13 @@ $('prefix').onclick=async()=>{
    }
    $('prefix-rows').append(row);
   }
- }catch(error){$('prefix-status').textContent=error.message;}
-};
+ }catch(error){if(request===prefixRequest)$('prefix-status').textContent=error.message;}
+}
+$('prefix-previous').onclick=()=>showPrefix(prefixIndex-1);
+$('prefix-next').onclick=()=>showPrefix(prefixIndex+1);
 $('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json','prefix-action.json');};
 for(const side of ['before','after'])$(`save-prefix-${side}`).onclick=()=>{if(prefixSvgs[side])download(prefixSvgs[side],'image/svg+xml',`cut-system-${side}.svg`);};
-$('close-prefix').onclick=()=>$('prefix-inspector').close();
+$('close-prefix').onclick=()=>{prefixRequest++;$('prefix-inspector').close();};
 $('sphere').onclick=async()=>{
  const revision=state.revision;sphereExport=null;sphereChartSvg='';$('save-sphere').disabled=true;$('save-sphere-chart').disabled=true;
  $('sphere-status').textContent='Computing the exact sphere-quotient action…';

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Step through successive exact cut-system actions in the prefix inspector,
+  retaining the precise drawing-limit warning and full meridian words.
+
 - Add checked global conjugation of every factor, with its braid frame retained
   across undo/redo, JSON export/import, and persistent session reopening.
 

@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## October 2: step through exact cut-system actions
+
+Added Previous/Next controls in the exact prefix-action inspector. Browser
+inspection on the saved main lab showed F1 before/after, advanced to F2 with
+both six-arc diagrams and complete words, then advanced to F8: its before
+drawing is available, while its after drawing correctly reports the 1024-node
+limit and leaves the full exact words export enabled. The modal layout was
+visually inspected; no saved exploration state changed. JS syntax passed.
+A scratch probe found that stripping the common basepoint prefix leaves 1079
+cuts after F8. Raising only the node cap led to a route-ordering search limit,
+so a larger cap alone is not a verified improvement. Next: explore a compact,
+mathematically checked multi-panel representation for these long cut systems,
+retaining shared basepoint and disjointness evidence. Do not silently drop
+arcs or label a numerical layout exact.
+
 ## October 2: checked global conjugation
 
 Added a Global conjugation input to the (6,7) lab. A signed braid word acts
@@ -11,10 +26,11 @@ reopened successfully with its position and history intact. Browser test on
 8025 applied `1 -2` (178 to 218 displayed letters), undid and redid it, and
 confirmed the exact sphere outer-action certificate still passes with an
 86-letter common whisker. The main user workspace remained untouched during
-the test. Full 288-test suite, JS syntax, and diff checks passed. Remote
-checks are pending. Next: commit/push this batch, verify CI, restart the saved
-main lab on 8017, then improve compressed
-late-prefix cut-system routing without drawing unverified arcs.
+the test. Full 288-test suite, JS syntax, and diff checks passed. Commit
+f336971 was pushed; Tests and Documentation CI passed. The saved main lab
+reopened on 8017 at its original 13 factors / 178 letters, with the new
+control available. Next: improve compressed late-prefix cut-system routing
+without drawing unverified arcs.
 
 ## October 2: export checked cut-system SVGs
 
