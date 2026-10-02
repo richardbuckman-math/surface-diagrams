@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## October 2: normalized sphere identity chart
+
+Commit 94575d0 (sphere outer-action certificate) was pushed; Tests and
+Documentation CI passed. Main8017 reopened the unchanged persistent workspace
+with the new Check sphere action button. The next batch adds
+sphere_cut_system.py: after a successful inner-action certificate it removes
+the common 58-letter basepoint whisker in F5, verifies the five resulting
+images are exactly x1...x5, then routes their five Arc(0,j) representatives
+together with the shared surface renderer. Puncture6 is at infinity. The
+sphere modal now shows this normalized standard fan, visually inspected in
+test browser port8025. It explicitly does not claim the disk arcs return or
+settle the central order-two spherical braid. Full286 tests, JS syntax and
+diff checks passed; commit/push, CI and main restart remain. Next: try a
+bounded sphere-chart normalization for intermediate prefixes while preserving
+the exact basepoint word and honest chart failures.
+
 ## October 2: exact sphere outer-action certificate
 
 The prior based-cut-system batch 8c580ce was pushed; Tests and Documentation
@@ -14,8 +30,8 @@ cut-system drawings. The UI now explicitly notes that outer action cannot
 distinguish the central order-two spherical braid from identity. Non-inner results are labelled uncertified. Tests cover
 the boundary relation, supplied product, Hurwitz invariance, central twist,
 and nonidentity examples; browser test at port8025 visually confirmed the
-certificate. Full284 tests, JS syntax and diff checks passed. Commit/push,
-CI and main restart remain. Next: find a
+certificate. Full284 tests, JS syntax and diff checks passed. Commit 94575d0
+was pushed and both CI checks passed; main8017 restarted. Next: find a
 compact geometric model for the common basepoint whisker and late cut-system
 images, without weakening existing exactness and route guards.
 

@@ -81,7 +81,11 @@ five-generator free-group action is one common inner conjugation. For the
 supplied (6,7) product it finds a 58-letter word `w` and verifies all six
 equations: each image is `w xi w^-1`, with `x6=(x1...x5)^-1`. Thus the sphere
 outer action is the identity, while the disk action is not. The modal shows
-the witness and abbreviated images; its JSON export contains every complete
+the witness, abbreviated images, and a five-puncture chart in which removing
+the verified common basepoint path `w` returns all five visible arcs to the
+standard cut system. Puncture 6 is at infinity in that chart. The chart uses
+the shared noninterleaving Arc renderer and appears only after the exact
+inner-action certificate succeeds. Its JSON export contains every complete
 word and expected image. This is an action certificate, not the separate
 19-substitution braid-relations derivation: the outer action alone does not
 distinguish the central order-two spherical braid from the identity. It is

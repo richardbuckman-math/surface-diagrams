@@ -117,13 +117,15 @@ $('close-prefix').onclick=()=>$('prefix-inspector').close();
 $('sphere').onclick=async()=>{
  const revision=state.revision;sphereExport=null;$('save-sphere').disabled=true;
  $('sphere-status').textContent='Computing the exact sphere-quotient action…';
- $('sphere-disk').textContent='';$('sphere-whisker').textContent='';$('sphere-equations').replaceChildren();
+ $('sphere-disk').textContent='';$('sphere-whisker').textContent='';$('sphere-equations').replaceChildren();$('sphere-chart').replaceChildren();
  $('sphere-inspector').showModal();
  try{
   const response=await fetch(`/api/sphere?revision=${revision}`),data=await response.json();
   if(!response.ok)throw new Error(data.error);
   if(state.revision!==revision)throw new Error('The factorization changed; reopen this check.');
-  sphereExport=data;$('save-sphere').disabled=false;
+  sphereExport={certified:data.certified,conjugator:data.conjugator,images:data.images,
+    expected:data.expected,disk_identity:data.disk_identity,revision:data.revision};
+  $('save-sphere').disabled=false;
   $('sphere-status').textContent=data.certified?
    'Certified: all six sphere meridian images are one common inner conjugation. The sphere outer action is the identity.':
    'No common inner-action certificate was found; this check makes no identity claim.';
@@ -131,6 +133,8 @@ $('sphere').onclick=async()=>{
    'The six-point disk action is also the identity.':
    'The six-point disk action is not the identity; the sphere relation changes the result.';
   $('sphere-whisker').textContent=data.certified?`Common whisker w (${data.conjugator.length} letters): ${data.conjugator.join(' ')||'identity'}`:'';
+  if(data.chart_svg)$('sphere-chart').innerHTML=data.chart_svg;
+  else $('sphere-chart').textContent=`Identity chart unavailable: ${data.chart_warning}`;
   for(let i=0;i<6;i++){
    const row=document.createElement('p');row.className='full-word';
    const word=data.images[i],core=i<5?`x${i+1}`:'(x1 x2 x3 x4 x5)⁻¹';

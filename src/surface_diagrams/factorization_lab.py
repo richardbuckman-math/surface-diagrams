@@ -19,6 +19,7 @@ from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
 from .mapping_classes import VerificationLimitError,exact_action
 from .sphere_actions import sphere_inner_certificate
+from .sphere_cut_system import sphere_chart_drawing
 
 
 class LabServer(ThreadingHTTPServer):
@@ -110,7 +111,11 @@ class LabServer(ThreadingHTTPServer):
                     after_punctures=punctures(after),before_svg=before_svg,
                     after_svg=after_svg,before_warning=before_warning,after_warning=after_warning)
     def sphere_action(self):
-        return dict(sphere_inner_certificate(product(self.history[self.position])),revision=self.revision)
+        word=product(self.history[self.position])
+        try: chart_svg,_=sphere_chart_drawing(word);chart_warning=''
+        except ValueError as error: chart_svg='';chart_warning=str(error)
+        return dict(sphere_inner_certificate(word),revision=self.revision,
+                    chart_svg=chart_svg,chart_warning=chart_warning)
     def mutate(self,payload):
         previous=(self.history,self.position,self.revision,self.message)
         try:

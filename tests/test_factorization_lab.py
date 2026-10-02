@@ -309,6 +309,8 @@ class FactorizationLabTests(unittest.TestCase):
             self.assertTrue(sphere['certified'])
             self.assertFalse(sphere['disk_identity'])
             self.assertEqual(len(sphere['conjugator']),58)
+            self.assertIn('<svg',sphere['chart_svg'])
+            self.assertEqual(sphere['chart_warning'],'')
             def post(data,token=state['token']):
                 return urlopen(Request(server.url+'/api/action',data=json.dumps(data).encode(),
                     headers={'Content-Type':'application/json','X-Surface-Token':token}))

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Display the certified final sphere cut system in a five-puncture chart after
+  removing the exact common basepoint whisker; the sixth puncture is at infinity.
+
 - Certify the (6,7) product's sphere outer action as trivial: after imposing
   the boundary relation, all six exact meridian images share one verified
   58-letter conjugator, despite a nontrivial disk action.

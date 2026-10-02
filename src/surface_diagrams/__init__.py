@@ -30,3 +30,6 @@ __all__ += ["based_arc_from_meridian", "based_arc_ray_word", "based_cut_system_d
 
 from .sphere_actions import sphere_reduce, sphere_inner_certificate
 __all__ += ["sphere_reduce", "sphere_inner_certificate"]
+
+from .sphere_cut_system import sphere_chart_drawing
+__all__ += ["sphere_chart_drawing"]
