@@ -85,6 +85,10 @@ marked unavailable and the exact words remain accessible. Each accepted
 before/after drawing has a **Save SVG** button for standalone inspection. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
+Each meridian row also has **View arc** for its before or after image. This
+routes one exact arc through the shared renderer and can remain available when
+the combined six-arc drawing reaches its limit. The individual view checks its
+full based image but does not claim that the six arcs are jointly disjoint.
 
 **Check sphere action** computes the entire product's exact six-meridian disk
 action, imposes `D = x1 x2 x3 x4 x5 x6 = 1`, and checks whether the resulting

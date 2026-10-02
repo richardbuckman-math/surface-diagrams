@@ -131,6 +131,20 @@ class LabServer(ThreadingHTTPServer):
                     before=before,after=after,before_punctures=punctures(before),
                     after_punctures=punctures(after),before_svg=before_svg,
                     after_svg=after_svg,before_warning=before_warning,after_warning=after_warning)
+    def prefix_arc(self,index,side,arc_index):
+        """Inspect one exact arc when joint routing is too large to draw."""
+        from .based_cut_system import based_arc_drawing
+        factors=self.history[self.position]
+        if type(index) is not int or not 0<=index<len(factors):
+            raise ValueError('Choose a valid factor position')
+        if side not in ('before','after') or type(arc_index) is not int or not 0<=arc_index<6:
+            raise ValueError('Choose a valid arc and side')
+        images=exact_action(product(factors[:index+(side=='after')]))
+        image=images[arc_index]
+        try: svg=based_arc_drawing(image,index=arc_index);warning=''
+        except ValueError as error: svg='';warning=str(error)
+        return dict(factor=factors[index].id,index=index,side=side,arc=arc_index+1,
+                    image=image,svg=svg,warning=warning,revision=self.revision)
     def sphere_action(self):
         word=product(self.history[self.position])
         try: chart_svg,_=sphere_chart_drawing(word);chart_warning=''
@@ -218,6 +232,18 @@ class LabServer(ThreadingHTTPServer):
 class LabHandler(EditorHandler):
     def do_GET(self):
         if not self._local_request(): return
+        if urlsplit(self.path).path=='/api/prefix-arc':
+            try:
+                query=parse_qs(urlsplit(self.path).query)
+                revision=int(query['revision'][0]);index=int(query['index'][0])
+                arc_index=int(query['arc'][0]);side=query['side'][0]
+                with self.server.lock:
+                    if revision!=self.server.revision:
+                        self._error(409,'State changed; reload before inspecting'); return
+                    data=self.server.prefix_arc(index,side,arc_index)
+            except (KeyError,ValueError,VerificationLimitError) as error:
+                self._error(400,str(error));return
+            self._reply(200,json.dumps(data));return
         if urlsplit(self.path).path=='/api/sphere':
             try:
                 revision=int(parse_qs(urlsplit(self.path).query)['revision'][0])

@@ -59,6 +59,10 @@ def dispatch(path, method, body):
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reopen this inspector')
             result = lab.prefix_action(int(query['index'][0]))
+        elif method == 'GET' and route.path == '/api/prefix-arc':
+            if int(query['revision'][0]) != lab.revision:
+                raise ValueError('State changed; reopen this inspector')
+            result = lab.prefix_arc(int(query['index'][0]),query['side'][0],int(query['arc'][0]))
         elif method == 'GET' and route.path == '/api/sphere':
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reopen this check')

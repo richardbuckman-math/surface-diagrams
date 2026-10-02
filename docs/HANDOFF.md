@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## October 2: individual exact arcs beyond the joint route limit
+
+The prefix inspector now offers View arc for each before/after meridian. A
+separate endpoint draws that one based arc with the shared surface renderer
+and checks its ray word against the complete exact meridian image; the modal
+explicitly says this is not a jointly verified cut system. F8's after x2,
+whose joint six-arc drawing exceeds the 1024-node limit, routes individually
+in a scratch calculation (1,039 image letters, 23,953 SVG bytes, 2.65 s).
+The public browser adapter exposes the same endpoint. The focused six-test set
+and JS syntax passed. Local static-browser inspection
+showed F8's after six-arc drawing still unavailable, while its 1,039-letter x2
+image drew alone with the explicit joint-system caveat. The initial long-arc
+viewport was blank above its centerline; it now centers vertically, offers
+Start/Middle/End navigation, and collapses the full word. Browser screenshots
+confirmed the start and middle views are readable. Next: push and verify the
+live page and remote checks. Longer-term work: a mathematically checked joint
+late-prefix representation.
+
 ## October 2: browser workspace persistence
 
 The public (6,7) lab now saves its complete 60-step undo/redo history and

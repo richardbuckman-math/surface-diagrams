@@ -1,7 +1,14 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,arcRequest=0,arcSvg='';
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
+const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
+arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Scroll to follow the long route.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
+document.body.append(arcDialog);
+$('close-arc').onclick=()=>{arcRequest++;arcDialog.close();};
+$('save-arc').onclick=()=>{if(arcSvg)download(arcSvg,'image/svg+xml','individual-based-arc.svg');};
+function positionArc(fraction){const drawing=$('arc-drawing');drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;}
+for(const [id,fraction] of [['arc-start',0],['arc-middle',.5],['arc-end',1]])$(id).onclick=()=>positionArc(fraction);
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
@@ -131,11 +138,34 @@ async function showPrefix(index){
     const word=data[side][i],shown=word.slice(0,64).join(' ');
     const copy=document.createElement('span');copy.className='full-word';
     copy.textContent=`${side}: ${shown}${word.length>64?' …':''} (${word.length} letters)`;
-    cell.append(dot,copy);row.append(cell);
+    const view=document.createElement('button');view.textContent='View arc';
+    view.setAttribute('aria-label',`View ${side} arc x${i+1} after ${data.factor}`);
+    view.onclick=()=>showArc(side,i,index,revision);
+    cell.append(dot,copy,view);row.append(cell);
    }
    $('prefix-rows').append(row);
   }
  }catch(error){if(request===prefixRequest)$('prefix-status').textContent=error.message;}
+}
+async function showArc(side,arcIndex,index,revision){
+ const request=++arcRequest;arcSvg='';$('save-arc').disabled=true;
+ $('arc-title').textContent=`${side} ${state.factors[index].id} · individual arc x${arcIndex+1}`;
+ $('arc-status').textContent='Routing one exact arc…';
+ $('arc-word').textContent='';$('arc-word-summary').textContent='Full based image';
+ $('arc-drawing').replaceChildren();arcDialog.showModal();
+ try{
+  const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}`);
+  const data=await response.json();if(request!==arcRequest)return;
+  if(!response.ok)throw new Error(data.error);
+  if(state.revision!==revision)throw new Error('The factorization changed; reopen the prefix inspector.');
+  $('arc-word-summary').textContent=`Full based image x${arcIndex+1} (${data.image.length} letters)`;
+  $('arc-word').textContent=`x${arcIndex+1} → ${data.image.join(' ')}`;
+  if(data.svg){arcSvg=data.svg;$('arc-drawing').innerHTML=arcSvg;$('save-arc').disabled=false;
+   positionArc(0);
+   $('arc-status').textContent='Exact individual arc drawn. Joint cut-system routing remains a separate check.';}
+  else{$('arc-drawing').textContent=`Drawing unavailable: ${data.warning}`;
+   $('arc-status').textContent='The exact based image is still available below.';}
+ }catch(error){if(request===arcRequest)$('arc-status').textContent=error.message;}
 }
 $('prefix-previous').onclick=()=>showPrefix(prefixIndex-1);
 $('prefix-next').onclick=()=>showPrefix(prefixIndex+1);
