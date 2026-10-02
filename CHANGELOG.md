@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Publish the verified (6,7) sphere-braid walkthrough, complete 2,486-move
+  certificate, portable verifier, and endpoint diagram; link it from the
+  catalog and lab certificate.
+
 - Record and revisit verified exploration steps, including Hurwitz moves,
   splits, combining, simplification, import, reset, and global conjugation.
   Legacy sessions reopen with neutral labels for earlier states.

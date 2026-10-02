@@ -90,8 +90,11 @@ inner-action certificate succeeds. Its **Save SVG** button exports the chart;
 the JSON export contains every complete
 word and expected image. This is an action certificate, not the separate
 19-substitution braid-relations derivation: the outer action alone does not
-distinguish the central order-two spherical braid from the identity. It is
-also not a claim that the late disk cut systems have been drawn. If a common conjugator is not found, the tool reports
+distinguish the central order-two spherical braid from the identity. The
+[full sphere-braid derivation](proofs/braid-six-seven/braid-six-seven-proof.html)
+checks the stronger braid-relations claim and explains the final complementary
+triple-twist cancellation. The chart does not claim that the late disk cut
+systems have been drawn. If a common conjugator is not found, the tool reports
 no certificate rather than asserting nonidentity.
 
 Each row reports the boundary class of its recovered `Arc` or `Loop`, compared

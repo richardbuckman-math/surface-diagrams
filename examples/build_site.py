@@ -27,7 +27,10 @@ def build():
         cards = []
         for e in (e for e in entries if e['category']==category):
             cards.append('<article class="card"><span class="badge">'+escape(e['status'])+'</span><h2><a href="'+e['slug']+'.html">'+escape(e['title'])+'</a></h2><p>'+escape(e['description'])+'</p></article>')
-            body = '<p class="badge">'+escape(e['status'])+' · no verified factorization supplied yet</p><p>'+escape(e['description'])+'</p>'
+            detail=' · verified braid certificate available' if e.get('proof_url') else ' · no verified factorization supplied yet'
+            body = '<p class="badge">'+escape(e['status']+detail)+'</p><p>'+escape(e['description'])+'</p>'
+            if e.get('proof_url'):
+                body+='<p><a href="../'+escape(e['proof_url'])+'">Read the complete sphere-braid derivation and certificate</a></p>'
             body += ''.join('<section><h2>'+escape(k)+'</h2><p>'+escape(v)+'</p></section>' for k,v in e['sections'].items())
             body += '<p>Future formats will use common curve and factor IDs, an explicit multiplication order, and documented correspondences. A drawing alone does not verify an equivalence.</p>'
             page(category+'/'+e['slug']+'.html',e['title'],body,'../')
@@ -39,7 +42,7 @@ def build():
         tikz=p.with_suffix('.tikz')
         figures.append('<article class="card"><h2>'+escape(label)+'</h2><a href="'+url+'"><img loading="lazy" src="'+url+'" alt="'+escape(label)+'"></a><p><a href="'+url+'">SVG</a>'+(' · <a href="'+tikz.relative_to(OUT).as_posix()+'">TikZ</a>' if tikz.exists() else '')+'</p></article>')
     page('gallery.html','Illustrated gallery','<p>Runnable examples from the <a href="docs/TUTORIAL.html">tutorial</a>. These show implemented drawing features; the mathematical catalog is planned separately.</p>'+''.join(figures))
-    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
+    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="docs/proofs/braid-six-seven/braid-six-seven-proof.html">Check the (6,7) sphere proof</a></h2><p>19 sphere substitutions with a machine-checkable move certificate.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
     page('releases.html','Versioned releases','<p>Development version: 0.1.0a5. This is alpha software; catalog entries are placeholders.</p><p><a href="https://github.com/richardbuckman-math/surface-diagrams/releases">Published release downloads</a> · <a href="docs/RELEASING.md">Release procedure</a></p>')
     check_links()
     print('Built site and checked local links:', OUT)

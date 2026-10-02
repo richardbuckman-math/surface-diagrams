@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## October 2: published (6,7) sphere-braid proof
+
+Moved the completed 2,486-step proof from ignored previews into
+docs/proofs/braid-six-seven. The portable verifier checks every cancellation,
+commutation, braid move and all 19 sphere substitutions. With `--source-svg`,
+it additionally checked the original Downloads/BraidSixSeven.svg transcription
+and its SHA-256; both modes passed. The HTML walkthrough, certificate, move
+table, endpoint SVG/TikZ, and README are now versioned. The (6,7) catalog
+distinguishes the verified six-punctured-sphere mapping-class identity from
+the still provisional full Lefschetz-fibration interpretation; the lab's
+sphere certificate and site home link to the proof. Portable site build and
+local-link check passed; browser inspection confirmed the proof introduction,
+endpoint drawing, and updated catalog link. Remote checks pending. Next:
+verify deployed Pages, then continue the interactive lab's exact geometry or
+develop more concise proof navigation. Do not claim the late disk cut system
+is drawn or that the spherical braid itself is trivial.
+
 ## October 2: revisitable exploration history
 
 Added labeled history steps for checked Hurwitz moves, splits, combining,
