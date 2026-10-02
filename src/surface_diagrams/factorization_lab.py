@@ -18,6 +18,7 @@ from .factorization_geometry import support_svg,braid_svg,row_height,factorizati
 from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
 from .mapping_classes import VerificationLimitError,exact_action
+from .sphere_actions import sphere_inner_certificate
 
 
 class LabServer(ThreadingHTTPServer):
@@ -108,6 +109,8 @@ class LabServer(ThreadingHTTPServer):
                     before=before,after=after,before_punctures=punctures(before),
                     after_punctures=punctures(after),before_svg=before_svg,
                     after_svg=after_svg,before_warning=before_warning,after_warning=after_warning)
+    def sphere_action(self):
+        return dict(sphere_inner_certificate(product(self.history[self.position])),revision=self.revision)
     def mutate(self,payload):
         previous=(self.history,self.position,self.revision,self.message)
         try:
@@ -157,6 +160,16 @@ class LabServer(ThreadingHTTPServer):
 class LabHandler(EditorHandler):
     def do_GET(self):
         if not self._local_request(): return
+        if urlsplit(self.path).path=='/api/sphere':
+            try:
+                revision=int(parse_qs(urlsplit(self.path).query)['revision'][0])
+                with self.server.lock:
+                    if revision!=self.server.revision:
+                        self._error(409,'State changed; reload before checking'); return
+                    data=self.server.sphere_action()
+            except (KeyError,ValueError,VerificationLimitError) as error:
+                self._error(400,str(error)); return
+            self._reply(200,json.dumps(data)); return
         if urlsplit(self.path).path=='/api/prefix':
             try:
                 query=parse_qs(urlsplit(self.path).query)

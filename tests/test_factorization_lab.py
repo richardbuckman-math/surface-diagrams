@@ -305,6 +305,10 @@ class FactorizationLabTests(unittest.TestCase):
             self.assertIn('<svg',prefix['before_svg'])
             self.assertIn('<svg',prefix['after_svg'])
             self.assertEqual(prefix['before_warning'],'')
+            sphere=json.load(urlopen(server.url+'/api/sphere?revision=0'))
+            self.assertTrue(sphere['certified'])
+            self.assertFalse(sphere['disk_identity'])
+            self.assertEqual(len(sphere['conjugator']),58)
             def post(data,token=state['token']):
                 return urlopen(Request(server.url+'/api/action',data=json.dumps(data).encode(),
                     headers={'Content-Type':'application/json','X-Surface-Token':token}))
@@ -315,6 +319,8 @@ class FactorizationLabTests(unittest.TestCase):
             with self.assertRaises(HTTPError): post({'op':'combine','index':4,'revision':1})
             self.assertEqual(server.revision,1)
             with self.assertRaises(HTTPError) as error: urlopen(server.url+'/api/prefix?index=1&revision=0')
+            self.assertEqual(error.exception.code,409)
+            with self.assertRaises(HTTPError) as error: urlopen(server.url+'/api/sphere?revision=0')
             self.assertEqual(error.exception.code,409)
             with self.assertRaises(HTTPError) as error: urlopen(server.url+'/api/prefix?index=99&revision=1')
             self.assertEqual(error.exception.code,400)

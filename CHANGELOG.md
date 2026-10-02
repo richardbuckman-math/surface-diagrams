@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Certify the (6,7) product's sphere outer action as trivial: after imposing
+  the boundary relation, all six exact meridian images share one verified
+  58-letter conjugator, despite a nontrivial disk action.
+
 - Draw six exact based meridian arcs together before and after the selected
   factor when the shared noninterleaving router accepts them; retain exact
   words and show an explicit warning when route limits are reached.

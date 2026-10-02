@@ -1,11 +1,11 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null;
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
- for(const id of ['reset','save','open','svg','simplify']) $(id).disabled=busy||!state;
+ for(const id of ['reset','save','open','svg','simplify','sphere']) $(id).disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
  for(const [value,label] of f?.splits||[]){const o=document.createElement('option');o.value=value;o.textContent=label;picker.append(o);}
@@ -114,6 +114,34 @@ $('prefix').onclick=async()=>{
 };
 $('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json',`prefix-through-${prefixExport.factor}.json`);};
 $('close-prefix').onclick=()=>$('prefix-inspector').close();
+$('sphere').onclick=async()=>{
+ const revision=state.revision;sphereExport=null;$('save-sphere').disabled=true;
+ $('sphere-status').textContent='Computing the exact sphere-quotient action…';
+ $('sphere-disk').textContent='';$('sphere-whisker').textContent='';$('sphere-equations').replaceChildren();
+ $('sphere-inspector').showModal();
+ try{
+  const response=await fetch(`/api/sphere?revision=${revision}`),data=await response.json();
+  if(!response.ok)throw new Error(data.error);
+  if(state.revision!==revision)throw new Error('The factorization changed; reopen this check.');
+  sphereExport=data;$('save-sphere').disabled=false;
+  $('sphere-status').textContent=data.certified?
+   'Certified: all six sphere meridian images are one common inner conjugation. The sphere outer action is the identity.':
+   'No common inner-action certificate was found; this check makes no identity claim.';
+  $('sphere-disk').textContent=data.disk_identity?
+   'The six-point disk action is also the identity.':
+   'The six-point disk action is not the identity; the sphere relation changes the result.';
+  $('sphere-whisker').textContent=data.certified?`Common whisker w (${data.conjugator.length} letters): ${data.conjugator.join(' ')||'identity'}`:'';
+  for(let i=0;i<6;i++){
+   const row=document.createElement('p');row.className='full-word';
+   const word=data.images[i],core=i<5?`x${i+1}`:'(x1 x2 x3 x4 x5)⁻¹';
+   row.textContent=`x${i+1} → ${word.slice(0,48).join(' ')}${word.length>48?' …':''} (${word.length} letters)`+
+    (data.certified?` = w · ${core} · w⁻¹ ✓`:'');
+   $('sphere-equations').append(row);
+  }
+ }catch(error){$('sphere-status').textContent=error.message;}
+};
+$('save-sphere').onclick=()=>{if(sphereExport)download(JSON.stringify(sphereExport,null,2),'application/json','sphere-action-certificate.json');};
+$('close-sphere').onclick=()=>$('sphere-inspector').close();
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);

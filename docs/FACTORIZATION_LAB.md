@@ -75,6 +75,19 @@ marked unavailable and the exact words remain accessible. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
 
+**Check sphere action** computes the entire product's exact six-meridian disk
+action, imposes `D = x1 x2 x3 x4 x5 x6 = 1`, and checks whether the resulting
+five-generator free-group action is one common inner conjugation. For the
+supplied (6,7) product it finds a 58-letter word `w` and verifies all six
+equations: each image is `w xi w^-1`, with `x6=(x1...x5)^-1`. Thus the sphere
+outer action is the identity, while the disk action is not. The modal shows
+the witness and abbreviated images; its JSON export contains every complete
+word and expected image. This is an action certificate, not the separate
+19-substitution braid-relations derivation: the outer action alone does not
+distinguish the central order-two spherical braid from the identity. It is
+also not a claim that the late disk cut systems have been drawn. If a common conjugator is not found, the tool reports
+no certificate rather than asserting nonidentity.
+
 Each row reports the boundary class of its recovered `Arc` or `Loop`, compared
 with the exact Artin image of the standard enclosing loop. The inspector shows
 the itinerary and both normalized boundary words. Half twists use the boundary

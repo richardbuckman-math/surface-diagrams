@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 2: exact sphere outer-action certificate
+
+The prior based-cut-system batch 8c580ce was pushed; Tests and Documentation
+checks passed. Main8017 was restarted from the untouched saved workspace. New sphere_actions.py substitutes
+x6=(x1...x5)^-1 into each exact meridian image of the full braid product.
+The supplied (6,7) product's six images are all exactly one common inner
+conjugation by a 58-letter word w in F5; its disk action is nontrivial. The
+browser's Check sphere action modal displays the certificate, six checked
+equations, and full JSON export. It explicitly separates this from the
+previous 19-substitution sphere-braid derivation and from incomplete late
+cut-system drawings. The UI now explicitly notes that outer action cannot
+distinguish the central order-two spherical braid from identity. Non-inner results are labelled uncertified. Tests cover
+the boundary relation, supplied product, Hurwitz invariance, central twist,
+and nonidentity examples; browser test at port8025 visually confirmed the
+certificate. Full284 tests, JS syntax and diff checks passed. Commit/push,
+CI and main restart remain. Next: find a
+compact geometric model for the common basepoint whisker and late cut-system
+images, without weakening existing exactness and route guards.
+
 ## October 2: based cut-system images in the prefix inspector
 
 The exact prefix-action inspector from dc605b1 is now live on the saved main
@@ -14,7 +33,7 @@ systems and exact colored meridian words. For F13, the browser shows honest
 source factorization can route the complete family through prefix7; later
 prefixes exceed combined or per-arc limits. White-background raster previews
 of prefixes2 and5 were visually inspected. Full281 tests, JS syntax and diff
-check passed; commit/push, CI and main UI restart remain. Next: improve
+check passed; 8c580ce was pushed and both CI checks passed. Next: improve
 representation/compression of late based arcs without blindly raising route
 limits; separately study the sphere quotient needed for visual identity.
 
