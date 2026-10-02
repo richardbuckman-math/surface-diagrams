@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Search exact support classes for shorter conjugated twist presentations while
+  preserving type and power; keep all lab braid-action checks.
+
+- Render denser lab supports with up to 768 cut visits, widening crowded gaps
+  while retaining fixed strokes, dots, and all geometric checks.
+
 - Recover both arc and closed-curve supports directly from exact boundary words,
   retaining the shared noninterleaving route checks and explicit drawing limits.
 - Recognize standard supports to remove complete stabilizing conjugators, and

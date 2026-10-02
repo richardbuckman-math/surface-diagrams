@@ -89,4 +89,5 @@ def simplify_twist(twist,*,strands=6,max_states=256):
                    exact_action(g[i:i+size],strands)==exact_action(replacement,strands))
         if not valid:raise ValueError('Twist simplification failed local proof verification')
         key=parent
-    return best
+    from .support_simplify import shorter_support_path
+    return shorter_support_path(best,strands=strands,max_states=max_states)

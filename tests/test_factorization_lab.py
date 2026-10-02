@@ -137,8 +137,30 @@ class FactorizationLabTests(unittest.TestCase):
                     observed=(arc.start,)+path+(arc.end,)+inverse_word(path)
                     self.assertEqual(free_homotopy_key(observed),supported_class(twist))
                     self.assertIn('<svg',support_drawing(twist))
-        with self.assertRaisesRegex(ValueError,'64-cut'):
-            support_curve(ConjugatedTwist((1,-2)*6,1,2,half=True))
+        with self.assertRaisesRegex(ValueError,'768'):
+            support_curve(ConjugatedTwist((1,-2)*7,1,2,half=True))
+
+    def test_dense_exact_support_expands_layout_and_keeps_geometric_checks(self):
+        from surface_diagrams.svg import render_svg
+        from surface_diagrams.curves import route,_conflict
+        twist=ConjugatedTwist((1,-2)*6,1,2,half=True)
+        curve=support_curve(twist)
+        self.assertEqual(len(curve.cuts),375)
+        support_drawing.cache_clear()
+        with patch('surface_diagrams.twist_supports.render_svg',wraps=render_svg) as renderer:
+            support_drawing(twist)
+        surface=renderer.call_args.args[0]; style=renderer.call_args.kwargs['style']
+        self.assertGreater(surface.width,360)
+        self.assertEqual(style.curve_width,1.5)
+        self.assertEqual(style.marked_point_radius,3.5)
+        segments=route(surface,style)
+        self.assertEqual(len(segments),376)
+        for segment in segments:
+            for k in range(33):
+                x,y=segment.point(k/32)
+                self.assertLess((2*x/surface.width)**2+(2*y/surface.height)**2,1)
+        self.assertFalse(any(_conflict((a.start,a.end,a.up),(b.start,b.end,b.up))
+                             for i,a in enumerate(segments) for b in segments[i+1:]))
 
     def test_simplification_preserves_twist_type_and_can_change_core(self):
         examples=(ConjugatedTwist((1,2),1,2,half=True),
@@ -165,6 +187,17 @@ class FactorizationLabTests(unittest.TestCase):
             simplified=simplify_twist(twist,max_states=1)
             self.assertEqual(simplified.conjugator,())
             self.assertEqual(exact_action(twist.word),exact_action(simplified.word))
+
+    def test_support_search_shortens_nonstandard_conjugates_exactly(self):
+        from surface_diagrams.support_simplify import shorter_support_path
+        central=tuple(range(1,6))*6
+        for points,half,power in ((2,True,1),(3,False,1),(3,False,2)):
+            twist=ConjugatedTwist(central+(points,),1,points,power,half)
+            result=shorter_support_path(twist,max_states=16)
+            self.assertEqual(len(result.conjugator),1)
+            self.assertEqual((result.points,result.power,result.half),(points,power,half))
+            self.assertEqual(exact_action(result.word),exact_action(twist.word))
+            self.assertEqual(len(simplify_twist(twist,max_states=16).conjugator),1)
 
     def test_order_propagation_agrees_with_unpruned_small_route_search(self):
         from surface_diagrams.curves import route,RoutingError

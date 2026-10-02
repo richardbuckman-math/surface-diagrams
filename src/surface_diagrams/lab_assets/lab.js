@@ -31,6 +31,7 @@ function paint(){
   const word=document.createElement('div');word.className='word';word.textContent=f.word.join(' ');word.title=word.textContent;
   const audit=document.createElement('div');audit.className='support-check '+(f.audit?.status||'unavailable');
   audit.textContent=f.audit?.matches===true?'Boundary word agrees':f.audit?.matches===false?'Preview check failed':'Preview check unavailable';
+  if(f.audit?.matches===true&&f.audit.cut_visits>64) audit.textContent+=` · ${f.audit.cut_visits} cuts — zoom to inspect`;
   audit.title=f.audit?.message||'No support audit available';
   card.append(head,audit,support,word);card.onclick=()=>choose(i);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(i);}};
   card.ondragstart=e=>{if(busy){e.preventDefault();return;}dragged=i;choose(i);e.dataTransfer.setData('text/plain',String(i));e.dataTransfer.effectAllowed='move';card.classList.add('dragging');};

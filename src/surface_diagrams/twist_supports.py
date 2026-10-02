@@ -4,7 +4,8 @@ Boundary words determine topology; the shared noninterleaving route solver
 must additionally accept the proposed itinerary before it is drawn.
 """
 from functools import lru_cache
-from .curves import Arc,Loop
+from collections import Counter
+from .curves import Arc,Loop,MAX_CUT_VISITS
 from .model import PlanarSurface,Style
 from .svg import render_svg
 from .braid_actions import arc_ray_word,loop_ray_word,free_homotopy_key,inverse_word
@@ -44,10 +45,10 @@ def arc_from_class(word,start,end):
     word=free_homotopy_key(word)
     if len(word)<2 or len(word)%2:
         raise ValueError('Boundary class cannot represent a two-point arc')
-    # A 64-cut itinerary has at most 33 upper segments, each crossing at
+    # A bounded itinerary has at most N/2+1 upper segments, each crossing at
     # most six rays. A larger reduced boundary cannot fit the shared limit.
-    if len(word)>2+2*33*6:
-        raise ValueError('Exact arc topology exceeds the shared 64-cut drawing limit')
+    if len(word)>2+2*(MAX_CUT_VISITS//2+1)*6:
+        raise ValueError(f'Exact arc topology exceeds the shared {MAX_CUT_VISITS}-cut drawing limit')
     size=(len(word)-2)//2
     for oriented in (word,inverse_word(word)):
         for index,letter in enumerate(oriented):
@@ -82,5 +83,9 @@ def support_curve(twist):
 @lru_cache(maxsize=64)
 def support_drawing(twist):
     curve=support_curve(twist)
-    surface=PlanarSurface.row('PPPPPP',spacing=50,height=220,margin=55).with_curves(curve)
+    # Keep fixed stroke/dot sizes while widening dense cut intervals. Scale
+    # the ellipse with the spacing so its aspect and containment remain intact.
+    visits=max(Counter(curve.cuts).values(),default=0)
+    scale=max(1.,((visits+1)*4+10)/50)
+    surface=PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale).with_curves(curve)
     return render_svg(surface,style=Style(curve_color='#a21caf',curve_width=1.5,marked_point_radius=3.5))

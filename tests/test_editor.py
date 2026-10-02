@@ -62,22 +62,24 @@ class EditorHTTPTests(unittest.TestCase):
         self.assertNotIn('Access-Control-Allow-Origin', headers)
 
     def test_host_and_origin_block_rebinding(self):
+        # These decisions precede body parsing. Sending an unnecessary body
+        # races the early connection close on Windows, hiding the HTTP status.
         for headers in ({'Host': 'attacker.example'}, {'Origin': 'https://attacker.example'},
                         {'Origin': 'null'}, {'Host': '127.0.0.1:1'}):
             with self.subTest(headers=headers):
                 self.assertEqual(self.request('/api/session', headers=headers)[0], 403)
-                self.assertEqual(self.post(headers=headers)[0], 403)
+                self.assertEqual(self.post(headers=headers,body='')[0], 403)
         self.assertEqual(self.request(headers={'Host': f'localhost:{self.server.server_port}'})[0], 200)
 
     def test_post_requires_session_token(self):
         for token in ('', 'invalid', '\u00e9'):
-            self.assertEqual(self.post(headers={'X-Surface-Token': token})[0], 403)
+            self.assertEqual(self.post(headers={'X-Surface-Token': token},body='')[0], 403)
 
     def test_paths_are_not_a_file_server(self):
         for path in ('/../../pyproject.toml', '/src/surface_diagrams/editor.py', '/api/export/../../file', '/api/eval'):
             with self.subTest(path=path):
                 self.assertEqual(self.request(path)[0], 404)
-                self.assertEqual(self.post(path)[0], 404)
+                self.assertEqual(self.post(path,body='')[0], 404)
 
     def test_render_response(self):
         status, _, content = self.post()
@@ -105,7 +107,7 @@ class EditorHTTPTests(unittest.TestCase):
                                 ({'Content-Length': '-1'}, 413), ({'Content-Length': 'bad'}, 413),
                                 ({'Transfer-Encoding': 'chunked'}, 400)]:
             with self.subTest(headers=headers):
-                self.assertEqual(self.post(headers=headers)[0], status)
+                self.assertEqual(self.post(headers=headers,body='')[0], status)
 
     def test_bad_json_and_duplicate_fields(self):
         for body in ('{', '{"version":1,"version":1}', '[]', 'null'):

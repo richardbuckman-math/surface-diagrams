@@ -1,5 +1,40 @@
 # Handoff: surface-diagrams
 
+## October 2: render the saved 578-cut F7 support
+
+Shared curves now allow768 cut visits and diagrams1024 route nodes. Lab spacing,
+height and margin scale with the busiest cut; stroke1.5 and dot radius3.5 stay
+fixed. Exact class, noninterleaving and analytic dot-clearance checks remain.
+Dense routes (>128nodes) cap complete ordering attempts at200 and pairwise
+comparison work at2million. A limit reports inconclusive search, not impossibility.
+Dense cards show cut count and recommend inspector zoom. Recipe editor retains
+its separate64-cut input cap.
+Read-only audit:48 saved states,44 distinct supports; one F7 has578cuts. It now
+renders in7-12seconds under production guards. Browser verified its lab badge,
+inspector and readable separated strands at8x in test server8024 (exec42428/tab12; stale tab11 may remain),
+using .preview/dense-lab-session.json, a copy of a historical state. Original
+workspace never mutated. Earlier87-cut preview also visually checked.
+Regression uses375-cut synthetic arc with376segments; checks expanded width,
+fixed stroke/dots, containment samples, noninterleaving, and rejection beyond768.
+Full277 tests passed after making header-only HTTP rejection tests send empty
+bodies (unchanged status assertions; eliminates Windows early-close/body race).
+No production HTTP behavior changed. Next bounded support-class search follows
+local braid rewrites: max4096 initial letters,2million admitted letters, same
+max_states count as local search, no excursion above initial boundary length.
+Final support equality is checked; lab braid-action checks remain mandatory.
+Saved raw F7 g53 -> g31; read-only whole product check362 ->290 passed using
+the support-search proposal alone. Integrated browser simplification362 ->274 passed exact product checks; all13
+support audits agree, F7 remains578cuts. Undo restored362; redo restored274.
+Only copied test workspace was changed. Browser initially hung on reload; a
+fresh test tab12 recovered, and API remained healthy throughout.
+All24 focused lab tests pass after integration, including exact braid actions
+for nonstandard half/Dehn/squared twists with a removable central prefix.
+Require remote CI before declaring final batch done.
+Preview HTTP8023 exec99055/tab10 and test8024 need cleanup after main deployment.
+Main8017 last exec82024 runs previous batch. Restart from persistent workspace
+only after validation. Next: verify CI and main UI; consider measured route
+caching/performance, not another blind increase in capacity.
+
 ## September 30 morning: preserve history on unchanged simplification
 
 Prior ccfc7c3 was pushed; Tests and Documentation passed. Live main tab9 was

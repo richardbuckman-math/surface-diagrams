@@ -76,7 +76,7 @@ def support_audit(factor):
             observed=(curve.start,)+word+(curve.end,)+inverse_word(word)
         else: observed=loop_ray_word(6,curve)
         return dict(status='match',matches=True,actual=free_homotopy_key(observed),
-                    expected=free_homotopy_key(expected),itinerary=repr(curve),
+                    expected=free_homotopy_key(expected),itinerary=repr(curve),cut_visits=len(curve.cuts),
                     message='Shared Arc/Loop itinerary agrees with the exact transported class; the surface router accepted its noninterleaving layout.')
     except ValueError as error:
         return dict(status='unavailable',matches=None,actual=None,expected=expected,message=str(error))

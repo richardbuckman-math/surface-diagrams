@@ -124,3 +124,23 @@ When growing prefix actions hit the computation bound, exact braid verification
 tries transporting each based meridian separately in reverse composition order.
 It retains base paths and never uses the unoriented curve-class comparison for
 braid equality. Intermediate words and final images remain bounded.
+
+Dense supports allow up to 768 cut visits per curve (1024 route nodes per
+diagram). The lab widens crowded cut intervals while retaining fixed dot and
+stroke sizes, and scales the outer ellipse with the spacing. Use inspector zoom
+for these larger drawings. Exact class, noninterleaving, and dot-clearance checks
+remain mandatory; the route search can still report its bounded-search limit.
+The separate recipe editor retains its existing 64-cut input limit.
+
+Dense diagrams (more than 128 route nodes) use at most 200 complete ordering
+attempts and two million pairwise crossing comparisons. Reaching a limit reports
+that the search is inconclusive; it does not assert that the curve is impossible.
+Dense cards show their cut count and recommend inspector zoom.
+
+After local braid rewrites, a bounded support-class search tries a shorter route
+back to a standard core. Accepted candidates keep twist type and power and pass
+an exact support comparison; lab operations still check exact braid actions.
+The search admits at most two million boundary letters, starts only on classes
+of at most 4096 letters, and never explores above the initial boundary length.
+It can shorten a conjugator through changes of supported presentation, but it
+does not promise a globally shortest answer.

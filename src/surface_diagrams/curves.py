@@ -10,6 +10,9 @@ from typing import Optional
 
 from .primitives import Path, Text
 
+MAX_CUT_VISITS = 768
+MAX_ROUTE_NODES = 1024
+
 
 def _integer(value, name):
     if type(value) is not int or value < 0:
@@ -20,8 +23,8 @@ def _validate_common(curve):
     object.__setattr__(curve, "cuts", tuple(curve.cuts))
     for cut in curve.cuts:
         _integer(cut, "cut")
-    if len(curve.cuts) > 64:
-        raise ValueError("at most 64 cut visits are supported per curve")
+    if len(curve.cuts) > MAX_CUT_VISITS:
+        raise ValueError(f"at most {MAX_CUT_VISITS} cut visits are supported per curve")
     if any(a == b for a, b in zip(curve.cuts, curve.cuts[1:])):
         raise ValueError("consecutive equal cuts are nonminimal")
 
@@ -258,8 +261,8 @@ def route(surface, style, *, max_states=20000):
             up = None if straight else (first_up if index % 2 == 0 else not first_up)
             edges.append((a, b, up))
             owners.append(owner)
-    if node_count > 128:
-        raise RoutingError("a diagram supports at most 128 route nodes; split it into panels")
+    if node_count > MAX_ROUTE_NODES:
+        raise RoutingError(f"a diagram supports at most {MAX_ROUTE_NODES} route nodes; split it into panels")
     # More constrained groups first; keep ordering deterministic.
     ordered = sorted(groups.items(), key=lambda pair: (-len(pair[1]), pair[0]))
     slots = {}
@@ -270,10 +273,20 @@ def route(surface, style, *, max_states=20000):
             raise RoutingError("too many visits in a cut interval; increase point spacing or reduce dot/curve sizes")
         slots[cut] = [left + (right - left) * (i + 1) / (len(nodes) + 1) for i in range(len(nodes))]
     states = 0
+    dense = node_count > 128
+    search_limit = min(max_states,200) if dense else max_states
+    comparisons = 0
     before=_forced_orders(groups,edges,fixed,xs)
     def valid_partial(positions):
+        nonlocal comparisons
         realized = [(positions[a], positions[b], up) for a, b, up in edges if a in positions and b in positions]
-        return all(not _conflict(a, b) for i, a in enumerate(realized) for b in realized[i+1:])
+        for i,a in enumerate(realized):
+            for b in realized[i+1:]:
+                comparisons+=1
+                if dense and comparisons>2000000:
+                    raise RoutingError('dense route comparison limit reached; this does not prove the curve impossible')
+                if _conflict(a,b): return False
+        return True
     def solve(index, positions):
         nonlocal states
         if not valid_partial(positions):
@@ -289,7 +302,7 @@ def route(surface, style, *, max_states=20000):
                 yield from orders(prefix+(node,),tuple(n for n in remaining if n!=node))
         for order in orders((),tuple(nodes)):
             states += 1
-            if states > max_states:
+            if states > search_limit:
                 raise RoutingError("route ordering search limit reached; this does not prove the curve impossible")
             positions.update(zip(order, slots[cut]))
             result = solve(index + 1, positions)
