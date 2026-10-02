@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.0a6 - 2026-10-02
+
 - Publish the verified (6,7) sphere-braid walkthrough, complete 2,486-move
   certificate, portable verifier, and endpoint diagram; link it from the
   catalog and lab certificate.
