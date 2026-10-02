@@ -5,6 +5,7 @@ from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
 import json
 import shutil
+from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'public'
@@ -20,6 +21,18 @@ def build():
     OUT.mkdir(exist_ok=True)
     shutil.copytree(ROOT/'docs', OUT/'docs', dirs_exist_ok=True)
     shutil.copytree(ROOT/'examples'/'output', OUT/'examples'/'output', dirs_exist_ok=True)
+    lab_assets = ROOT/'src'/'surface_diagrams'/'lab_assets'
+    lab_out = OUT/'lab'
+    lab_out.mkdir(exist_ok=True)
+    for name in ('lab.css', 'lab.js', 'public-lab.js', 'public-lab-worker.mjs', 'public-lab-backend.py'):
+        shutil.copy2(lab_assets/name, lab_out/name)
+    lab_html = (lab_assets/'index.html').read_text(encoding='utf-8')
+    lab_html = lab_html.replace('<script src="lab.js"></script>',
+                                '<script src="public-lab.js"></script><script src="lab.js"></script>')
+    (lab_out/'index.html').write_text(lab_html, encoding='utf-8')
+    with ZipFile(lab_out/'surface_diagrams.zip', 'w', ZIP_DEFLATED) as archive:
+        for source in sorted((ROOT/'src'/'surface_diagrams').glob('*.py')):
+            archive.write(source, 'surface_diagrams/'+source.name)
     for script in (ROOT/'examples').glob('*.py'):
         shutil.copy2(script, OUT/'examples'/script.name)
     entries = [json.loads(p.read_text(encoding='utf-8')) for p in sorted((ROOT/'docs'/'catalog').glob('*.json'))]
@@ -31,6 +44,8 @@ def build():
             body = '<p class="badge">'+escape(e['status']+detail)+'</p><p>'+escape(e['description'])+'</p>'
             if e.get('proof_url'):
                 body+='<p><a href="../'+escape(e['proof_url'])+'">Read the complete sphere-braid derivation and certificate</a></p>'
+            if e['slug']=='6-7':
+                body+='<p><a href="../lab/index.html">Open the interactive (6,7) factorization lab</a></p>'
             body += ''.join('<section><h2>'+escape(k)+'</h2><p>'+escape(v)+'</p></section>' for k,v in e['sections'].items())
             body += '<p>Future formats will use common curve and factor IDs, an explicit multiplication order, and documented correspondences. A drawing alone does not verify an equivalence.</p>'
             page(category+'/'+e['slug']+'.html',e['title'],body,'../')
@@ -42,7 +57,7 @@ def build():
         tikz=p.with_suffix('.tikz')
         figures.append('<article class="card"><h2>'+escape(label)+'</h2><a href="'+url+'"><img loading="lazy" src="'+url+'" alt="'+escape(label)+'"></a><p><a href="'+url+'">SVG</a>'+(' · <a href="'+tikz.relative_to(OUT).as_posix()+'">TikZ</a>' if tikz.exists() else '')+'</p></article>')
     page('gallery.html','Illustrated gallery','<p>Runnable examples from the <a href="docs/TUTORIAL.html">tutorial</a>. These show implemented drawing features; the mathematical catalog is planned separately.</p>'+''.join(figures))
-    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="docs/proofs/braid-six-seven/braid-six-seven-proof.html">Check the (6,7) sphere proof</a></h2><p>19 sphere substitutions with a machine-checkable move certificate.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
+    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="lab/index.html">Try the (6,7) factorization lab</a></h2><p>Drag Hurwitz moves, split and combine factors, and inspect the exact action in your browser.</p></section><section><h2><a href="docs/proofs/braid-six-seven/braid-six-seven-proof.html">Check the (6,7) sphere proof</a></h2><p>19 sphere substitutions with a machine-checkable move certificate.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
     page('releases.html','Versioned releases','<p>Development version: 0.1.0a6. This is alpha software; catalog entries are under development.</p><p><a href="https://github.com/richardbuckman-math/surface-diagrams/releases">Published release downloads</a> · <a href="docs/RELEASING.md">Release procedure</a></p>')
     check_links()
     print('Built site and checked local links:', OUT)

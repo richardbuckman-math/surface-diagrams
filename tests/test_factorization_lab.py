@@ -1,4 +1,5 @@
 import json
+import runpy
 import threading
 import unittest
 from pathlib import Path
@@ -19,6 +20,23 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_public_browser_adapter_uses_checked_lab_operations(self):
+        asset=Path(__file__).resolve().parents[1]/'src'/'surface_diagrams'/'lab_assets'/'public-lab-backend.py'
+        dispatch=runpy.run_path(str(asset))['dispatch']
+        original=json.loads(dispatch('/api/state','GET',''))
+        self.assertEqual(original['status'],200)
+        self.assertEqual(len(json.loads(original['body'])['factors']),13)
+        moved=json.loads(dispatch('/api/action','POST',json.dumps(dict(op='move',index=0,target=1,revision=0))))
+        result=json.loads(moved['body'])
+        self.assertEqual(moved['status'],200)
+        self.assertEqual([f['id'] for f in result['factors'][:2]],['F2','F1'])
+        self.assertEqual(result['steps'][-1],'Hurwitz: F1 from 1 to 2')
+        self.assertEqual(json.loads(dispatch('/api/action','POST',json.dumps(dict(op='move',index=0,target=1,revision=0))))['status'],400)
+        prefix=json.loads(dispatch('/api/prefix?index=0&revision=1','GET',''))
+        self.assertEqual(len(json.loads(prefix['body'])['after']),6)
+        undone=json.loads(dispatch('/api/action','POST',json.dumps(dict(op='undo',revision=1))))
+        self.assertEqual(json.loads(undone['body'])['position'],0)
+
     def test_history_labels_and_seek_survive_branching_and_legacy_reopen(self):
         with TemporaryDirectory() as folder:
             path=Path(folder)/'steps.json'

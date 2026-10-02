@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## October 2: public (6,7) lab on GitHub Pages
+
+The interactive lab now has a static Pages build at `lab/index.html`. It runs
+the same Python LabServer state, Hurwitz and substitution checks in a browser
+worker using pinned Pyodide v314.0.7; no shared backend or user session file is
+exposed. The site builder packages the source modules, copies the lab assets,
+and links the lab from home and the (6,7) catalog page. Browser test on a local
+static server loaded all 13 factors/178 letters, performed a checked Hurwitz
+move and square-twist split, showed the changed continuous braid, and obtained
+the sphere-action certificate. The public page explicitly tells visitors to
+Export JSON before refreshing; local session persistence remains available in
+the Python server. The browser-adapter unit test and local-link build passed.
+Next: push, verify Pages deployment and the exact public URL in a clean browser,
+then share it. Keep the two modes' persistence distinction clear.
+
 ## October 2: alpha release 0.1.0a6
 
 Bumped package and site version to 0.1.0a6, with the completed lab, published

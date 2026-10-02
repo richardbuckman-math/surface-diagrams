@@ -1,5 +1,13 @@
 # Interactive factorization prototype
 
+The [public browser lab](https://richardbuckman-math.github.io/surface-diagrams/lab/index.html)
+uses the same Python calculations in a browser worker, so visitors can use it
+without installing Python or connecting to your computer. Its first load fetches
+the Python WebAssembly runtime from the pinned Pyodide CDN. Work in the public
+page stays in that browser tab; use **Export JSON** before closing or refreshing
+and **Load JSON** to resume. The local app below can instead save its complete
+undo/redo workspace to a session file.
+
 Run from an installed checkout:
 
 ```powershell

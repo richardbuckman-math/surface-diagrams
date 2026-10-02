@@ -32,7 +32,7 @@ function paint(){
   button.onclick=()=>action({op:'seek',position:i},0);
   item.append(button);$('history-list').append(item);
  });
- $('storage-status').textContent=state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
+ $('storage-status').textContent=window.surfaceLabPublic?'This public lab computes in your browser. Export JSON to keep your work before closing or refreshing the page.':state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
  $('frame-status').textContent=state.frame?.length?`Global frame g = ${state.frame.join(' ')}`:'Global frame g = identity';
  $('frame-status').title=$('frame-status').textContent;
  selected=Math.min(selected,state.factors.length-1);
