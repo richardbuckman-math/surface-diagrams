@@ -6,9 +6,12 @@ Bumped package and site version to 0.1.0a6, with the completed lab, published
 (6,7) proof, and catalog work grouped under that changelog heading. All 25
 tutorial figures and TikZ counterparts regenerated without tracked changes;
 the full 289-test suite passed and the portable site built with every local
-link valid. The version commit, tag, and release workflow remain to verify.
-Next: push the version commit, confirm Tests/Documentation CI, push tag
-`v0.1.0a6`, and confirm the prerelease contains wheel/source archives.
+link valid. Commit 639370f and annotated tag `v0.1.0a6` are pushed. Tests
+and Documentation passed on main, the tag-triggered Tests passed, and the
+Release workflow published the prerelease with both the universal wheel and
+source archive. Next: return to the interactive lab's late exact cut-system
+representation; retain full words and an explicit route-limit message until
+a joint drawing can be verified.
 
 ## October 2: proof navigation
 
