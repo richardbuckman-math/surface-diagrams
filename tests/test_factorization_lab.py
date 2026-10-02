@@ -19,6 +19,29 @@ from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_cur
 
 
 class FactorizationLabTests(unittest.TestCase):
+    def test_history_labels_and_seek_survive_branching_and_legacy_reopen(self):
+        with TemporaryDirectory() as folder:
+            path=Path(folder)/'steps.json'
+            server=LabServer(session_path=path)
+            try:
+                server.mutate(dict(op='split',index=0,kind='powers',revision=0))
+                self.assertEqual(server.operations[1],'Split F1 (powers)')
+                server.mutate(dict(op='seek',position=0,revision=1))
+                self.assertEqual(server.position,0)
+                with self.assertRaisesRegex(ValueError,'saved history step'):
+                    server.mutate(dict(op='seek',position=9,revision=2))
+                server.mutate(dict(op='reset',revision=2))
+                self.assertEqual(server.operations,['Original factorization','Reset to original factorization'])
+                self.assertEqual(len(server.history),len(server.operations))
+            finally: server.server_close()
+            reopened=LabServer(session_path=path)
+            try: self.assertEqual(reopened.operations[1],'Reset to original factorization')
+            finally: reopened.server_close()
+            saved=json.loads(path.read_text());saved.pop('operations');path.write_text(json.dumps(saved))
+            legacy=LabServer(session_path=path)
+            try: self.assertEqual(legacy.operations,['Earlier saved state 1','Earlier saved state 2'])
+            finally: legacy.server_close()
+
     def test_global_conjugation_preserves_factor_types_and_checks_frame(self):
         factors=initial_factors();word=(1,-2,3)
         transformed=global_conjugate_factors(factors,word)

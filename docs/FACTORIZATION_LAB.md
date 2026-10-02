@@ -148,6 +148,14 @@ Exported JSON includes `global_conjugator`, and import and session reopening
 check that the recorded frame accounts for the product. Simplification of the
 individual factors remains bounded and does not claim a shortest word.
 
+The **Exploration history** panel names each new checked operation and can
+revisit any retained step. Branching from an older step discards its redo
+branch; up to 60 states are retained. A local `--session` file saves the labels
+with the factor and frame history. Older session files reopen with neutral
+"Earlier saved state" labels because their original operations were not
+recorded. Export JSON saves the current factorization and frame only, not the
+complete undo history.
+
 A saved local session can reopen when an older history state exceeds the exact
 verification limit. A persistent notice identifies those states as not reverified;
 malformed records and proven mismatches still reject. Importing a JSON

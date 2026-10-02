@@ -5,6 +5,7 @@ const status=(text,error=false)=>{ $('status').textContent=text; $('status').cla
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
+ document.querySelectorAll('#history-list button').forEach(button=>button.disabled=busy||Number(button.dataset.position)===state?.position);
  for(const id of ['reset','save','open','svg','simplify','sphere','conjugate','global-word']) $(id).disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
@@ -22,6 +23,15 @@ function choose(index){
  controls();
 }
 function paint(){
+ $('history-summary').textContent=`Exploration history · step ${state.position+1} of ${state.steps.length}`;
+ $('history-list').replaceChildren();
+ state.steps.forEach((label,i)=>{
+  const item=document.createElement('li');item.classList.toggle('current',i===state.position);
+  const button=document.createElement('button');button.textContent=label;button.dataset.position=i;
+  button.setAttribute('aria-label',`Open history step ${i+1}: ${label}`);
+  button.onclick=()=>action({op:'seek',position:i},0);
+  item.append(button);$('history-list').append(item);
+ });
  $('storage-status').textContent=state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
  $('frame-status').textContent=state.frame?.length?`Global frame g = ${state.frame.join(' ')}`:'Global frame g = identity';
  $('frame-status').title=$('frame-status').textContent;

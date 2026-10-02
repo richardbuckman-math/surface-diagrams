@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## October 2: revisitable exploration history
+
+Added labeled history steps for checked Hurwitz moves, splits, combining,
+global conjugation, simplification, import, and reset. The lab can revisit a
+saved state and branch from it; history, frames, and labels truncate together.
+The visible panel states clearly that Export JSON saves only the current
+factorization. Old session files reopen with neutral labels rather than
+invented operation names; a copied 48-state user workspace reopened at
+position 47 with all 48 labels. Isolated browser test on 8025 split F1,
+showed the new labeled step, and navigated back to the original 13-factor
+state. Visual layout and JS syntax passed; full test suite in progress.
+Next: restart main from its unchanged saved workspace, verify remote checks,
+then continue exact late-cut-system representation or a readable proof view.
+
 ## October 2: selected braid interval
 
 The selected mapping-class card now shades the corresponding vertical braid

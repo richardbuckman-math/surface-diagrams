@@ -11,3 +11,4 @@ dialog{width:min(95vw,1000px);max-height:90vh;border:1px solid #9fb6d0;border-ra
 
 .support{top:56px}.support-check{position:absolute;top:36px;left:20px;font-size:10px;color:#476b58}.support-check.mismatch,.support-check.unavailable{color:#a14b20}
 .braid-row{fill:transparent;pointer-events:none}.braid-row.selected{fill:#e0efff}
+.history ol{max-height:230px;overflow:auto;margin:8px 0;padding-left:24px}.history li{margin:3px 0}.history li button{max-width:100%;text-align:left}.history li.current button{font-weight:700;background:#e0efff}

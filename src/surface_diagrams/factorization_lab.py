@@ -26,7 +26,7 @@ class LabServer(ThreadingHTTPServer):
     daemon_threads=True
     def __init__(self,port=0,session_path=None):
         self.session_path=Path(session_path).expanduser().resolve() if session_path else None
-        history=[initial_factors()]; frames=[()]; position=0; limited=[]
+        history=[initial_factors()]; frames=[()]; operations=['Original factorization']; position=0; limited=[]
         if self.session_path and self.session_path.exists():
             if self.session_path.stat().st_size>16*1024*1024:
                 raise ValueError('Session file exceeds 16 MiB')
@@ -39,6 +39,10 @@ class LabServer(ThreadingHTTPServer):
             saved_frames=saved.get('frames',[[] for _ in entries])
             if not isinstance(saved_frames,list) or len(saved_frames)!=len(entries):
                 raise ValueError('Invalid global conjugation history')
+            operations=saved.get('operations',[f'Earlier saved state {i+1}' for i in range(len(entries))])
+            if (not isinstance(operations,list) or len(operations)!=len(entries) or
+                    any(not isinstance(label,str) or not 1<=len(label)<=300 for label in operations)):
+                raise ValueError('Invalid operation history')
             history=[];frames=[]
             for index,entry in enumerate(entries):
                 factors=parse_factors(entry)
@@ -52,7 +56,8 @@ class LabServer(ThreadingHTTPServer):
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
         self.lock=threading.Lock()
-        self.history=history; self.frames=frames; self.position=position; self.revision=0
+        self.history=history; self.frames=frames; self.operations=operations
+        self.position=position; self.revision=0
         self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
                       else 'Loaded 13 factors / 178 braid letters from the earlier SVG.')
         self.verification_notice=('Saved history states '+', '.join(map(str,limited))+
@@ -68,7 +73,7 @@ class LabServer(ThreadingHTTPServer):
         if self.session_path is None: return
         document=dict(format='surface-diagrams-session-v1',position=self.position,
                       history=[export_factors(factors) for factors in self.history],
-                      frames=[list(frame) for frame in self.frames])
+                      frames=[list(frame) for frame in self.frames],operations=self.operations)
         temporary=None
         try:
             with tempfile.NamedTemporaryFile(mode='w',encoding='utf-8',dir=self.session_path.parent,
@@ -94,7 +99,7 @@ class LabServer(ThreadingHTTPServer):
         return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
-                    frame=self.frames[self.position],
+                    frame=self.frames[self.position],steps=self.operations,position=self.position,
                     export=dict(export_factors(factors),global_conjugator=self.frames[self.position]))
     def prefix_action(self,index):
         """Exact based meridian images on both sides of a selected factor."""
@@ -125,12 +130,12 @@ class LabServer(ThreadingHTTPServer):
         return dict(sphere_inner_certificate(word),revision=self.revision,
                     chart_svg=chart_svg,chart_warning=chart_warning)
     def mutate(self,payload):
-        previous=(self.history,self.frames,self.position,self.revision,self.message)
+        previous=(self.history,self.frames,self.operations,self.position,self.revision,self.message)
         try:
             self._mutate(payload)
             self.save_session()
         except Exception:
-            self.history,self.frames,self.position,self.revision,self.message=previous
+            self.history,self.frames,self.operations,self.position,self.revision,self.message=previous
             raise
     def _mutate(self,payload):
         if payload.get('revision')!=self.revision: raise ValueError('State changed; reload before editing')
@@ -141,6 +146,11 @@ class LabServer(ThreadingHTTPServer):
         elif op=='redo':
             if self.position==len(self.history)-1: raise ValueError('Nothing to redo')
             self.position+=1; self.message='Redid the operation.'
+        elif op=='seek':
+            destination=payload.get('position')
+            if type(destination) is not int or not 0<=destination<len(self.history):
+                raise ValueError('Choose a saved history step')
+            self.position=destination;self.message=f'Opened saved history step {destination+1}.'
         else:
             i=payload.get('index')
             if op not in ('reset','import','simplify','conjugate') and (type(i) is not int or not 0<=i<len(factors)):
@@ -149,14 +159,17 @@ class LabServer(ThreadingHTTPServer):
             if op=='move':
                 result=move_factor(factors,i,payload.get('target'))
                 message=f'Moved {factors[i].id}; crossed factors conjugated. Every adjacent move passed exact disk-action checks.'
+                label=f'Hurwitz: {factors[i].id} from {i+1} to {payload["target"]+1}'
             elif op=='split':
                 result=split_factor(factors,i,payload.get('kind'))
                 message=f'Split {factors[i].id}; replacement passed exact disk-action verification.'
+                label=f'Split {factors[i].id} ({payload["kind"]})'
             elif op=='combine':
                 result=combine_factors(factors,i)
                 message='Combined neighboring factors; exact disk action verified.'
+                label=f'Combine from position {i+1}'
             elif op=='reset':
-                result=initial_factors();next_frame=();message='Restored original factorization. Undo is available.'
+                result=initial_factors();next_frame=();message='Restored original factorization. Undo is available.';label='Reset to original factorization'
             elif op=='conjugate':
                 word=parse_global_conjugator(payload.get('word'))
                 if not word:
@@ -166,6 +179,7 @@ class LabServer(ThreadingHTTPServer):
                 next_frame=parse_global_conjugator(reduce_word(word+frame))
                 checked_global_frame(result,next_frame)
                 message='Globally conjugated every factor; the complete conjugated disk action was verified.'
+                label=('Global conjugation: '+' '.join(map(str,word)))[:300]
             elif op=='simplify':
                 result=checked(factors,tuple(simplify_factor(f) for f in factors))
                 if result==factors:
@@ -173,6 +187,7 @@ class LabServer(ThreadingHTTPServer):
                     self.revision+=1
                     return
                 message='Simplified conjugated twists with a bounded search; exact actions verified. Global minimality is not asserted.'
+                label='Simplify factor representatives'
             elif op=='import':
                 document=payload.get('document')
                 result=parse_factors(document)
@@ -180,11 +195,14 @@ class LabServer(ThreadingHTTPServer):
                 if next_frame: checked_global_frame(result,next_frame)
                 else: result=import_factors(document)
                 message='Loaded saved exploration; exact product and global frame verified.'
+                label='Import verified factorization'
             else: raise ValueError('Unknown operation')
             self.history=self.history[:self.position+1]+[result]
             self.frames=self.frames[:self.position+1]+[next_frame]
+            self.operations=self.operations[:self.position+1]+[label]
             if len(self.history)>60:
                 self.history=self.history[-60:];self.frames=self.frames[-60:]
+                self.operations=self.operations[-60:]
             self.position=len(self.history)-1; self.message=message
         self.revision+=1
 

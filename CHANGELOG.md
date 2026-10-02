@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Record and revisit verified exploration steps, including Hurwitz moves,
+  splits, combining, simplification, import, reset, and global conjugation.
+  Legacy sessions reopen with neutral labels for earlier states.
+
 - Highlight the selected factor's matching interval in the continuous braid;
   preserve unshaded standalone SVG exports.
 
