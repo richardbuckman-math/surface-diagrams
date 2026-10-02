@@ -10,3 +10,4 @@ dialog{width:min(95vw,1000px);max-height:90vh;border:1px solid #9fb6d0;border-ra
 #global-word{font:12px Consolas,monospace;border:1px solid #b7c8dc;border-radius:6px;padding:7px 9px;width:min(320px,65vw)}#global-word:focus-visible{outline:3px solid #3885ef;outline-offset:2px}#frame-status{font:11px Consolas,monospace;color:#4f6480;margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .support{top:56px}.support-check{position:absolute;top:36px;left:20px;font-size:10px;color:#476b58}.support-check.mismatch,.support-check.unavailable{color:#a14b20}
+.braid-row{fill:transparent;pointer-events:none}.braid-row.selected{fill:#e0efff}

@@ -15,7 +15,12 @@ function controls(){
  $('inspect').disabled=busy||!f;
  $('prefix').disabled=busy||!f;
 }
-function choose(index){selected=index;document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));controls();}
+function choose(index){
+ selected=index;
+ document.querySelectorAll('.factor').forEach((el,i)=>el.classList.toggle('selected',i===selected));
+ document.querySelectorAll('.braid-row').forEach((el,i)=>el.classList.toggle('selected',i===selected));
+ controls();
+}
 function paint(){
  $('storage-status').textContent=state.persistent?'Workspace and undo history saved to session file.':'Session is in memory. Save JSON before stopping the server.';
  $('frame-status').textContent=state.frame?.length?`Global frame g = ${state.frame.join(' ')}`:'Global frame g = identity';

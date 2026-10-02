@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## October 2: selected braid interval
+
+The selected mapping-class card now shades the corresponding vertical braid
+interval. Browser inspection showed the highlight move from F1 to F2 while
+the continuous strands and blue separators stayed legible. Standalone paired
+SVG exports retain an unshaded braid (`fill="none"`), covered by the updated
+factorization geometry test. Focused 26 tests and JS syntax passed. Next:
+keep improving the route representation for late exact cut systems; the
+simple common-whisker strategy was insufficient at F8.
+
 ## October 2: step through exact cut-system actions
 
 Added Previous/Next controls in the exact prefix-action inspector. Browser

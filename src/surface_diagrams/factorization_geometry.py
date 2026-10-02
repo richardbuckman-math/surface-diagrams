@@ -140,6 +140,11 @@ def braid_svg(factors):
         boundaries.append(offset)
     paths,_=_braid_paths(6,letters,levels,28,RAINBOW,Style(curve_width=1.3),'smooth')
     svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="{offset}" viewBox="0 0 240 {offset}" role="img" aria-label="Continuous six-strand braid">']
+    top=0
+    for index,factor in enumerate(factors):
+        height=row_height(factor)
+        svg.append(f'<rect class="braid-row" data-index="{index}" x="0" y="{top}" width="240" height="{height}" fill="none"><title>{escape(factor.id)} braid interval</title></rect>')
+        top+=height
     for path in paths:
         commands=[]
         for op,*values in path.commands:

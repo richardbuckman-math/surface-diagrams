@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Highlight the selected factor's matching interval in the continuous braid;
+  preserve unshaded standalone SVG exports.
+
 - Step through successive exact cut-system actions in the prefix inspector,
   retaining the precise drawing-limit warning and full meridian words.
 

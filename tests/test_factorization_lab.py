@@ -321,6 +321,11 @@ class FactorizationLabTests(unittest.TestCase):
         f=initial_factors(); svg=braid_svg(f)
         self.assertEqual(svg.count('stroke-dasharray'),12)
         self.assertIn(f'height="{sum(row_height(x) for x in f)}"',svg)
+        rows=ET.fromstring(svg).findall('{http://www.w3.org/2000/svg}rect')
+        self.assertEqual(len(rows),len(f))
+        self.assertEqual([int(row.get('y')) for row in rows],
+                         [sum(row_height(x) for x in f[:i]) for i in range(len(f))])
+        self.assertEqual([row.get('fill') for row in rows],['none']*len(f))
 
     def test_paired_export_preserves_missing_preview_warning(self):
         factor=Factor('<test & twist>',(),1,2)
