@@ -72,43 +72,35 @@ zoom, scrolling, and the full exact braid word and conjugator. Escape or Close
 returns to the stacked view. The inspector keeps strokes thin while enlarging
 the drawing, making nearby strands easier to distinguish.
 
-**Inspect prefix action** shows the exact images of the six based meridians
-immediately before and after the selected factor. Colored numbers show the
-puncture permutation; the accompanying words preserve winding and base paths,
-so the permutation alone is never presented as an identity test. Long words are
-abbreviated on screen; **Save full exact words as JSON** exports all six complete
-images on both sides. The six colored arcs share a basepoint at the left outer
-rim. Each recovered arc's ray word is checked against the full exact meridian
-image before the shared surface router draws the family together. When a curve
-exceeds 2048 cut visits or the family exceeds 3072 route nodes, the drawing is
-marked unavailable and the exact words remain accessible. Each accepted
-before/after drawing has a **Save SVG** button for standalone inspection. The
-inspector initially fits each whole drawing in its panel; **Show detail** and
-**Start/Middle/End** reveal the original-sized arcs. Click an **x1–x6** label
-to trace that same exact arc in both before/after drawings; click it again to
-show all six at full color. These are disk
-actions, without imposing the sphere relation; a final nontrivial disk action
-does not decide whether the factorization is the identity on the sphere.
-Each x1–x6 row reports whether its complete based image changed and, when it
-did, the shared prefix and suffix lengths plus a short excerpt around the
-changed middle. This exposes differences hidden beyond the abbreviated word
-preview; **Save full exact words as JSON** preserves every letter. **Compare
-arcs** routes that meridian before and after the selected factor side by side,
-with fit/detail controls and separate SVG downloads. Each individual route
-checks its full based image, but the pair does not establish a joint six-arc
-cut-system placement; a route that exceeds its limit says so explicitly.
-When a joint drawing is unavailable, **Show six arcs separately** lazily draws
-the individual exact meridians in a small gallery, with Inspect for each full
-route. These previews do not check or depict one joint planar placement.
-Each meridian row also has **View arc** for its before or after image. This
-individual view starts fitted to the whole path; **Show detail** and
-**Start/Middle/End** reveal the original-sized route. It
-routes one exact arc through the shared renderer and can remain available when
-the combined six-arc drawing reaches its limit. The individual view checks its
-full based image but does not claim that the six arcs are jointly disjoint.
-Inside the individual view, step to the previous or next arc and switch between
-its before and after image without closing the inspector. Start/Middle/End
-buttons navigate a long drawing horizontally; the complete word is expandable.
+**Inspect prefix action** defaults to the chain from the left boundary to the
+first puncture, then from that puncture to the next, through all six. The old
+six-spoke boundary fan remains selectable. For the chain, the exact image of
+the first based meridian determines its initial edge. The image of each
+adjacent meridian product determines the two-point neighborhood boundary of
+the next edge. Those five unframed point-to-point arcs are recovered and checked
+against their complete boundary classes. The six edge images may be computed
+independently; a joint drawing still uses the shared router to place their
+representatives without crossings. A route-limit warning is not an
+intersection claim. The colored endpoint numbers show the permutation while
+the words retain winding; a permutation alone is never an identity test.
+
+Long words are abbreviated on screen; **Save full exact words as JSON** exports
+all six complete images on both sides, identifying whether they are chain-edge
+neighborhood boundaries or based meridians. A curve over 2048 cut visits or a
+family over 3072 route nodes is marked unavailable. Each accepted before/after
+drawing has **Save SVG**. The inspector fits both drawings initially; **Show
+detail** and **Start/Middle/End** reveal original-sized arcs. Click an
+**e1–e6** chain edge (or **x1–x6** spoke) to trace it in both drawings. These
+are disk actions without the sphere relation; a nontrivial disk action alone
+does not decide identity on the sphere.
+
+Each row reports whether its complete exact word changed, the shared prefix
+and suffix lengths, and an excerpt around the changed middle. **Compare arcs**
+routes one edge before and after the selected factor side by side. **View arc**
+inspects one full route and its word. When a joint drawing is unavailable,
+**Show six arcs separately** offers six individually routed previews. These
+single-edge and gallery views check exact individual classes but do not certify
+a simultaneous six-edge placement. Individual failures report their limits.
 
 **Check sphere action** computes the entire product's exact six-meridian disk
 action, imposes `D = x1 x2 x3 x4 x5 x6 = 1`, and checks whether the resulting

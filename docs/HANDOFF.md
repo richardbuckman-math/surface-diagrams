@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## October 3: adjacent-point chain for the factorization lab
+
+Richard clarified that the desired disk cut system is boundary → point 1 →
+point 2 → … → point 6, with an optional unused last edge to the right rim.
+The lab now defaults to the six-edge chain and keeps the previous six-spoke
+boundary fan as a selector option. For a braid prefix with meridian images
+A(x_i), the initial edge is recovered from A(x_1), and the edge from the image
+of point i to point i+1 is recovered from the two-point neighborhood-boundary
+class of A(x_i x_(i+1)). Each recovered edge is checked against that exact
+class. The joint renderer still checks a simultaneous noncrossing layout;
+independently drawn representatives need not align, and exceeding its route
+limit is not evidence of an intersection. The identity and F1 chains render
+as intended; the exact F10 chain renders jointly. At F11, the after-chain has
+4,695 nodes, over the 3,072 joint route cap, though its individual edges fit
+the 2,048-cut limit. The terminal right-rim edge is deferred as optional.
+Tests cover edge classes through F12 and allow a late individual edge when
+others exceed their limits. The F11 e3 edge, with 1,581 cuts and a 4,002-letter
+neighborhood-boundary word, drew individually. Local browser inspection covered
+F1, joint F10, F11's honest limit, and the retained fan view; the portable
+browser showed the F1 chain. All 299 tests pass with an absolute PYTHONPATH,
+JavaScript syntax passes, and the portable site builds with local links checked.
+Next: develop a compact joint F11 layout and verify that independently
+recovered chain edges admit it; the optional sixth-point-to-right-rim edge can
+be added if it improves inspection.
+
 ## October 3: side-by-side individual arc comparison
 
 Each exact prefix row now has Compare arcs. It routes that meridian before and

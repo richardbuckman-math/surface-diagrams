@@ -109,42 +109,63 @@ class LabServer(ThreadingHTTPServer):
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
                     frame=self.frames[self.position],steps=self.operations,position=self.position,
                     export=dict(export_factors(factors),global_conjugator=self.frames[self.position]))
-    def prefix_action(self,index):
-        """Exact based meridian images on both sides of a selected factor."""
+    def prefix_action(self,index,system='fan'):
+        """Exact images of either the boundary fan or adjacent-point chain."""
         from .based_cut_system import based_cut_system_drawing
+        from .chain_cut_system import chain_cut_system_drawing,chain_words
         factors=self.history[self.position]
         if type(index) is not int or not 0<=index<len(factors):
             raise ValueError('Choose a valid factor position')
-        before=exact_action(product(factors[:index]))
-        after=exact_action(product(factors[:index+1]))
+        if system not in ('fan','chain'):
+            raise ValueError('Choose the boundary fan or adjacent-point chain')
+        before_meridians=exact_action(product(factors[:index]))
+        after_meridians=exact_action(product(factors[:index+1]))
         def punctures(images):
             keys=tuple(free_homotopy_key(word) for word in images)
             if any(len(key)!=1 for key in keys):
                 raise ValueError('Meridian images have no single puncture class')
             return tuple(abs(key[0]) for key in keys)
         def drawing(images):
-            try: return based_cut_system_drawing(images),''
+            try: return (chain_cut_system_drawing(images) if system=='chain' else
+                         based_cut_system_drawing(images)),''
             except ValueError as error: return '',str(error)
-        before_svg,before_warning=drawing(before)
-        after_svg,after_warning=drawing(after)
-        return dict(factor=factors[index].id,index=index,revision=self.revision,
-                    before=before,after=after,before_punctures=punctures(before),
-                    after_punctures=punctures(after),before_svg=before_svg,
+        before_svg,before_warning=drawing(before_meridians)
+        after_svg,after_warning=drawing(after_meridians)
+        if system=='chain':
+            before,before_endpoints=chain_words(before_meridians)
+            after,after_endpoints=chain_words(after_meridians)
+        else:
+            before,after=before_meridians,after_meridians
+            before_endpoints=tuple((0,p) for p in punctures(before))
+            after_endpoints=tuple((0,p) for p in punctures(after))
+        return dict(factor=factors[index].id,index=index,revision=self.revision,system=system,
+                    before=before,after=after,
+                    before_meridians=before_meridians,after_meridians=after_meridians,
+                    before_punctures=tuple(end for _,end in before_endpoints),
+                    after_punctures=tuple(end for _,end in after_endpoints),
+                    before_endpoints=before_endpoints,after_endpoints=after_endpoints,
+                    word_kind='adjacent-pair neighborhood boundary' if system=='chain' else 'based meridian',
+                    before_svg=before_svg,
                     after_svg=after_svg,before_warning=before_warning,after_warning=after_warning)
-    def prefix_arc(self,index,side,arc_index):
+    def prefix_arc(self,index,side,arc_index,system='fan'):
         """Inspect one exact arc when joint routing is too large to draw."""
         from .based_cut_system import based_arc_drawing
+        from .chain_cut_system import chain_arc_drawing,chain_words
         factors=self.history[self.position]
         if type(index) is not int or not 0<=index<len(factors):
             raise ValueError('Choose a valid factor position')
         if side not in ('before','after') or type(arc_index) is not int or not 0<=arc_index<6:
             raise ValueError('Choose a valid arc and side')
+        if system not in ('fan','chain'):
+            raise ValueError('Choose the boundary fan or adjacent-point chain')
         images=exact_action(product(factors[:index+(side=='after')]))
-        image=images[arc_index]
-        try: svg=based_arc_drawing(image,index=arc_index);warning=''
+        image=(chain_words(images)[0][arc_index] if system=='chain' else images[arc_index])
+        try:
+            svg=(chain_arc_drawing(images,index=arc_index) if system=='chain' else
+                 based_arc_drawing(image,index=arc_index));warning=''
         except ValueError as error: svg='';warning=str(error)
         return dict(factor=factors[index].id,index=index,side=side,arc=arc_index+1,
-                    image=image,svg=svg,warning=warning,revision=self.revision)
+                    system=system,image=image,svg=svg,warning=warning,revision=self.revision)
     def sphere_action(self):
         word=product(self.history[self.position])
         try: chart_svg,_=sphere_chart_drawing(word);chart_warning=''
@@ -240,7 +261,7 @@ class LabHandler(EditorHandler):
                 with self.server.lock:
                     if revision!=self.server.revision:
                         self._error(409,'State changed; reload before inspecting'); return
-                    data=self.server.prefix_arc(index,side,arc_index)
+                    data=self.server.prefix_arc(index,side,arc_index,query.get('system',['fan'])[0])
             except (KeyError,ValueError,VerificationLimitError) as error:
                 self._error(400,str(error));return
             self._reply(200,json.dumps(data));return
@@ -261,7 +282,7 @@ class LabHandler(EditorHandler):
                 with self.server.lock:
                     if revision!=self.server.revision:
                         self._error(409,'State changed; reload before inspecting'); return
-                    data=self.server.prefix_action(index)
+                    data=self.server.prefix_action(index,query.get('system',['fan'])[0])
             except (KeyError,ValueError,VerificationLimitError) as error:
                 self._error(400,str(error)); return
             self._reply(200,json.dumps(data)); return

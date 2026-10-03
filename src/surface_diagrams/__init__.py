@@ -28,6 +28,9 @@ __all__ += ["ConjugatedTwist", "simplify_twist", "support_curve", "support_drawi
 from .based_cut_system import based_arc_from_meridian, based_arc_ray_word, based_cut_system_drawing
 __all__ += ["based_arc_from_meridian", "based_arc_ray_word", "based_cut_system_drawing"]
 
+from .chain_cut_system import chain_words, chain_arc, chain_arcs, chain_arc_drawing, chain_cut_system_drawing
+__all__ += ["chain_words", "chain_arc", "chain_arcs", "chain_arc_drawing", "chain_cut_system_drawing"]
+
 from .sphere_actions import sphere_reduce, sphere_inner_certificate
 __all__ += ["sphere_reduce", "sphere_inner_certificate"]
 

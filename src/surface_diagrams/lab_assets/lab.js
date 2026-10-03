@@ -3,6 +3,8 @@ let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null
 const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
+const prefixSystem=$('prefix-system');
+prefixSystem.onchange=()=>{if(prefixIndex!==null)showPrefix(prefixIndex);};
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
 arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-previous">← Previous arc</button><button id="arc-next">Next arc →</button><button id="arc-toggle">Show before</button></div><div class="toolbar"><button id="arc-fit">Show detail</button><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Fit shows the whole arc; detail shows its original size.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
 document.body.append(arcDialog);
@@ -181,7 +183,7 @@ function tracePrefix(index){
  $('prefix-rows').querySelectorAll('.trace-arc').forEach((button,i)=>{
   const pressed=i===prefixHighlight;
   button.setAttribute('aria-pressed',String(pressed));
-  button.title=pressed?'Show all six arcs':`Trace x${i+1} in both drawings`;
+  button.title=pressed?'Show all six arcs':`Trace ${prefixExport?.system==='chain'?'e':'x'}${i+1} in both drawings`;
  });
 }
 function prefixWordChange(before,after){
@@ -189,7 +191,7 @@ function prefixWordChange(before,after){
  while(prefix<Math.min(before.length,after.length)&&before[prefix]===after[prefix])prefix++;
  while(suffix<Math.min(before.length,after.length)-prefix&&
        before[before.length-suffix-1]===after[after.length-suffix-1])suffix++;
- if(prefix===before.length&&prefix===after.length)return 'Based image unchanged.';
+ if(prefix===before.length&&prefix===after.length)return 'Exact word unchanged.';
  const middle=word=>word.slice(prefix,word.length-suffix);
  const excerpt=word=>{
   const part=middle(word);
@@ -218,9 +220,11 @@ async function showArcGallery(side,index,revision,request){
   card.classList.toggle('muted',prefixHighlight!==null&&prefixHighlight!==i);
   const head=document.createElement('div');head.className='arc-gallery-head';
   const label=document.createElement('strong');
-  label.textContent=`x${i+1} → ${prefixExport[`${side}_punctures`][i]}`;
+  const endpoints=prefixExport[`${side}_endpoints`][i];
+  label.textContent=prefixExport.system==='chain'?`e${i+1}: ${endpoints[0]||'rim'} → ${endpoints[1]}`:
+   `x${i+1} → ${endpoints[1]}`;
   const inspect=document.createElement('button');inspect.textContent='Inspect';
-  inspect.setAttribute('aria-label',`Inspect ${side} arc x${i+1} after ${state.factors[index].id}`);
+  inspect.setAttribute('aria-label',`Inspect ${side} arc ${prefixExport.system==='chain'?'e':'x'}${i+1} after ${state.factors[index].id}`);
   inspect.onclick=()=>showArc(side,i,index,revision);
   head.append(label,inspect);
   const preview=document.createElement('div');preview.className='arc-gallery-preview';
@@ -230,7 +234,7 @@ async function showArcGallery(side,index,revision,request){
  for(let i=0;i<6;i++){
   progress.textContent=`Routing ${i+1} of 6 exact arcs…`;
   try{
-   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${i}&revision=${revision}`);
+   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${i}&revision=${revision}&system=${prefixExport.system}`);
    const data=await response.json();
    if(request!==prefixRequest||state.revision!==revision)return;
    if(!response.ok)throw new Error(data.error);
@@ -242,8 +246,14 @@ async function showArcGallery(side,index,revision,request){
 }
 async function showPrefix(index){
  if(!state||index<0||index>=state.factors.length)return;
- const revision=state.revision,request=++prefixRequest;
+ const revision=state.revision,request=++prefixRequest,system=prefixSystem.value;
  prefixIndex=index;choose(index);
+ $('prefix-inspector').querySelector('p').textContent=system==='chain'?
+  'The colored chain runs from the left boundary to its first puncture, then from each puncture to the next. The first edge is checked by its based meridian; each later edge is recovered from the exact image of the boundary around an adjacent puncture pair. Joint routing checks their simultaneous drawing.':
+  'The six colored spokes run from one left-boundary basepoint to the punctures. Each ray word reproduces its complete based meridian image; joint routing checks their simultaneous drawing.';
+ $('prefix-inspector').querySelectorAll('p')[1].textContent=system==='chain'?
+  'The edge labels e1–e6 follow the original order, while the colored endpoint numbers show where the braid moves them. The exact neighborhood-boundary words retain winding; click an edge label to trace it in both drawings. This is the six-point disk action.':
+  'Colored puncture numbers show only the permutation; the words retain winding and base paths. Click x1–x6 below to trace one arc in both drawings. This is the six-point disk action, without imposing the sphere relation.';
  $('prefix-title').textContent=`After ${state.factors[index].id} · exact prefix action`;
  $('prefix-position').textContent=`Factor ${index+1} of ${state.factors.length}`;
  $('prefix-previous').disabled=index===0;
@@ -254,20 +264,23 @@ async function showPrefix(index){
  for(const side of ['before','after']){
   const drawing=$(`prefix-${side}`);drawing.classList.remove('arc-gallery-host');drawing.replaceChildren();
  }
- $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
+ $('prefix-status').textContent=`Computing exact ${system==='chain'?'chain-edge':'based meridian'} images and routing the cut system…`;
  if(!$('prefix-inspector').open)$('prefix-inspector').showModal();
  try{
-  const response=await fetch(`/api/prefix?index=${index}&revision=${revision}`);
+  const response=await fetch(`/api/prefix?index=${index}&revision=${revision}&system=${system}`);
   const data=await response.json();
   if(request!==prefixRequest)return;
   if(!response.ok)throw new Error(data.error);
   if(state.revision!==revision)throw new Error('The factorization changed; reopen this inspector.');
-  prefixExport={factor:data.factor,index:data.index,revision:data.revision,before:data.before,
-    after:data.after,before_punctures:data.before_punctures,after_punctures:data.after_punctures};
+  prefixExport={factor:data.factor,index:data.index,revision:data.revision,system:data.system,
+    word_kind:data.word_kind,before:data.before,after:data.after,
+    before_meridians:data.before_meridians,after_meridians:data.after_meridians,
+    before_punctures:data.before_punctures,after_punctures:data.after_punctures,
+    before_endpoints:data.before_endpoints,after_endpoints:data.after_endpoints};
   $('save-prefix').disabled=false;
   const changed=data.before.filter((word,i)=>word.length!==data.after[i].length||
    word.some((letter,j)=>letter!==data.after[i][j])).length;
-  $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly. ${changed} of 6 changed.`;
+  $('prefix-status').textContent=`Prefix through ${data.factor}; all six ${system==='chain'?'chain-edge boundary words':'based meridian images'} computed exactly. ${changed} of 6 changed.`;
   for(const side of ['before','after']){
    const drawing=$(`prefix-${side}`);
    if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
@@ -277,25 +290,26 @@ async function showPrefix(index){
   for(let i=0;i<6;i++){
    const row=document.createElement('div');row.className='prefix-row';
    const label=document.createElement('button');label.className='trace-arc';
-   label.textContent=`x${i+1}`;label.style.borderColor=prefixColors[i];
-   label.title=`Trace x${i+1} in both drawings`;label.setAttribute('aria-pressed','false');
+   label.textContent=`${system==='chain'?'e':'x'}${i+1}`;label.style.borderColor=prefixColors[i];
+   label.title=`Trace ${label.textContent} in both drawings`;label.setAttribute('aria-pressed','false');
    label.onclick=()=>tracePrefix(i);row.append(label);
    for(const side of ['before','after']){
     const cell=document.createElement('div');cell.className='prefix-cell';
     const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=prefixColors[i];
     dot.textContent=String(data[`${side}_punctures`][i]);
-    const word=data[side][i],shown=word.slice(0,64).join(' ');
+    const word=data[side][i],shown=word.slice(0,64).join(' '),endpoints=data[`${side}_endpoints`][i];
     const copy=document.createElement('span');copy.className='full-word';
-    copy.textContent=`${side}: ${shown}${word.length>64?' …':''} (${word.length} letters)`;
+    const wordLabel=system==='chain'?`${side} ${endpoints[0]||'rim'}→${endpoints[1]}`:side;
+    copy.textContent=`${wordLabel}: ${shown}${word.length>64?' …':''} (${word.length} letters)`;
     const view=document.createElement('button');view.textContent='View arc';
-    view.setAttribute('aria-label',`View ${side} arc x${i+1} after ${data.factor}`);
+    view.setAttribute('aria-label',`View ${side} arc ${system==='chain'?'e':'x'}${i+1} after ${data.factor}`);
     view.onclick=()=>showArc(side,i,index,revision);
     cell.append(dot,copy,view);row.append(cell);
    }
    const difference=document.createElement('div');difference.className='prefix-diff';
    difference.textContent=prefixWordChange(data.before[i],data.after[i]);
    const compare=document.createElement('button');compare.textContent='Compare arcs';
-   compare.setAttribute('aria-label',`Compare before and after arc x${i+1} after ${data.factor}`);
+   compare.setAttribute('aria-label',`Compare before and after arc ${system==='chain'?'e':'x'}${i+1} after ${data.factor}`);
    compare.onclick=()=>showCompareArc(i,index,revision);
    difference.append(compare);row.append(difference);
    $('prefix-rows').append(row);
@@ -306,7 +320,11 @@ async function showCompareArc(arcIndex,index,revision){
  if(!prefixExport||prefixExport.index!==index||prefixExport.revision!==revision)return;
  const request=++compareRequest;compareSvgs={};
  const factor=prefixExport.factor;
- $('compare-title').textContent=`${factor} · exact arc x${arcIndex+1} before and after`;
+ const chain=prefixExport.system==='chain',edge=`${chain?'e':'x'}${arcIndex+1}`;
+ $('compare-title').textContent=`${factor} · exact arc ${edge} before and after`;
+ compareDialog.querySelector('p').textContent=chain?
+  'These are individually routed images of one chain edge before and after the factor. Each edge is checked against its exact two-point neighborhood-boundary class (the first edge uses its based meridian). The pair does not check a joint six-edge placement.':
+  'These are two individually routed exact meridian arcs. Their full based images are checked separately; the pair does not depict or check a joint six-arc placement.';
  $('compare-diff').textContent=prefixWordChange(prefixExport.before[arcIndex],prefixExport.after[arcIndex]);
  for(const side of ['before','after']){
   $(`compare-${side}`).textContent='Routing exact arc…';
@@ -317,7 +335,7 @@ async function showCompareArc(arcIndex,index,revision){
  let drawn=0;
  for(const side of ['before','after']){
   try{
-   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}`);
+   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}&system=${prefixExport.system}`);
    const data=await response.json();
    if(request!==compareRequest)return;
    if(!response.ok)throw new Error(data.error);
@@ -331,26 +349,30 @@ async function showCompareArc(arcIndex,index,revision){
    if(request!==compareRequest)return;
    $(`compare-${side}`).textContent=`Drawing unavailable: ${error.message}`;
   }
-  $('compare-status').textContent=`${drawn} of 2 individual exact arcs drawn. Full based images: before ${prefixExport.before[arcIndex].length} letters, after ${prefixExport.after[arcIndex].length} letters. Joint cut-system placement is a separate check.`;
+  $('compare-status').textContent=`${drawn} of 2 individual exact arcs drawn. Exact ${chain?'neighborhood-boundary words':'based images'}: before ${prefixExport.before[arcIndex].length} letters, after ${prefixExport.after[arcIndex].length} letters. Joint placement is a separate check.`;
  }
 }
 async function showArc(side,arcIndex,index,revision){
  if(arcIndex<0||arcIndex>=6)return;
+ const chain=prefixExport?.system==='chain',edge=`${chain?'e':'x'}${arcIndex+1}`;
  arcSelection={side,arcIndex,index,revision};
  const request=++arcRequest;arcSvg='';$('save-arc').disabled=true;
- $('arc-title').textContent=`${side} ${state.factors[index].id} · individual arc x${arcIndex+1}`;
+ $('arc-title').textContent=`${side} ${state.factors[index].id} · individual arc ${edge}`;
+ arcDialog.querySelector('p').textContent=chain?
+  'This chain edge is recovered from its exact two-point neighborhood-boundary class (the first edge uses a based meridian). Its individual drawing does not check joint six-edge placement.':
+  'This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.';
  $('arc-previous').disabled=arcIndex===0;$('arc-next').disabled=arcIndex===5;
  $('arc-toggle').textContent=`Show ${side==='before'?'after':'before'}`;
  $('arc-status').textContent='Routing one exact arc…';
  $('arc-word').textContent='';$('arc-word-summary').textContent='Full based image';
  $('arc-drawing').replaceChildren();if(!arcDialog.open)arcDialog.showModal();
  try{
-  const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}`);
+  const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}&system=${prefixExport.system}`);
   const data=await response.json();if(request!==arcRequest)return;
   if(!response.ok)throw new Error(data.error);
   if(state.revision!==revision)throw new Error('The factorization changed; reopen the prefix inspector.');
-  $('arc-word-summary').textContent=`Full based image x${arcIndex+1} (${data.image.length} letters)`;
-  $('arc-word').textContent=`x${arcIndex+1} → ${data.image.join(' ')}`;
+  $('arc-word-summary').textContent=`Full ${chain?'neighborhood-boundary word':'based image'} ${edge} (${data.image.length} letters)`;
+  $('arc-word').textContent=`${edge} → ${data.image.join(' ')}`;
   if(data.svg){arcSvg=data.svg;$('arc-drawing').innerHTML=arcSvg;$('save-arc').disabled=false;
    setArcFit(arcFit);
    $('arc-status').textContent='Exact individual arc drawn. Joint cut-system routing remains a separate check.';}
