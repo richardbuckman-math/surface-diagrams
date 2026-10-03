@@ -89,6 +89,10 @@ to trace that same exact arc in both before/after drawings; click it again to
 show all six at full color. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
+Each x1–x6 row reports whether its complete based image changed and, when it
+did, the shared prefix and suffix lengths plus a short excerpt around the
+changed middle. This exposes differences hidden beyond the abbreviated word
+preview; **Save full exact words as JSON** preserves every letter.
 Each meridian row also has **View arc** for its before or after image. This
 individual view starts fitted to the whole path; **Show detail** and
 **Start/Middle/End** reveal the original-sized route. It

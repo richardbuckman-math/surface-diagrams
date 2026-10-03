@@ -9,6 +9,7 @@ dialog{width:min(95vw,1000px);max-height:90vh;border:1px solid #9fb6d0;border-ra
 .prefix-drawing svg.tracing path.arc.traced{opacity:1;stroke-width:3px}
 .prefix-drawing svg.fit-overview.tracing path.arc.traced{stroke-width:1px}
 .prefix-row .trace-arc{padding:3px 2px;min-width:30px}.prefix-row .trace-arc[aria-pressed="true"]{background:#e0efff}
+.prefix-diff{grid-column:2 / -1;color:#344c68;background:#f3f7fc;border-radius:4px;padding:5px 7px;font:11px Consolas,monospace;overflow-wrap:anywhere}
 #sphere-status{font-weight:700;color:#245d49}#sphere-equations p{border-bottom:1px solid #dce5ef;padding:7px 0;margin:0}#sphere-whisker{background:#f3f7fb;padding:10px;border-radius:6px}
 .sphere-chart{margin:12px 0}.sphere-chart figcaption{font-size:12px;font-weight:600;margin-bottom:4px}.sphere-chart .prefix-drawing{min-height:0;max-height:38vh}
 #sphere-chart svg{margin:auto}

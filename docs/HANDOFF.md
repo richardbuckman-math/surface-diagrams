@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## October 3: compare exact before/after meridian words
+
+Each prefix row now reports an exact changed/unchanged result, counts the
+shared initial and final letters, and previews the changed middle rather than
+only the first 64 letters. On the original F11 step, x3/x4 are unchanged;
+x5/x6 each share 320 letters at both ends, hiding their actual changes in the
+old preview. The new display shows 4 of 6 meridians changed and the precise
+middle lengths (x5: 1,191 to 3,123). Full words and SVG inspection remain
+available. Local visual inspection and the portable browser worker agree;
+JavaScript syntax and the site/link build pass. Next: commit/push, verify
+remote tests and Pages, then design an exact compact joint view for F11 onward.
+
 ## October 3: whole-path inspection for long individual arcs
 
 Individual arc inspection now fits the entire SVG by default, with original
@@ -7,8 +19,9 @@ size available through Show detail and Start/Middle/End. This makes F11's
 1,502-cut x5 path visible as one image before zooming into the route. Local
 browser screenshots confirmed both scales; the portable browser exposed the
 same fitted control. JavaScript syntax, site build, and local-link checks pass.
-Next: commit/push and verify remote Tests/Documentation and the public lab;
-then work on a compact, jointly checked six-arc representation for F11 onward.
+Commit 0424d89 was pushed; remote Tests and Documentation passed, and the
+public lab exposed the new Show detail control. Compact joint F11 geometry
+remains open.
 
 ## October 3: individual exact F11/F12 arcs
 

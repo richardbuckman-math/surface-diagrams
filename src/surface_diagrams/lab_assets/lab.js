@@ -150,6 +150,20 @@ function tracePrefix(index){
   button.title=pressed?'Show all six arcs':`Trace x${i+1} in both drawings`;
  });
 }
+function prefixWordChange(before,after){
+ let prefix=0,suffix=0;
+ while(prefix<Math.min(before.length,after.length)&&before[prefix]===after[prefix])prefix++;
+ while(suffix<Math.min(before.length,after.length)-prefix&&
+       before[before.length-suffix-1]===after[after.length-suffix-1])suffix++;
+ if(prefix===before.length&&prefix===after.length)return 'Based image unchanged.';
+ const middle=word=>word.slice(prefix,word.length-suffix);
+ const excerpt=word=>{
+  const part=middle(word);
+  return part.length<=14?part.join(' ')||'∅':
+   `${part.slice(0,7).join(' ')} … ${part.slice(-7).join(' ')}`;
+ };
+ return `Shared prefix ${prefix}, suffix ${suffix} letters. Changed middle: before ${excerpt(before)} (${middle(before).length} letters) → after ${excerpt(after)} (${middle(after).length} letters).`;
+}
 async function showPrefix(index){
  if(!state||index<0||index>=state.factors.length)return;
  const revision=state.revision,request=++prefixRequest;
@@ -172,7 +186,9 @@ async function showPrefix(index){
   prefixExport={factor:data.factor,index:data.index,revision:data.revision,before:data.before,
     after:data.after,before_punctures:data.before_punctures,after_punctures:data.after_punctures};
   $('save-prefix').disabled=false;
-  $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly.`;
+  const changed=data.before.filter((word,i)=>word.length!==data.after[i].length||
+   word.some((letter,j)=>letter!==data.after[i][j])).length;
+  $('prefix-status').textContent=`Prefix through ${data.factor}; all six based images computed exactly. ${changed} of 6 changed.`;
   for(const side of ['before','after']){
    const drawing=$(`prefix-${side}`);
    if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
@@ -197,6 +213,8 @@ async function showPrefix(index){
     view.onclick=()=>showArc(side,i,index,revision);
     cell.append(dot,copy,view);row.append(cell);
    }
+   const difference=document.createElement('div');difference.className='prefix-diff';
+   difference.textContent=prefixWordChange(data.before[i],data.after[i]);row.append(difference);
    $('prefix-rows').append(row);
   }
  }catch(error){if(request===prefixRequest)$('prefix-status').textContent=error.message;}
