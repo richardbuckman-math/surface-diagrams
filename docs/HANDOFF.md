@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## October 3: deterministic local normal-triangle pairing
+
+Added `normal_strands.py`, a computation-only primitive for one triangular
+region. Three cyclically ordered boundary crossing lists produce the forced
+noncrossing side-to-side pairings from the half-sum counts. It rejects parity
+or triangle-inequality failures and, critically, refuses a local connection
+between differently labeled arcs. It does not yet derive minimal intersection
+counts or draw F11; the current renderer remains in place. Nine focused tests
+pass, including all admissible small count patterns checked for noninterleaving
+chords and a 4,800-crossing labeled local triangle. No SVG path changed, so
+visual inspection belongs to the integration batch. Next: derive certified
+upper/lower auxiliary-ray counts for one exact chain arc, glue neighboring
+triangle pairings without dropping crossing IDs, and round-trip its exact
+class before attempting the six-arc F11 layout.
+
+
 ## October 3: source correction and F11 execution scope
 
 Richard identified Dylan P. Thurston, *Geometric intersection of curves on
