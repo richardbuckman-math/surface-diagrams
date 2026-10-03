@@ -93,6 +93,9 @@ Each x1–x6 row reports whether its complete based image changed and, when it
 did, the shared prefix and suffix lengths plus a short excerpt around the
 changed middle. This exposes differences hidden beyond the abbreviated word
 preview; **Save full exact words as JSON** preserves every letter.
+When a joint drawing is unavailable, **Show six arcs separately** lazily draws
+the individual exact meridians in a small gallery, with Inspect for each full
+route. These previews do not check or depict one joint planar placement.
 Each meridian row also has **View arc** for its before or after image. This
 individual view starts fitted to the whole path; **Show detail** and
 **Start/Middle/End** reveal the original-sized route. It

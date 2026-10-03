@@ -130,6 +130,7 @@ function setPrefixFit(fit){
  prefixFit=fit;$('prefix-fit').textContent=fit?'Show detail':'Fit whole diagrams';
  for(const side of ['before','after']){
   const drawing=$(`prefix-${side}`),svg=drawing.querySelector('svg');
+  if(drawing.classList.contains('arc-gallery-host'))continue;
   if(svg){svg.style.width=fit?'100%':'';svg.style.height=fit?'auto':'';svg.classList.toggle('fit-overview',fit);}
   if(fit)drawing.scrollTo(0,0);
  }
@@ -138,7 +139,13 @@ function setPrefixFit(fit){
 function tracePrefix(index){
  prefixHighlight=prefixHighlight===index?null:index;
  for(const side of ['before','after']){
-  const svg=$(`prefix-${side}`).querySelector('svg');
+  const drawing=$(`prefix-${side}`);
+  if(drawing.classList.contains('arc-gallery-host')){
+   drawing.querySelectorAll('.arc-gallery-card').forEach(card=>
+    card.classList.toggle('muted',prefixHighlight!==null&&Number(card.dataset.arc)!==prefixHighlight));
+   continue;
+  }
+  const svg=drawing.querySelector('svg');
   if(!svg)continue;
   svg.classList.toggle('tracing',prefixHighlight!==null);
   svg.querySelectorAll('path.arc').forEach(path=>
@@ -164,6 +171,48 @@ function prefixWordChange(before,after){
  };
  return `Shared prefix ${prefix}, suffix ${suffix} letters. Changed middle: before ${excerpt(before)} (${middle(before).length} letters) → after ${excerpt(after)} (${middle(after).length} letters).`;
 }
+function offerArcGallery(side,index,revision,request,warning){
+ const drawing=$(`prefix-${side}`);drawing.replaceChildren();
+ const note=document.createElement('p');note.textContent=`Joint drawing unavailable: ${warning}`;
+ const button=document.createElement('button');button.textContent='Show six arcs separately';
+ button.onclick=()=>showArcGallery(side,index,revision,request);
+ drawing.append(note,button);
+}
+async function showArcGallery(side,index,revision,request){
+ if(request!==prefixRequest||state.revision!==revision)return;
+ const drawing=$(`prefix-${side}`);drawing.replaceChildren();drawing.classList.add('arc-gallery-host');
+ const note=document.createElement('p');
+ note.textContent='Each available preview is exact and routed separately; unavailable arcs report their limit. This gallery does not show or check their joint planar placement.';
+ const progress=document.createElement('p');progress.setAttribute('role','status');
+ const grid=document.createElement('div');grid.className='arc-gallery';
+ const cards=[];
+ for(let i=0;i<6;i++){
+  const card=document.createElement('div');card.className='arc-gallery-card';card.dataset.arc=String(i);
+  card.classList.toggle('muted',prefixHighlight!==null&&prefixHighlight!==i);
+  const head=document.createElement('div');head.className='arc-gallery-head';
+  const label=document.createElement('strong');
+  label.textContent=`x${i+1} → ${prefixExport[`${side}_punctures`][i]}`;
+  const inspect=document.createElement('button');inspect.textContent='Inspect';
+  inspect.setAttribute('aria-label',`Inspect ${side} arc x${i+1} after ${state.factors[index].id}`);
+  inspect.onclick=()=>showArc(side,i,index,revision);
+  head.append(label,inspect);
+  const preview=document.createElement('div');preview.className='arc-gallery-preview';
+  preview.textContent='Routing exact arc…';card.append(head,preview);grid.append(card);cards.push(preview);
+ }
+ drawing.append(note,progress,grid);
+ for(let i=0;i<6;i++){
+  progress.textContent=`Routing ${i+1} of 6 exact arcs…`;
+  try{
+   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${i}&revision=${revision}`);
+   const data=await response.json();
+   if(request!==prefixRequest||state.revision!==revision)return;
+   if(!response.ok)throw new Error(data.error);
+   if(data.svg)cards[i].innerHTML=data.svg;
+   else cards[i].textContent=`Drawing unavailable: ${data.warning}`;
+  }catch(error){if(request!==prefixRequest)return;cards[i].textContent=error.message;}
+ }
+ progress.textContent='All six arc previews attempted. Open Inspect for a full route; unavailable cards show their limits.';
+}
 async function showPrefix(index){
  if(!state||index<0||index>=state.factors.length)return;
  const revision=state.revision,request=++prefixRequest;
@@ -174,7 +223,10 @@ async function showPrefix(index){
  $('prefix-next').disabled=index===state.factors.length-1;
  prefixExport=null;prefixSvgs={};prefixHighlight=null;$('save-prefix').disabled=true;
  $('save-prefix-before').disabled=true;$('save-prefix-after').disabled=true;
- $('prefix-rows').replaceChildren();$('prefix-before').replaceChildren();$('prefix-after').replaceChildren();
+ $('prefix-rows').replaceChildren();
+ for(const side of ['before','after']){
+  const drawing=$(`prefix-${side}`);drawing.classList.remove('arc-gallery-host');drawing.replaceChildren();
+ }
  $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
  if(!$('prefix-inspector').open)$('prefix-inspector').showModal();
  try{
@@ -192,7 +244,7 @@ async function showPrefix(index){
   for(const side of ['before','after']){
    const drawing=$(`prefix-${side}`);
    if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
-   else drawing.textContent=`Drawing unavailable: ${data[`${side}_warning`]}`;
+   else offerArcGallery(side,index,revision,request,data[`${side}_warning`]);
   }
   setPrefixFit(prefixFit);
   for(let i=0;i<6;i++){

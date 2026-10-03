@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## October 3: six separate previews when joint routing is unavailable
+
+An unavailable before/after joint panel now offers Show six arcs separately.
+It lazily fetches the six exact individually routed SVGs into a colored 2×3
+gallery; each card opens the full arc inspector. The panel states explicitly
+that the previews do not show or check one joint planar placement, and any
+individual route failure remains visible on its card. Local and portable
+browser screenshots confirmed the original F11 after-gallery, all six cards,
+and opening x5's full 3,763-letter image. An F13 local check showed two
+available after-arcs and four honest 2048-cut-limit cards, with no false
+joint claim. The 28 factorization tests, JavaScript syntax, and portable
+site/link checks pass. Next: commit/push, verify CI and public Pages, then
+develop a compact representation that checks joint F11 geometry.
+
 ## October 3: compare exact before/after meridian words
 
 Each prefix row now reports an exact changed/unchanged result, counts the
@@ -9,8 +23,9 @@ x5/x6 each share 320 letters at both ends, hiding their actual changes in the
 old preview. The new display shows 4 of 6 meridians changed and the precise
 middle lengths (x5: 1,191 to 3,123). Full words and SVG inspection remain
 available. Local visual inspection and the portable browser worker agree;
-JavaScript syntax and the site/link build pass. Next: commit/push, verify
-remote tests and Pages, then design an exact compact joint view for F11 onward.
+JavaScript syntax and the site/link build pass. Commit cc24de8 was pushed;
+remote Tests and Documentation passed. The separate-arc gallery above is the
+next visual fallback while exact joint F11 geometry remains open.
 
 ## October 3: whole-path inspection for long individual arcs
 
