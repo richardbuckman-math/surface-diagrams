@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## October 3: replace F11 route-order search with local normal strands
+
+Richard proposed using the horizontal reference chain plus upper/lower rays
+from each marked point or inner boundary to subdivide the disk. In each inner
+three-sided region, derive crossing counts on the auxiliary rays from the
+existing exact arc itineraries, then connect sides by their forced local strand
+counts: if the three side counts are `a,b,c`, the `a-b`, `a-c`, and `b-c`
+connections number `(a+b-c)/2`, `(a+c-b)/2`, and `(b+c-a)/2`. Reject a region
+if parity, nonnegativity, or endpoint conditions fail. Keep arc labels, endpoint
+order, and gluing data across neighboring regions; bare aggregate counts would
+lose these. Lay strands out evenly, then smooth only after their combinatorial
+pairings and exact classes have been verified. This should replace the current
+joint cut-slot permutation search for supported disjoint systems, including
+F11; it should not merely raise the 3,072-node cap. Start with one simple
+and one moderately twisted arc, round-trip the class, then test F10/F11 with
+six labeled arcs and visually inspect. Keep the existing renderer as fallback
+until this passes. Implement inside the existing `surface_diagrams` package,
+separating route computation from SVG layout; no new distribution or restart.
+For a related punctured-disk triangle-coordinate construction and its local
+component counts, see S. Ö. Yurttaş, *Geometric intersection of curves on
+punctured disks*, §2 (https://arxiv.org/pdf/1206.5325). Its lamination setup
+does not by itself settle our labeled marked-point arc endpoint conventions.
+
+
 ## October 3: straight reference chain and weekly pacing
 
 The six-edge identity chain now draws along the horizontal line from the left
