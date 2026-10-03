@@ -1,5 +1,25 @@
 # Handoff: surface-diagrams
 
+## October 3: later exact six-arc cut systems
+
+The shared noncrossing route solver now checks only edges completed by the
+newly assigned cut interval, while preserving its full analytic intersection
+and point-clearance checks. Its order propagation avoids copying every node
+position for each pair comparison. The joint limit is 2048 route nodes; the
+original factorization's F8 after-system (1,225 nodes) and F9 after-system
+(1,675 nodes) both render with the exact shared Arc renderer. The F8 before
+and after drawings were inspected in the local server and portable
+browser-worker build. At this size the raw SVG
+starts as a blank-looking viewport, so the prefix inspector now fits both
+whole diagrams by default, keeps colored strokes visible at overview scale,
+and offers original-size Start/Middle/End navigation. The individual arc and
+full-word views remain available. Browser screenshots confirmed the fitted
+pair and original-size detail; the portable site reproduced the fitted pair.
+The full 292-test suite, JS syntax, site build
+with local-link checks, and git diff check pass. Next: commit/push and verify
+remote Tests/Documentation and the public lab; then study a compact exact
+representation for F10 onward, where the joint node limit is still reached.
+
 ## October 2: compare individual prefix arcs
 
 The individual-arc inspector now steps between x1–x6 and switches the selected

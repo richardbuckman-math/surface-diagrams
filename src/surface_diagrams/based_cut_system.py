@@ -92,7 +92,7 @@ def _cached_drawing(images):
         raise ValueError('The six-point cut system needs six meridian images')
     arcs = tuple(based_arc_from_meridian(image) for image in images)
     if sum(len(arc.cuts)+2 for arc in arcs) > MAX_ROUTE_NODES:
-        raise ValueError('Combined cut-system routes exceed 1024 nodes; the exact words remain available')
+        raise ValueError(f'Combined cut-system routes exceed {MAX_ROUTE_NODES} nodes; the exact words remain available')
     visits = max(Counter(cut for arc in arcs for cut in arc.cuts).values(),default=0)
     scale = max(1.,((visits+1)*4+10)/50)
     surface = PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale)

@@ -34,7 +34,7 @@ def _cached_chart(braid):
         raise ValueError('Normalized sphere action did not recover the standard meridians')
     arcs=tuple(based_arc_from_meridian(image,points=5) for image in normalized)
     if sum(len(arc.cuts)+2 for arc in arcs)>MAX_ROUTE_NODES:
-        raise ValueError('Normalized five-arc chart exceeds the 1024-node route limit')
+        raise ValueError(f'Normalized five-arc chart exceeds the {MAX_ROUTE_NODES}-node route limit')
     visits=max(Counter(cut for arc in arcs for cut in arc.cuts).values(),default=0)
     scale=max(1.,((visits+1)*4+10)/50)
     surface=PlanarSurface.row('PPPPP',spacing=50*scale,height=220*scale,margin=55*scale)

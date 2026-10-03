@@ -5,13 +5,14 @@ advertised as a complete implementation of any named Thurston coordinate system.
 """
 
 from dataclasses import dataclass
+from itertools import chain
 from math import acos, cos, sin, pi, sqrt
 from typing import Optional
 
 from .primitives import Path, Text
 
 MAX_CUT_VISITS = 768
-MAX_ROUTE_NODES = 1024
+MAX_ROUTE_NODES = 2048
 
 
 def _integer(value, name):
@@ -163,26 +164,42 @@ def _forced_orders(groups,edges,fixed,xs):
         if k in values and values[k]!=value: return False
         if k not in values: values[k]=value;queue.append(k)
         return True
-    for i,(a,b,side) in enumerate(edges):
-        for c,d,other in edges[i+1:]:
-            if side is None or side!=other or len({a,b,c,d})<4: continue
-            shared={node_cut[n] for n in (a,b) if n in node_cut}&{node_cut[n] for n in (c,d) if n in node_cut}
-            if len(shared)==2:
-                left,right=sorted(shared)
-                u=next(n for n in (a,b) if node_cut[n]==left);v=next(n for n in (c,d) if node_cut[n]==left)
-                r=next(n for n in (a,b) if node_cut[n]==right);s=next(n for n in (c,d) if node_cut[n]==right)
-                k,l=key(u,v),key(r,s); parity=1^(u>v)^(r>s)
-                graph.setdefault(k,[]).append((l,parity));graph.setdefault(l,[]).append((k,parity))
-            elif len(shared)==1:
-                cut=next(iter(shared));pair=[n for n in (a,b,c,d) if node_cut.get(n)==cut]
-                if len(pair)!=2: continue
-                u,v=pair;allowed=[]
-                for low,high in ((u,v),(v,u)):
-                    p=dict(representatives)
-                    p[low]=xs[cut]+(xs[cut+1]-xs[cut])/3
-                    p[high]=xs[cut]+2*(xs[cut+1]-xs[cut])/3
-                    if not _conflict((p[a],p[b],side),(p[c],p[d],side)): allowed.append((low,high))
-                if len(allowed)==1 and not pin(*allowed[0]): return {}
+    edge_cuts=[frozenset(node_cut[n] for n in (a,b) if n in node_cut)
+               for a,b,_ in edges]
+    buckets={}
+    for index,(_,_,side) in enumerate(edges):
+        if side is not None:
+            for cut in edge_cuts[index]:
+                buckets.setdefault((side,cut),[]).append(index)
+    # Only edges meeting the same cut can constrain its slot ordering. The
+    # previous all-pairs scan spent most of its time rejecting unrelated edges.
+    for (_,cut),indices in buckets.items():
+        for place,i in enumerate(indices):
+            a,b,side=edges[i]
+            for j in indices[place+1:]:
+                c,d,_=edges[j]
+                if len({a,b,c,d})<4: continue
+                shared=edge_cuts[i]&edge_cuts[j]
+                if cut!=min(shared): continue  # Visit a two-cut pair only once.
+                if len(shared)==2:
+                    left,right=sorted(shared)
+                    u=next(n for n in (a,b) if node_cut[n]==left);v=next(n for n in (c,d) if node_cut[n]==left)
+                    r=next(n for n in (a,b) if node_cut[n]==right);s=next(n for n in (c,d) if node_cut[n]==right)
+                    k,l=key(u,v),key(r,s); parity=1^(u>v)^(r>s)
+                    graph.setdefault(k,[]).append((l,parity));graph.setdefault(l,[]).append((k,parity))
+                elif len(shared)==1:
+                    cut=next(iter(shared));pair=[n for n in (a,b,c,d) if node_cut.get(n)==cut]
+                    if len(pair)!=2: continue
+                    u,v=pair;allowed=[]
+                    low_slot=xs[cut]+(xs[cut+1]-xs[cut])/3
+                    high_slot=xs[cut]+2*(xs[cut+1]-xs[cut])/3
+                    for low,high in ((u,v),(v,u)):
+                        def position(node):
+                            return low_slot if node==low else high_slot if node==high else representatives[node]
+                        if not _conflict((position(a),position(b),side),
+                                         (position(c),position(d),side)):
+                            allowed.append((low,high))
+                    if len(allowed)==1 and not pin(*allowed[0]): return {}
     while queue:
         k=queue.pop()
         for other,parity in graph.get(k,()):
@@ -277,20 +294,28 @@ def route(surface, style, *, max_states=20000):
     search_limit = min(max_states,200) if dense else max_states
     comparisons = 0
     before=_forced_orders(groups,edges,fixed,xs)
-    def valid_partial(positions):
+    incident={node:[] for node in range(node_count)}
+    for edge_index,(a,b,_) in enumerate(edges):
+        incident[a].append(edge_index)
+        incident[b].append(edge_index)
+    def valid_new(positions,active,new):
+        """Check each newly completed edge once against the earlier drawing."""
         nonlocal comparisons
-        realized = [(positions[a], positions[b], up) for a, b, up in edges if a in positions and b in positions]
-        for i,a in enumerate(realized):
-            for b in realized[i+1:]:
+        for i,edge_index in enumerate(new):
+            a,b,side=edges[edge_index]
+            segment=(positions[a],positions[b],side)
+            for earlier in chain(active,new[:i]):
+                c,d,other=edges[earlier]
                 comparisons+=1
                 if dense and comparisons>2000000:
                     raise RoutingError('dense route comparison limit reached; this does not prove the curve impossible')
-                if _conflict(a,b): return False
+                if _conflict(segment,(positions[c],positions[d],other)): return False
         return True
-    def solve(index, positions):
+    initial=tuple(i for i,(a,b,_) in enumerate(edges) if a in fixed and b in fixed)
+    if not valid_new(fixed,(),initial):
+        raise RoutingError("no noncrossing ordering realizes these itineraries together")
+    def solve(index, positions, active):
         nonlocal states
-        if not valid_partial(positions):
-            return None
         if index == len(ordered):
             return dict(positions)
         cut, nodes = ordered[index]
@@ -305,13 +330,18 @@ def route(surface, style, *, max_states=20000):
             if states > search_limit:
                 raise RoutingError("route ordering search limit reached; this does not prove the curve impossible")
             positions.update(zip(order, slots[cut]))
-            result = solve(index + 1, positions)
+            newly_completed=tuple(sorted({edge_index for node in nodes for edge_index in incident[node]
+                                          if edge_index not in active
+                                          and edges[edge_index][0] in positions
+                                          and edges[edge_index][1] in positions}))
+            result=(solve(index + 1, positions, active+newly_completed)
+                    if valid_new(positions,active,newly_completed) else None)
             if result is not None:
                 return result
             for node in nodes:
                 del positions[node]
         return None
-    positions = solve(0, dict(fixed))
+    positions = solve(0, dict(fixed), initial)
     if positions is None:
         raise RoutingError("no noncrossing ordering realizes these itineraries together")
     aspect = surface.height / surface.width * style.curve_height

@@ -80,9 +80,11 @@ abbreviated on screen; **Save full exact words as JSON** exports all six complet
 images on both sides. The six colored arcs share a basepoint at the left outer
 rim. Each recovered arc's ray word is checked against the full exact meridian
 image before the shared surface router draws the family together. When a curve
-exceeds 768 cut visits or the family exceeds 1024 route nodes, the drawing is
+exceeds 768 cut visits or the family exceeds 2048 route nodes, the drawing is
 marked unavailable and the exact words remain accessible. Each accepted
-before/after drawing has a **Save SVG** button for standalone inspection. These are disk
+before/after drawing has a **Save SVG** button for standalone inspection. The
+inspector initially fits each whole drawing in its panel; **Show detail** and
+**Start/Middle/End** reveal the original-sized arcs. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
 Each meridian row also has **View arc** for its before or after image. This
@@ -193,7 +195,7 @@ tries transporting each based meridian separately in reverse composition order.
 It retains base paths and never uses the unoriented curve-class comparison for
 braid equality. Intermediate words and final images remain bounded.
 
-Dense supports allow up to 768 cut visits per curve (1024 route nodes per
+Dense supports allow up to 768 cut visits per curve (2048 route nodes per
 diagram). The lab widens crowded cut intervals while retaining fixed dot and
 stroke sizes, and scales the outer ellipse with the spacing. Use inspector zoom
 for these larger drawings. Exact class, noninterleaving, and dot-clearance checks
@@ -209,7 +211,8 @@ The exact prefix-action inspector has Previous/Next controls to follow the
 cut system factor by factor. Each panel shows the six based arcs when the
 shared router accepts them; later steps retain all exact meridian words and
 disable SVG export for a drawing that could not be verified. In the supplied
-factorization, the six-arc drawing after F8 exceeds the 1024-node limit.
+factorization, the six-arc drawing after F8 is now available, including its
+1,225 route nodes; still later steps can reach the stated drawing limits.
 Selecting a factor also shades its matching interval in the continuous braid;
 the standalone paired SVG has no selection shading.
 

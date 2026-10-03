@@ -1,5 +1,5 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,arcRequest=0,arcSvg='',arcSelection=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,arcRequest=0,arcSvg='',arcSelection=null;
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
@@ -105,6 +105,23 @@ $('inspect').onclick=()=>{
  $('inspect-viewport').scrollTo(0,0);
 };
 $('prefix').onclick=()=>showPrefix(selected);
+function positionPrefix(fraction){
+ if(prefixFit)setPrefixFit(false);
+ for(const side of ['before','after']){
+  const drawing=$(`prefix-${side}`);
+  drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;
+  drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;
+ }
+}
+function setPrefixFit(fit){
+ prefixFit=fit;$('prefix-fit').textContent=fit?'Show detail':'Fit whole diagrams';
+ for(const side of ['before','after']){
+  const drawing=$(`prefix-${side}`),svg=drawing.querySelector('svg');
+  if(svg){svg.style.width=fit?'100%':'';svg.style.height=fit?'auto':'';svg.classList.toggle('fit-overview',fit);}
+  if(fit)drawing.scrollTo(0,0);
+ }
+ if(!fit)positionPrefix(.5);
+}
 async function showPrefix(index){
  if(!state||index<0||index>=state.factors.length)return;
  const revision=state.revision,request=++prefixRequest;
@@ -133,6 +150,7 @@ async function showPrefix(index){
    if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
    else drawing.textContent=`Drawing unavailable: ${data[`${side}_warning`]}`;
   }
+  setPrefixFit(prefixFit);
   const colors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
   for(let i=0;i<6;i++){
    const row=document.createElement('div');row.className='prefix-row';
@@ -179,6 +197,10 @@ async function showArc(side,arcIndex,index,revision){
 }
 $('prefix-previous').onclick=()=>showPrefix(prefixIndex-1);
 $('prefix-next').onclick=()=>showPrefix(prefixIndex+1);
+$('prefix-fit').onclick=()=>setPrefixFit(!prefixFit);
+$('prefix-start').onclick=()=>positionPrefix(0);
+$('prefix-middle').onclick=()=>positionPrefix(.5);
+$('prefix-end').onclick=()=>positionPrefix(1);
 $('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json','prefix-action.json');};
 for(const side of ['before','after'])$(`save-prefix-${side}`).onclick=()=>{if(prefixSvgs[side])download(prefixSvgs[side],'image/svg+xml',`cut-system-${side}.svg`);};
 $('close-prefix').onclick=()=>{prefixRequest++;$('prefix-inspector').close();};
