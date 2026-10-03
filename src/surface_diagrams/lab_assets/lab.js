@@ -6,6 +6,33 @@ const status=(text,error=false)=>{ $('status').textContent=text; $('status').cla
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
 arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-previous">← Previous arc</button><button id="arc-next">Next arc →</button><button id="arc-toggle">Show before</button></div><div class="toolbar"><button id="arc-fit">Show detail</button><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Fit shows the whole arc; detail shows its original size.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
 document.body.append(arcDialog);
+const compareDialog=document.createElement('dialog');compareDialog.id='compare-inspector';
+compareDialog.innerHTML='<div class="inspect-heading"><h2 id="compare-title">Compare one based arc</h2><button id="close-compare">Close</button></div><p>These are two individually routed exact meridian arcs. Their full based images are checked separately; the pair does not depict or check a joint six-arc placement.</p><p id="compare-status" role="status"></p><div class="toolbar"><button id="compare-fit">Show detail</button><button id="compare-start">Start</button><button id="compare-middle">Middle</button><button id="compare-end">End</button><span>Fit shows both whole arcs; detail shows their original size.</span></div><div class="prefix-drawings"><figure><figcaption>Before <button id="save-compare-before" disabled>Save SVG</button></figcaption><div id="compare-before" class="prefix-drawing"></div></figure><figure><figcaption>After <button id="save-compare-after" disabled>Save SVG</button></figcaption><div id="compare-after" class="prefix-drawing"></div></figure></div><p id="compare-diff" class="full-word"></p>';
+document.body.append(compareDialog);
+let compareRequest=0,compareFit=true,compareSvgs={};
+$('close-compare').onclick=()=>{compareRequest++;compareDialog.close();};
+for(const side of ['before','after'])$(`save-compare-${side}`).onclick=()=>{
+ if(compareSvgs[side])download(compareSvgs[side],'image/svg+xml',`individual-arc-${side}.svg`);
+};
+function positionCompare(fraction){
+ if(compareFit)setCompareFit(false);
+ for(const side of ['before','after']){
+  const drawing=$(`compare-${side}`);drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;
+  drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;
+ }
+}
+function setCompareFit(fit){
+ compareFit=fit;$('compare-fit').textContent=fit?'Show detail':'Fit both arcs';
+ for(const side of ['before','after']){
+  const drawing=$(`compare-${side}`),svg=drawing.querySelector('svg');
+  if(svg){svg.style.width=fit?'100%':'';svg.style.height=fit?'auto':'';svg.classList.toggle('fit-overview',fit);}
+  if(fit)drawing.scrollTo(0,0);
+ }
+ if(!fit)positionCompare(.5);
+}
+$('compare-fit').onclick=()=>setCompareFit(!compareFit);
+for(const [id,fraction] of [['compare-start',0],['compare-middle',.5],['compare-end',1]])
+ $(id).onclick=()=>positionCompare(fraction);
 $('close-arc').onclick=()=>{arcRequest++;arcDialog.close();};
 $('save-arc').onclick=()=>{if(arcSvg)download(arcSvg,'image/svg+xml','individual-based-arc.svg');};
 function positionArc(fraction){
@@ -266,10 +293,46 @@ async function showPrefix(index){
     cell.append(dot,copy,view);row.append(cell);
    }
    const difference=document.createElement('div');difference.className='prefix-diff';
-   difference.textContent=prefixWordChange(data.before[i],data.after[i]);row.append(difference);
+   difference.textContent=prefixWordChange(data.before[i],data.after[i]);
+   const compare=document.createElement('button');compare.textContent='Compare arcs';
+   compare.setAttribute('aria-label',`Compare before and after arc x${i+1} after ${data.factor}`);
+   compare.onclick=()=>showCompareArc(i,index,revision);
+   difference.append(compare);row.append(difference);
    $('prefix-rows').append(row);
   }
  }catch(error){if(request===prefixRequest)$('prefix-status').textContent=error.message;}
+}
+async function showCompareArc(arcIndex,index,revision){
+ if(!prefixExport||prefixExport.index!==index||prefixExport.revision!==revision)return;
+ const request=++compareRequest;compareSvgs={};
+ const factor=prefixExport.factor;
+ $('compare-title').textContent=`${factor} · exact arc x${arcIndex+1} before and after`;
+ $('compare-diff').textContent=prefixWordChange(prefixExport.before[arcIndex],prefixExport.after[arcIndex]);
+ for(const side of ['before','after']){
+  $(`compare-${side}`).textContent='Routing exact arc…';
+  $(`save-compare-${side}`).disabled=true;
+ }
+ $('compare-status').textContent='Routing two individual exact arcs…';
+ if(!compareDialog.open)compareDialog.showModal();
+ let drawn=0;
+ for(const side of ['before','after']){
+  try{
+   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}`);
+   const data=await response.json();
+   if(request!==compareRequest)return;
+   if(!response.ok)throw new Error(data.error);
+   if(state.revision!==revision)throw new Error('The factorization changed; reopen the prefix inspector.');
+   if(data.svg){
+    compareSvgs[side]=data.svg;$(`compare-${side}`).innerHTML=data.svg;
+    $(`save-compare-${side}`).disabled=false;drawn++;
+    setCompareFit(compareFit);
+   }else $(`compare-${side}`).textContent=`Drawing unavailable: ${data.warning}`;
+  }catch(error){
+   if(request!==compareRequest)return;
+   $(`compare-${side}`).textContent=`Drawing unavailable: ${error.message}`;
+  }
+  $('compare-status').textContent=`${drawn} of 2 individual exact arcs drawn. Full based images: before ${prefixExport.before[arcIndex].length} letters, after ${prefixExport.after[arcIndex].length} letters. Joint cut-system placement is a separate check.`;
+ }
 }
 async function showArc(side,arcIndex,index,revision){
  if(arcIndex<0||arcIndex>=6)return;

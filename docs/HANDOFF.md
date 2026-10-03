@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## October 3: side-by-side individual arc comparison
+
+Each exact prefix row now has Compare arcs. It routes that meridian before and
+after the selected factor into one fitted, side-by-side modal, with original
+size navigation and separate SVG downloads. It reports complete based-word
+lengths and the changed middle while stating that two individually checked
+routes do not verify a joint six-arc placement. The original F11 x5 pair
+(1,831 versus 3,763 letters) rendered in both the local and portable
+browsers. The 28 focused factorization tests, JavaScript syntax, and portable
+site/link build pass.
+The previous gallery batch is commit 594e956; remote Tests #112 and
+Documentation #77 passed. A deterministic 9-move Hurwitz walk also found an
+F3 support whose exact boundary class grows to 16,514 letters and exceeds the
+2048-cut individual drawing limit; its exact braid check remains distinct from
+the unavailable support picture. Next: investigate compact exact joint
+routing for F11 and a scalable support representation after Hurwitz moves.
+
 ## October 3: six separate previews when joint routing is unavailable
 
 An unavailable before/after joint panel now offers Show six arcs separately.
@@ -11,8 +28,9 @@ browser screenshots confirmed the original F11 after-gallery, all six cards,
 and opening x5's full 3,763-letter image. An F13 local check showed two
 available after-arcs and four honest 2048-cut-limit cards, with no false
 joint claim. The 28 factorization tests, JavaScript syntax, and portable
-site/link checks pass. Next: commit/push, verify CI and public Pages, then
-develop a compact representation that checks joint F11 geometry.
+site/link checks pass. Commit 594e956 was pushed; remote Tests #112 and
+Documentation #77 passed. The public Pages lab loaded the 13-factor example.
+Next is the side-by-side comparison above, then compact exact joint geometry.
 
 ## October 3: compare exact before/after meridian words
 

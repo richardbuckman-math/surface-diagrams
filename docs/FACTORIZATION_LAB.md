@@ -92,7 +92,11 @@ does not decide whether the factorization is the identity on the sphere.
 Each x1–x6 row reports whether its complete based image changed and, when it
 did, the shared prefix and suffix lengths plus a short excerpt around the
 changed middle. This exposes differences hidden beyond the abbreviated word
-preview; **Save full exact words as JSON** preserves every letter.
+preview; **Save full exact words as JSON** preserves every letter. **Compare
+arcs** routes that meridian before and after the selected factor side by side,
+with fit/detail controls and separate SVG downloads. Each individual route
+checks its full based image, but the pair does not establish a joint six-arc
+cut-system placement; a route that exceeds its limit says so explicitly.
 When a joint drawing is unavailable, **Show six arcs separately** lazily draws
 the individual exact meridians in a small gallery, with Inspect for each full
 route. These previews do not check or depict one joint planar placement.

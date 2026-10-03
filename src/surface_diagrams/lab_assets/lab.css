@@ -9,7 +9,7 @@ dialog{width:min(95vw,1000px);max-height:90vh;border:1px solid #9fb6d0;border-ra
 .prefix-drawing svg.tracing path.arc.traced{opacity:1;stroke-width:3px}
 .prefix-drawing svg.fit-overview.tracing path.arc.traced{stroke-width:1px}
 .prefix-row .trace-arc{padding:3px 2px;min-width:30px}.prefix-row .trace-arc[aria-pressed="true"]{background:#e0efff}
-.prefix-diff{grid-column:2 / -1;color:#344c68;background:#f3f7fc;border-radius:4px;padding:5px 7px;font:11px Consolas,monospace;overflow-wrap:anywhere}
+.prefix-diff{grid-column:2 / -1;color:#344c68;background:#f3f7fc;border-radius:4px;padding:5px 7px;font:11px Consolas,monospace;overflow-wrap:anywhere}.prefix-diff button{margin-left:8px;font:inherit}
 .arc-gallery-host{max-height:60vh}.arc-gallery-host>p{margin:4px 0 9px}.arc-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}@media(max-width:650px){.arc-gallery{grid-template-columns:1fr}}
 .arc-gallery-card{min-width:0;border:1px solid #d5e0eb;border-radius:6px;padding:5px;transition:opacity .15s}.arc-gallery-card.muted{opacity:.15}.arc-gallery-head{display:flex;justify-content:space-between;align-items:center;color:#31516f}.arc-gallery-head button{padding:3px 6px}.arc-gallery-preview{min-height:140px;display:grid;place-items:center;overflow:hidden;color:#74849b}.arc-gallery-preview svg{display:block;width:100%;height:140px}.arc-gallery-preview svg path.arc{vector-effect:non-scaling-stroke;stroke-width:.8px}
 #sphere-status{font-weight:700;color:#245d49}#sphere-equations p{border-bottom:1px solid #dce5ef;padding:7px 0;margin:0}#sphere-whisker{background:#f3f7fb;padding:10px;border-radius:6px}
@@ -20,4 +20,4 @@ dialog{width:min(95vw,1000px);max-height:90vh;border:1px solid #9fb6d0;border-ra
 .support{top:56px}.support-check{position:absolute;top:36px;left:20px;font-size:10px;color:#476b58}.support-check.mismatch,.support-check.unavailable{color:#a14b20}
 .braid-row{fill:transparent;pointer-events:none}.braid-row.selected{fill:#e0efff}
 .history ol{max-height:230px;overflow:auto;margin:8px 0;padding-left:24px}.history li{margin:3px 0}.history li button{max-width:100%;text-align:left}.history li.current button{font-weight:700;background:#e0efff}
-.prefix-cell button{flex:none;padding:3px 6px}#arc-inspector{width:min(95vw,1100px)}#arc-inspector .prefix-drawing{max-height:55vh}#arc-word{max-height:90px;overflow:auto}
+.prefix-cell button{flex:none;padding:3px 6px}#arc-inspector,#compare-inspector{width:min(95vw,1100px)}#arc-inspector .prefix-drawing,#compare-inspector .prefix-drawing{max-height:55vh}#arc-word{max-height:90px;overflow:auto}
