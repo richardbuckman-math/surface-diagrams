@@ -233,8 +233,8 @@ class FactorizationLabTests(unittest.TestCase):
                     observed=(arc.start,)+path+(arc.end,)+inverse_word(path)
                     self.assertEqual(free_homotopy_key(observed),supported_class(twist))
                     self.assertIn('<svg',support_drawing(twist))
-        with self.assertRaisesRegex(ValueError,'768'):
-            support_curve(ConjugatedTwist((1,-2)*7,1,2,half=True))
+        with self.assertRaisesRegex(ValueError,'2048'):
+            support_curve(ConjugatedTwist((1,-2)*8,1,2,half=True))
 
     def test_dense_exact_support_expands_layout_and_keeps_geometric_checks(self):
         from surface_diagrams.svg import render_svg

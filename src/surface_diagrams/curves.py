@@ -11,7 +11,7 @@ from typing import Optional
 
 from .primitives import Path, Text
 
-MAX_CUT_VISITS = 768
+MAX_CUT_VISITS = 2048
 MAX_ROUTE_NODES = 3072
 
 

@@ -80,7 +80,7 @@ abbreviated on screen; **Save full exact words as JSON** exports all six complet
 images on both sides. The six colored arcs share a basepoint at the left outer
 rim. Each recovered arc's ray word is checked against the full exact meridian
 image before the shared surface router draws the family together. When a curve
-exceeds 768 cut visits or the family exceeds 3072 route nodes, the drawing is
+exceeds 2048 cut visits or the family exceeds 3072 route nodes, the drawing is
 marked unavailable and the exact words remain accessible. Each accepted
 before/after drawing has a **Save SVG** button for standalone inspection. The
 inspector initially fits each whole drawing in its panel; **Show detail** and
@@ -197,7 +197,7 @@ tries transporting each based meridian separately in reverse composition order.
 It retains base paths and never uses the unoriented curve-class comparison for
 braid equality. Intermediate words and final images remain bounded.
 
-Dense supports allow up to 768 cut visits per curve (2048 route nodes per
+Dense supports allow up to 2048 cut visits per curve (3072 route nodes per
 diagram). The lab widens crowded cut intervals while retaining fixed dot and
 stroke sizes, and scales the outer ellipse with the spacing. Use inspector zoom
 for these larger drawings. Exact class, noninterleaving, and dot-clearance checks
@@ -205,7 +205,8 @@ remain mandatory; the route search can still report its bounded-search limit.
 The separate recipe editor retains its existing 64-cut input limit.
 
 Dense diagrams (more than 128 route nodes) use at most 200 complete ordering
-attempts and two million pairwise crossing comparisons. Reaching a limit reports
+attempts and a node-scaled budget of up to eight million pairwise crossing
+comparisons. Reaching a limit reports
 that the search is inconclusive; it does not assert that the curve is impossible.
 Dense cards show their cut count and recommend inspector zoom.
 

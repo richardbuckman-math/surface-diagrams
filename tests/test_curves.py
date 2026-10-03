@@ -20,8 +20,8 @@ class CurvesTest(unittest.TestCase):
                lambda: Loop((0,3,2,0)), lambda: Loop(())]
         for make in bad:
             with self.assertRaises(ValueError): make()
-        with self.assertRaisesRegex(ValueError,'768 cut visits'):
-            Loop((0,1)*385)
+        with self.assertRaisesRegex(ValueError,'2048 cut visits'):
+            Loop((0,1)*1025)
 
     def test_visit_itinerary_and_alternating_sides_preserved(self):
         arc = Arc(2,3,(4,2,4,2,4),False)

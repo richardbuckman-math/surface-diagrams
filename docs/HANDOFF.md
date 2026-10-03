@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## October 3: individual exact F11/F12 arcs
+
+The shared per-curve cut limit is now 2048. The original F11 and F12
+meridian images recover individual exact arcs with 334–1502 cuts, although
+their combined six-arc systems still exceed the 3072-node route limit. The
+F11 x5 image, 3,763 letters and 1,502 cuts, routes individually in about
+13 seconds; a regression checks its complete based meridian and SVG. The
+inspector continues to label these as *individual* paths, never a jointly
+verified six-arc diagram. All 294 tests pass; local and portable browser
+screenshots confirmed the F11 x5 drawing and its explicit joint-view warning.
+The portable site builds with local links checked. Next: publish and verify
+remote checks and Pages, then seek a compact exact six-arc representation.
+
 ## October 3: exact joint cut system through F10
 
 Raised the shared route budget to 3072 nodes and gave dense route comparisons
@@ -8,10 +21,9 @@ prefix has 2,627 route nodes; its complete six-arc system now renders in about
 one minute locally, with all six meridian words checked and all arcs routed
 together. Local and portable browser screenshots confirmed the fitted
 F9-before/F10-after pair and x6 trace. The new F10 regression and all 293
-tests pass; the portable site builds with local links checked. Next: commit,
-push, and verify remote checks and public Pages. F11 onward still includes
-arcs beyond the 768-cut individual limit; a compact exact representation
-remains the next display problem.
+tests pass; the portable site builds with local links checked. Commit fbf49c8
+was pushed, and remote Tests and Documentation passed. A compact exact
+*joint* representation for F11 onward remains the next display problem.
 
 ## October 3: trace one arc in a later exact cut system
 

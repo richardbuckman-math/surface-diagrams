@@ -56,6 +56,16 @@ class BasedCutSystemTests(unittest.TestCase):
         for color in RAINBOW[:6]:
             self.assertIn(color,svg)
 
+    def test_eleventh_prefix_long_arc_remains_exact_individually(self):
+        image=exact_action(product(initial_factors()[:11]))[4]
+        arc=based_arc_from_meridian(image)
+        self.assertGreater(len(arc.cuts),768)
+        self.assertLessEqual(len(arc.cuts),2048)
+        self.assertEqual(reduce_word(based_arc_ray_word(arc)+(arc.end,)+
+                                     inverse_word(based_arc_ray_word(arc))),image)
+        svg=based_arc_drawing(image,index=4)
+        self.assertIn(RAINBOW[4],svg)
+
     def test_non_meridians_and_wrong_endpoints_are_rejected(self):
         with self.assertRaises(ValueError): based_arc_from_meridian((1,2))
         with self.assertRaises(ValueError): based_arc_from_meridian((-1,))

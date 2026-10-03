@@ -9,7 +9,7 @@ from collections import Counter
 from functools import lru_cache
 
 from .braid_actions import inverse_word, reduce_word
-from .curves import Arc, MAX_ROUTE_NODES
+from .curves import Arc, MAX_CUT_VISITS, MAX_ROUTE_NODES
 from .model import PlanarSurface, Style
 from .svg import render_svg
 from .twist_supports import _ray_cuts
@@ -60,7 +60,7 @@ def based_arc_from_meridian(image, *, points=6):
                 if reduce_word(path+(puncture,)+inverse_word(path)) == image:
                     candidates.append(arc)
     if not candidates:
-        raise ValueError('No exact based arc fits the shared 768-cut drawing limit')
+        raise ValueError(f'No exact based arc fits the shared {MAX_CUT_VISITS}-cut drawing limit')
     return min(candidates,key=lambda arc:(len(arc.cuts),arc.initial_up))
 
 
