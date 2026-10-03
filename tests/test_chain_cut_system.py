@@ -18,6 +18,7 @@ class ChainCutSystemTests(unittest.TestCase):
         arcs = chain_arcs(tuple((i,) for i in range(1, 7)))
         self.assertEqual(tuple((arc.start, arc.end) for arc in arcs), endpoints)
         self.assertTrue(all(not arc.cuts for arc in arcs))
+        self.assertTrue(all(arc.is_straight(6) for arc in arcs))
         svg = chain_cut_system_drawing(tuple((i,) for i in range(1, 7)))
         self.assertIn('<svg', svg)
         for color in RAINBOW[:6]:

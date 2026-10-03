@@ -11,7 +11,7 @@ from functools import lru_cache
 
 from .based_cut_system import based_arc_from_meridian
 from .braid_actions import reduce_word
-from .curves import MAX_ROUTE_NODES
+from .curves import Arc, MAX_ROUTE_NODES
 from .model import PlanarSurface, Style
 from .svg import render_svg
 from .twist_supports import arc_from_class
@@ -47,8 +47,18 @@ def chain_words(images):
 def chain_arcs(images):
     """Recover the six chain arcs; joint routing is checked only when drawn."""
     words, endpoints = chain_words(images)
-    return (based_arc_from_meridian(words[0]),) + tuple(
-        arc_from_class(words[i], *endpoints[i]) for i in range(1, 6))
+    return tuple(_recover_edge(words, endpoints, i) for i in range(6))
+
+
+def _recover_edge(words, endpoints, index):
+    arc = (based_arc_from_meridian(words[0]) if index == 0 else
+           arc_from_class(words[index], *endpoints[index]))
+    # A zero-cut edge between consecutive objects has a straight representative.
+    # Keep the standard reference chain on the symmetry line, including its
+    # boundary-to-first-point edge, instead of inventing a small semicircle.
+    if not arc.cuts and abs(arc.start - arc.end) == 1:
+        return Arc(arc.start, arc.end)
+    return arc
 
 
 def chain_arc(images, index):
@@ -56,8 +66,7 @@ def chain_arc(images, index):
     if type(index) is not int or not 0 <= index < 6:
         raise ValueError('Choose one of the six chain arcs')
     words, endpoints = chain_words(images)
-    return (based_arc_from_meridian(words[0]) if index == 0 else
-            arc_from_class(words[index], *endpoints[index]))
+    return _recover_edge(words, endpoints, index)
 
 
 def chain_arc_drawing(images, *, index=0):

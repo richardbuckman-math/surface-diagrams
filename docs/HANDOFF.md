@@ -1,5 +1,19 @@
 # Handoff: surface-diagrams
 
+## October 3: straight reference chain and weekly pacing
+
+The six-edge identity chain now draws along the horizontal line from the left
+boundary through points 1–6. An adjacent zero-cut edge also stays straight
+after a prefix when its exact class permits it, so unchanged edges no longer
+acquire arbitrary small semicircles. `tests/test_chain_cut_system.py` (5 tests)
+passes, including exact chain classes through F12 and joint F10 routing. Local
+browser inspection confirmed the identity and F1 pictures. A temporary F11
+experiment raising the 3,072-node cap to 6,000 took over two minutes without
+finishing; the right next step is a more compact exact joint router, not a
+larger cap or a numerical substitute. The recurring run now spreads usage
+across the rest of the week and keeps at least 15% for interactive work.
+
+
 ## October 3: adjacent-point chain for the factorization lab
 
 Richard clarified that the desired disk cut system is boundary → point 1 →
