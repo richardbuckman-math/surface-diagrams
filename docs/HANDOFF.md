@@ -1,5 +1,20 @@
 # Handoff: surface-diagrams
 
+## October 3: source correction and F11 execution scope
+
+Richard identified Dylan P. Thurston, *Geometric intersection of curves on
+surfaces* ([his CiteSeerX link](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.304.8233&rep=rep1&type=pdf))
+as the intended construction reference. The PDF was not directly retrievable
+through the current web tool; check the full text before attributing the local
+formula to Thurston. Related accessible primary constructions are listed in
+RESEARCH_NOTES.md. `prefix_action` computes before/after exact meridian images
+when the user opens a factor's cut-system inspector; the F11 joint drawing is
+attempted for F11-after (and F12-before), or after edits that change those
+prefixes. It is not part of the exact sphere identity certificate:
+`sphere_inner_certificate` verifies the disk braid's induced outer action on
+the six-punctured sphere independently. Cached identical drawings can be reused.
+
+
 ## October 3: replace F11 route-order search with local normal strands
 
 Richard proposed using the horizontal reference chain plus upper/lower rays

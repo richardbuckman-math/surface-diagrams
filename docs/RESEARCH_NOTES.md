@@ -7,14 +7,28 @@ Use primary papers and authors' documentation before choosing an algorithm.
 ## Curves and coordinates
 
 - **Dylan P. Thurston, _Geometric intersection of curves on surfaces_**, draft:
+  [Richard's CiteSeerX PDF](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.304.8233&rep=rep1&type=pdf),
   [author-page PDF](https://dpthurst.pages.iu.edu/DehnCoordinates.pdf).
-  The indexed first page calls it a pre-preprint and describes geometric
-  intersection, smoothing, Dehn-Thurston coordinate changes, and twisting.
-  This is a strong candidate for the unpublished webpage note Richard mentioned,
-  but the exact title has not yet been confirmed by him. The direct PDF returned
-  404 during this session; do not claim the complete draft was read or freeze an
-  algorithm from the indexed abstract. Obtain a working author copy before the
-  R0 coordinate comparison. Do not confuse Dylan's work with William's.
+  Richard confirmed this exact paper is the source he meant for reconstructing
+  curve drawings from a subdivision. The indexed first page calls it a
+  pre-preprint and describes geometric intersection, smoothing, Dehn-Thurston
+  coordinate changes, and twisting. Neither direct PDF was retrievable through
+  the current web tool, so the full construction has not yet been checked
+  against the draft. Obtain a readable copy before attributing particular
+  formulas or endpoint conventions to it. Do not confuse Dylan's work with
+  William's.
+- **S. Ö. Yurttaş, _Geometric intersection of curves on punctured disks_**:
+  [arXiv PDF](https://arxiv.org/pdf/1206.5325). Section 2 gives a specific
+  near-triangulation of a punctured disk, local above/below/loop component
+  counts, and reconstruction of an integral lamination from compatible
+  triangle coordinates. Our labeled arcs ending at marked points need explicit
+  endpoint and strand-order treatment beyond that closed-lamination setting.
+- **Jeff Erickson and Amir Nayyeri, _Tracing Compressed Curves in Triangulated
+  Surfaces_**: [authors' PDF](https://jeffe.cs.illinois.edu/pubs/pdf/tracingx.pdf).
+  Normal coordinates determine local noncrossing segments; the paper traces
+  curves through a triangulation without enumerating drawing-slot permutations.
+  Its compressed tracing becomes relevant if outputting all F11 segments is
+  costly even after local reconstruction.
 - **William P. Thurston, _On the geometry and dynamics of diffeomorphisms of
   surfaces_**, Bulletin AMS 19 (1988), 417-431:
   [publisher DOI](https://doi.org/10.1090/S0273-0979-1988-15685-6).
