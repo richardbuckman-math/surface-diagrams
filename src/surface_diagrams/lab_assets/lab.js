@@ -1,14 +1,26 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,prefixHighlight=null,arcRequest=0,arcSvg='',arcSelection=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,prefixHighlight=null,arcRequest=0,arcSvg='',arcSelection=null,arcFit=true;
 const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
-arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-previous">← Previous arc</button><button id="arc-next">Next arc →</button><button id="arc-toggle">Show before</button></div><div class="toolbar"><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Scroll to follow the long route.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
+arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-previous">← Previous arc</button><button id="arc-next">Next arc →</button><button id="arc-toggle">Show before</button></div><div class="toolbar"><button id="arc-fit">Show detail</button><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Fit shows the whole arc; detail shows its original size.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
 document.body.append(arcDialog);
 $('close-arc').onclick=()=>{arcRequest++;arcDialog.close();};
 $('save-arc').onclick=()=>{if(arcSvg)download(arcSvg,'image/svg+xml','individual-based-arc.svg');};
-function positionArc(fraction){const drawing=$('arc-drawing');drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;}
+function positionArc(fraction){
+ if(arcFit)setArcFit(false);
+ const drawing=$('arc-drawing');drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;
+ drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;
+}
+function setArcFit(fit){
+ arcFit=fit;$('arc-fit').textContent=fit?'Show detail':'Fit whole arc';
+ const drawing=$('arc-drawing'),svg=drawing.querySelector('svg');
+ if(svg){svg.style.width=fit?'100%':'';svg.style.height=fit?'auto':'';svg.classList.toggle('fit-overview',fit);}
+ if(fit)drawing.scrollTo(0,0);
+ else positionArc(.5);
+}
+$('arc-fit').onclick=()=>setArcFit(!arcFit);
 for(const [id,fraction] of [['arc-start',0],['arc-middle',.5],['arc-end',1]])$(id).onclick=()=>positionArc(fraction);
 for(const [id,delta] of [['arc-previous',-1],['arc-next',1]])$(id).onclick=()=>{
  if(arcSelection)showArc(arcSelection.side,arcSelection.arcIndex+delta,arcSelection.index,arcSelection.revision);
@@ -207,7 +219,7 @@ async function showArc(side,arcIndex,index,revision){
   $('arc-word-summary').textContent=`Full based image x${arcIndex+1} (${data.image.length} letters)`;
   $('arc-word').textContent=`x${arcIndex+1} → ${data.image.join(' ')}`;
   if(data.svg){arcSvg=data.svg;$('arc-drawing').innerHTML=arcSvg;$('save-arc').disabled=false;
-   positionArc(0);
+   setArcFit(arcFit);
    $('arc-status').textContent='Exact individual arc drawn. Joint cut-system routing remains a separate check.';}
   else{$('arc-drawing').textContent=`Drawing unavailable: ${data.warning}`;
    $('arc-status').textContent='The exact based image is still available below.';}

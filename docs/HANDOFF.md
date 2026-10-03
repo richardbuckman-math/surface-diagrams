@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## October 3: whole-path inspection for long individual arcs
+
+Individual arc inspection now fits the entire SVG by default, with original
+size available through Show detail and Start/Middle/End. This makes F11's
+1,502-cut x5 path visible as one image before zooming into the route. Local
+browser screenshots confirmed both scales; the portable browser exposed the
+same fitted control. JavaScript syntax, site build, and local-link checks pass.
+Next: commit/push and verify remote Tests/Documentation and the public lab;
+then work on a compact, jointly checked six-arc representation for F11 onward.
+
 ## October 3: individual exact F11/F12 arcs
 
 The shared per-curve cut limit is now 2048. The original F11 and F12
@@ -10,8 +20,9 @@ F11 x5 image, 3,763 letters and 1,502 cuts, routes individually in about
 inspector continues to label these as *individual* paths, never a jointly
 verified six-arc diagram. All 294 tests pass; local and portable browser
 screenshots confirmed the F11 x5 drawing and its explicit joint-view warning.
-The portable site builds with local links checked. Next: publish and verify
-remote checks and Pages, then seek a compact exact six-arc representation.
+The portable site builds with local links checked. Commit a0563f2 was pushed;
+remote Tests and Documentation passed. The compact exact six-arc
+representation remains open.
 
 ## October 3: exact joint cut system through F10
 

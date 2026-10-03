@@ -90,6 +90,8 @@ show all six at full color. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
 Each meridian row also has **View arc** for its before or after image. This
+individual view starts fitted to the whole path; **Show detail** and
+**Start/Middle/End** reveal the original-sized route. It
 routes one exact arc through the shared renderer and can remain available when
 the combined six-arc drawing reaches its limit. The individual view checks its
 full based image but does not claim that the six arcs are jointly disjoint.
