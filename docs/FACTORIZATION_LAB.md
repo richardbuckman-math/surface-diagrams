@@ -84,7 +84,9 @@ exceeds 768 cut visits or the family exceeds 2048 route nodes, the drawing is
 marked unavailable and the exact words remain accessible. Each accepted
 before/after drawing has a **Save SVG** button for standalone inspection. The
 inspector initially fits each whole drawing in its panel; **Show detail** and
-**Start/Middle/End** reveal the original-sized arcs. These are disk
+**Start/Middle/End** reveal the original-sized arcs. Click an **x1–x6** label
+to trace that same exact arc in both before/after drawings; click it again to
+show all six at full color. These are disk
 actions, without imposing the sphere relation; a final nontrivial disk action
 does not decide whether the factorization is the identity on the sphere.
 Each meridian row also has **View arc** for its before or after image. This

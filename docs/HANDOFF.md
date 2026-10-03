@@ -1,5 +1,16 @@
 # Handoff: surface-diagrams
 
+## October 3: trace one arc in a later exact cut system
+
+The prefix inspector's x1–x6 labels now toggle a single arc in both the
+before and after six-arc diagrams. This makes the exact path change readable
+inside the dense F8 drawing without losing the joint routing check. The
+toggle restores all six colors and resets when moving to another factor.
+Local and portable browser checks confirmed the selected x2 path and toggle;
+the 28 factorization tests, JavaScript syntax, and portable site link check
+pass. Next: push and verify CI/Pages, then develop a compact exact view for
+F10 and later prefixes that still exceed the joint route limit.
+
 ## October 3: later exact six-arc cut systems
 
 The shared noncrossing route solver now checks only edges completed by the
@@ -16,9 +27,9 @@ and offers original-size Start/Middle/End navigation. The individual arc and
 full-word views remain available. Browser screenshots confirmed the fitted
 pair and original-size detail; the portable site reproduced the fitted pair.
 The full 292-test suite, JS syntax, site build
-with local-link checks, and git diff check pass. Next: commit/push and verify
-remote Tests/Documentation and the public lab; then study a compact exact
-representation for F10 onward, where the joint node limit is still reached.
+with local-link checks, and git diff check pass. Commit 89403a1 was pushed;
+remote Tests and Documentation both passed, and the public lab showed the
+fitted prefix controls. The joint node limit is still reached for F10 onward.
 
 ## October 2: compare individual prefix arcs
 

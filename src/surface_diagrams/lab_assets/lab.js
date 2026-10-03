@@ -1,5 +1,6 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,arcRequest=0,arcSvg='',arcSelection=null;
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,prefixHighlight=null,arcRequest=0,arcSvg='',arcSelection=null;
+const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
@@ -122,6 +123,21 @@ function setPrefixFit(fit){
  }
  if(!fit)positionPrefix(.5);
 }
+function tracePrefix(index){
+ prefixHighlight=prefixHighlight===index?null:index;
+ for(const side of ['before','after']){
+  const svg=$(`prefix-${side}`).querySelector('svg');
+  if(!svg)continue;
+  svg.classList.toggle('tracing',prefixHighlight!==null);
+  svg.querySelectorAll('path.arc').forEach(path=>
+   path.classList.toggle('traced',path.getAttribute('stroke')===prefixColors[prefixHighlight]));
+ }
+ $('prefix-rows').querySelectorAll('.trace-arc').forEach((button,i)=>{
+  const pressed=i===prefixHighlight;
+  button.setAttribute('aria-pressed',String(pressed));
+  button.title=pressed?'Show all six arcs':`Trace x${i+1} in both drawings`;
+ });
+}
 async function showPrefix(index){
  if(!state||index<0||index>=state.factors.length)return;
  const revision=state.revision,request=++prefixRequest;
@@ -130,7 +146,7 @@ async function showPrefix(index){
  $('prefix-position').textContent=`Factor ${index+1} of ${state.factors.length}`;
  $('prefix-previous').disabled=index===0;
  $('prefix-next').disabled=index===state.factors.length-1;
- prefixExport=null;prefixSvgs={};$('save-prefix').disabled=true;
+ prefixExport=null;prefixSvgs={};prefixHighlight=null;$('save-prefix').disabled=true;
  $('save-prefix-before').disabled=true;$('save-prefix-after').disabled=true;
  $('prefix-rows').replaceChildren();$('prefix-before').replaceChildren();$('prefix-after').replaceChildren();
  $('prefix-status').textContent='Computing exact based meridian images and routing the cut systems…';
@@ -151,13 +167,15 @@ async function showPrefix(index){
    else drawing.textContent=`Drawing unavailable: ${data[`${side}_warning`]}`;
   }
   setPrefixFit(prefixFit);
-  const colors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
   for(let i=0;i<6;i++){
    const row=document.createElement('div');row.className='prefix-row';
-   const label=document.createElement('strong');label.textContent=`x${i+1}`;row.append(label);
+   const label=document.createElement('button');label.className='trace-arc';
+   label.textContent=`x${i+1}`;label.style.borderColor=prefixColors[i];
+   label.title=`Trace x${i+1} in both drawings`;label.setAttribute('aria-pressed','false');
+   label.onclick=()=>tracePrefix(i);row.append(label);
    for(const side of ['before','after']){
     const cell=document.createElement('div');cell.className='prefix-cell';
-    const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=colors[i];
+    const dot=document.createElement('span');dot.className='prefix-dot';dot.style.background=prefixColors[i];
     dot.textContent=String(data[`${side}_punctures`][i]);
     const word=data[side][i],shown=word.slice(0,64).join(' ');
     const copy=document.createElement('span');copy.className='full-word';
