@@ -4,10 +4,13 @@
 
 Richard identified Dylan P. Thurston, *Geometric intersection of curves on
 surfaces* ([his CiteSeerX link](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.304.8233&rep=rep1&type=pdf))
-as the intended construction reference. The PDF was not directly retrievable
-through the current web tool; check the full text before attributing the local
-formula to Thurston. Related accessible primary constructions are listed in
-RESEARCH_NOTES.md. `prefix_action` computes before/after exact meridian images
+as the intended construction reference. Richard supplied a local PDF; the
+relevant pp. 8–11 were read and visually checked. Proposition 14 gives unique
+noncrossing triangle filling for a simple closed curve in minimal position
+from admissible edge-intersection counts. Section 4.1 allows more general
+decompositions with punctures and arcs but does not settle our six colored
+arc endpoint/label conventions by itself. Read RESEARCH_NOTES.md for the exact
+scope. `prefix_action` computes before/after exact meridian images
 when the user opens a factor's cut-system inspector; the F11 joint drawing is
 attempted for F11-after (and F12-before), or after edits that change those
 prefixes. It is not part of the exact sphere identity certificate:
@@ -33,6 +36,10 @@ and one moderately twisted arc, round-trip the class, then test F10/F11 with
 six labeled arcs and visually inspect. Keep the existing renderer as fallback
 until this passes. Implement inside the existing `surface_diagrams` package,
 separating route computation from SVG layout; no new distribution or restart.
+Thurston's uniqueness statement assumes minimal position relative to the
+triangulation: raw intersections of our current half-ellipse drawing with the
+new rays are not automatically valid geometric intersection counts. Establish
+that normalization or derive the counts directly from a certified exact class.
 For a related punctured-disk triangle-coordinate construction and its local
 component counts, see S. Ö. Yurttaş, *Geometric intersection of curves on
 punctured disks*, §2 (https://arxiv.org/pdf/1206.5325). Its lamination setup

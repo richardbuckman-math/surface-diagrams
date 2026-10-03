@@ -10,13 +10,18 @@ Use primary papers and authors' documentation before choosing an algorithm.
   [Richard's CiteSeerX PDF](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.304.8233&rep=rep1&type=pdf),
   [author-page PDF](https://dpthurst.pages.iu.edu/DehnCoordinates.pdf).
   Richard confirmed this exact paper is the source he meant for reconstructing
-  curve drawings from a subdivision. The indexed first page calls it a
-  pre-preprint and describes geometric intersection, smoothing, Dehn-Thurston
-  coordinate changes, and twisting. Neither direct PDF was retrievable through
-  the current web tool, so the full construction has not yet been checked
-  against the draft. Obtain a readable copy before attributing particular
-  formulas or endpoint conventions to it. Do not confuse Dylan's work with
-  William's.
+  curve drawings from a subdivision, and supplied a local copy on October 3.
+  Section 4, Proposition 14 (p. 8) states that edge-intersection numbers of a
+  simple closed curve in minimal position on a triangulated surface determine
+  it uniquely: each triangle has a unique noncrossing filling when the counts
+  satisfy triangle inequalities and parity. Section 4.1 (pp. 10–11) discusses
+  maximal decompositions with punctures and arc endpoints, whose pieces can be
+  triangles, pairs of pants, or cusped annuli. Loops in the decomposition need
+  further marking/twist data. This supports deterministic local reconstruction,
+  but does not by itself prove that bare aggregate counts identify the six
+  separately labeled boundary-to-marked-point/point-to-point arcs in our lab.
+  Preserve endpoint and strand-label data and round-trip their exact classes.
+  Do not confuse Dylan's work with William's.
 - **S. Ö. Yurttaş, _Geometric intersection of curves on punctured disks_**:
   [arXiv PDF](https://arxiv.org/pdf/1206.5325). Section 2 gives a specific
   near-triangulation of a punctured disk, local above/below/loop component
