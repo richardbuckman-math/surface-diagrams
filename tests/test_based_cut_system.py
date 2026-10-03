@@ -46,6 +46,16 @@ class BasedCutSystemTests(unittest.TestCase):
         for color in RAINBOW[:6]:
             self.assertIn(color,svg)
 
+    def test_tenth_prefix_routes_beyond_old_joint_limit(self):
+        images=exact_action(product(initial_factors()[:10]))
+        nodes=sum(len(based_arc_from_meridian(image).cuts)+2 for image in images)
+        self.assertGreater(nodes,2048)
+        self.assertLessEqual(nodes,3072)
+        svg=based_cut_system_drawing(images)
+        self.assertIn('<svg',svg)
+        for color in RAINBOW[:6]:
+            self.assertIn(color,svg)
+
     def test_non_meridians_and_wrong_endpoints_are_rejected(self):
         with self.assertRaises(ValueError): based_arc_from_meridian((1,2))
         with self.assertRaises(ValueError): based_arc_from_meridian((-1,))

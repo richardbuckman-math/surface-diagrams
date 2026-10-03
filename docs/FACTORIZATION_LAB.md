@@ -80,7 +80,7 @@ abbreviated on screen; **Save full exact words as JSON** exports all six complet
 images on both sides. The six colored arcs share a basepoint at the left outer
 rim. Each recovered arc's ray word is checked against the full exact meridian
 image before the shared surface router draws the family together. When a curve
-exceeds 768 cut visits or the family exceeds 2048 route nodes, the drawing is
+exceeds 768 cut visits or the family exceeds 3072 route nodes, the drawing is
 marked unavailable and the exact words remain accessible. Each accepted
 before/after drawing has a **Save SVG** button for standalone inspection. The
 inspector initially fits each whole drawing in its panel; **Show detail** and

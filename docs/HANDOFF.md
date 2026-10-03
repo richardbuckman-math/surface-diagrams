@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## October 3: exact joint cut system through F10
+
+Raised the shared route budget to 3072 nodes and gave dense route comparisons
+a node-scaled ceiling of at most eight million. The original (6,7) F10
+prefix has 2,627 route nodes; its complete six-arc system now renders in about
+one minute locally, with all six meridian words checked and all arcs routed
+together. Local and portable browser screenshots confirmed the fitted
+F9-before/F10-after pair and x6 trace. The new F10 regression and all 293
+tests pass; the portable site builds with local links checked. Next: commit,
+push, and verify remote checks and public Pages. F11 onward still includes
+arcs beyond the 768-cut individual limit; a compact exact representation
+remains the next display problem.
+
 ## October 3: trace one arc in a later exact cut system
 
 The prefix inspector's x1–x6 labels now toggle a single arc in both the
@@ -8,8 +21,9 @@ inside the dense F8 drawing without losing the joint routing check. The
 toggle restores all six colors and resets when moving to another factor.
 Local and portable browser checks confirmed the selected x2 path and toggle;
 the 28 factorization tests, JavaScript syntax, and portable site link check
-pass. Next: push and verify CI/Pages, then develop a compact exact view for
-F10 and later prefixes that still exceed the joint route limit.
+pass. Commit b056204 is pushed, and remote Tests and Documentation passed;
+the public lab exposed and responded to the new controls. F10 rendering is
+now addressed in the section above.
 
 ## October 3: later exact six-arc cut systems
 

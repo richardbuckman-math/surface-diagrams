@@ -12,7 +12,7 @@ from typing import Optional
 from .primitives import Path, Text
 
 MAX_CUT_VISITS = 768
-MAX_ROUTE_NODES = 2048
+MAX_ROUTE_NODES = 3072
 
 
 def _integer(value, name):
@@ -307,7 +307,9 @@ def route(surface, style, *, max_states=20000):
             for earlier in chain(active,new[:i]):
                 c,d,other=edges[earlier]
                 comparisons+=1
-                if dense and comparisons>2000000:
+                # A complete dense candidate needs quadratically many pair
+                # checks; keep a finite search budget as the diagram grows.
+                if dense and comparisons>max(2000000,min(8000000,node_count*node_count)):
                     raise RoutingError('dense route comparison limit reached; this does not prove the curve impossible')
                 if _conflict(segment,(positions[c],positions[d],other)): return False
         return True
