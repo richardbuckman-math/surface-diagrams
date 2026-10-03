@@ -1,14 +1,20 @@
 'use strict';
-let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,arcRequest=0,arcSvg='';
+let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,arcRequest=0,arcSvg='',arcSelection=null;
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
-arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Scroll to follow the long route.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
+arcDialog.innerHTML='<div class="inspect-heading"><h2 id="arc-title">Individual based arc</h2><button id="close-arc">Close</button></div><p>This is one exact based meridian arc. Its ray word is checked against the full meridian image. A single-arc drawing does not verify that all six arcs are jointly disjoint or form a cut system.</p><p id="arc-status" role="status"></p><div class="toolbar"><button id="arc-previous">← Previous arc</button><button id="arc-next">Next arc →</button><button id="arc-toggle">Show before</button></div><div class="toolbar"><button id="arc-start">Start</button><button id="arc-middle">Middle</button><button id="arc-end">End</button><span>Scroll to follow the long route.</span></div><div id="arc-drawing" class="prefix-drawing"></div><details><summary id="arc-word-summary">Full based image</summary><p id="arc-word" class="full-word"></p></details><button id="save-arc" disabled>Save SVG</button>';
 document.body.append(arcDialog);
 $('close-arc').onclick=()=>{arcRequest++;arcDialog.close();};
 $('save-arc').onclick=()=>{if(arcSvg)download(arcSvg,'image/svg+xml','individual-based-arc.svg');};
 function positionArc(fraction){const drawing=$('arc-drawing');drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;drawing.scrollLeft=(drawing.scrollWidth-drawing.clientWidth)*fraction;}
 for(const [id,fraction] of [['arc-start',0],['arc-middle',.5],['arc-end',1]])$(id).onclick=()=>positionArc(fraction);
+for(const [id,delta] of [['arc-previous',-1],['arc-next',1]])$(id).onclick=()=>{
+ if(arcSelection)showArc(arcSelection.side,arcSelection.arcIndex+delta,arcSelection.index,arcSelection.revision);
+};
+$('arc-toggle').onclick=()=>{
+ if(arcSelection)showArc(arcSelection.side==='before'?'after':'before',arcSelection.arcIndex,arcSelection.index,arcSelection.revision);
+};
 function controls(){
  const f=state?.factors[selected];
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
@@ -148,11 +154,15 @@ async function showPrefix(index){
  }catch(error){if(request===prefixRequest)$('prefix-status').textContent=error.message;}
 }
 async function showArc(side,arcIndex,index,revision){
+ if(arcIndex<0||arcIndex>=6)return;
+ arcSelection={side,arcIndex,index,revision};
  const request=++arcRequest;arcSvg='';$('save-arc').disabled=true;
  $('arc-title').textContent=`${side} ${state.factors[index].id} · individual arc x${arcIndex+1}`;
+ $('arc-previous').disabled=arcIndex===0;$('arc-next').disabled=arcIndex===5;
+ $('arc-toggle').textContent=`Show ${side==='before'?'after':'before'}`;
  $('arc-status').textContent='Routing one exact arc…';
  $('arc-word').textContent='';$('arc-word-summary').textContent='Full based image';
- $('arc-drawing').replaceChildren();arcDialog.showModal();
+ $('arc-drawing').replaceChildren();if(!arcDialog.open)arcDialog.showModal();
  try{
   const response=await fetch(`/api/prefix-arc?index=${index}&side=${side}&arc=${arcIndex}&revision=${revision}`);
   const data=await response.json();if(request!==arcRequest)return;

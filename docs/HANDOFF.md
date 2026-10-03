@@ -1,5 +1,15 @@
 # Handoff: surface-diagrams
 
+## October 2: compare individual prefix arcs
+
+The individual-arc inspector now steps between x1–x6 and switches the selected
+arc between its before and after image without closing. Request revisions and
+stale-response guards still apply. A local static-browser check switched F8 x2
+from its 1,039-letter after image to its 431-letter before image, then advanced
+to x3 (287 letters); the SVG and label updated in place. JS syntax and site
+local links passed. Next: push, verify remote CI and Pages, then return to a
+joint late-prefix representation and robust support geometry.
+
 ## October 2: individual exact arcs beyond the joint route limit
 
 The prefix inspector now offers View arc for each before/after meridian. A

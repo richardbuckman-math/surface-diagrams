@@ -89,6 +89,9 @@ Each meridian row also has **View arc** for its before or after image. This
 routes one exact arc through the shared renderer and can remain available when
 the combined six-arc drawing reaches its limit. The individual view checks its
 full based image but does not claim that the six arcs are jointly disjoint.
+Inside the individual view, step to the previous or next arc and switch between
+its before and after image without closing the inspector. Start/Middle/End
+buttons navigate a long drawing horizontally; the complete word is expandable.
 
 **Check sphere action** computes the entire product's exact six-meridian disk
 action, imposes `D = x1 x2 x3 x4 x5 x6 = 1`, and checks whether the resulting
