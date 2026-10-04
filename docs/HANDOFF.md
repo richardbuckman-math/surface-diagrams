@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 4: puncture terminals in normal triangle counts
+
+`normal_strands.arc_gap_triangle_counts` now collects upper/lower vertical-ray
+counts and horizontal cut counts for each of the five inner gaps of one `Arc`.
+It retains each puncture endpoint as a separate **vertex slot**, determined by
+the first or last segment's side and direction; it does not count an endpoint
+as a ray crossing. Formal triangle counts include these vertex slots solely
+for the local parity/triangle-inequality test. For example, the raw upper
+counts for `Arc(1,3,(),direction='up')` at gap 1 are `(0,0,1)` and fail parity;
+its endpoint at puncture 1 gives formal counts `(1,0,1)`. The moderately
+winding `Arc(1,4,(3,0,5),direction='up')` has the same issue at its upper
+start and lower finish. All 780 formal upper/lower inner-gap checks for the six
+original chain arcs at prefixes F0–F12 pass, including the long F11 arcs.
+Eight focused normal-strand tests pass. This establishes numerical local
+admissibility, **not** a jointly embedded drawing: shared-ray crossing order,
+colored owner pairings, outer regions, and exact-class round trips remain to
+be built. Next: assign stable crossing IDs and consistent per-ray order to the
+six F11 arcs, then glue local strands and verify each recovered arc class.
+
 ## October 4: genus-two lift and section search
 
 Richard asked how to find sections in the supplied `(6,7)` factorization.

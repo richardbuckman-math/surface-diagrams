@@ -6,6 +6,7 @@ intersection counts or normalize a curve relative to a triangulation.
 """
 
 from dataclasses import dataclass
+from collections import Counter
 
 
 @dataclass(frozen=True)
@@ -25,6 +26,31 @@ class TriangleStrand:
     second_side: int
     second_slot: int
     owner: int
+
+
+@dataclass(frozen=True)
+class ArcGapTriangleCounts:
+    """One inner gap's side counts, retaining puncture endpoints separately.
+
+    A terminal is a vertex of the triangle, not a crossing of its vertical
+    ray. It occupies a formal slot on that side only when testing numerical
+    admissibility. An eventual gluer must still attach the strand to the
+    vertex rather than to a ray crossing.
+    """
+
+    gap: int
+    side: str
+    left_ray: int
+    chain_cut: int
+    right_ray: int
+    left_terminal: int = 0
+    right_terminal: int = 0
+
+    def formal_pair_counts(self):
+        """Test parity and triangle inequalities with terminal vertex slots."""
+        return triangle_pair_counts(self.left_ray + self.left_terminal,
+                                    self.chain_cut,
+                                    self.right_ray + self.right_terminal)
 
 
 class NormalTriangleError(ValueError):
@@ -107,7 +133,35 @@ def arc_side_ray_word(arc, *, points=6, side='upper'):
 
 def arc_side_ray_counts(arc, *, points=6, side='upper'):
     """Crossing count at each auxiliary ray, from the reduced side word."""
-    from collections import Counter
-
     counts = Counter(abs(letter) for letter in arc_side_ray_word(arc, points=points, side=side))
     return tuple(counts[point] for point in range(1, points + 1))
+
+
+def arc_gap_triangle_counts(arc, *, points=6, side='upper'):
+    """Return inner-gap counts from one exact Arc itinerary.
+
+    Each cut at gap j meets both the upper and lower triangle's chain side.
+    The first and last segments determine which triangle contains each
+    puncture endpoint. Outer-rim endpoints and cuts belong to outer regions,
+    not these ``points - 1`` inner triangles. Counts alone do not certify a
+    joint normal drawing or the order of different arcs along shared rays.
+    """
+    rays = arc_side_ray_counts(arc, points=points, side=side)
+    cuts = Counter(arc.cuts)
+    locations = ((2 * arc.start,) + tuple(2 * cut + 1 for cut in arc.cuts)
+                 + (2 * arc.end,))
+    terminals = [[0, 0] for _ in range(points - 1)]
+    for point, neighbor, segment_index in (
+            (arc.start, locations[1], 0),
+            (arc.end, locations[-2], len(locations) - 2)):
+        if not 1 <= point <= points:
+            continue
+        segment_upper = (segment_index % 2 == 0) == arc.initial_up
+        if segment_upper != (side == 'upper'):
+            continue
+        gap = point if neighbor > 2 * point else point - 1
+        if 1 <= gap < points:
+            terminals[gap - 1][0 if point == gap else 1] += 1
+    return tuple(ArcGapTriangleCounts(
+        gap, side, rays[gap - 1], cuts[gap], rays[gap],
+        *terminals[gap - 1]) for gap in range(1, points))
