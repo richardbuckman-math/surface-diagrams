@@ -25,6 +25,9 @@ supplied factors to `Mod(Sigma_2,p)`, trace a filling arc/curve system to
 identify the point-pushing loop for candidate regions, and certify a trivial
 loop before claiming a section. If found, lift to one-boundary mapping
 classes to read its self-intersection. Keep this separate from F11 rendering.
+Validation: all 308 local tests passed, the site build checked local links,
+GitHub Tests and Documentation checks passed for `4375153`, and the updated
+`(6,7)` catalog page returned HTTP 200 with the new status on GitHub Pages.
 
 ## October 4: upper/lower auxiliary-ray counts from exact arc itineraries
 
