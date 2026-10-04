@@ -2,16 +2,17 @@
   "category": "fibrations",
   "slug": "6-7",
   "title": "(6,7)",
-  "status": "Braid identity verified",
-  "description": "The supplied six-strand braid is verified as the identity in the six-punctured-sphere mapping class group. Its full Lefschetz-fibration interpretation remains to be specified.",
+  "status": "Genus-two identity verified",
+  "description": "The supplied six-strand braid lifts to a positive genus-two identity factorization with six nonseparating and seven separating twists. A section of this specific fibration has not yet been verified.",
   "proof_url": "docs/proofs/braid-six-seven/braid-six-seven-proof.html",
   "sections": {
-    "Surface and conventions": "The checked identity is in the mapping class group of a sphere with six marked points. The associated fibration surface and framing require further source information.",
+    "Surface and conventions": "The six-point sphere has a double cover branched at the marked points, giving a closed genus-two fiber. Half twists lift to nonseparating Dehn twists; squared twists around three points lift to separating Dehn twists. The sphere identity and +I homology action exclude the hyperelliptic involution, establishing identity on the closed genus-two fiber. Section framing remains open.",
     "Derivation": "A certificate records 2,486 elementary rewrites, including 19 sphere-relator substitutions. A portable verifier checks every move.",
     "Braid factorization": "The source is the 178-letter word transcribed from the supplied BraidSixSeven.svg; its exact source-file SHA-256 is recorded in the proof.",
     "Planar mapping class diagrams": "The local interactive lab displays thirteen factors and exact support-class checks. Correspondence with every drawing in the supplied PDF remains provisional.",
     "Standard mapping classes": "The final word is a positive full twist on punctures 4,5,6 followed by a negative full twist on punctures 1,2,3. The two curves are complementary on the sphere, so the Dehn twists cancel.",
-    "Equivalences and transformations": "The disk braid action is nontrivial. On the sphere the outer action is trivial, while the spherical braid represents its nontrivial central full twist. The full braid-relations proof establishes the mapping-class identity.",
-    "References": "User-supplied braid SVG; an external publication citation has not yet been established."
+    "Equivalences and transformations": "The disk braid action is nontrivial. On the sphere the outer action is trivial, while the spherical braid represents its nontrivial central full twist. The full braid-relations proof establishes the sphere mapping-class identity; the five-chain homology calculation distinguishes the identity from the genus-two deck involution.",
+    "Sections and multisections": "The branch points form three two-element monodromy orbits: (1,4), (2,5), and (3,6). These suggest degree-two multisections, not sections from fixed Weierstrass points. Xiao's degree-four (6,7) fibration is known to admit a smooth section, but equivalence with this supplied factorization and its section self-intersection remain unproved.",
+    "References": "User-supplied braid SVG; Birman-Hilden genus-two lifting theory; Zoltán Szabó, arXiv:2609.34042 (Xiao comparison). The supplied factorization has not been identified with that publication."
   }
 }

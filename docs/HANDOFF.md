@@ -1,5 +1,31 @@
 # Handoff: surface-diagrams
 
+## October 4: genus-two lift and section search
+
+Richard asked how to find sections in the supplied `(6,7)` factorization.
+Added `hyperelliptic_homology.py` and focused tests: the 178-letter braid's
+closed genus-two five-chain action is `+I`, while its exact six-punctured-sphere
+action is the identity. Birman–Hilden's kernel is `{1, iota}` and `iota` acts
+by `-I`, so the 13 positive factors really give a closed genus-two identity
+relation with six nonseparating and seven separating Dehn twists. This does
+**not** imply a section. The half twists exchange `(3,6), (1,4), (2,5)` and
+repeat those pairs; there is no fixed Weierstrass point. The pairs suggest
+three degree-two multisection candidates. The canonical added point at
+infinity fails its pointed test: the braid is not the third power of the disk
+full twist, as its exponent sum and exact Artin action show. The vanishing-cycle
+homology quotient is `Z^2`, but it is not automatically the total-space H1
+without a section.
+
+Szabó's new arXiv:2609.34042, §9.5, asserts a smooth section for Xiao's
+degree-four `(6,7)` fibration and no holomorphic section. The branch-pair
+pattern and homological divisibility match our factorization, but the factor
+orders differ and equivalence is unproved. See [the section-search note](SECTIONS_6_7.md)
+for sources, limits, and the exact marked-point criterion. Next: lift the
+supplied factors to `Mod(Sigma_2,p)`, trace a filling arc/curve system to
+identify the point-pushing loop for candidate regions, and certify a trivial
+loop before claiming a section. If found, lift to one-boundary mapping
+classes to read its self-intersection. Keep this separate from F11 rendering.
+
 ## October 4: upper/lower auxiliary-ray counts from exact arc itineraries
 
 `normal_strands.arc_side_ray_word` now reads reduced signed crossings with
