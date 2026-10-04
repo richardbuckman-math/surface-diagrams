@@ -1,11 +1,27 @@
 import unittest
 
 from surface_diagrams.normal_strands import (
-    NormalTriangleError, StrandVisit, pair_triangle_sides, triangle_pair_counts,
+    NormalTriangleError, StrandVisit, arc_side_ray_counts, arc_side_ray_word,
+    pair_triangle_sides, triangle_pair_counts,
 )
+from surface_diagrams.braid_actions import arc_ray_word
+from surface_diagrams.based_cut_system import based_arc_ray_word
+from surface_diagrams.curves import Arc
 
 
 class NormalTriangleTests(unittest.TestCase):
+    def test_auxiliary_rays_retain_both_sides_and_outer_endpoint(self):
+        arc = Arc(1, 4, (3, 0, 5), direction='up')
+        self.assertEqual(arc_side_ray_word(arc, side='upper'),
+                         (2, 3, 1, 2, 3, 4, 5))
+        self.assertEqual(arc_side_ray_word(arc, side='lower'),
+                         (-3, -2, -1, -5))
+        self.assertEqual(arc_side_ray_counts(arc, side='lower'),
+                         (1, 1, 1, 0, 1, 0))
+        based = Arc(0, 4, (3, 0), direction='down')
+        self.assertEqual(arc_side_ray_word(based), based_arc_ray_word(based))
+        self.assertEqual(arc_side_ray_word(arc), arc_ray_word(6, arc))
+
     def test_three_colored_corners_preserve_arc_owners(self):
         sides = (
             (StrandVisit(2, 0), StrandVisit(0, 1)),

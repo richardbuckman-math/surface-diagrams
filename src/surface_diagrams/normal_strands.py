@@ -71,3 +71,43 @@ def pair_triangle_sides(sides):
     for offset in range(n20):
         connect(2, len(sides[2]) - 1 - offset, 0, offset)
     return tuple(strands)
+
+
+def arc_side_ray_word(arc, *, points=6, side='upper'):
+    """Reduced crossing word against rays on one side of the marked row.
+
+    This includes arcs with a left or right outer-rim endpoint. Positive
+    letters cross left-to-right. A reduced ray word is exact for the supplied
+    itinerary, but this alone is not a minimal-position certificate for the
+    *combined* upper/lower/horizontal triangulation.
+    """
+    from .braid_actions import reduce_word
+    from .curves import Arc
+
+    if not isinstance(arc, Arc) or type(points) is not int or points < 1:
+        raise ValueError('Expected an Arc and a positive marked-point count')
+    if side not in ('upper', 'lower'):
+        raise ValueError("side must be 'upper' or 'lower'")
+    if max(arc.start, arc.end) > points + 1 or any(cut > points for cut in arc.cuts):
+        raise ValueError('arc endpoint or cut exceeds the marked row')
+    if arc.start_side is not None or arc.end_side is not None:
+        raise ValueError('inner-boundary rim endpoints need a separate convention')
+
+    locations = (2 * arc.start,) + tuple(2 * cut + 1 for cut in arc.cuts) + (2 * arc.end,)
+    letters = []
+    for index, (start, end) in enumerate(zip(locations, locations[1:])):
+        up = (index % 2 == 0) == arc.initial_up
+        if up != (side == 'upper'):
+            continue
+        crossed = [point for point in range(1, points + 1)
+                   if min(start, end) < 2 * point < max(start, end)]
+        letters.extend(crossed if start < end else (-point for point in reversed(crossed)))
+    return reduce_word(letters)
+
+
+def arc_side_ray_counts(arc, *, points=6, side='upper'):
+    """Crossing count at each auxiliary ray, from the reduced side word."""
+    from collections import Counter
+
+    counts = Counter(abs(letter) for letter in arc_side_ray_word(arc, points=points, side=side))
+    return tuple(counts[point] for point in range(1, points + 1))

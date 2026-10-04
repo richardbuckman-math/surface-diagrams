@@ -7,6 +7,7 @@ from surface_diagrams.chain_cut_system import (chain_arc, chain_arc_drawing,
                                                chain_words)
 from surface_diagrams.factorization_explorer import initial_factors, product
 from surface_diagrams.mapping_classes import exact_action
+from surface_diagrams.normal_strands import arc_side_ray_word
 from surface_diagrams.visuals import RAINBOW
 
 
@@ -32,10 +33,12 @@ class ChainCutSystemTests(unittest.TestCase):
             arcs = chain_arcs(images)
             self.assertEqual(tuple((arc.start, arc.end) for arc in arcs), endpoints)
             first = based_arc_ray_word(arcs[0])
+            self.assertEqual(arc_side_ray_word(arcs[0]), first)
             self.assertEqual(reduce_word(first + (arcs[0].end,) + inverse_word(first)), words[0])
             for i in range(1, 6):
                 arc = arcs[i]
                 path = arc_ray_word(6, arc)
+                self.assertEqual(arc_side_ray_word(arc), path)
                 boundary = (arc.start,) + path + (arc.end,) + inverse_word(path)
                 self.assertEqual(free_homotopy_key(boundary), free_homotopy_key(words[i]))
 

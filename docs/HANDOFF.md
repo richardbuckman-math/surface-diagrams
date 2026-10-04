@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## October 4: upper/lower auxiliary-ray counts from exact arc itineraries
+
+`normal_strands.arc_side_ray_word` now reads reduced signed crossings with
+upper **or** lower marked-point rays from an `Arc`, including the chain's
+left-rim starting edge; `arc_side_ray_counts` gives the six per-ray counts.
+The upper word agrees with the existing exact point-to-point and based-arc
+readers for every original factorization prefix through F12. A test also
+checks lower-ray orientation and counts on a winding sample arc. Ten focused
+normal-strand/chain tests pass. No SVG changes were made. These reduced words
+are exact for their given itineraries; do **not** yet assert that the union of
+upper, lower, and horizontal counts is simultaneously in minimal position for
+Thurston's triangulation. Next: establish that normalization or find a concrete
+counterexample, then form admissible triangle counts while preserving each
+arc's crossings, label, and endpoints. F11 still uses the existing renderer.
+
+
 ## October 3: deterministic local normal-triangle pairing
 
 Added `normal_strands.py`, a computation-only primitive for one triangular
