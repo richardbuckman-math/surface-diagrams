@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## October 4: explicit-order gluing of normal triangles
+
+`normal_gluing.glue_triangles` now certifies a proposed collection of labeled
+normal strands across oriented triangular regions. It checks that crossings
+on each shared edge occur in reverse boundary order, local pairings preserve
+arc owners, declared puncture/boundary terminals are used once, and every
+component is exactly one complete endpoint-to-endpoint arc. A small two-gap
+example for `Arc(1,3, direction='up')` succeeds; tests reject wrong shared-edge
+order or orientation, owner switches, missing terminals, and extra cycles.
+This accepts **supplied** crossing orders; it neither derives F11's orders
+from the six itineraries nor verifies a recovered arc's exact class. Next:
+retain IDs when reducing each itinerary's ray crossings, derive consistent
+orders for all shared sides including outer regions, and round-trip each
+glued arc against its independent exact class before rendering. The lab's
+current F11 fallback remains unchanged.
+
 ## October 4: puncture terminals in normal triangle counts
 
 `normal_strands.arc_gap_triangle_counts` now collects upper/lower vertical-ray
