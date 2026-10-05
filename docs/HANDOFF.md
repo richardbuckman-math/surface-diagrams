@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## October 5: common-ray orders read from an accepted joint layout
+
+`normal_strands.joint_arc_ray_orders` now partitions a complete, already
+accepted `curves.route` result by arc owner, verifies each arc's segment and
+ray IDs, and sorts every upper/lower physical ray by the shared analytic
+heights. Its output retains one-based colored arc owners and stable
+`ArcRayVisit` IDs. It rejects mislabeled pieces and cross-arc equal heights.
+The accepted six-arc F1 route gives upper ray 3, from north toward point 3,
+as arc 3 segment 0, arc 6 segment 2, arc 3 segment 2, arc 6 segment 0,
+matching the hand-derived order; all F1 ray events survive. Focused tests
+cover this readout and invalid joint layouts. This is an **inspection of an
+existing joint route**, not a construction of F11 or a derivation of orders
+from itineraries alone; no SVG changed. Next derive cross-arc precedence from
+terminal positions and local normal pairings, use it with shared-edge reversal
+to reconstruct and round-trip the full F1 arcs, then scale to F11 without the
+current route search.
+
 ## October 5: strict shared-ray precedence resolution
 
 `normal_strands.LabeledRayVisit` pairs a stable `ArcRayVisit` with its chain-arc

@@ -3,10 +3,11 @@ from dataclasses import replace
 from math import sqrt
 
 from surface_diagrams.normal_strands import (
-    ArcRayVisit, NormalTriangleError, StrandVisit, _reduce_ray_visits,
+    ArcRayVisit, LabeledRayVisit, NormalTriangleError, StrandVisit, _reduce_ray_visits,
     arc_gap_triangle_counts, arc_side_ray_counts, arc_side_ray_visits,
     arc_side_ray_word,
-    pair_triangle_sides, single_arc_ray_orders, triangle_pair_counts,
+    joint_arc_ray_orders, pair_triangle_sides, single_arc_ray_orders,
+    triangle_pair_counts,
 )
 from surface_diagrams.braid_actions import arc_ray_word
 from surface_diagrams.based_cut_system import based_arc_ray_word
@@ -25,6 +26,14 @@ class NormalTriangleTests(unittest.TestCase):
         pieces = route(surface.with_curves(arc), Style())
         xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (surface.width / 2,)
         return pieces, xs
+
+    @staticmethod
+    def _joint_f1_layout():
+        arcs = chain_arcs(exact_action(product(initial_factors()[:1])))
+        surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
+        pieces = route(surface.with_curves(*arcs), Style())
+        xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (surface.width / 2,)
+        return arcs, pieces, xs
 
     def test_single_arc_layout_orders_surviving_visits_by_analytic_height(self):
         arc = Arc(1, 4, (3, 0, 5), direction='up')
@@ -70,6 +79,46 @@ class NormalTriangleTests(unittest.TestCase):
                          sum(len(arc_side_ray_visits(arc, side))
                              for side in ('upper', 'lower')))
         self.assertGreater(max(map(len, orders.values())), 1)
+
+    def test_joint_f1_layout_orders_labeled_visits_on_common_rays(self):
+        arcs, pieces, xs = self._joint_f1_layout()
+        orders = joint_arc_ray_orders(arcs, pieces, xs)
+        # The documented order is north toward point 3, opposite the API's
+        # point-to-outward direction.
+        self.assertEqual(tuple((visit.owner, visit.visit.segment)
+                               for visit in reversed(orders['upper', 3])),
+                         ((3, 0), (6, 2), (3, 2), (6, 0)))
+        for side in ('upper', 'lower'):
+            expected = {LabeledRayVisit(owner, visit)
+                        for owner, arc in enumerate(arcs, 1)
+                        for visit in arc_side_ray_visits(arc, side)}
+            actual = {visit for point in range(1, 7)
+                      for visit in orders[side, point]}
+            self.assertEqual(actual, expected)
+            for point in range(1, 7):
+                self.assertTrue(all(visit.ray == (side, point)
+                                    for visit in orders[side, point]))
+
+    def test_joint_layout_rejects_cross_arc_ties_and_wrong_owners(self):
+        arcs, pieces, xs = self._joint_f1_layout()
+        with self.assertRaisesRegex(NormalTriangleError, 'owner disagrees'):
+            joint_arc_ray_orders(arcs, pieces[:10] +
+                                 (replace(pieces[10], owner=2),) + pieces[11:], xs)
+
+        x = xs[3]
+        def unscaled_height(piece):
+            radius = abs(piece.end - piece.start) / 2
+            return radius * sqrt(1 - ((x - (piece.start + piece.end) / 2) / radius) ** 2)
+        tied_aspect = (pieces[2].aspect * unscaled_height(pieces[2])
+                       / unscaled_height(pieces[10]))
+        tied = pieces[:10] + (replace(pieces[10], aspect=tied_aspect),) + pieces[11:]
+        offset = 0
+        for arc in arcs:
+            count = len(arc.cuts) + 1
+            single_arc_ray_orders(arc, tied[offset:offset + count], xs)
+            offset += count
+        with self.assertRaisesRegex(NormalTriangleError, 'indistinguishable heights'):
+            joint_arc_ray_orders(arcs, tied, xs)
 
     def test_puncture_terminals_are_separate_vertex_slots(self):
         arc = Arc(1, 3, direction='up')

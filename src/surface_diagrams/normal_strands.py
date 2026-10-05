@@ -251,6 +251,14 @@ def arc_side_ray_counts(arc, *, points=6, side='upper'):
     return tuple(counts[point] for point in range(1, points + 1))
 
 
+def _ray_height(piece, x):
+    """Distance from the marked row to a half-ellipse at an interior x."""
+    radius = abs(piece.end - piece.start) / 2
+    middle = (piece.start + piece.end) / 2
+    unit = (x - middle) / radius
+    return radius * piece.aspect * sqrt(max(0., 1 - unit * unit))
+
+
 def single_arc_ray_orders(arc, pieces, reference_xs):
     """Read surviving crossing IDs from one already accepted Arc layout.
 
@@ -305,17 +313,65 @@ def single_arc_ray_orders(arc, pieces, reference_xs):
                 piece = pieces[visit.segment]
                 if not min(piece.start, piece.end) < x < max(piece.start, piece.end):
                     raise NormalTriangleError('ray visit disagrees with layout geometry')
-                radius = abs(piece.end - piece.start) / 2
-                middle = (piece.start + piece.end) / 2
-                unit = (x - middle) / radius
-                height = radius * piece.aspect * sqrt(max(0., 1 - unit * unit))
-                ray.append((height, visit))
+                ray.append((_ray_height(piece, x), visit))
             ray.sort(key=lambda item: item[0])
             if any(isclose(first[0], second[0], rel_tol=1e-12, abs_tol=1e-10)
                    for first, second in zip(ray, ray[1:])):
                 raise NormalTriangleError('ray crossings have indistinguishable heights')
             orders[side, point] = tuple(visit for _, visit in ray)
     return orders
+
+
+def joint_arc_ray_orders(arcs, pieces, reference_xs):
+    """Read common physical ray orders from one already accepted joint layout.
+
+    ``arcs`` are the route's Arc curves in owner order; ``pieces`` are its
+    complete, unsplit HalfEllipse sequence. Route owners are zero-based, while
+    returned LabeledRayVisit owners are one-based chain-arc labels. Each tuple
+    runs from its marked point outward (up on upper rays, down on lower rays).
+    The caller supplies a jointly accepted placement; this reader does not
+    construct or certify a noncrossing placement from the itineraries.
+    """
+    from .curves import Arc, HalfEllipse
+
+    arcs = tuple(arcs)
+    pieces = tuple(pieces)
+    xs = tuple(reference_xs)
+    if not arcs or any(not isinstance(arc, Arc) for arc in arcs):
+        raise ValueError('expected one or more Arc curves in route owner order')
+    if any(not isinstance(piece, HalfEllipse) for piece in pieces):
+        raise NormalTriangleError('joint layout needs HalfEllipse segments')
+    if len(pieces) != sum(len(arc.cuts) + 1 for arc in arcs):
+        raise NormalTriangleError('joint layout does not contain every Arc segment')
+
+    grouped = []
+    offset = 0
+    for owner, arc in enumerate(arcs):
+        count = len(arc.cuts) + 1
+        owned = pieces[offset:offset + count]
+        if any(piece.owner != owner for piece in owned):
+            raise NormalTriangleError('joint layout segment owner disagrees with Arc route order')
+        grouped.append(owned)
+        offset += count
+
+    orders = {('upper', point): [] for point in range(1, len(xs) - 1)}
+    orders.update({('lower', point): [] for point in range(1, len(xs) - 1)})
+    for owner, (arc, owned) in enumerate(zip(arcs, grouped), 1):
+        individual = single_arc_ray_orders(arc, owned, xs)
+        for (side, point), visits in individual.items():
+            x = xs[point]
+            orders[side, point].extend(
+                (_ray_height(owned[visit.segment], x), LabeledRayVisit(owner, visit))
+                for visit in visits)
+
+    result = {}
+    for ray, crossings in orders.items():
+        crossings.sort(key=lambda item: item[0])
+        if any(isclose(first[0], second[0], rel_tol=1e-12, abs_tol=1e-10)
+               for first, second in zip(crossings, crossings[1:])):
+            raise NormalTriangleError('joint ray crossings have indistinguishable heights')
+        result[ray] = tuple(visit for _, visit in crossings)
+    return result
 
 
 def arc_gap_triangle_counts(arc, *, points=6, side='upper'):
