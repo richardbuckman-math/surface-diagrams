@@ -55,6 +55,15 @@ class LabeledRayVisit:
 
 
 @dataclass(frozen=True)
+class LabeledCutVisit:
+    """A horizontal cut endpoint, labeled by its 1-based arc and visit IDs."""
+
+    owner: int
+    cut_visit_id: int
+    gap: int
+
+
+@dataclass(frozen=True)
 class TriangleStrand:
     """A local connection between two ordered crossings."""
 
@@ -259,27 +268,15 @@ def _ray_height(piece, x):
     return radius * piece.aspect * sqrt(max(0., 1 - unit * unit))
 
 
-def single_arc_ray_orders(arc, pieces, reference_xs):
-    """Read surviving crossing IDs from one already accepted Arc layout.
+def _validate_arc_layout(arc, pieces, xs):
+    """Check that route pieces follow one Arc and retain each declared cut."""
+    from .curves import HalfEllipse
 
-    ``reference_xs`` lists the left outer tip, marked points, and right outer
-    tip in increasing x order. Each returned tuple runs from the marked point
-    outward along its upper or lower vertical ray. Half-ellipse heights are
-    evaluated analytically at that x coordinate. This only orders visits of
-    this one arc; separate layouts provide no order between different arcs.
-    """
-    from .curves import Arc, HalfEllipse
-
-    xs = tuple(reference_xs)
-    pieces = tuple(pieces)
     points = len(xs) - 2
-    if (not isinstance(arc, Arc) or points < 1
-            or any(not isinstance(x, (int, float)) or not isfinite(x) for x in xs)
-            or any(left >= right for left, right in zip(xs, xs[1:]))):
-        raise ValueError('expected an Arc and increasing finite reference coordinates')
-    # This also checks point/cut bounds and the endpoint convention.
-    visits = tuple(arc_side_ray_visits(arc, side=side, points=points)
-                   for side in ('upper', 'lower'))
+    if (max(arc.start, arc.end) > points + 1
+            or any(cut > points for cut in arc.cuts)
+            or arc.start_side is not None or arc.end_side is not None):
+        raise ValueError('arc endpoint or cut exceeds the marked row, or uses a rim endpoint')
     if len(pieces) != len(arc.cuts) + 1 or any(
             not isinstance(piece, HalfEllipse) for piece in pieces):
         raise NormalTriangleError('layout does not contain the Arc segments')
@@ -301,6 +298,30 @@ def single_arc_ray_orders(arc, pieces, reference_xs):
     for index, cut in enumerate(arc.cuts):
         if not xs[cut] < pieces[index].end < xs[cut + 1]:
             raise NormalTriangleError('layout cut visit lies outside its gap')
+
+
+def single_arc_ray_orders(arc, pieces, reference_xs):
+    """Read surviving crossing IDs from one already accepted Arc layout.
+
+    ``reference_xs`` lists the left outer tip, marked points, and right outer
+    tip in increasing x order. Each returned tuple runs from the marked point
+    outward along its upper or lower vertical ray. Half-ellipse heights are
+    evaluated analytically at that x coordinate. This only orders visits of
+    this one arc; separate layouts provide no order between different arcs.
+    """
+    from .curves import Arc
+
+    xs = tuple(reference_xs)
+    pieces = tuple(pieces)
+    points = len(xs) - 2
+    if (not isinstance(arc, Arc) or points < 1
+            or any(not isinstance(x, (int, float)) or not isfinite(x) for x in xs)
+            or any(left >= right for left, right in zip(xs, xs[1:]))):
+        raise ValueError('expected an Arc and increasing finite reference coordinates')
+    # This also checks point/cut bounds and the endpoint convention.
+    visits = tuple(arc_side_ray_visits(arc, side=side, points=points)
+                   for side in ('upper', 'lower'))
+    _validate_arc_layout(arc, pieces, xs)
 
     orders = {}
     for side, side_visits in zip(('upper', 'lower'), visits):
@@ -371,6 +392,53 @@ def joint_arc_ray_orders(arcs, pieces, reference_xs):
                for first, second in zip(crossings, crossings[1:])):
             raise NormalTriangleError('joint ray crossings have indistinguishable heights')
         result[ray] = tuple(visit for _, visit in crossings)
+    return result
+
+
+def joint_arc_cut_orders(arcs, pieces, reference_xs):
+    """Read x orders of labeled cut visits from an accepted joint Arc route.
+
+    ``reference_xs`` runs from the left outer tip through the marked row to
+    the right outer tip. Result keys are gaps 0..n, including empty gaps;
+    tuples run left to right. Route owners are zero-based, while the returned
+    arc owner and cut-visit ID are one-based. This reads a supplied placement;
+    it does not construct one from itineraries.
+    """
+    from .curves import Arc, HalfEllipse
+
+    arcs = tuple(arcs)
+    pieces = tuple(pieces)
+    xs = tuple(reference_xs)
+    if not arcs or any(not isinstance(arc, Arc) for arc in arcs):
+        raise ValueError('expected one or more Arc curves in route owner order')
+    if (len(xs) < 3
+            or any(not isinstance(x, (int, float)) or not isfinite(x) for x in xs)
+            or any(left >= right for left, right in zip(xs, xs[1:]))):
+        raise ValueError('expected increasing finite reference coordinates')
+    if (len(pieces) != sum(len(arc.cuts) + 1 for arc in arcs)
+            or any(not isinstance(piece, HalfEllipse) for piece in pieces)):
+        raise NormalTriangleError('joint layout does not contain every Arc segment')
+
+    orders = {gap: [] for gap in range(len(xs) - 1)}
+    offset = 0
+    for owner, arc in enumerate(arcs):
+        count = len(arc.cuts) + 1
+        owned = pieces[offset:offset + count]
+        if any(piece.owner != owner for piece in owned):
+            raise NormalTriangleError('joint layout segment owner disagrees with Arc route order')
+        _validate_arc_layout(arc, owned, xs)
+        for index, gap in enumerate(arc.cuts):
+            orders[gap].append((owned[index].end,
+                                LabeledCutVisit(owner + 1, index + 1, gap)))
+        offset += count
+
+    result = {}
+    for gap, visits in orders.items():
+        visits.sort(key=lambda item: item[0])
+        if any(isclose(first[0], second[0], rel_tol=1e-12, abs_tol=1e-10)
+               for first, second in zip(visits, visits[1:])):
+            raise NormalTriangleError('joint cut visits have indistinguishable x positions')
+        result[gap] = tuple(visit for _, visit in visits)
     return result
 
 

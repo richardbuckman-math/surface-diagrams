@@ -1,5 +1,23 @@
 # Handoff: surface-diagrams
 
+## October 5: labeled horizontal-cut orders from a joint layout
+
+`normal_strands.joint_arc_cut_orders` now reads the left-to-right order of
+actual visits to each horizontal chain gap from one already accepted joint
+`curves.route` layout. Every record retains its one-based arc owner and
+one-based itinerary cut-visit ID; all owner blocks, segment joins, endpoints,
+and gap coordinates are checked, and tied coordinates reject. On F1, only
+gaps 2 and 5 have visits, each with three labeled visits; the test compares
+their full orders to the route's actual endpoints. This complements the
+upper/lower shared-ray readout but still **reads** a route obtained by the old
+search: it does not derive F11's joint orders from exact itineraries. The four
+straight F1 chain edges lie on triangulation edges and have no cut visits;
+normal-triangle assembly must handle these edge-parallel components separately
+instead of inventing interior crossings. No SVG changed. Next use the F1
+ray/cut orders as a reference to glue the two winding arcs' normal triangle
+pieces and round-trip their exact classes, then derive those orders from
+terminal and local pairing constraints without consulting `curves.route`.
+
 ## October 5: common-ray orders read from an accepted joint layout
 
 `normal_strands.joint_arc_ray_orders` now partitions a complete, already

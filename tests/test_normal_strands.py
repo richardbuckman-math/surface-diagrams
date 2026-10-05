@@ -3,10 +3,12 @@ from dataclasses import replace
 from math import sqrt
 
 from surface_diagrams.normal_strands import (
-    ArcRayVisit, LabeledRayVisit, NormalTriangleError, StrandVisit, _reduce_ray_visits,
+    ArcRayVisit, LabeledCutVisit, LabeledRayVisit, NormalTriangleError,
+    StrandVisit, _reduce_ray_visits,
     arc_gap_triangle_counts, arc_side_ray_counts, arc_side_ray_visits,
     arc_side_ray_word,
-    joint_arc_ray_orders, pair_triangle_sides, single_arc_ray_orders,
+    joint_arc_cut_orders, joint_arc_ray_orders, pair_triangle_sides,
+    single_arc_ray_orders,
     triangle_pair_counts,
 )
 from surface_diagrams.braid_actions import arc_ray_word
@@ -119,6 +121,52 @@ class NormalTriangleTests(unittest.TestCase):
             offset += count
         with self.assertRaisesRegex(NormalTriangleError, 'indistinguishable heights'):
             joint_arc_ray_orders(arcs, tied, xs)
+
+    def test_joint_f1_cut_orders_match_every_route_endpoint(self):
+        arcs, pieces, xs = self._joint_f1_layout()
+        orders = joint_arc_cut_orders(arcs, pieces, xs)
+        self.assertEqual(orders, {
+            0: (), 1: (),
+            2: (LabeledCutVisit(6, 3, 2), LabeledCutVisit(3, 2, 2),
+                LabeledCutVisit(6, 1, 2)),
+            3: (), 4: (),
+            5: (LabeledCutVisit(3, 3, 5), LabeledCutVisit(6, 2, 5),
+                LabeledCutVisit(3, 1, 5)),
+            6: (),
+        })
+
+        endpoint_xs = {gap: [] for gap in orders}
+        offset = 0
+        for owner, arc in enumerate(arcs, 1):
+            for visit_id, gap in enumerate(arc.cuts, 1):
+                outgoing = pieces[offset + visit_id - 1]
+                incoming = pieces[offset + visit_id]
+                self.assertEqual((outgoing.end_node, outgoing.end),
+                                 (incoming.start_node, incoming.start))
+                self.assertTrue(xs[gap] < outgoing.end < xs[gap + 1])
+                endpoint_xs[gap].append((outgoing.end, owner, visit_id))
+            offset += len(arc.cuts) + 1
+        for gap, visits in orders.items():
+            self.assertEqual(tuple((visit.owner, visit.cut_visit_id)
+                                   for visit in visits),
+                             tuple((owner, visit_id) for _, owner, visit_id in
+                                   sorted(endpoint_xs[gap])))
+
+    def test_joint_cut_orders_reject_wrong_owner_gap_and_tie(self):
+        arcs, pieces, xs = self._joint_f1_layout()
+        wrong_owner = pieces[:10] + (replace(pieces[10], owner=2),) + pieces[11:]
+        with self.assertRaisesRegex(NormalTriangleError, 'owner disagrees'):
+            joint_arc_cut_orders(arcs, wrong_owner, xs)
+
+        wrong_gap = (pieces[:3] + (replace(pieces[3], end=100.),
+                                    replace(pieces[4], start=100.)) + pieces[5:])
+        with self.assertRaisesRegex(NormalTriangleError, 'outside its gap'):
+            joint_arc_cut_orders(arcs, wrong_gap, xs)
+
+        tied = (pieces[:8] + (replace(pieces[8], end=pieces[3].end),
+                              replace(pieces[9], start=pieces[3].end)) + pieces[10:])
+        with self.assertRaisesRegex(NormalTriangleError, 'indistinguishable x'):
+            joint_arc_cut_orders(arcs, tied, xs)
 
     def test_puncture_terminals_are_separate_vertex_slots(self):
         arc = Arc(1, 3, direction='up')
