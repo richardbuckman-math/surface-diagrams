@@ -1,5 +1,18 @@
 # Visualization-first development plan
 
+## Active October 5 prototypes
+
+The public `(6,7)` lab remains the interactive factorization reference. A
+separate three-/five-point boundary-twist playground now develops checked
+substitutions and Hurwitz moves; see `docs/HANDOFF.md` for its implemented
+relations and limits. Xiao `(4,3)` has a normalized, verified seven-factor
+interactive lab and paired support and braid drawings. Matsumoto `(6,2)` and
+Nakamura `(10,10)` have source-backed study pages and section notes; they need
+exact factor encodings before interactive editing. The next factorization
+increment is to encode Matsumoto's curves as checked six-strand factors and
+keep framed section relations distinct from closed-surface identity checks.
+Preserve the F11 joint cut-system work as a separate display milestone.
+
 Controlling plan, updated September 12, 2026. Richard's latest instruction makes
 **all requested visualizations, including cut systems, higher priority than the
 calculation engines**. The earlier R0-R7 calculation-led sequence is superseded.

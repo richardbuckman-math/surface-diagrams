@@ -14,10 +14,12 @@ const start = (async () => {
 let sessionRestored = false;
 
 self.onmessage = async event => {
- const {id, path, method, body, savedSession} = event.data;
+ const {id, path, method, body, savedSession, labSeed} = event.data;
  try {
   const pyodide = await start;
   if (!sessionRestored) {
+   pyodide.globals.set('requested_lab_seed', labSeed || '6-7');
+   pyodide.runPython('select_lab_seed(requested_lab_seed)');
    pyodide.globals.set('saved_session_text', savedSession || '');
    pyodide.runPython('restore_browser_session(saved_session_text)');
    sessionRestored = true;

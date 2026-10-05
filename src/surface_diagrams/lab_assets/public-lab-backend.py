@@ -2,21 +2,29 @@
 import json
 from urllib.parse import parse_qs, urlsplit
 
-from surface_diagrams.factorization_lab import LabServer, validated_session_document
-from surface_diagrams.factorization_explorer import initial_factors
+from surface_diagrams.factorization_lab import LabServer, starting_factors, validated_session_document
 from surface_diagrams.factorization_geometry import factorization_svg
 
 
 lab = LabServer.__new__(LabServer)
 lab.session_path = None
-lab.history = [initial_factors()]
-lab.frames = [()]
-lab.operations = ['Original factorization']
-lab.position = 0
-lab.revision = 0
-lab.message = 'Loaded the original factorization in this browser.'
-lab.verification_notice = ''
 lab.token = 'browser-only'
+
+
+def select_lab_seed(seed_slug='6-7'):
+    """Bind this worker to one exact starting product before restoring storage."""
+    lab.seed_factors = starting_factors(seed_slug)
+    lab.seed_slug = seed_slug
+    lab.history = [lab.seed_factors]
+    lab.frames = [()]
+    lab.operations = ['Original factorization']
+    lab.position = 0
+    lab.revision = 0
+    lab.message = 'Loaded the original factorization in this browser.'
+    lab.verification_notice = ''
+
+
+select_lab_seed()
 
 
 def restore_browser_session(text):
@@ -26,7 +34,7 @@ def restore_browser_session(text):
     try:
         if len(text) > 16*1024*1024:
             raise ValueError('Saved browser workspace exceeds 16 MiB')
-        history,frames,operations,position,limited=validated_session_document(json.loads(text))
+        history,frames,operations,position,limited=validated_session_document(json.loads(text),lab.seed_slug)
     except (ValueError,TypeError,IndexError,KeyError,OverflowError) as error:
         lab.message='Could not reopen the browser workspace: '+str(error)+'; loaded the original factorization.'
         return

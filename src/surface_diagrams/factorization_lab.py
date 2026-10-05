@@ -1,4 +1,4 @@
-"""Local interactive (6,7) factorization prototype. Run with --no-browser."""
+"""Local interactive six-strand factorization labs. Run with --no-browser."""
 import argparse
 from dataclasses import asdict
 from http.server import ThreadingHTTPServer
@@ -12,7 +12,8 @@ import threading
 import webbrowser
 from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
-from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,import_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors
+from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors
+from .fibration_lab_seeds import XIAO_FOUR_THREE
 from .braid_actions import free_homotopy_key,reduce_word
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
 from .factorization_audit import support_audit
@@ -22,10 +23,20 @@ from .sphere_actions import sphere_inner_certificate
 from .sphere_cut_system import sphere_chart_drawing
 
 
-def validated_session_document(saved):
+def starting_factors(seed_slug='6-7'):
+    """Only executable, verified six-strand seeds are available as labs."""
+    if seed_slug=='6-7': return initial_factors()
+    if seed_slug=='4-3': return XIAO_FOUR_THREE.factors
+    raise ValueError('Unknown factorization lab seed')
+
+
+def validated_session_document(saved,seed_slug='6-7'):
     """Decode a workspace with the same checks for disk and browser storage."""
     if not isinstance(saved,dict) or saved.get('format')!='surface-diagrams-session-v1':
         raise ValueError('Not a Factorization Lab session file')
+    if saved.get('seed','6-7')!=seed_slug:
+        raise ValueError('This workspace belongs to a different factorization lab')
+    seed_factors=starting_factors(seed_slug)
     entries=saved.get('history'); position=saved.get('position')
     if not isinstance(entries,list) or not 1<=len(entries)<=60 or type(position) is not int or not 0<=position<len(entries):
         raise ValueError('Invalid session history')
@@ -38,26 +49,30 @@ def validated_session_document(saved):
         raise ValueError('Invalid operation history')
     history=[];frames=[];limited=[]
     for index,entry in enumerate(entries):
-        factors=parse_factors(entry)
+        factors=parse_factors(entry,expected_seed=seed_slug)
         frame=parse_global_conjugator(saved_frames[index])
         try:
-            if frame: checked_global_frame(factors,frame)
-            else: checked(initial_factors(),factors)
-        except VerificationLimitError: limited.append(index+1)
+            if frame: checked_global_frame(factors,frame,seed_factors)
+            else: checked(seed_factors,factors)
+        except VerificationLimitError:
+            if seed_slug=='4-3': raise
+            limited.append(index+1)
         history.append(factors);frames.append(frame)
     return history,frames,operations,position,limited
 
 
 class LabServer(ThreadingHTTPServer):
     daemon_threads=True
-    def __init__(self,port=0,session_path=None):
+    def __init__(self,port=0,session_path=None,seed_slug='6-7'):
+        self.seed_slug=seed_slug
+        self.seed_factors=starting_factors(seed_slug)
         self.session_path=Path(session_path).expanduser().resolve() if session_path else None
-        history=[initial_factors()]; frames=[()]; operations=['Original factorization']; position=0; limited=[]
+        history=[self.seed_factors]; frames=[()]; operations=['Original factorization']; position=0; limited=[]
         if self.session_path and self.session_path.exists():
             if self.session_path.stat().st_size>16*1024*1024:
                 raise ValueError('Session file exceeds 16 MiB')
             saved=json.loads(self.session_path.read_text(encoding='utf-8'))
-            history,frames,operations,position,limited=validated_session_document(saved)
+            history,frames,operations,position,limited=validated_session_document(saved,seed_slug)
         super().__init__(('127.0.0.1',port),LabHandler)
         self.token=secrets.token_urlsafe(32)
         self.allowed_hosts={f'127.0.0.1:{self.server_port}',f'localhost:{self.server_port}'}
@@ -65,7 +80,8 @@ class LabServer(ThreadingHTTPServer):
         self.history=history; self.frames=frames; self.operations=operations
         self.position=position; self.revision=0
         self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
-                      else 'Loaded 13 factors / 178 braid letters from the earlier SVG.')
+                      else ("Loaded Xiao's seven normalized factors; exact disk product fixed to this seed."
+                            if seed_slug=='4-3' else 'Loaded 13 factors / 178 braid letters from the earlier SVG.'))
         self.verification_notice=('Saved history states '+', '.join(map(str,limited))+
             ' reached the exact verification limit on reopening. Their product equality is not reverified; history is preserved.' if limited else '')
         if limited: self.message='Reopened saved exploration and undo history.'
@@ -89,9 +105,11 @@ class LabServer(ThreadingHTTPServer):
         finally:
             if temporary is not None and temporary.exists(): temporary.unlink()
     def session_document(self):
-        return dict(format='surface-diagrams-session-v1',position=self.position,
-                    history=[export_factors(factors) for factors in self.history],
-                    frames=[list(frame) for frame in self.frames],operations=self.operations)
+        document=dict(format='surface-diagrams-session-v1',position=self.position,
+                      history=[export_factors(factors,self.seed_slug) for factors in self.history],
+                      frames=[list(frame) for frame in self.frames],operations=self.operations)
+        if self.seed_slug=='4-3': document['seed']='4-3'
+        return document
     def state(self):
         factors=self.history[self.position]
         rows=[]
@@ -104,11 +122,12 @@ class LabServer(ThreadingHTTPServer):
             if not f.half and f.points==3: options.append(['lantern','Lantern: three pairwise twists (marked points)'])
             rows.append(dict(asdict(f),word=f.word,core=f.core,label=f.label,svg=svg,warning=warning,
                              height=row_height(f),splits=options,audit=support_audit(f)))
-        return dict(token=self.token,revision=self.revision,factors=rows,braid=braid_svg(factors),
+        return dict(token=self.token,revision=self.revision,seed_slug=self.seed_slug,
+                    factors=rows,braid=braid_svg(factors),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
                     frame=self.frames[self.position],steps=self.operations,position=self.position,
-                    export=dict(export_factors(factors),global_conjugator=self.frames[self.position]))
+                    export=dict(export_factors(factors,self.seed_slug),global_conjugator=self.frames[self.position]))
     def prefix_action(self,index,system='fan'):
         """Exact images of either the boundary fan or adjacent-point chain."""
         from .based_cut_system import based_cut_system_drawing
@@ -212,7 +231,7 @@ class LabServer(ThreadingHTTPServer):
                 message='Combined neighboring factors; exact disk action verified.'
                 label=f'Combine from position {i+1}'
             elif op=='reset':
-                result=initial_factors();next_frame=();message='Restored original factorization. Undo is available.';label='Reset to original factorization'
+                result=self.seed_factors;next_frame=();message='Restored original factorization. Undo is available.';label='Reset to original factorization'
             elif op=='conjugate':
                 word=parse_global_conjugator(payload.get('word'))
                 if not word:
@@ -220,7 +239,7 @@ class LabServer(ThreadingHTTPServer):
                     self.revision+=1;return
                 result=global_conjugate_factors(factors,word)
                 next_frame=parse_global_conjugator(reduce_word(word+frame))
-                checked_global_frame(result,next_frame)
+                checked_global_frame(result,next_frame,self.seed_factors)
                 message='Globally conjugated every factor; the complete conjugated disk action was verified.'
                 label=('Global conjugation: '+' '.join(map(str,word)))[:300]
             elif op=='simplify':
@@ -233,13 +252,15 @@ class LabServer(ThreadingHTTPServer):
                 label='Simplify factor representatives'
             elif op=='import':
                 document=payload.get('document')
-                result=parse_factors(document)
+                result=parse_factors(document,expected_seed=self.seed_slug)
                 next_frame=parse_global_conjugator(document.get('global_conjugator',[]))
-                if next_frame: checked_global_frame(result,next_frame)
-                else: result=import_factors(document)
+                if next_frame: checked_global_frame(result,next_frame,self.seed_factors)
+                else: result=checked(self.seed_factors,result)
                 message='Loaded saved exploration; exact product and global frame verified.'
                 label='Import verified factorization'
             else: raise ValueError('Unknown operation')
+            if self.seed_slug=='4-3':
+                checked_global_frame(result,next_frame,self.seed_factors)
             self.history=self.history[:self.position+1]+[result]
             self.frames=self.frames[:self.position+1]+[next_frame]
             self.operations=self.operations[:self.position+1]+[label]
@@ -297,7 +318,7 @@ class LabHandler(EditorHandler):
         if self.path=='/api/state':
             with self.server.lock: data=self.server.state()
             self._reply(200,json.dumps(data)); return
-        assets={'/':('index.html','text/html; charset=utf-8'),
+        assets={'/':('xiao-4-3.html' if self.server.seed_slug=='4-3' else 'index.html','text/html; charset=utf-8'),
                 '/lab.js':('lab.js','text/javascript; charset=utf-8'),
                 '/lab.css':('lab.css','text/css; charset=utf-8')}
         if self.path not in assets: self._error(404,'Not found'); return
@@ -330,9 +351,10 @@ def main(argv=None):
     parser.add_argument('--port',type=int,default=0)
     parser.add_argument('--no-browser',action='store_true')
     parser.add_argument('--session',type=Path,help='Save and reopen this workspace file, including undo/redo history')
+    parser.add_argument('--seed',choices=('6-7','4-3'),default='6-7',help='Choose the factorization lab seed')
     args=parser.parse_args(argv)
     if not 0<=args.port<=65535: parser.error('port must be between 0 and 65535')
-    try: server=LabServer(args.port,args.session)
+    try: server=LabServer(args.port,args.session,args.seed)
     except (ValueError,OSError) as error: parser.error(str(error))
     print(server.url,flush=True)
     if not args.no_browser: webbrowser.open(server.url)

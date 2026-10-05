@@ -2,7 +2,16 @@
 
 The [interactive factorization prototype](docs/FACTORIZATION_LAB.md) opens with
 `python -m surface_diagrams.factorization_lab`: drag factors through Hurwitz moves,
-inspect a continuous braid, split checked twists, combine, and undo.
+inspect a continuous braid, split checked twists, combine, and undo. Use
+`--seed 4-3` for Xiao's seven-factor genus-two relation.
+
+Public workspaces: [(6,7) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/index.html),
+[(4,3) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/xiao-4-3/index.html),
+and [boundary-twist playground](https://richardbuckman-math.github.io/surface-diagrams/boundary-lab/index.html).
+The [(6,2)](https://richardbuckman-math.github.io/surface-diagrams/fibration-lab/6-2.html)
+and [(10,10)](https://richardbuckman-math.github.io/surface-diagrams/fibration-lab/10-10.html)
+pages collect source relations and section leads while their exact braid factors
+are prepared.
 
 Browse the [tutorial and gallery](https://richardbuckman-math.github.io/surface-diagrams/)
 and planned relation and Lefschetz-fibration catalog. See
@@ -16,7 +25,7 @@ groups and other relevant low dimensional geometry and topology. SVG and TikZ ou
 for arbitrary enlarging without losing sharpness.
 
 This is extremely experimental for now. It is based on older code I wrote a while ago,
-but this is the alpha version, 0.1.0a3. Python 3.9+; no runtime dependencies.
+but this is the alpha version, 0.1.0a6. Python 3.9+; no runtime dependencies.
 I will finish editing this readme when the software is in a more finished state. For now
 what is here may be wrong or not yet implemented.
 

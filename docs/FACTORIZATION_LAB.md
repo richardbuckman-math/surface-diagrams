@@ -1,5 +1,18 @@
 # Interactive factorization prototype
 
+The [Xiao (4,3) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/xiao-4-3/index.html)
+starts from seven normalized positive factors (148 braid letters). Use
+`python -m surface_diagrams.factorization_lab --seed 4-3` locally. Its Hurwitz
+moves, substitutions, imports, and saved sessions preserve **that seed's exact
+disk product**; the disk product is not the identity. The seed separately has
+trivial sphere outer action and `+I` closed genus-two homology action. Its
+browser storage and exports identify the seed, so (4,3) and (6,7) workspaces
+cannot be mixed. See the [source and section study](SECTIONS_GENUS2.md).
+
+The [boundary-twist playground](https://richardbuckman-math.github.io/surface-diagrams/boundary-lab/index.html)
+is a separate three-/five-point workspace for building a factorization from
+one selected boundary twist; it includes a checked three-point walkthrough.
+
 The [public browser lab](https://richardbuckman-math.github.io/surface-diagrams/lab/index.html)
 uses the same Python calculations in a browser worker, so visitors can use it
 without installing Python or connecting to your computer. Its first load fetches

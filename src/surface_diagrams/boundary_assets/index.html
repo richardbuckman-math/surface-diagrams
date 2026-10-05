@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Boundary Twist Playground · Surface Diagrams</title>
+  <link rel="stylesheet" href="../lab/lab.css">
+  <link rel="stylesheet" href="boundary.css">
+</head>
+<body>
+<header>
+  <div class="heading"><div><p class="eyebrow">SURFACE DIAGRAMS · FACTORIZATION PLAYGROUND</p><h1>Boundary Twist Playground</h1></div><span id="count">Loading…</span></div>
+  <p class="intro">Choose a boundary twist, replace it with verified factors, then explore with Hurwitz moves. Surface supports and one continuous braid update together.</p>
+  <div class="toolbar"><label for="points">Marked points</label><select id="points"><option value="3">3</option><option value="5">5</option></select><label for="power">Power</label><input id="power" type="number" min="1" max="32" value="1"><button id="new">Start this target</button><button id="example">Load three-point walkthrough</button></div>
+  <div class="toolbar"><button id="undo">Undo</button><button id="redo">Redo</button><span class="divider"></span><button id="save">Export JSON</button><button id="open">Load JSON</button><input id="file" type="file" accept=".json,application/json" hidden><button id="svg">Save SVG</button></div>
+  <div class="toolbar editing"><strong id="selected">Select a factor</strong><label for="split-kind">Substitute</label><select id="split-kind"></select><button id="split">Apply</button><button id="combine">Combine neighbors</button></div>
+  <p id="status" role="status" aria-live="polite">Loading the exact factorization engine…</p><p id="storage-status"></p>
+</header>
+<main>
+  <details class="scope" open><summary>Three-point exercise</summary><p>Start with one three-point boundary twist. Substitute the marked-point lantern relation to get three pairwise twists. Split the first pairwise twist into two half twists; drag the second half twist down one row, then drag the intervening pairwise twist down one row. The last two twists now combine into a square. The walkthrough button records every checked step so you can inspect or undo it.</p><p>The library currently offers power splitting, a two-point Dehn twist as two half twists, and the three-point marked-disk lantern substitution. The proposed conversion of a marked point into framed inner boundaries changes the surface; daisy and rose substitutions will appear here when their framing and factor order have been encoded and verified.</p></details>
+  <details class="scope history"><summary id="history-summary">Exploration history</summary><ol id="history-list"></ol></details>
+  <p id="target-status">Exact target loading…</p>
+  <div class="column-head"><span>Planar mapping classes <small>Drag a card · or use ↑ ↓</small></span><span>Continuous braid</span></div>
+  <div class="workspace"><section id="factors" aria-label="Ordered factorization"></section><div id="braid" aria-label="Continuous braid with blue factor separators"></div></div>
+  <p class="math-note">Equality is checked by the complete Artin action in the selected disk braid group. A support picture can be unavailable even when the algebraic replacement is verified. This marked-point model does not include inner-boundary framing.</p>
+</main>
+<script src="public.js"></script><script src="boundary.js"></script>
+</body>
+</html>

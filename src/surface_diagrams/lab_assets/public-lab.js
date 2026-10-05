@@ -3,7 +3,9 @@
 // stay on this device; the local HTTP server still uses its ordinary API.
 window.surfaceLabPublic = true;
 window.surfaceLabStorageAvailable = true;
-const labStorageKey = 'surface-diagrams-six-seven-workspace-v1';
+const labSeed = document.documentElement.dataset.labSeed === '4-3' ? '4-3' : '6-7';
+const labStorageKey = labSeed === '4-3' ? 'surface-diagrams-xiao-four-three-workspace-v1' :
+ 'surface-diagrams-six-seven-workspace-v1';
 let savedLabSession = '';
 try { savedLabSession = localStorage.getItem(labStorageKey) || ''; }
 catch (_) { window.surfaceLabStorageAvailable = false; }
@@ -32,6 +34,7 @@ window.fetch = (input, options = {}) => {
  return new Promise((resolve, reject) => {
   const id = ++nextLabRequest;
   pendingLabRequests.set(id, {resolve, reject});
-  labWorker.postMessage({id, path, method: options.method || 'GET', body: options.body || '', savedSession: savedLabSession});
+  labWorker.postMessage({id, path, method: options.method || 'GET', body: options.body || '',
+   savedSession: savedLabSession, labSeed});
  });
 };

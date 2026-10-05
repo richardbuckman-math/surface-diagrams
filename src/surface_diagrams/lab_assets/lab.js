@@ -435,14 +435,15 @@ $('conjugate').onclick=async()=>{
 };
 $('global-word').onkeydown=event=>{if(event.key==='Enter')$('conjugate').click();};
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
-$('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json','six-seven-factorization.json');
+const factorizationFilename=()=>state?.seed_slug==='4-3'?'xiao-four-three-factorization':'six-seven-factorization';
+$('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json',factorizationFilename()+'.json');
 $('open').onclick=()=>$('file').click();
 $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;if(file.size>250000)throw new Error('Choose a JSON file smaller than 250 KB');const document=JSON.parse(await file.text());await action({op:'import',document},0);}catch(e){status(e.message,true);}finally{$('file').value='';}};
 $('svg').onclick=async()=>{
  if(busy||!state)return;
  try{const response=await fetch('/api/export.svg?revision='+state.revision);
   if(!response.ok){const data=await response.json();throw new Error(data.error);}
-  download(await response.text(),'image/svg+xml','six-seven-factorization.svg');
+  download(await response.text(),'image/svg+xml',factorizationFilename()+'.svg');
  }catch(error){status(error.message,true);}
 };
 fetch('/api/state').then(r=>{if(!r.ok)throw new Error('Could not load the lab');return r.json();}).then(data=>{state=data;paint();}).catch(e=>status(e.message,true));

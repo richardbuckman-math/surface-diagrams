@@ -2,15 +2,16 @@
   "category": "fibrations",
   "slug": "6-2",
   "title": "(6,2)",
-  "status": "Planned",
-  "description": "Derivations and factorizations will be added here. The precise surface, conventions and source references remain to be specified.",
+  "status": "Source relation; braid encoding pending",
+  "description": "Matsumoto's eight-factor genus-two relation has six nonseparating and two separating twists. A one-boundary lift gives a section of square -1, and Hamada finds four disjoint such sections. Exact six-strand factor records are not yet encoded.",
   "sections": {
-    "Surface and conventions": "Pending source material and verification.",
-    "Derivation": "Pending source material and verification.",
-    "Braid factorization": "Pending source material and verification.",
-    "Planar mapping class diagrams": "Pending source material and verification.",
-    "Standard mapping classes": "Pending source material and verification.",
-    "Equivalences and transformations": "Pending source material and verification.",
-    "References": "Pending source material and verification."
+    "Surface and conventions": "The regular fiber is a genus-two surface. Capping the boundary of the framed relation gives a closed-surface identity of type (6,2).",
+    "Derivation": "Baykur-Korkmaz, Section 3.3, state Matsumoto's relation (t_B0 t_B1 t_B2 t_c)^2 = t_delta in the mapping class group of the genus-two surface with one boundary component.",
+    "Braid factorization": "The source curve diagram has not been converted into exact six-strand braid factors in this package. No checked interactive starting factorization is claimed yet.",
+    "Planar mapping class diagrams": "The cited papers depict the vanishing cycles and framed lifts; package support drawings remain to be constructed and checked.",
+    "Standard mapping classes": "Each repeated block has three nonseparating twists B0, B1, B2 and one separating twist c.",
+    "Equivalences and transformations": "Baykur-Korkmaz also describe a reverse-engineered (6,2) relation and identify it with a lift of Matsumoto's symmetric relation. A machine-checked conversion between their presentations is pending.",
+    "Sections and multisections": "The one-boundary relation gives one section of self-intersection -1. Hamada's Theorem 2 constructs four disjoint sections of self-intersection -1 for the genus-two Matsumoto-Cadavid-Korkmaz fibration. These are literature results, not boundary-framed checks by this package.",
+    "References": "Baykur-Korkmaz, arXiv:1510.00089, Section 3.3; Hamada, arXiv:1610.08458, Theorem 2."
   }
 }

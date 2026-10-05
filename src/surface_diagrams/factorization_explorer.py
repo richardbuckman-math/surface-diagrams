@@ -69,11 +69,11 @@ def parse_global_conjugator(word):
     return reduce_word(word)
 
 
-def checked_global_frame(factors,frame):
+def checked_global_frame(factors,frame,starting_factors=None):
     """Check a factorization against a globally conjugated starting product."""
     frame=parse_global_conjugator(frame)
     validate_size(factors)
-    expected=frame+product(initial_factors())+inverse_word(frame)
+    expected=frame+product(initial_factors() if starting_factors is None else starting_factors)+inverse_word(frame)
     if exact_action(product(factors))!=exact_action(expected):
         raise ValueError('Product does not match its saved global conjugation')
     return tuple(factors)
@@ -160,16 +160,23 @@ def combine_factors(factors,index):
     return result
 
 
-def export_factors(factors):
-    return {'format':'surface-diagrams-factorization-v1','strands':6,
-            'source':'Earlier BraidSixSeven SVG; remaining PDF support correspondence provisional',
-            'factors':[dict(asdict(f),word=f.word) for f in factors]}
+def export_factors(factors,seed_slug='6-7'):
+    if seed_slug not in ('6-7','4-3'):
+        raise ValueError('Unknown factorization lab seed')
+    document={'format':'surface-diagrams-factorization-v1','strands':6,
+              'source':('Earlier BraidSixSeven SVG; remaining PDF support correspondence provisional'
+                        if seed_slug=='6-7' else "Xiao's (4,3) normalized seven-factor seed"),
+              'factors':[dict(asdict(f),word=f.word) for f in factors]}
+    if seed_slug=='4-3': document['seed']='4-3'
+    return document
 
 
-def parse_factors(document):
+def parse_factors(document,expected_seed=None):
     """Validate saved records without asserting equality of their product."""
     if not isinstance(document,dict) or document.get('format')!='surface-diagrams-factorization-v1' or document.get('strands')!=6:
         raise ValueError('Choose a six-strand Factorization Lab JSON file')
+    if expected_seed is not None and document.get('seed','6-7')!=expected_seed:
+        raise ValueError('This factorization belongs to a different lab seed')
     rows=document.get('factors')
     if not isinstance(rows,list) or not 1<=len(rows)<=80: raise ValueError('Expected 1 to 80 factors')
     factors=[]; ids=set()

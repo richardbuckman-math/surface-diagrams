@@ -1,5 +1,54 @@
 # Handoff: surface-diagrams
 
+## October 5: boundary-twist playground and genus-two study pages
+
+Added a separate boundary-twist playground at `boundary-lab/index.html`. Its
+Python `BoundaryProject` keeps an ordered list of conjugated half/Dehn twists,
+checks every split, combine, and Hurwitz move by the complete Artin action in
+the disk braid group, and checks the whole product against the selected
+three- or five-point boundary twist. The browser page uses the same engine in
+Pyodide, with drag/drop and arrow moves, a continuous braid with blue factor
+separators, planar supports from the shared Arc/Loop renderer, history,
+undo/redo, JSON import/export, SVG export, and browser-local session recovery.
+The three-point walkthrough records: marked-point lantern; split one pairwise
+twist into two half twists; two Hurwitz moves; combine equal neighboring twists
+into a square. A five-point twist squared can be split into two copies. This is
+a **marked-disk** calculation: framed inner-boundary lantern/daisy/rose
+substitutions and splitting a marked point into an inner boundary are not yet
+implemented. A drawing is a support preview, separate from the exact action
+certificate. The public worker fetches pinned Pyodide and the site's common
+`surface_diagrams.zip`; local browser smoke used the identical Python app via
+a test server because the sandbox denied the CDN fetch.
+
+`fibration_lab_seeds.py` records a source-backed normalized seven-factor Xiao
+`(4,3)` representative. The printed branch braid words, the two
+hyperelliptic-involution corrections, and the normalized positive factors are
+kept distinct. Its closed genus-two identity passes exact sphere inner-action
+and `+I` homology checks; the build publishes paired seven-row support/braid
+SVG and a study page. The shared six-strand lab now accepts an explicit
+`--seed 4-3` or the separate public route `lab/xiao-4-3/index.html`. It keeps
+Xiao's disk product as its exact edit target; the original `(6,7)` baseline,
+session format, and browser storage remain separate. `(6,2)` and `(10,10)`
+now have source-backed study pages, with exact six-strand encodings explicitly
+pending. Section leads
+are in `docs/SECTIONS_GENUS2.md`: three disjoint square `-1` sections for an
+equivalent `(4,3)` presentation, four for Matsumoto `(6,2)`, no square `-1`
+section for Nakamura `(10,10)` by minimality, and no section certified for the
+supplied ordered `(6,7)` relation. Literature results are not claimed as
+independent boundary-framed checks by this package.
+
+Validation: 341 full-suite tests pass, including 18 focused boundary/seed
+tests and 3 Xiao lab tests. Node syntax checks pass for the new browser
+scripts. The site build passes its local-link check. Local browser smoke covers
+the three-point and five-point workflows, all three fibration study pages,
+and Xiao's editable lab after a Hurwitz move and sphere check. The SVGs were
+visually inspected. Next: encode and verify
+Matsumoto `(6,2)` curves before enabling
+its edits. For `(10,10)`, first record the exact ordered curves and lantern
+substitution with a closed-surface certificate. Develop framed substitutions
+as typed relation records with explicit boundary components, never as an
+unverified braid rewrite. Continue F11's joint-ray-order work separately.
+
 ## October 5: individual-layout ray order readout
 
 `normal_strands.single_arc_ray_orders` reads the surviving `ArcRayVisit` IDs
