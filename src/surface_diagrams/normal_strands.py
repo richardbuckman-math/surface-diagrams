@@ -7,6 +7,7 @@ intersection counts or normalize a curve relative to a triangulation.
 
 from dataclasses import dataclass
 from collections import Counter
+from heapq import heappop, heappush
 from math import isclose, isfinite, sqrt
 
 
@@ -39,6 +40,18 @@ class ArcRayVisit:
     @property
     def letter(self):
         return self.sign * self.point
+
+
+@dataclass(frozen=True)
+class LabeledRayVisit:
+    """A stable ray crossing ID together with its arc owner."""
+
+    owner: int
+    visit: ArcRayVisit
+
+    @property
+    def ray(self):
+        return self.visit.side, self.visit.point
 
 
 @dataclass(frozen=True)
@@ -79,6 +92,61 @@ class ArcGapTriangleCounts:
 
 class NormalTriangleError(ValueError):
     """Counts or labels cannot be realized by this normal triangle."""
+
+
+def resolve_ray_order(visits, precedences):
+    """Resolve supplied strict precedences on one physical ray, if unique.
+
+    Each ``(before, after)`` pair uses the caller's chosen ray direction.
+    These constraints must come from certified geometry, terminal anchors, or
+    local strand arguments; this function does not derive them from itineraries.
+    A partial order has a unique linear extension exactly when every step of
+    topological sorting has one available visit. Ambiguity is reported rather
+    than broken by owner or segment number.
+    """
+    visits = tuple(visits)
+    if any(not isinstance(visit, LabeledRayVisit) or
+           not isinstance(visit.visit, ArcRayVisit) for visit in visits):
+        raise NormalTriangleError('ray order needs labeled ray visits')
+    if len(set(visits)) != len(visits):
+        raise NormalTriangleError('ray order repeats a visit')
+    if len({(visit.owner, visit.visit.segment, visit.visit.point)
+            for visit in visits}) != len(visits):
+        raise NormalTriangleError('ray order repeats a crossing ID')
+    if len({visit.ray for visit in visits}) > 1:
+        raise NormalTriangleError('ray order combines different rays')
+
+    positions = {visit: index for index, visit in enumerate(visits)}
+    successors = [set() for _ in visits]
+    indegree = [0] * len(visits)
+    for before, after in precedences:
+        if before not in positions or after not in positions:
+            raise NormalTriangleError('ray precedence names an unknown visit')
+        source, target = positions[before], positions[after]
+        if target not in successors[source]:
+            successors[source].add(target)
+            indegree[target] += 1
+
+    available = []
+    for index, degree in enumerate(indegree):
+        if degree == 0:
+            heappush(available, index)
+    order = []
+    first_tie = None
+    while available:
+        if len(available) > 1 and first_tie is None:
+            first_tie = tuple(visits[index] for index in sorted(available))
+        index = heappop(available)
+        order.append(visits[index])
+        for successor in successors[index]:
+            indegree[successor] -= 1
+            if indegree[successor] == 0:
+                heappush(available, successor)
+    if len(order) != len(visits):
+        raise NormalTriangleError('ray precedence constraints contain a cycle')
+    if first_tie is not None:
+        raise NormalTriangleError(f'ray order has unresolved ties: {first_tie!r}')
+    return tuple(order)
 
 
 def triangle_pair_counts(a, b, c):

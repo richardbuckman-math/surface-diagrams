@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## October 5: strict shared-ray precedence resolution
+
+`normal_strands.LabeledRayVisit` pairs a stable `ArcRayVisit` with its chain-arc
+owner. `resolve_ray_order` accepts **supplied** strict precedence constraints
+on one upper/lower physical ray and returns an order only when their partial
+order has a unique linear extension. It rejects a mixed ray, duplicate or
+unknown crossing, a cycle, and unresolved cross-arc ties. It never chooses an
+owner/itinerary sort as geometry. The documented F1 upper-ray-3 order
+`(arc 3, segment 0), (arc 6, segment 2), (arc 3, segment 2),
+(arc 6, segment 0)` is now a regression case using its four exact event IDs and
+the **previously supplied** local precedence facts. This test does not derive
+those facts, and F11 remains undrawn jointly. Four new constraint tests plus
+the 12 existing normal-strand and five gluing tests pass; no SVG was changed.
+Next derive cross-arc precedences from common terminal geometry and local
+triangle pairings, check reversal on every shared cut, then glue F1 and
+round-trip its six exact arc classes before attempting F11.
+
 ## October 5: boundary-twist playground and genus-two study pages
 
 Added a separate boundary-twist playground at `boundary-lab/index.html`. Its
