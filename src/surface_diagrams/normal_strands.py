@@ -18,6 +18,29 @@ class StrandVisit:
 
 
 @dataclass(frozen=True)
+class ArcRayVisit:
+    """One signed crossing of a marked-point ray by an Arc segment.
+
+    ``crossing_id`` is stable within the supplied Arc itinerary. A joint
+    drawing must also supply the arc owner and derive an order along the ray;
+    itinerary order alone gives neither geometric ray order nor minimality.
+    """
+
+    side: str
+    segment: int
+    point: int
+    sign: int
+
+    @property
+    def crossing_id(self):
+        return self.segment, self.point
+
+    @property
+    def letter(self):
+        return self.sign * self.point
+
+
+@dataclass(frozen=True)
 class TriangleStrand:
     """A local connection between two ordered crossings."""
 
@@ -99,15 +122,25 @@ def pair_triangle_sides(sides):
     return tuple(strands)
 
 
-def arc_side_ray_word(arc, *, points=6, side='upper'):
-    """Reduced crossing word against rays on one side of the marked row.
+def _reduce_ray_visits(visits):
+    """Freely reduce signed visits while retaining the surviving event IDs."""
+    result = []
+    for visit in visits:
+        if result and result[-1].letter == -visit.letter:
+            result.pop()
+        else:
+            result.append(visit)
+    return tuple(result)
+
+
+def arc_side_ray_visits(arc, side='upper', points=6):
+    """Reduced signed ray visits, each tied to its source segment and point.
 
     This includes arcs with a left or right outer-rim endpoint. Positive
-    letters cross left-to-right. A reduced ray word is exact for the supplied
-    itinerary, but this alone is not a minimal-position certificate for the
-    *combined* upper/lower/horizontal triangulation.
+    signs cross left-to-right. Reduction removes inverse visits even when
+    their source segments differ. The surviving ``crossing_id`` values are
+    identifiers, not a claimed order of crossings on any physical ray.
     """
-    from .braid_actions import reduce_word
     from .curves import Arc
 
     if not isinstance(arc, Arc) or type(points) is not int or points < 1:
@@ -120,15 +153,27 @@ def arc_side_ray_word(arc, *, points=6, side='upper'):
         raise ValueError('inner-boundary rim endpoints need a separate convention')
 
     locations = (2 * arc.start,) + tuple(2 * cut + 1 for cut in arc.cuts) + (2 * arc.end,)
-    letters = []
+    visits = []
     for index, (start, end) in enumerate(zip(locations, locations[1:])):
         up = (index % 2 == 0) == arc.initial_up
         if up != (side == 'upper'):
             continue
         crossed = [point for point in range(1, points + 1)
                    if min(start, end) < 2 * point < max(start, end)]
-        letters.extend(crossed if start < end else (-point for point in reversed(crossed)))
-    return reduce_word(letters)
+        sign = 1 if start < end else -1
+        visits.extend(ArcRayVisit(side, index, point, sign)
+                      for point in (crossed if sign > 0 else reversed(crossed)))
+    return _reduce_ray_visits(visits)
+
+
+def arc_side_ray_word(arc, *, points=6, side='upper'):
+    """Reduced crossing word against rays on one side of the marked row.
+
+    A reduced ray word is exact for the supplied itinerary, but this alone is
+    not a minimal-position certificate for the combined triangulation.
+    """
+    return tuple(visit.letter for visit in arc_side_ray_visits(
+        arc, side=side, points=points))
 
 
 def arc_side_ray_counts(arc, *, points=6, side='upper'):

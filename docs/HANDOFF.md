@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## October 4: stable auxiliary-ray event IDs
+
+`normal_strands.arc_side_ray_visits` retains each surviving upper/lower ray
+crossing's segment and point ID through free reduction; `arc_side_ray_word`
+now reads those visits. Focused tests check cross-segment cancellation,
+immutability, a winding arc on both sides, and agreement with the independent
+exact upper-ray readers for all six chain arcs at F0–F12. F11-after has no
+upper/lower ray cancellations in its six arcs, so these IDs cover its raw ray
+events. They do **not** determine order along a shared physical ray: F11 has
+many segments with the same abstract gap-to-gap itinerary. Next derive and
+verify each shared-side order, including outer regions, then glue labeled
+triangles and round-trip exact arc classes before smoothing any joint picture.
+
 ## October 4: explicit-order gluing of normal triangles
 
 `normal_gluing.glue_triangles` now certifies a proposed collection of labeled

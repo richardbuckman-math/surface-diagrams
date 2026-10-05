@@ -1,8 +1,9 @@
 import unittest
 
 from surface_diagrams.normal_strands import (
-    NormalTriangleError, StrandVisit, arc_gap_triangle_counts,
-    arc_side_ray_counts, arc_side_ray_word,
+    ArcRayVisit, NormalTriangleError, StrandVisit, _reduce_ray_visits,
+    arc_gap_triangle_counts, arc_side_ray_counts, arc_side_ray_visits,
+    arc_side_ray_word,
     pair_triangle_sides, triangle_pair_counts,
 )
 from surface_diagrams.braid_actions import arc_ray_word
@@ -52,14 +53,51 @@ class NormalTriangleTests(unittest.TestCase):
         for prefix in range(13):
             arcs = chain_arcs(exact_action(product(factors[:prefix])))
             for edge, arc in enumerate(arcs, 1):
+                all_ids = []
                 for side in ('upper', 'lower'):
+                    visits = arc_side_ray_visits(arc, side=side)
+                    all_ids.extend(visit.crossing_id for visit in visits)
+                    with self.subTest(prefix=prefix, edge=edge, side=side):
+                        self.assertEqual(tuple(visit.letter for visit in visits),
+                                         arc_side_ray_word(arc, side=side))
+                        self.assertTrue(all(visit.side == side and
+                                            visit.crossing_id == (visit.segment, visit.point)
+                                            and visit.sign in (-1, 1)
+                                            for visit in visits))
+                        if side == 'upper':
+                            expected = (based_arc_ray_word(arc) if arc.start == 0 else
+                                        arc_ray_word(6, arc))
+                            self.assertEqual(tuple(visit.letter for visit in visits),
+                                             expected)
                     for gap in arc_gap_triangle_counts(arc, side=side):
                         with self.subTest(prefix=prefix, edge=edge,
                                           side=side, gap=gap.gap):
                             gap.formal_pair_counts()
+                self.assertEqual(len(all_ids), len(set(all_ids)))
+
+    def test_ray_visit_reduction_retains_survivor_ids_across_segments(self):
+        # A minimal Arc cannot repeat consecutive cuts, so build the event
+        # stream directly to exercise cancellation across different segments.
+        visits = (ArcRayVisit('upper', 0, 2, 1),
+                  ArcRayVisit('upper', 0, 3, 1),
+                  ArcRayVisit('upper', 2, 3, -1),
+                  ArcRayVisit('upper', 2, 4, 1))
+        reduced = _reduce_ray_visits(visits)
+        self.assertEqual(reduced, (visits[0], visits[3]))
+        self.assertEqual(tuple(visit.crossing_id for visit in reduced),
+                         ((0, 2), (2, 4)))
+        with self.assertRaises((AttributeError, TypeError)):
+            reduced[0].point = 5
 
     def test_auxiliary_rays_retain_both_sides_and_outer_endpoint(self):
         arc = Arc(1, 4, (3, 0, 5), direction='up')
+        self.assertEqual(tuple((visit.segment, visit.letter)
+                               for visit in arc_side_ray_visits(arc, 'upper')),
+                         ((0, 2), (0, 3), (2, 1), (2, 2), (2, 3),
+                          (2, 4), (2, 5)))
+        self.assertEqual(tuple((visit.segment, visit.letter)
+                               for visit in arc_side_ray_visits(arc, 'lower')),
+                         ((1, -3), (1, -2), (1, -1), (3, -5)))
         self.assertEqual(arc_side_ray_word(arc, side='upper'),
                          (2, 3, 1, 2, 3, 4, 5))
         self.assertEqual(arc_side_ray_word(arc, side='lower'),
