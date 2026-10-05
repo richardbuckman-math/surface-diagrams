@@ -1,5 +1,21 @@
 # Handoff: surface-diagrams
 
+## October 5: individual-layout ray order readout
+
+`normal_strands.single_arc_ray_orders` reads the surviving `ArcRayVisit` IDs
+from one accepted `HalfEllipse` layout, sorting crossings along each upper or
+lower ray by analytic height and rejecting tied heights or a layout that
+disagrees with the arc itinerary. Tests cover a winding arc and one individual
+F11 edge. This supplies only **within-arc** order: separate single-arc layouts
+cannot be merged into a verified order for all six F11 arcs. Derive a common
+placement and verify its shared-ray orders before gluing normal triangles.
+For the smaller F1 system, terminal anchors and the forced triangle pairings
+determine upper ray 3 from north toward puncture 3 as arc 3 segment 0,
+arc 6 segment 2, arc 3 segment 2, arc 6 segment 0; the existing joint route
+agrees. Sorting by owner or itinerary order fails this local constraint.
+Next encode such precedence and shared-cut reversal rules, reporting any
+remaining ties rather than permuting F11's thousands of crossings.
+
 ## October 4: stable auxiliary-ray event IDs
 
 `normal_strands.arc_side_ray_visits` retains each surviving upper/lower ray

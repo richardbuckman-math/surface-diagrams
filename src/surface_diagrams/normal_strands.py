@@ -7,6 +7,7 @@ intersection counts or normalize a curve relative to a triangulation.
 
 from dataclasses import dataclass
 from collections import Counter
+from math import isclose, isfinite, sqrt
 
 
 @dataclass(frozen=True)
@@ -180,6 +181,73 @@ def arc_side_ray_counts(arc, *, points=6, side='upper'):
     """Crossing count at each auxiliary ray, from the reduced side word."""
     counts = Counter(abs(letter) for letter in arc_side_ray_word(arc, points=points, side=side))
     return tuple(counts[point] for point in range(1, points + 1))
+
+
+def single_arc_ray_orders(arc, pieces, reference_xs):
+    """Read surviving crossing IDs from one already accepted Arc layout.
+
+    ``reference_xs`` lists the left outer tip, marked points, and right outer
+    tip in increasing x order. Each returned tuple runs from the marked point
+    outward along its upper or lower vertical ray. Half-ellipse heights are
+    evaluated analytically at that x coordinate. This only orders visits of
+    this one arc; separate layouts provide no order between different arcs.
+    """
+    from .curves import Arc, HalfEllipse
+
+    xs = tuple(reference_xs)
+    pieces = tuple(pieces)
+    points = len(xs) - 2
+    if (not isinstance(arc, Arc) or points < 1
+            or any(not isinstance(x, (int, float)) or not isfinite(x) for x in xs)
+            or any(left >= right for left, right in zip(xs, xs[1:]))):
+        raise ValueError('expected an Arc and increasing finite reference coordinates')
+    # This also checks point/cut bounds and the endpoint convention.
+    visits = tuple(arc_side_ray_visits(arc, side=side, points=points)
+                   for side in ('upper', 'lower'))
+    if len(pieces) != len(arc.cuts) + 1 or any(
+            not isinstance(piece, HalfEllipse) for piece in pieces):
+        raise NormalTriangleError('layout does not contain the Arc segments')
+    straight = arc.is_straight(points)
+    for index, piece in enumerate(pieces):
+        expected_up = (index % 2 == 0) == arc.initial_up
+        if (piece.up != (None if straight else expected_up)
+                or not all(isfinite(value) for value in
+                           (piece.start, piece.end, piece.aspect))
+                or piece.start == piece.end
+                or (not straight and piece.aspect <= 0)):
+            raise NormalTriangleError('layout segment disagrees with Arc side or geometry')
+        if index and (piece.start != pieces[index - 1].end
+                      or piece.start_node != pieces[index - 1].end_node
+                      or piece.owner != pieces[index - 1].owner):
+            raise NormalTriangleError('layout segments do not join in itinerary order')
+    if pieces[0].start != xs[arc.start] or pieces[-1].end != xs[arc.end]:
+        raise NormalTriangleError('layout endpoints disagree with the Arc')
+    for index, cut in enumerate(arc.cuts):
+        if not xs[cut] < pieces[index].end < xs[cut + 1]:
+            raise NormalTriangleError('layout cut visit lies outside its gap')
+
+    orders = {}
+    for side, side_visits in zip(('upper', 'lower'), visits):
+        for point in range(1, points + 1):
+            ray = []
+            x = xs[point]
+            for visit in side_visits:
+                if visit.point != point:
+                    continue
+                piece = pieces[visit.segment]
+                if not min(piece.start, piece.end) < x < max(piece.start, piece.end):
+                    raise NormalTriangleError('ray visit disagrees with layout geometry')
+                radius = abs(piece.end - piece.start) / 2
+                middle = (piece.start + piece.end) / 2
+                unit = (x - middle) / radius
+                height = radius * piece.aspect * sqrt(max(0., 1 - unit * unit))
+                ray.append((height, visit))
+            ray.sort(key=lambda item: item[0])
+            if any(isclose(first[0], second[0], rel_tol=1e-12, abs_tol=1e-10)
+                   for first, second in zip(ray, ray[1:])):
+                raise NormalTriangleError('ray crossings have indistinguishable heights')
+            orders[side, point] = tuple(visit for _, visit in ray)
+    return orders
 
 
 def arc_gap_triangle_counts(arc, *, points=6, side='upper'):

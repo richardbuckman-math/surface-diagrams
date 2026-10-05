@@ -1,20 +1,76 @@
 import unittest
+from dataclasses import replace
+from math import sqrt
 
 from surface_diagrams.normal_strands import (
     ArcRayVisit, NormalTriangleError, StrandVisit, _reduce_ray_visits,
     arc_gap_triangle_counts, arc_side_ray_counts, arc_side_ray_visits,
     arc_side_ray_word,
-    pair_triangle_sides, triangle_pair_counts,
+    pair_triangle_sides, single_arc_ray_orders, triangle_pair_counts,
 )
 from surface_diagrams.braid_actions import arc_ray_word
 from surface_diagrams.based_cut_system import based_arc_ray_word
-from surface_diagrams.chain_cut_system import chain_arcs
-from surface_diagrams.curves import Arc
+from surface_diagrams.chain_cut_system import chain_arc, chain_arcs
+from surface_diagrams.curves import Arc, route
 from surface_diagrams.factorization_explorer import initial_factors, product
 from surface_diagrams.mapping_classes import exact_action
+from surface_diagrams.model import PlanarSurface, Style
 
 
 class NormalTriangleTests(unittest.TestCase):
+    @staticmethod
+    def _single_arc_layout(arc, *, spacing=36, height=80, margin=30):
+        surface = PlanarSurface.row('PPPPPP', spacing=spacing,
+                                    height=height, margin=margin)
+        pieces = route(surface.with_curves(arc), Style())
+        xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (surface.width / 2,)
+        return pieces, xs
+
+    def test_single_arc_layout_orders_surviving_visits_by_analytic_height(self):
+        arc = Arc(1, 4, (3, 0, 5), direction='up')
+        pieces, xs = self._single_arc_layout(arc)
+        orders = single_arc_ray_orders(arc, pieces, xs)
+        self.assertEqual(tuple(visit.crossing_id for visit in orders['upper', 2]),
+                         ((0, 2), (2, 2)))
+        self.assertEqual(tuple(visit.crossing_id for visit in orders['upper', 3]),
+                         ((0, 3), (2, 3)))
+        self.assertEqual(orders['lower', 4], ())
+        for side in ('upper', 'lower'):
+            self.assertEqual({visit.crossing_id for point in range(1, 7)
+                              for visit in orders[side, point]},
+                             {visit.crossing_id for visit in
+                              arc_side_ray_visits(arc, side)})
+
+    def test_single_arc_layout_rejects_tied_heights_and_wrong_itinerary(self):
+        arc = Arc(1, 4, (3, 0, 5), direction='up')
+        pieces, xs = self._single_arc_layout(arc)
+        x = xs[2]
+        def unscaled_height(piece):
+            radius = abs(piece.end - piece.start) / 2
+            return radius * sqrt(1 - ((x - (piece.start + piece.end) / 2) / radius) ** 2)
+        tied_aspect = (pieces[0].aspect * unscaled_height(pieces[0])
+                       / unscaled_height(pieces[2]))
+        tied = pieces[:2] + (replace(pieces[2], aspect=tied_aspect),) + pieces[3:]
+        with self.assertRaisesRegex(NormalTriangleError, 'indistinguishable heights'):
+            single_arc_ray_orders(arc, tied, xs)
+        wrong_side = pieces[:2] + (replace(pieces[2], up=False),) + pieces[3:]
+        with self.assertRaisesRegex(NormalTriangleError, 'disagrees'):
+            single_arc_ray_orders(arc, wrong_side, xs)
+        with self.assertRaisesRegex(NormalTriangleError, 'outside its gap'):
+            single_arc_ray_orders(arc, pieces,
+                                  xs[:5] + (pieces[-1].start + 1,) + xs[6:])
+
+    def test_one_f11_arc_layout_has_individual_ray_orders(self):
+        images = exact_action(product(initial_factors()[:11]))
+        arc = chain_arc(images, 3)
+        pieces, xs = self._single_arc_layout(arc, spacing=500,
+                                             height=2200, margin=550)
+        orders = single_arc_ray_orders(arc, pieces, xs)
+        self.assertEqual(sum(len(visits) for visits in orders.values()),
+                         sum(len(arc_side_ray_visits(arc, side))
+                             for side in ('upper', 'lower')))
+        self.assertGreater(max(map(len, orders.values())), 1)
+
     def test_puncture_terminals_are_separate_vertex_slots(self):
         arc = Arc(1, 3, direction='up')
         upper = arc_gap_triangle_counts(arc, side='upper')
