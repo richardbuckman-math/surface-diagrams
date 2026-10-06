@@ -1,5 +1,25 @@
 # Handoff: surface-diagrams
 
+## October 6: F1 inner-triangle gluing round-trip
+
+`normal_gluing.inner_arc_triangles` now assembles the five upper and five lower
+inner triangles from **supplied** labeled ray and horizontal-cut orders. It
+keeps each arc owner and crossing ID, places puncture terminals at triangle
+vertices, and rejects missing winding arcs and crossings that would require
+the outer regions. The shared-edge gluer reconstructs F1's two winding chain
+arcs, owners 3 and 6, from these triangles. Both paths have the expected
+endpoints (p2-to-p3 and p5-to-p6), and each path's 14 ordered signed ray/cut
+events agrees exactly with its original `Arc` itinerary. The four other F1
+arcs are straight triangulation edges and are explicitly excluded from this
+inner-region model. All 22 normal-strand/gluing tests pass; no SVG changed.
+
+This validates the local pairing and gluing step against an already accepted
+F1 layout. It **does not derive** the ray/cut orders from itineraries, prove
+minimal position, or resolve F11's joint placement. Next derive shared-edge
+orders from terminal geometry and local pairing constraints without reading
+`curves.route`; use F1 as the benchmark, then attempt F11 with outer regions
+and edge-parallel arcs handled explicitly.
+
 ## October 5: labeled horizontal-cut orders from a joint layout
 
 `normal_strands.joint_arc_cut_orders` now reads the left-to-right order of

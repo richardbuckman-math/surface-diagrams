@@ -2,8 +2,17 @@ import unittest
 
 from surface_diagrams.normal_gluing import (
     ExpectedArc, NormalTriangle, TerminalVisit, TriangleSide, glue_triangles,
+    inner_arc_triangles,
 )
-from surface_diagrams.normal_strands import NormalTriangleError, StrandVisit
+from surface_diagrams.normal_strands import (
+    ArcRayVisit, LabeledCutVisit, LabeledRayVisit, NormalTriangleError,
+    StrandVisit, joint_arc_cut_orders, joint_arc_ray_orders,
+)
+from surface_diagrams.chain_cut_system import chain_arcs
+from surface_diagrams.curves import route
+from surface_diagrams.factorization_explorer import initial_factors, product
+from surface_diagrams.mapping_classes import exact_action
+from surface_diagrams.model import PlanarSurface, Style
 
 
 def two_upper_gaps():
@@ -25,6 +34,63 @@ def two_upper_gaps():
 
 
 class NormalGluingTests(unittest.TestCase):
+    def test_f1_inner_triangles_round_trip_both_winding_itineraries(self):
+        arcs = chain_arcs(exact_action(product(initial_factors()[:1])))
+        surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
+        pieces = route(surface.with_curves(*arcs), Style())
+        xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (
+            surface.width / 2,)
+        rays = joint_arc_ray_orders(arcs, pieces, xs)
+        cuts = joint_arc_cut_orders(arcs, pieces, xs)
+
+        # The other four F1 chain arcs coincide with triangulation edges.
+        self.assertEqual(tuple(owner for owner, arc in enumerate(arcs, 1)
+                               if arc.is_straight(6)), (1, 2, 4, 5))
+        triangles, expected = inner_arc_triangles(arcs, rays, cuts, owners=(3, 6))
+        self.assertEqual(len(triangles), 10)
+        self.assertEqual({triangle.triangle_id for triangle in triangles},
+                         {(side, gap) for side in ('upper', 'lower')
+                          for gap in range(1, 6)})
+        self.assertEqual(tuple((arc.owner, arc.start.vertex, arc.end.vertex)
+                               for arc in expected),
+                         ((3, 'p2', 'p3'), (6, 'p5', 'p6')))
+
+        glued = glue_triangles(triangles, expected)
+        self.assertEqual(tuple(path.owner for path in glued), (3, 6))
+        for path in glued:
+            arc = arcs[path.owner - 1]
+            locations = ((2 * arc.start,) + tuple(2 * gap + 1 for gap in arc.cuts)
+                         + (2 * arc.end,))
+            itinerary = []
+            for segment, (start, end) in enumerate(zip(locations, locations[1:])):
+                side = 'upper' if (segment % 2 == 0) == arc.initial_up else 'lower'
+                points = [point for point in range(1, 7)
+                          if min(start, end) < 2 * point < max(start, end)]
+                sign = 1 if start < end else -1
+                for point in (points if sign > 0 else reversed(points)):
+                    itinerary.append(LabeledRayVisit(
+                        path.owner, ArcRayVisit(side, segment, point, sign)))
+                if segment < len(arc.cuts):
+                    itinerary.append(LabeledCutVisit(
+                        path.owner, segment + 1, arc.cuts[segment]))
+            self.assertEqual(tuple(visit.crossing for visit in path.crossings),
+                             tuple(itinerary))
+            self.assertEqual(len(itinerary), 14)
+
+        with self.assertRaisesRegex(NormalTriangleError, 'edge-parallel'):
+            inner_arc_triangles(arcs, rays, cuts, owners=(3,))
+
+        # A different shared-ray order may not be silently reconnected into
+        # another owner's arc when the local normal pairings are glued.
+        swapped_rays = dict(rays)
+        upper_three = list(swapped_rays['upper', 3])
+        upper_three[0], upper_three[1] = upper_three[1], upper_three[0]
+        swapped_rays['upper', 3] = tuple(upper_three)
+        bad_triangles, expected = inner_arc_triangles(
+            arcs, swapped_rays, cuts, owners=(3, 6))
+        with self.assertRaises(NormalTriangleError):
+            glue_triangles(bad_triangles, expected)
+
     def test_two_upper_triangles_join_the_direct_arc(self):
         triangles, expected, crossing = two_upper_gaps()
         paths = glue_triangles(triangles, (expected,))

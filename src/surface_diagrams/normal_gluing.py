@@ -10,7 +10,8 @@ from dataclasses import dataclass
 from typing import Hashable
 
 from .normal_strands import (
-    NormalTriangleError, StrandVisit, pair_triangle_sides,
+    LabeledCutVisit, LabeledRayVisit, NormalTriangleError, StrandVisit,
+    arc_side_ray_visits, pair_triangle_sides,
 )
 
 
@@ -60,6 +61,131 @@ class GluedArc:
     start: TerminalVisit
     end: TerminalVisit
     crossings: tuple[StrandVisit, ...]
+
+
+def inner_arc_triangles(arcs, ray_orders, cut_orders, *, owners):
+    """Build the two normal triangles in each inner gap from supplied orders.
+
+    ``arcs`` use one-based chain owners. The order maps come from a common
+    accepted placement, such as ``joint_arc_ray_orders`` and
+    ``joint_arc_cut_orders``. Omitted arcs must be straight adjacent chain
+    edges. This model deliberately excludes outer regions: it rejects any
+    crossing on the first/last ray or outer cut, and endpoints in outer gaps.
+    The returned expected arcs can be passed to ``glue_triangles`` with the
+    triangles; neither operation derives the supplied crossing orders.
+    """
+    from .curves import Arc
+
+    arcs = tuple(arcs)
+    owners = tuple(owners)
+    points = len(cut_orders) - 1
+    if (points < 2 or not arcs or any(not isinstance(arc, Arc) for arc in arcs)
+            or not owners or len(set(owners)) != len(owners)
+            or any(type(owner) is not int or not 1 <= owner <= len(arcs)
+                   for owner in owners)):
+        raise NormalTriangleError('expected arcs and distinct one-based owners')
+    if set(cut_orders) != set(range(points + 1)) or set(ray_orders) != {
+            (side, point) for side in ('upper', 'lower')
+            for point in range(1, points + 1)}:
+        raise NormalTriangleError('inner region needs every ray and cut order')
+
+    expected_rays = tuple(LabeledRayVisit(owner, visit)
+                          for owner, arc in enumerate(arcs, 1)
+                          for side in ('upper', 'lower')
+                          for visit in arc_side_ray_visits(arc, side, points))
+    actual_rays = tuple(visit for key, visits in ray_orders.items()
+                        for visit in visits)
+    if (len(actual_rays) != len(expected_rays)
+            or set(actual_rays) != set(expected_rays)
+            or any(not isinstance(visit, LabeledRayVisit) or visit.ray != key
+                   for key, visits in ray_orders.items() for visit in visits)):
+        raise NormalTriangleError('ray orders differ from Arc crossing IDs')
+    expected_cuts = tuple(LabeledCutVisit(owner, visit_id, gap)
+                          for owner, arc in enumerate(arcs, 1)
+                          for visit_id, gap in enumerate(arc.cuts, 1))
+    actual_cuts = tuple(visit for visits in cut_orders.values()
+                        for visit in visits)
+    if (len(actual_cuts) != len(expected_cuts)
+            or set(actual_cuts) != set(expected_cuts)
+            or any(not isinstance(visit, LabeledCutVisit) or visit.gap != gap
+                   for gap, visits in cut_orders.items() for visit in visits)):
+        raise NormalTriangleError('cut orders differ from Arc visit IDs')
+
+    selected = set(owners)
+    for owner, arc in enumerate(arcs, 1):
+        if owner not in selected and not (arc.is_straight(points)
+                                          and abs(arc.start - arc.end) == 1):
+            raise NormalTriangleError('omitted arc is not an edge-parallel chain arc')
+    if (cut_orders[0] or cut_orders[points]
+            or any(ray_orders[side, point] for side in ('upper', 'lower')
+                   for point in (1, points))):
+        raise NormalTriangleError('outer crossings need outer regions')
+
+    terminals = {}
+    expected_arcs = []
+
+    def place_terminal(owner, role, point, neighbor, segment, arc):
+        upper = (segment % 2 == 0) == arc.initial_up
+        side = 'upper' if upper else 'lower'
+        gap = point if neighbor > 2 * point else point - 1
+        if not 1 <= gap < points:
+            raise NormalTriangleError('arc terminal needs an outer region')
+        left = point == gap
+        side_index = (0 if left else 2) if upper else (2 if left else 0)
+        at_start = (not left) if upper else left
+        vertex = f'p{point}'
+        terminal_id = (owner, role)
+        terminal = TerminalVisit(owner, terminal_id, terminal_id, vertex)
+        slot = (side, gap, side_index, at_start)
+        if slot in terminals:
+            raise NormalTriangleError('puncture terminal order is unresolved')
+        terminals[slot] = terminal
+        return terminal
+
+    for owner in owners:
+        arc = arcs[owner - 1]
+        if not 1 <= arc.start <= points or not 1 <= arc.end <= points:
+            raise NormalTriangleError('arc terminal needs an outer region')
+        if arc.start_side is not None or arc.end_side is not None:
+            raise NormalTriangleError('inner boundary rim terminal is unsupported')
+        first_neighbor = 2 * arc.cuts[0] + 1 if arc.cuts else 2 * arc.end
+        last_neighbor = 2 * arc.cuts[-1] + 1 if arc.cuts else 2 * arc.start
+        start = place_terminal(owner, 'start', arc.start, first_neighbor, 0, arc)
+        end = place_terminal(owner, 'end', arc.end, last_neighbor,
+                             len(arc.cuts), arc)
+        expected_arcs.append(ExpectedArc(owner, start, end))
+
+    def side_visits(side, gap, index, crossings):
+        begin = terminals.get((side, gap, index, True))
+        end = terminals.get((side, gap, index, False))
+        return tuple(visit for visit in (begin,) if visit is not None) + tuple(
+            crossings) + tuple(visit for visit in (end,) if visit is not None)
+
+    def strand_visits(visits):
+        return tuple(StrandVisit(visit.owner, visit) for visit in visits)
+
+    triangles = []
+    for gap in range(1, points):
+        upper = NormalTriangle(('upper', gap),
+                               ('north', f'p{gap}', f'p{gap + 1}'), (
+            TriangleSide(('ray', 'upper', gap), side_visits(
+                'upper', gap, 0, strand_visits(reversed(ray_orders['upper', gap])))),
+            TriangleSide(('cut', gap), side_visits(
+                'upper', gap, 1, strand_visits(cut_orders[gap]))),
+            TriangleSide(('ray', 'upper', gap + 1), side_visits(
+                'upper', gap, 2, strand_visits(ray_orders['upper', gap + 1]))),
+        ))
+        lower = NormalTriangle(('lower', gap),
+                               ('south', f'p{gap + 1}', f'p{gap}'), (
+            TriangleSide(('ray', 'lower', gap + 1), side_visits(
+                'lower', gap, 0, strand_visits(reversed(ray_orders['lower', gap + 1])))),
+            TriangleSide(('cut', gap), side_visits(
+                'lower', gap, 1, strand_visits(reversed(cut_orders[gap])))),
+            TriangleSide(('ray', 'lower', gap), side_visits(
+                'lower', gap, 2, strand_visits(ray_orders['lower', gap]))),
+        ))
+        triangles.extend((upper, lower))
+    return tuple(triangles), tuple(expected_arcs)
 
 
 def glue_triangles(triangles, expected_arcs):

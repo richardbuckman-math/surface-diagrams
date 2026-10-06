@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from collections import Counter
 from heapq import heappop, heappush
 from math import isclose, isfinite, sqrt
+from typing import Hashable
 
 
 @dataclass(frozen=True)
@@ -16,7 +17,7 @@ class StrandVisit:
     """An ordered edge crossing belonging to a labeled arc or loop."""
 
     owner: int
-    crossing: int
+    crossing: Hashable
 
 
 @dataclass(frozen=True)
