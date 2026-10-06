@@ -2,14 +2,14 @@ import unittest
 
 from surface_diagrams.normal_gluing import (
     ExpectedArc, NormalTriangle, TerminalVisit, TriangleSide, glue_triangles,
-    inner_arc_triangles,
+    arc_triangles, inner_arc_triangles,
 )
 from surface_diagrams.normal_strands import (
     ArcRayVisit, LabeledCutVisit, LabeledRayVisit, NormalTriangleError,
     StrandVisit, joint_arc_cut_orders, joint_arc_ray_orders,
 )
 from surface_diagrams.chain_cut_system import chain_arcs
-from surface_diagrams.curves import route
+from surface_diagrams.curves import Arc, route
 from surface_diagrams.factorization_explorer import initial_factors, product
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.model import PlanarSurface, Style
@@ -34,6 +34,41 @@ def two_upper_gaps():
 
 
 class NormalGluingTests(unittest.TestCase):
+    def test_outer_caps_round_trip_boundary_arcs(self):
+        surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
+        xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (
+            surface.width / 2,)
+        for arc, vertices in (
+                (Arc(0, 1, (6,), direction='up'), ('b0', 'p1')),
+                (Arc(6, 7, (0,), direction='up'), ('p6', 'b7'))):
+            with self.subTest(arc=arc):
+                pieces = route(surface.with_curves(arc), Style())
+                rays = joint_arc_ray_orders((arc,), pieces, xs)
+                cuts = joint_arc_cut_orders((arc,), pieces, xs)
+                triangles, expected = arc_triangles((arc,), rays, cuts, owners=(1,))
+                self.assertEqual(len(triangles), 14)
+                path, = glue_triangles(triangles, expected)
+                self.assertEqual((path.start.vertex, path.end.vertex), vertices)
+                self.assertEqual((path.start.kind, path.end.kind),
+                                 tuple('boundary' if vertex.startswith('b') else 'puncture'
+                                       for vertex in vertices))
+
+                locations = ((2 * arc.start,) + tuple(2 * gap + 1 for gap in arc.cuts)
+                             + (2 * arc.end,))
+                itinerary = []
+                for segment, (start, end) in enumerate(zip(locations, locations[1:])):
+                    side = 'upper' if (segment % 2 == 0) == arc.initial_up else 'lower'
+                    points = [point for point in range(1, 7)
+                              if min(start, end) < 2 * point < max(start, end)]
+                    sign = 1 if start < end else -1
+                    for point in (points if sign > 0 else reversed(points)):
+                        itinerary.append(LabeledRayVisit(
+                            1, ArcRayVisit(side, segment, point, sign)))
+                    if segment < len(arc.cuts):
+                        itinerary.append(LabeledCutVisit(1, segment + 1, arc.cuts[segment]))
+                self.assertEqual(tuple(visit.crossing for visit in path.crossings),
+                                 tuple(itinerary))
+
     def test_f1_inner_triangles_round_trip_both_winding_itineraries(self):
         arcs = chain_arcs(exact_action(product(initial_factors()[:1])))
         surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)

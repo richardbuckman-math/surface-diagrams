@@ -1,5 +1,25 @@
 # Handoff: surface-diagrams
 
+## October 6: outer cap triangles and boundary terminals
+
+`normal_gluing.arc_triangles` extends the supplied-order assembler to all 14
+upper/lower regions: five inner gaps and two outer caps on each side. The caps
+retain labeled ray and cut visits and place left/right disk-boundary terminals
+at their actual vertices. Two one-cut boundary arcs round-trip through the
+gluer with their ordered signed events and boundary/puncture endpoints intact.
+The F1 `inner_arc_triangles` contract remains unchanged. All 23 focused
+normal-strand/gluing tests pass; no SVG changed.
+
+The F11 diagnostic shows why the caps matter: all six arcs are nonstraight,
+and collectively have 1,014 visits to outer cuts 0 and 6 and 2,029 visits to
+the end rays at points 1 and 6. Owner 1 begins at the left disk boundary.
+Inner-region counts are admissible, but none of these arcs fits in the old
+ten-region assembler. The new 14-region assembler still requires **jointly
+derived** crossing orders; it neither obtains those orders from the exact
+itineraries nor certifies minimal position. Next derive the shared cut/ray
+orders without consulting `curves.route`, then try the complete F11 chain
+through this assembler and round-trip every labeled arc before rendering it.
+
 ## October 6: F1 inner-triangle gluing round-trip
 
 `normal_gluing.inner_arc_triangles` now assembles the five upper and five lower
