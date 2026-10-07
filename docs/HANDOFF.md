@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## October 7: F1 shared orders derived without a route
+
+`normal_order.resolve_arc_orders` now derives the shared ray and horizontal-cut
+orders for F1's two winding cut-system arcs from their exact labeled local
+triangle connections. It applies the cyclic block rule in each triangle and
+propagates reversed order through paired chords until terminals anchor a
+comparison. All 36 F1 crossing-pair comparisons resolve; the resulting edge
+orders agree with the previously accepted route, and `inner_arc_triangles`
+plus `glue_triangles` reconstruct both original 14-event arc itineraries.
+Permuting the supplied owners and connection records does not change the
+result. Tests reject ambiguous parallel arcs, contradictory local blocks, and
+an excessive comparison workload. All 32 focused normal tests pass; no SVG
+changed.
+
+The resolver deliberately caps its **quadratic** comparison work at 10,000
+pairs. F11 has roughly 9.3 million possible pairs, so this does **not** yet
+derive its joint orders or improve the lab's F11 picture. Next adapt the same
+comparison rule to a memoized comparison sort (and reject any unresolved or
+contradictory comparison), then run its full F11 orders through the 14-region
+assembler, gluer, and exact labeled-itinerary check before rendering.
+
 ## October 7: route-free 14-region counts and labeled local connections
 
 `normal_strands.arc_gap_triangle_counts(..., include_outer=True)` includes
@@ -18,7 +39,8 @@ expected local side-pair counts. Across the focused normal modules, 28 tests
 pass. No SVG changed, so the lab's F11 picture remains its existing fallback.
 The full local discovery ran 356 tests and hit one unrelated intermittent
 Windows `os.replace` access error in a factorization-lab temporary session;
-that single test passed immediately when rerun. Check remote CI on the push.
+that single test passed immediately when rerun. GitHub Tests and Documentation
+checks passed for commit `69a70f4`.
 
 The next step is to derive each shared ray/cut order from these labeled local
 connections. In a triangle, a side's visits split into two ordered blocks by
