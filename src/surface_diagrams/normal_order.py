@@ -1,12 +1,14 @@
-"""Infer small shared-edge orders from labeled local triangle connections.
+"""Infer shared-edge orders from labeled local triangle connections.
 
 Every comparison follows the two noncrossing rules inside a triangle: chords
 to different partner sides occupy fixed blocks, while chords to the same side
 have reversed boundary order at their partners. Terminal vertices anchor the
 recursion. No route coordinates or owner-based ordering enter the result.
 
-This is a quadratic, deliberately bounded resolver for small arc systems. It
-does not establish minimal position or claim to scale to the F11 itineraries.
+Comparison sorting avoids enumerating every same-edge pair. A final local
+triangle check certifies that the complete orders preserve the supplied
+connections, including comparisons the sort did not request. This does not
+establish minimal position.
 """
 
 from collections import defaultdict, deque
@@ -16,6 +18,7 @@ from .normal_gluing import TerminalVisit
 from .normal_itinerary import LocalTriangleConnection, arc_local_connections
 from .normal_strands import (
     LabeledCutVisit, LabeledRayVisit, NormalTriangleError, StrandVisit,
+    pair_triangle_sides,
 )
 
 
@@ -82,17 +85,20 @@ def _block_boundary_order(side, first_partner, second_partner):
 
 
 class _ComparisonResolver:
-    def __init__(self, connections, points):
+    def __init__(self, connections, points, max_pairs):
         self.points = points
+        self.max_pairs = max_pairs
         self.incidences = defaultdict(dict)
         self.edge_visits = defaultdict(list)
         self.numbers = {}
         self.cache = {}
+        self.triangle_connections = defaultdict(list)
         for connection in connections:
             if not isinstance(connection, LocalTriangleConnection):
                 raise NormalTriangleError('expected local triangle connections')
             if connection.first_side == connection.second_side:
                 raise NormalTriangleError('local chord joins one side to itself')
+            self.triangle_connections[connection.triangle_id].append(connection)
             for event, side, partner, partner_side in (
                     (connection.first, connection.first_side,
                      connection.second, connection.second_side),
@@ -141,6 +147,9 @@ class _ComparisonResolver:
         root, flip = self._pair(first, second)
         if root in self.cache:
             return flip * self.cache[root]
+        if len(self.cache) >= self.max_pairs:
+            raise NormalTriangleError(
+                f'comparison workload would exceed max_pairs={self.max_pairs}')
         # The queue records d_state = parity[state] * d_root. Pair identity
         # numbers merely normalize memo keys; they never choose an order.
         parity = {root: 1}
@@ -192,6 +201,9 @@ class _ComparisonResolver:
                             fixed = candidate
                         else:
                             parity[next_pair] = next_parity
+                            if len(self.cache) + len(parity) > self.max_pairs:
+                                raise NormalTriangleError(
+                                    f'comparison workload would exceed max_pairs={self.max_pairs}')
                             queue.append(next_pair)
                         continue
                 if fixed is not None and fixed != candidate:
@@ -206,62 +218,116 @@ class _ComparisonResolver:
             self.cache[pair] = result
         return flip * fixed
 
+    def check_triangle_orders(self, orders):
+        """Check every supplied chord against canonical noncrossing pairings.
 
-def resolve_connection_orders(connections, *, points=6, max_pairs=10000):
-    """Resolve all ray and cut orders from a small set of local chords.
+        This scans all local connections after sorting, rather than relying on
+        the subset of pair comparisons requested by mergesort. Thus a hidden
+        comparator cycle or conflict cannot pass as a valid triangle drawing.
+        """
+        positions = {edge: {visit: index for index, visit in enumerate(visits)}
+                     for edge, visits in orders.items()}
+        for triangle, connections in self.triangle_connections.items():
+            side_events = [[], [], []]
+            for connection in connections:
+                side_events[connection.first_side].append(connection.first)
+                side_events[connection.second_side].append(connection.second)
+            for events in side_events:
+                terminal_vertices = [event.vertex for event in events
+                                     if isinstance(event, TerminalVisit)]
+                if len(terminal_vertices) != len(set(terminal_vertices)):
+                    raise NormalTriangleError(
+                        f'terminal order is unresolved in {triangle!r}')
+
+            def boundary_position(side, event):
+                edge, orientation = _side_edge(triangle, side, self.points)
+                if isinstance(event, TerminalVisit):
+                    source, target = _side_vertices(triangle, side, self.points)
+                    if event.vertex == source:
+                        return -1
+                    if event.vertex == target:
+                        return len(orders.get(edge, ()))
+                    raise NormalTriangleError(
+                        'terminal is not on its declared triangle side')
+                index = positions[edge][event]
+                return index if orientation == 1 else len(orders[edge]) - 1 - index
+
+            sides = tuple(tuple(sorted(events,
+                                       key=lambda event: boundary_position(side, event)))
+                          for side, events in enumerate(side_events))
+            try:
+                paired = pair_triangle_sides(sides)
+            except NormalTriangleError as exc:
+                raise NormalTriangleError(
+                    f'local comparison constraints conflict in {triangle!r}: {exc}') from exc
+            actual = {frozenset((connection.first, connection.second))
+                      for connection in connections}
+            inferred = {frozenset((sides[strand.first_side][strand.first_slot],
+                                   sides[strand.second_side][strand.second_slot]))
+                        for strand in paired}
+            if len(actual) != len(connections) or actual != inferred:
+                raise NormalTriangleError(
+                    f'local comparison constraints conflict in {triangle!r}')
+
+
+def _merge_order(visits, resolver):
+    """Comparison sort with no owner or itinerary fallback for a tie."""
+    current = list(visits)
+    width = 1
+    while width < len(current):
+        merged = []
+        for start in range(0, len(current), 2 * width):
+            middle = min(start + width, len(current))
+            end = min(start + 2 * width, len(current))
+            left, right = start, middle
+            while left < middle and right < end:
+                if resolver.compare(current[left], current[right]) == 1:
+                    merged.append(current[left])
+                    left += 1
+                else:
+                    merged.append(current[right])
+                    right += 1
+            merged.extend(current[left:middle])
+            merged.extend(current[right:end])
+        current = merged
+        width *= 2
+    # The final consecutive comparisons prove each neighbor's order. Along
+    # with the triangle check, these rule out an unresolved placement that a
+    # particular merge schedule happened not to compare directly.
+    for first, second in zip(current, current[1:]):
+        if resolver.compare(first, second) != 1:
+            raise NormalTriangleError('shared-edge order constraints contain a cycle')
+    return tuple(current)
+
+
+def resolve_connection_orders(connections, *, points=6, max_pairs=250000):
+    """Resolve all ray and cut orders from labeled local chords.
 
     Ray tuples run outward from their marked point; cut tuples run left to
     right. Every pair must be determined by triangle blocks, transfer, or a
-    terminal anchor. Conflicts, cycles, ambiguity, and an oversized quadratic
+    terminal anchor. Conflicts, cycles, ambiguity, and an excessive memoized
     comparison workload raise ``NormalTriangleError``.
     """
     if type(points) is not int or points < 2:
         raise ValueError('points must be at least two')
     if type(max_pairs) is not int or max_pairs < 0:
         raise ValueError('max_pairs must be nonnegative')
-    resolver = _ComparisonResolver(tuple(connections), points)
-    pair_count = sum(len(visits) * (len(visits) - 1) // 2
-                     for visits in resolver.edge_visits.values())
-    if pair_count > max_pairs:
-        raise NormalTriangleError(
-            f'{pair_count} shared-edge comparisons exceed max_pairs={max_pairs}')
+    resolver = _ComparisonResolver(tuple(connections), points, max_pairs)
+    orders = {edge: _merge_order(visits, resolver)
+              for edge, visits in resolver.edge_visits.items()}
+    resolver.check_triangle_orders(orders)
 
-    def order(visits):
-        visits = tuple(visits)
-        if len(visits) < 2:
-            return visits
-        outgoing = {visit: set() for visit in visits}
-        indegree = {visit: 0 for visit in visits}
-        for i, first in enumerate(visits):
-            for second in visits[i + 1:]:
-                sign = resolver.compare(first, second)
-                before, after = (first, second) if sign == 1 else (second, first)
-                outgoing[before].add(after)
-                indegree[after] += 1
-        result = []
-        remaining = set(visits)
-        while remaining:
-            ready = [visit for visit in remaining if indegree[visit] == 0]
-            if not ready:
-                raise NormalTriangleError('shared-edge order constraints contain a cycle')
-            if len(ready) != 1:
-                raise NormalTriangleError('shared edge has unresolved order')
-            current = ready[0]
-            result.append(current.crossing)
-            remaining.remove(current)
-            for successor in outgoing[current]:
-                indegree[successor] -= 1
-        return tuple(result)
-
-    rays = {(side, point): order(resolver.edge_visits['ray', side, point])
+    rays = {(side, point): tuple(visit.crossing for visit in
+                                  orders.get(('ray', side, point), ()))
             for side in ('upper', 'lower') for point in range(1, points + 1)}
-    cuts = {gap: order(resolver.edge_visits['cut', gap])
+    cuts = {gap: tuple(visit.crossing for visit in
+                       orders.get(('cut', gap), ()))
             for gap in range(points + 1)}
     return rays, cuts
 
 
-def resolve_arc_orders(arcs, *, owners=None, points=6, max_pairs=10000):
-    """Derive complete small-system orders from exact ``Arc`` itineraries.
+def resolve_arc_orders(arcs, *, owners=None, points=6, max_pairs=250000):
+    """Derive complete shared-edge orders from exact ``Arc`` itineraries.
 
     ``owners`` selects one-based arc labels in ``arcs``. An F1 chain may select
     its winding owners and leave straight edge-parallel arcs on the triangle

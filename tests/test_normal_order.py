@@ -94,6 +94,19 @@ class NormalOrderTests(unittest.TestCase):
         with self.assertRaisesRegex(NormalTriangleError, 'exceed max_pairs'):
             resolve_arc_orders(arcs, owners=(3, 6), max_pairs=1)
 
+        # F1 has 36 possible same-edge pairs, but comparison sorting and
+        # propagation need fewer memoized states to recover its full orders.
+        self.assertEqual(resolve_arc_orders(arcs, owners=(3, 6), max_pairs=35),
+                         resolve_arc_orders(arcs, owners=(3, 6)))
+
+    def test_duplicate_terminal_vertex_has_no_invented_order(self):
+        arcs = chain_arcs(exact_action(product(initial_factors()[:2])))
+        # Two F2 arcs terminate at p5 on the same side of upper gap 4. Their
+        # itinerary labels cannot choose an order at that common vertex.
+        with self.assertRaisesRegex(NormalTriangleError,
+                                    'terminal order is unresolved'):
+            resolve_arc_orders(arcs, owners=(3, 4, 5, 6))
+
 
 if __name__ == '__main__':
     unittest.main()

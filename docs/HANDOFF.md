@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## October 7: bounded comparison sorting and exact-path certificate
+
+`normal_order` now comparison-sorts physical ray/cut visits without enumerating
+every pair. It memoizes the route-free local-chord comparisons, caps their
+state count, and independently checks every triangle's canonical noncrossing
+pairing after sorting. F1 needs 32 memoized pairs (36 possible), still matches
+the accepted layout, and passes the complete local check. The new
+`normal_certificate.certify_arc_orders` then glues all 14 triangles and checks
+each recovered owner's **exact labeled event sequence**, not just its owner
+and endpoints. A regression shows why: swapping two visits of one F1 arc can
+pass `glue_triangles` while changing its itinerary; the certificate rejects it.
+All 35 focused normal tests pass; no SVG changed.
+
+F11 contains about 15,440 labeled events and 9,321,296 possible same-edge
+pairs. A bounded attempt hit the 250,000 memoized-pair limit after about 57
+seconds, before producing full orders. Also, five F11 triangle-side slots have
+two arc terminals at the same marked-point vertex: p1 (owners 1/2), p2 (2/3),
+p3 (3/4), p4 (4/5), and p5 (5/6). The current triangle assembler rejects a
+duplicate slot; the sorter reports its order unresolved. This is a model
+limitation, **not** evidence that F11 arcs intersect. Next derive the local
+cyclic order of same-vertex terminals from their partner strands, implement
+that in the assembler/checker, and reduce comparison propagation work before
+re-attempting the complete F11 certificate. The existing lab fallback remains.
+
 ## October 7: F1 shared orders derived without a route
 
 `normal_order.resolve_arc_orders` now derives the shared ray and horizontal-cut
