@@ -1,5 +1,37 @@
 # Handoff: surface-diagrams
 
+## October 7: route-free 14-region counts and labeled local connections
+
+`normal_strands.arc_gap_triangle_counts(..., include_outer=True)` includes
+outer cuts and boundary terminal slots. `arc_triangle_count_certificate`
+checks all 14 upper/lower regions for each labeled arc and their aggregate.
+All six exact F11-after chain arcs pass individual and aggregate parity and
+triangle-inequality checks, including the outer caps. These are **numerical**
+admissibility checks, not crossing orders or an embedding.
+
+`normal_itinerary.arc_local_connections` independently walks an exact `Arc`
+itinerary and records every labeled terminal/ray/cut-to-next-event connection
+in its upper or lower triangle. It does not read `curves.route`. It refuses an
+itinerary whose ray reduction would discard crossing IDs. Tests round-trip
+both winding F1 arcs and all six F11-after arcs, matching each region's
+expected local side-pair counts. Across the focused normal modules, 28 tests
+pass. No SVG changed, so the lab's F11 picture remains its existing fallback.
+The full local discovery ran 356 tests and hit one unrelated intermittent
+Windows `os.replace` access error in a factorization-lab temporary session;
+that single test passed immediately when rerun. Check remote CI on the push.
+
+The next step is to derive each shared ray/cut order from these labeled local
+connections. In a triangle, a side's visits split into two ordered blocks by
+which other side their chords meet; two chords with the same pair of sides
+transfer a reversed-order constraint to their partner visits. A route-free
+diagnostic resolved all 36 F1 crossing-pair comparisons and matched the
+previously accepted F1 layout; 380 sampled F11 pairs also resolved without a
+contradiction, which is **not** a full F11 certificate. Implement a memoized
+comparison/order resolver that reports ambiguity or contradiction, then pass
+its complete F11 orders through `arc_triangles` and `glue_triangles` and check
+all exact labeled itineraries before smoothing or drawing. Avoid enumerating
+all roughly 9.3 million possible F11 event pairs if a comparison sort suffices.
+
 ## October 6: outer cap triangles and boundary terminals
 
 `normal_gluing.arc_triangles` extends the supplied-order assembler to all 14

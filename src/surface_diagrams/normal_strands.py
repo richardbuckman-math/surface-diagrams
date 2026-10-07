@@ -77,12 +77,13 @@ class TriangleStrand:
 
 @dataclass(frozen=True)
 class ArcGapTriangleCounts:
-    """One inner gap's side counts, retaining puncture endpoints separately.
+    """One gap's side counts, retaining endpoint vertices separately.
 
     A terminal is a vertex of the triangle, not a crossing of its vertical
     ray. It occupies a formal slot on that side only when testing numerical
     admissibility. An eventual gluer must still attach the strand to the
-    vertex rather than to a ray crossing.
+    vertex rather than to a ray crossing. In outer gaps 0 and ``points``, the
+    missing left or right ray is a boundary edge with zero crossings.
     """
 
     gap: int
@@ -98,6 +99,21 @@ class ArcGapTriangleCounts:
         return triangle_pair_counts(self.left_ray + self.left_terminal,
                                     self.chain_cut,
                                     self.right_ray + self.right_terminal)
+
+
+@dataclass(frozen=True)
+class ArcTriangleCountCertificate:
+    """Numerical counts for labeled arcs in every upper/lower gap.
+
+    ``individual`` and ``aggregate`` run by gap, upper then lower. Their
+    counts and ``pair_counts`` do not determine orders on shared edges, owner
+    pairings, a joint embedding, or minimal position.
+    """
+
+    owners: tuple
+    individual: tuple
+    aggregate: tuple
+    pair_counts: tuple
 
 
 class NormalTriangleError(ValueError):
@@ -443,31 +459,75 @@ def joint_arc_cut_orders(arcs, pieces, reference_xs):
     return result
 
 
-def arc_gap_triangle_counts(arc, *, points=6, side='upper'):
-    """Return inner-gap counts from one exact Arc itinerary.
+def arc_gap_triangle_counts(arc, *, points=6, side='upper', include_outer=False):
+    """Return gap counts from one exact Arc itinerary.
 
     Each cut at gap j meets both the upper and lower triangle's chain side.
     The first and last segments determine which triangle contains each
-    puncture endpoint. Outer-rim endpoints and cuts belong to outer regions,
-    not these ``points - 1`` inner triangles. Counts alone do not certify a
-    joint normal drawing or the order of different arcs along shared rays.
+    endpoint. By default only gaps 1..``points - 1`` are returned. With
+    ``include_outer=True``, gaps 0 and ``points`` include their outer cuts,
+    boundary terminals, and puncture terminals facing those caps. Counts alone
+    do not certify a joint normal drawing or shared-ray orders.
     """
     rays = arc_side_ray_counts(arc, points=points, side=side)
     cuts = Counter(arc.cuts)
     locations = ((2 * arc.start,) + tuple(2 * cut + 1 for cut in arc.cuts)
                  + (2 * arc.end,))
-    terminals = [[0, 0] for _ in range(points - 1)]
+    terminals = [[0, 0] for _ in range(points + 1)]
     for point, neighbor, segment_index in (
             (arc.start, locations[1], 0),
             (arc.end, locations[-2], len(locations) - 2)):
-        if not 1 <= point <= points:
-            continue
         segment_upper = (segment_index % 2 == 0) == arc.initial_up
         if segment_upper != (side == 'upper'):
             continue
-        gap = point if neighbor > 2 * point else point - 1
-        if 1 <= gap < points:
-            terminals[gap - 1][0 if point == gap else 1] += 1
+        gap = (0 if point == 0 else points if point == points + 1 else
+               point if neighbor > 2 * point else point - 1)
+        if include_outer or 1 <= gap < points:
+            terminals[gap][0 if point == gap else 1] += 1
+    gaps = range(points + 1) if include_outer else range(1, points)
     return tuple(ArcGapTriangleCounts(
-        gap, side, rays[gap - 1], cuts[gap], rays[gap],
-        *terminals[gap - 1]) for gap in range(1, points))
+        gap, side, 0 if gap == 0 else rays[gap - 1], cuts[gap],
+        0 if gap == points else rays[gap], *terminals[gap]) for gap in gaps)
+
+
+def arc_triangle_count_certificate(arcs, *, points=6, owners=None):
+    """Certify formal counts in all ``2 * (points + 1)`` regions.
+
+    ``owners`` labels the supplied arcs; omitted labels are one-based indices.
+    This checks each arc and their componentwise sum, but does not infer a
+    shared crossing order, owner-preserving strand pairing, or minimality.
+    """
+    arcs = tuple(arcs)
+    owners = tuple(range(1, len(arcs) + 1)) if owners is None else tuple(owners)
+    if not arcs or len(owners) != len(arcs) or len(set(owners)) != len(owners):
+        raise ValueError('expected arcs with distinct owner labels')
+
+    individual = []
+    for owner, arc in zip(owners, arcs):
+        upper = arc_gap_triangle_counts(arc, points=points, side='upper',
+                                        include_outer=True)
+        lower = arc_gap_triangle_counts(arc, points=points, side='lower',
+                                        include_outer=True)
+        regions = tuple(region for pair in zip(upper, lower) for region in pair)
+        for region in regions:
+            try:
+                region.formal_pair_counts()
+            except NormalTriangleError as exc:
+                raise NormalTriangleError(
+                    f'owner {owner!r}, {region.side} gap {region.gap}: {exc}') from exc
+        individual.append(regions)
+
+    aggregate = []
+    for aligned in zip(*individual):
+        first = aligned[0]
+        aggregate.append(ArcGapTriangleCounts(
+            first.gap, first.side,
+            sum(region.left_ray for region in aligned),
+            sum(region.chain_cut for region in aligned),
+            sum(region.right_ray for region in aligned),
+            sum(region.left_terminal for region in aligned),
+            sum(region.right_terminal for region in aligned)))
+    aggregate = tuple(aggregate)
+    pair_counts = tuple(region.formal_pair_counts() for region in aggregate)
+    return ArcTriangleCountCertificate(owners, tuple(individual), aggregate,
+                                       pair_counts)

@@ -6,7 +6,7 @@ from surface_diagrams.normal_strands import (
     ArcRayVisit, LabeledCutVisit, LabeledRayVisit, NormalTriangleError,
     StrandVisit, _reduce_ray_visits,
     arc_gap_triangle_counts, arc_side_ray_counts, arc_side_ray_visits,
-    arc_side_ray_word,
+    arc_side_ray_word, arc_triangle_count_certificate,
     joint_arc_cut_orders, joint_arc_ray_orders, pair_triangle_sides,
     single_arc_ray_orders,
     triangle_pair_counts,
@@ -200,6 +200,71 @@ class NormalTriangleTests(unittest.TestCase):
         for gap in upper + lower:
             with self.subTest(side=gap.side, gap=gap.gap):
                 gap.formal_pair_counts()
+
+    def test_outer_caps_include_boundary_terminals_and_outer_cuts(self):
+        for arc, cap, terminal_side in (
+                (Arc(0, 1), 0, 'left'),
+                (Arc(6, 7), 6, 'right')):
+            with self.subTest(arc=arc):
+                upper = arc_gap_triangle_counts(arc, include_outer=True)
+                lower = arc_gap_triangle_counts(arc, side='lower',
+                                                include_outer=True)
+                self.assertEqual(tuple(gap.gap for gap in upper), tuple(range(7)))
+                self.assertEqual((upper[cap].left_terminal,
+                                  upper[cap].right_terminal), (1, 1))
+                self.assertEqual(upper[cap].formal_pair_counts(), (0, 0, 1))
+                self.assertEqual(lower[cap].formal_pair_counts(), (0, 0, 0))
+                self.assertEqual(arc_gap_triangle_counts(arc), upper[1:6])
+                self.assertEqual(upper[cap].left_ray if terminal_side == 'left'
+                                 else upper[cap].right_ray, 0)
+
+        winding = Arc(0, 1, (6,), direction='up')
+        upper = arc_gap_triangle_counts(winding, include_outer=True)
+        lower = arc_gap_triangle_counts(winding, side='lower',
+                                        include_outer=True)
+        self.assertEqual((upper[0].left_ray, upper[0].chain_cut,
+                          upper[0].right_ray, upper[0].left_terminal),
+                         (0, 0, 1, 1))
+        self.assertEqual((upper[6].left_ray, upper[6].chain_cut,
+                          upper[6].right_ray), (1, 1, 0))
+        self.assertEqual(lower[6].formal_pair_counts(), (1, 0, 0))
+        for region in upper + lower:
+            region.formal_pair_counts()
+
+    def test_f11_after_has_14_admissible_aggregate_regions(self):
+        arcs = chain_arcs(exact_action(product(initial_factors()[:11])))
+        owners = tuple(f'x{edge}' for edge in range(1, 7))
+        certificate = arc_triangle_count_certificate(arcs, owners=owners)
+        self.assertEqual(certificate.owners, owners)
+        self.assertEqual(len(certificate.individual), 6)
+        self.assertEqual(len(certificate.aggregate), 14)
+        self.assertEqual(tuple((region.gap, region.side)
+                               for region in certificate.aggregate),
+                         tuple((gap, side) for gap in range(7)
+                               for side in ('upper', 'lower')))
+        self.assertEqual(certificate.aggregate[0].left_terminal, 1)
+        self.assertEqual(certificate.aggregate[0].chain_cut, 220)
+        self.assertEqual(certificate.aggregate[-1].chain_cut, 794)
+        for index, aggregate in enumerate(certificate.aggregate):
+            with self.subTest(gap=aggregate.gap, side=aggregate.side):
+                components = tuple(regions[index]
+                                   for regions in certificate.individual)
+                self.assertEqual(
+                    tuple(getattr(aggregate, field) for field in
+                          ('left_ray', 'chain_cut', 'right_ray',
+                           'left_terminal', 'right_terminal')),
+                    tuple(sum(getattr(region, field) for region in components)
+                          for field in ('left_ray', 'chain_cut', 'right_ray',
+                                        'left_terminal', 'right_terminal')))
+                self.assertEqual(certificate.pair_counts[index],
+                                 aggregate.formal_pair_counts())
+                self.assertEqual(certificate.pair_counts[index],
+                                 tuple(sum(region.formal_pair_counts()[pair]
+                                           for region in components)
+                                       for pair in range(3)))
+
+        with self.assertRaisesRegex(ValueError, 'distinct owner'):
+            arc_triangle_count_certificate(arcs[:2], owners=('x', 'x'))
 
     def test_original_chain_prefixes_have_admissible_inner_triangles(self):
         factors = initial_factors()
