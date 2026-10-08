@@ -15,6 +15,9 @@ from .normal_strands import (
 )
 
 
+_PARTNER_BLOCKS = ({2: 0, 1: 1}, {0: 0, 2: 1}, {1: 0, 0: 1})
+
+
 @dataclass(frozen=True)
 class TerminalVisit(StrandVisit):
     """A formal side slot that actually ends at a puncture or disk boundary.
@@ -63,6 +66,48 @@ class GluedArc:
     crossings: tuple[StrandVisit, ...]
 
 
+def _block_boundary_order(side, first_partner, second_partner):
+    # Boundary traversal is 0 -> 1 -> 2 -> 0. The block nearest the
+    # preceding vertex comes first on each side.
+    blocks = _PARTNER_BLOCKS[side]
+    return 1 if blocks[first_partner] < blocks[second_partner] else -1
+
+
+def _ordered_terminals(terminals, side, partners, physical_sides, vertices):
+    """Order terminals at one vertex from their chords inside this triangle.
+
+    Different partner sides occupy fixed blocks. Within one block, the
+    partner side's boundary order reverses. Equal partner geometry supplies
+    no order, regardless of owner or input order.
+    """
+    blocks = _PARTNER_BLOCKS[side]
+
+    def key(terminal):
+        partner_side, partner = partners[terminal]
+        if partner_side not in blocks:
+            raise NormalTriangleError('terminal chord has an invalid partner side')
+        if isinstance(partner, TerminalVisit):
+            source, target = vertices[partner_side], vertices[(partner_side + 1) % 3]
+            if partner.vertex == source:
+                position = -1
+            elif partner.vertex == target:
+                position = len(physical_sides[partner_side])
+            else:
+                raise NormalTriangleError('terminal chord partner is on the wrong side')
+        else:
+            try:
+                position = physical_sides[partner_side].index(partner)
+            except ValueError as exc:
+                raise NormalTriangleError(
+                    'terminal chord partner is missing from its side') from exc
+        return blocks[partner_side], -position
+
+    keyed = [(key(terminal), terminal) for terminal in terminals]
+    if len({position for position, _ in keyed}) != len(keyed):
+        raise NormalTriangleError('terminal order is unresolved')
+    return tuple(terminal for _, terminal in sorted(keyed, key=lambda item: item[0]))
+
+
 def inner_arc_triangles(arcs, ray_orders, cut_orders, *, owners):
     """Build the two normal triangles in each inner gap from supplied orders.
 
@@ -92,6 +137,7 @@ def arc_triangles(arcs, ray_orders, cut_orders, *, owners):
 
 def _arc_triangles(arcs, ray_orders, cut_orders, *, owners, include_outer):
     from .curves import Arc
+    from .normal_itinerary import arc_local_connections
 
     arcs = tuple(arcs)
     owners = tuple(owners)
@@ -139,6 +185,8 @@ def _arc_triangles(arcs, ray_orders, cut_orders, *, owners, include_outer):
         raise NormalTriangleError('outer crossings need outer regions')
 
     terminals = {}
+    terminal_partners = {}
+    terminal_locations = {}
     expected_arcs = []
 
     def place_terminal(owner, role, point, neighbor, segment, arc):
@@ -164,9 +212,8 @@ def _arc_triangles(arcs, ray_orders, cut_orders, *, owners, include_outer):
         terminal_id = (owner, role)
         terminal = TerminalVisit(owner, terminal_id, terminal_id, vertex, kind)
         slot = (side, gap, side_index, at_start)
-        if slot in terminals:
-            raise NormalTriangleError('terminal order is unresolved')
-        terminals[slot] = terminal
+        terminals.setdefault(slot, []).append(terminal)
+        terminal_locations[terminal] = (side, gap, side_index)
         return terminal
 
     for owner in owners:
@@ -181,13 +228,27 @@ def _arc_triangles(arcs, ray_orders, cut_orders, *, owners, include_outer):
         start = place_terminal(owner, 'start', arc.start, first_neighbor, 0, arc)
         end = place_terminal(owner, 'end', arc.end, last_neighbor,
                              len(arc.cuts), arc)
+        connections = arc_local_connections(arc, points=points, owner=owner)
+        first, last = connections[0], connections[-1]
+        for terminal, connection, terminal_side, event, partner_side, partner in (
+                (start, first, first.first_side, first.first,
+                 first.second_side, first.second),
+                (end, last, last.second_side, last.second,
+                 last.first_side, last.first)):
+            if (event != terminal or terminal_locations[terminal] !=
+                    (*connection.triangle_id, terminal_side)):
+                raise NormalTriangleError('arc terminal disagrees with its local chord')
+            terminal_partners[terminal] = (partner_side, partner)
         expected_arcs.append(ExpectedArc(owner, start, end))
 
-    def side_visits(side, gap, index, crossings):
-        begin = terminals.get((side, gap, index, True))
-        end = terminals.get((side, gap, index, False))
-        return tuple(visit for visit in (begin,) if visit is not None) + tuple(
-            crossings) + tuple(visit for visit in (end,) if visit is not None)
+    def side_visits(side, gap, index, physical_sides, vertices):
+        begin = _ordered_terminals(
+            terminals.get((side, gap, index, True), ()), index,
+            terminal_partners, physical_sides, vertices)
+        end = _ordered_terminals(
+            terminals.get((side, gap, index, False), ()), index,
+            terminal_partners, physical_sides, vertices)
+        return begin + physical_sides[index] + end
 
     def strand_visits(visits):
         return tuple(StrandVisit(visit.owner, visit) for visit in visits)
@@ -197,31 +258,40 @@ def _arc_triangles(arcs, ray_orders, cut_orders, *, owners, include_outer):
     for gap in gaps:
         left = 'b0' if gap == 0 else f'p{gap}'
         right = f'b{points + 1}' if gap == points else f'p{gap + 1}'
+        upper_vertices = ('north', left, right)
+        upper_physical = (
+            () if gap == 0 else strand_visits(reversed(ray_orders['upper', gap])),
+            strand_visits(cut_orders[gap]),
+            () if gap == points else strand_visits(ray_orders['upper', gap + 1]),
+        )
         upper = NormalTriangle(('upper', gap),
-                               ('north', left, right), (
+                               upper_vertices, (
             TriangleSide(('boundary', 'upper', 'left') if gap == 0 else
                          ('ray', 'upper', gap), side_visits(
-                'upper', gap, 0, () if gap == 0 else
-                strand_visits(reversed(ray_orders['upper', gap])))),
+                'upper', gap, 0, upper_physical, upper_vertices)),
             TriangleSide(('cut', gap), side_visits(
-                'upper', gap, 1, strand_visits(cut_orders[gap]))),
+                'upper', gap, 1, upper_physical, upper_vertices)),
             TriangleSide(('boundary', 'upper', 'right') if gap == points else
                          ('ray', 'upper', gap + 1), side_visits(
-                'upper', gap, 2, () if gap == points else
-                strand_visits(ray_orders['upper', gap + 1]))),
+                'upper', gap, 2, upper_physical, upper_vertices)),
         ))
+        lower_vertices = ('south', right, left)
+        lower_physical = (
+            () if gap == points else strand_visits(reversed(
+                ray_orders['lower', gap + 1])),
+            strand_visits(reversed(cut_orders[gap])),
+            () if gap == 0 else strand_visits(ray_orders['lower', gap]),
+        )
         lower = NormalTriangle(('lower', gap),
-                               ('south', right, left), (
+                               lower_vertices, (
             TriangleSide(('boundary', 'lower', 'right') if gap == points else
                          ('ray', 'lower', gap + 1), side_visits(
-                'lower', gap, 0, () if gap == points else
-                strand_visits(reversed(ray_orders['lower', gap + 1])))),
+                'lower', gap, 0, lower_physical, lower_vertices)),
             TriangleSide(('cut', gap), side_visits(
-                'lower', gap, 1, strand_visits(reversed(cut_orders[gap])))),
+                'lower', gap, 1, lower_physical, lower_vertices)),
             TriangleSide(('boundary', 'lower', 'left') if gap == 0 else
                          ('ray', 'lower', gap), side_visits(
-                'lower', gap, 2, () if gap == 0 else
-                strand_visits(ray_orders['lower', gap]))),
+                'lower', gap, 2, lower_physical, lower_vertices)),
         ))
         triangles.extend((upper, lower))
     return tuple(triangles), tuple(expected_arcs)

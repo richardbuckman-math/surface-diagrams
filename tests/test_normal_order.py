@@ -15,7 +15,7 @@ from surface_diagrams.normal_order import (
     resolve_arc_orders, resolve_connection_orders,
 )
 from surface_diagrams.normal_strands import (
-    ArcRayVisit, LabeledRayVisit, NormalTriangleError, StrandVisit,
+    ArcRayVisit, LabeledCutVisit, LabeledRayVisit, NormalTriangleError, StrandVisit,
     joint_arc_cut_orders, joint_arc_ray_orders,
 )
 
@@ -99,13 +99,53 @@ class NormalOrderTests(unittest.TestCase):
         self.assertEqual(resolve_arc_orders(arcs, owners=(3, 6), max_pairs=35),
                          resolve_arc_orders(arcs, owners=(3, 6)))
 
-    def test_duplicate_terminal_vertex_has_no_invented_order(self):
+    def test_shared_terminal_order_follows_partner_crossings(self):
         arcs = chain_arcs(exact_action(product(initial_factors()[:2])))
-        # Two F2 arcs terminate at p5 on the same side of upper gap 4. Their
-        # itinerary labels cannot choose an order at that common vertex.
+        inferred = resolve_arc_orders(arcs, owners=(3, 4, 5, 6))
+        connections = tuple(connection for owner in (6, 5, 4, 3)
+                            for connection in arc_local_connections(
+                                arcs[owner - 1], owner=owner))
+        self.assertEqual(resolve_connection_orders(reversed(connections)),
+                         inferred)
+        self.assertEqual(resolve_arc_orders(arcs, owners=(6, 5, 4, 3)),
+                         inferred)
+
+        surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
+        pieces = route(surface.with_curves(*arcs), Style())
+        xs = ((-surface.width / 2,) +
+              tuple(point.x for point in surface.objects) +
+              (surface.width / 2,))
+        self.assertEqual(inferred[0], joint_arc_ray_orders(arcs, pieces, xs))
+        self.assertEqual(inferred[1], joint_arc_cut_orders(arcs, pieces, xs))
+
+    def test_identical_terminal_partner_geometry_remains_ambiguous(self):
+        arcs = (Arc(1, 2, direction='up'), Arc(1, 2, direction='up'))
         with self.assertRaisesRegex(NormalTriangleError,
                                     'terminal order is unresolved'):
-            resolve_arc_orders(arcs, owners=(3, 4, 5, 6))
+            resolve_arc_orders(arcs)
+
+    def test_distinct_terminal_partner_sides_use_triangle_blocks(self):
+        def terminal(owner, role, vertex):
+            identifier = (owner, role)
+            return TerminalVisit(owner, identifier, identifier, vertex)
+
+        ray = StrandVisit(1, LabeledRayVisit(
+            1, ArcRayVisit('upper', 0, 1, 1)))
+        cut = StrandVisit(2, LabeledCutVisit(2, 1, 1))
+        # The two starts share p2 on side 2 of upper gap 1. The cut block
+        # precedes the left-ray block on that side, regardless of input order.
+        connections = (
+            LocalTriangleConnection(1, ('upper', 1), 2,
+                                    terminal(1, 'start', 'p2'), 0, ray),
+            LocalTriangleConnection(2, ('upper', 1), 2,
+                                    terminal(2, 'start', 'p2'), 1, cut),
+            LocalTriangleConnection(1, ('upper', 0), 2, ray, 0,
+                                    terminal(1, 'end', 'b0')),
+            LocalTriangleConnection(2, ('lower', 1), 1, cut, 0,
+                                    terminal(2, 'end', 'p2')),
+        )
+        self.assertEqual(resolve_connection_orders(connections),
+                         resolve_connection_orders(reversed(connections)))
 
 
 if __name__ == '__main__':

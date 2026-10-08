@@ -126,6 +126,43 @@ class NormalGluingTests(unittest.TestCase):
         with self.assertRaises(NormalTriangleError):
             glue_triangles(bad_triangles, expected)
 
+    def test_f2_shared_vertex_terminals_follow_supplied_crossing_orders(self):
+        arcs = chain_arcs(exact_action(product(initial_factors()[:2])))
+        surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
+        pieces = route(surface.with_curves(*arcs), Style())
+        xs = (-surface.width / 2,) + tuple(point.x for point in surface.objects) + (
+            surface.width / 2,)
+        rays = joint_arc_ray_orders(arcs, pieces, xs)
+        cuts = joint_arc_cut_orders(arcs, pieces, xs)
+        triangles, expected = arc_triangles(arcs, rays, cuts,
+                                            owners=(3, 4, 5, 6))
+        reordered, _ = arc_triangles(arcs, rays, cuts,
+                                     owners=(6, 5, 4, 3))
+        self.assertEqual(reordered, triangles)
+        shared = {(triangle.triangle_id, side_index): tuple(
+            visit.terminal_id for visit in side.visits
+            if isinstance(visit, TerminalVisit))
+            for triangle in triangles
+            for side_index, side in enumerate(triangle.sides)
+            if sum(isinstance(visit, TerminalVisit)
+                   for visit in side.visits) > 1}
+        self.assertEqual(shared, {
+            (('lower', 3), 0): ((4, 'end'), (5, 'start')),
+            (('upper', 4), 2): ((6, 'start'), (5, 'end')),
+            (('lower', 5), 0): ((4, 'start'), (3, 'end')),
+        })
+        self.assertEqual(tuple(path.owner for path in glue_triangles(
+            triangles, expected)), (3, 4, 5, 6))
+
+    def test_identical_terminal_partner_geometry_is_rejected(self):
+        arcs = (Arc(1, 2, direction='up'), Arc(1, 2, direction='up'))
+        rays = {(side, point): () for side in ('upper', 'lower')
+                for point in range(1, 7)}
+        cuts = {gap: () for gap in range(7)}
+        with self.assertRaisesRegex(NormalTriangleError,
+                                    'terminal order is unresolved'):
+            arc_triangles(arcs, rays, cuts, owners=(1, 2))
+
     def test_two_upper_triangles_join_the_direct_arc(self):
         triangles, expected, crossing = two_upper_gaps()
         paths = glue_triangles(triangles, (expected,))

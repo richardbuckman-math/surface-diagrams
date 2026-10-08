@@ -1,5 +1,28 @@
 # Handoff: surface-diagrams
 
+## October 8: shared puncture-terminal order on F2
+
+`normal_gluing` and `normal_order` now order multiple arc terminals at one
+marked-point vertex from their local chord partners. Different partner sides
+use the triangle's fixed block order; partners on the same side inherit the
+reverse of that side's crossing order. Identical partner geometry remains
+ambiguous and raises rather than choosing an owner/input order. For F2,
+owners 3–6 now obtain shared edge orders from exact itineraries alone;
+those orders match the accepted route as a benchmark, and the 14-region
+assembler plus exact-path certificate reconstruct all four labeled arcs
+(38, 14, 24, and 7 crossings). Reversing connection/owner input preserves the
+orders. All 40 focused normal tests pass; no SVG changed.
+
+F11's five known same-vertex terminal pairs can now be placed *once complete
+physical edge orders are available*. The full order resolver still hits its
+250,000 pair-state budget before that point. A separate read-only design
+check ranked directed strand suffixes and matched every F1/F2 crossing-pair
+comparison (36/318) and their edge orders; it is **not implemented** or
+validated on F11. Next implement its integer prefix-doubling ranks to avoid
+storing long pairwise walks, then require the complete triangle-pairing check,
+`certify_arc_orders` exact itineraries, and a visual inspection before using a
+joint F11 drawing in the lab.
+
 ## October 7: bounded comparison sorting and exact-path certificate
 
 `normal_order` now comparison-sorts physical ray/cut visits without enumerating

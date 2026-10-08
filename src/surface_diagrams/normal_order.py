@@ -14,7 +14,9 @@ establish minimal position.
 from collections import defaultdict, deque
 from dataclasses import dataclass
 
-from .normal_gluing import TerminalVisit
+from .normal_gluing import (
+    TerminalVisit, _block_boundary_order, _ordered_terminals,
+)
 from .normal_itinerary import LocalTriangleConnection, arc_local_connections
 from .normal_strands import (
     LabeledCutVisit, LabeledRayVisit, NormalTriangleError, StrandVisit,
@@ -75,13 +77,6 @@ def _terminal_boundary_order(first, second, triangle, side_index, points):
     if a == b:
         return None
     return 1 if a < b else -1
-
-
-def _block_boundary_order(side, first_partner, second_partner):
-    # Boundary traversal is 0 -> 1 -> 2 -> 0. The block nearest the
-    # preceding vertex comes first on each side.
-    blocks = ({2: 0, 1: 1}, {0: 0, 2: 1}, {1: 0, 0: 1})[side]
-    return 1 if blocks[first_partner] < blocks[second_partner] else -1
 
 
 class _ComparisonResolver:
@@ -232,29 +227,34 @@ class _ComparisonResolver:
             for connection in connections:
                 side_events[connection.first_side].append(connection.first)
                 side_events[connection.second_side].append(connection.second)
-            for events in side_events:
-                terminal_vertices = [event.vertex for event in events
-                                     if isinstance(event, TerminalVisit)]
-                if len(terminal_vertices) != len(set(terminal_vertices)):
-                    raise NormalTriangleError(
-                        f'terminal order is unresolved in {triangle!r}')
+            vertices = tuple(_side_vertices(triangle, side, self.points)[0]
+                             for side in range(3))
 
-            def boundary_position(side, event):
+            def physical_position(side, event):
                 edge, orientation = _side_edge(triangle, side, self.points)
-                if isinstance(event, TerminalVisit):
-                    source, target = _side_vertices(triangle, side, self.points)
-                    if event.vertex == source:
-                        return -1
-                    if event.vertex == target:
-                        return len(orders.get(edge, ()))
-                    raise NormalTriangleError(
-                        'terminal is not on its declared triangle side')
                 index = positions[edge][event]
                 return index if orientation == 1 else len(orders[edge]) - 1 - index
 
-            sides = tuple(tuple(sorted(events,
-                                       key=lambda event: boundary_position(side, event)))
-                          for side, events in enumerate(side_events))
+            physical_sides = tuple(tuple(sorted(
+                (event for event in events
+                 if not isinstance(event, TerminalVisit)),
+                key=lambda event: physical_position(side, event)))
+                for side, events in enumerate(side_events))
+            sides = []
+            for side, events in enumerate(side_events):
+                source, target = vertices[side], vertices[(side + 1) % 3]
+                partners = {event: (
+                    self.incidences[event][triangle].partner_side,
+                    self.incidences[event][triangle].partner)
+                    for event in events if isinstance(event, TerminalVisit)}
+                begins = _ordered_terminals(
+                    (event for event in partners if event.vertex == source),
+                    side, partners, physical_sides, vertices)
+                ends = _ordered_terminals(
+                    (event for event in partners if event.vertex == target),
+                    side, partners, physical_sides, vertices)
+                sides.append(begins + physical_sides[side] + ends)
+            sides = tuple(sides)
             try:
                 paired = pair_triangle_sides(sides)
             except NormalTriangleError as exc:

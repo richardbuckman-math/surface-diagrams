@@ -28,6 +28,14 @@ class NormalCertificateTests(unittest.TestCase):
         with self.assertRaises(NormalTriangleError):
             certify_arc_orders(arcs, wrong, cuts, owners=(3, 6))
 
+    def test_route_free_f2_shared_terminals_certify_exact_itineraries(self):
+        arcs = chain_arcs(exact_action(product(initial_factors()[:2])))
+        rays, cuts = resolve_arc_orders(arcs, owners=(3, 4, 5, 6))
+        paths = certify_arc_orders(arcs, rays, cuts, owners=(3, 4, 5, 6))
+        self.assertEqual(tuple(path.owner for path in paths), (3, 4, 5, 6))
+        self.assertEqual(tuple(len(path.crossings) for path in paths),
+                         (38, 14, 24, 7))
+
     def test_rejects_wrong_itinerary_even_when_gluing_accepts(self):
         arc = chain_arcs(exact_action(product(initial_factors()[:1])))[2]
         surface = PlanarSurface.row('PPPPPP', spacing=50, height=220, margin=55)
