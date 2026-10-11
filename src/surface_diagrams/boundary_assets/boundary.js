@@ -1,6 +1,25 @@
 'use strict';
-let state=null,selected=0,busy=false,dragged=null;
+let state=null,selected=0,busy=false,dragged=null,compactBraid=false;
 const $=id=>document.getElementById(id);
+const braidLayoutLabel=document.createElement('label');
+braidLayoutLabel.htmlFor='braid-layout';braidLayoutLabel.textContent='Braid layout ';
+const braidLayoutSelect=document.createElement('select');braidLayoutSelect.id='braid-layout';
+for(const [value,label] of [['classic','Classic'],['compact','Compact commuting']]){
+  const option=document.createElement('option');option.value=value;option.textContent=label;
+  braidLayoutSelect.append(option);
+}
+braidLayoutLabel.append(braidLayoutSelect);
+document.querySelector('header .toolbar').append(braidLayoutLabel);
+function applyBraidLayout(){
+  if(!state)return;
+  state.factors.forEach((factor,index)=>{
+    const card=$('factors').children[index];
+    if(card)card.style.height=(compactBraid ? factor.height_compact : factor.height)+'px';
+  });
+  $('braid').innerHTML=compactBraid&&state.braid_compact?state.braid_compact:state.braid;
+  choose(selected);
+}
+braidLayoutSelect.onchange=()=>{compactBraid=braidLayoutSelect.value==='compact';applyBraidLayout();};
 const showStatus=(message,error=false)=>{
   $('status').textContent=message;
   $('status').classList.toggle('error',error);
@@ -90,7 +109,7 @@ function paint(){
       .forEach(element=>element.classList.remove('dragging','drop-target'));};
     $('factors').append(card);
   });
-  $('braid').innerHTML=state.braid;
+  applyBraidLayout();
   choose(selected);showStatus(state.message);
 }
 
@@ -131,7 +150,9 @@ $('file').onchange=async event=>{
   event.target.value='';
 };
 $('svg').onclick=async()=>{
-  try{const response=await fetch('/api/export.svg');
+  try{const orientation=document.getElementById('pc-orientation');
+    const mirror=orientation?.value==='earlier'?'0':'1';
+    const response=await fetch(`/api/export.svg?compact=${compactBraid?'1':'0'}&mirror=${mirror}`);
     if(!response.ok){const data=await response.json();throw new Error(data.error);}
     download(await response.text(),'image/svg+xml',`boundary-twist-${state.points}-points.svg`);
   }catch(error){showStatus(error.message,true);}

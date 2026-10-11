@@ -18,8 +18,15 @@ def _n(value):
     return format(value, ".12g")
 
 
-def render_svg(surface: PlanarSurface, *, style=None, scale=1, title="Planar surface") -> str:
-    """Return a standalone SVG. Scale changes display size, not coordinates."""
+def render_svg(surface: PlanarSurface, *, style=None, scale=1, title="Planar surface",
+               mirror_curve_paths_vertical=False) -> str:
+    """Return a standalone SVG. Scale and curve mirror affect display only.
+
+    The optional mirror reflects routed Arc and Loop paths about the marked
+    point row. It leaves surface marks, labels, braid paths, and the underlying
+    curve itineraries unchanged. A legend can extend below the point row, so
+    the axis is read from the marks rather than the SVG's overall center.
+    """
     if not isinstance(surface, (PlanarSurface, GenusSurface, CutDiskDiagram, GenusDiagram, BoundaryGuide, BorderedReferenceDiagram, PlanarDiagram, BraidDiagram, Figure, FactorizationDiagram, DiagramDocument)):
         raise TypeError("expected a supported surface, diagram, or Figure")
     style = (surface.style if isinstance(surface, DiagramDocument) else Style()) if style is None else style
@@ -28,8 +35,15 @@ def render_svg(surface: PlanarSurface, *, style=None, scale=1, title="Planar sur
     _number(scale, "scale", positive=True)
     if not isinstance(title, str):
         raise TypeError("title must be a string")
+    if type(mirror_curve_paths_vertical) is not bool:
+        raise TypeError("mirror_curve_paths_vertical must be a boolean")
     drawing = layout(surface, style)
     w, h = drawing.width, drawing.height
+    if mirror_curve_paths_vertical:
+        marks = [shape for shape in drawing.ellipses if shape.role == 'marked-point']
+        row_y = marks[0].y if marks and all(abs(shape.y - marks[0].y) < 1e-9
+                                             for shape in marks) else 0
+        mirror_translate = h - 2 * row_y
     lines = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {_n(w)} {_n(h)}" '
              f'width="{_n(w * scale)}" height="{_n(h * scale)}" role="img">',
              f"<title>{escape(title)}</title>"]
@@ -61,9 +75,12 @@ def render_svg(surface: PlanarSurface, *, style=None, scale=1, title="Planar sur
         clip = f' clip-path="url(#{clip_id})"'
     for path in drawing.paths:
         extra = ' stroke-dasharray="3 3"' if path.dashed else ''
+        mirror = (f' transform="translate(0 {_n(mirror_translate)}) scale(1 -1)"'
+                  if mirror_curve_paths_vertical and path.role in ('arc', 'closed-curve')
+                  else '')
         lines.append(f'<path class="{path.role}" d="{path_data(path.commands)}" fill="none" '
                      f'stroke="{path.stroke}" stroke-width="{_n(path.stroke_width)}" '
-                     f'stroke-linecap="round" stroke-linejoin="round"{extra}{clip}/>')
+                     f'stroke-linecap="round" stroke-linejoin="round"{extra}{mirror}{clip}/>')
     for shape in drawing.ellipses:
         attrs = (f'class="{shape.role}" cx="{_n(w / 2 + shape.x)}" '
                  f'cy="{_n(h / 2 - shape.y)}"')

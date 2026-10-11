@@ -17,13 +17,13 @@ from .sphere_actions import sphere_inner_certificate
 from .visuals import ColoredCurve,PlanarDiagram,RAINBOW
 
 
-def sphere_chart_drawing(braid):
+def sphere_chart_drawing(braid, *, mirror_vertical=False):
     """Return (SVG, removed common whisker), or a precise chart limitation."""
-    return _cached_chart(tuple(braid))
+    return _cached_chart(tuple(braid), mirror_vertical)
 
 
 @lru_cache(maxsize=24)
-def _cached_chart(braid):
+def _cached_chart(braid, mirror_vertical):
     certificate=sphere_inner_certificate(braid)
     if not certificate['certified']:
         raise ValueError('The sphere outer action has no identity certificate for this chart')
@@ -40,4 +40,5 @@ def _cached_chart(braid):
     surface=PlanarSurface.row('PPPPP',spacing=50*scale,height=220*scale,margin=55*scale)
     diagram=PlanarDiagram(surface,tuple(ColoredCurve(f'x{i+1}',arc,RAINBOW[i])
                                         for i,arc in enumerate(arcs)))
-    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5)),whisker
+    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical),whisker

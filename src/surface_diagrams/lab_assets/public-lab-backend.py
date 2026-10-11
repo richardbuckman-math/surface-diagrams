@@ -79,7 +79,11 @@ def dispatch(path, method, body):
         elif method == 'GET' and route.path == '/api/export.svg':
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reload before exporting')
-            return json.dumps(dict(status=200, body=factorization_svg(lab.history[lab.position]),
+            if query.get('mirror',['0'])[0] not in ('0','1') or query.get('compact',['0'])[0] not in ('0','1'):
+                raise ValueError('Invalid display option')
+            return json.dumps(dict(status=200, body=factorization_svg(lab.history[lab.position],
+                                   mirror_vertical=query.get('mirror',['0'])[0]=='1',
+                                   compact=query.get('compact',['0'])[0]=='1'),
                                    mime='image/svg+xml'))
         else:
             return json.dumps(dict(status=404, body=json.dumps({'error': 'Not found'}),

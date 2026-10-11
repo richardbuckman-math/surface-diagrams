@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PC Lantern Lab · Surface Diagrams</title>
+  <link rel="stylesheet" href="../lab/lab.css">
+  <link rel="stylesheet" href="../boundary-lab/boundary.css">
+  <link rel="stylesheet" href="pc-lantern.css">
+</head>
+<body>
+<header>
+  <div class="heading"><div><p class="eyebrow">SURFACE DIAGRAMS · CONVENTION CHECK</p><h1>PC Lantern Lab</h1></div><span id="count">Loading…</span></div>
+  <p class="intro"><strong>PC = puncture-capped.</strong> Follow the chain of three arcs through
+    <strong>T₁₂ · T₁₃ · T₂₃ = T₁₂₃</strong>, then drag factors to try exact Hurwitz moves.
+    The braid words keep their algebraic sign; the planar arc paths use Richard's vertically reflected display orientation.</p>
+  <div class="toolbar"><select id="points" hidden><option value="3">3</option></select><input id="power" type="number" value="1" hidden>
+    <button id="example">Restore three lantern twists</button><button id="new">Show direct T₁₂₃ twist</button>
+    <button id="undo">Undo</button><button id="redo">Redo</button></div>
+  <div class="toolbar"><button id="save">Export JSON</button><button id="open">Load JSON</button>
+    <input id="file" type="file" accept=".json,application/json" hidden><button id="svg">Save factorization SVG</button></div>
+  <div class="toolbar editing"><strong id="selected">Select a factor</strong>
+    <label for="split-kind">Substitute</label><select id="split-kind"></select>
+    <button id="split">Apply</button><button id="combine">Combine neighbors</button></div>
+  <p id="status" role="status" aria-live="polite">Loading the exact braid action…</p><p id="storage-status"></p>
+</header>
+<main>
+  <details class="scope"><summary>What this relation checks</summary>
+    <p>This is the three-marked-point image of the lantern relation after capping the
+       three inner boundaries with once-marked disks. The comparison is in the
+       <strong>disk braid group B₃</strong>. It does not retain the three inner-boundary
+       framings of the original four-holed sphere relation. Each edit is checked
+       against the exact action of T₁₂₃; a picture is evidence you can inspect,
+       while the braid action performs the algebraic check.</p>
+    <p>The three colored cut arcs are boundary→1, 1→2, and 2→3. The reflected
+       display changes their coordinates only. Twist signs, braid words, and
+       each arc's exact itinerary are unchanged.</p>
+  </details>
+  <details class="scope history"><summary id="history-summary">Exploration history</summary><ol id="history-list"></ol></details>
+  <div class="toolbar pc-display-controls" role="group" aria-label="Cut system visibility">
+    <label><input id="pc-show-column" type="checkbox" checked> Show cut-system column</label>
+    <span class="divider"></span>
+    <label><input id="pc-arc-1" type="checkbox" checked> <span class="pc-swatch e1"></span>boundary→1</label>
+    <label><input id="pc-arc-2" type="checkbox" checked> <span class="pc-swatch e2"></span>1→2</label>
+    <label><input id="pc-arc-3" type="checkbox" checked> <span class="pc-swatch e3"></span>2→3</label>
+    <button id="pc-show-all" type="button">Show all</button>
+    <button id="pc-hide-all" type="button">Hide all</button>
+    <span class="divider"></span>
+    <label for="pc-orientation">Planar orientation</label>
+    <select id="pc-orientation"><option value="mirrored">Richard's view</option><option value="earlier">Earlier view</option></select>
+  </div>
+  <p id="target-status">Exact target loading…</p>
+  <div class="column-head"><span>Planar mapping classes <small>Drag a card · or use ↑ ↓</small></span>
+    <span class="pc-cut-column-head">Cumulative cut system <small>After each factor</small></span>
+    <span>Continuous braid</span></div>
+  <div class="workspace"><section id="factors" aria-label="Ordered factorization"></section>
+    <section id="pc-cuts-column" aria-label="Cumulative cut system after each factor"></section>
+    <div id="braid" aria-label="Continuous braid with blue factor separators"></div></div>
+  <details class="scope pc-direct-check"><summary>Compare the final cut system with one direct T₁₂₃</summary>
+    <div id="pc-target-drawing" class="pc-cut-drawing"></div><p id="pc-match" class="pc-word"></p>
+  </details>
+  <p class="math-note">The blue dotted lines separate factors in one exact three-strand braid.
+    Hurwitz, split, combine, undo, and saved JSON use the same checked engine as the boundary-twist playground.</p>
+</main>
+<script src="pc-public.js"></script>
+<script src="../boundary-lab/boundary.js?v=20261011"></script>
+<script src="pc-cuts.js"></script>
+</body>
+</html>

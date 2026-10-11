@@ -69,16 +69,16 @@ def chain_arc(images, index):
     return _recover_edge(words, endpoints, index)
 
 
-def chain_arc_drawing(images, *, index=0):
+def chain_arc_drawing(images, *, index=0, mirror_vertical=False):
     """Draw one exact chain edge, without claiming a joint embedded picture."""
     if type(index) is not int or not 0 <= index < 6:
         raise ValueError('Choose one of the six chain arcs')
-    return _cached_arc_drawing(tuple(tuple(image) for image in images), index)
+    return _cached_arc_drawing(tuple(tuple(image) for image in images), index, mirror_vertical)
 
 
-def chain_cut_system_drawing(images):
+def chain_cut_system_drawing(images, *, mirror_vertical=False):
     """Draw all six chain edges together, or report the finite route limit."""
-    return _cached_drawing(tuple(tuple(image) for image in images))
+    return _cached_drawing(tuple(tuple(image) for image in images), mirror_vertical)
 
 
 def _surface(arcs):
@@ -89,15 +89,16 @@ def _surface(arcs):
 
 
 @lru_cache(maxsize=48)
-def _cached_arc_drawing(images, index):
+def _cached_arc_drawing(images, index, mirror_vertical):
     arc = chain_arc(images, index)
     diagram = PlanarDiagram(_surface((arc,)),
                             (ColoredCurve(f'chain {index + 1}', arc, RAINBOW[index]),))
-    return render_svg(diagram, style=Style(curve_width=1.5, marked_point_radius=3.5))
+    return render_svg(diagram, style=Style(curve_width=1.5, marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)
 
 
 @lru_cache(maxsize=24)
-def _cached_drawing(images):
+def _cached_drawing(images, mirror_vertical):
     arcs = chain_arcs(images)
     if sum(len(arc.cuts) + 2 for arc in arcs) > MAX_ROUTE_NODES:
         raise ValueError(f'Combined chain routes exceed {MAX_ROUTE_NODES} nodes; '
@@ -105,4 +106,5 @@ def _cached_drawing(images):
     diagram = PlanarDiagram(_surface(arcs), tuple(
         ColoredCurve(f'chain {i + 1}', arc, RAINBOW[i])
         for i, arc in enumerate(arcs)))
-    return render_svg(diagram, style=Style(curve_width=1.5, marked_point_radius=3.5))
+    return render_svg(diagram, style=Style(curve_width=1.5, marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)

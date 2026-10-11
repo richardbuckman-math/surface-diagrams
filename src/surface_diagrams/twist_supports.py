@@ -80,12 +80,13 @@ def support_curve(twist):
     return arc_from_class(word,start,end)
 
 
-@lru_cache(maxsize=64)
-def support_drawing(twist):
+@lru_cache(maxsize=128)
+def support_drawing(twist, *, mirror_vertical=False):
     curve=support_curve(twist)
     # Keep fixed stroke/dot sizes while widening dense cut intervals. Scale
     # the ellipse with the spacing so its aspect and containment remain intact.
     visits=max(Counter(curve.cuts).values(),default=0)
     scale=max(1.,((visits+1)*4+10)/50)
     surface=PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale).with_curves(curve)
-    return render_svg(surface,style=Style(curve_color='#a21caf',curve_width=1.5,marked_point_radius=3.5))
+    return render_svg(surface,style=Style(curve_color='#a21caf',curve_width=1.5,marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)

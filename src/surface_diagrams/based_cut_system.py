@@ -64,30 +64,31 @@ def based_arc_from_meridian(image, *, points=6):
     return min(candidates,key=lambda arc:(len(arc.cuts),arc.initial_up))
 
 
-def based_cut_system_drawing(images):
+def based_cut_system_drawing(images, *, mirror_vertical=False):
     """Render six exact based arcs together, or report an honest route limit."""
-    return _cached_drawing(tuple(tuple(image) for image in images))
+    return _cached_drawing(tuple(tuple(image) for image in images), mirror_vertical)
 
 
-def based_arc_drawing(image, *, index=0):
+def based_arc_drawing(image, *, index=0, mirror_vertical=False):
     """Draw one exact based arc, without asserting a six-arc cut system."""
     if type(index) is not int or not 0 <= index < 6:
         raise ValueError('Choose one of the six based arcs')
-    return _cached_arc_drawing(tuple(image), index)
+    return _cached_arc_drawing(tuple(image), index, mirror_vertical)
 
 
 @lru_cache(maxsize=48)
-def _cached_arc_drawing(image, index):
+def _cached_arc_drawing(image, index, mirror_vertical):
     arc = based_arc_from_meridian(image)
     visits = max(Counter(arc.cuts).values(),default=0)
     scale = max(1.,((visits+1)*4+10)/50)
     surface = PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale)
     diagram = PlanarDiagram(surface,(ColoredCurve(f'x{index+1}',arc,RAINBOW[index]),))
-    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5))
+    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)
 
 
 @lru_cache(maxsize=24)
-def _cached_drawing(images):
+def _cached_drawing(images, mirror_vertical):
     if len(images) != 6:
         raise ValueError('The six-point cut system needs six meridian images')
     arcs = tuple(based_arc_from_meridian(image) for image in images)
@@ -98,4 +99,5 @@ def _cached_drawing(images):
     surface = PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale)
     diagram = PlanarDiagram(surface,tuple(ColoredCurve(f'x{i+1}',arc,RAINBOW[i])
                                           for i,arc in enumerate(arcs)))
-    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5))
+    return render_svg(diagram,style=Style(curve_width=1.5,marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)

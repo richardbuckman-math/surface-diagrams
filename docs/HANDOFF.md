@@ -1,5 +1,45 @@
 # Handoff: surface-diagrams
 
+## October 11: PC lantern lab, cumulative cut system, and display calibration
+
+The new PC (puncture-capped) lantern lab starts with the checked three-factor
+disk relation `T12 · T13 · T23 = T123`. Its public page is
+`/boundary-lab/pc-lantern.html`. Each factor row has its Arc/Loop support, the
+cut-system image **after that row's cumulative prefix**, and the corresponding
+interval of one continuous exact three-strand braid. The disk chain is
+boundary→1, 1→2, 2→3. The three final arc itineraries agree with a direct
+`T123`, and the full Artin actions agree. The page keeps Hurwitz moves,
+splitting, combining, undo, save/reopen, and direct-twist comparison. Users can
+hide the middle column, toggle any of the three colored arcs independently,
+and show or hide all at once. The cut-system renderer uses the same shared
+Arc/PlanarDiagram library as the rest of the package; a failed route is shown
+as unavailable rather than invented.
+
+Richard's vertically reflected planar display is the default in the PC lab;
+the earlier view is selectable. Both support curves and transported cut arcs
+flip together. The six-seven and Xiao labs also expose the same planar view
+choice, including inspectors and SVG saves. These are coordinate reflections
+only: exact braid words, Artin actions, and braid diagrams are unchanged.
+
+The optional compact braid layout groups commuting crossings (such as
+`σ1 σ3`) at one level and gives consecutive crossings a shallower path when
+row space permits. Classic remains selectable. The signed word and its exact
+action remain the source of truth; compact rendering changes neither. The
+paired exports and row heights follow the chosen layout. The PC cut rows
+follow the factor cards' actual heights so all three columns stay aligned.
+
+Focused tests cover the PC relation, every prefix, orientation, compact braid
+action and alignment; local browser inspection covered independent arc
+visibility, column collapse, orientation, compact layout, and Hurwitz updates.
+The full local suite passed 406 tests with an absolute `PYTHONPATH`; the first
+run's sole failure was a subprocess import caused by a relative path after it
+changed working directory. `python examples/build_site.py` checks site links.
+Next: ask Richard to inspect
+the PC page's positive-twist pictures beside the existing (6,7) factors and
+identify any remaining convention mismatch. Keep exact sphere identity checks
+distinct from these disk pictures. Avoid treating the framed lantern, general
+daisy relation, or a numerical support preview as implemented proof.
+
 ## October 11: lantern sign calibration and sphere midpoint
 
 Richard confirmed that F1 is the squared twist around one-based points 3, 4,

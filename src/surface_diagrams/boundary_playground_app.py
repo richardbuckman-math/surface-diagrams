@@ -70,6 +70,7 @@ class BoundaryLab:
                 splits.append(('lantern', 'Three pairwise twists'))
             rows.append(dict(asdict(factor), word=factor.word, label=factor.label,
                              svg=svg, warning=warning, height=row_height(factor),
+                             height_compact=row_height(factor, compact=True),
                              splits=splits))
         return {
             'points': project.points,
@@ -77,6 +78,7 @@ class BoundaryLab:
             'target_word': project.target_word,
             'factors': rows,
             'braid': braid_svg(project.factors, project.points),
+            'braid_compact': braid_svg(project.factors, project.points, compact=True),
             'export': project.to_dict(),
             'undo': self.position > 0,
             'redo': self.position < len(self.history)-1,
@@ -166,5 +168,6 @@ class BoundaryLab:
              self.message) = before
             raise
 
-    def export_svg(self):
-        return factorization_svg(self.project.factors, self.project.points)
+    def export_svg(self, *, mirror_vertical=False, compact=False):
+        return factorization_svg(self.project.factors, self.project.points,
+                                 mirror_vertical=mirror_vertical, compact=compact)

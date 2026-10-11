@@ -17,6 +17,8 @@ from .model import PlanarSurface, Style
 from .svg import render_svg
 from .twist_supports import _ray_cuts, support_drawing
 from .visuals import RAINBOW, _braid_paths
+from .braid_schedule import (aligned_compact_steps, compact_layer_count,
+                             layered_braid_paths)
 
 
 def _check_strands(strands):
@@ -84,8 +86,8 @@ def support_curve(twist, strands):
     return _arc_from_class(word, start, end, strands)
 
 
-@lru_cache(maxsize=128)
-def support_svg(factor, strands):
+@lru_cache(maxsize=256)
+def support_svg(factor, strands, *, mirror_vertical=False):
     """Render a verified single-factor support, or raise ValueError.
 
     Six-point factors retain the existing lab renderer and its cache. A failed
@@ -94,54 +96,68 @@ def support_svg(factor, strands):
     _check_strands(strands)
     twist = factor.mapping_class
     if strands == 6:
-        return support_drawing(twist)
+        return (support_drawing(twist, mirror_vertical=True)
+                if mirror_vertical else support_drawing(twist))
     curve = support_curve(twist, strands)
     visits = max(Counter(curve.cuts).values(), default=0)
     scale = max(1., ((visits + 1) * 4 + 10) / 50)
     surface = PlanarSurface.row('P' * strands, spacing=50 * scale,
                                 height=220 * scale, margin=55 * scale).with_curves(curve)
     return render_svg(surface, style=Style(curve_color='#a21caf', curve_width=1.5,
-                                           marked_point_radius=3.5))
+                                           marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)
 
 
-def row_height(factor):
-    return max(210, len(factor.word) * 12 + 36)
+def row_height(factor, *, compact=False):
+    levels = compact_layer_count(factor.word) if compact else len(factor.word)
+    return max(210, levels * 12 + 36)
 
 
-def braid_svg(factors, strands):
+def braid_svg(factors, strands, *, compact=False):
     """Draw exact words as one continuous braid, with factor row boundaries."""
     _check_strands(strands)
     factors = tuple(factors)
     if not factors:
         raise ValueError('A braid view needs at least one factor')
-    levels = [0.]
-    letters = []
-    boundaries = []
-    offset = 0
-    for factor in factors:
-        height = row_height(factor)
-        letters.append(None)
-        levels.append(-offset - 18)
-        for index, letter in enumerate(factor.word):
-            if type(letter) is not int or not 1 <= abs(letter) < strands:
-                raise ValueError('Factor braid word exceeds the marked disk')
-            letters.append(letter)
-            levels.append(-offset - 18 - (index + 1) * 12)
-        offset += height
-        letters.append(None)
-        levels.append(-offset)
-        boundaries.append(offset)
+    if compact:
+        if any(type(letter) is not int or not 1 <= abs(letter) < strands
+               for factor in factors for letter in factor.word):
+            raise ValueError('Factor braid word exceeds the marked disk')
+        letters, levels, boundaries, offset = aligned_compact_steps(
+            factors, strands, lambda factor: row_height(factor, compact=True))
+    else:
+        levels = [0.]
+        letters = []
+        boundaries = []
+        offset = 0
+        for factor in factors:
+            height = row_height(factor)
+            letters.append(None)
+            levels.append(-offset - 18)
+            for index, letter in enumerate(factor.word):
+                if type(letter) is not int or not 1 <= abs(letter) < strands:
+                    raise ValueError('Factor braid word exceeds the marked disk')
+                letters.append(letter)
+                levels.append(-offset - 18 - (index + 1) * 12)
+            offset += height
+            letters.append(None)
+            levels.append(-offset)
+            boundaries.append(offset)
     spacing = 28
     width = max(240, (strands - 1) * spacing + 40)
     center = width / 2
-    paths, _ = _braid_paths(strands, letters, levels, spacing, RAINBOW,
-                            Style(curve_width=1.3), 'smooth')
+    if compact:
+        paths, _ = layered_braid_paths(strands, letters, levels, spacing, RAINBOW,
+                                       Style(curve_width=1.3), 'straight')
+    else:
+        paths, _ = _braid_paths(strands, letters, levels, spacing, RAINBOW,
+                                Style(curve_width=1.3), 'smooth')
     svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{offset}" '
            f'viewBox="0 0 {width} {offset}" role="img" '
            f'aria-label="Continuous {strands}-strand braid">']
     top = 0
     for index, factor in enumerate(factors):
-        height = row_height(factor)
+        height = row_height(factor, compact=compact)
         svg.append(f'<rect class="braid-row" data-index="{index}" x="0" y="{top}" '
                    f'width="{width}" height="{height}" fill="none">'
                    f'<title>{escape(factor.id)} braid interval</title></rect>')
@@ -161,14 +177,14 @@ def braid_svg(factors, strands):
     return ''.join(svg)
 
 
-def factorization_svg(factors, strands):
+def factorization_svg(factors, strands, *, mirror_vertical=False, compact=False):
     """Portable paired export with explicit unavailable-support messages."""
     _check_strands(strands)
     factors = tuple(factors)
     if not factors:
         raise ValueError('A paired view needs at least one factor')
-    height = sum(row_height(factor) for factor in factors)
-    braid = braid_svg(factors, strands)
+    height = sum(row_height(factor, compact=compact) for factor in factors)
+    braid = braid_svg(factors, strands, compact=compact)
     braid_width = max(240, (strands - 1) * 28 + 40)
     body = []
     y = 0
@@ -178,7 +194,8 @@ def factorization_svg(factors, strands):
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">'
                     f'{escape(label[:52])}</text>')
         try:
-            support = support_svg(factor, strands)
+            support = (support_svg(factor, strands, mirror_vertical=True)
+                       if mirror_vertical else support_svg(factor, strands))
             support = re.sub(r'width="[^"]*"', 'width="340"', support, count=1)
             support = re.sub(r'height="[^"]*"', 'height="166"', support, count=1)
             body.append('<text x="12" y="34" font-family="sans-serif" font-size="10" '
@@ -191,7 +208,7 @@ def factorization_svg(factors, strands):
                         '<text x="12" y="100" font-family="sans-serif" font-size="12">'
                         'Exact braid remains in the right column.</text>')
         body.append('</g>')
-        y += row_height(factor)
+        y += row_height(factor, compact=compact)
     body.append(f'<g transform="translate(360 0)">{braid}</g>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{360 + braid_width + 20}" '
             f'height="{height + 28}" viewBox="0 0 {360 + braid_width + 20} {height + 28}">'

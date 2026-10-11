@@ -1,7 +1,7 @@
 """Pyodide adapter for the exact boundary-twist playground."""
 
 import json
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 from surface_diagrams.boundary_playground_app import BoundaryLab
 
@@ -22,7 +22,8 @@ def restore_browser_session(text):
 
 def dispatch(path, method, body):
     try:
-        route = urlsplit(path).path
+        parsed = urlsplit(path)
+        route = parsed.path
         if method == 'GET' and route == '/api/state':
             result = lab.state()
         elif method == 'POST' and route == '/api/action':
@@ -31,7 +32,11 @@ def dispatch(path, method, body):
             return json.dumps({'status':200,'body':json.dumps(lab.state()),
                                'session':lab.session_document(),'mime':'application/json'})
         elif method == 'GET' and route == '/api/export.svg':
-            return json.dumps({'status':200,'body':lab.export_svg(),
+            query = parse_qs(parsed.query)
+            if query.get('compact',['0'])[0] not in ('0','1'):
+                raise ValueError('Invalid braid layout option')
+            return json.dumps({'status':200,'body':lab.export_svg(
+                compact=query.get('compact',['0'])[0]=='1'),
                                'mime':'image/svg+xml'})
         else:
             return json.dumps({'status':404,'body':json.dumps({'error':'Not found'}),

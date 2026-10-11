@@ -121,9 +121,10 @@ class LabServer(ThreadingHTTPServer):
             if not f.half and f.points==2: options.append(['halves','Split into half twists'])
             if not f.half and f.points==3: options.append(['lantern','Lantern: three pairwise twists (marked points)'])
             rows.append(dict(asdict(f),word=f.word,core=f.core,label=f.label,svg=svg,warning=warning,
-                             height=row_height(f),splits=options,audit=support_audit(f)))
+                             height=row_height(f),height_compact=row_height(f,compact=True),
+                             splits=options,audit=support_audit(f)))
         return dict(token=self.token,revision=self.revision,seed_slug=self.seed_slug,
-                    factors=rows,braid=braid_svg(factors),
+                    factors=rows,braid=braid_svg(factors),braid_compact=braid_svg(factors,compact=True),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
                     frame=self.frames[self.position],steps=self.operations,position=self.position,
@@ -308,12 +309,18 @@ class LabHandler(EditorHandler):
                 self._error(400,str(error)); return
             self._reply(200,json.dumps(data)); return
         if urlsplit(self.path).path=='/api/export.svg':
-            try: revision=int(parse_qs(urlsplit(self.path).query)['revision'][0])
+            try:
+                query=parse_qs(urlsplit(self.path).query)
+                revision=int(query['revision'][0])
+                if query.get('mirror',['0'])[0] not in ('0','1') or query.get('compact',['0'])[0] not in ('0','1'):
+                    raise ValueError('Invalid display option')
             except (KeyError,ValueError): self._error(400,'Supply the current revision'); return
             with self.server.lock:
                 if revision!=self.server.revision:
                     self._error(409,'State changed; reload before exporting'); return
-                svg=factorization_svg(self.server.history[self.server.position])
+                svg=factorization_svg(self.server.history[self.server.position],
+                                      mirror_vertical=query.get('mirror',['0'])[0]=='1',
+                                      compact=query.get('compact',['0'])[0]=='1')
             self._reply(200,svg,'image/svg+xml; charset=utf-8'); return
         if self.path=='/api/state':
             with self.server.lock: data=self.server.state()

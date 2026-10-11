@@ -3,6 +3,41 @@ let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null
 const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
+const planarOrientation=$('planar-orientation');
+const originalPathTransforms=new WeakMap();
+const planarHosts=['factors','inspect-drawing','prefix-before','prefix-after',
+ 'arc-drawing','compare-before','compare-after','sphere-chart'];
+function applyPlanarOrientation(root){
+ for(const path of root.querySelectorAll('svg path.arc, svg path.closed-curve')){
+  if(!originalPathTransforms.has(path))
+   originalPathTransforms.set(path,path.getAttribute('transform'));
+  const original=originalPathTransforms.get(path);
+  if(planarOrientation.value==='original'){
+   if(original===null)path.removeAttribute('transform');
+   else path.setAttribute('transform',original);
+   continue;
+  }
+  const svg=path.closest('svg');
+  const mark=svg?.querySelector('circle.marked-point');
+  const rowY=mark?Number(mark.getAttribute('cy')):NaN;
+  if(!Number.isFinite(rowY))continue;
+  path.setAttribute('transform',`translate(0 ${2*rowY}) scale(1 -1)${original?' '+original:''}`);
+ }
+}
+function displayPlanarSvg(host,svg){host.innerHTML=svg;applyPlanarOrientation(host);}
+function orientedSvg(svg){
+ if(planarOrientation.value==='original')return svg;
+ const parsed=new DOMParser().parseFromString(svg,'image/svg+xml');
+ if(parsed.querySelector('parsererror'))throw new Error('The SVG export could not be read.');
+ applyPlanarOrientation(parsed);
+ return new XMLSerializer().serializeToString(parsed.documentElement);
+}
+function downloadPlanarSvg(svg,name){download(orientedSvg(svg),'image/svg+xml',name);}
+planarOrientation.onchange=()=>{
+ for(const id of planarHosts)applyPlanarOrientation($(id));
+};
+const braidLayout=$('braid-layout');
+braidLayout.onchange=()=>{if(state)setBraidLayout();};
 const prefixSystem=$('prefix-system');
 prefixSystem.onchange=()=>{if(prefixIndex!==null)showPrefix(prefixIndex);};
 const arcDialog=document.createElement('dialog');arcDialog.id='arc-inspector';
@@ -14,7 +49,7 @@ document.body.append(compareDialog);
 let compareRequest=0,compareFit=true,compareSvgs={};
 $('close-compare').onclick=()=>{compareRequest++;compareDialog.close();};
 for(const side of ['before','after'])$(`save-compare-${side}`).onclick=()=>{
- if(compareSvgs[side])download(compareSvgs[side],'image/svg+xml',`individual-arc-${side}.svg`);
+ if(compareSvgs[side])downloadPlanarSvg(compareSvgs[side],`individual-arc-${side}.svg`);
 };
 function positionCompare(fraction){
  if(compareFit)setCompareFit(false);
@@ -36,7 +71,7 @@ $('compare-fit').onclick=()=>setCompareFit(!compareFit);
 for(const [id,fraction] of [['compare-start',0],['compare-middle',.5],['compare-end',1]])
  $(id).onclick=()=>positionCompare(fraction);
 $('close-arc').onclick=()=>{arcRequest++;arcDialog.close();};
-$('save-arc').onclick=()=>{if(arcSvg)download(arcSvg,'image/svg+xml','individual-based-arc.svg');};
+$('save-arc').onclick=()=>{if(arcSvg)downloadPlanarSvg(arcSvg,'individual-based-arc.svg');};
 function positionArc(fraction){
  if(arcFit)setArcFit(false);
  const drawing=$('arc-drawing');drawing.scrollTop=(drawing.scrollHeight-drawing.clientHeight)/2;
@@ -77,6 +112,15 @@ function choose(index){
  document.querySelectorAll('.braid-row').forEach((el,i)=>el.classList.toggle('selected',i===selected));
  controls();
 }
+function setBraidLayout(){
+ const compact=braidLayout.value==='compact'&&Boolean(state.braid_compact);
+ document.querySelectorAll('#factors .factor').forEach((card,i)=>{
+  const factor=state.factors[i];
+  card.style.height=(compact?factor.height_compact||factor.height:factor.height)+'px';
+ });
+ $('braid').innerHTML=compact?state.braid_compact:state.braid;
+ choose(selected);
+}
 function paint(){
  $('history-summary').textContent=`Exploration history · step ${state.position+1} of ${state.steps.length}`;
  $('history-list').replaceChildren();
@@ -100,7 +144,7 @@ function paint(){
   const buttons=document.createElement('span');buttons.className='row-buttons';
   for(const [label,delta] of [['↑',-1],['↓',1]]){const b=document.createElement('button');b.textContent=label;b.setAttribute('aria-label',`Move ${f.id} ${delta<0?'up':'down'}`);b.disabled=i+delta<0||i+delta>=state.factors.length;b.onclick=e=>{e.stopPropagation();choose(i);action({op:'move',index:i,target:i+delta},i+delta);};buttons.append(b);}
   head.append(title,buttons);const support=document.createElement('div');support.className='support';
-  if(f.svg)support.innerHTML=f.svg;else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
+  if(f.svg)displayPlanarSvg(support,f.svg);else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
   const word=document.createElement('div');word.className='word';word.textContent=f.word.join(' ');word.title=word.textContent;
   const audit=document.createElement('div');audit.className='support-check '+(f.audit?.status||'unavailable');
   audit.textContent=f.audit?.matches===true?'Boundary word agrees':f.audit?.matches===false?'Preview check failed':'Preview check unavailable';
@@ -114,7 +158,7 @@ function paint(){
   card.ondragend=()=>{dragged=null;document.querySelectorAll('.dragging,.drop-target').forEach(el=>el.classList.remove('dragging','drop-target'));};
   $('factors').append(card);
  });
- $('braid').innerHTML=state.braid;choose(selected);status(state.message);
+ setBraidLayout();status(state.message);
 }
 async function action(payload,next=selected){
  if(busy)return;busy=true;document.body.classList.add('busy');controls();status('Checking exact braid actions and redrawing affected supports…');
@@ -134,7 +178,7 @@ $('inspect').onclick=()=>{
  const f=state.factors[selected];
  $('inspect-title').textContent=`${f.id} · ${f.label}`;
  $('inspect-drawing').replaceChildren();
- if(f.svg){$('inspect-drawing').innerHTML=f.svg;$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
+ if(f.svg){displayPlanarSvg($('inspect-drawing'),f.svg);$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
  else $('inspect-drawing').textContent=f.warning;
  $('inspect-word').textContent='Braid: '+f.word.join(' ');
  $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
@@ -238,7 +282,7 @@ async function showArcGallery(side,index,revision,request){
    const data=await response.json();
    if(request!==prefixRequest||state.revision!==revision)return;
    if(!response.ok)throw new Error(data.error);
-   if(data.svg)cards[i].innerHTML=data.svg;
+   if(data.svg)displayPlanarSvg(cards[i],data.svg);
    else cards[i].textContent=`Drawing unavailable: ${data.warning}`;
   }catch(error){if(request!==prefixRequest)return;cards[i].textContent=error.message;}
  }
@@ -283,7 +327,7 @@ async function showPrefix(index){
   $('prefix-status').textContent=`Prefix through ${data.factor}; all six ${system==='chain'?'chain-edge boundary words':'based meridian images'} computed exactly. ${changed} of 6 changed.`;
   for(const side of ['before','after']){
    const drawing=$(`prefix-${side}`);
-   if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];drawing.innerHTML=prefixSvgs[side];$(`save-prefix-${side}`).disabled=false;}
+   if(data[`${side}_svg`]){prefixSvgs[side]=data[`${side}_svg`];displayPlanarSvg(drawing,prefixSvgs[side]);$(`save-prefix-${side}`).disabled=false;}
    else offerArcGallery(side,index,revision,request,data[`${side}_warning`]);
   }
   setPrefixFit(prefixFit);
@@ -341,7 +385,7 @@ async function showCompareArc(arcIndex,index,revision){
    if(!response.ok)throw new Error(data.error);
    if(state.revision!==revision)throw new Error('The factorization changed; reopen the prefix inspector.');
    if(data.svg){
-    compareSvgs[side]=data.svg;$(`compare-${side}`).innerHTML=data.svg;
+    compareSvgs[side]=data.svg;displayPlanarSvg($(`compare-${side}`),data.svg);
     $(`save-compare-${side}`).disabled=false;drawn++;
     setCompareFit(compareFit);
    }else $(`compare-${side}`).textContent=`Drawing unavailable: ${data.warning}`;
@@ -373,7 +417,7 @@ async function showArc(side,arcIndex,index,revision){
   if(state.revision!==revision)throw new Error('The factorization changed; reopen the prefix inspector.');
   $('arc-word-summary').textContent=`Full ${chain?'neighborhood-boundary word':'based image'} ${edge} (${data.image.length} letters)`;
   $('arc-word').textContent=`${edge} → ${data.image.join(' ')}`;
-  if(data.svg){arcSvg=data.svg;$('arc-drawing').innerHTML=arcSvg;$('save-arc').disabled=false;
+  if(data.svg){arcSvg=data.svg;displayPlanarSvg($('arc-drawing'),arcSvg);$('save-arc').disabled=false;
    setArcFit(arcFit);
    $('arc-status').textContent='Exact individual arc drawn. Joint cut-system routing remains a separate check.';}
   else{$('arc-drawing').textContent=`Drawing unavailable: ${data.warning}`;
@@ -387,7 +431,7 @@ $('prefix-start').onclick=()=>positionPrefix(0);
 $('prefix-middle').onclick=()=>positionPrefix(.5);
 $('prefix-end').onclick=()=>positionPrefix(1);
 $('save-prefix').onclick=()=>{if(prefixExport)download(JSON.stringify(prefixExport,null,2),'application/json','prefix-action.json');};
-for(const side of ['before','after'])$(`save-prefix-${side}`).onclick=()=>{if(prefixSvgs[side])download(prefixSvgs[side],'image/svg+xml',`cut-system-${side}.svg`);};
+for(const side of ['before','after'])$(`save-prefix-${side}`).onclick=()=>{if(prefixSvgs[side])downloadPlanarSvg(prefixSvgs[side],`cut-system-${side}.svg`);};
 $('close-prefix').onclick=()=>{prefixRequest++;$('prefix-inspector').close();};
 $('sphere').onclick=async()=>{
  const revision=state.revision;sphereExport=null;sphereChartSvg='';$('save-sphere').disabled=true;$('save-sphere-chart').disabled=true;
@@ -408,7 +452,7 @@ $('sphere').onclick=async()=>{
    'The six-point disk action is also the identity.':
    'The six-point disk action is not the identity; the sphere relation changes the result.';
   $('sphere-whisker').textContent=data.certified?`Common whisker w (${data.conjugator.length} letters): ${data.conjugator.join(' ')||'identity'}`:'';
-  if(data.chart_svg){sphereChartSvg=data.chart_svg;$('sphere-chart').innerHTML=sphereChartSvg;$('save-sphere-chart').disabled=false;}
+  if(data.chart_svg){sphereChartSvg=data.chart_svg;displayPlanarSvg($('sphere-chart'),sphereChartSvg);$('save-sphere-chart').disabled=false;}
   else $('sphere-chart').textContent=`Identity chart unavailable: ${data.chart_warning}`;
   for(let i=0;i<6;i++){
    const row=document.createElement('p');row.className='full-word';
@@ -420,7 +464,7 @@ $('sphere').onclick=async()=>{
  }catch(error){$('sphere-status').textContent=error.message;}
 };
 $('save-sphere').onclick=()=>{if(sphereExport)download(JSON.stringify(sphereExport,null,2),'application/json','sphere-action-certificate.json');};
-$('save-sphere-chart').onclick=()=>{if(sphereChartSvg)download(sphereChartSvg,'image/svg+xml','sphere-identity-cut-system.svg');};
+$('save-sphere-chart').onclick=()=>{if(sphereChartSvg)downloadPlanarSvg(sphereChartSvg,'sphere-identity-cut-system.svg');};
 $('close-sphere').onclick=()=>$('sphere-inspector').close();
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
@@ -441,7 +485,10 @@ $('open').onclick=()=>$('file').click();
 $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;if(file.size>250000)throw new Error('Choose a JSON file smaller than 250 KB');const document=JSON.parse(await file.text());await action({op:'import',document},0);}catch(e){status(e.message,true);}finally{$('file').value='';}};
 $('svg').onclick=async()=>{
  if(busy||!state)return;
- try{const response=await fetch('/api/export.svg?revision='+state.revision);
+ try{const options=new URLSearchParams({revision:String(state.revision),
+   mirror:planarOrientation.value==='richard'?'1':'0',
+   compact:braidLayout.value==='compact'?'1':'0'});
+  const response=await fetch('/api/export.svg?'+options);
   if(!response.ok){const data=await response.json();throw new Error(data.error);}
   download(await response.text(),'image/svg+xml',factorizationFilename()+'.svg');
  }catch(error){status(error.message,true);}

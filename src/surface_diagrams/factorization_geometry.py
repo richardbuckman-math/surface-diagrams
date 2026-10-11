@@ -9,6 +9,8 @@ import re
 from math import sin,cos,pi,hypot,ceil,sqrt
 from .model import Style
 from .visuals import _braid_paths, RAINBOW
+from .braid_schedule import (aligned_compact_steps, compact_layer_count,
+                             layered_braid_paths)
 
 
 def turn(point,letter):
@@ -119,30 +121,38 @@ def support_points(first,count,half,conjugator):
     return points
 
 
-def support_svg(factor):
+def support_svg(factor, *, mirror_vertical=False):
     from .twist_supports import support_drawing
-    return support_drawing(factor.mapping_class)
+    return (support_drawing(factor.mapping_class, mirror_vertical=True)
+            if mirror_vertical else support_drawing(factor.mapping_class))
 
 
-def row_height(factor):
-    return max(210, len(factor.word)*12+36)
+def row_height(factor, *, compact=False):
+    levels = compact_layer_count(factor.word) if compact else len(factor.word)
+    return max(210, levels*12+36)
 
 
-def braid_svg(factors):
-    levels=[0.]; letters=[]; boundaries=[]; offset=0
-    for factor in factors:
-        height=row_height(factor)
-        letters.append(None); levels.append(-offset-18)
-        for j,letter in enumerate(factor.word):
-            letters.append(letter); levels.append(-offset-18-(j+1)*12)
-        offset+=height
-        letters.append(None); levels.append(-offset)
-        boundaries.append(offset)
-    paths,_=_braid_paths(6,letters,levels,28,RAINBOW,Style(curve_width=1.3),'smooth')
+def braid_svg(factors, *, compact=False):
+    if compact:
+        letters,levels,boundaries,offset=aligned_compact_steps(
+            factors,6,lambda factor: row_height(factor,compact=True))
+        paths,_=layered_braid_paths(6,letters,levels,28,RAINBOW,
+                                    Style(curve_width=1.3),'straight')
+    else:
+        levels=[0.]; letters=[]; boundaries=[]; offset=0
+        for factor in factors:
+            height=row_height(factor)
+            letters.append(None); levels.append(-offset-18)
+            for j,letter in enumerate(factor.word):
+                letters.append(letter); levels.append(-offset-18-(j+1)*12)
+            offset+=height
+            letters.append(None); levels.append(-offset)
+            boundaries.append(offset)
+        paths,_=_braid_paths(6,letters,levels,28,RAINBOW,Style(curve_width=1.3),'smooth')
     svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="{offset}" viewBox="0 0 240 {offset}" role="img" aria-label="Continuous six-strand braid">']
     top=0
     for index,factor in enumerate(factors):
-        height=row_height(factor)
+        height=row_height(factor,compact=compact)
         svg.append(f'<rect class="braid-row" data-index="{index}" x="0" y="{top}" width="240" height="{height}" fill="none"><title>{escape(factor.id)} braid interval</title></rect>')
         top+=height
     for path in paths:
@@ -157,17 +167,18 @@ def braid_svg(factors):
     return ''.join(svg)
 
 
-def factorization_svg(factors):
+def factorization_svg(factors, *, mirror_vertical=False, compact=False):
     """Portable paired export, retaining support verification labels and failures."""
     from .factorization_audit import support_audit
-    height=sum(row_height(f) for f in factors)
+    height=sum(row_height(f,compact=compact) for f in factors)
     body=[]; y=0
     for f in factors:
         label=f'{f.id} · {f.label}'
         body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
         try:
-            svg=re.sub(r'width="[^"]*"','width="340"',support_svg(f),count=1)
+            svg=re.sub(r'width="[^"]*"','width="340"',
+                       support_svg(f,mirror_vertical=True) if mirror_vertical else support_svg(f),count=1)
             svg=re.sub(r'height="[^"]*"','height="166"',svg,count=1)
             audit=support_audit(f)
             check='Boundary word agrees' if audit['matches'] is True else 'Preview check failed' if audit['matches'] is False else 'Preview check unavailable'
@@ -178,8 +189,8 @@ def factorization_svg(factors):
             body.append(f'<desc>{escape(str(error))}</desc><text x="12" y="80" fill="#a14b20" '
                         'font-family="sans-serif" font-size="12">Support preview unavailable.</text>'
                         '<text x="12" y="100" font-family="sans-serif" font-size="12">Exact braid remains in the right column.</text>')
-        body.append('</g>'); y+=row_height(f)
-    body.append(f'<g transform="translate(360 0)">{braid_svg(factors)}</g>')
+        body.append('</g>'); y+=row_height(f,compact=compact)
+    body.append(f'<g transform="translate(360 0)">{braid_svg(factors,compact=compact)}</g>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="620" height="{height+28}" viewBox="0 0 620 {height+28}">'
             '<title>Factorization Lab paired export</title><rect width="100%" height="100%" fill="white"/>'
             '<text x="12" y="18" font-family="sans-serif" font-size="12" fill="#526880">'
