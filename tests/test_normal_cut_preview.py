@@ -1,5 +1,6 @@
 import unittest
 from collections import Counter
+import re
 from unittest.mock import patch
 from xml.etree import ElementTree as ET
 
@@ -34,6 +35,9 @@ class NormalCutPreviewTests(unittest.TestCase):
             self.assertEqual(float(boundary.attrib['x']), 13.0)
         self.assertEqual(len(root.findall('{http://www.w3.org/2000/svg}circle')),
                          certificate.points)
+        labels = root.findall("{http://www.w3.org/2000/svg}text[@class='marked-point-label']")
+        self.assertEqual(tuple(label.text for label in labels),
+                         tuple(str(point) for point in range(1, certificate.points + 1)))
         paths = root.findall("{http://www.w3.org/2000/svg}path[@class='arc']")
         self.assertEqual(len(paths), len(certificate.owners))
         connections = Counter(connection.owner for connection in certificate.connections)
@@ -137,6 +141,33 @@ class NormalCutPreviewTests(unittest.TestCase):
                          render_normal_cut_preview(certificate, projection='strip'))
         with self.assertRaisesRegex(ValueError, 'projection'):
             render_normal_cut_preview(certificate, projection='unknown')
+
+    def test_vertical_mirror_changes_only_display_coordinates(self):
+        certificate = self._certificate(1)
+        standard = ET.fromstring(render_normal_cut_preview(certificate))
+        mirrored = ET.fromstring(render_normal_cut_preview(certificate, mirror_vertical=True))
+        view_height = float(standard.attrib['viewBox'].split()[3])
+        tag = "{http://www.w3.org/2000/svg}path[@class='arc']"
+        regular_paths = standard.findall(tag)
+        mirror_paths = mirrored.findall(tag)
+        self.assertEqual(len(regular_paths), len(mirror_paths))
+        for regular, flipped in zip(regular_paths, mirror_paths):
+            self.assertEqual(regular.attrib['data-owner'], flipped.attrib['data-owner'])
+            self.assertEqual(regular.attrib['stroke'], flipped.attrib['stroke'])
+            a = [float(value) for value in re.findall(r'-?\d+(?:\.\d+)?', regular.attrib['d'])]
+            b = [float(value) for value in re.findall(r'-?\d+(?:\.\d+)?', flipped.attrib['d'])]
+            self.assertEqual(len(a), len(b))
+            for index, (x, y) in enumerate(zip(a, b)):
+                if index % 2 == 0:
+                    self.assertAlmostEqual(x, y)
+                else:
+                    self.assertAlmostEqual(x + y, view_height)
+        self.assertEqual([circle.attrib for circle in
+                          standard.findall('{http://www.w3.org/2000/svg}circle')],
+                         [circle.attrib for circle in
+                          mirrored.findall('{http://www.w3.org/2000/svg}circle')])
+        with self.assertRaisesRegex(TypeError, 'boolean'):
+            render_normal_cut_preview(certificate, mirror_vertical='yes')
 
 
 if __name__ == '__main__':

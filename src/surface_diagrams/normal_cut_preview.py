@@ -190,17 +190,20 @@ class _StripLayout(_FanLayout):
         self._validate_crossings()
 
 
-def render_normal_cut_preview(certificate, *, projection='strip'):
+def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertical=False):
     """Render six colored normal Arcs after their exact-event certificate.
 
     The SVG is a preview of the certified combinatorial placement. Its local
     chords are drawn in convex cells; no minimal-position assertion is
-    made for the supplied Arc itineraries.
+    made for the supplied Arc itineraries. A vertical mirror changes only
+    display coordinates, leaving the certified itineraries untouched.
     """
     if not isinstance(certificate, CertifiedCutSystem):
         raise TypeError('expected a CertifiedCutSystem')
     if projection not in ('strip', 'fan'):
         raise ValueError('projection must be strip or fan')
+    if type(mirror_vertical) is not bool:
+        raise TypeError('mirror_vertical must be a boolean')
     layout = _StripLayout(certificate) if projection == 'strip' else _FanLayout(certificate)
     connections = defaultdict(list)
     for connection in certificate.connections:
@@ -213,7 +216,7 @@ def render_normal_cut_preview(certificate, *, projection='strip'):
 
     def screen(point):
         return (_number(width / 2 + point[0]),
-                _number(height / 2 - point[1]))
+                _number(height / 2 + (point[1] if mirror_vertical else -point[1])))
 
     if projection == 'strip':
         corner_radius = max(18.0, min(layout.spacing / 4,
@@ -266,5 +269,9 @@ def render_normal_cut_preview(certificate, *, projection='strip'):
         lines.append(f'<circle class="marked-point" cx="{cx}" cy="{cy}" '
                      'r="3.5" fill="#006fff" stroke="#006fff" '
                      'stroke-width="2" vector-effect="non-scaling-stroke"/>')
+        lines.append(f'<text class="marked-point-label" x="{cx}" '
+                     f'y="{_number(float(cy) + 15)}" text-anchor="middle" '
+                     'font-family="sans-serif" font-size="10" '
+                     f'fill="#183457">{point}</text>')
     lines.append('</svg>')
     return '\n'.join(lines) + '\n'
