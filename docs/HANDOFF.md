@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## October 11: complete route-free F11 normal-strand certificate
+
+`normal_suffix_rank` now derives shared ray and horizontal-cut orders from
+directed labeled strand suffixes using integer prefix-doubling ranks. It uses
+linear memory and avoids the old pair-comparison cache limit. On F1/F2, its
+complete orders match both the older route-free comparison resolver and the
+accepted route benchmark. On F11-after, it resolves 10,745 ray visits and
+4,683 cut visits (15,428 total) in about 1.8 seconds locally. The independent
+canonical triangle-pairing check passes, and `certify_arc_orders` glues all
+14 regions into six paths whose **complete labeled event sequences** match
+the exact input Arc itineraries (lengths 3,439, 709, 5,207, 291, 4,392,
+1,390). The full calculation plus certificate took about 3.9 seconds locally.
+Focused tests cover F1/F2 equivalence, F11's full certificate, reversed
+input, unresolved parallel arcs, conflicting orders, identical terminal
+geometry, and a nonterminating closed-strand cycle. No SVG changed.
+
+This is a combinatorial joint noncrossing certificate for the supplied Arc
+itineraries. It is separate from the braid's exact sphere identity check and
+does not independently prove that those itineraries were minimal relative
+to the chosen triangulation. The public lab still shows its existing F11
+fallback. Next expose the certified computation through a stable cut-system
+engine entry point, lay out its ordered local strands with colored arc IDs,
+smooth only after preserving their topology, and inspect the resulting F11
+SVG visually before replacing the fallback.
+
 ## October 8: shared puncture-terminal order on F2
 
 `normal_gluing` and `normal_order` now order multiple arc terminals at one
