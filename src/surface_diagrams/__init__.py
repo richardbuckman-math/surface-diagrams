@@ -36,3 +36,6 @@ __all__ += ["sphere_reduce", "sphere_inner_certificate"]
 
 from .sphere_cut_system import sphere_chart_drawing
 __all__ += ["sphere_chart_drawing"]
+
+from .normal_cut_engine import CertifiedCutSystem, calculate_cut_system
+__all__ += ["CertifiedCutSystem", "calculate_cut_system"]

@@ -1,5 +1,42 @@
 # Handoff: surface-diagrams
 
+## October 11: certified cut-system engine entry point and visual preview
+
+`surface_diagrams.calculate_cut_system(arcs)` now packages the route-free
+normal-strand calculation as one result: labeled local connections, shared
+ray/cut orders, 14 ordered triangles, and six glued paths whose complete
+event itineraries have passed the exact certificate. It rejects ambiguous or
+inconsistent placements instead of supplying arbitrary coordinates. The
+calculation remained independent of the old route solver. A separate
+`render_normal_cut_preview` consumes that result and places all six colored
+paths on one polygonal fan; its physical crossings have identical coordinates
+on both incident triangles. This is a preview of the certified combinatorial
+placement, not a claim that the input itineraries are triangulation-minimal.
+The public lab still uses its existing fallback.
+
+All 51 focused normal tests pass, covering F1/F2, reversed owner order, and
+the complete F11 paths. A full local run of 379 tests exposed two generated
+subprocess imports from a relative `PYTHONPATH` and the known intermittent
+Windows `os.replace` access error in a temporary lab session; all three
+affected cases passed immediately with an absolute `PYTHONPATH` and a retry.
+Visual inspection found F1 legible and the F11 fit mathematically traceable
+but crowded around the north/south fan apex. Before enabling it in the lab,
+improve the projection by opening each apex into a top/bottom boundary strip,
+preserving the cyclic side order in every convex cell; then inspect F11 at
+detail scale, particularly the shared puncture terminals and outer caps.
+After that, use the certified preview in the existing prefix-action endpoint
+and retain honest status language distinguishing the normal-strand certificate
+from the exact sphere braid identity.
+
+The route-free engine also certified every recoverable original prefix F0–F12
+in a local sweep. F13 stops earlier at `Arc`'s shared 2,048-cut representation
+limit: the six exact chain arcs need (1020, 213, 2285, 89, 2121, 3019) cut
+visits. A temporary local 8,192-cut limit let the existing engine certify
+28,846 labeled events in about 6.4 seconds, without changing the old route
+solver. A subsequent calculation-engine increment should separate the Arc
+representation limit from the old renderer's 2,048-cut/3,072-node safety
+limits, with explicit checks at route and support-recovery entry points.
+
 ## October 11: complete route-free F11 normal-strand certificate
 
 `normal_suffix_rank` now derives shared ray and horizontal-cut orders from
