@@ -7,7 +7,10 @@ from surface_diagrams.chain_cut_system import chain_arcs
 from surface_diagrams.factorization_explorer import initial_factors, product
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.normal_cut_engine import calculate_cut_system
-from surface_diagrams.normal_cut_preview import _FanLayout, render_normal_cut_preview
+from surface_diagrams.normal_cut_preview import (
+    _FanLayout, _StripLayout, render_normal_cut_preview,
+)
+from surface_diagrams.normal_gluing import TerminalVisit
 from surface_diagrams.visuals import RAINBOW
 
 
@@ -17,12 +20,18 @@ class NormalCutPreviewTests(unittest.TestCase):
         images = exact_action(product(initial_factors()[:prefix]))
         return calculate_cut_system(chain_arcs(images), owners=owners)
 
-    def _assert_svg_matches_certificate(self, certificate):
+    def _assert_svg_matches_certificate(self, certificate, *, projection='strip'):
         with patch('surface_diagrams.curves.route', side_effect=AssertionError('old route called')):
-            svg = render_normal_cut_preview(certificate)
+            svg = render_normal_cut_preview(certificate, projection=projection)
         root = ET.fromstring(svg)
         self.assertEqual(root.tag, '{http://www.w3.org/2000/svg}svg')
-        self.assertEqual(len(root.findall('{http://www.w3.org/2000/svg}ellipse')), 1)
+        boundary = root.find("{http://www.w3.org/2000/svg}*[@class='outer-boundary']")
+        self.assertIsNotNone(boundary)
+        self.assertEqual(boundary.tag.split('}')[-1],
+                         'rect' if projection == 'strip' else 'ellipse')
+        if projection == 'strip':
+            self.assertGreater(float(boundary.attrib['rx']), 0)
+            self.assertEqual(float(boundary.attrib['x']), 13.0)
         self.assertEqual(len(root.findall('{http://www.w3.org/2000/svg}circle')),
                          certificate.points)
         paths = root.findall("{http://www.w3.org/2000/svg}path[@class='arc']")
@@ -39,7 +48,8 @@ class NormalCutPreviewTests(unittest.TestCase):
                              connections[owner])
             self.assertNotIn('nan', path.attrib['d'].lower())
             self.assertNotIn('inf', path.attrib['d'].lower())
-        layout = _FanLayout(certificate)
+        layout = (_StripLayout(certificate) if projection == 'strip'
+                  else _FanLayout(certificate))
         self.assertEqual(len(layout.crossings),
                          sum(map(len, certificate.ray_orders.values())) +
                          sum(map(len, certificate.cut_orders.values())))
@@ -68,6 +78,65 @@ class NormalCutPreviewTests(unittest.TestCase):
         certificate = self._certificate(11)
         self.assertEqual(len(certificate.triangles), 14)
         self._assert_svg_matches_certificate(certificate)
+
+    def test_strip_cells_preserve_all_side_orders_and_stay_inside_disk(self):
+        for prefix in (1, 11):
+            with self.subTest(prefix=prefix):
+                certificate = self._certificate(prefix)
+                layout = _StripLayout(certificate)
+                for triangle in certificate.triangles:
+                    side, gap = triangle.triangle_id
+                    corners = layout._cell_vertices(triangle)
+                    self.assertEqual(len(corners), 4)
+                    self.assertEqual(corners[0][1], corners[3][1])
+                    self.assertEqual(corners[1][1], corners[2][1])
+                    self.assertEqual(corners[0][0], corners[1][0])
+                    self.assertEqual(corners[2][0], corners[3][0])
+                    self.assertEqual(corners[1][1], 0)
+                    self.assertEqual(corners[0][1] > 0, side == 'upper')
+                    self.assertEqual(abs(corners[0][0] - corners[2][0]),
+                                     layout.spacing)
+                    for side_index, edge in enumerate(triangle.sides):
+                        start, end = corners[side_index:side_index + 2]
+                        physical = [visit for visit in edge.visits
+                                    if not isinstance(visit, TerminalVisit)]
+                        for position, visit in enumerate(physical, 1):
+                            coordinate = layout.coordinate(visit)
+                            fraction = position / (len(physical) + 1)
+                            self.assertAlmostEqual(coordinate[0],
+                                start[0] + fraction * (end[0] - start[0]))
+                            self.assertAlmostEqual(coordinate[1],
+                                start[1] + fraction * (end[1] - start[1]))
+                for crossing in layout.crossings.values():
+                    self.assertLess(abs(crossing[0]), layout.width / 2)
+                    self.assertLess(abs(crossing[1]), layout.height / 2)
+                triangles = {triangle.triangle_id: triangle
+                             for triangle in certificate.triangles}
+                for connection in certificate.connections:
+                    side, gap = connection.triangle_id
+                    corners = layout._cell_vertices(triangles[side, gap])
+                    left, right = sorted((corners[0][0], corners[2][0]))
+                    low, high = sorted((corners[0][1], corners[1][1]))
+                    for point in (layout.coordinate(connection.first),
+                                  layout.coordinate(connection.second)):
+                        self.assertLessEqual(left, point[0])
+                        self.assertLessEqual(point[0], right)
+                        self.assertLessEqual(low, point[1])
+                        self.assertLessEqual(point[1], high)
+                    command = layout.chord(connection)
+                    if command[0] == 'Q':
+                        self.assertLess(left, command[1])
+                        self.assertLess(command[1], right)
+                        self.assertLess(low, command[2])
+                        self.assertLess(command[2], high)
+
+    def test_legacy_fan_projection_remains_available(self):
+        certificate = self._certificate(1)
+        self._assert_svg_matches_certificate(certificate, projection='fan')
+        self.assertEqual(render_normal_cut_preview(certificate),
+                         render_normal_cut_preview(certificate, projection='strip'))
+        with self.assertRaisesRegex(ValueError, 'projection'):
+            render_normal_cut_preview(certificate, projection='unknown')
 
 
 if __name__ == '__main__':

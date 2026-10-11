@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## October 11: strip projection for the certified F11 preview
+
+`render_normal_cut_preview` now defaults to a strip projection: each upper and
+lower normal triangle is opened at its unused north/south apex into a convex
+rectangular cell. The occupied left ray, horizontal cut, and right ray keep
+their cyclic order, and neighboring cells share the same crossing coordinate.
+This removes the artificial apex convergence while preserving the already
+certified local pairing and labeled itineraries. The earlier fan remains an
+optional projection. F1 and F11 SVG/PNG previews were visually inspected;
+F1 is legible and F11 still needs zoom or owner highlighting because of its
+15,428 physical crossing events. Focused geometry tests check every F1/F11
+cell, side order, crossing coordinate, and interior terminal bend. The public
+lab fallback is unchanged. Next integrate this certified strip preview into
+the chain-prefix lab endpoint with accurate status text and a way to inspect
+one colored owner at a time; then address F13's separate 2,048-cut Arc
+representation limit without raising the old route-solver limit.
+
 ## October 11: certified cut-system engine entry point and visual preview
 
 `surface_diagrams.calculate_cut_system(arcs)` now packages the route-free
@@ -20,13 +37,10 @@ subprocess imports from a relative `PYTHONPATH` and the known intermittent
 Windows `os.replace` access error in a temporary lab session; all three
 affected cases passed immediately with an absolute `PYTHONPATH` and a retry.
 Visual inspection found F1 legible and the F11 fit mathematically traceable
-but crowded around the north/south fan apex. Before enabling it in the lab,
-improve the projection by opening each apex into a top/bottom boundary strip,
-preserving the cyclic side order in every convex cell; then inspect F11 at
-detail scale, particularly the shared puncture terminals and outer caps.
-After that, use the certified preview in the existing prefix-action endpoint
-and retain honest status language distinguishing the normal-strand certificate
-from the exact sphere braid identity.
+but crowded around the north/south fan apex; the strip-projection increment
+above addresses that visual bottleneck. The prefix-action endpoint still
+needs integration and honest status language distinguishing the normal-strand
+certificate from the exact sphere braid identity.
 
 The route-free engine also certified every recoverable original prefix F0–F12
 in a local sweep. F13 stops earlier at `Arc`'s shared 2,048-cut representation

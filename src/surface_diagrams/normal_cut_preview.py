@@ -1,8 +1,8 @@
 """SVG preview of a certified normal-strand cut system.
 
 The certificate supplies all local pairings and exact labeled itineraries.
-This module only places those strands in a convex polygonal fan. It neither
-changes their combinatorics nor establishes minimality of the input Arcs.
+This module only places those strands in convex cells. It neither changes
+their combinatorics nor establishes minimality of the input Arcs.
 """
 
 from collections import defaultdict
@@ -50,6 +50,9 @@ class _FanLayout:
         self.crossings = {}
         self._place_crossings()
 
+    def _cell_vertices(self, triangle):
+        return tuple(self.vertices[name] for name in triangle.vertices)
+
     def _place_crossings(self):
         for gap, visits in self.certificate.cut_orders.items():
             for index, crossing in enumerate(visits):
@@ -72,15 +75,21 @@ class _FanLayout:
                     self.vertices[f'p{point}'], self.vertices['north' if side == 'upper' else 'south'],
                     fraction)
 
+        self._validate_crossings()
+
+    def _validate_crossings(self):
         # Check the oriented 14-triangle assembler against the canonical
         # physical coordinates. Terminal slots occupy the vertex itself; they
         # do not consume a ray/cut crossing position.
         for triangle in self.certificate.triangles:
-            vertices = tuple(self.vertices[name] for name in triangle.vertices)
-            if self._area(*vertices) <= 0:
-                raise NormalTriangleError('normal fan triangle is degenerate or reversed')
+            vertices = self._cell_vertices(triangle)
+            if any(self._area(vertices[index], vertices[(index + 1) % len(vertices)],
+                              vertices[(index + 2) % len(vertices)]) <= 0
+                   for index in range(len(vertices))):
+                raise NormalTriangleError('normal cell is degenerate or reversed')
             for side_index, side in enumerate(triangle.sides):
-                source, target = vertices[side_index], vertices[(side_index + 1) % 3]
+                source = vertices[side_index]
+                target = vertices[(side_index + 1) % len(vertices)]
                 physical = tuple(visit for visit in side.visits
                                  if not isinstance(visit, TerminalVisit))
                 for index, visit in enumerate(physical):
@@ -110,21 +119,21 @@ class _FanLayout:
             raise NormalTriangleError('a local strand has coincident ends')
         triangle = next(triangle for triangle in self.certificate.triangles
                         if triangle.triangle_id == connection.triangle_id)
-        vertices = tuple(self.vertices[name] for name in triangle.vertices)
-        centroid = (sum(point[0] for point in vertices) / 3,
-                    sum(point[1] for point in vertices) / 3)
+        vertices = self._cell_vertices(triangle)
+        centroid = (sum(point[0] for point in vertices) / len(vertices),
+                    sum(point[1] for point in vertices) / len(vertices))
         midpoint = _between(first, second, .5)
         dx, dy = second[0] - first[0], second[1] - first[1]
         length = hypot(dx, dy)
         # A terminal-to-incident-side strand or an edge-parallel chain arc
-        # would otherwise lie on a triangle edge. A shallow inward bend
+        # would otherwise lie on a cell edge. A shallow inward bend
         # separates it from that edge while retaining its boundary order.
         if (isinstance(connection.first, TerminalVisit)
                 or isinstance(connection.second, TerminalVisit)):
             on_edge = any(
-                abs(self._area(vertices[index], vertices[(index + 1) % 3], first)) < 1e-7
-                and abs(self._area(vertices[index], vertices[(index + 1) % 3], second)) < 1e-7
-                for index in range(3))
+                abs(self._area(vertices[index], vertices[(index + 1) % len(vertices)], first)) < 1e-7
+                and abs(self._area(vertices[index], vertices[(index + 1) % len(vertices)], second)) < 1e-7
+                for index in range(len(vertices)))
             if on_edge:
                 nx, ny = -dy / length, dx / length
                 if (centroid[0] - midpoint[0]) * nx + (centroid[1] - midpoint[1]) * ny < 0:
@@ -135,16 +144,64 @@ class _FanLayout:
         return ('L', *second)
 
 
-def render_normal_cut_preview(certificate):
+class _StripLayout(_FanLayout):
+    """Open each apex into an empty top/bottom edge of a rectangular cell.
+
+    The three occupied sides keep their counterclockwise order: upper cells
+    run down the left ray, across the cut, then up the right ray; lower cells
+    run up the right ray, back across the cut, then down the left ray. Adjacent
+    cells use the same vertical ray and crossing coordinates.
+    """
+
+    def __init__(self, certificate):
+        super().__init__(certificate)
+        del self.vertices['north']
+        del self.vertices['south']
+
+    def _cell_vertices(self, triangle):
+        side, gap = triangle.triangle_id
+        left, right = self.xs[gap], self.xs[gap + 1]
+        height = self.apex_height
+        if side == 'upper':
+            return ((left, height), (left, 0.0),
+                    (right, 0.0), (right, height))
+        return ((right, -height), (right, 0.0),
+                (left, 0.0), (left, -height))
+
+    def _place_crossings(self):
+        for gap, visits in self.certificate.cut_orders.items():
+            for index, crossing in enumerate(visits):
+                visit = StrandVisit(crossing.owner, crossing)
+                if visit in self.crossings:
+                    raise NormalTriangleError('a crossing ID occurs on multiple edges')
+                self.crossings[visit] = (
+                    self.xs[gap] + (index + 1) * self.spacing / (len(visits) + 1),
+                    0.0)
+        for (side, point), visits in self.certificate.ray_orders.items():
+            sign = 1 if side == 'upper' else -1
+            for index, crossing in enumerate(visits):
+                visit = StrandVisit(crossing.owner, crossing)
+                if visit in self.crossings:
+                    raise NormalTriangleError('a crossing ID occurs on multiple edges')
+                self.crossings[visit] = (
+                    self.xs[point],
+                    sign * (index + 1) * self.apex_height / (len(visits) + 1))
+
+        self._validate_crossings()
+
+
+def render_normal_cut_preview(certificate, *, projection='strip'):
     """Render six colored normal Arcs after their exact-event certificate.
 
     The SVG is a preview of the certified combinatorial placement. Its local
-    chords are drawn in convex triangles; no minimal-position assertion is
+    chords are drawn in convex cells; no minimal-position assertion is
     made for the supplied Arc itineraries.
     """
     if not isinstance(certificate, CertifiedCutSystem):
         raise TypeError('expected a CertifiedCutSystem')
-    layout = _FanLayout(certificate)
+    if projection not in ('strip', 'fan'):
+        raise ValueError('projection must be strip or fan')
+    layout = _StripLayout(certificate) if projection == 'strip' else _FanLayout(certificate)
     connections = defaultdict(list)
     for connection in certificate.connections:
         connections[connection.owner].append(connection)
@@ -158,16 +215,27 @@ def render_normal_cut_preview(certificate):
         return (_number(width / 2 + point[0]),
                 _number(height / 2 - point[1]))
 
+    if projection == 'strip':
+        corner_radius = max(18.0, min(layout.spacing / 4,
+                                      layout.apex_height * .12))
+        boundary = (f'<rect class="outer-boundary" x="{_number(padding)}" '
+                    f'y="{_number(padding)}" width="{_number(layout.width)}" '
+                    f'height="{_number(layout.height)}" '
+                    f'rx="{_number(corner_radius)}" fill="none" '
+                    'stroke="#000000" stroke-width="1.5" '
+                    'vector-effect="non-scaling-stroke"/>')
+    else:
+        boundary = (f'<ellipse class="outer-boundary" cx="{_number(width / 2)}" '
+                    f'cy="{_number(height / 2)}" rx="{_number(layout.width / 2)}" '
+                    f'ry="{_number(layout.height / 2)}" fill="none" '
+                    'stroke="#000000" stroke-width="1.5"/>')
     lines = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {_number(width)} {_number(height)}" '
              f'width="{_number(width)}" height="{_number(height)}" role="img">',
              '<title>Normal-strand cut-system preview</title>',
              '<desc>Joint local strands follow certified exact Arc itineraries; '
              'minimal position is not independently established.</desc>',
              '<rect width="100%" height="100%" fill="white"/>',
-             f'<ellipse class="outer-boundary" cx="{_number(width / 2)}" '
-             f'cy="{_number(height / 2)}" rx="{_number(layout.width / 2)}" '
-             f'ry="{_number(layout.height / 2)}" fill="none" '
-             'stroke="#000000" stroke-width="1.5"/>']
+             boundary]
     for path in certificate.paths:
         owner = path.owner
         segments = connections[owner]
@@ -196,6 +264,7 @@ def render_normal_cut_preview(certificate):
     for point in range(1, certificate.points + 1):
         cx, cy = screen(layout.vertices[f'p{point}'])
         lines.append(f'<circle class="marked-point" cx="{cx}" cy="{cy}" '
-                     'r="3.5" fill="#006fff"/>')
+                     'r="3.5" fill="#006fff" stroke="#006fff" '
+                     'stroke-width="2" vector-effect="non-scaling-stroke"/>')
     lines.append('</svg>')
     return '\n'.join(lines) + '\n'
