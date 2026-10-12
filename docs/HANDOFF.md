@@ -43,6 +43,14 @@ replacements change the disk action and thus are not directly the PC
 substitutions. This is evidence against this particular greedy gathering
 route, not a proof that no structural derivation exists.
 
+A separate original-factor scan found no certified sphere-trivial proper contiguous block.
+Among all 8,190 nonempty proper order-preserving subsequences, exponent sum
+modulo 10 and puncture permutation leave 252 candidates. Exact sphere-inner
+actions certify none of 248; four hit the prototype word limit, so the scan does not
+exclude those four. Even a positive noncontiguous hit would need Hurwitz moves
+to become a factor-level substitution. Do not repeat this greedy subset scan;
+look for nonlocal transport or a geometric block structure instead.
+
 Validation: the route generator checks every intermediate full disk action,
 its serialized 35-state history reopens through `validated_session_document`,
 focused unit tests pass, site local links and JavaScript syntax pass, and the
