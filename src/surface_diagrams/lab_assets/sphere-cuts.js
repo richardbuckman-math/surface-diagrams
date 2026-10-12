@@ -5,7 +5,9 @@
 const sphereCuts = document.getElementById('sphere-cuts-column');
 const sphereSplit = document.getElementById('sphere-split');
 const sphereDialog = document.getElementById('sphere-cut-inspector');
+const sphereCutFit = document.getElementById('sphere-cut-fit');
 let sphereCutRequest = 0, sphereCutKey = '', sphereCutRows = new Map();
+let sphereCutFitOverview = false;
 const sphereCutResize = new ResizeObserver(() => {
   document.querySelectorAll('#sphere-cuts-column .sphere-cut-row').forEach((row, index) => {
     row.style.height = `${document.querySelectorAll('#factors .factor')[index]?.offsetHeight || 160}px`;
@@ -44,6 +46,13 @@ document.getElementById('sphere-show-column').onchange=event => {
   document.body.classList.toggle('sphere-hide-column',!event.target.checked);
 };
 document.getElementById('close-sphere-cut').onclick=() => sphereDialog.close();
+sphereCutFit.onclick=() => {
+  sphereCutFitOverview=!sphereCutFitOverview;
+  sphereCutFit.setAttribute('aria-pressed',String(sphereCutFitOverview));
+  sphereCutFit.textContent=sphereCutFitOverview?'Show detail':'Fit overview';
+  document.getElementById('sphere-cut-large').classList.toggle('sphere-cut-fit',sphereCutFitOverview);
+  document.getElementById('sphere-cut-meet').classList.toggle('sphere-cut-fit',sphereCutFitOverview);
+};
 
 function sphereSplitDescription(split,count) {
   document.getElementById('sphere-split-description').textContent=

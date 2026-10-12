@@ -1,5 +1,17 @@
 # Handoff: surface-diagrams
 
+## October 12: fitted sphere-chart inspection
+
+The five-arc sphere-cut inspector now has a Fit overview / Show detail toggle.
+Fit displays the complete normal-strand SVG in the available dialog height,
+with a thinner screen stroke for dense charts; detail preserves the original
+SVG size and scrolling so individual crossings can be traced. The toggle is
+presentation-only: it does not change Arc itineraries, shared crossing order,
+or the joint normal-placement certificate. Browser inspection checked both
+states on F2, including the full-chart fit. Next, improve the six-point disk
+endpoint tangents locally, checking F1 and later prefixes for new crossings
+before allowing the change into the common renderer.
+
 ## October 12: five-arc sphere column and forward/backward meeting split
 
 The (6,7) lab now has a middle column with **five**, not six, sphere cut
