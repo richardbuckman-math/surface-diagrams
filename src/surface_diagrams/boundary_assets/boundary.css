@@ -5,4 +5,8 @@
 .factor .word{bottom:4px}
 main .scope p{line-height:1.5}
 #example{background:#eff8f1;border-color:#9dc9ae}
+.target-preview svg{display:block;width:min(100%,350px);height:auto;margin:8px auto}
+.target-surface .toolbar{gap:8px;flex-wrap:wrap}
+.target-surface .toolbar button{font-size:12px;padding:6px 9px}
+.target-surface .toolbar button[disabled]{opacity:.58}
 @media(max-width:740px){#power{width:54px}}

@@ -39,6 +39,8 @@ function controls(){
   picker.disabled=busy||!factor?.splits.length;
   $('split').disabled=picker.disabled;
   $('combine').disabled=busy||!factor||selected>=state.factors.length-1;
+  if($('target-choices'))document.querySelectorAll('#target-choices button').forEach(button=>
+    button.disabled=busy||button.dataset.eligible!=='true');
   document.querySelectorAll('#history-list button').forEach(button=>
     button.disabled=busy||Number(button.dataset.position)===state?.position);
 }
@@ -54,7 +56,25 @@ function paint(){
   selected=Math.max(0,Math.min(selected,state.factors.length-1));
   $('points').value=String(state.points);$('power').value=String(state.power);
   $('count').textContent=`${state.factors.length} factors · ${state.factors.reduce((n,f)=>n+f.word.length,0)} letters`;
-  $('target-status').textContent=`Target: boundary twist on ${state.points} marked points, power ${state.power} · exact B${state.points} action verified`;
+  const boundaries=new Set(state.inner_boundaries||[]);
+  $('target-status').textContent=boundaries.size?
+    `Target: twist around ${state.points} objects, power ${state.power} · exact B${state.points} action verified after capping; framed equality unverified`:
+    `Target: boundary twist on ${state.points} marked points, power ${state.power} · exact B${state.points} action verified`;
+  if($('target-choices')){
+    $('target-drawing').innerHTML=state.target_surface_svg||'';
+    $('target-caption').textContent=`Twist around all ${state.points} objects, power ${state.power}. `+
+      (boundaries.size?`Inner boundaries at ${[...boundaries].join(', ')}; equality is checked only after capping.`:
+       'All objects are marked points; the disk braid equality is exact.');
+    $('target-choices').replaceChildren();
+    for(let point=1;point<=state.points;point++){
+      const button=document.createElement('button');
+      button.textContent=`${boundaries.has(point)?'Cap':'Uncap'} ${point}`;
+      button.dataset.eligible=String(boundaries.has(point)||state.boundary_eligible?.[point-1]);
+      if(button.dataset.eligible!=='true')button.title='A half-twist arc ends here';
+      button.onclick=()=>action({op:'toggle_boundary',point},selected);
+      $('target-choices').append(button);
+    }
+  }
   $('storage-status').textContent=window.boundaryStorageAvailable?
     'Workspace and undo history are saved in this browser. Export JSON to move the current factorization elsewhere.':
     'Browser storage is unavailable; export JSON before closing this page.';

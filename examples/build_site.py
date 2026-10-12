@@ -81,6 +81,22 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
 <p><a href="../boundary-lab/index.html">Explore the four-point substitutions in the playground</a> · <a href="https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-daisy-rose.md">Read the source with full notation</a></p>
 <p>Background: <a href="https://margalit.droppages.net/papers/pure-braids.pdf">Margalit and McCammond, <em>Geometric presentations for the pure braid group</em></a>, Section 4.</p>
 ''', '../')
+    page('relations/pc-half-lantern.html', 'Puncture-capped half lantern', '''
+<p>Start with the three-point puncture-capped lantern. Products are read from top to bottom, as in the <a href="../boundary-lab/index.html">interactive playground</a>.</p>
+<section><h2>Split and move</h2>
+<p>Let H₁₂ be the positive half twist on the arc from point 1 to point 2. Split T₁₂ into two copies of H₁₂, then make the two indicated Hurwitz moves:</p>
+<pre>T₁₂₃ = T₁₂ T₁₃ T₂₃
+      = H₁₂ H₁₂ T₁₃ T₂₃
+      = H₁₂ T₂₃ H₁₂ T₂₃
+      = H₁₂ (T₂₃ H₁₂ T₂₃⁻¹) T₂₃ T₂₃.</pre>
+<p>The first move uses H₁₂ T₁₃ H₁₂⁻¹ = T₂₃. The next move pulls the middle closed-curve twist past the half twist, conjugating the latter. Combine the final neighbors:</p>
+<pre>T₁₂₃ = H₁₂ (T₂₃ H₁₂ T₂₃⁻¹) T₂₃².</pre>
+<p>In braid generators, the final product is σ₁ · (σ₂² σ₁ σ₂⁻²) · σ₂⁴, equal to (σ₁σ₂)³ by the complete Artin action in B₃. Conjugating the whole formula transports it to any three-point support in a larger marked disk.</p></section>
+<section><h2>Uncapping a point</h2><p>In this factorization the two half-twist arcs end at points 1 and 2. The playground lets you draw point 3 as an inner boundary, and blocks uncapping points 1 and 2. The displayed equality is verified after capping all inner boundaries.</p><p>If point 3 alone becomes a boundary, the ordinary framed lantern supplies the correction:</p>
+<pre>T₁₂₃ T₃ = H₁₂ (T₂₃ H₁₂ T₂₃⁻¹) T₂₃².</pre>
+<p>T₃ is the positive twist parallel to that inner boundary. This follows mathematically from the framed lantern and the same Hurwitz moves; the playground does not yet check it in a framed mapping-class engine. See <a href="https://web.math.ucsb.edu/~mccammon/papers/pure-braids.pdf">Margalit and McCammond, Theorem 5.1</a>, for punctures versus inner boundaries.</p></section>
+<p><a href="../boundary-lab/index.html">Explore the checked half-lantern walkthrough</a> · <a href="https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-half-lantern.md">Read the source with full notation</a></p>
+''', '../')
     for category, title in [('relations','Mapping class relations'),('fibrations','Lefschetz fibrations')]:
         cards = []
         for e in (e for e in entries if e['category']==category):

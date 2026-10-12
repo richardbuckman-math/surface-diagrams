@@ -44,3 +44,18 @@ def pc_rose_terms(twist):
                 ConjugatedTwist(g, i + 1, 2))
     prefix, *petals = pc_daisy_terms(twist)
     return pc_rose_terms(prefix) + tuple(petals)
+
+
+def pc_half_lantern_terms(twist):
+    """Three-point PC lantern, two half twists, and one squared pair twist.
+
+    This is the exact result of splitting T(i,i+1), moving its second half
+    past the next pair twist, moving that twist past the half twist, then
+    combining the equal pair twists. It transports through any conjugator.
+    """
+    if not isinstance(twist, ConjugatedTwist) or twist.half or twist.power != 1 or twist.points != 3:
+        raise ValueError('PC half lantern needs one three-point Dehn twist')
+    g, i = twist.conjugator, twist.first
+    return (ConjugatedTwist(g, i, 2, half=True),
+            ConjugatedTwist(g + (i + 1, i + 1), i, 2, half=True),
+            ConjugatedTwist(g, i + 1, 2, power=2))

@@ -12,7 +12,7 @@ import re
 
 from .braid_actions import arc_ray_word, free_homotopy_key, inverse_word, loop_ray_word
 from .curves import Arc, Loop, MAX_CUT_VISITS
-from .mapping_classes import supported_class
+from .mapping_classes import ConjugatedTwist, supported_class
 from .model import PlanarSurface, Style
 from .svg import render_svg
 from .twist_supports import _ray_cuts, support_drawing
@@ -87,7 +87,7 @@ def support_curve(twist, strands):
 
 
 @lru_cache(maxsize=256)
-def support_svg(factor, strands, *, mirror_vertical=False):
+def support_svg(factor, strands, *, mirror_vertical=False, inner_boundaries=()):
     """Render a verified single-factor support, or raise ValueError.
 
     Six-point factors retain the existing lab renderer and its cache. A failed
@@ -101,11 +101,34 @@ def support_svg(factor, strands, *, mirror_vertical=False):
     curve = support_curve(twist, strands)
     visits = max(Counter(curve.cuts).values(), default=0)
     scale = max(1., ((visits + 1) * 4 + 10) / 50)
-    surface = PlanarSurface.row('P' * strands, spacing=50 * scale,
+    boundaries = set(inner_boundaries)
+    if any(type(point) is not int or not 1 <= point <= strands for point in boundaries):
+        raise ValueError('Inner boundary position exceeds the support surface')
+    pattern = ''.join('B' if point in boundaries else 'P' for point in range(1, strands + 1))
+    surface = PlanarSurface.row(pattern, spacing=50 * scale,
                                 height=220 * scale, margin=55 * scale).with_curves(curve)
     return render_svg(surface, style=Style(curve_color='#a21caf', curve_width=1.5,
-                                           marked_point_radius=3.5),
+                                           marked_point_radius=3.5,
+                                           boundary_shape='circle', boundary_radius=9),
                       mirror_curve_paths_vertical=mirror_vertical)
+
+
+def target_surface_svg(strands, inner_boundaries=()):
+    """Draw the target twist on a proposed mix of punctures and inner holes.
+
+    This is a surface-type diagram; it does not certify a framed lift of the
+    factorization. Its curve is the same exact marked-disk support class.
+    """
+    _check_strands(strands)
+    boundaries = set(inner_boundaries)
+    if any(type(point) is not int or not 1 <= point <= strands for point in boundaries):
+        raise ValueError('Inner boundary position exceeds the target surface')
+    pattern = ''.join('B' if point in boundaries else 'P' for point in range(1, strands + 1))
+    curve = support_curve(ConjugatedTwist((), 1, strands), strands)
+    surface = PlanarSurface.row(pattern, spacing=48, height=138, margin=70).with_curves(curve)
+    return render_svg(surface, style=Style(boundary_shape='circle', boundary_radius=10,
+                                           marked_point_radius=4, curve_color='#a21caf',
+                                           curve_width=2))
 
 
 def row_height(factor, *, compact=False):
@@ -177,7 +200,8 @@ def braid_svg(factors, strands, *, compact=False):
     return ''.join(svg)
 
 
-def factorization_svg(factors, strands, *, mirror_vertical=False, compact=False):
+def factorization_svg(factors, strands, *, mirror_vertical=False, compact=False,
+                      inner_boundaries=()):
     """Portable paired export with explicit unavailable-support messages."""
     _check_strands(strands)
     factors = tuple(factors)
@@ -194,8 +218,8 @@ def factorization_svg(factors, strands, *, mirror_vertical=False, compact=False)
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">'
                     f'{escape(label[:52])}</text>')
         try:
-            support = (support_svg(factor, strands, mirror_vertical=True)
-                       if mirror_vertical else support_svg(factor, strands))
+            support = support_svg(factor, strands, mirror_vertical=mirror_vertical,
+                                  inner_boundaries=inner_boundaries)
             support = re.sub(r'width="[^"]*"', 'width="340"', support, count=1)
             support = re.sub(r'height="[^"]*"', 'height="166"', support, count=1)
             body.append('<text x="12" y="34" font-family="sans-serif" font-size="10" '

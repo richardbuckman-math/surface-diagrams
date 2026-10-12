@@ -60,6 +60,24 @@ class BoundaryPlaygroundAppTests(unittest.TestCase):
         reopened.restore(saved)
         self.assertEqual(len(reopened.project.factors), 6)
 
+    def test_half_lantern_uncapping_is_preserved_in_history(self):
+        lab = BoundaryLab()
+        self.apply(lab, op='split', index=0, kind='half_lantern')
+        state = lab.state()
+        self.assertEqual(len(state['factors']), 3)
+        self.assertEqual(state['boundary_eligible'], [False, False, True])
+        self.assertIn('<svg', state['target_surface_svg'])
+        self.apply(lab, op='toggle_boundary', point=3)
+        self.assertEqual(lab.state()['inner_boundaries'], [3])
+        self.assertTrue(all('<circle' in factor['svg'] for factor in lab.state()['factors']))
+        self.assertIn('<circle', lab.export_svg())
+        saved = lab.session_document()
+        reopened = BoundaryLab()
+        reopened.restore(saved)
+        self.assertEqual(reopened.state()['inner_boundaries'], [3])
+        self.apply(reopened, op='undo')
+        self.assertEqual(reopened.state()['inner_boundaries'], [])
+
     def test_invalid_import_and_session_leave_workspace_intact(self):
         lab = BoundaryLab()
         before = lab.session_document()

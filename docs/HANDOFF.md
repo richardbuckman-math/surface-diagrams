@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## October 12: PC half lantern and target-surface preview
+
+The existing five-step three-point half-lantern walkthrough has a reusable
+`pc_half_lantern_terms` substitution. For any conjugated three-point twist,
+`T123 = H12 (T23 H12 T23^-1) T23^2` transports with the outer conjugator;
+the exact disk Artin action checks it. The boundary playground offers this
+direct split as well as the inspectable Hurwitz history. The relation catalog
+and `relations/pc-half-lantern.html` show the derivation. For point 3 made an
+inner boundary, the ordinary lantern yields the mathematical correction
+`T123 T3 = H12 (T23 H12 T23^-1) T23^2`; the app does not yet certify this
+framed equality.
+
+The playground has a collapsible target diagram rendered with the common
+`PlanarSurface` library. Its cap/uncap buttons turn eligible marked points
+into proposed inner boundaries; points that are half-twist arc endpoints are
+blocked. Factor support cards and SVG export use the same puncture/boundary
+pattern. These choices survive history, undo/redo, and JSON export/import.
+The state and UI explicitly distinguish exact disk action after capping from
+an unverified framed lift. The PC lantern page still works with the shared
+JavaScript. The full suite, focused relation tests, site link check, and local browser
+inspection of both labs and the proof page pass. Next implement a separately
+checked framed mapping-class/boundary-twist correction engine before claiming
+exact equality after uncapping, then reuse the target selector in other labs.
+
 ## October 12: puncture-capped daisy and rose derivation
 
 The four-point identity proposed by Richard is now derived from two

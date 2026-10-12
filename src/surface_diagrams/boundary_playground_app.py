@@ -2,9 +2,9 @@
 
 from dataclasses import asdict
 
-from .boundary_playground import import_project, new_project
+from .boundary_playground import half_twist_endpoints, import_project, new_project
 from .boundary_playground_geometry import (
-    braid_svg, factorization_svg, row_height, support_svg,
+    braid_svg, factorization_svg, row_height, support_svg, target_surface_svg,
 )
 
 
@@ -54,10 +54,13 @@ class BoundaryLab:
 
     def state(self):
         project = self.project
+        arc_points = {point for factor in project.factors
+                      for point in half_twist_endpoints(factor)}
         rows = []
         for factor in project.factors:
             try:
-                svg = support_svg(factor, project.points)
+                svg = support_svg(factor, project.points,
+                                  inner_boundaries=project.inner_boundaries)
                 warning = ''
             except ValueError as error:
                 svg, warning = '', str(error)
@@ -68,6 +71,7 @@ class BoundaryLab:
                 splits.append(('halves', 'Split into half twists'))
             if not factor.half and factor.points == 3:
                 splits.append(('lantern', 'Three pairwise twists'))
+                splits.append(('half_lantern', 'PC half lantern: two arcs + squared twist'))
             if not factor.half and factor.points >= 4:
                 splits.append(('pc_daisy', 'PC daisy: smaller twist + under-going pairs'))
             rows.append(dict(asdict(factor), word=factor.word, label=factor.label,
@@ -78,6 +82,10 @@ class BoundaryLab:
             'points': project.points,
             'power': project.power,
             'target_word': project.target_word,
+            'inner_boundaries': list(project.inner_boundaries),
+            'boundary_eligible': [point not in arc_points
+                                  for point in range(1, project.points + 1)],
+            'target_surface_svg': target_surface_svg(project.points, project.inner_boundaries),
             'factors': rows,
             'braid': braid_svg(project.factors, project.points),
             'braid_compact': braid_svg(project.factors, project.points, compact=True),
@@ -141,6 +149,12 @@ class BoundaryLab:
             elif operation == 'example':
                 self._example()
                 self.message = 'Loaded the checked three-point derivation; open its history to inspect each move.'
+            elif operation == 'toggle_boundary':
+                point = payload.get('point')
+                project = self.project.toggle_boundary(point)
+                self._append(project, f'{"Cap" if point not in project.inner_boundaries else "Uncap"} point {point}')
+                self.message = ('The target diagram changed. Exact factorization equality is '
+                                'checked after capping; framed equality is not yet certified.')
             elif operation == 'import':
                 project = import_project(payload.get('document'))
                 self._append(project, 'Import checked factorization')
@@ -172,4 +186,5 @@ class BoundaryLab:
 
     def export_svg(self, *, mirror_vertical=False, compact=False):
         return factorization_svg(self.project.factors, self.project.points,
-                                 mirror_vertical=mirror_vertical, compact=compact)
+                                 mirror_vertical=mirror_vertical, compact=compact,
+                                 inner_boundaries=self.project.inner_boundaries)

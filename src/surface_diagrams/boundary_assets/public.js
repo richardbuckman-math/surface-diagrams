@@ -5,7 +5,7 @@ const boundaryStorageKey = 'surface-diagrams-boundary-playground-workspace-v1';
 let savedBoundarySession = '';
 try { savedBoundarySession = localStorage.getItem(boundaryStorageKey) || ''; }
 catch (_) { window.boundaryStorageAvailable = false; }
-const boundaryWorker = new Worker(new URL('worker.mjs', document.currentScript.src), {type:'module'});
+const boundaryWorker = new Worker(new URL('worker.mjs?v=20261012-half', document.currentScript.src), {type:'module'});
 let nextBoundaryRequest = 0;
 const pendingBoundaryRequests = new Map();
 boundaryWorker.onmessage = event => {

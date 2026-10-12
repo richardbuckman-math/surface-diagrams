@@ -1,7 +1,7 @@
 """Exact, reusable factorization state for a marked-point boundary twist.
 
-This is a disk-braid calculation. Inner-boundary framings, daisy and rose
-relations, and changes in the number of marked points need separate encodings.
+This is a disk-braid calculation. Framed inner-boundary relations and changes
+in the number of target objects need separate encodings.
 """
 
 from dataclasses import asdict, dataclass, replace
@@ -9,7 +9,7 @@ from dataclasses import asdict, dataclass, replace
 from .braid_actions import inverse_word, reduce_word
 from .factorization_explorer import Factor
 from .mapping_classes import exact_action
-from .projected_relations import pc_daisy_terms
+from .projected_relations import pc_daisy_terms, pc_half_lantern_terms
 from .twist_simplify import simplify_twist
 
 
@@ -27,6 +27,18 @@ def _word(factors):
 def _same_action(points, before, after):
     if exact_action(_word(before), points) != exact_action(_word(after), points):
         raise ValueError('Replacement does not preserve the exact disk braid action')
+
+
+def half_twist_endpoints(factor):
+    """Physical marked-point endpoints of a conjugated half-twist arc."""
+    if not factor.half:
+        return ()
+    start, end = factor.first, factor.first + 1
+    for crossing in reversed(factor.conjugator):
+        index = abs(crossing)
+        start = index + 1 if start == index else index if start == index + 1 else start
+        end = index + 1 if end == index else index if end == index + 1 else end
+    return (start, end)
 
 
 def _validated_factor(factor, points):
@@ -57,6 +69,7 @@ class BoundaryProject:
     points: int
     power: int
     factors: tuple
+    inner_boundaries: tuple = ()
 
     def __post_init__(self):
         if type(self.points) is not int or self.points not in SUPPORTED_POINTS:
@@ -64,10 +77,18 @@ class BoundaryProject:
         if type(self.power) is not int or not 1 <= self.power <= MAX_POWER:
             raise ValueError('Choose a boundary-twist power between 1 and 32')
         object.__setattr__(self, 'factors', tuple(self.factors))
+        object.__setattr__(self, 'inner_boundaries', tuple(self.inner_boundaries))
         if not 1 <= len(self.factors) <= MAX_FACTORS:
             raise ValueError('A project needs 1 to 80 factors')
         for factor in self.factors:
             _validated_factor(factor, self.points)
+        if (any(type(point) is not int or not 1 <= point <= self.points
+                for point in self.inner_boundaries) or
+                tuple(sorted(set(self.inner_boundaries))) != self.inner_boundaries):
+            raise ValueError('Inner boundaries must be distinct marked-point positions')
+        arc_points = {point for factor in self.factors for point in half_twist_endpoints(factor)}
+        if arc_points.intersection(self.inner_boundaries):
+            raise ValueError('A half-twist arc cannot end on an inner boundary')
         if len({factor.id for factor in self.factors}) != len(self.factors):
             raise ValueError('Factor IDs must be distinct')
         if sum(len(factor.word) for factor in self.factors) > MAX_LETTERS:
@@ -84,7 +105,18 @@ class BoundaryProject:
         return _word(self.factors)
 
     def _replace(self, factors):
-        return BoundaryProject(self.points, self.power, factors)
+        return BoundaryProject(self.points, self.power, factors, self.inner_boundaries)
+
+    def toggle_boundary(self, point):
+        """Mark a possible uncapping; equality remains certified after capping."""
+        if type(point) is not int or not 1 <= point <= self.points:
+            raise ValueError('Choose a marked point on the target surface')
+        updated = set(self.inner_boundaries)
+        if point in updated:
+            updated.remove(point)
+        else:
+            updated.add(point)
+        return replace(self, inner_boundaries=tuple(sorted(updated)))
 
     def move(self, source, target):
         """Drag one unchanged factor through checked adjacent Hurwitz moves."""
@@ -133,6 +165,13 @@ class BoundaryProject:
                 Factor(f'{factor.id}.D{repeat+1}.{j+1}', term.conjugator, term.first, term.points)
                 for repeat in range(factor.power) for j, term in enumerate(terms)
             )
+        elif kind == 'half_lantern' and not factor.half and factor.points == 3:
+            terms = pc_half_lantern_terms(replace(factor, power=1).mapping_class)
+            replacement = tuple(
+                Factor(f'{factor.id}.H{repeat+1}.{j+1}', term.conjugator, term.first,
+                       term.points, term.power, term.half)
+                for repeat in range(factor.power) for j, term in enumerate(terms)
+            )
         else:
             raise ValueError('That split is not available for this factor')
         _same_action(self.points, (factor,), replacement)
@@ -165,6 +204,7 @@ class BoundaryProject:
             'format': FORMAT,
             'points': self.points,
             'power': self.power,
+            'inner_boundaries': list(self.inner_boundaries),
             'factors': [dict(asdict(f), conjugator=list(f.conjugator), word=list(f.word))
                         for f in self.factors],
         }
@@ -179,12 +219,15 @@ def import_project(document):
     if not isinstance(document, dict) or document.get('format') != FORMAT:
         raise ValueError('Choose a boundary playground JSON file')
     points, power, rows = document.get('points'), document.get('power'), document.get('factors')
+    inner_boundaries = document.get('inner_boundaries', [])
     if type(points) is not int or points not in SUPPORTED_POINTS:
         raise ValueError('Choose 3, 4, or 5 marked points')
     if type(power) is not int or not 1 <= power <= MAX_POWER:
         raise ValueError('Choose a boundary-twist power between 1 and 32')
     if not isinstance(rows, list) or not 1 <= len(rows) <= MAX_FACTORS:
         raise ValueError('Expected 1 to 80 factor records')
+    if not isinstance(inner_boundaries, list):
+        raise ValueError('Inner boundaries must be a list')
     factors = []
     for row in rows:
         if not isinstance(row, dict) or not isinstance(row.get('conjugator'), list):
@@ -195,4 +238,4 @@ def import_project(document):
         if row.get('word') != list(factor.word):
             raise ValueError('Saved braid word disagrees with its factor record')
         factors.append(factor)
-    return BoundaryProject(points, power, tuple(factors))
+    return BoundaryProject(points, power, tuple(factors), tuple(inner_boundaries))

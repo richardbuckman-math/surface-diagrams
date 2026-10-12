@@ -1,7 +1,9 @@
 import json
 import unittest
 
-from surface_diagrams.boundary_playground import BoundaryProject, import_project, new_project
+from surface_diagrams.boundary_playground import (
+    BoundaryProject, half_twist_endpoints, import_project, new_project,
+)
 from surface_diagrams.braid_actions import artin_action
 from surface_diagrams.factorization_explorer import Factor
 
@@ -27,6 +29,37 @@ class BoundaryPlaygroundTests(unittest.TestCase):
         for state in (start, lantern, halves, first_move, second_move, result):
             self.assertEqual(artin_action(3, state.word), artin_action(3, start.target_word))
         self.assertEqual(import_project(json.loads(json.dumps(result.to_dict()))), result)
+
+    def test_direct_half_lantern_matches_the_five_step_walk(self):
+        start = new_project(3)
+        direct = start.split(0, 'half_lantern')
+        walk = start.split(0, 'lantern').split(0, 'halves').move(1, 2).move(1, 2).combine(2)
+        self.assertEqual([factor.word for factor in direct.factors],
+                         [factor.word for factor in walk.factors])
+        self.assertEqual(artin_action(3, direct.word), artin_action(3, start.word))
+
+    def test_uncap_only_points_without_half_twist_arc_endpoints(self):
+        half_lantern = new_project(3).split(0, 'half_lantern')
+        self.assertEqual([half_twist_endpoints(f) for f in half_lantern.factors],
+                         [(1, 2), (1, 2), ()])
+        mixed = half_lantern.toggle_boundary(3)
+        self.assertEqual(mixed.inner_boundaries, (3,))
+        self.assertEqual(mixed.word, half_lantern.word)
+        self.assertEqual(import_project(json.loads(json.dumps(mixed.to_dict()))), mixed)
+        with self.assertRaisesRegex(ValueError, 'half-twist arc'):
+            half_lantern.toggle_boundary(1)
+        self.assertEqual(mixed.toggle_boundary(3), half_lantern)
+        legacy = half_lantern.to_dict()
+        del legacy['inner_boundaries']
+        self.assertEqual(import_project(legacy), half_lantern)
+        self.assertEqual(half_twist_endpoints(Factor('h', (2,), 1, 2, half=True)),
+                         (1, 3))
+
+    def test_powered_half_lantern_preserves_target_action(self):
+        start = new_project(3, 2)
+        result = start.split(0, 'half_lantern')
+        self.assertEqual(len(result.factors), 6)
+        self.assertEqual(artin_action(3, result.word), artin_action(3, start.word))
 
     def test_five_point_square_split_and_combine(self):
         start = new_project(5, 2)

@@ -3,7 +3,7 @@ import {loadPyodide} from 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodid
 const start = (async () => {
   const pyodide = await loadPyodide();
   const [packageResponse,backendResponse] = await Promise.all([
-    fetch('../lab/surface_diagrams.zip'),fetch('backend.py')
+    fetch('../lab/surface_diagrams.zip?v=20261012-half'),fetch('backend.py')
   ]);
   if (!packageResponse.ok || !backendResponse.ok)
     throw new Error('Could not load the published boundary playground');

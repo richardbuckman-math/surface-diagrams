@@ -3,7 +3,9 @@
 import unittest
 
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
-from surface_diagrams.projected_relations import pc_daisy_terms, pc_rose_terms
+from surface_diagrams.projected_relations import (
+    pc_daisy_terms, pc_half_lantern_terms, pc_rose_terms,
+)
 
 
 def product(terms):
@@ -47,6 +49,16 @@ class ProjectedRelationsTests(unittest.TestCase):
         outer = ConjugatedTwist((4, -2), 2, 4)
         self.assertEqual(exact_action(product(pc_daisy_terms(outer))), exact_action(outer.word))
         self.assertEqual(exact_action(product(pc_rose_terms(outer))), exact_action(outer.word))
+
+    def test_half_lantern_matches_checked_hurwitz_walk(self):
+        for conjugator, first, strands in (((), 1, 3), ((2, -1), 2, 4)):
+            with self.subTest(conjugator=conjugator):
+                outer = ConjugatedTwist(conjugator, first, 3)
+                halves = pc_half_lantern_terms(outer)
+                self.assertEqual([(term.half, term.power) for term in halves],
+                                 [(True, 1), (True, 1), (False, 2)])
+                self.assertEqual(exact_action(product(halves), strands),
+                                 exact_action(outer.word, strands))
 
 
 if __name__ == '__main__':
