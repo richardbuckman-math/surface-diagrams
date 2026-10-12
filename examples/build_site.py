@@ -32,7 +32,7 @@ def build():
     lab_assets = ROOT/'src'/'surface_diagrams'/'lab_assets'
     lab_out = OUT/'lab'
     lab_out.mkdir(exist_ok=True)
-    for name in ('lab.css', 'lab.js', 'public-lab.js', 'public-lab-worker.mjs', 'public-lab-backend.py'):
+    for name in ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js', 'public-lab-worker.mjs', 'public-lab-backend.py'):
         shutil.copy2(lab_assets/name, lab_out/name)
     lab_html = (lab_assets/'index.html').read_text(encoding='utf-8')
     lab_html = lab_html.replace('<script src="lab.js"></script>',

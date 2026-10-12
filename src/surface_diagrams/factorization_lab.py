@@ -19,8 +19,9 @@ from .factorization_geometry import support_svg,braid_svg,row_height,factorizati
 from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
 from .mapping_classes import VerificationLimitError,exact_action
-from .sphere_actions import sphere_inner_certificate
+from .sphere_actions import sphere_inner_certificate,sphere_reduce
 from .sphere_cut_system import sphere_chart_drawing
+from .braid_actions import inverse_word
 
 
 def starting_factors(seed_slug='6-7'):
@@ -192,6 +193,41 @@ class LabServer(ThreadingHTTPServer):
         except ValueError as error: chart_svg='';chart_warning=str(error)
         return dict(sphere_inner_certificate(word),revision=self.revision,
                     chart_svg=chart_svg,chart_warning=chart_warning)
+    def sphere_cut_row(self,row,split):
+        """Five consecutive-point sphere arcs after a forward or inverse-suffix step."""
+        from .midpoint_certificate import sphere_split_certificate
+        from .sphere_arc_simplify import sphere_chain_drawing
+
+        factors=self.history[self.position]
+        if type(row) is not int or not 1<=row<=len(factors):
+            raise ValueError('Choose a valid factor row')
+        if type(split) is not int or not 1<=split<len(factors):
+            raise ValueError('Leave at least one factor on each side of the split')
+        direction='forward' if row<=split else 'backward'
+        word=(product(factors[:row]) if direction=='forward'
+              else inverse_word(product(factors[row:])))
+        images=exact_action(word)
+        data=dict(row=row,split=split,direction=direction,revision=self.revision,
+                  braid_letters=len(word),sphere_meridian_lengths=[len(sphere_reduce(image))
+                                                            for image in images])
+        try:
+            data.update(sphere_chain_drawing(images));data['warning']=''
+        except (ValueError,VerificationLimitError) as error:
+            data.update(svg='',warning=str(error),joint_certified=False)
+        if row==split:
+            try:
+                midpoint=sphere_split_certificate(factors,split)
+                data['meet_certified']=midpoint.sphere_equal
+                data['meet_disk_equal']=midpoint.disk_equal
+                data['meet_whisker_length']=len(midpoint.common_whisker)
+                try:
+                    data['meet_backward']=sphere_chain_drawing(midpoint.backward_disk_images)
+                    data['meet_picture_equal']=bool(data.get('svg')) and data['svg']==data['meet_backward']['svg']
+                except (ValueError,VerificationLimitError) as error:
+                    data['meet_backward']=dict(svg='',warning=str(error),joint_certified=False)
+            except (ValueError,VerificationLimitError) as error:
+                data['meet_certified']=False;data['meet_warning']=str(error)
+        return data
     def mutate(self,payload):
         previous=(self.history,self.frames,self.operations,self.position,self.revision,self.message)
         try:
@@ -275,6 +311,17 @@ class LabServer(ThreadingHTTPServer):
 class LabHandler(EditorHandler):
     def do_GET(self):
         if not self._local_request(): return
+        if urlsplit(self.path).path=='/api/sphere-cut':
+            try:
+                query=parse_qs(urlsplit(self.path).query)
+                revision=int(query['revision'][0]);row=int(query['row'][0]);split=int(query['split'][0])
+                with self.server.lock:
+                    if revision!=self.server.revision:
+                        self._error(409,'State changed; reload the cut column');return
+                    data=self.server.sphere_cut_row(row,split)
+            except (KeyError,ValueError,VerificationLimitError) as error:
+                self._error(400,str(error));return
+            self._reply(200,json.dumps(data));return
         if urlsplit(self.path).path=='/api/prefix-arc':
             try:
                 query=parse_qs(urlsplit(self.path).query)
@@ -327,6 +374,7 @@ class LabHandler(EditorHandler):
             self._reply(200,json.dumps(data)); return
         assets={'/':('xiao-4-3.html' if self.server.seed_slug=='4-3' else 'index.html','text/html; charset=utf-8'),
                 '/lab.js':('lab.js','text/javascript; charset=utf-8'),
+                '/sphere-cuts.js':('sphere-cuts.js','text/javascript; charset=utf-8'),
                 '/lab.css':('lab.css','text/css; charset=utf-8')}
         if self.path not in assets: self._error(404,'Not found'); return
         name,mime=assets[self.path]

@@ -1,5 +1,41 @@
 # Handoff: surface-diagrams
 
+## October 12: five-arc sphere column and forward/backward meeting split
+
+The (6,7) lab now has a middle column with **five**, not six, sphere cut
+arcs: 1–2 through 5–6. Each row shows the cut system after its factor. The
+split selector defaults to F1–F7 computed forward and F8–F13 computed from
+the end using the inverse suffix. Changing the split recalculates both sides.
+At the meeting row, the inspector compares the prefix to the inverse suffix
+through the existing exact six-meridian sphere certificate. For the original
+7+6 split the disk braids differ, but the quotient actions agree up to a
+58-letter common whisker, and the chosen five-arc SVGs coincide exactly.
+
+`sphere_arc_simplify.py` applies exact Artin generator actions to the
+five-generator sphere quotient of each adjacent-pair boundary class. A bounded
+search finds shorter disk-chart Arc representatives and checks their endpoints
+and quotient class. Independently short arcs need not fit together in one disk
+chart: F1, F3, and F9 use some original disk representatives so the complete
+five-arc placement passes the normal-triangle crossing-order and itinerary
+certificate. A rejected joint chart is reported as unavailable. The search is
+not a globally minimal braid-word algorithm and does not produce an explicit
+spherical-braid-relator substitution sequence. At F7, the chart has 116 cut
+visits, versus 750 in the unsimplified disk representatives; at the meeting
+comparison, both shortened chart SVGs are identical. Users can toggle the
+column or individual arcs and click any row to inspect it at full size.
+
+The new backend endpoint is `/api/sphere-cut` in both the local server and
+Pyodide public adapter. Its exact action is recomputed from the active edited
+factorization, so Hurwitz moves and splits invalidate the visual rows and
+trigger fresh checks. Original 13-row tests, an alternate split, public
+adapter tests, and a moved-factor spot check pass. Browser inspection found
+all rows loaded, the 7+6 midpoint check, and working split and arc toggles.
+The site build and link check pass. The next useful work is to make the
+normal-triangle SVGs smoother/readable at high crossing counts while retaining
+the certified joint order, then resume the safe local endpoint treatment for
+six-point disk charts. Do not assume the shortened quotient class search
+alone proves a joint embedding; keep the normal certificate gate.
+
 ## October 12: flatter PC lantern, fixed display convention, compact headers
 
 The PC lantern cut disk and factor supports now use flatter ovals. Its
