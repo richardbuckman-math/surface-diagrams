@@ -1,5 +1,37 @@
 # Handoff: surface-diagrams
 
+## October 12: flatter PC lantern, fixed display convention, compact headers
+
+The PC lantern cut disk and factor supports now use flatter ovals. Its
+boundary→1 arc leaves the left rim in the inward normal direction, and the
+three chain arcs receive presentation-only endpoint controls so adjacent edges
+meet each marked point from opposite sides. This uses the shared Arc itinerary
+and router unchanged; `chain_presentation.py` separates the final SVG shaping
+from the exact calculation. The accepted vertically reflected planar view is
+now the sole display in the PC, (6,7), and Xiao labs. The orientation selector
+is gone, SVG export agrees with the displayed view, and each lab can collapse
+its top controls to one slim header row. The (6,7) support and disk-chart
+outlines are flatter when their itineraries have enough routing clearance;
+dense supports keep their prior height to preserve embedded route checks.
+
+Do **not** apply the PC endpoint control curve to the joint six-point chain
+yet: a trial on (6,7) F1 introduced a visible crossing between formerly
+disjoint nested arcs. That trial was reverted. The six-point cut diagrams still
+use the original route geometry, including their old puncture tangents. The
+safe next step is a small local endpoint adjustment that preserves the order
+and nonintersection of neighboring arcs, with F1 and later prefixes inspected
+before enabling it. The six-edge chain remains explicitly a disk chart; the
+sphere cut system has only the five adjacent-point arcs.
+
+Focused PC geometry and lab tests, six-point chain/orientation tests, and
+factorization tests pass after the revert. The full local suite passed 410
+tests; the Node orientation test and `examples/build_site.py` passed too.
+Browser inspection confirmed the PC oval, boundary entry, three columns, and
+compact header; the (6,7) controls were checked in its lab. Its F1 support and
+cut-chain pictures were also rendered and inspected after flattening. The
+visual crossing from the experimental six-point endpoint shaping is why that
+shaping is explicitly left out of the shipped joint-chain renderer.
+
 ## October 11: PC lantern lab, cumulative cut system, and display calibration
 
 The new PC (puncture-capped) lantern lab starts with the checked three-factor

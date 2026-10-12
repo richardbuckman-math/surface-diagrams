@@ -87,6 +87,9 @@ def support_drawing(twist, *, mirror_vertical=False):
     # the ellipse with the spacing so its aspect and containment remain intact.
     visits=max(Counter(curve.cuts).values(),default=0)
     scale=max(1.,((visits+1)*4+10)/50)
-    surface=PlanarSurface.row('PPPPPP',spacing=50*scale,height=220*scale,margin=55*scale).with_curves(curve)
+    # Simple supports fit a flatter oval. Dense itineraries retain the taller
+    # routing clearance needed for exact embeddedness checks.
+    height=(180 if visits<5 else 220)*scale
+    surface=PlanarSurface.row('PPPPPP',spacing=50*scale,height=height,margin=55*scale).with_curves(curve)
     return render_svg(surface,style=Style(curve_color='#a21caf',curve_width=1.5,marked_point_radius=3.5),
                       mirror_curve_paths_vertical=mirror_vertical)

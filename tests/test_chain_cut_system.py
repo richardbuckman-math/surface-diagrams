@@ -1,4 +1,5 @@
 import unittest
+from xml.etree import ElementTree
 
 from surface_diagrams.based_cut_system import based_arc_ray_word
 from surface_diagrams.braid_actions import free_homotopy_key, inverse_word, reduce_word, arc_ray_word
@@ -59,6 +60,17 @@ class ChainCutSystemTests(unittest.TestCase):
         self.assertIn('<svg', svg)
         for color in RAINBOW[:6]:
             self.assertIn(color, svg)
+
+    def test_disk_chain_presentation_uses_oval_and_normal_rim_entry(self):
+        images = tuple((i,) for i in range(1, 7))
+        svg = ElementTree.fromstring(chain_cut_system_drawing(images))
+        ellipse = next(element for element in svg if element.attrib.get('class') == 'outer-boundary')
+        self.assertGreater(float(ellipse.attrib['rx']) / float(ellipse.attrib['ry']), 1.9)
+        arcs = [element for element in svg if element.attrib.get('class') == 'arc']
+        self.assertEqual(len(arcs), 6)
+        self.assertIn(' L ', arcs[0].attrib['d'])  # straight, inward normal at left tip
+        self.assertEqual(chain_arcs(images)[0].start, 0)
+
 
     def test_rejects_non_meridians_and_wrong_edge(self):
         with self.assertRaises(ValueError):

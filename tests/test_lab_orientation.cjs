@@ -7,12 +7,21 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'src',
   'surface_diagrams', 'lab_assets', 'lab.js'), 'utf8');
-const helpers = source.slice(source.indexOf('const planarOrientation='),
+const helpers = source.slice(source.indexOf('const originalPathTransforms='),
   source.indexOf('const braidLayout='));
 const hosts = new Map();
-const orientation = {value: 'richard'};
+const controls = {hidden: false};
+const toggleAttributes = new Map();
+const toggle = {
+  textContent: 'Hide controls',
+  setAttribute: (name, value) => toggleAttributes.set(name, value),
+};
+const headerClasses = new Set();
+const header = {classList: {toggle: (name, present) =>
+  present ? headerClasses.add(name) : headerClasses.delete(name)}};
 const context = vm.createContext({
-  $: id => id === 'planar-orientation' ? orientation : hosts.get(id),
+  $: id => ({'top-controls': controls, 'toggle-controls': toggle})[id] ?? hosts.get(id),
+  document: {querySelector: selector => selector === 'header' ? header : null},
   WeakMap,
   Number,
   DOMParser: class {},
@@ -51,6 +60,22 @@ apply(root);
 assert.equal(arc.getAttribute('transform'), 'translate(0 245.5) scale(1 -1)');
 assert.equal(loop.getAttribute('transform'),
   'translate(0 260) scale(1 -1) rotate(10)');
+apply(root);
+assert.equal(arc.getAttribute('transform'), 'translate(0 245.5) scale(1 -1)');
+assert.equal(loop.getAttribute('transform'),
+  'translate(0 260) scale(1 -1) rotate(10)');
+
+const setControlsExpanded = vm.runInContext('setControlsExpanded', context);
+setControlsExpanded(false);
+assert.equal(controls.hidden, true);
+assert.equal(toggle.textContent, 'Show controls');
+assert.equal(toggleAttributes.get('aria-expanded'), 'false');
+assert.equal(headerClasses.has('controls-collapsed'), true);
+toggle.onclick();
+assert.equal(controls.hidden, false);
+assert.equal(toggle.textContent, 'Hide controls');
+assert.equal(toggleAttributes.get('aria-expanded'), 'true');
+assert.equal(headerClasses.has('controls-collapsed'), false);
 
 const layoutHelper = source.slice(source.indexOf('function setBraidLayout(){'),
   source.indexOf('function paint(){'));
@@ -85,15 +110,3 @@ assert.deepEqual(cards.map(card => card.style.height), ['210px', '300px']);
 assert.equal(braidHost.innerHTML, '<svg>classic</svg>');
 assert.equal(chosen, selected);
 assert.equal(braid.getAttribute('transform'), null);
-
-orientation.value = 'original';
-apply(root);
-assert.equal(arc.getAttribute('transform'), null);
-assert.equal(loop.getAttribute('transform'), 'rotate(10)');
-
-orientation.value = 'richard';
-apply(root);
-apply(root);
-assert.equal(arc.getAttribute('transform'), 'translate(0 245.5) scale(1 -1)');
-assert.equal(loop.getAttribute('transform'),
-  'translate(0 260) scale(1 -1) rotate(10)');

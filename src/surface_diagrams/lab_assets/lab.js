@@ -3,20 +3,12 @@ let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null
 const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
-const planarOrientation=$('planar-orientation');
 const originalPathTransforms=new WeakMap();
-const planarHosts=['factors','inspect-drawing','prefix-before','prefix-after',
- 'arc-drawing','compare-before','compare-after','sphere-chart'];
 function applyPlanarOrientation(root){
  for(const path of root.querySelectorAll('svg path.arc, svg path.closed-curve')){
   if(!originalPathTransforms.has(path))
    originalPathTransforms.set(path,path.getAttribute('transform'));
   const original=originalPathTransforms.get(path);
-  if(planarOrientation.value==='original'){
-   if(original===null)path.removeAttribute('transform');
-   else path.setAttribute('transform',original);
-   continue;
-  }
   const svg=path.closest('svg');
   const mark=svg?.querySelector('circle.marked-point');
   const rowY=mark?Number(mark.getAttribute('cy')):NaN;
@@ -26,16 +18,20 @@ function applyPlanarOrientation(root){
 }
 function displayPlanarSvg(host,svg){host.innerHTML=svg;applyPlanarOrientation(host);}
 function orientedSvg(svg){
- if(planarOrientation.value==='original')return svg;
  const parsed=new DOMParser().parseFromString(svg,'image/svg+xml');
  if(parsed.querySelector('parsererror'))throw new Error('The SVG export could not be read.');
  applyPlanarOrientation(parsed);
  return new XMLSerializer().serializeToString(parsed.documentElement);
 }
 function downloadPlanarSvg(svg,name){download(orientedSvg(svg),'image/svg+xml',name);}
-planarOrientation.onchange=()=>{
- for(const id of planarHosts)applyPlanarOrientation($(id));
-};
+function setControlsExpanded(expanded){
+ const controls=$('top-controls'),toggle=$('toggle-controls');
+ controls.hidden=!expanded;
+ toggle.setAttribute('aria-expanded',String(expanded));
+ toggle.textContent=expanded?'Hide controls':'Show controls';
+ document.querySelector('header').classList.toggle('controls-collapsed',!expanded);
+}
+$('toggle-controls').onclick=()=>setControlsExpanded($('top-controls').hidden);
 const braidLayout=$('braid-layout');
 braidLayout.onchange=()=>{if(state)setBraidLayout();};
 const prefixSystem=$('prefix-system');
@@ -486,7 +482,7 @@ $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;i
 $('svg').onclick=async()=>{
  if(busy||!state)return;
  try{const options=new URLSearchParams({revision:String(state.revision),
-   mirror:planarOrientation.value==='richard'?'1':'0',
+   mirror:'1',
    compact:braidLayout.value==='compact'?'1':'0'});
   const response=await fetch('/api/export.svg?'+options);
   if(!response.ok){const data=await response.json();throw new Error(data.error);}

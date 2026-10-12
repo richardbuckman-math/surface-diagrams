@@ -117,8 +117,13 @@ class PCLanternLabTests(unittest.TestCase):
         page = (ASSETS / 'pc-lantern.html').read_text(encoding='utf-8')
         script = (ASSETS / 'pc-cuts.js').read_text(encoding='utf-8')
         for control in ('pc-show-column', 'pc-arc-1', 'pc-arc-2', 'pc-arc-3',
-                        'pc-show-all', 'pc-hide-all', 'pc-orientation', 'pc-cuts-column'):
+                        'pc-show-all', 'pc-hide-all', 'pc-cuts-column',
+                        'pc-toggle-controls', 'pc-header-controls'):
             self.assertIn(f'id="{control}"', page)
+        self.assertNotIn('id="pc-orientation"', page)
+        self.assertIn('aria-controls="pc-header-controls"', page)
+        self.assertIn("classList.toggle('pc-controls-collapsed')", script)
+        self.assertNotIn("pcElement('pc-orientation')", script)
         self.assertIn('state.cut_steps.slice(1, -1)', script)
         self.assertIn('state.factors[index].height', script)
         self.assertIn('factorCards[index]?.offsetHeight', script)

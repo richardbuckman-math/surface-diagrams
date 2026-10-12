@@ -84,8 +84,9 @@ def chain_cut_system_drawing(images, *, mirror_vertical=False):
 def _surface(arcs):
     visits = max(Counter(cut for arc in arcs for cut in arc.cuts).values(), default=0)
     scale = max(1., ((visits + 1) * 4 + 10) / 50)
+    height = (180 if visits < 5 else 220) * scale
     return PlanarSurface.row('PPPPPP', spacing=50 * scale,
-                             height=220 * scale, margin=55 * scale)
+                             height=height, margin=55 * scale)
 
 
 @lru_cache(maxsize=48)

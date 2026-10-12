@@ -5,25 +5,49 @@ Only the displayed arc paths are reflected vertically; the positive braid
 generators, twist powers, and exact Arc itineraries retain their usual values.
 """
 
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from typing import Optional
 from functools import lru_cache
 from html import escape
 
 from .based_cut_system import based_arc_from_meridian
 from .boundary_playground import BoundaryProject, new_project
 from .boundary_playground_app import BoundaryLab
-from .boundary_playground_geometry import _arc_from_class, factorization_svg, support_svg
+from .boundary_playground_geometry import (_arc_from_class, factorization_svg,
+                                           support_curve)
 from .braid_actions import artin_action, reduce_word
+from .chain_presentation import ChainDiagram, shape_chain_arc
 from .curves import Arc
 from .model import PlanarSurface, Style
 from .svg import render_svg
-from .visuals import ColoredCurve, PlanarDiagram
+from .visuals import ColoredCurve
 
 
-SURFACE = PlanarSurface.row('PPP', spacing=82, height=260, margin=80)
+SURFACE = PlanarSurface.row('PPP', spacing=82, height=180, margin=80)
 STYLE = Style(background='#ffffff', curve_width=2.4,
               marked_point_radius=5, curve_height=0.84)
 ARC_COLORS = ('#c02648', '#0e7490', '#7c3aed')
+
+
+_shape_pc_arc = shape_chain_arc
+
+
+@dataclass(frozen=True)
+class _PCCutDiagram(ChainDiagram):
+    """The three-edge disk chain has its boundary endpoint in the first arc."""
+
+    rim_index: Optional[int] = 0
+
+
+def _pc_support_svg(factor, *, mirror_vertical):
+    """Use a flat disk for PC support pictures, with the shared exact curve."""
+    curve = support_curve(factor.mapping_class, 3)
+    surface = PlanarSurface.row('PPP', spacing=50, height=130,
+                                margin=55).with_curves(curve)
+    return render_svg(surface, style=Style(curve_color='#a21caf',
+                                           curve_width=1.5,
+                                           marked_point_radius=3.5),
+                      mirror_curve_paths_vertical=mirror_vertical)
 
 
 def pc_project():
@@ -72,7 +96,7 @@ def cut_system_svg(word, mirrored=True):
                     for index, (label, arc) in enumerate(zip(labels, arcs)))
     # Arc names are already present in the column controls. Omitting the SVG
     # legend gives the curves more of each factor row's fixed vertical space.
-    diagram = PlanarDiagram(SURFACE, colored, show_legend=False)
+    diagram = _PCCutDiagram(SURFACE, colored, show_legend=False)
     svg = render_svg(diagram, style=STYLE, title='PC lantern cut system',
                      mirror_curve_paths_vertical=mirrored)
     drawing = diagram.drawing(STYLE)
@@ -141,8 +165,8 @@ class PCLanternLab(BoundaryLab):
         state = super().state()
         for factor, row in zip(self.project.factors, state['factors']):
             try:
-                row['svg_mirrored'] = support_svg(factor, 3, mirror_vertical=True)
-                row['svg_unmirrored'] = row['svg']
+                row['svg_mirrored'] = _pc_support_svg(factor, mirror_vertical=True)
+                row['svg_unmirrored'] = _pc_support_svg(factor, mirror_vertical=False)
                 row['svg'] = row['svg_mirrored']
             except ValueError as error:
                 row['svg_mirrored'] = row['svg_unmirrored'] = ''
