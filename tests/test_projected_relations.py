@@ -1,7 +1,9 @@
 """Exact disk checks for the puncture-capped daisy and rose derivations."""
 
 import unittest
+from dataclasses import replace
 
+from surface_diagrams.factorization_explorer import initial_factors
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.projected_relations import (
     pc_daisy_terms, pc_half_lantern_terms, pc_rose_terms,
@@ -59,6 +61,20 @@ class ProjectedRelationsTests(unittest.TestCase):
                                  [(True, 1), (True, 1), (False, 2)])
                 self.assertEqual(exact_action(product(halves), strands),
                                  exact_action(outer.word, strands))
+
+    def test_six_seven_half_lantern_first_arc_pairing(self):
+        factors = {factor.id: factor for factor in initial_factors()}
+        self.assertEqual(
+            [factor.id for factor in factors.values() if not factor.half],
+            ['F1', 'F4', 'F5', 'F8', 'F10', 'F12', 'F13'],
+        )
+        standard_h34 = exact_action((3,))
+        for factor_id in ('F1', 'F8', 'F13'):
+            with self.subTest(factor=factor_id):
+                unit = replace(factors[factor_id].mapping_class, power=1)
+                terms = pc_half_lantern_terms(unit)
+                self.assertEqual(exact_action(product(terms)), exact_action(unit.word))
+                self.assertEqual(exact_action(terms[0].word), standard_h34)
 
 
 if __name__ == '__main__':

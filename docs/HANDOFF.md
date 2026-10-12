@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## October 12: (6,7) derivation priority and first half-lantern pairing
+
+Richard's highest priority is a structural derivation of the supplied (6,7)
+relation, working backward from its 13 factors. Start by splitting the seven
+squared three-point twists (F1, F4, F5, F8, F10, F12, F13) into two units each,
+then apply the exact PC half-lantern to selected units. Do not confuse this
+with the completed 19-step sphere-braid word proof: the desired result is a
+factor-level derivation using Hurwitz moves and named substitutions.
+
+An exact candidate pairing is already known. Applying `pc_half_lantern_terms`
+to one unit of F1, F8, and F13 produces a *first* half twist with exactly the
+same Artin action as the standard H34 (indeed all three first halves agree in
+the disk braid group). Moving one unchanged half twist toward another by
+Hurwitz moves should therefore permit combining adjacent equal halves to T34;
+the crossed factors must be recalculated and the whole product rechecked.
+The six original half twists have endpoint pairs (3,6), (1,4), (2,5),
+(3,6), (1,4), (2,5), respectively. None directly equals one of the newly
+generated half twists from the seven three-point cores, even under the
+six-punctured sphere outer-action certificate. This is a bounded baseline,
+not a proof that no longer Hurwitz route exists. The next useful increment is
+to expose checked PC half-lantern splitting in the (6,7) lab and construct a
+saved, replayable F1/F8/F13 pairing-and-combination path, checking each move's
+disk action and final sphere class before searching for further relations.
+
 ## October 12: PC half lantern and target-surface preview
 
 The existing five-step three-point half-lantern walkthrough has a reusable
