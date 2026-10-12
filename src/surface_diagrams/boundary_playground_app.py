@@ -68,6 +68,8 @@ class BoundaryLab:
                 splits.append(('halves', 'Split into half twists'))
             if not factor.half and factor.points == 3:
                 splits.append(('lantern', 'Three pairwise twists'))
+            if not factor.half and factor.points >= 4:
+                splits.append(('pc_daisy', 'PC daisy: smaller twist + under-going pairs'))
             rows.append(dict(asdict(factor), word=factor.word, label=factor.label,
                              svg=svg, warning=warning, height=row_height(factor),
                              height_compact=row_height(factor, compact=True),

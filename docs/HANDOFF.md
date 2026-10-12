@@ -1,5 +1,32 @@
 # Handoff: surface-diagrams
 
+## October 12: puncture-capped daisy and rose derivation
+
+The four-point identity proposed by Richard is now derived from two
+puncture-capped lantern substitutions:
+`T1234 T12 = T123 T34 T124_under`, then
+`T124_under = T24_under T14_under T12`. Cancelling the right-hand `T12`
+gives `T1234 = T123 T34 T24_under T14_under`. In the existing braid
+convention the last two are conjugates by `(-3,)` and `(-3,-2)`; all four
+supports render with the shared surface library. A checked recursive PC
+daisy generator extends this to an n-point twist, and recursive PC rose
+terms are exactly action-checked for n=3..6. These are marked-disk
+identities, not framed-boundary daisy/rose relations.
+
+The boundary-twist playground now offers 4 marked points and a PC daisy
+substitution for 4- or 5-point twists. Applying the existing PC lantern to
+the first three-point factor of the four-point daisy produces a six-factor
+pairwise rose. Each mutation checks the complete disk Artin action; JSON
+save/reopen and Hurwitz behavior remain available. The written derivation is
+`docs/proofs/pc-daisy-rose.md`. The daisy and rose catalog pages now link to
+that derivation and the interactive playground. All 419 tests pass with an
+absolute `PYTHONPATH`; the site build and local link check pass. Local browser
+inspection confirmed the four support curves, rose continuation, and both
+catalog pages. Next, consider an explicit per-step lantern
+walkthrough in the PC lab, then use the relation library to explore candidate
+substitutions in (6,7). Framed inner-boundary versions still need a separate
+surface model and checked encodings.
+
 ## October 12: fitted sphere-chart inspection
 
 The five-arc sphere-cut inspector now has a Fit overview / Show detail toggle.

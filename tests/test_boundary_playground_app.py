@@ -44,6 +44,22 @@ class BoundaryPlaygroundAppTests(unittest.TestCase):
         self.apply(restored, op='redo')
         self.assertEqual(len(restored.project.factors), 2)
 
+    def test_four_point_pc_daisy_is_drawn_and_can_continue_to_rose(self):
+        lab = BoundaryLab()
+        self.apply(lab, op='new', points=4, power=1)
+        self.assertIn(('pc_daisy', 'PC daisy: smaller twist + under-going pairs'),
+                      lab.state()['factors'][0]['splits'])
+        self.apply(lab, op='split', index=0, kind='pc_daisy')
+        daisy = lab.state()
+        self.assertEqual(len(daisy['factors']), 4)
+        self.assertTrue(all(factor['svg'] and not factor['warning'] for factor in daisy['factors']))
+        self.apply(lab, op='split', index=0, kind='lantern')
+        self.assertEqual(len(lab.state()['factors']), 6)
+        saved = lab.session_document()
+        reopened = BoundaryLab()
+        reopened.restore(saved)
+        self.assertEqual(len(reopened.project.factors), 6)
+
     def test_invalid_import_and_session_leave_workspace_intact(self):
         lab = BoundaryLab()
         before = lab.session_document()

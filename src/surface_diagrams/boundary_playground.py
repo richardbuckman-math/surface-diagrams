@@ -9,11 +9,12 @@ from dataclasses import asdict, dataclass, replace
 from .braid_actions import inverse_word, reduce_word
 from .factorization_explorer import Factor
 from .mapping_classes import exact_action
+from .projected_relations import pc_daisy_terms
 from .twist_simplify import simplify_twist
 
 
 FORMAT = 'surface-diagrams-boundary-playground-v1'
-SUPPORTED_POINTS = (3, 5)
+SUPPORTED_POINTS = (3, 4, 5)
 MAX_POWER = 32
 MAX_FACTORS = 80
 MAX_LETTERS = 3500
@@ -59,7 +60,7 @@ class BoundaryProject:
 
     def __post_init__(self):
         if type(self.points) is not int or self.points not in SUPPORTED_POINTS:
-            raise ValueError('Choose 3 or 5 marked points')
+            raise ValueError('Choose 3, 4, or 5 marked points')
         if type(self.power) is not int or not 1 <= self.power <= MAX_POWER:
             raise ValueError('Choose a boundary-twist power between 1 and 32')
         object.__setattr__(self, 'factors', tuple(self.factors))
@@ -126,6 +127,12 @@ class BoundaryProject:
                 for repeat in range(factor.power)
                 for j, (g, a) in enumerate((((), i), ((i+1,), i), ((), i+1)))
             )
+        elif kind == 'pc_daisy' and not factor.half and factor.points >= 4:
+            terms = pc_daisy_terms(replace(factor, power=1).mapping_class)
+            replacement = tuple(
+                Factor(f'{factor.id}.D{repeat+1}.{j+1}', term.conjugator, term.first, term.points)
+                for repeat in range(factor.power) for j, term in enumerate(terms)
+            )
         else:
             raise ValueError('That split is not available for this factor')
         _same_action(self.points, (factor,), replacement)
@@ -173,7 +180,7 @@ def import_project(document):
         raise ValueError('Choose a boundary playground JSON file')
     points, power, rows = document.get('points'), document.get('power'), document.get('factors')
     if type(points) is not int or points not in SUPPORTED_POINTS:
-        raise ValueError('Choose 3 or 5 marked points')
+        raise ValueError('Choose 3, 4, or 5 marked points')
     if type(power) is not int or not 1 <= power <= MAX_POWER:
         raise ValueError('Choose a boundary-twist power between 1 and 32')
     if not isinstance(rows, list) or not 1 <= len(rows) <= MAX_FACTORS:

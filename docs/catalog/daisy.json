@@ -2,15 +2,16 @@
   "category": "relations",
   "slug": "daisy",
   "title": "Daisy",
-  "status": "Planned",
-  "description": "Derivations and factorizations will be added here. The precise surface, conventions and source references remain to be specified.",
+  "status": "PC version verified",
+  "description": "A puncture-capped daisy derivation is verified in the marked disk and available as an interactive substitution. The framed inner-boundary relation remains to be developed.",
+  "pc_proof_url": "https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-daisy-rose.md",
   "sections": {
-    "Surface and conventions": "Pending source material and verification.",
-    "Derivation": "Pending source material and verification.",
-    "Braid factorization": "Pending source material and verification.",
-    "Planar mapping class diagrams": "Pending source material and verification.",
-    "Standard mapping classes": "Pending source material and verification.",
-    "Equivalences and transformations": "Pending source material and verification.",
-    "References": "Pending source material and verification."
+    "Surface and conventions": "A disk with marked points, treated as punctures. A twist about one marked point is trivial; this is not the framed-boundary daisy relation.",
+    "Derivation": "The four-point formula follows from two PC lantern substitutions and cancellation of a repeated two-point twist. The same argument gives a recursive n-point formula.",
+    "Braid factorization": "The under-going pair twists have explicit conjugating braid words, and the full disk Artin action checks the substitutions.",
+    "Planar mapping class diagrams": "The boundary-twist playground renders all four factors with the shared surface library.",
+    "Standard mapping classes": "The final four-factor product consists entirely of positive Dehn twists; no inverse twist remains after cancellation.",
+    "Equivalences and transformations": "Expand the leading three-point twist by the PC lantern to obtain the pairwise PC rose factorization.",
+    "References": "See the linked derivation and Margalit–McCammond, Geometric presentations for the pure braid group, Section 4."
   }
 }

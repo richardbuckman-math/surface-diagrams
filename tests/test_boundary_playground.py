@@ -37,6 +37,23 @@ class BoundaryPlaygroundTests(unittest.TestCase):
         self.assertEqual([f.id for f in split.move(0, 1).factors], ['T.2', 'T.1'])
         self.assertEqual(split.combine(0).word, start.word)
 
+    def test_four_point_pc_daisy_then_lantern_gives_pairwise_rose(self):
+        start = new_project(4)
+        daisy = start.split(0, 'pc_daisy')
+        self.assertEqual([(f.first, f.points, f.conjugator) for f in daisy.factors],
+                         [(1, 3, ()), (3, 2, ()), (2, 2, (-3,)), (1, 2, (-3, -2))])
+        rose = daisy.split(0, 'lantern')
+        self.assertEqual(len(rose.factors), 6)
+        self.assertTrue(all(f.points == 2 for f in rose.factors))
+        self.assertEqual(artin_action(4, rose.word), artin_action(4, start.word))
+        self.assertEqual(import_project(json.loads(json.dumps(rose.to_dict()))), rose)
+
+    def test_five_point_pc_daisy_accepts_power_splitting(self):
+        start = new_project(5, 2)
+        daisy = start.split(0, 'pc_daisy')
+        self.assertEqual(len(daisy.factors), 10)
+        self.assertEqual(artin_action(5, daisy.word), artin_action(5, start.word))
+
     def test_checked_drag_is_reversible(self):
         start = new_project(3).split(0, 'lantern')
         moved = start.move(0, 2)
@@ -69,7 +86,7 @@ class BoundaryPlaygroundTests(unittest.TestCase):
             import_project(altered)
         altered = json.loads(json.dumps(document))
         altered['points'] = 6
-        with self.assertRaisesRegex(ValueError, '3 or 5'):
+        with self.assertRaisesRegex(ValueError, '3, 4, or 5'):
             import_project(altered)
 
     def test_invalid_operation_never_changes_state(self):
@@ -83,7 +100,7 @@ class BoundaryPlaygroundTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             BoundaryProject(3, 1, (Factor('wrong', (), 1, 2),))
         with self.assertRaises(ValueError):
-            new_project(4)
+            new_project(2)
         self.assertEqual(start, new_project(3))
 
 
