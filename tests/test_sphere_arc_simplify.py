@@ -21,16 +21,22 @@ class SphereArcColumnTests(unittest.TestCase):
         self.assertFalse(rows[6]['meet_disk_equal'])
         self.assertTrue(rows[6]['meet_backward']['joint_certified'])
         self.assertTrue(rows[6]['meet_picture_equal'])
-        self.assertEqual(rows[-1]['cut_counts'], (0, 0, 0, 0, 0))
+        self.assertEqual(rows[6]['svg'], rows[7]['svg'])
+        self.assertEqual(rows[6]['meet_backward']['svg'], rows[7]['svg'])
+        self.assertEqual(rows[-1]['cut_counts'], (0, 7, 0, 7, 5))
+        self.assertEqual(rows[-1]['braid_letters'], 14)  # inverse F13, before its action
         self.assertLess(sum(rows[6]['cut_counts']), 147 + 220 + 40 + 275 + 68)
         self.assertEqual(rows[6]['endpoints'], ((4, 5), (5, 3), (1, 3), (1, 2), (2, 6)))
 
     def test_split_selector_changes_direction_and_validates_bounds(self):
         server = LabServer()
         try:
-            self.assertEqual(server.sphere_cut_row(5, 4)['direction'], 'backward')
-            self.assertEqual(server.sphere_cut_row(4, 4)['direction'], 'forward')
-            self.assertTrue(server.sphere_cut_row(4, 4)['meet_certified'])
+            backward=server.sphere_cut_row(5, 4)
+            forward=server.sphere_cut_row(4, 4)
+            self.assertEqual(backward['direction'], 'backward')
+            self.assertEqual(forward['direction'], 'forward')
+            self.assertTrue(forward['meet_certified'])
+            self.assertEqual(forward['svg'], backward['svg'])
             with self.assertRaisesRegex(ValueError, 'factor row'):
                 server.sphere_cut_row(0, 7)
             with self.assertRaisesRegex(ValueError, 'at least one factor'):
@@ -45,7 +51,7 @@ class SphereArcColumnTests(unittest.TestCase):
         self.assertEqual(result['status'], 200)
         data = json.loads(result['body'])
         self.assertEqual(data['direction'], 'backward')
-        self.assertEqual(data['cut_counts'], [0, 0, 0, 0, 0])
+        self.assertEqual(data['cut_counts'], [0, 7, 0, 7, 5])
         self.assertEqual(data['svg'].count('class="arc"'), 5)
 
 

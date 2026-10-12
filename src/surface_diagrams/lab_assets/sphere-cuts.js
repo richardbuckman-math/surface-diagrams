@@ -47,14 +47,14 @@ document.getElementById('close-sphere-cut').onclick=() => sphereDialog.close();
 
 function sphereSplitDescription(split,count) {
   document.getElementById('sphere-split-description').textContent=
-    `F1–F${split} forward; after F${split}, compare the inverse of F${split+1}–F${count}. `+
-    `F${split+1}–F${count} rows are worked back from the end.`;
+    `F1–F${split}: after each forward factor. F${split+1}–F${count}: before each factor, worked back from the end. `+
+    `After F${split} and before F${split+1} meet at the same sphere cut system.`;
 }
 function openSphereCut(row) {
   const data=sphereCutRows.get(row);
   if (!data) return;
   document.getElementById('sphere-cut-title').textContent=
-    `After factor ${row} · ${data.direction==='forward'?'forward prefix':'inverse suffix'}`;
+    `${data.direction==='forward'?'After':'Before'} factor ${row} · ${data.direction==='forward'?'forward prefix':'inverse suffix'}`;
   document.getElementById('sphere-cut-explanation').textContent=
     `Five arcs join the consecutive original marked points. ${data.joint_certified ?
     'Their shared crossing order and exact Arc itineraries pass the joint normal-placement check.' :
@@ -88,16 +88,25 @@ function renderSphereCut(row,data) {
   if (!card) return;
   const drawing=card.querySelector('.sphere-cut-thumbnail');
   const heading=card.querySelector('strong');
-  heading.textContent=`${data.direction==='forward'?'Forward':'From end'} · after F${row}`;
+  heading.textContent=`${data.direction==='forward'?'Forward · after':'From end · before'} F${row}`;
   drawing.innerHTML=data.svg||'';
   if (!data.svg) drawing.textContent=data.warning||'Joint chart unavailable';
   filterSpherePaths(drawing);
   const note=card.querySelector('small');
-  note.textContent=data.meet_certified ? 'Meet ✓ · click to compare' :
+  note.textContent=data.meet_certified ? 'Meet A ✓ · click to compare' :
     data.meet_warning ? 'Meet check unavailable' :
     data.joint_certified ? `${data.method==='sphere-short'?'Sphere-short':'Joint chart'} · ${data.cut_counts.reduce((a,b)=>a+b,0)} cuts` :
     'No joint chart';
   sphereCutRows.set(row,data);
+  if (row===data.split+1) {
+    const forward=sphereCutRows.get(data.split);
+    if (forward?.meet_certified && data.joint_certified && forward.svg===data.svg)
+      note.textContent='Meet B ✓ · same five-arc drawing';
+    else if (forward?.meet_certified && data.joint_certified)
+      note.textContent='Meet B · exact sphere match; chart differs';
+    card.classList.add('sphere-meeting-row');
+  }
+  if (row===data.split) card.classList.add('sphere-meeting-row');
 }
 function refreshSphereCuts() {
   if (!state || !sphereCuts) return;
@@ -124,8 +133,8 @@ function refreshSphereCuts() {
   for (let row=1;row<=count;row++) {
     const card=document.createElement('article');card.className='sphere-cut-row';
     card.style.height=`${factors[row-1]?.offsetHeight||state.factors[row-1].height}px`;
-    card.tabIndex=0;card.setAttribute('aria-label',`Inspect sphere cut complex after factor ${row}`);
-    card.innerHTML=`<strong>After F${row}</strong><div class="sphere-cut-thumbnail">Calculating five arcs…</div><small></small>`;
+    card.tabIndex=0;card.setAttribute('aria-label',`Inspect sphere cut complex ${row<=split?'after':'before'} factor ${row}`);
+    card.innerHTML=`<strong>${row<=split?'After':'Before'} F${row}</strong><div class="sphere-cut-thumbnail">Calculating five arcs…</div><small></small>`;
     card.onclick=()=>openSphereCut(row);
     card.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openSphereCut(row);}};
     sphereCuts.append(card);

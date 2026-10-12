@@ -3,10 +3,13 @@
 ## October 12: five-arc sphere column and forward/backward meeting split
 
 The (6,7) lab now has a middle column with **five**, not six, sphere cut
-arcs: 1–2 through 5–6. Each row shows the cut system after its factor. The
-split selector defaults to F1–F7 computed forward and F8–F13 computed from
-the end using the inverse suffix. Changing the split recalculates both sides.
-At the meeting row, the inspector compares the prefix to the inverse suffix
+arcs: 1–2 through 5–6. Forward rows show the cut system **after** their
+factor; backward rows show it **before** their factor. The split selector
+defaults to F1–F7 computed forward and F8–F13 computed from the end using
+inverse suffixes. Thus the adjacent F7 and F8 rows show the same meeting cut
+system; F13 shows the state before F13 rather than the identity after it.
+Changing the split recalculates both sides. At the meeting row, the inspector
+compares the prefix to the inverse suffix
 through the existing exact six-meridian sphere certificate. For the original
 7+6 split the disk braids differ, but the quotient actions agree up to a
 58-letter common whisker, and the chosen five-arc SVGs coincide exactly.
@@ -21,7 +24,8 @@ certificate. A rejected joint chart is reported as unavailable. The search is
 not a globally minimal braid-word algorithm and does not produce an explicit
 spherical-braid-relator substitution sequence. At F7, the chart has 116 cut
 visits, versus 750 in the unsimplified disk representatives; at the meeting
-comparison, both shortened chart SVGs are identical. Users can toggle the
+comparison, both shortened chart SVGs are identical and now appear in the
+adjacent F7/F8 rows. Users can toggle the
 column or individual arcs and click any row to inspect it at full size.
 
 The new backend endpoint is `/api/sphere-cut` in both the local server and

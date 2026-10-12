@@ -194,7 +194,7 @@ class LabServer(ThreadingHTTPServer):
         return dict(sphere_inner_certificate(word),revision=self.revision,
                     chart_svg=chart_svg,chart_warning=chart_warning)
     def sphere_cut_row(self,row,split):
-        """Five consecutive-point sphere arcs after a forward or inverse-suffix step."""
+        """Five sphere arcs after a forward factor or before a backward factor."""
         from .midpoint_certificate import sphere_split_certificate
         from .sphere_arc_simplify import sphere_chain_drawing
 
@@ -205,7 +205,7 @@ class LabServer(ThreadingHTTPServer):
             raise ValueError('Leave at least one factor on each side of the split')
         direction='forward' if row<=split else 'backward'
         word=(product(factors[:row]) if direction=='forward'
-              else inverse_word(product(factors[row:])))
+              else inverse_word(product(factors[row-1:])))
         images=exact_action(word)
         data=dict(row=row,split=split,direction=direction,revision=self.revision,
                   braid_letters=len(word),sphere_meridian_lengths=[len(sphere_reduce(image))
