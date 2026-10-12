@@ -26,6 +26,8 @@ class XiaoFactorizationLabTests(unittest.TestCase):
             self.assertTrue(forward['joint_certified'])
             self.assertTrue(backward['joint_certified'])
             self.assertTrue(forward['meet_certified'])
+            self.assertTrue(forward['meet_picture_equal_strip'])
+            self.assertEqual(forward['svg_strip'], backward['svg_strip'])
             self.assertEqual(len(forward['cut_counts']), 5)
             self.assertEqual(len(backward['cut_counts']), 5)
         finally:

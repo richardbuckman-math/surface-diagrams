@@ -224,6 +224,8 @@ class LabServer(ThreadingHTTPServer):
                 try:
                     data['meet_backward']=sphere_chain_drawing(midpoint.backward_disk_images)
                     data['meet_picture_equal']=bool(data.get('svg')) and data['svg']==data['meet_backward']['svg']
+                    data['meet_picture_equal_strip']=(bool(data.get('svg_strip')) and
+                        data['svg_strip']==data['meet_backward']['svg_strip'])
                 except (ValueError,VerificationLimitError) as error:
                     data['meet_backward']=dict(svg='',warning=str(error),joint_certified=False)
             except (ValueError,VerificationLimitError) as error:

@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 12 night: alternate cut-system projection in both sphere labs
+
+The Xiao (4,3) and (6,7) labs now default to a rectangular cut chart with
+one vertical upper/lower ray per marked point and a horizontal reference
+cut. A `Cut layout` selector preserves the previous fan drawing as an
+option. Both views render the **same** jointly certified five-arc data;
+changing the selector redraws cached results without repeating the braid
+or arc calculations. The strip and fan SVGs are returned together by the
+sphere-cut adapter, including both midpoint representatives, and the
+meet-picture label compares the currently selected projection. The pale
+dashed orthogonal lines are cell guides, not additional sphere arcs.
+
+Focused Python tests (13), JavaScript syntax, site build/link check, and
+`git diff --check` passed. Browser inspection of Xiao F1 and the 4+3
+midpoint confirmed the new strip view, preserved fan view, and identical
+five-arc meeting drawings. Next, continue the checked (6,7) factor-level
+derivation and thesis (4,3) transcription; refine colored-strand smoothing
+separately without changing exact itineraries or joint endpoint order.
+
 ## October 12 evening: graphical (4,3) baseline and thesis storyboard
 
 The existing Xiao (4,3) lab now has the same five-arc sphere cut-complex

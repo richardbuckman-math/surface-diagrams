@@ -4,11 +4,16 @@
 // warning. The split changes only which exact braid action is displayed.
 const sphereCuts = document.getElementById('sphere-cuts-column');
 const sphereSplit = document.getElementById('sphere-split');
+const sphereLayout = document.getElementById('sphere-layout');
 const sphereDialog = document.getElementById('sphere-cut-inspector');
 const sphereCutFit = document.getElementById('sphere-cut-fit');
 const sphereCutSave = document.getElementById('save-sphere-cut');
 let sphereCutRequest = 0, sphereCutKey = '', sphereCutRows = new Map();
+let sphereCutOpenedRow = null;
 let sphereCutFitOverview = false;
+function sphereCutSvg(data) {
+  return sphereLayout.value === 'strip' ? data.svg_strip || '' : data.svg || '';
+}
 const sphereCutResize = new ResizeObserver(() => {
   document.querySelectorAll('#sphere-cuts-column .sphere-cut-row').forEach((row, index) => {
     row.style.height = `${document.querySelectorAll('#factors .factor')[index]?.offsetHeight || 160}px`;
@@ -63,6 +68,7 @@ function sphereSplitDescription(split,count) {
 function openSphereCut(row) {
   const data=sphereCutRows.get(row);
   if (!data) return;
+  sphereCutOpenedRow=row;
   document.getElementById('sphere-cut-title').textContent=
     `${data.direction==='forward'?'After':'Before'} factor ${row} · ${data.direction==='forward'?'forward prefix':'inverse suffix'}`;
   document.getElementById('sphere-cut-explanation').textContent=
@@ -73,11 +79,12 @@ function openSphereCut(row) {
     `Arc cut visits: ${data.cut_counts?.join(', ') || 'unavailable'}. `+
     (data.warning||'');
   const large=document.getElementById('sphere-cut-large');
-  large.innerHTML=data.svg||'';
-  if (!data.svg) large.textContent=data.warning||'Drawing unavailable';
-  sphereCutSave.disabled=!data.svg;
+  const svg=sphereCutSvg(data);
+  large.innerHTML=svg;
+  if (!svg) large.textContent=data.warning||'Drawing unavailable';
+  sphereCutSave.disabled=!svg;
   sphereCutSave.onclick=()=>{
-    if (data.svg) download(data.svg,'image/svg+xml',
+    if (svg) download(svg,'image/svg+xml',
       `sphere-cut-${data.direction==='forward'?'after':'before'}-F${row}.svg`);
   };
   const meet=document.getElementById('sphere-cut-meet');meet.replaceChildren();
@@ -85,14 +92,14 @@ function openSphereCut(row) {
     const note=document.createElement('p');
     note.textContent=data.meet_certified ?
       `Exact sphere midpoint check passed. The two disk braids ${data.meet_disk_equal?'also agree':'can differ'}; their sphere actions agree up to one common basepoint whisker (${data.meet_whisker_length} letters). `+
-      (data.meet_picture_equal?'The two five-arc chart drawings coincide exactly.':'The chart representatives need not coincide visually.') :
+      ((sphereLayout.value==='strip'?data.meet_picture_equal_strip:data.meet_picture_equal)?'The two five-arc chart drawings coincide exactly.':'The chart representatives need not coincide visually.') :
       `Midpoint check unavailable: ${data.meet_warning||'the sphere images did not match'}`;
     meet.append(note);
-    if (data.meet_backward?.svg) {
+    if (data.meet_backward && sphereCutSvg(data.meet_backward)) {
       const disclosure=document.createElement('details');
       const label=document.createElement('summary');label.textContent='Show inverse-suffix chart';
       const picture=document.createElement('div');picture.className='prefix-drawing';
-      picture.innerHTML=data.meet_backward.svg;disclosure.append(label,picture);meet.append(disclosure);
+      picture.innerHTML=sphereCutSvg(data.meet_backward);disclosure.append(label,picture);meet.append(disclosure);
     }
   }
   filterSpherePaths(sphereDialog);
@@ -104,8 +111,9 @@ function renderSphereCut(row,data) {
   const drawing=card.querySelector('.sphere-cut-thumbnail');
   const heading=card.querySelector('strong');
   heading.textContent=`${data.direction==='forward'?'Forward · after':'From end · before'} F${row}`;
-  drawing.innerHTML=data.svg||'';
-  if (!data.svg) drawing.textContent=data.warning||'Joint chart unavailable';
+  const svg=sphereCutSvg(data);
+  drawing.innerHTML=svg;
+  if (!svg) drawing.textContent=data.warning||'Joint chart unavailable';
   filterSpherePaths(drawing);
   const note=card.querySelector('small');
   note.textContent=data.meet_certified ? 'Meet A ✓ · click to compare' :
@@ -115,7 +123,7 @@ function renderSphereCut(row,data) {
   sphereCutRows.set(row,data);
   if (row===data.split+1) {
     const forward=sphereCutRows.get(data.split);
-    if (forward?.meet_certified && data.joint_certified && forward.svg===data.svg)
+    if (forward?.meet_certified && data.joint_certified && sphereCutSvg(forward)===svg)
       note.textContent='Meet B ✓ · same five-arc drawing';
     else if (forward?.meet_certified && data.joint_certified)
       note.textContent='Meet B · exact sphere match; chart differs';
@@ -174,4 +182,11 @@ function refreshSphereCuts() {
   })();
 }
 sphereSplit.onchange=refreshSphereCuts;
+sphereLayout.onchange=()=>{
+  for (const [row,data] of sphereCutRows) renderSphereCut(row,data);
+  if (sphereDialog.open && sphereCutOpenedRow!==null) {
+    sphereDialog.close();
+    openSphereCut(sphereCutOpenedRow);
+  }
+};
 new MutationObserver(refreshSphereCuts).observe(document.getElementById('factors'),{childList:true});

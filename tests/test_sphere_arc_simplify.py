@@ -17,11 +17,20 @@ class SphereArcColumnTests(unittest.TestCase):
                          ['forward'] * 7 + ['backward'] * 6)
         self.assertTrue(all(row['joint_certified'] for row in rows))
         self.assertTrue(all(row['svg'].count('class="arc"') == 5 for row in rows))
+        self.assertTrue(all(row['svg_strip'].count('class="arc"') == 5 for row in rows))
+        self.assertTrue(all('<rect class="outer-boundary"' in row['svg_strip']
+                            and '<ellipse class="outer-boundary"' in row['svg']
+                            for row in rows))
+        self.assertTrue(all(row['svg_strip'].count('class="vertical-ray"') == 6
+                            and row['svg_strip'].count('class="horizontal-cut"') == 1
+                            for row in rows))
         self.assertTrue(rows[6]['meet_certified'])
         self.assertFalse(rows[6]['meet_disk_equal'])
         self.assertTrue(rows[6]['meet_backward']['joint_certified'])
         self.assertTrue(rows[6]['meet_picture_equal'])
+        self.assertTrue(rows[6]['meet_picture_equal_strip'])
         self.assertEqual(rows[6]['svg'], rows[7]['svg'])
+        self.assertEqual(rows[6]['svg_strip'], rows[7]['svg_strip'])
         self.assertEqual(rows[6]['meet_backward']['svg'], rows[7]['svg'])
         self.assertEqual(rows[-1]['cut_counts'], (0, 7, 0, 7, 5))
         self.assertEqual(rows[-1]['braid_letters'], 14)  # inverse F13, before its action
@@ -53,6 +62,7 @@ class SphereArcColumnTests(unittest.TestCase):
         self.assertEqual(data['direction'], 'backward')
         self.assertEqual(data['cut_counts'], [0, 7, 0, 7, 5])
         self.assertEqual(data['svg'].count('class="arc"'), 5)
+        self.assertEqual(data['svg_strip'].count('class="arc"'), 5)
 
 
 if __name__ == '__main__':

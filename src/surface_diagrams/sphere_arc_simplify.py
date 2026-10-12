@@ -130,6 +130,8 @@ def sphere_chain_drawing(images):
 def _drawing(certificate, arcs, depths, method):
     return dict(svg=render_normal_cut_preview(certificate, projection='fan',
                                               mirror_vertical=True),
+                svg_strip=render_normal_cut_preview(certificate, projection='strip',
+                                                    mirror_vertical=True),
                 cut_counts=tuple(len(arc.cuts) for arc in arcs),
                 endpoints=tuple((arc.start, arc.end) for arc in arcs),
                 sphere_search_depths=depths, method=method,

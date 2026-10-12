@@ -239,6 +239,23 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
              'minimal position is not independently established.</desc>',
              '<rect width="100%" height="100%" fill="white"/>',
              boundary]
+    if projection == 'strip':
+        # These are drawing guides for the certified normal-cell edges, not
+        # extra arcs. Each puncture has its own vertical upper and lower ray.
+        left = screen(layout.vertices['b0'])
+        right = screen(layout.vertices[f'b{certificate.points + 1}'])
+        lines.append('<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" '
+                     'stroke-dasharray="3 4" opacity=".55" '
+                     'vector-effect="non-scaling-stroke">')
+        lines.append(f'<path class="horizontal-cut" d="M {left[0]} {left[1]} '
+                     f'L {right[0]} {right[1]}"/>')
+        for point in range(1, certificate.points + 1):
+            x = layout.xs[point]
+            top = screen((x, layout.apex_height))
+            bottom = screen((x, -layout.apex_height))
+            lines.append(f'<path class="vertical-ray" d="M {top[0]} {top[1]} '
+                         f'L {bottom[0]} {bottom[1]}"/>')
+        lines.append('</g>')
     for path in certificate.paths:
         owner = path.owner
         segments = connections[owner]
