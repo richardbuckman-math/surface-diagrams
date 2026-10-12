@@ -6,6 +6,7 @@ const sphereCuts = document.getElementById('sphere-cuts-column');
 const sphereSplit = document.getElementById('sphere-split');
 const sphereDialog = document.getElementById('sphere-cut-inspector');
 const sphereCutFit = document.getElementById('sphere-cut-fit');
+const sphereCutSave = document.getElementById('save-sphere-cut');
 let sphereCutRequest = 0, sphereCutKey = '', sphereCutRows = new Map();
 let sphereCutFitOverview = false;
 const sphereCutResize = new ResizeObserver(() => {
@@ -74,6 +75,11 @@ function openSphereCut(row) {
   const large=document.getElementById('sphere-cut-large');
   large.innerHTML=data.svg||'';
   if (!data.svg) large.textContent=data.warning||'Drawing unavailable';
+  sphereCutSave.disabled=!data.svg;
+  sphereCutSave.onclick=()=>{
+    if (data.svg) download(data.svg,'image/svg+xml',
+      `sphere-cut-${data.direction==='forward'?'after':'before'}-F${row}.svg`);
+  };
   const meet=document.getElementById('sphere-cut-meet');meet.replaceChildren();
   if (row===data.split) {
     const note=document.createElement('p');

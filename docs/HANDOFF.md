@@ -11,6 +11,9 @@ or the joint normal-placement certificate. Browser inspection checked both
 states on F2, including the full-chart fit. Next, improve the six-point disk
 endpoint tangents locally, checking F1 and later prefixes for new crossings
 before allowing the change into the common renderer.
+The inspector can also save the certified normal-chart SVG at its native size,
+regardless of the fit setting. This was checked in the local lab; the site
+build, JavaScript syntax check, and link check pass.
 
 ## October 12: five-arc sphere column and forward/backward meeting split
 
