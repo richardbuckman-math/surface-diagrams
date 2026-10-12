@@ -4,7 +4,7 @@
   "title": "Daisy",
   "status": "PC version verified",
   "description": "A puncture-capped daisy derivation is verified in the marked disk and available as an interactive substitution. The framed inner-boundary relation remains to be developed.",
-  "pc_proof_url": "https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-daisy-rose.md",
+  "pc_proof_url": "pc-daisy-rose.html",
   "sections": {
     "Surface and conventions": "A disk with marked points, treated as punctures. A twist about one marked point is trivial; this is not the framed-boundary daisy relation.",
     "Derivation": "The four-point formula follows from two PC lantern substitutions and cancellation of a repeated two-point twist. The same argument gives a recursive n-point formula.",

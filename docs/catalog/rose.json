@@ -4,7 +4,7 @@
   "title": "Rose",
   "status": "PC version verified",
   "description": "A pairwise puncture-capped rose factorization follows by recursively applying the PC daisy relation. The framed inner-boundary rose remains to be developed.",
-  "pc_proof_url": "https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-daisy-rose.md",
+  "pc_proof_url": "pc-daisy-rose.html",
   "sections": {
     "Surface and conventions": "A disk with marked points treated as punctures; twists enclosing a single point are trivial.",
     "Derivation": "Apply the recursive PC daisy relation until every factor encloses a pair of points. The four-point version also follows by applying the PC lantern to the first three-point daisy factor.",

@@ -58,6 +58,29 @@ def build():
     for script in (ROOT/'examples').glob('*.py'):
         shutil.copy2(script, OUT/'examples'/script.name)
     entries = [json.loads(p.read_text(encoding='utf-8')) for p in sorted((ROOT/'docs'/'catalog').glob('*.json'))]
+    page('relations/pc-daisy-rose.html', 'Puncture-capped daisy and rose', '''
+<p>A derivation in the marked disk, with products read in the playground’s top-to-bottom order. A twist enclosing one puncture is trivial. Framed inner boundaries require additional boundary twists.</p>
+<section><h2>The four-point daisy</h2>
+<p>Write T₁₂₃₄ for the twist enclosing all four marked points. Let U₂₄ and U₁₄ be pair twists whose curves pass under the intervening points, and U₁₂₄ the three-point twist passing under point 3. Two puncture-capped lantern substitutions give</p>
+<pre>T₁₂₃₄ T₁₂ = T₁₂₃ T₃₄ U₁₂₄
+U₁₂₄ = U₂₄ U₁₄ T₁₂.</pre>
+<p>The first lantern treats {1,2}, {3}, and {4} as its three entries. The second splits the under-going curve around {1,2,4}. Substitute the second equation into the first, then cancel T₁₂ on the right:</p>
+<pre>T₁₂₃₄ = T₁₂₃ T₃₄ U₂₄ U₁₄.</pre>
+<p>The final product has only positive twists. In the project’s braid convention, the under-going factors are</p>
+<pre>U₂₄ = σ₃⁻¹ σ₂² σ₃
+U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
+<p>Both lantern steps and the final identity have been checked by the complete Artin action in the disk braid group B₄.</p></section>
+<section><h2>General daisy and pairwise rose</h2>
+<p>For n marked points, let U(i,n) be the twist on points i and n whose support passes under points i+1 through n−1. Its braid word is</p>
+<pre>U(i,n) = (σₙ₋₁⁻¹ … σᵢ₊₁⁻¹) σᵢ² (σᵢ₊₁ … σₙ₋₁).</pre>
+<p>Apply the puncture-capped lantern to the entries {1,…,n−2}, {n−1}, {n}, then apply the (n−1)-point daisy inside the under-going twist on {1,…,n−2,n}. A repeated twist on {1,…,n−2} cancels on the right, leaving</p>
+<pre>T(1,…,n) = T(1,…,n−1) U(n−1,n) U(n−2,n) … U(1,n).</pre>
+<p>Iterate until only pair twists remain. This gives n(n−1)/2 pairwise factors, the puncture-capped rose. For four points, expanding T₁₂₃ by the three-point PC lantern produces</p>
+<pre>T₁₂₃₄ = T₁₂ T₁₃(PC) T₂₃ T₃₄ U₂₄ U₁₄.</pre>
+<p>The implementation checks these formulas by exact disk braid action for 3–6 points. This finite check supplements the lantern induction; a support drawing alone is not an algebraic certificate.</p></section>
+<p><a href="../boundary-lab/index.html">Explore the four-point substitutions in the playground</a> · <a href="https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-daisy-rose.md">Read the source with full notation</a></p>
+<p>Background: <a href="https://margalit.droppages.net/papers/pure-braids.pdf">Margalit and McCammond, <em>Geometric presentations for the pure braid group</em></a>, Section 4.</p>
+''', '../')
     for category, title in [('relations','Mapping class relations'),('fibrations','Lefschetz fibrations')]:
         cards = []
         for e in (e for e in entries if e['category']==category):

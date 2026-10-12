@@ -18,11 +18,15 @@ substitution for 4- or 5-point twists. Applying the existing PC lantern to
 the first three-point factor of the four-point daisy produces a six-factor
 pairwise rose. Each mutation checks the complete disk Artin action; JSON
 save/reopen and Hurwitz behavior remain available. The written derivation is
-`docs/proofs/pc-daisy-rose.md`. The daisy and rose catalog pages now link to
-that derivation and the interactive playground. All 419 tests pass with an
+`docs/proofs/pc-daisy-rose.md`, with a readable site version at
+`relations/pc-daisy-rose.html`. The daisy and rose catalog pages and the
+playground link to that local proof page, independent of GitHub's file viewer.
+All 419 tests pass with an
 absolute `PYTHONPATH`; the site build and local link check pass. Local browser
 inspection confirmed the four support curves, rose continuation, and both
-catalog pages. Next, consider an explicit per-step lantern
+catalog and proof pages. Both GitHub workflows passed for the implementation
+commit `e2cf8d1`; the follow-up proof page still needs its remote checks.
+Next, consider an explicit per-step lantern
 walkthrough in the PC lab, then use the relation library to explore candidate
 substitutions in (6,7). Framed inner-boundary versions still need a separate
 surface model and checked encodings.
