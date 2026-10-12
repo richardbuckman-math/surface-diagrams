@@ -25,7 +25,8 @@ All 419 tests pass with an
 absolute `PYTHONPATH`; the site build and local link check pass. Local browser
 inspection confirmed the four support curves, rose continuation, and both
 catalog and proof pages. Both GitHub workflows passed for the implementation
-commit `e2cf8d1`; the follow-up proof page still needs its remote checks.
+and site-hosted proof commits; the public proof page and relation links were
+checked after deployment.
 Next, consider an explicit per-step lantern
 walkthrough in the PC lab, then use the relation library to explore candidate
 substitutions in (6,7). Framed inner-boundary versions still need a separate
