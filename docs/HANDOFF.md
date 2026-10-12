@@ -51,6 +51,19 @@ exclude those four. Even a positive noncontiguous hit would need Hurwitz moves
 to become a factor-level substitution. Do not repeat this greedy subset scan;
 look for nonlocal transport or a geometric block structure instead.
 
+Promising geometric comparison: Szabó's September 2026 degree-four Xiao
+factorization (https://arxiv.org/html/2609.34042v1, Section 6) orders its six
+arc twists as X3,Y2,X1,Y3,X2,Y1. Relabel its paired branch points
+(r1,r1')=(2,5), (r2,r2')=(1,4), (r3,r3')=(3,6): their endpoint-pair order then
+matches the user's F2,F3,F6,F7,F9,F11 exactly. This is only an endpoint match.
+Using the paper's M1, P2, M0 three-point partitions and their rotations, no
+choice of swapping points within the three pairs directly matches all seven
+of the user's separating partitions; the best multiset overlap is five of
+seven. Do not claim these positive factorizations are Hurwitz equivalent yet.
+A better next search may transport Szabó's exact arc/loop classes through a
+short Hurwitz path or compare the geometric vanishing-path order, rather than
+continue greedy equal-twist gathering.
+
 Validation: the route generator checks every intermediate full disk action,
 its serialized 35-state history reopens through `validated_session_document`,
 focused unit tests pass, site local links and JavaScript syntax pass, and the
