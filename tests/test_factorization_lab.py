@@ -14,7 +14,7 @@ from surface_diagrams.factorization_explorer import (Factor,initial_factors,prod
     global_conjugate_factors,checked_global_frame,parse_global_conjugator)
 from surface_diagrams.factorization_geometry import support_points,turn,braid_svg,row_height,deform_polyline,factorization_svg
 from math import pi
-from surface_diagrams.factorization_lab import LabServer
+from surface_diagrams.factorization_lab import LabServer, validated_session_document
 from surface_diagrams.factorization_audit import support_audit,audit_points,polyline_ray_word
 from surface_diagrams import Arc,Loop,ConjugatedTwist,simplify_twist,support_curve,support_drawing
 
@@ -202,6 +202,53 @@ class FactorizationLabTests(unittest.TestCase):
         half=split_factor((Factor('P',(3,),1,2),),0,'halves')
         self.assertEqual(combine_factors(half,0)[0].word,Factor('P',(3,),1,2).word)
         with self.assertRaises(ValueError): combine_factors(initial_factors(),0)
+
+    def test_pc_half_lantern_split_preserves_six_seven_disk_action(self):
+        factors=initial_factors()
+        original=exact_action(product(factors))
+        split=split_factor(factors,0,'half_lantern')
+        self.assertEqual(len(split),18)
+        self.assertEqual(exact_action(product(split)),original)
+        self.assertEqual([(f.half,f.power) for f in split[:3]],
+                         [(True,1),(True,1),(False,2)])
+        self.assertEqual([(f.half,f.power) for f in split[3:6]],
+                         [(True,1),(True,1),(False,2)])
+        self.assertEqual(split[0].mapping_class.word,(3,))
+        self.assertEqual(split[3].mapping_class.word,(3,))
+        self.assertEqual(split[0].conjugator,())
+        self.assertEqual(combine_factors((split[0],split[3]),0)[0].word,(3,3))
+
+        server=LabServer(0)
+        try:
+            self.assertIn('half_lantern',
+                          [kind for kind,_ in server.state()['factors'][0]['splits']])
+            server.mutate(dict(op='split',index=0,kind='half_lantern',revision=0))
+            self.assertEqual(len(server.history[server.position]),18)
+        finally: server.server_close()
+
+    def test_h34_derivation_walkthrough_reopens_with_exact_history(self):
+        source=(Path(__file__).resolve().parents[1]/'src'/'surface_diagrams'/
+                'lab_assets'/'six-seven-h34-session.json')
+        document=json.loads(source.read_text(encoding='utf-8'))
+        history,frames,operations,position,limited=validated_session_document(document,'6-7')
+        self.assertEqual(len(history),35)
+        self.assertEqual(position,34)
+        self.assertEqual(limited,[])
+        self.assertEqual(history[position][0].word,(3,3,3,3))
+        self.assertEqual(exact_action(product(history[position])),
+                         exact_action(product(history[0])))
+        server=LabServer(0)
+        try:
+            server.mutate(dict(op='load_session',session=document,revision=0))
+            self.assertEqual(server.position,34)
+            self.assertEqual(server.operations,operations)
+            server.mutate(dict(op='seek',position=0,revision=1))
+            self.assertEqual(server.history[server.position],initial_factors())
+            damaged=dict(document,position=999)
+            with self.assertRaisesRegex(ValueError,'Invalid session history'):
+                server.mutate(dict(op='load_session',session=damaged,revision=2))
+            self.assertEqual(server.position,0)
+        finally: server.server_close()
 
     def test_shared_renderer_recovers_confirmed_itinerary_and_elliptic_paths(self):
         f=initial_factors()[8]

@@ -123,6 +123,14 @@ def split_factor(factors,index,kind):
         replacements=tuple(replace(f,id=f'{f.id}.{i+1}',power=1) for i in range(f.power))
     elif kind=='halves' and not f.half and f.points==2:
         replacements=tuple(replace(f,id=f'{f.id}.h{i+1}',half=True,power=1) for i in range(2*f.power))
+    elif kind=='half_lantern' and not f.half and f.points==3:
+        from .projected_relations import pc_half_lantern_terms
+        unit=replace(f.mapping_class,power=1)
+        replacements=tuple(simplify_factor(Factor(
+            f'{f.id}.HL{repeat+1}.{j+1}',term.conjugator,term.first,
+            term.points,term.power,term.half))
+            for repeat in range(f.power)
+            for j,term in enumerate(pc_half_lantern_terms(unit)))
     elif kind=='lantern' and not f.half and f.points==3:
         i=f.first
         replacements=tuple(Factor(f'{f.id}.L{repeat+1}.{j+1}',reduce_word(f.conjugator+g),a,2)

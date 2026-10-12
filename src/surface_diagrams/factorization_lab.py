@@ -121,6 +121,7 @@ class LabServer(ThreadingHTTPServer):
             if f.power>1: options.append(['powers',f'Split into {f.power} equal factors'])
             if not f.half and f.points==2: options.append(['halves','Split into half twists'])
             if not f.half and f.points==3: options.append(['lantern','Lantern: three pairwise twists (marked points)'])
+            if not f.half and f.points==3: options.append(['half_lantern','PC half lantern: two half twists and a squared pair twist'])
             rows.append(dict(asdict(f),word=f.word,core=f.core,label=f.label,svg=svg,warning=warning,
                              height=row_height(f),height_compact=row_height(f,compact=True),
                              splits=options,audit=support_audit(f)))
@@ -238,6 +239,15 @@ class LabServer(ThreadingHTTPServer):
             raise
     def _mutate(self,payload):
         if payload.get('revision')!=self.revision: raise ValueError('State changed; reload before editing')
+        if payload.get('op')=='load_session':
+            history,frames,operations,position,limited=validated_session_document(
+                payload.get('session'),self.seed_slug)
+            if limited:
+                raise ValueError('The walkthrough has states beyond the exact verification limit')
+            self.history,self.frames,self.operations,self.position=history,frames,operations,position
+            self.message='Loaded the checked derivation walkthrough; choose a history step to replay it.'
+            self.revision+=1
+            return
         op=payload.get('op'); factors=self.history[self.position];frame=self.frames[self.position]
         if op=='undo':
             if self.position==0: raise ValueError('Nothing to undo')
@@ -375,7 +385,8 @@ class LabHandler(EditorHandler):
         assets={'/':('xiao-4-3.html' if self.server.seed_slug=='4-3' else 'index.html','text/html; charset=utf-8'),
                 '/lab.js':('lab.js','text/javascript; charset=utf-8'),
                 '/sphere-cuts.js':('sphere-cuts.js','text/javascript; charset=utf-8'),
-                '/lab.css':('lab.css','text/css; charset=utf-8')}
+                '/lab.css':('lab.css','text/css; charset=utf-8'),
+                '/six-seven-h34-session.json':('six-seven-h34-session.json','application/json; charset=utf-8')}
         if self.path not in assets: self._error(404,'Not found'); return
         name,mime=assets[self.path]
         self._reply(200,resources.files('surface_diagrams').joinpath('lab_assets',name).read_bytes(),mime)

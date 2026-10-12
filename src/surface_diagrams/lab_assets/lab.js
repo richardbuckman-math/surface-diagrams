@@ -93,6 +93,7 @@ function controls(){
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
  document.querySelectorAll('#history-list button').forEach(button=>button.disabled=busy||Number(button.dataset.position)===state?.position);
  for(const id of ['reset','save','open','svg','simplify','sphere','conjugate','global-word']) $(id).disabled=busy||!state;
+ if($('load-walkthrough'))$('load-walkthrough').disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
  for(const [value,label] of f?.splits||[]){const o=document.createElement('option');o.value=value;o.textContent=label;picker.append(o);}
@@ -465,6 +466,15 @@ $('close-sphere').onclick=()=>$('sphere-inspector').close();
 $('zoom').onchange=inspectZoom;
 $('close-inspector').onclick=()=>$('inspector').close();
 $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo'});$('reset').onclick=()=>action({op:'reset'},0);
+if($('load-walkthrough'))$('load-walkthrough').onclick=async()=>{
+ if(busy||!state)return;
+ try{
+  status('Loading the checked H₃₄ walkthrough…');
+  const response=await fetch('six-seven-h34-session.json');
+  if(!response.ok)throw new Error('Could not load the published walkthrough');
+  await action({op:'load_session',session:await response.json()},0);
+ }catch(error){status(error.message,true);}
+};
 $('simplify').onclick=()=>action({op:'simplify'});
 $('conjugate').onclick=async()=>{
  const raw=$('global-word').value.trim(),parts=raw?raw.split(/[\s,]+/):[];

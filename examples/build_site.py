@@ -32,7 +32,8 @@ def build():
     lab_assets = ROOT/'src'/'surface_diagrams'/'lab_assets'
     lab_out = OUT/'lab'
     lab_out.mkdir(exist_ok=True)
-    for name in ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js', 'public-lab-worker.mjs', 'public-lab-backend.py'):
+    for name in ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js', 'public-lab-worker.mjs',
+                 'public-lab-backend.py', 'six-seven-h34-session.json'):
         shutil.copy2(lab_assets/name, lab_out/name)
     lab_html = (lab_assets/'index.html').read_text(encoding='utf-8')
     lab_html = lab_html.replace('<script src="lab.js"></script>',
@@ -97,6 +98,14 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
 <p>T₃ is the positive twist parallel to that inner boundary. This follows mathematically from the framed lantern and the same Hurwitz moves; the playground does not yet check it in a framed mapping-class engine. See <a href="https://web.math.ucsb.edu/~mccammon/papers/pure-braids.pdf">Margalit and McCammond, Theorem 5.1</a>, for punctures versus inner boundaries.</p></section>
 <p><a href="../boundary-lab/index.html">Explore the checked half-lantern walkthrough</a> · <a href="https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/pc-half-lantern.md">Read the source with full notation</a></p>
 ''', '../')
+    page('fibrations/six-seven-h34.html', 'First (6,7) factor-level consolidation', '''
+<p>This is a checked intermediate step toward a relation-level derivation, not a derivation of the full (6,7) identity. The supplied disk product is nontrivial.</p>
+<section><h2>Expose three matching factors</h2><p>Split all seven squared three-point twists into ordinary copies. Apply the PC half lantern to the first copy of F1 and F8; the first half twist from each is exactly H₃₄ in the six-strand disk braid group. Apply the PC lantern to the first copy of F5; its third factor is T₃₄.</p>
+<p>Move F8’s H₃₄ through 13 factors by checked adjacent Hurwitz moves, conjugating the crossed factors, then combine H₃₄·H₃₄ into T₃₄. Move F5’s T₃₄ through nine factors and combine T₃₄·T₃₄ into T₃₄². The other factors have changed; this is not a cancellation of the entire product.</p>
+<pre>H₃₄, H₃₄, T₃₄  →  T₃₄, T₃₄  →  T₃₄²</pre>
+<p>All 35 saved states preserve the complete exact disk Artin action. The resulting product still has trivial sphere outer action. Its spherical braid is the nontrivial central full twist, as in the complete word-level certificate.</p></section>
+<p><a href="../lab/index.html">Open the lab and choose “Load H₃₄ derivation steps”</a> · <a href="../lab/six-seven-h34-session.json">Download the checked 35-state session</a> · <a href="https://github.com/richardbuckman-math/surface-diagrams/blob/main/docs/proofs/six-seven-h34-consolidation.md">Read the technical derivation note</a></p>
+''', '../')
     for category, title in [('relations','Mapping class relations'),('fibrations','Lefschetz fibrations')]:
         cards = []
         for e in (e for e in entries if e['category']==category):
@@ -113,6 +122,7 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
                 body+='<p><a href="../'+escape(e['proof_url'])+'">Read the complete sphere-braid derivation and certificate</a></p>'
             if e['slug']=='6-7':
                 body+='<p><a href="../lab/index.html">Open the interactive (6,7) factorization lab</a></p>'
+                body+='<p><a href="six-seven-h34.html">Replay the first checked half-lantern consolidation</a></p>'
             if category=='relations' and e['slug']=='lantern':
                 body+='<p><a href="../boundary-lab/pc-lantern.html">Open the PC lantern lab with cumulative cut arcs</a></p>'
             if category=='fibrations' and e['slug'] in ('4-3','6-2','10-10'):
