@@ -129,6 +129,7 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
                 body+='<p><a href="../fibration-lab/'+e['slug']+'.html">Open the source-backed factorization study</a></p>'
             if category=='fibrations' and e['slug']=='4-3':
                 body+='<p><a href="../lab/xiao-4-3/index.html">Explore Xiao’s seven factors interactively</a></p>'
+                body+='<p><a href="../docs/proofs/four-three-thesis-storyboard.html">Follow Buckman’s separate Baykur–Korkmaz derivation diagrams</a></p>'
             body += ''.join('<section><h2>'+escape(k)+'</h2><p>'+escape(v)+'</p></section>' for k,v in e['sections'].items())
             body += '<p>Future formats will use common curve and factor IDs, an explicit multiplication order, and documented correspondences. A drawing alone does not verify an equivalence.</p>'
             page(category+'/'+e['slug']+'.html',e['title'],body,'../')
@@ -149,6 +150,7 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
             body+='<section><h2>Seven-factor normalized representative</h2><p>The exact six-strand disk word has '+str(len(word))+' letters. Its action on the six-punctured sphere is inner and its genus-two homology action is +I, certifying the closed genus-two identity. The printed branch braids at two factors require an involution correction before they represent positive separating twists; see the source note.</p><p><a href="'+seed.slug+'.svg">Open the paired surface and braid SVG</a></p><a href="'+seed.slug+'.svg"><img src="'+seed.slug+'.svg" alt="Normalized '+escape(seed.slug)+' factorization and continuous braid"></a>'
             if seed.slug=='4-3':
                 body+='<p><a href="../lab/xiao-4-3/index.html">Open the interactive Xiao (4,3) lab</a></p>'
+                body+='<p><a href="../docs/proofs/four-three-thesis-storyboard.html">Follow Buckman’s Baykur–Korkmaz derivation storyboard</a></p>'
             body+=''.join('<details><summary>'+escape(factor.id)+' · '+escape(factor.label)+'</summary><pre>'+escape(' '.join(map(str,factor.word)))+'</pre></details>' for factor in seed.factors)
             body+='</section>'
         else:

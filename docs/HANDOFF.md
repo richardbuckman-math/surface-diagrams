@@ -1,5 +1,38 @@
 # Handoff: surface-diagrams
 
+## October 12 evening: graphical (4,3) baseline and thesis storyboard
+
+The existing Xiao (4,3) lab now has the same five-arc sphere cut-complex
+column as the (6,7) lab. Its default split is after factor 4, so four
+forward and three inverse-suffix rows meet. The sphere-cut engine already
+worked for this seed: its exact midpoint check passes and both sides draw
+the same jointly certified five-arc chart. The new test asserts these
+properties. This is the normalized Xiao seed and must remain distinct from
+the Baykur--Korkmaz factorization in Richard's thesis.
+
+RichardBuckmanThesis.pdf, Chapter 4 section 4.3, printed pages 33--36
+(PDF pages 46--49), Figures 4.5--4.9, contains a horizontal visual
+derivation of the Baykur--Korkmaz (4,3) relation. A new source storyboard at
+`docs/proofs/four-three-thesis-storyboard.html` displays cropped thesis
+figures in a side-scrolling sequence; the site catalog and Xiao study link
+to it. The thesis convention is crucial: the top diagram is the algebraic
+rightmost factor, applied first. Figure 4.5 starts with a reduced daisy and
+cyclic permutation; 4.6 rearranges points; 4.7 concatenates two boundary
+factorizations and applies half lantern twice; 4.8 uses bundled Hurwitz
+moves to make all factors liftable; 4.9 replaces two points by boundaries
+and redraws on the sphere. This storyboard is an attributed source guide,
+not an exact transcription or a cut-complex certificate for those stages.
+Next encode the five-marked-disk Figure 4.5 first column in the calculation
+engine, verify its product against the exterior boundary twist, then
+transcribe each thesis arrow into individual checked moves and add per-stage
+cut complexes. Do not silently identify these stages with the Xiao lab.
+
+All 428 tests pass with an absolute `PYTHONPATH` (the generated-code tests
+start subprocesses and fail under a relative path). JavaScript syntax, site
+build and local-link checks pass. Browser inspection showed all seven cut
+rows, a 4+3 default, and equal meeting pictures; the storyboard layout and
+next-stage navigation were visually checked.
+
 ## October 12: first checked (6,7) half-lantern/Hurwitz walkthrough
 
 The (6,7) lab now offers a checked `half_lantern` split for a three-point

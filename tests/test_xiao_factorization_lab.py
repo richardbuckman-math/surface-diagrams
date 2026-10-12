@@ -16,6 +16,21 @@ ASSETS = Path(__file__).resolve().parents[1] / 'src' / 'surface_diagrams' / 'lab
 
 
 class XiaoFactorizationLabTests(unittest.TestCase):
+    def test_four_plus_three_sphere_cut_complex_meets(self):
+        lab = LabServer(seed_slug='4-3')
+        try:
+            forward = lab.sphere_cut_row(4, 4)
+            backward = lab.sphere_cut_row(5, 4)
+            self.assertEqual(forward['direction'], 'forward')
+            self.assertEqual(backward['direction'], 'backward')
+            self.assertTrue(forward['joint_certified'])
+            self.assertTrue(backward['joint_certified'])
+            self.assertTrue(forward['meet_certified'])
+            self.assertEqual(len(forward['cut_counts']), 5)
+            self.assertEqual(len(backward['cut_counts']), 5)
+        finally:
+            lab.server_close()
+
     def test_variant_moves_split_combine_reset_and_seed_bound_import(self):
         seed = XIAO_FOUR_THREE.factors
         seed_action = exact_action(product(seed))

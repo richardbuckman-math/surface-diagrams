@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baykur–Korkmaz (4,3) · thesis derivation storyboard</title>
+<style>
+  :root{font:16px/1.5 system-ui,Segoe UI,sans-serif;color:#183148;background:#edf3f7}
+  *{box-sizing:border-box}body{margin:0}header{background:#fff;padding:20px max(20px,calc((100vw - 1180px)/2));border-bottom:1px solid #c9d7e3}
+  h1{font-size:clamp(24px,4vw,36px);line-height:1.18;margin:4px 0 10px}p{max-width:980px;margin:8px 0}
+  .eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#407189;font-weight:700}
+  a{color:#145d94}.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+  button{font:inherit;padding:7px 12px;border:1px solid #98b3c8;border-radius:6px;background:#fff;color:#164a71;cursor:pointer}
+  button:hover{background:#e4f2fa}button:focus-visible,a:focus-visible{outline:3px solid #218fc7;outline-offset:2px}
+  #position{font-size:13px;color:#52677b}main{padding:20px 0 50px}
+  .strip{display:flex;align-items:flex-start;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:0 max(20px,calc((100vw - 1180px)/2)) 18px}
+  .stage{flex:0 0 min(1180px,calc(100vw - 40px));scroll-snap-align:center;background:white;border:1px solid #cbd9e4;border-radius:12px;padding:16px;min-width:0}
+  .stage h2{font-size:19px;margin:0 0 4px}.stage p{font-size:14px;color:#52677b;margin:0 0 12px}
+  .stage img{display:block;width:100%;height:auto;object-fit:contain;border:1px solid #e2e9ef;background:white}
+  .stage>a{display:block}.stage .source{font-size:12px;margin:10px 0 0}
+  .note{max-width:1180px;margin:15px auto;padding:0 20px;font-size:14px;color:#3c536a}
+  .note strong{color:#8d4823}
+</style>
+<header>
+  <div class="eyebrow">Surface diagrams · source storyboard</div>
+  <h1>Baykur–Korkmaz (4,3): a graphical derivation</h1>
+  <p>Richard Buckman’s thesis, §4.3, Figures 4.5–4.9, already lays this derivation out as horizontal transitions between vertical factorizations. Scroll sideways to follow those original diagrams. Open a figure for full-size inspection.</p>
+  <p>This is a visual source guide to the <em>Baykur–Korkmaz</em> relation. The <a href="../../lab/xiao-4-3/index.html">Xiao (4,3) lab</a> uses a different seven-factor seed, with exact braid checks and a five-arc cut-complex column.</p>
+  <div class="controls"><button id="previous" type="button">← Previous stage</button><button id="next" type="button">Next stage →</button><span id="position" role="status">Stage 1 of 5</span></div>
+</header>
+<main>
+  <div class="strip" id="strip" tabindex="0" aria-label="Five thesis derivation stages, scroll horizontally">
+    <section class="stage" aria-label="Stage 1"><h2>1 · Reduced daisy and cyclic permutation</h2><p>Three factorizations of the exterior boundary twist. Green curves with exponent 2 are inverse squared twists.</p><a href="../figures/four-three-thesis/fig-4-5.png"><img src="../figures/four-three-thesis/fig-4-5.png" alt="Thesis Figure 4.5: three four-row planar factorizations connected by a cyclic-permutation arrow"></a><p class="source">Thesis Figure 4.5, printed page 34.</p></section>
+    <section class="stage" aria-label="Stage 2"><h2>2 · Rearrange the marked points</h2><p>Drag the first and third marked points around the second. This is a change of the planar chart, not an extra factor.</p><a href="../figures/four-three-thesis/fig-4-6.png"><img src="../figures/four-three-thesis/fig-4-6.png" alt="Thesis Figure 4.6: the marked-point rearrangement and its two vertical factorizations"></a><p class="source">Thesis Figure 4.6, printed page 34.</p></section>
+    <section class="stage" aria-label="Stage 3"><h2>3 · Square the exterior twist; use half lantern twice</h2><p>Concatenate two factorizations, commute and cycle factors, then replace two positive/negative-twist pairs by pairs of half twists.</p><a href="../figures/four-three-thesis/fig-4-7.png"><img src="../figures/four-three-thesis/fig-4-7.png" alt="Thesis Figure 4.7: four vertical factorizations with substitution arrows"></a><p class="source">Thesis Figure 4.7, printed page 35.</p></section>
+    <section class="stage" aria-label="Stage 4"><h2>4 · Hurwitz moves make the odd twists liftable</h2><p>Follow the five columns left to right. The arrows group several adjacent Hurwitz moves; the last column has only liftable factors.</p><a href="../figures/four-three-thesis/fig-4-8.png"><img src="../figures/four-three-thesis/fig-4-8.png" alt="Thesis Figure 4.8: five eight-row factorizations linked by Hurwitz arrows"></a><p class="source">Thesis Figure 4.8, printed page 36.</p></section>
+    <section class="stage" aria-label="Stage 5"><h2>5 · Replace points by boundaries and redraw on the sphere</h2><p>Replace the third and fourth marked points by inner boundaries, include their boundary-twist corrections, and put the exterior boundary on the right of the sphere.</p><a href="../figures/four-three-thesis/fig-4-9.png"><img src="../figures/four-three-thesis/fig-4-9.png" alt="Thesis Figure 4.9: the final disk-with-boundaries and spherical factorization drawings"></a><p class="source">Thesis Figure 4.9, printed page 36.</p></section>
+  </div>
+  <p class="note"><strong>Reading convention:</strong> in these thesis figures, the top row is the algebraic rightmost factor; factors act top to bottom. The current Xiao lab uses its own top-to-bottom word order. These source images have not yet been transcribed into checked braid words, so no per-stage cut complexes or exact Hurwitz certificates are asserted here. The next step is to encode the five-marked-disk stages and compute their cut arcs, then verify each arrow.</p>
+</main>
+<script>
+  const strip=document.getElementById('strip');
+  const stages=[...strip.querySelectorAll('.stage')];
+  const position=document.getElementById('position');
+  function current(){const center=strip.scrollLeft+strip.clientWidth/2;let best=0,distance=Infinity;stages.forEach((stage,i)=>{const d=Math.abs(stage.offsetLeft+stage.offsetWidth/2-center);if(d<distance){distance=d;best=i;}});return best;}
+  function go(index){const stage=stages[Math.max(0,Math.min(stages.length-1,index))];const left=stage.getBoundingClientRect().left-strip.getBoundingClientRect().left+strip.scrollLeft-(strip.clientWidth-stage.clientWidth)/2;strip.scrollTo({left,behavior:'smooth'});}
+  document.getElementById('previous').onclick=()=>go(current()-1);
+  document.getElementById('next').onclick=()=>go(current()+1);
+  strip.addEventListener('scroll',()=>{position.textContent=`Stage ${current()+1} of ${stages.length}`;},{passive:true});
+  strip.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();go(current()+(event.key==='ArrowRight'?1:-1));}});
+</script>
+</html>

@@ -134,7 +134,8 @@ function refreshSphereCuts() {
       const option=document.createElement('option');option.value=String(split);
       option.textContent=`F${split} (${split} + ${count-split})`;sphereSplit.append(option);
     }
-    sphereSplit.value=String(old>=1&&old<count?old:Math.min(7,count-1));
+    const initial=state.seed_slug==='4-3'?4:7;
+    sphereSplit.value=String(old>=1&&old<count?old:Math.min(initial,count-1));
   }
   const split=Number(sphereSplit.value);
   sphereSplitDescription(split,count);
