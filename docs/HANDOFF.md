@@ -1,5 +1,47 @@
 # Handoff: surface-diagrams
 
+## October 13: three exact Baykur--Korkmaz thesis columns
+
+Figure 4.5's first five-marked-disk column has now been transcribed into
+five atomic braid factors on four drawn rows: top `T123` and green
+`T45^-2`, then `T345`, `T245_under3`, `T145_under2,3`. The last two use
+conjugators `(-2,)` and `(-1,-2)` on the standard `T345` core. With the
+thesis's top-first application order, the exact disk equality is
+`T145_under2,3 T245_under3 T345 T123 T45^-2 = T12345`; the cyclically
+rotated second column has the same full Artin action on all five meridians.
+The third column is a simultaneous chart conjugation by the three-strand
+half-turn `beta=(1,2,1)` on the first three points. Every corresponding
+factor passes an individual based disk-action equality against
+`beta f beta^-1`, including the unchanged top pair and standard bottom
+`T345`. All three complete products still equal `T12345` as disk actions.
+These are disk checks, not just sphere or free-homotopy checks.
+
+`src/surface_diagrams/marked_disk_chain.py` recovers a reusable disk chain
+from any marked-disk meridian action: outer boundary to point 1, then each
+adjacent pair. Every prefix of all three columns passes the route-free joint
+normal-strand certificate with `points=5`. The new static page
+`docs/proofs/four-three-thesis-first-stage.html` lays the three vertical
+factorizations side by side, with planar supports and a cut diagram after
+each row. It offers vertical-ray, smooth, and fan presentations of the same
+certified cut orders. At the end the four point-to-point arcs return to
+their reference form, while the boundary-based arc retains one cut visit,
+visibly detecting the exterior boundary twist. The source storyboard and
+site catalog link to this checked preview. Its factor names and routed
+supports agree with the three Figure 4.5 source columns on visual
+inspection; later substitution and Hurwitz arrows remain unverified.
+
+Validation: all 436 tests pass. Five focused tests cover exact disk products,
+individual chart conjugations, the green inverse square, joint cut
+certificates, and generated HTML freshness. The site build and local-link
+check pass. Browser inspection covered all three factor columns, their
+source-support shapes, the final boundary arc, and the layout selector.
+Remote workflows still need checking after push.
+Next transcribe Figure 4.7's concatenation of the second and third columns
+for the squared exterior twist, then encode its two half-lantern substitutions
+with explicit factor-by-factor checks and per-row cut chains. Do not call the
+Figure 4.6 chart change a Hurwitz move or identify it with Xiao's distinct
+(4,3) seed.
+
 ## October 12 late: optional smooth sphere cuts and faster first paint
 
 The Xiao (4,3) and (6,7) sphere-cut columns now have a third `Smooth curves`

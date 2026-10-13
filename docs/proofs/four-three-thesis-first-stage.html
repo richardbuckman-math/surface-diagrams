@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checked first stage · Baykur–Korkmaz (4,3)</title>
+<style>
+  :root{font:15px/1.45 system-ui,Segoe UI,sans-serif;color:#173149;background:#eaf1f5}
+  *{box-sizing:border-box}body{margin:0}header{background:white;padding:20px max(18px,calc((100vw - 1100px)/2));border-bottom:1px solid #c5d4e1}
+  h1{font-size:clamp(23px,3vw,34px);margin:4px 0 8px}header p{max-width:980px;margin:6px 0}a{color:#145b91}
+  .eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#33748c;font-weight:700}
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+  button,select{font:inherit;padding:7px 10px;border:1px solid #91aec4;border-radius:6px;background:white;color:#174c73}
+  button{cursor:pointer}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #1689bc;outline-offset:2px}
+  .strip{display:flex;align-items:flex-start;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px max(18px,calc((100vw - 1100px)/2)) 25px}
+  .column{flex:0 0 min(1030px,calc(100vw - 36px));scroll-snap-align:center;background:white;border:1px solid #c6d8e4;border-radius:12px;padding:16px}
+  .column h2{margin:0 0 3px;font-size:21px}.column>p{margin:0 0 13px;color:#546a7b}
+  .factor-row{border-top:1px solid #d6e1e9;padding:12px 0}.factor-row h3{font-size:16px;margin:0 0 8px}.factor-row p{font-size:12px;color:#587184;margin:6px 0 0}
+  .panels{display:grid;grid-template-columns:42% 58%;gap:10px;align-items:center}.support,.cut{min-width:0}.support svg,.cut svg{width:100%;height:225px;display:block}
+  .cut-svg[hidden]{display:none}.arrow{flex:0 0 70px;align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:34px;color:#216b9a}.arrow small{font-size:12px;text-align:center}
+  .notes{max-width:1100px;margin:0 auto 35px;padding:0 18px;color:#415970}.notes p{margin:8px 0}
+  @media(max-width:650px){.panels{grid-template-columns:1fr}.arrow{display:none}}
+</style>
+<header><div class="eyebrow">Surface diagrams · exact five-strand checkpoint</div>
+<h1>Baykur–Korkmaz (4,3): first checked thesis move</h1>
+<p>These are the three columns of <a href="../figures/four-three-thesis/fig-4-5.png">thesis Figure 4.5</a>. A reduced daisy factorization of the five-point disk’s exterior boundary twist is cyclically rotated, then the first and third marked points are rearranged. All three products have the same <strong>exact disk braid action</strong> as the exterior twist, on all five meridians.</p>
+<div class="controls"><button id="previous" type="button">← Previous column</button><button id="next" type="button">Next column →</button>
+<label>Cut drawing <select id="projection"><option value="strip">Vertical rays</option><option value="smooth">Smooth curves</option><option value="fan">Fan</option></select></label>
+<span id="position" role="status">Column 1 of 3</span></div></header>
+<main class="strip" id="strip" tabindex="0" aria-label="Three checked columns from thesis Figure 4.5"><section class="column"><h2>1 · Reduced daisy</h2><p>Top row acts first; green T45^-2 is a negative square.</p><article class="factor-row"><h3>After row 1: T123 · T45^-2</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 203.45 87.75 A 81.85 30.69375 0 0 0 39.75 87.75 A 81.85 30.69375 0 0 0 203.45 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<path class="closed-curve" d="M 325.75 87.75 A 53.85 20.19375 0 0 0 218.05 87.75 A 53.85 20.19375 0 0 0 325.75 87.75 Z " fill="none" stroke="#188747" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 196.333333 L 113 196.333333 L 163 178 L 179.666667 123 L 163 86.333333 L 113 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 113 159.666667 L 63 159.666667 L 38 123 L 63 68 L 113 49.666667 L 163 49.666667 L 213 49.666667 L 263 49.666667 L 296.333333 123 L 263 196.333333 L 213 178 L 196.333333 123 L 213 86.333333 L 263 86.333333 L 279.666667 123 L 263 159.666667 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 50.09752 186.871515 63 196.333333 C 75.90248 205.795152 97.262295 199.218579 113 196.333333 C 128.737705 193.448087 152.237235 189.839041 163 178 C 171.072074 169.120719 179.666667 135 179.666667 123 C 179.666667 111 173.514591 92.116358 163 86.333333 C 148.980545 78.622633 128.022021 80.825259 113 86.333333 C 97.977979 91.841408 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 179 123 128.022021 154.158592 113 159.666667 C 97.977979 165.174741 77.37415 166.694029 63 159.666667 C 49.44458 153.039573 38 138.088664 38 123 C 38 107 51.559893 79.185882 63 68 C 74.440107 56.814118 97.262295 52.551913 113 49.666667 C 128.737705 46.781421 147 49.666667 163 49.666667 C 179 49.666667 197 49.666667 213 49.666667 C 229 49.666667 250.988584 39.09662 263 49.666667 C 272.008562 57.594201 296.333333 111 296.333333 123 C 296.333333 135 273.015313 189.723227 263 196.333333 C 249.646249 205.146809 223.762765 189.839041 213 178 C 204.927926 169.120719 196.333333 135 196.333333 123 C 196.333333 111 202.485409 92.116358 213 86.333333 C 227.019455 78.622633 248.980545 78.622633 263 86.333333 C 273.514591 92.116358 279.666667 111 279.666667 123 C 279.666667 135 275 159.666667 263 159.666667 C 247 159.666667 197 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 129.666667 196.333333 L 146.333333 196.333333 L 163 178 L 179.666667 123 L 163 86.333333 L 129.666667 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 129.666667 159.666667 L 96.333333 159.666667 L 38 123 L 113 68 L 146.333333 49.666667 L 163 49.666667 L 179.666667 49.666667 L 196.333333 49.666667 L 296.333333 123 L 196.333333 196.333333 L 188 178 L 196.333333 123 L 196.333333 86.333333 L 229.666667 86.333333 L 279.666667 123 L 229.666667 159.666667 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>5 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 2: T345</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 85.5 32.0625 0 0 0 154.75 87.75 A 85.5 32.0625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 196.333333 L 113 196.333333 L 163 217.285714 L 213 211 L 263 214.666667 L 304.666667 123 L 263 31.333333 L 213 31.333333 L 163 68 L 150.5 123 L 163 138.714286 L 179.666667 123 L 213 86.333333 L 263 86.333333 L 279.666667 123 L 263 159.666667 L 213 145 L 163 170.142857 L 125.5 123 L 113 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 185.857143 L 213 167 L 263 178 L 288 123 L 263 68 L 213 68 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 213 49.666667 L 263 49.666667 L 296.333333 123 L 263 196.333333 L 213 189 L 163 201.571429 L 113 159.666667 L 63 159.666667 L 38 123 L 63 68 L 113 49.666667 L 138 123 L 163 154.428571 L 196.333333 123 L 213 104.666667 L 263 104.666667 L 271.333333 123 L 263 141.333333 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 50.09752 186.871515 63 196.333333 C 75.90248 205.795152 97.340046 193.0522 113 196.333333 C 124.073825 198.653563 151.805477 215.643851 163 217.285714 C 174.194523 218.927578 201.689593 211.296225 213 211 C 226.195475 210.654404 253.477687 223.808087 263 214.666667 C 267.328324 210.511476 304.666667 129 304.666667 123 C 304.666667 117 267.242641 35.575974 263 31.333333 C 253.66619 21.999524 225.393167 26.789172 213 31.333333 C 200.606833 35.877495 170.436046 57.093799 163 68 C 157.929969 75.436046 150.5 114 150.5 123 C 150.5 129.827051 156.172949 138.714286 163 138.714286 C 170.788275 138.714286 174.289051 128.633692 179.666667 123 C 187.952376 114.319733 202.01622 91.166197 213 86.333333 C 225.082158 81.017184 251.43395 79.972006 263 86.333333 C 268.257295 89.224846 279.666667 117 279.666667 123 C 279.666667 129 268.697772 157.786402 263 159.666667 C 250.464902 163.803249 226.128155 143.624669 213 145 C 201.747295 146.178855 173.972771 172.901725 163 170.142857 C 154.271659 167.948303 130.111073 130.729037 125.5 123 C 120.888927 115.270963 122 86.333333 113 86.333333 C 97 86.333333 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 124.314286 123 152.643864 181.300443 163 185.857143 C 173.356136 190.413843 201.720478 167.886248 213 167 C 226.159443 165.966044 251.614671 184.679393 263 178 C 268.175149 174.963912 288 129 288 123 C 288 117 267.83843 71.548182 263 68 C 252.355454 60.194 224.56605 61.638673 213 68 C 201.43395 74.361327 149.8 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 176.2 123 202.355454 57.472667 213 49.666667 C 223.644546 41.860666 253.090582 40.946378 263 49.666667 C 267.504281 53.630434 296.333333 117 296.333333 123 C 296.333333 129 267.703512 192.608152 263 196.333333 C 252.652274 204.528732 226.181928 188.309518 213 189 C 201.701204 189.591842 173.856838 204.756101 163 201.571429 C 152.143162 198.386756 123.435114 164.039476 113 159.666667 C 98.243274 153.482896 77.37415 166.694029 63 159.666667 C 49.44458 153.039573 38 138.088664 38 123 C 38 107 51.559893 79.185882 63 68 C 74.440107 56.814118 100.09752 40.204848 113 49.666667 C 120.257645 54.98894 134.123434 114.877671 138 123 C 141.876566 131.122329 154 154.428571 163 154.428571 C 174.314286 154.428571 188.313854 130.981291 196.333333 123 C 202.304275 117.057491 204.877432 106.900373 213 104.666667 C 225.727511 101.166601 250.407283 100.708956 263 104.666667 C 268.723962 106.465626 271.333333 117 271.333333 123 C 271.333333 129 269 141.333333 263 141.333333 C 249.8 141.333333 199.8 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 129.666667 196.333333 L 146.333333 196.333333 L 163 217.285714 L 173 211 L 179.666667 214.666667 L 304.666667 123 L 179.666667 31.333333 L 171.333333 31.333333 L 163 68 L 150.5 123 L 163 138.714286 L 179.666667 123 L 196.333333 86.333333 L 229.666667 86.333333 L 279.666667 123 L 229.666667 159.666667 L 203 145 L 163 170.142857 L 125.5 123 L 129.666667 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 185.857143 L 193 167 L 213 178 L 288 123 L 213 68 L 188 68 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 179.666667 49.666667 L 196.333333 49.666667 L 296.333333 123 L 196.333333 196.333333 L 183 189 L 163 201.571429 L 129.666667 159.666667 L 96.333333 159.666667 L 38 123 L 113 68 L 146.333333 49.666667 L 138 123 L 163 154.428571 L 196.333333 123 L 204.666667 104.666667 L 246.333333 104.666667 L 271.333333 123 L 246.333333 141.333333 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>11 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 3: T245 under 3</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 113.5 42.5625 0 0 0 98.75 87.75 A 28 10.5 0 0 0 154.75 87.75 A 28 10.5 0 0 1 210.75 87.75 A 57.5 21.5625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 196.333333 L 113 217.285714 L 163 219.25 L 213 211 L 263 211 L 303 123 L 263 35 L 213 35 L 163 68 L 113 68 L 96.333333 123 L 113 138.714286 L 163 150.5 L 196.333333 123 L 213 101 L 263 101 L 273 123 L 263 145 L 213 145 L 163 178 L 113 170.142857 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 113 185.857143 L 163 191.75 L 213 167 L 263 167 L 283 123 L 263 79 L 213 79 L 179.666667 123 L 163 136.75 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 213 57 L 263 57 L 293 123 L 263 189 L 213 189 L 163 205.5 L 113 201.571429 L 63 159.666667 L 38 123 L 63 68 L 79.666667 123 L 113 154.428571 L 163 164.25 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 51.35857 185.357127 63 196.333333 C 71.232154 204.095079 101.9716 214.758373 113 217.285714 C 122.64985 219.497138 153.1195 219.87106 163 219.25 C 172.8805 218.62894 203.13352 211.813985 213 211 C 228.786368 209.697625 251.674294 222.074023 263 211 C 268.148048 205.966353 303 130.2 303 123 C 303 115.8 268.148048 40.033647 263 35 C 251.674294 23.925977 228.042118 30.036101 213 35 C 197.957882 39.963899 178.042118 63.036101 163 68 C 147.805942 73.014039 125.341972 57.817873 113 68 C 103.743521 75.636595 96.333333 111 96.333333 123 C 96.333333 130.788275 105.800218 135.744375 113 138.714286 C 122.151942 142.489462 153.271459 152.334525 163 150.5 C 172.728541 148.665475 189.297887 129.965092 196.333333 123 C 203.002161 116.39786 204.088581 103.940768 213 101 C 228.042118 96.036101 248.128199 95.547006 263 101 C 269.759909 103.478633 273 115.8 273 123 C 273 130.2 269.759909 142.521367 263 145 C 248.128199 150.452994 228.042118 140.036101 213 145 C 203.598676 148.102437 172.601175 175.58599 163 178 C 153.398825 180.41401 121.674537 174.913853 113 170.142857 C 103.086243 164.690291 51.685714 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 74.314286 123 103.676554 179.447274 113 185.857143 C 121.158015 191.465778 153.271459 193.584525 163 191.75 C 172.728541 189.915475 203.389963 169.378484 213 167 C 228.376059 163.194425 249.589277 175.429597 263 167 C 269.095783 163.168365 283 130.2 283 123 C 283 115.8 269.095783 82.831635 263 79 C 249.589277 70.570403 227.007369 71.604109 213 79 C 202.388357 84.602948 187.521347 113.927845 179.666667 123 C 174.858159 128.553827 170.346206 136.75 163 136.75 C 153.1 136.75 103.1 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 178.84 123 199.779787 65.725341 213 57 C 226.220213 48.274659 250.781447 46.919694 263 57 C 268.553888 61.581957 293 115.8 293 123 C 293 130.2 268.553888 184.418043 263 189 C 250.781447 199.080306 228.628683 186.421267 213 189 C 203.232073 190.611708 172.822685 204.265148 163 205.5 C 153.177315 206.734852 121.999742 205.69631 113 201.571429 C 102.714581 196.857278 70.81224 167.850918 63 159.666667 C 52.581644 148.752198 38 138.088664 38 123 C 38 107 47 68 63 68 C 75 68 73.657616 112.612926 79.666667 123 C 85.332343 132.793527 102.859996 149.40927 113 154.428571 C 121.872503 158.82046 153.555462 167.218283 163 164.25 C 172.444538 161.281717 203.1 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 129.666667 196.333333 L 155.857143 217.285714 L 163 219.25 L 173 211 L 183 211 L 303 123 L 183 35 L 173 35 L 163 68 L 138 68 L 96.333333 123 L 120.142857 138.714286 L 163 150.5 L 196.333333 123 L 203 101 L 243 101 L 273 123 L 243 145 L 203 145 L 163 178 L 134.428571 170.142857 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 141.571429 185.857143 L 163 191.75 L 193 167 L 223 167 L 283 123 L 223 79 L 193 79 L 179.666667 123 L 163 136.75 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 183 57 L 203 57 L 293 123 L 203 189 L 183 189 L 163 205.5 L 148.714286 201.571429 L 96.333333 159.666667 L 38 123 L 113 68 L 79.666667 123 L 127.285714 154.428571 L 163 164.25 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>9 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 4: T145 under 2,3</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 143 53.625 0 0 0 39.75 87.75 A 29.5 11.0625 0 0 0 98.75 87.75 A 56 21 0 0 1 210.75 87.75 A 57.5 21.5625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 178 L 113 178 L 163 178 L 213 178 L 263 178 L 288 123 L 263 68 L 213 68 L 163 68 L 113 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 48.980545 170.2893 63 178 C 77.019455 185.7107 97 178 113 178 C 129 178 147 178 163 178 C 179 178 197 178 213 178 C 229 178 250.09752 187.461819 263 178 C 275.90248 168.538181 288 139 288 123 C 288 107 275.90248 77.461819 263 68 C 250.09752 58.538181 229 68 213 68 C 197 68 179 68 163 68 C 147 68 127.019455 60.2893 113 68 C 98.980545 75.7107 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 167 123 184 123.6 188 123.6 C 192 123.6 209 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 113 178 L 138 178 L 163 178 L 188 178 L 213 178 L 288 123 L 213 68 L 188 68 L 163 68 L 138 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>1 cut visit · five jointly certified arcs, including the boundary-to-first arc</p></article></section><div class="arrow" aria-hidden="true">→<small>cyclic<br>rotation</small></div><section class="column"><h2>2 · Cyclic row rotation</h2><p>The disjoint top pair moves to the bottom.</p><article class="factor-row"><h3>After row 1: T345</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 85.5 32.0625 0 0 0 154.75 87.75 A 85.5 32.0625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 Q 38 121.8 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 178 L 213 178 L 263 178 L 288 123 L 263 68 L 213 68 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 17 123 34 122.4 38 122.4 C 42 122.4 59 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 129 123 148.980545 170.2893 163 178 C 177.019455 185.7107 197 178 213 178 C 229 178 250.09752 187.461819 263 178 C 275.90248 168.538181 288 139 288 123 C 288 107 275.90248 77.461819 263 68 C 250.09752 58.538181 227.019455 60.2893 213 68 C 198.980545 75.7107 147 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 167 123 184 123.6 188 123.6 C 192 123.6 209 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 Q 38 121.8 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 178 L 188 178 L 213 178 L 288 123 L 213 68 L 188 68 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>1 cut visit · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 2: T245 under 3</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 113.5 42.5625 0 0 0 98.75 87.75 A 28 10.5 0 0 0 154.75 87.75 A 28 10.5 0 0 1 210.75 87.75 A 57.5 21.5625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 Q 38 121.8 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 113 196.333333 L 163 205.5 L 213 196.333333 L 263 196.333333 L 296.333333 123 L 263 49.666667 L 213 68 L 188 123 L 163 150.5 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 113 68 L 88 123 L 113 159.666667 L 163 178 L 213 159.666667 L 263 159.666667 L 279.666667 123 L 263 86.333333 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 17 123 34 122.4 38 122.4 C 42 122.4 59 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 79 123 100.658028 186.151206 113 196.333333 C 125.341972 206.515461 147 205.5 163 205.5 C 179 205.5 197.066802 197.793877 213 196.333333 C 228.933198 194.87279 250.988584 206.90338 263 196.333333 C 272.008562 188.405799 296.333333 135 296.333333 123 C 296.333333 111 273.015313 56.276773 263 49.666667 C 249.646249 40.853191 224.440107 56.814118 213 68 C 201.559893 79.185882 196.292827 109.316835 188 123 C 181.450657 133.806415 175.636158 150.5 163 150.5 C 147 150.5 97 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 179 123 129 68 113 68 C 97 68 88 107 88 123 C 88 138.088664 100.832426 150.743779 113 159.666667 C 125.90248 169.128485 147 178 163 178 C 179 178 197.262295 162.551913 213 159.666667 C 228.737705 156.781421 248.980545 167.377367 263 159.666667 C 273.514591 153.883642 279.666667 135 279.666667 123 C 279.666667 111 275 86.333333 263 86.333333 C 247 86.333333 197 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 Q 38 121.8 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 146.333333 196.333333 L 163 205.5 L 179.666667 196.333333 L 196.333333 196.333333 L 296.333333 123 L 196.333333 49.666667 L 188 68 L 188 123 L 163 150.5 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 138 68 L 88 123 L 129.666667 159.666667 L 163 178 L 196.333333 159.666667 L 229.666667 159.666667 L 279.666667 123 L 229.666667 86.333333 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>4 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 3: T145 under 2,3</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 143 53.625 0 0 0 39.75 87.75 A 29.5 11.0625 0 0 0 98.75 87.75 A 56 21 0 0 1 210.75 87.75 A 57.5 21.5625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 196.333333 L 113 205.5 L 163 205.5 L 213 205.5 L 263 205.5 L 300.5 123 L 263 40.5 L 213 49.666667 L 179.666667 123 L 163 150.5 L 113 150.5 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 113 68 L 63 68 L 38 123 L 63 159.666667 L 113 178 L 163 178 L 213 178 L 263 178 L 288 123 L 263 68 L 213 86.333333 L 196.333333 123 L 213 150.5 L 263 150.5 L 275.5 123 L 263 95.5 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 50.658028 186.151206 63 196.333333 C 75.341972 206.515461 97.066802 204.039457 113 205.5 C 128.933198 206.960543 147 205.5 163 205.5 C 179 205.5 197 205.5 213 205.5 C 229 205.5 251.35857 216.476206 263 205.5 C 269.548305 199.325884 300.5 132 300.5 123 C 300.5 114 269.89781 46.281022 263 40.5 C 250.737226 30.222628 224.370418 38.409953 213 49.666667 C 204.472187 58.109202 184.99766 112.249163 179.666667 123 C 174.809624 132.795037 173.107019 146.330855 163 150.5 C 148.208982 156.601295 128.427286 154.742504 113 150.5 C 97.572714 146.257496 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 179 123 127.019455 75.7107 113 68 C 98.980545 60.2893 75.90248 58.538181 63 68 C 50.09752 77.461819 38 107 38 123 C 38 138.088664 50.832426 150.743779 63 159.666667 C 75.90248 169.128485 97.262295 175.114754 113 178 C 128.737705 180.885246 147 178 163 178 C 179 178 197 178 213 178 C 229 178 250.09752 187.461819 263 178 C 270.257645 172.677727 288 132 288 123 C 288 114 271.085459 71.952891 263 68 C 248.62585 60.972638 225.341972 76.151206 213 86.333333 C 203.743521 93.969929 196.333333 111 196.333333 123 C 196.333333 133.933143 202.892981 146.330855 213 150.5 C 227.791018 156.601295 248.354959 156.943818 263 150.5 C 271.237835 146.875352 275.5 132 275.5 123 C 275.5 114 272 95.5 263 95.5 C 247 95.5 197 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 129.666667 196.333333 L 150.5 205.5 L 163 205.5 L 175.5 205.5 L 188 205.5 L 300.5 123 L 188 40.5 L 179.666667 49.666667 L 179.666667 123 L 163 150.5 L 125.5 150.5 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 138 68 L 113 68 L 38 123 L 96.333333 159.666667 L 138 178 L 163 178 L 188 178 L 213 178 L 288 123 L 213 68 L 196.333333 86.333333 L 196.333333 123 L 200.5 150.5 L 238 150.5 L 275.5 123 L 238 95.5 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>6 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 4: T123 · T45^-2</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 203.45 87.75 A 81.85 30.69375 0 0 0 39.75 87.75 A 81.85 30.69375 0 0 0 203.45 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<path class="closed-curve" d="M 325.75 87.75 A 53.85 20.19375 0 0 0 218.05 87.75 A 53.85 20.19375 0 0 0 325.75 87.75 Z " fill="none" stroke="#188747" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 178 L 113 178 L 163 178 L 213 178 L 263 178 L 288 123 L 263 68 L 213 68 L 163 68 L 113 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 48.980545 170.2893 63 178 C 77.019455 185.7107 97 178 113 178 C 129 178 147 178 163 178 C 179 178 197 178 213 178 C 229 178 250.09752 187.461819 263 178 C 275.90248 168.538181 288 139 288 123 C 288 107 275.90248 77.461819 263 68 C 250.09752 58.538181 229 68 213 68 C 197 68 179 68 163 68 C 147 68 127.019455 60.2893 113 68 C 98.980545 75.7107 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 167 123 184 123.6 188 123.6 C 192 123.6 209 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 113 178 L 138 178 L 163 178 L 188 178 L 213 178 L 288 123 L 213 68 L 188 68 L 163 68 L 138 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>1 cut visit · five jointly certified arcs, including the boundary-to-first arc</p></article></section><div class="arrow" aria-hidden="true">→<small>chart β</small></div><section class="column"><h2>3 · Rearrange points 1 and 3</h2><p>The braid β = σ1 σ2 σ1 changes the chart, not the factor count.</p><article class="factor-row"><h3>After row 1: T123 · T45^-2</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 203.45 87.75 A 81.85 30.69375 0 0 0 39.75 87.75 A 81.85 30.69375 0 0 0 203.45 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<path class="closed-curve" d="M 325.75 87.75 A 53.85 20.19375 0 0 0 218.05 87.75 A 53.85 20.19375 0 0 0 325.75 87.75 Z " fill="none" stroke="#188747" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 196.333333 L 113 196.333333 L 163 178 L 179.666667 123 L 163 86.333333 L 113 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 113 159.666667 L 63 159.666667 L 38 123 L 63 68 L 113 49.666667 L 163 49.666667 L 213 49.666667 L 263 49.666667 L 296.333333 123 L 263 196.333333 L 213 178 L 196.333333 123 L 213 86.333333 L 263 86.333333 L 279.666667 123 L 263 159.666667 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 50.09752 186.871515 63 196.333333 C 75.90248 205.795152 97.262295 199.218579 113 196.333333 C 128.737705 193.448087 152.237235 189.839041 163 178 C 171.072074 169.120719 179.666667 135 179.666667 123 C 179.666667 111 173.514591 92.116358 163 86.333333 C 148.980545 78.622633 128.022021 80.825259 113 86.333333 C 97.977979 91.841408 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 179 123 128.022021 154.158592 113 159.666667 C 97.977979 165.174741 77.37415 166.694029 63 159.666667 C 49.44458 153.039573 38 138.088664 38 123 C 38 107 51.559893 79.185882 63 68 C 74.440107 56.814118 97.262295 52.551913 113 49.666667 C 128.737705 46.781421 147 49.666667 163 49.666667 C 179 49.666667 197 49.666667 213 49.666667 C 229 49.666667 250.988584 39.09662 263 49.666667 C 272.008562 57.594201 296.333333 111 296.333333 123 C 296.333333 135 273.015313 189.723227 263 196.333333 C 249.646249 205.146809 223.762765 189.839041 213 178 C 204.927926 169.120719 196.333333 135 196.333333 123 C 196.333333 111 202.485409 92.116358 213 86.333333 C 227.019455 78.622633 248.980545 78.622633 263 86.333333 C 273.514591 92.116358 279.666667 111 279.666667 123 C 279.666667 135 275 159.666667 263 159.666667 C 247 159.666667 197 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 129.666667 196.333333 L 146.333333 196.333333 L 163 178 L 179.666667 123 L 163 86.333333 L 129.666667 86.333333 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 129.666667 159.666667 L 96.333333 159.666667 L 38 123 L 113 68 L 146.333333 49.666667 L 163 49.666667 L 179.666667 49.666667 L 196.333333 49.666667 L 296.333333 123 L 196.333333 196.333333 L 188 178 L 196.333333 123 L 196.333333 86.333333 L 229.666667 86.333333 L 279.666667 123 L 229.666667 159.666667 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>5 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 2: β(T345) · points 1,4,5</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 57.5 21.5625 0 0 0 210.75 87.75 A 56 21 0 0 1 98.75 87.75 A 29.5 11.0625 0 0 0 39.75 87.75 A 143 53.625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 178 L 113 196.333333 L 163 178 L 213 196.333333 L 263 205.5 L 300.5 123 L 263 40.5 L 213 40.5 L 163 35 L 113 40.5 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 113 68 L 163 57 L 213 68 L 263 68 L 288 123 L 263 178 L 213 159.666667 L 188 123 L 163 101 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 113 159.666667 L 88 123 L 113 95.5 L 163 79 L 213 95.5 L 263 95.5 L 275.5 123 L 263 150.5 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 50.09752 168.538181 63 178 C 75.90248 187.461819 97 196.333333 113 196.333333 C 129 196.333333 147 178 163 178 C 179 178 197.572714 192.09083 213 196.333333 C 228.427286 200.575837 250.737226 215.777372 263 205.5 C 269.89781 199.718978 300.5 132 300.5 123 C 300.5 114 269.548305 46.674116 263 40.5 C 251.35857 29.523794 228.975855 41.378672 213 40.5 C 197.183904 39.630115 178.84 35 163 35 C 147.16 35 124.891302 30.035654 113 40.5 C 100.988584 51.070046 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 79 123 99.646249 76.813475 113 68 C 126.220213 59.274659 147.16 57 163 57 C 178.84 57 197.254971 66.268047 213 68 C 228.90407 69.749448 250.09752 58.538181 263 68 C 270.257645 73.322273 288 114 288 123 C 288 132 271.085459 174.047109 263 178 C 248.62585 185.027362 225.90248 169.128485 213 159.666667 C 200.832426 150.743779 197.787293 134.483757 188 123 C 180.655597 114.382567 174.322562 101 163 101 C 147.16 101 97.16 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 179 123 129 159.666667 113 159.666667 C 97.911336 159.666667 88 138.088664 88 123 C 88 110.363842 102.100999 101.894081 113 95.5 C 126.662395 87.484729 147.16 79 163 79 C 178.84 79 197.371317 92.921267 213 95.5 C 228.786549 98.104781 248.354959 89.056182 263 95.5 C 271.237835 99.124648 275.5 114 275.5 123 C 275.5 132 272 150.5 263 150.5 C 247 150.5 197 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 113 178 L 146.333333 196.333333 L 163 178 L 179.666667 196.333333 L 188 205.5 L 300.5 123 L 188 40.5 L 175.5 40.5 L 163 35 L 150.5 40.5 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 L 138 68 L 163 57 L 188 68 L 213 68 L 288 123 L 213 178 L 196.333333 159.666667 L 188 123 L 163 101 L 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 L 129.666667 159.666667 L 88 123 L 125.5 95.5 L 163 79 L 200.5 95.5 L 238 95.5 L 275.5 123 L 238 150.5 L 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>5 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 3: β(T245) · points 2,4,5</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 57.5 21.5625 0 0 0 210.75 87.75 A 28 10.5 0 0 1 154.75 87.75 A 28 10.5 0 0 0 98.75 87.75 A 113.5 42.5625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 178 L 113 178 L 163 178 L 213 196.333333 L 263 196.333333 L 296.333333 123 L 263 49.666667 L 213 49.666667 L 163 49.666667 L 113 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 86.333333 L 213 86.333333 L 263 86.333333 L 279.666667 123 L 263 159.666667 L 213 159.666667 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 48.980545 170.2893 63 178 C 77.019455 185.7107 97 178 113 178 C 129 178 147.262295 175.114754 163 178 C 178.737705 180.885246 197.262295 193.448087 213 196.333333 C 228.737705 199.218579 250.988584 206.90338 263 196.333333 C 272.008562 188.405799 296.333333 135 296.333333 123 C 296.333333 111 272.008562 57.594201 263 49.666667 C 250.988584 39.09662 229 49.666667 213 49.666667 C 197 49.666667 178.737705 46.781421 163 49.666667 C 147.262295 52.551913 125.90248 58.538181 113 68 C 100.09752 77.461819 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 129 123 147.977979 91.841408 163 86.333333 C 178.022021 80.825259 197 86.333333 213 86.333333 C 229 86.333333 248.980545 78.622633 263 86.333333 C 273.514591 92.116358 279.666667 111 279.666667 123 C 279.666667 135 273.514591 153.883642 263 159.666667 C 248.980545 167.377367 228.022021 165.174741 213 159.666667 C 197.977979 154.158592 147 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 167 123 184 123.6 188 123.6 C 192 123.6 209 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 113 178 L 138 178 L 163 178 L 179.666667 196.333333 L 196.333333 196.333333 L 296.333333 123 L 196.333333 49.666667 L 179.666667 49.666667 L 163 49.666667 L 138 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 L 163 86.333333 L 196.333333 86.333333 L 229.666667 86.333333 L 279.666667 123 L 229.666667 159.666667 L 196.333333 159.666667 L 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>2 cut visits · five jointly certified arcs, including the boundary-to-first arc</p></article><article class="factor-row"><h3>After row 4: T345</h3><div class="panels"><div class="support" aria-label="Planar twist supports"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.5 175.5" width="365.5" height="175.5" role="img">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 325.75 87.75 A 85.5 32.0625 0 0 0 154.75 87.75 A 85.5 32.0625 0 0 0 325.75 87.75 Z " fill="none" stroke="#c218a5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 175.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="182.75" cy="87.75" rx="170" ry="75" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="70.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="126.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="182.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="238.75" cy="87.75" r="4" fill="#006fff"/>
+<circle class="marked-point" cx="294.75" cy="87.75" r="4" fill="#006fff"/>
+</svg>
+</div><div class="cut" aria-label="Five-arc disk cut complex"><div class="cut-svg" data-projection="strip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 L 63 178 L 113 178 L 163 178 L 213 178 L 263 178 L 288 123 L 263 68 L 213 68 L 163 68 L 113 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="smooth" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect class="outer-boundary" x="13" y="13" width="300" height="220" rx="18" fill="none" stroke="#000000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<g class="cut-guides" stroke="#a9bbcb" stroke-width=".8" stroke-dasharray="3 4" opacity=".55" vector-effect="non-scaling-stroke">
+<path class="horizontal-cut" d="M 13 123 L 313 123"/>
+<path class="vertical-ray" d="M 63 233 L 63 13"/>
+<path class="vertical-ray" d="M 113 233 L 113 13"/>
+<path class="vertical-ray" d="M 163 233 L 163 13"/>
+<path class="vertical-ray" d="M 213 233 L 213 13"/>
+<path class="vertical-ray" d="M 263 233 L 263 13"/>
+</g>
+<path class="arc" data-owner="1" d="M 13 123 C 29 123 48.980545 170.2893 63 178 C 77.019455 185.7107 97 178 113 178 C 129 178 147 178 163 178 C 179 178 197 178 213 178 C 229 178 250.09752 187.461819 263 178 C 275.90248 168.538181 288 139 288 123 C 288 107 275.90248 77.461819 263 68 C 250.09752 58.538181 229 68 213 68 C 197 68 179 68 163 68 C 147 68 127.019455 60.2893 113 68 C 98.980545 75.7107 47 123 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 C 67 123 84 123.6 88 123.6 C 92 123.6 109 123 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 C 117 123 134 123.6 138 123.6 C 142 123.6 159 123 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 C 167 123 184 123.6 188 123.6 C 192 123.6 209 123 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 C 217 123 234 123.6 238 123.6 C 242 123.6 259 123 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div><div class="cut-svg" data-projection="fan" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 246" width="326" height="246" role="img">
+<title>Normal-strand cut-system preview</title>
+<desc>Joint local strands follow certified exact Arc itineraries; minimal position is not independently established.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<ellipse class="outer-boundary" cx="163" cy="123" rx="150" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<path class="arc" data-owner="1" d="M 13 123 L 113 178 L 138 178 L 163 178 L 188 178 L 213 178 L 288 123 L 213 68 L 188 68 L 163 68 L 138 68 L 63 123" fill="none" stroke="#d73027" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="2" d="M 63 123 Q 88 124.2 113 123" fill="none" stroke="#e08214" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="3" d="M 113 123 Q 138 124.2 163 123" fill="none" stroke="#b59b00" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="4" d="M 163 123 Q 188 124.2 213 123" fill="none" stroke="#23964f" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="arc" data-owner="5" d="M 213 123 Q 238 124.2 263 123" fill="none" stroke="#168aad" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="marked-point" cx="63" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="63" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">1</text>
+<circle class="marked-point" cx="113" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="113" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">2</text>
+<circle class="marked-point" cx="163" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="163" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">3</text>
+<circle class="marked-point" cx="213" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="213" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">4</text>
+<circle class="marked-point" cx="263" cy="123" r="3.5" fill="#006fff" stroke="#006fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text class="marked-point-label" x="263" y="138" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#183457">5</text>
+</svg>
+</div></div></div><p>1 cut visit · five jointly certified arcs, including the boundary-to-first arc</p></article></section></main>
+<div class="notes"><p><strong>Certificate:</strong> every displayed cut complex has a joint normal-strand certificate for the boundary-to-1-to-2-to-3-to-4-to-5 chain. The point-to-point arcs return to their reference positions after four rows; the boundary arc records the remaining exterior twist. The three cut layouts display the same crossing orders. Smooth curves are a presentation choice, not a separate geometric minimality proof.</p>
+<p>The green support is <em>T45 inverse squared</em>. The first column’s under-going three-point curves use conjugators −2 and (−1, −2). Products read bottom-to-top algebraically because the thesis’s top row acts first. The cyclic arrow is checked by exact disk action. The third column is the simultaneous conjugation by β = σ1σ2σ1 shown in Figure 4.6; every corresponding factor is checked as a based disk action. The later half-lantern and Hurwitz arrows in <a href="four-three-thesis-storyboard.html">the source storyboard</a> remain unverified. This is separate from the Xiao (4,3) lab.</p></div>
+<script>
+ const strip=document.getElementById('strip'),columns=[...strip.querySelectorAll('.column')];
+ const position=document.getElementById('position');
+ function current(){const middle=strip.scrollLeft+strip.clientWidth/2;return columns.reduce((best,col,i)=>Math.abs(col.offsetLeft+col.offsetWidth/2-middle)<Math.abs(columns[best].offsetLeft+columns[best].offsetWidth/2-middle)?i:best,0)}
+ function go(index){const col=columns[Math.max(0,Math.min(columns.length-1,index))];strip.scrollTo({left:col.getBoundingClientRect().left-strip.getBoundingClientRect().left+strip.scrollLeft-(strip.clientWidth-col.clientWidth)/2,behavior:'smooth'})}
+ document.getElementById('previous').onclick=()=>go(current()-1);
+ document.getElementById('next').onclick=()=>go(current()+1);
+ strip.addEventListener('scroll',()=>{position.textContent=`Column ${current()+1} of ${columns.length}`},{passive:true});
+ document.getElementById('projection').onchange=event=>document.querySelectorAll('.cut-svg').forEach(item=>{item.hidden=item.dataset.projection!==event.target.value});
+</script></html>
