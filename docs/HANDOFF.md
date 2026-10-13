@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## October 13: squared exterior-twist checkpoint in thesis Figure 4.7
+
+The checked Figure 4.5 third and second columns can be concatenated to
+factor `T12345^2` on the five-marked disk. `thesis_four_three.py` now keeps
+three explicit states: the eight-row concatenation; a cyclic rotation moving
+its last `T123 · T45^-2` row to the top; and a seven-row state combining the
+two identical top rows into `T123^2 · T45^-4`. The complete based Artin
+action of each state equals the exterior boundary twist squared. The local
+two-row combination also passes exact disk-action equality. Every prefix
+of all three states has a five-arc joint normal-strand certificate.
+
+`docs/proofs/four-three-thesis-squared-stage.html` shows the states as
+horizontally browsable vertical columns with planar support and cut chart
+after each row. The vertical-ray, smooth, and fan drawing options use the
+same certified crossing data. The first checked page, source storyboard, and
+site catalog link to it. Visual inspection of the new page confirmed all
+three columns, the first and combined cut diagrams, and the smooth selector.
+Seven focused tests pass, including generated-page freshness; the portable
+site build and local-link check pass. **This is only the first Figure 4.7 regrouping**;
+the later commuting arrangement and two half-lantern substitutions are not
+yet certified. Next transcribe the source's first half-lantern pair and
+validate its exact disk action, local Hurwitz route, and per-row cut chains
+before adding another arrow. Preserve the distinction between a checked
+disk equality and a suggested support picture.
+
 ## October 13: three exact Baykur--Korkmaz thesis columns
 
 Figure 4.5's first five-marked-disk column has now been transcribed into
@@ -36,9 +61,8 @@ certificates, and generated HTML freshness. The site build and local-link
 check pass. Browser inspection covered all three factor columns, their
 source-support shapes, the final boundary arc, and the layout selector.
 Remote workflows still need checking after push.
-Next transcribe Figure 4.7's concatenation of the second and third columns
-for the squared exterior twist, then encode its two half-lantern substitutions
-with explicit factor-by-factor checks and per-row cut chains. Do not call the
+Continue with the two half-lantern substitutions using explicit
+factor-by-factor checks and per-row cut chains. Do not call the
 Figure 4.6 chart change a Hurwitz move or identify it with Xiao's distinct
 (4,3) seed.
 

@@ -32,8 +32,8 @@ def support_svg(row):
                       mirror_curve_paths_vertical=True)
 
 
-def column_html(title, rows, subtitle):
-    certificates = check_stage(rows)
+def column_html(title, rows, subtitle, *, outer_power=1):
+    certificates = check_stage(rows, outer_power=outer_power)
     cards = []
     for index, row in enumerate(rows, 1):
         certificate = certificates[index]
@@ -95,7 +95,7 @@ def build_html():
     + middle + '<div class="arrow" aria-hidden="true">→<small>chart β</small></div>'
     + right + '''</main>
 <div class="notes"><p><strong>Certificate:</strong> every displayed cut complex has a joint normal-strand certificate for the boundary-to-1-to-2-to-3-to-4-to-5 chain. The point-to-point arcs return to their reference positions after four rows; the boundary arc records the remaining exterior twist. The three cut layouts display the same crossing orders. Smooth curves are a presentation choice, not a separate geometric minimality proof.</p>
-<p>The green support is <em>T45 inverse squared</em>. The first column’s under-going three-point curves use conjugators −2 and (−1, −2). Products read bottom-to-top algebraically because the thesis’s top row acts first. The cyclic arrow is checked by exact disk action. The third column is the simultaneous conjugation by β = σ1σ2σ1 shown in Figure 4.6; every corresponding factor is checked as a based disk action. The later half-lantern and Hurwitz arrows in <a href="four-three-thesis-storyboard.html">the source storyboard</a> remain unverified. This is separate from the Xiao (4,3) lab.</p></div>
+<p>The green support is <em>T45 inverse squared</em>. The first column’s under-going three-point curves use conjugators −2 and (−1, −2). Products read bottom-to-top algebraically because the thesis’s top row acts first. The cyclic arrow is checked by exact disk action. The third column is the simultaneous conjugation by β = σ1σ2σ1 shown in Figure 4.6; every corresponding factor is checked as a based disk action. <a href="four-three-thesis-squared-stage.html">Continue to the checked squared-boundary stage</a>. The later half-lantern and Hurwitz arrows in <a href="four-three-thesis-storyboard.html">the source storyboard</a> remain unverified. This is separate from the Xiao (4,3) lab.</p></div>
 <script>
  const strip=document.getElementById('strip'),columns=[...strip.querySelectorAll('.column')];
  const position=document.getElementById('position');

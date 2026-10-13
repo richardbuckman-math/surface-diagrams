@@ -63,6 +63,17 @@ REARRANGED_ROWS = (
 )
 OUTER_WORD = ConjugatedTwist((), 1, 5).word
 
+# The first Figure 4.7 column concatenates Figure 4.5's third and second
+# columns. Rotate its last row to the top, then combine the two commuting
+# copies of T123 and T45^-2. The middle state records the actual cyclic move
+# instead of presenting a product equality as an unexplained arrow.
+CONCATENATED_ROWS = REARRANGED_ROWS + CYCLIC_ROWS
+ROTATED_ROWS = (CONCATENATED_ROWS[-1],) + CONCATENATED_ROWS[:-1]
+SQUARED_ROWS = (
+    (ThesisFactor('T123^2', T123.twist, 2),
+     ThesisFactor('T45^-4', T45_INVERSE_SQUARE.twist, -4)),
+) + ROTATED_ROWS[2:]
+
 
 def chronological_word(rows, count=None):
     """Product of rows applied from the top, reversing algebraic order."""
@@ -71,10 +82,12 @@ def chronological_word(rows, count=None):
                  for factor in row for letter in factor.word)
 
 
-def check_stage(rows):
+def check_stage(rows, *, outer_power=1):
     """Check the complete disk action and certify each five-arc prefix."""
-    if exact_action(chronological_word(rows), 5) != exact_action(OUTER_WORD, 5):
-        raise ValueError('Figure 4.5 column does not equal the exterior boundary twist')
+    if type(outer_power) is not int or outer_power < 1:
+        raise ValueError('Exterior boundary power must be positive')
+    if exact_action(chronological_word(rows), 5) != exact_action(OUTER_WORD * outer_power, 5):
+        raise ValueError('Thesis column does not equal its exterior boundary twist target')
     certificates = []
     for count in range(len(rows) + 1):
         images = exact_action(chronological_word(rows, count), 5)
