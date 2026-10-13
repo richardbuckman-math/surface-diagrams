@@ -1,5 +1,6 @@
 'use strict';
 let state,selected=0,busy=false,dragged=null,prefixExport=null,sphereExport=null,prefixSvgs={},sphereChartSvg='',prefixIndex=null,prefixRequest=0,prefixFit=true,prefixHighlight=null,arcRequest=0,arcSvg='',arcSelection=null,arcFit=true;
+window.surfaceLabReady=false;
 const prefixColors=['#d73027','#e08214','#b59b00','#23964f','#168aad','#5254c8'];
 const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
@@ -139,7 +140,7 @@ function paint(){
   const head=document.createElement('div');head.className='factor-head';
   const title=document.createElement('span');const name=document.createElement('strong');name.textContent=f.id;const kind=document.createElement('span');kind.className='kind';kind.textContent=f.label;title.append(name,kind);
   const buttons=document.createElement('span');buttons.className='row-buttons';
-  for(const [label,delta] of [['↑',-1],['↓',1]]){const b=document.createElement('button');b.textContent=label;b.setAttribute('aria-label',`Move ${f.id} ${delta<0?'up':'down'}`);b.disabled=i+delta<0||i+delta>=state.factors.length;b.onclick=e=>{e.stopPropagation();choose(i);action({op:'move',index:i,target:i+delta},i+delta);};buttons.append(b);}
+  for(const [label,delta] of [['↑',-1],['↓',1]]){const b=document.createElement('button');b.textContent=label;b.setAttribute('aria-label',`Move ${f.id} ${delta<0?'up':'down'}`);b.disabled=busy||i+delta<0||i+delta>=state.factors.length;b.onclick=e=>{e.stopPropagation();choose(i);action({op:'move',index:i,target:i+delta},i+delta);};buttons.append(b);}
   head.append(title,buttons);const support=document.createElement('div');support.className='support';
   if(f.svg)displayPlanarSvg(support,f.svg);else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
   const word=document.createElement('div');word.className='word';word.textContent=f.word.join(' ');word.title=word.textContent;
@@ -499,4 +500,19 @@ $('svg').onclick=async()=>{
   download(await response.text(),'image/svg+xml',factorizationFilename()+'.svg');
  }catch(error){status(error.message,true);}
 };
-fetch('/api/state').then(r=>{if(!r.ok)throw new Error('Could not load the lab');return r.json();}).then(data=>{state=data;paint();}).catch(e=>status(e.message,true));
+const loadingOverlay=$('lab-loading'),loadingMessage=$('lab-loading-message');
+$('lab-loading-retry').onclick=()=>location.reload();
+if(window.surfaceLabPublic && !window.surfaceLabSeedPreview)
+ loadingMessage.textContent='Reopening your saved exploration and starting exact calculations…';
+if(window.surfaceLabSeedPreview)window.surfaceLabSeedPreview.then(preview=>{
+ if(window.surfaceLabReady)return;
+ state=preview;busy=true;paint();
+ loadingMessage.textContent='Diagrams are visible. Starting the exact calculation engine…';
+}).catch(()=>{});
+fetch('/api/state').then(r=>{if(!r.ok)throw new Error('Could not load the lab');return r.json();}).then(data=>{
+ window.surfaceLabReady=true;busy=false;state=data;paint();loadingOverlay.hidden=true;
+}).catch(error=>{
+ status(error.message,true);loadingOverlay.classList.add('error');
+ loadingMessage.textContent=`The lab could not finish loading: ${error.message}`;
+ $('lab-loading-retry').hidden=false;
+});

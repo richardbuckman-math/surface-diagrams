@@ -1,21 +1,31 @@
 import unittest
 from collections import Counter
 import re
+from types import SimpleNamespace
 from unittest.mock import patch
 from xml.etree import ElementTree as ET
 
 from surface_diagrams.chain_cut_system import chain_arcs
+from surface_diagrams.curves import Arc
 from surface_diagrams.factorization_explorer import initial_factors, product
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.normal_cut_engine import calculate_cut_system
 from surface_diagrams.normal_cut_preview import (
-    _FanLayout, _StripLayout, render_normal_cut_preview,
+    _FanLayout, _StripLayout, _chain_endpoint_directions, render_normal_cut_preview,
 )
 from surface_diagrams.normal_gluing import TerminalVisit
 from surface_diagrams.visuals import RAINBOW
 
 
 class NormalCutPreviewTests(unittest.TestCase):
+    def test_smooth_chain_endpoints_remain_opposite_after_permutation(self):
+        # Both other endpoints lie to the right of point 1, so choosing
+        # tangents from screen x alone would make these arcs leave together.
+        chain = SimpleNamespace(arcs=(Arc(3, 1), Arc(1, 2)), owners=(1, 2))
+        directions = _chain_endpoint_directions(chain)
+        self.assertEqual(directions[1][1], directions[2][0])
+        self.assertEqual(directions[1], (1.0, 1.0))
+
     @staticmethod
     def _certificate(prefix, *, owners=None):
         images = exact_action(product(initial_factors()[:prefix]))
@@ -141,6 +151,36 @@ class NormalCutPreviewTests(unittest.TestCase):
                          render_normal_cut_preview(certificate, projection='strip'))
         with self.assertRaisesRegex(ValueError, 'projection'):
             render_normal_cut_preview(certificate, projection='unknown')
+
+    def test_smooth_view_keeps_certified_crossings_and_opposite_point_tangents(self):
+        certificate = self._certificate(1)
+        layout = _StripLayout(certificate)
+        root = ET.fromstring(render_normal_cut_preview(certificate, projection='smooth'))
+        self.assertEqual(len(root.findall(".//{http://www.w3.org/2000/svg}path[@class='vertical-ray']")), 6)
+        paths = root.findall("{http://www.w3.org/2000/svg}path[@class='arc']")
+        self.assertEqual(len(paths), 6)
+        height = float(root.attrib['viewBox'].split()[3])
+        width = float(root.attrib['viewBox'].split()[2])
+        for path in paths:
+            tokens = path.attrib['d'].split()
+            self.assertEqual(tokens[0], 'M')
+            self.assertTrue(tokens.count('C'))
+            self.assertNotIn('L', tokens)
+            self.assertNotIn('Q', tokens)
+            first = tokens.index('C')
+            last = len(tokens) - 7
+            self.assertEqual(tokens[last], 'C')
+            self.assertAlmostEqual(float(tokens[2]), float(tokens[first + 2]))
+            self.assertAlmostEqual(float(tokens[last + 4]), float(tokens[last + 6]))
+            owner = int(path.attrib['data-owner'])
+            coordinates = {(float(tokens[index + 5]), float(tokens[index + 6]))
+                           for index, token in enumerate(tokens) if token == 'C'}
+            for visit, coordinate in layout.crossings.items():
+                if visit.owner != owner:
+                    continue
+                expected = (round(width / 2 + coordinate[0], 6),
+                            round(height / 2 - coordinate[1], 6))
+                self.assertIn(expected, coordinates)
 
     def test_vertical_mirror_changes_only_display_coordinates(self):
         certificate = self._certificate(1)

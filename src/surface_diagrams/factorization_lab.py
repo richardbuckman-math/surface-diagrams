@@ -194,16 +194,18 @@ class LabServer(ThreadingHTTPServer):
         except ValueError as error: chart_svg='';chart_warning=str(error)
         return dict(sphere_inner_certificate(word),revision=self.revision,
                     chart_svg=chart_svg,chart_warning=chart_warning)
-    def sphere_cut_row(self,row,split):
+    def sphere_cut_row(self,row,split,smooth=False):
         """Five sphere arcs after a forward factor or before a backward factor."""
         from .midpoint_certificate import sphere_split_certificate
-        from .sphere_arc_simplify import sphere_chain_drawing
+        from .sphere_arc_simplify import sphere_chain_drawing,sphere_chain_smooth_drawing
 
         factors=self.history[self.position]
         if type(row) is not int or not 1<=row<=len(factors):
             raise ValueError('Choose a valid factor row')
         if type(split) is not int or not 1<=split<len(factors):
             raise ValueError('Leave at least one factor on each side of the split')
+        if type(smooth) is not bool:
+            raise ValueError('Smooth display must be a boolean')
         direction='forward' if row<=split else 'backward'
         word=(product(factors[:row]) if direction=='forward'
               else inverse_word(product(factors[row-1:])))
@@ -213,6 +215,7 @@ class LabServer(ThreadingHTTPServer):
                                                             for image in images])
         try:
             data.update(sphere_chain_drawing(images));data['warning']=''
+            if smooth: data['svg_smooth']=sphere_chain_smooth_drawing(images)
         except (ValueError,VerificationLimitError) as error:
             data.update(svg='',warning=str(error),joint_certified=False)
         if row==split:
@@ -222,10 +225,16 @@ class LabServer(ThreadingHTTPServer):
                 data['meet_disk_equal']=midpoint.disk_equal
                 data['meet_whisker_length']=len(midpoint.common_whisker)
                 try:
-                    data['meet_backward']=sphere_chain_drawing(midpoint.backward_disk_images)
+                    data['meet_backward']=dict(sphere_chain_drawing(midpoint.backward_disk_images))
+                    if smooth:
+                        data['meet_backward']['svg_smooth']=sphere_chain_smooth_drawing(
+                            midpoint.backward_disk_images)
                     data['meet_picture_equal']=bool(data.get('svg')) and data['svg']==data['meet_backward']['svg']
                     data['meet_picture_equal_strip']=(bool(data.get('svg_strip')) and
                         data['svg_strip']==data['meet_backward']['svg_strip'])
+                    if smooth:
+                        data['meet_picture_equal_smooth']=(bool(data.get('svg_smooth')) and
+                            data['svg_smooth']==data['meet_backward']['svg_smooth'])
                 except (ValueError,VerificationLimitError) as error:
                     data['meet_backward']=dict(svg='',warning=str(error),joint_certified=False)
             except (ValueError,VerificationLimitError) as error:
@@ -327,10 +336,13 @@ class LabHandler(EditorHandler):
             try:
                 query=parse_qs(urlsplit(self.path).query)
                 revision=int(query['revision'][0]);row=int(query['row'][0]);split=int(query['split'][0])
+                if query.get('smooth',['0'])[0] not in ('0','1'):
+                    raise ValueError('Invalid smooth display option')
+                smooth=query.get('smooth',['0'])[0]=='1'
                 with self.server.lock:
                     if revision!=self.server.revision:
                         self._error(409,'State changed; reload the cut column');return
-                    data=self.server.sphere_cut_row(row,split)
+                    data=self.server.sphere_cut_row(row,split,smooth=smooth)
             except (KeyError,ValueError,VerificationLimitError) as error:
                 self._error(400,str(error));return
             self._reply(200,json.dumps(data));return

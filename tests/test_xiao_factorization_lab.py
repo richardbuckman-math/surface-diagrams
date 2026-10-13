@@ -28,6 +28,9 @@ class XiaoFactorizationLabTests(unittest.TestCase):
             self.assertTrue(forward['meet_certified'])
             self.assertTrue(forward['meet_picture_equal_strip'])
             self.assertEqual(forward['svg_strip'], backward['svg_strip'])
+            smooth = lab.sphere_cut_row(4, 4, smooth=True)
+            self.assertTrue(smooth['meet_picture_equal_smooth'])
+            self.assertEqual(smooth['svg_smooth'], smooth['meet_backward']['svg_smooth'])
             self.assertEqual(len(forward['cut_counts']), 5)
             self.assertEqual(len(backward['cut_counts']), 5)
         finally:

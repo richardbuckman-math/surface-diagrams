@@ -1,14 +1,16 @@
 import {loadPyodide} from 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs';
 
 const start = (async () => {
- const pyodide = await loadPyodide();
- const [packageResponse, backendResponse] = await Promise.all([
-  fetch('surface_diagrams.zip'), fetch('public-lab-backend.py')
+ self.postMessage({kind: 'progress', phase: 'Loading the Python calculation engine…'});
+ const [pyodide, packageResponse, backendResponse] = await Promise.all([
+  loadPyodide(), fetch('surface_diagrams.zip'), fetch('public-lab-backend.py')
  ]);
+ self.postMessage({kind: 'progress', phase: 'Loading the verified diagram library…'});
  if (!packageResponse.ok || !backendResponse.ok) throw new Error('Could not load the published lab package');
  pyodide.FS.writeFile('/tmp/surface_diagrams.zip', new Uint8Array(await packageResponse.arrayBuffer()));
  pyodide.runPython("import sys; sys.path.insert(0, '/tmp/surface_diagrams.zip')");
  pyodide.runPython(await backendResponse.text());
+ self.postMessage({kind: 'progress', phase: 'Restoring factors and checking their diagrams…'});
  return pyodide;
 })();
 let sessionRestored = false;

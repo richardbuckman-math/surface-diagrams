@@ -1,5 +1,31 @@
 # Handoff: surface-diagrams
 
+## October 12 late: optional smooth sphere cuts and faster first paint
+
+The Xiao (4,3) and (6,7) sphere-cut columns now have a third `Smooth curves`
+layout. It renders cubic paths through the **same** crossing coordinates of
+the exact joint normal-strand certificate, with horizontal, opposite
+approach/departure tangents at the shared marked points. The fan and
+vertical-ray layouts remain unchanged. Smooth SVGs are generated only for
+rows requested after selecting that layout; the certificate itself is
+cached, and switching back reuses earlier SVG results. This is a display
+smoothing, not a separate proof of minimal position or smooth-path
+embeddedness; dense rows can still look tightly bent.
+
+On the public site, new visitors now see build-time seed diagrams while
+Pyodide starts. Saved browser workspaces do not use that seed preview.
+The package and worker backend download alongside Pyodide, with a prominent
+startup panel showing phases and a retry button on failure. After the exact
+engine is ready, a cut-column progress message remains until all requested
+rows arrive. The underlying exact edit state still comes from the worker.
+
+Validation: 430 tests passed; all four affected JavaScript files passed
+`node --check`; site build and local-link check passed. Browser inspection
+confirmed the visible cold-start preview, lazy smooth requests, Xiao F1
+curves, and equal smooth (6,7) midpoint charts. Next: resume the checked
+(6,7) factor-level derivation; improve dense smooth-chart legibility only
+if it can preserve the certified crossing order and endpoint geometry.
+
 ## October 12 night: alternate cut-system projection in both sphere labs
 
 The Xiao (4,3) and (6,7) labs now default to a rectangular cut chart with

@@ -23,6 +23,7 @@ def build():
         sys.path.insert(0, str(ROOT/'src'))
     from surface_diagrams.boundary_playground_geometry import factorization_svg
     from surface_diagrams.fibration_lab_seeds import SEEDS
+    from surface_diagrams.factorization_lab import LabServer, starting_factors
     from surface_diagrams.hyperelliptic_homology import IDENTITY, homology_action
     from surface_diagrams.sphere_actions import sphere_inner_certificate
 
@@ -45,6 +46,26 @@ def build():
     xiao_out = lab_out/'xiao-4-3'
     xiao_out.mkdir(exist_ok=True)
     (xiao_out/'index.html').write_text(xiao_html, encoding='utf-8')
+    for slug in ('6-7', '4-3'):
+        # New visitors see the original diagrams before the browser's Python
+        # runtime finishes loading. This snapshot is never used for a saved
+        # workspace, and the worker remains the authority for every edit.
+        preview = LabServer.__new__(LabServer)
+        preview.seed_slug = slug
+        preview.seed_factors = starting_factors(slug)
+        preview.history = [preview.seed_factors]
+        preview.frames = [()]
+        preview.operations = ['Original factorization']
+        preview.position = preview.revision = 0
+        preview.token = 'browser-only'
+        preview.session_path = None
+        preview.message = ('Loaded Xiao\'s seven normalized factors; exact disk product fixed to this seed.'
+                           if slug == '4-3' else
+                           'Loaded 13 factors / 178 braid letters from the earlier SVG.')
+        preview.verification_notice = ''
+        (lab_out/f'seed-preview-{slug}.json').write_text(
+            json.dumps(preview.state(), separators=(',', ':'), ensure_ascii=False),
+            encoding='utf-8')
     with ZipFile(lab_out/'surface_diagrams.zip', 'w', ZIP_DEFLATED) as archive:
         for source in sorted((ROOT/'src'/'surface_diagrams').glob('*.py')):
             archive.write(source, 'surface_diagrams/'+source.name)

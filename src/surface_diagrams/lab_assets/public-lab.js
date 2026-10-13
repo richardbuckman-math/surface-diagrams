@@ -13,6 +13,12 @@ const labWorker = new Worker(new URL('public-lab-worker.mjs', document.currentSc
 let nextLabRequest = 0;
 const pendingLabRequests = new Map();
 labWorker.onmessage = event => {
+ if (event.data.kind === 'progress') {
+  const message = document.getElementById('lab-loading-message');
+  if (message && !document.getElementById('lab-loading').hidden)
+   message.textContent = event.data.phase;
+  return;
+ }
  const {id, status, body, mime, session} = event.data;
  const pending = pendingLabRequests.get(id);
  if (!pending) return;
@@ -28,6 +34,14 @@ labWorker.onerror = event => {
  pendingLabRequests.clear();
 };
 const ordinaryFetch = window.fetch.bind(window);
+// A small, build-time snapshot can paint a new visitor's seed diagram while
+// the Python worker starts. Saved explorations always wait for their own state.
+window.surfaceLabSeedPreview = savedLabSession ? null : ordinaryFetch(
+ new URL(`seed-preview-${labSeed}.json`, document.currentScript.src)
+).then(response => {
+ if (!response.ok) throw new Error('Seed preview unavailable');
+ return response.json();
+});
 window.fetch = (input, options = {}) => {
  const path = typeof input === 'string' ? input : input.url;
  if (!path.startsWith('/api/')) return ordinaryFetch(input, options);

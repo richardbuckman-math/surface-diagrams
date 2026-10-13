@@ -70,7 +70,10 @@ def dispatch(path, method, body):
         elif method == 'GET' and route.path == '/api/sphere-cut':
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reload the cut column')
-            result = lab.sphere_cut_row(int(query['row'][0]),int(query['split'][0]))
+            if query.get('smooth',['0'])[0] not in ('0','1'):
+                raise ValueError('Invalid smooth display option')
+            result = lab.sphere_cut_row(int(query['row'][0]),int(query['split'][0]),
+                                        smooth=query.get('smooth',['0'])[0]=='1')
         elif method == 'GET' and route.path == '/api/prefix-arc':
             if int(query['revision'][0]) != lab.revision:
                 raise ValueError('State changed; reopen this inspector')

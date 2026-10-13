@@ -86,6 +86,21 @@ def short_sphere_chain(images):
 
 @lru_cache(maxsize=128)
 def sphere_chain_drawing(images):
+    """Return the usual fan and vertical-ray views of five certified arcs."""
+    certificate, arcs, depths, method = _sphere_chain_certificate(images)
+    return _drawing(certificate, arcs, depths, method)
+
+
+@lru_cache(maxsize=128)
+def sphere_chain_smooth_drawing(images):
+    """Render the optional smooth view only after it is requested."""
+    certificate, _, _, _ = _sphere_chain_certificate(images)
+    return render_normal_cut_preview(certificate, projection='smooth',
+                                     mirror_vertical=True)
+
+
+@lru_cache(maxsize=128)
+def _sphere_chain_certificate(images):
     """Certify and draw five sphere arcs in one disk chart.
 
     Independent short representatives can conflict at the chart's ray orders.
@@ -105,7 +120,7 @@ def sphere_chain_drawing(images):
         arcs = tuple(item[0] for item in short)
         try:
             certificate = calculate_cut_system(arcs)
-            return _drawing(certificate, arcs, tuple(item[1] for item in short), 'sphere-short')
+            return certificate, arcs, tuple(item[1] for item in short), 'sphere-short'
         except (ValueError, NormalTriangleError):
             pass
     raw = tuple(chain_arc(images, index) for index in range(1, 6))
@@ -118,10 +133,10 @@ def sphere_chain_drawing(images):
                      for index, bit in enumerate(bits))
         try:
             certificate = calculate_cut_system(arcs)
-            return _drawing(certificate, arcs,
-                            tuple(0 if bit or short[index] is None else short[index][1]
-                                  for index, bit in enumerate(bits)),
-                            'sphere-short' if not any(bits) and all(short) else 'joint-chart')
+            return (certificate, arcs,
+                    tuple(0 if bit or short[index] is None else short[index][1]
+                          for index, bit in enumerate(bits)),
+                    'sphere-short' if not any(bits) and all(short) else 'joint-chart')
         except (ValueError, NormalTriangleError):
             continue
     raise ValueError('No jointly certified five-arc chart found among the bounded sphere and disk representatives')

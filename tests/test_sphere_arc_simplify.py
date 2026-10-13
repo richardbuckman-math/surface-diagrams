@@ -18,6 +18,7 @@ class SphereArcColumnTests(unittest.TestCase):
         self.assertTrue(all(row['joint_certified'] for row in rows))
         self.assertTrue(all(row['svg'].count('class="arc"') == 5 for row in rows))
         self.assertTrue(all(row['svg_strip'].count('class="arc"') == 5 for row in rows))
+        self.assertTrue(all('svg_smooth' not in row for row in rows))
         self.assertTrue(all('<rect class="outer-boundary"' in row['svg_strip']
                             and '<ellipse class="outer-boundary"' in row['svg']
                             for row in rows))
@@ -63,6 +64,19 @@ class SphereArcColumnTests(unittest.TestCase):
         self.assertEqual(data['cut_counts'], [0, 7, 0, 7, 5])
         self.assertEqual(data['svg'].count('class="arc"'), 5)
         self.assertEqual(data['svg_strip'].count('class="arc"'), 5)
+
+    def test_smooth_projection_is_only_added_on_request(self):
+        server = LabServer(port=0)
+        try:
+            usual = server.sphere_cut_row(1, 7)
+            smooth = server.sphere_cut_row(1, 7, smooth=True)
+            self.assertNotIn('svg_smooth', usual)
+            self.assertIn(' C ', smooth['svg_smooth'])
+            self.assertEqual(smooth['svg_smooth'].count('class="arc"'), 5)
+            self.assertEqual(smooth['cut_counts'], usual['cut_counts'])
+            self.assertTrue(smooth['joint_certified'])
+        finally:
+            server.server_close()
 
 
 if __name__ == '__main__':

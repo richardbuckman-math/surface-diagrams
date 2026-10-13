@@ -11,7 +11,8 @@ from math import hypot
 
 from .normal_cut_engine import CertifiedCutSystem
 from .normal_gluing import TerminalVisit
-from .normal_strands import NormalTriangleError, StrandVisit
+from .normal_strands import (LabeledCutVisit, LabeledRayVisit,
+                             NormalTriangleError, StrandVisit)
 from .visuals import RAINBOW
 
 
@@ -22,6 +23,99 @@ def _number(value):
 def _between(first, second, fraction):
     return (first[0] + (second[0] - first[0]) * fraction,
             first[1] + (second[1] - first[1]) * fraction)
+
+
+def _unit(vector):
+    length = hypot(*vector)
+    return (vector[0] / length, vector[1] / length) if length else (1.0, 0.0)
+
+
+def _edge_spacing(layout, visit):
+    if isinstance(visit, TerminalVisit):
+        return min(layout.spacing, layout.apex_height) / 2
+    if isinstance(visit.crossing, LabeledCutVisit):
+        count = len(layout.certificate.cut_orders[visit.crossing.gap])
+        return layout.spacing / (count + 1)
+    if isinstance(visit.crossing, LabeledRayVisit):
+        count = len(layout.certificate.ray_orders[visit.crossing.ray])
+        return layout.apex_height / (count + 1)
+    raise NormalTriangleError('unknown cut-system visit in smooth preview')
+
+
+def _chain_endpoint_directions(certificate):
+    """Orient a complete chain so neighboring arcs leave a point oppositely."""
+    arcs = certificate.arcs
+    if len(arcs) < 2 or certificate.owners != tuple(range(1, len(arcs) + 1)):
+        return {}
+    directions = {}
+    for index, arc in enumerate(arcs):
+        ends = {arc.start, arc.end}
+        previous = ends & {arcs[index - 1].start, arcs[index - 1].end} if index else set()
+        following = ends & {arcs[index + 1].start, arcs[index + 1].end} if index + 1 < len(arcs) else set()
+        if len(previous) > 1 or len(following) > 1:
+            return {}
+        left = next(iter(previous)) if previous else next(iter(ends - following), None)
+        right = next(iter(following)) if following else next(iter(ends - previous), None)
+        if left is None or right is None or left == right or {left, right} != ends:
+            return {}
+        directions[index + 1] = (1.0 if arc.start == left else -1.0,
+                                 1.0 if arc.end == right else -1.0)
+    return directions
+
+
+def _smooth_commands(layout, path, segments, endpoint_directions=None):
+    """Round a certified strand without moving any of its cut crossings.
+
+    Every local chord endpoint remains a vertex of the cubic path. Small
+    controls preserve the drawing's local placement; this is a display
+    operation, not a new normal-strand or minimality certificate.
+    """
+    points = [layout.coordinate(path.start)]
+    visits = [path.start]
+    for connection in segments:
+        chord = layout.chord(connection)
+        if chord[0] == 'Q':
+            control = chord[1:3]
+            first, last = points[-1], layout.coordinate(connection.second)
+            points.append(((first[0] + 2 * control[0] + last[0]) / 4,
+                           (first[1] + 2 * control[1] + last[1]) / 4))
+            visits.append(None)
+        points.append(layout.coordinate(connection.second))
+        visits.append(connection.second)
+    if len(points) < 2:
+        raise NormalTriangleError('a rendered strand needs two endpoints')
+    endpoint_direction = 1.0 if points[-1][0] >= points[0][0] else -1.0
+    start_direction, end_direction = endpoint_directions or (endpoint_direction,
+                                                              endpoint_direction)
+    tangents = []
+    for index in range(len(points)):
+        if index == 0:
+            # Consecutive chain arcs leave and arrive horizontally on
+            # opposite sides of their common marked point.
+            tangents.append((start_direction, 0.0))
+        elif index == len(points) - 1:
+            tangents.append((end_direction, 0.0))
+        else:
+            before, after = points[index - 1], points[index + 1]
+            tangents.append(_unit((after[0] - before[0], after[1] - before[1])))
+    commands = [('M', *points[0])]
+    for index, (first, last) in enumerate(zip(points, points[1:])):
+        distance = hypot(last[0] - first[0], last[1] - first[1])
+        if distance < 1e-9:
+            raise NormalTriangleError('a smoothed strand has a zero-length segment')
+        # A crossing on a densely occupied edge has less room for rounding.
+        # The controls remain close to the original two chords even in F11.
+        spacing = min(_edge_spacing(layout, visit) for visit in
+                      (visits[index], visits[index + 1]) if visit is not None)
+        step = min(distance * .34, spacing * .72, 16.0)
+        if visits[index] is None or visits[index + 1] is None:
+            step = min(step, 4.0)
+        start_tangent, end_tangent = tangents[index:index + 2]
+        commands.append(('C', first[0] + step * start_tangent[0],
+                         first[1] + step * start_tangent[1],
+                         last[0] - step * end_tangent[0],
+                         last[1] - step * end_tangent[1], *last))
+    return commands
 
 
 class _FanLayout:
@@ -200,11 +294,11 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
     """
     if not isinstance(certificate, CertifiedCutSystem):
         raise TypeError('expected a CertifiedCutSystem')
-    if projection not in ('strip', 'fan'):
-        raise ValueError('projection must be strip or fan')
+    if projection not in ('strip', 'fan', 'smooth'):
+        raise ValueError('projection must be strip, fan, or smooth')
     if type(mirror_vertical) is not bool:
         raise TypeError('mirror_vertical must be a boolean')
-    layout = _StripLayout(certificate) if projection == 'strip' else _FanLayout(certificate)
+    layout = _StripLayout(certificate) if projection != 'fan' else _FanLayout(certificate)
     connections = defaultdict(list)
     for connection in certificate.connections:
         connections[connection.owner].append(connection)
@@ -218,7 +312,7 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
         return (_number(width / 2 + point[0]),
                 _number(height / 2 + (point[1] if mirror_vertical else -point[1])))
 
-    if projection == 'strip':
+    if projection != 'fan':
         corner_radius = max(18.0, min(layout.spacing / 4,
                                       layout.apex_height * .12))
         boundary = (f'<rect class="outer-boundary" x="{_number(padding)}" '
@@ -239,7 +333,7 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
              'minimal position is not independently established.</desc>',
              '<rect width="100%" height="100%" fill="white"/>',
              boundary]
-    if projection == 'strip':
+    if projection != 'fan':
         # These are drawing guides for the certified normal-cell edges, not
         # extra arcs. Each puncture has its own vertical upper and lower ray.
         left = screen(layout.vertices['b0'])
@@ -256,6 +350,7 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
             lines.append(f'<path class="vertical-ray" d="M {top[0]} {top[1]} '
                          f'L {bottom[0]} {bottom[1]}"/>')
         lines.append('</g>')
+    endpoint_directions = _chain_endpoint_directions(certificate) if projection == 'smooth' else {}
     for path in certificate.paths:
         owner = path.owner
         segments = connections[owner]
@@ -265,13 +360,24 @@ def render_normal_cut_preview(certificate, *, projection='strip', mirror_vertica
         for first, second in zip(segments, segments[1:]):
             if first.second != second.first:
                 raise NormalTriangleError('rendered local connections do not join')
-        commands.extend(layout.chord(connection) for connection in segments)
+        if projection == 'smooth':
+            commands = _smooth_commands(layout, path, segments,
+                                        endpoint_directions.get(path.owner))
+        else:
+            commands.extend(layout.chord(connection) for connection in segments)
         data = []
         for op, *values in commands:
             if op == 'Q':
                 control = screen(values[:2])
                 target = screen(values[2:])
                 data.append(f'Q {control[0]} {control[1]} {target[0]} {target[1]}')
+            elif op == 'C':
+                first_control = screen(values[:2])
+                second_control = screen(values[2:4])
+                target = screen(values[4:])
+                data.append(f'C {first_control[0]} {first_control[1]} '
+                            f'{second_control[0]} {second_control[1]} '
+                            f'{target[0]} {target[1]}')
             else:
                 target = screen(values)
                 data.append(f'{op} {target[0]} {target[1]}')
