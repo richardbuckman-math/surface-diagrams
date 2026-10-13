@@ -25,6 +25,15 @@ finished. Next measure cold-start latency on the published page and optimize
 the Python/WASM download if it remains disruptive; keep the static preview
 and exact editable state clearly distinguished.
 
+The deployed browser also exposed a stale-asset risk: Pages could serve a new
+script with an older cached stylesheet, leaving the compact badge visible even
+after the engine was ready. `build_site.py` now fingerprints the whole lab
+bundle and versions the HTML asset URLs; the browser adapter carries that
+version through the worker, seed preview, Python archive, and backend. A local
+browser reload with the versioned bundle restored a 14-factor saved session,
+enabled editing, and hid the badge. The site build and link check passed; both
+adapter and worker modules passed `node --check`.
+
 ## October 13: squared exterior twist and two PC half lanterns
 
 The checked Figure 4.5 third and second columns can be concatenated to

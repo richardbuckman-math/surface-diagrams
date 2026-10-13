@@ -1,9 +1,17 @@
 import {loadPyodide} from 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs';
 
+const labAssetVersion = new URL(self.location.href).searchParams.get('v');
+const labAssetUrl = name => {
+ const url = new URL(name, self.location.href);
+ if (labAssetVersion) url.searchParams.set('v', labAssetVersion);
+ return url;
+};
+
 const start = (async () => {
  self.postMessage({kind: 'progress', phase: 'Loading the Python calculation engine…'});
  const [pyodide, packageResponse, backendResponse] = await Promise.all([
-  loadPyodide(), fetch('surface_diagrams.zip'), fetch('public-lab-backend.py')
+  loadPyodide(), fetch(labAssetUrl('surface_diagrams.zip')),
+  fetch(labAssetUrl('public-lab-backend.py'))
  ]);
  self.postMessage({kind: 'progress', phase: 'Loading the verified diagram library…'});
  if (!packageResponse.ok || !backendResponse.ok) throw new Error('Could not load the published lab package');

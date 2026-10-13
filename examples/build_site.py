@@ -3,6 +3,7 @@ from pathlib import Path
 from html import escape
 from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
+import hashlib
 import json
 import shutil
 import sys
@@ -36,16 +37,8 @@ def build():
     for name in ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js', 'public-lab-worker.mjs',
                  'public-lab-backend.py', 'six-seven-h34-session.json'):
         shutil.copy2(lab_assets/name, lab_out/name)
-    lab_html = (lab_assets/'index.html').read_text(encoding='utf-8')
-    lab_html = lab_html.replace('<script src="lab.js"></script>',
-                                '<script src="public-lab.js"></script><script src="lab.js"></script>')
-    (lab_out/'index.html').write_text(lab_html, encoding='utf-8')
-    xiao_html = (lab_assets/'xiao-4-3.html').read_text(encoding='utf-8')
-    xiao_html = xiao_html.replace('<script src="../lab.js"></script>',
-                                  '<script src="../public-lab.js"></script><script src="../lab.js"></script>')
     xiao_out = lab_out/'xiao-4-3'
     xiao_out.mkdir(exist_ok=True)
-    (xiao_out/'index.html').write_text(xiao_html, encoding='utf-8')
     for slug in ('6-7', '4-3'):
         # Keep a prepared default view available while the browser's Python
         # runtime starts, including when a saved session has no cached preview.
@@ -69,6 +62,29 @@ def build():
     with ZipFile(lab_out/'surface_diagrams.zip', 'w', ZIP_DEFLATED) as archive:
         for source in sorted((ROOT/'src'/'surface_diagrams').glob('*.py')):
             archive.write(source, 'surface_diagrams/'+source.name)
+    versioned_assets = ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js',
+                        'public-lab-worker.mjs', 'public-lab-backend.py',
+                        'surface_diagrams.zip', 'seed-preview-6-7.json',
+                        'seed-preview-4-3.json')
+    digest = hashlib.sha256()
+    for name in versioned_assets:
+        digest.update(name.encode('utf-8'))
+        digest.update((lab_out/name).read_bytes())
+    lab_version = digest.hexdigest()[:12]
+
+    def version_lab_html(html, prefix):
+        for name in ('lab.css', 'public-lab.js', 'lab.js', 'sphere-cuts.js'):
+            html = html.replace(f'"{prefix}{name}"', f'"{prefix}{name}?v={lab_version}"')
+        return html
+
+    lab_html = (lab_assets/'index.html').read_text(encoding='utf-8')
+    lab_html = lab_html.replace('<script src="lab.js"></script>',
+                                '<script src="public-lab.js"></script><script src="lab.js"></script>')
+    (lab_out/'index.html').write_text(version_lab_html(lab_html, ''), encoding='utf-8')
+    xiao_html = (lab_assets/'xiao-4-3.html').read_text(encoding='utf-8')
+    xiao_html = xiao_html.replace('<script src="../lab.js"></script>',
+                                  '<script src="../public-lab.js"></script><script src="../lab.js"></script>')
+    (xiao_out/'index.html').write_text(version_lab_html(xiao_html, '../'), encoding='utf-8')
     boundary_assets = ROOT/'src'/'surface_diagrams'/'boundary_assets'
     boundary_out = OUT/'boundary-lab'
     boundary_out.mkdir(exist_ok=True)

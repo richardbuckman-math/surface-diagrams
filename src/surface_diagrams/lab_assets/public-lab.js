@@ -6,6 +6,12 @@ window.surfaceLabStorageAvailable = true;
 const labSeed = document.documentElement.dataset.labSeed === '4-3' ? '4-3' : '6-7';
 const labStorageKey = labSeed === '4-3' ? 'surface-diagrams-xiao-four-three-workspace-v1' :
  'surface-diagrams-six-seven-workspace-v1';
+const labAssetVersion = new URL(document.currentScript.src).searchParams.get('v');
+const labAssetUrl = name => {
+ const url = new URL(name, document.currentScript.src);
+ if (labAssetVersion) url.searchParams.set('v', labAssetVersion);
+ return url;
+};
 const previewStorageKey = `${labStorageKey}-rendered-preview-v1`;
 let savedLabSession = '';
 try { savedLabSession = localStorage.getItem(labStorageKey) || ''; }
@@ -20,7 +26,7 @@ if (savedLabSession && window.surfaceLabStorageAvailable) {
    cachedLabPreview = preview;
  } catch (_) { /* A corrupt preview never prevents exact session restoration. */ }
 }
-const labWorker = new Worker(new URL('public-lab-worker.mjs', document.currentScript.src), {type: 'module'});
+const labWorker = new Worker(labAssetUrl('public-lab-worker.mjs'), {type: 'module'});
 let nextLabRequest = 0;
 const pendingLabRequests = new Map();
 labWorker.onmessage = event => {
@@ -58,7 +64,7 @@ const ordinaryFetch = window.fetch.bind(window);
 // only a preview tied to its exact session document; the worker remains the
 // authority for the restored state and every edit.
 window.surfaceLabStartupPreview = cachedLabPreview ? Promise.resolve(cachedLabPreview) : ordinaryFetch(
- new URL(`seed-preview-${labSeed}.json`, document.currentScript.src)
+ labAssetUrl(`seed-preview-${labSeed}.json`)
 ).then(response => {
  if (!response.ok) throw new Error('Seed preview unavailable');
  return response.json();
