@@ -19,7 +19,8 @@ Node orientation test passed. In local browser inspection, the (6,7) first
 load showed all 13 factor cards under the compact badge before the worker
 finished. Splitting F1 produced 14 cards; an immediate reload showed those
 14 saved cards under the badge, then restored the editable state and undo
-history. Xiao's seven-card prepared preview also appeared before its engine
+history; the badge disappeared when editing unlocked. Xiao's seven-card
+prepared preview also appeared before its engine
 finished. Next measure cold-start latency on the published page and optimize
 the Python/WASM download if it remains disruptive; keep the static preview
 and exact editable state clearly distinguished.
