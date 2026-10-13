@@ -90,7 +90,16 @@ PAIRABLE_ROWS = (
 
 
 def _half_lantern_rows(factor, label):
-    first, second, correction = pc_half_lantern_terms(factor.twist)
+    # Figure 4.7 draws both resulting arcs toward point 5. Conjugating the
+    # standard PC half lantern by H45 exchanges endpoints 4 and 5 while
+    # preserving this three-point curve and the T45 correction. Check that
+    # stabilization before using the source-facing version of the relation.
+    twist = factor.twist
+    transported = ConjugatedTwist(twist.conjugator + (4,), twist.first,
+                                   twist.points, twist.power, twist.half)
+    if exact_action(transported.word, 5) != exact_action(twist.word, 5):
+        raise ValueError('Half-lantern endpoint transport changed the three-point twist')
+    first, second, correction = pc_half_lantern_terms(transported)
     if exact_action(correction.word, 5) != exact_action(
             ConjugatedTwist((), 4, 2, power=2).word, 5):
         raise ValueError('Half-lantern correction is not T45 squared')

@@ -28,7 +28,7 @@ def build_html():
                            'The T45 correction commutes through these supports; each green square now follows a three-point twist.',
                            outer_power=2)
     halves = column_html('5 · Apply PC half lantern twice', HALF_LANTERN_ROWS,
-                         'Each three-point twist followed by its T45 inverse square becomes two positive arc half twists.',
+                         'Each three-point twist and T45 inverse square become two positive half twists; the arcs end at point 5 as in Figure 4.7.',
                          outer_power=2)
     return ('''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Checked squared-boundary stage · Baykur–Korkmaz (4,3)</title>
@@ -61,7 +61,7 @@ def build_html():
     + combined + '<div class="arrow" aria-hidden="true">→<small>commute<br>corrections</small></div>'
     + pairable + '<div class="arrow" aria-hidden="true">→<small>PC half<br>lantern ×2</small></div>'
     + halves + '''</main>
-<div class="notes"><p><strong>Certificate:</strong> each complete product is checked against T12345 squared as a based five-strand disk action. Every prefix yields five jointly certified cut arcs, including the boundary-to-first arc. The intermediate columns expose the cyclic and correction moves; the two three-point-plus-inverse-square pairs become four positive half twists by checked PC half lantern substitutions. These last two columns give one exact ordering of that step; they are not a factor-by-factor transcription of the thesis's third and fourth drawings. The smooth cut layout preserves the certified crossing order, but has no independent geometric minimality claim.</p>
+<div class="notes"><p><strong>Certificate:</strong> each complete product is checked against T12345 squared as a based five-strand disk action. Every prefix yields five jointly certified cut arcs, including the boundary-to-first arc. The intermediate columns expose the cyclic and correction moves; the two three-point-plus-inverse-square pairs become four positive half twists by checked PC half lantern substitutions. The half-twist endpoints now agree with Figure 4.7: both 245 arcs join points 2 and 5, and both 145 arcs join points 1 and 5. Exact source isotopy and the Figure 4.8 arrows remain to be checked. The smooth cut layout preserves the certified crossing order, but has no independent geometric minimality claim.</p>
 <p><a href="four-three-thesis-first-stage.html">Review the three Figure 4.5 columns</a> · <a href="four-three-thesis-storyboard.html">See the original thesis storyboard</a>. The subsequent Hurwitz moves in Figure 4.8 remain to be individually certified.</p></div>
 <script>
  const strip=document.getElementById('strip'),columns=[...strip.querySelectorAll('.column')],position=document.getElementById('position');

@@ -7,6 +7,7 @@ from examples.build_four_three_thesis_squared_stage import (
     OUTPUT as SQUARED_OUTPUT, build_html as build_squared_html,
 )
 from surface_diagrams.braid_actions import inverse_word
+from surface_diagrams.factorization_geometry import support_points
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.marked_disk_chain import marked_disk_chain
 from surface_diagrams.thesis_four_three import (
@@ -95,6 +96,17 @@ class ThesisFourThreeTests(unittest.TestCase):
             self.assertEqual(exact_action(chronological_word(old), 5),
                              exact_action(chronological_word(new), 5))
         self.assertTrue(all(f.exponent > 0 for row in HALF_LANTERN_ROWS for f in row))
+        # The source's Figure 4.7 arcs end at point 5, not point 4. Exact
+        # product equality alone would miss the alternate half-lantern chart.
+        for rows, endpoints in ((HALF_LANTERN_ROWS[4:6], (2, 5)),
+                                (HALF_LANTERN_ROWS[6:8], (1, 5))):
+            for row in rows:
+                twist = row[0].twist
+                path = support_points(twist.first, twist.points, twist.half,
+                                      twist.conjugator)
+                self.assertEqual(tuple(sorted(round(point[0] + 1)
+                                              for point in (path[0], path[-1]))),
+                                 endpoints)
 
 
 if __name__ == '__main__':

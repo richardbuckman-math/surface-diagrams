@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 13: Figure 4.7 half-lantern endpoint chart
+
+The previously checked two PC half-lantern substitutions used arcs ending
+at point 4. The thesis's fourth Figure 4.7 drawing has the corresponding
+arcs ending at point 5. Conjugating each local PC half-lantern by the half
+twist H45 exchanges these endpoints while preserving both the enclosing
+three-point twist and its T45 squared correction; both invariances are now
+checked by exact five-strand disk action. The updated fifth graphical column
+shows two 2–5 arcs and two 1–5 arcs, each with its five-arc prefix cut chart.
+This matches the source endpoints, but a complete planar isotopy match of
+the curved supports remains to be checked.
+
+Validation: eight focused thesis tests pass, including both local relation
+equalities, the exterior-square product, all prefix cut certificates, and
+the four source-facing endpoints. Browser inspection of the regenerated fifth
+column showed the 2–5 and 1–5 support arcs beside their certified cut charts.
+Next transcribe and certify the first Figure 4.8 Hurwitz arrow, then add its
+post-move factorization and cut column to the horizontal derivation.
+
 ## October 13: saved-lab startup speed
 
 The saved-session validator was recomputing the starting braid's exact disk
