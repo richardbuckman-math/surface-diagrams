@@ -144,14 +144,14 @@ class FactorizationLabTests(unittest.TestCase):
             path=Path(folder)/'session.json'
             path.write_text(json.dumps(dict(format='surface-diagrams-session-v1',position=0,
                 history=[export_factors(initial_factors())])))
-            with patch('surface_diagrams.factorization_lab.checked',side_effect=VerificationLimitError('limit')):
+            with patch('surface_diagrams.factorization_lab.exact_action',side_effect=VerificationLimitError('limit')):
                 server=LabServer(0,path)
             try:
                 self.assertEqual(server.history[0],initial_factors())
                 self.assertIn('not reverified',server.verification_notice)
                 self.assertNotIn('exact products verified',server.message)
             finally: server.server_close()
-            with patch('surface_diagrams.factorization_lab.checked',side_effect=ValueError('Product mismatch')):
+            with patch('surface_diagrams.factorization_lab.exact_action',side_effect=ValueError('Product mismatch')):
                 with self.assertRaisesRegex(ValueError,'Product mismatch'): LabServer(0,path)
 
     def test_supported_class_matches_full_action_without_unrelated_expansion(self):

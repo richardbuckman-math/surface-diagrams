@@ -12,6 +12,7 @@ let sphereCutRequest = 0, sphereCutKey = '', sphereCutRows = new Map();
 const sphereCutCaches = new Map();
 let sphereCutOpenedRow = null;
 let sphereCutFitOverview = false;
+let sphereCutObserver = null, sphereCutPendingOpen = null;
 function sphereCutSvg(data) {
   if (sphereLayout.value === 'smooth') return data.svg_smooth || '';
   return sphereLayout.value === 'strip' ? data.svg_strip || '' : data.svg || '';
@@ -22,7 +23,7 @@ function updateSphereProgress(count,failed=0) {
   const done=sphereCutRows.size;
   progress.hidden=done===count&&failed===0;
   progress.textContent=failed ? `${failed} cut diagrams could not be drawn; open a row for details.` :
-    `${sphereLayout.value==='smooth'?'Smoothing':'Calculating'} cut diagrams: ${done} of ${count} ready…`;
+    `Cut diagrams load as you scroll: ${done} of ${count} ready…`;
 }
 const sphereCutResize = new ResizeObserver(() => {
   document.querySelectorAll('#sphere-cuts-column .sphere-cut-row').forEach((row, index) => {
@@ -169,46 +170,71 @@ function refreshSphereCuts() {
     sphereCutResize.disconnect();
     document.querySelectorAll('#factors .factor').forEach(card=>sphereCutResize.observe(card));return;}
   sphereCutKey=key;
+  if (sphereCutObserver) sphereCutObserver.disconnect();
+  sphereCutPendingOpen=null;
   sphereCutRows=sphereCutCaches.get(key)||new Map();
   sphereCutCaches.set(key,sphereCutRows);
   while(sphereCutCaches.size>4) sphereCutCaches.delete(sphereCutCaches.keys().next().value);
   const request=++sphereCutRequest;
   sphereCuts.replaceChildren();
   const factors=[...document.querySelectorAll('#factors .factor')];
-  for (let row=1;row<=count;row++) {
-    const card=document.createElement('article');card.className='sphere-cut-row';
-    card.style.height=`${factors[row-1]?.offsetHeight||state.factors[row-1].height}px`;
-    card.tabIndex=0;card.setAttribute('aria-label',`Inspect sphere cut complex ${row<=split?'after':'before'} factor ${row}`);
-    card.innerHTML=`<strong>${row<=split?'After':'Before'} F${row}</strong><div class="sphere-cut-thumbnail">Calculating five arcs…</div><small></small>`;
-    card.onclick=()=>openSphereCut(row);
-    card.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openSphereCut(row);}};
-    sphereCuts.append(card);
-    if (sphereCutRows.has(row)) renderSphereCut(row,sphereCutRows.get(row));
-  }
-  updateSphereProgress(count);
-  sphereCutResize.disconnect();factors.forEach(card=>sphereCutResize.observe(card));
+  const queued=new Set(),queue=[];
+  let running=false,failed=0;
   const revision=state.revision;
-  (async()=>{
-    let failed=0;
-    for (let row=1;row<=count;row++) {
+  async function drain() {
+    if (running) return;
+    running=true;
+    while (queue.length && request===sphereCutRequest) {
+      const row=queue.shift();
       if (sphereCutRows.has(row)) continue;
       try {
+        const card=sphereCuts.children[row-1];
+        if (card) card.querySelector('.sphere-cut-thumbnail').textContent='Calculating five arcs…';
         const response=await fetch(`/api/sphere-cut?row=${row}&split=${split}&revision=${revision}`+
           (layoutFamily==='smooth'?'&smooth=1':''));
         const data=await response.json();
         if (request!==sphereCutRequest || revision!==state.revision) return;
         if (!response.ok) throw new Error(data.error||'Cut calculation failed');
         renderSphereCut(row,data);
+        if (sphereCutPendingOpen===row) {
+          sphereCutPendingOpen=null;
+          openSphereCut(row);
+        }
       } catch(error) {
         if (request!==sphereCutRequest) return;
         const card=sphereCuts.children[row-1];
         if (card) card.querySelector('.sphere-cut-thumbnail').textContent=error.message;
+        if (sphereCutPendingOpen===row) sphereCutPendingOpen=null;
         failed++;
         updateSphereProgress(count,failed);
       }
     }
-    if (request===sphereCutRequest) updateSphereProgress(count,failed);
-  })();
+    running=false;
+  }
+  function requestRow(row,open=false) {
+    if (sphereCutRows.has(row)) {if (open) openSphereCut(row);return;}
+    if (open) sphereCutPendingOpen=row;
+    if (!queued.has(row)) {queued.add(row);queue.push(row);}
+    drain();
+  }
+  sphereCutObserver=new IntersectionObserver(entries=>{
+    for (const entry of entries)
+      if (entry.isIntersecting) requestRow(Number(entry.target.dataset.row));
+  },{rootMargin:'350px 0px'});
+  for (let row=1;row<=count;row++) {
+    const card=document.createElement('article');card.className='sphere-cut-row';
+    card.style.height=`${factors[row-1]?.offsetHeight||state.factors[row-1].height}px`;
+    card.tabIndex=0;card.setAttribute('aria-label',`Inspect sphere cut complex ${row<=split?'after':'before'} factor ${row}`);
+    card.dataset.row=String(row);
+    card.innerHTML=`<strong>${row<=split?'After':'Before'} F${row}</strong><div class="sphere-cut-thumbnail">Scroll here to draw five arcs…</div><small></small>`;
+    card.onclick=()=>requestRow(row,true);
+    card.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();requestRow(row,true);}};
+    sphereCuts.append(card);
+    if (sphereCutRows.has(row)) renderSphereCut(row,sphereCutRows.get(row));
+    sphereCutObserver.observe(card);
+  }
+  updateSphereProgress(count);
+  sphereCutResize.disconnect();factors.forEach(card=>sphereCutResize.observe(card));
 }
 sphereSplit.onchange=refreshSphereCuts;
 sphereLayout.onchange=()=>{

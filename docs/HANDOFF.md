@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## October 13: saved-lab startup speed
+
+The saved-session validator was recomputing the starting braid's exact disk
+action for every undo-history entry. It now computes the starting word once,
+caches its action for each distinct global frame, and still checks the complete
+factor product and size of every saved state. A representative 17-state session
+validated in about 11.3 seconds before and 4.7 seconds after this change in
+native Python; browser timing also includes Pyodide download and startup.
+
+The public lab previously queued all five-arc sphere cut drawings immediately
+after restoration, occupying the single Python worker before edits could run.
+Cut rows now calculate as they enter the viewport, retain their existing cache,
+and calculate on demand when a user opens a row. The progress text explains
+this behavior. Local browser inspection restored a 14-factor saved session:
+two visible cut rows calculated initially, distant rows displayed scroll
+placeholders, and opening a later row produced its cut inspector. Thirty focused
+lab tests passed, including saved-history validation. `node --check` and the
+portable site build/link check passed. Next measure a cold published load after
+Pages deployment and target Pyodide transfer/startup if it remains slow; keep
+the saved-history checks and lazy cut rendering intact.
+
 ## October 13: first-load factorization lab preview
 
 The public (6,7) and Xiao (4,3) labs already shipped build-time seed diagrams,

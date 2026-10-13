@@ -12,7 +12,7 @@ import threading
 import webbrowser
 from urllib.parse import parse_qs,urlsplit
 from .editor import EditorHandler
-from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors
+from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors,validate_size
 from .fibration_lab_seeds import XIAO_FOUR_THREE
 from .braid_actions import free_homotopy_key,reduce_word
 from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
@@ -49,12 +49,18 @@ def validated_session_document(saved,seed_slug='6-7'):
             any(not isinstance(label,str) or not 1<=len(label)<=300 for label in operations)):
         raise ValueError('Invalid operation history')
     history=[];frames=[];limited=[]
+    seed_word=product(seed_factors)
+    expected_actions={}
     for index,entry in enumerate(entries):
         factors=parse_factors(entry,expected_seed=seed_slug)
         frame=parse_global_conjugator(saved_frames[index])
         try:
-            if frame: checked_global_frame(factors,frame,seed_factors)
-            else: checked(seed_factors,factors)
+            validate_size(factors)
+            if frame not in expected_actions:
+                expected_actions[frame]=exact_action(frame+seed_word+inverse_word(frame))
+            if exact_action(product(factors))!=expected_actions[frame]:
+                raise ValueError('Product does not match its saved global conjugation' if frame else
+                                 'Exact disk action verification failed; operation was not applied')
         except VerificationLimitError:
             if seed_slug=='4-3': raise
             limited.append(index+1)
