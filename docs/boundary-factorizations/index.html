@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planar boundary factorization catalog</title>
+<style>
+  :root { color-scheme: light; font: 16px/1.45 system-ui,sans-serif; color: #213d3a; background: #f3f6f3 }
+  body { margin: 0 }
+  header,main { max-width: 1260px; margin: auto; padding: 20px }
+  header { padding-bottom: 0 }
+  h1 { font: 2.3rem/1.1 Georgia,serif; margin: .4em 0 }
+  h2 { font: 1.5rem/1.2 Georgia,serif }
+  a { color: #136d65 }
+  .intro { max-width: 85ch }
+  .panel { background: white; border: 1px solid #d3e0d9; border-radius: 13px; padding: 18px; margin: 16px 0; box-shadow: 0 2px 10px #244d3810 }
+  .controls { display: flex; gap: 18px; flex-wrap: wrap; align-items: end }
+  [hidden] { display: none !important }
+  #pager { align-items: center; gap: 10px; font-size: .85rem }
+  #pager button { border: 1px solid #9db5aa; border-radius: 7px; background: #e6f3e9; padding: 5px 9px; cursor: pointer }
+  #pager button:disabled { opacity: .45; cursor: default }
+  label { display: grid; gap: 5px; font-size: .9rem; font-weight: 650 }
+  select,input { font: inherit; border: 1px solid #9db5aa; border-radius: 7px; padding: 8px; background: white; color: inherit }
+  input[type=number] { width: 5em }
+  .layout { display: grid; grid-template-columns: minmax(240px,310px) minmax(0,1fr); gap: 18px }
+  #types { max-height: 75vh; overflow: auto; border: 1px solid #d6e4dc; border-radius: 8px }
+  #types button { display: block; width: 100%; border: 0; border-bottom: 1px solid #e2eae4; background: white; padding: 10px 12px; text-align: left; color: inherit; cursor: pointer; font: inherit }
+  #types button:hover,#types button[aria-current=true] { background: #e6f3e9 }
+  #types button small { display: block; color: #526a62 }
+  .matrix-wrap { max-width: 100%; overflow: auto }
+  table { border-collapse: collapse; font-variant-numeric: tabular-nums }
+  th,td { border: 1px solid #d4e0d8; padding: 6px 9px; text-align: center; min-width: 26px }
+  thead th { background: #e7efeb; position: sticky; top: 0 }
+  th:first-child { text-align: left; white-space: nowrap }
+  .yes { background: #b8ded3; color: #073b31; font-weight: bold }
+  .singleton th,.singleton td { border-top: 3px solid #7ba99b; background: #f5e8d5 }
+  .negative { color: #9a3a22; font-weight: bold }
+  .tag { display: inline-block; background: #e9ebf6; border-radius: 20px; padding: 3px 10px; font-size: .82rem; font-weight: 700 }
+  .hint { color: #536a61; font-size: .9rem }
+  @media(max-width:760px) { .layout { grid-template-columns: 1fr } #types { max-height: 220px } }
+</style>
+<header>
+  <p><a href="../../index.html">Surface diagrams</a> / Factorization catalog</p>
+  <h1>Planar boundary factorization catalog</h1>
+  <p class="intro">Candidate patterns for a disk with <strong>inner boundary circles and no marked points</strong>. Each numbered column is an inner boundary. Each row is the set of boundaries inside one non-singleton Dehn twist. Every pair occurs in exactly one row. This necessary count condition does <em>not</em> prove that the unordered twists can be ordered to equal the exterior boundary twist.</p>
+</header>
+<main>
+  <div class="panel controls">
+    <label>Inner boundaries <select id="n"></select></label>
+    <label>Extra twist power on each inner boundary <input id="q" type="number" step="1" value="0"></label>
+    <span id="status" role="status">Loading catalog…</span>
+  </div>
+  <div class="layout">
+    <section class="panel"><h2>Patterns</h2><p class="hint">Unordered rows, also identified under relabeling of the inner boundaries. Select a representative.</p><p class="controls" id="pager"><button id="prev" type="button">Previous</button><span id="range"></span><button id="next" type="button">Next</button></p><div id="types"></div></section>
+    <section class="panel"><h2 id="heading">Choose a pattern</h2><p><span class="tag">Count-compatible candidate</span></p><p id="description"></p><div class="matrix-wrap" id="matrix"></div><p class="hint" id="explain"></p></section>
+  </div>
+  <section class="panel"><h2>What the counts mean</h2><p>The target is one positive exterior-boundary twist, multiplied by the chosen power of every inner-boundary twist. A non-singleton block contributes one to each enclosed pair and one to each enclosed boundary. The orange singleton row gives the signed powers needed so that every column has the target total. Negative entries mean inverse boundary twists. If you require <em>only positive</em> twists and choose extra power 0, the full exterior twist by itself is the sole possible pattern.</p><p>Matching counts is a necessary condition in the abelianization. Supporting curves, factor order, and exact mapping-class equality remain to be found. The catalog does not label these patterns as verified factorizations. An eight-boundary surface has seven inner boundaries; choose “7 inner / 8 total” for that convention.</p><p><a href="https://msp.org/gt/2010/14-4/gt-v14-n4-p06-s.pdf">Multiplicity invariant reference (Plamenevskaya–Van Horn-Morris)</a> · <a href="https://oeis.org/A001200">Structural type count reference</a></p></section>
+</main>
+<script>
+const count = {1:1,2:1,3:2,4:3,5:5,6:10,7:24,8:69,9:384,10:5250};
+const nSelect = document.getElementById('n'), qInput = document.getElementById('q');
+let data = null, selected = 0, page = 0, request = 0;
+for (let n=1;n<=10;n++) nSelect.add(new Option(`${n} inner / ${n+1} total · ${count[n]} type${count[n]===1?'':'s'}`, String(n)));
+nSelect.value='7';
+function completeLines(n,large) {
+  const used = new Set();
+  for (const block of large) for(let i=0;i<block.length;i++) for(let j=i+1;j<block.length;j++) used.add(`${block[i]},${block[j]}`);
+  const blocks = large.map(b=>[...b]);
+  for(let i=1;i<=n;i++) for(let j=i+1;j<=n;j++) if(!used.has(`${i},${j}`)) blocks.push([i,j]);
+  return blocks.sort((a,b)=>b.length-a.length||a.join(',').localeCompare(b.join(',')));
+}
+function render() {
+  if(!data) return;
+  const n=data.n, large=data.types[selected], blocks=completeLines(n,large), q=Number(qInput.value)||0;
+  const degree=Array(n).fill(0);
+  const pair=Array.from({length:n},()=>Array(n).fill(0));
+  for(const block of blocks) {
+    for(const x of block) degree[x-1]++;
+    for(let i=0;i<block.length;i++) for(let j=i+1;j<block.length;j++) pair[block[i]-1][block[j]-1]++;
+  }
+  const singles=degree.map(d=>1+q-d), good=pair.every((row,i)=>row.every((v,j)=>j<=i||v===1));
+  document.getElementById('heading').textContent=`Pattern ${selected+1} of ${data.types.length}`;
+  const sizes=[...new Set(blocks.map(b=>b.length))].sort((a,b)=>b-a).map(size=>`${size}×${blocks.filter(b=>b.length===size).length}`).join(', ') || 'none';
+  document.getElementById('description').textContent=`${blocks.length} non-singleton twist${blocks.length===1?'':'es'} (${large.length} enclose three or more boundaries). Block sizes: ${sizes}.`;
+  const table=document.createElement('table'), head=document.createElement('thead'), tr=document.createElement('tr');
+  for(const value of ['Twist support',...Array.from({length:n},(_,i)=>String(i+1))]) {const th=document.createElement('th');th.textContent=value;tr.append(th)}
+  head.append(tr);table.append(head);
+  const body=document.createElement('tbody');
+  blocks.forEach((block,i)=>{const row=document.createElement('tr'), th=document.createElement('th');th.textContent=`${i+1}: {${block.join(', ')}}`;row.append(th);
+    for(let p=1;p<=n;p++){const cell=document.createElement('td');if(block.includes(p)){cell.className='yes';cell.textContent='●'}row.append(cell)}body.append(row)});
+  const row=document.createElement('tr');row.className='singleton';const th=document.createElement('th');th.textContent='Inner boundary powers';row.append(th);
+  for(const power of singles){const cell=document.createElement('td');cell.textContent=String(power).replace('-', '−');if(power<0)cell.className='negative';row.append(cell)}body.append(row);table.append(body);
+  document.getElementById('matrix').replaceChildren(table);
+  document.getElementById('explain').textContent=`Pair multiplicity: ${good?'1 for all pairs':'CHECK FAILED'}. Signed column totals: ${degree.map((d,i)=>d+singles[i]).join(', ')} (target ${1+q}). ${singles.some(v=>v<0)?'This candidate needs inverse singleton boundary twists at the chosen target power.':'All required singleton powers are nonnegative.'}`;
+}
+function renderTypes(){const list=document.getElementById('types');list.replaceChildren();const start=page*100,end=Math.min(start+100,data.types.length);
+  document.getElementById('pager').hidden=data.types.length<=100;
+  document.getElementById('range').textContent=`${start+1}–${end} of ${data.types.length}`;
+  document.getElementById('prev').disabled=page===0;
+  document.getElementById('next').disabled=end===data.types.length;
+  data.types.slice(start,end).forEach((large,offset)=>{const i=start+offset,button=document.createElement('button');button.type='button';button.setAttribute('aria-current',String(i===selected));button.textContent=`${i+1}. ${large.length?large.map(b=>'{'+b.join(',')+'}').join('  '):(data.n===1?'Annulus boundary twist':'All pairwise blocks')}`;
+  const rows=completeLines(data.n,large).length,small=document.createElement('small');small.textContent=`${rows} non-singleton row${rows===1?'':'s'}`;button.append(small);button.onclick=()=>{selected=i;for(const el of list.children)el.setAttribute('aria-current',String(el===button));render()};list.append(button)})}
+async function load(){const token=++request,n=Number(nSelect.value);data=null;document.getElementById('status').textContent=`Loading ${count[n]} patterns…`;try{const res=await fetch(`data/${n}.json`);if(!res.ok)throw Error(`HTTP ${res.status}`);const next=await res.json();if(token!==request)return;if(next.n!==n||next.types.length!==count[n])throw Error('Catalog data mismatch');data=next;selected=0;page=0;renderTypes();render();document.getElementById('status').textContent=`${next.types.length} structural types loaded`;}catch(error){if(token===request)document.getElementById('status').textContent=`Could not load catalog: ${error.message}`}}
+nSelect.addEventListener('change',load);qInput.addEventListener('input',render);
+document.getElementById('prev').onclick=()=>{page--;selected=page*100;renderTypes();render()};
+document.getElementById('next').onclick=()=>{page++;selected=page*100;renderTypes();render()};
+load();
+</script>
+</html>

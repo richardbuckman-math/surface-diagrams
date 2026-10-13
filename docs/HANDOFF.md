@@ -1,5 +1,34 @@
 # Handoff: surface-diagrams
 
+## October 13: planar boundary incidence catalog
+
+A separate static Pages catalog now enumerates candidate products of Dehn
+twists on planar surfaces with **no marked points**, one through ten labeled
+inner boundaries, modulo row order and simultaneous relabeling of inner
+boundaries. The generator constructs every pair-once block system by adding
+one boundary to disjoint old blocks, completing unused pairs by two-boundary
+blocks, and removing exact incidence-graph isomorphs. There are 24 types for
+an eight-total-boundary surface (seven inner boundaries), 69 for eight inner
+boundaries, and 5,250 for ten inner boundaries. All JSON files are precomputed
+at build time; the browser loads one size at a time and shows 100 patterns per
+page. The matrix explicitly computes the singleton boundary-twist powers
+needed for the target exterior twist times an optional uniform inner-boundary
+multitwist. The generated page is `docs/boundary-factorizations/index.html`.
+
+These are **abelianized incidence candidates**, not ordered or geometrically
+verified mapping-class factorizations. In particular, at inner power zero,
+every nontrivial pattern needs negative singleton powers. The enumeration
+matches the standard unlabeled finite-linear-space counts through ten points;
+unit tests independently check every saved pair count and signed column total.
+The user's `8Boundaries.pdf` at the supplied OneDrive path remains a zero-byte
+cloud placeholder on this host, so its diagrams could not yet be compared.
+The user confirmed that boundary renumberings should count as one type.
+Next, compare the PDF as soon as its contents hydrate or the user attaches it,
+resolve whether its eight boundaries include the outside boundary, then pick
+the first nontrivial candidate and test explicit curve positions and an
+ordered product in the framed mapping class group. Do not promote a matching
+incidence matrix to a verified factorization.
+
 ## October 13: Figure 4.7 half-lantern endpoint chart
 
 The previously checked two PC half-lantern substitutions used arcs ending
