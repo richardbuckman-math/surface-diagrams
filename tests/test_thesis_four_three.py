@@ -10,8 +10,9 @@ from surface_diagrams.braid_actions import inverse_word
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.marked_disk_chain import marked_disk_chain
 from surface_diagrams.thesis_four_three import (
-    CHART_BRAID, CONCATENATED_ROWS, CYCLIC_ROWS, FIRST_ROWS, OUTER_WORD,
-    REARRANGED_ROWS, ROTATED_ROWS, SQUARED_ROWS, check_stage,
+    CHART_BRAID, CONCATENATED_ROWS, CYCLIC_ROWS, FIRST_ROWS,
+    HALF_LANTERN_ROWS, OUTER_WORD, PAIRABLE_ROWS, REARRANGED_ROWS,
+    ROTATED_ROWS, SQUARED_ROWS, T45_INVERSE_SQUARE, check_stage,
     chronological_word,
 )
 
@@ -74,9 +75,26 @@ class ThesisFourThreeTests(unittest.TestCase):
     def test_published_squared_stage_contains_every_certified_cut_row(self):
         page = build_squared_html()
         self.assertEqual(SQUARED_OUTPUT.read_text(encoding='utf-8'), page)
-        self.assertEqual(page.count('class="factor-row"'), 23)
-        self.assertEqual(page.count('data-projection="smooth"'), 23)
-        self.assertIn('The inserted middle column exposes the cyclic step', page)
+        self.assertEqual(page.count('class="factor-row"'), 39)
+        self.assertEqual(page.count('data-projection="smooth"'), 39)
+        self.assertIn('checked PC half lantern substitutions', page)
+
+    def test_two_half_lantern_pairs_remove_all_negative_twists(self):
+        target = exact_action(OUTER_WORD * 2, 5)
+        for rows in (PAIRABLE_ROWS, HALF_LANTERN_ROWS):
+            with self.subTest(rows=rows):
+                self.assertEqual(exact_action(chronological_word(rows), 5), target)
+                self.assertEqual(len(check_stage(rows, outer_power=2)), 9)
+        correction = T45_INVERSE_SQUARE.word
+        for row in SQUARED_ROWS[1:]:
+            for factor in row:
+                self.assertEqual(exact_action(correction + factor.word, 5),
+                                 exact_action(factor.word + correction, 5))
+        for old, new in ((PAIRABLE_ROWS[4:6], HALF_LANTERN_ROWS[4:6]),
+                         (PAIRABLE_ROWS[6:8], HALF_LANTERN_ROWS[6:8])):
+            self.assertEqual(exact_action(chronological_word(old), 5),
+                             exact_action(chronological_word(new), 5))
+        self.assertTrue(all(f.exponent > 0 for row in HALF_LANTERN_ROWS for f in row))
 
 
 if __name__ == '__main__':

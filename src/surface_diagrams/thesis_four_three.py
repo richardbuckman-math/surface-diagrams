@@ -4,8 +4,9 @@ Figure 4.5 has four drawn rows. Its top row contains two disjoint twists;
 the green T45 factor is negative squared. The thesis applies rows top to
 bottom, so the corresponding algebraic braid product is written bottom to
 top in this package's right-composition convention. This module covers the
-three Figure 4.5 columns and the Figure 4.6 chart braid, not the later
-half-lantern and Hurwitz arrows.
+three Figure 4.5 columns, the Figure 4.6 chart braid, and one checked
+ordering of the two Figure 4.7 PC half-lantern substitutions. It does not
+transcribe the later Hurwitz arrows.
 """
 
 from dataclasses import dataclass
@@ -14,6 +15,7 @@ from .braid_actions import inverse_word, reduce_word
 from .mapping_classes import ConjugatedTwist, exact_action
 from .marked_disk_chain import marked_disk_chain
 from .normal_cut_engine import calculate_cut_system
+from .projected_relations import pc_half_lantern_terms
 
 
 @dataclass(frozen=True)
@@ -73,6 +75,33 @@ SQUARED_ROWS = (
     (ThesisFactor('T123^2', T123.twist, 2),
      ThesisFactor('T45^-4', T45_INVERSE_SQUARE.twist, -4)),
 ) + ROTATED_ROWS[2:]
+
+# The negative T45 twist commutes with every other support in this state.
+# Split its fourth inverse power into two inverse squares and place one
+# immediately below each under-going three-point twist. This is a checked
+# alternative ordering for applying the two puncture-capped half lanterns.
+PAIRABLE_ROWS = (
+    (SQUARED_ROWS[0][0],),
+    SQUARED_ROWS[1], SQUARED_ROWS[2],
+    (ThesisFactor('T345^2', T345.twist, 2),),
+    (T245_UNDER,), (T45_INVERSE_SQUARE,),
+    (T145_UNDER,), (T45_INVERSE_SQUARE,),
+)
+
+
+def _half_lantern_rows(factor, label):
+    first, second, correction = pc_half_lantern_terms(factor.twist)
+    if exact_action(correction.word, 5) != exact_action(
+            ConjugatedTwist((), 4, 2, power=2).word, 5):
+        raise ValueError('Half-lantern correction is not T45 squared')
+    # Algebraic H_first H_second acts top-first as H_second, then H_first.
+    return ((ThesisFactor(f'{label} second half', second),),
+            (ThesisFactor(f'{label} first half', first),))
+
+
+HALF_LANTERN_ROWS = (PAIRABLE_ROWS[:4]
+                     + _half_lantern_rows(T245_UNDER, '245')
+                     + _half_lantern_rows(T145_UNDER, '145'))
 
 
 def chronological_word(rows, count=None):

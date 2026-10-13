@@ -1,10 +1,11 @@
-"""Render the checked concatenation and first regrouping of thesis Figure 4.7."""
+"""Render the checked squared-boundary and PC half-lantern disk stages."""
 
 from pathlib import Path
 
 from examples.build_four_three_thesis_first_stage import column_html
 from surface_diagrams.thesis_four_three import (
-    CONCATENATED_ROWS, ROTATED_ROWS, SQUARED_ROWS,
+    CONCATENATED_ROWS, HALF_LANTERN_ROWS, PAIRABLE_ROWS, ROTATED_ROWS,
+    SQUARED_ROWS,
 )
 
 
@@ -23,6 +24,12 @@ def build_html():
     combined = column_html('3 · Combine the top pair', SQUARED_ROWS,
                            'The two T123 factors form T123^2; the two green inverse squares form T45^-4.',
                            outer_power=2)
+    pairable = column_html('4 · Place the two inverse squares', PAIRABLE_ROWS,
+                           'The T45 correction commutes through these supports; each green square now follows a three-point twist.',
+                           outer_power=2)
+    halves = column_html('5 · Apply PC half lantern twice', HALF_LANTERN_ROWS,
+                         'Each three-point twist followed by its T45 inverse square becomes two positive arc half twists.',
+                         outer_power=2)
     return ('''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Checked squared-boundary stage · Baykur–Korkmaz (4,3)</title>
 <style>
@@ -44,16 +51,18 @@ def build_html():
 </style>
 <header><div class="eyebrow">Surface diagrams · exact five-strand checkpoint</div>
 <h1>Baykur–Korkmaz (4,3): square the boundary twist</h1>
-<p>The first column of <a href="../figures/four-three-thesis/fig-4-7.png">thesis Figure 4.7</a> concatenates two checked factorizations of the five-point exterior boundary twist. We show an explicit cyclic rotation before combining the matching top row. All three columns have the exact disk action of the <strong>squared exterior twist</strong> on all five meridians.</p>
+<p>The first column of <a href="../figures/four-three-thesis/fig-4-7.png">thesis Figure 4.7</a> concatenates two checked factorizations of the five-point exterior boundary twist. We expose the cyclic rotation and move the negative squares into pairs before applying the puncture-capped half lantern twice. All five columns have the exact disk action of the <strong>squared exterior twist</strong> on all five meridians.</p>
 <div class="controls"><button id="previous" type="button">← Previous column</button><button id="next" type="button">Next column →</button>
 <label>Cut drawing <select id="projection"><option value="strip">Vertical rays</option><option value="smooth">Smooth curves</option><option value="fan">Fan</option></select></label>
-<span id="position" role="status">Column 1 of 3</span></div></header>
-<main class="strip" id="strip" tabindex="0" aria-label="Three checked squared-boundary columns">'''
+<span id="position" role="status">Column 1 of 5</span></div></header>
+<main class="strip" id="strip" tabindex="0" aria-label="Five checked squared-boundary columns">'''
     + first + '<div class="arrow" aria-hidden="true">→<small>cyclic<br>rotation</small></div>'
     + rotated + '<div class="arrow" aria-hidden="true">→<small>combine<br>commuting twists</small></div>'
-    + combined + '''</main>
-<div class="notes"><p><strong>Certificate:</strong> each complete product is checked against T12345 squared as a based five-strand disk action. Every prefix yields five jointly certified cut arcs, including the boundary-to-first arc. The inserted middle column exposes the cyclic step; the two top pairs combine by exact local disk-action equality. The smooth cut layout preserves the certified crossing order, but has no independent geometric minimality claim.</p>
-<p><a href="four-three-thesis-first-stage.html">Review the three Figure 4.5 columns</a> · <a href="four-three-thesis-storyboard.html">See the original thesis storyboard</a>. The later commuting rearrangement and two half-lantern substitutions in Figure 4.7 remain to be individually certified.</p></div>
+    + combined + '<div class="arrow" aria-hidden="true">→<small>commute<br>corrections</small></div>'
+    + pairable + '<div class="arrow" aria-hidden="true">→<small>PC half<br>lantern ×2</small></div>'
+    + halves + '''</main>
+<div class="notes"><p><strong>Certificate:</strong> each complete product is checked against T12345 squared as a based five-strand disk action. Every prefix yields five jointly certified cut arcs, including the boundary-to-first arc. The intermediate columns expose the cyclic and correction moves; the two three-point-plus-inverse-square pairs become four positive half twists by checked PC half lantern substitutions. These last two columns give one exact ordering of that step; they are not a factor-by-factor transcription of the thesis's third and fourth drawings. The smooth cut layout preserves the certified crossing order, but has no independent geometric minimality claim.</p>
+<p><a href="four-three-thesis-first-stage.html">Review the three Figure 4.5 columns</a> · <a href="four-three-thesis-storyboard.html">See the original thesis storyboard</a>. The subsequent Hurwitz moves in Figure 4.8 remain to be individually certified.</p></div>
 <script>
  const strip=document.getElementById('strip'),columns=[...strip.querySelectorAll('.column')],position=document.getElementById('position');
  function current(){const middle=strip.scrollLeft+strip.clientWidth/2;return columns.reduce((best,col,i)=>Math.abs(col.offsetLeft+col.offsetWidth/2-middle)<Math.abs(columns[best].offsetLeft+columns[best].offsetWidth/2-middle)?i:best,0)}

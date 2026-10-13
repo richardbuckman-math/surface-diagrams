@@ -1,6 +1,6 @@
 # Handoff: surface-diagrams
 
-## October 13: squared exterior-twist checkpoint in thesis Figure 4.7
+## October 13: squared exterior twist and two PC half lanterns
 
 The checked Figure 4.5 third and second columns can be concatenated to
 factor `T12345^2` on the five-marked disk. `thesis_four_three.py` now keeps
@@ -15,15 +15,23 @@ of all three states has a five-arc joint normal-strand certificate.
 horizontally browsable vertical columns with planar support and cut chart
 after each row. The vertical-ray, smooth, and fan drawing options use the
 same certified crossing data. The first checked page, source storyboard, and
-site catalog link to it. Visual inspection of the new page confirmed all
-three columns, the first and combined cut diagrams, and the smooth selector.
-Seven focused tests pass, including generated-page freshness; the portable
-site build and local-link check pass. **This is only the first Figure 4.7 regrouping**;
-the later commuting arrangement and two half-lantern substitutions are not
-yet certified. Next transcribe the source's first half-lantern pair and
-validate its exact disk action, local Hurwitz route, and per-row cut chains
-before adding another arrow. Preserve the distinction between a checked
-disk equality and a suggested support picture.
+site catalog link to it. Visual inspection confirmed all five columns, the
+first and final cut diagrams, the routed half-twist supports, and the smooth
+selector. Eight focused tests pass, including generated-page freshness; the portable
+site build and local-link check pass.
+
+An additional exact ordering now moves `T45^-4` into two `T45^-2` factors,
+one just after each under-going three-point twist. The correction commutes
+with every support it crosses; this is checked by full based disk action.
+Each adjacent three-point-plus-inverse-square pair equals two positive
+half twists by the existing PC half-lantern relation. Both local equalities,
+the full five-strand product, and every prefix's joint five-arc cut chart
+pass exact checks. The squared-stage page now adds those as columns 4 and 5.
+**They are an alternative checked ordering, not a factor-by-factor
+transcription of the thesis's third and fourth Figure 4.7 drawings.**
+Next match those two source drawings exactly, then trace the Figure 4.8
+Hurwitz moves toward the final (4,3) relation. Preserve the distinction
+between disk equality, source depiction, and a support picture.
 
 ## October 13: three exact Baykur--Korkmaz thesis columns
 
