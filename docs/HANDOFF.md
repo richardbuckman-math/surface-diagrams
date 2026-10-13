@@ -1,5 +1,29 @@
 # Handoff: surface-diagrams
 
+## October 13: first-load factorization lab preview
+
+The public (6,7) and Xiao (4,3) labs already shipped build-time seed diagrams,
+but a full-screen loading overlay covered them until browser Python finished.
+The overlay now shrinks to a visible, nonblocking progress badge once a
+read-only preview is painted. If a browser has a saved exploration, a rendered
+preview is cached with its exact serialized session after a successful worker
+response; a reload displays that matching view immediately while the worker
+reopens it. When no matching cached preview exists, the prepared default
+factorization is shown and clearly labeled as such during restoration. Editing
+remains disabled until the exact worker state arrives. A worker failure leaves
+the static preview visible with an error and retry control.
+
+Validation: `python examples/build_site.py` checked local links; both changed
+JavaScript files passed `node --check`; 34 focused Python lab tests and the
+Node orientation test passed. In local browser inspection, the (6,7) first
+load showed all 13 factor cards under the compact badge before the worker
+finished. Splitting F1 produced 14 cards; an immediate reload showed those
+14 saved cards under the badge, then restored the editable state and undo
+history. Xiao's seven-card prepared preview also appeared before its engine
+finished. Next measure cold-start latency on the published page and optimize
+the Python/WASM download if it remains disruptive; keep the static preview
+and exact editable state clearly distinguished.
+
 ## October 13: squared exterior twist and two PC half lanterns
 
 The checked Figure 4.5 third and second columns can be concatenated to

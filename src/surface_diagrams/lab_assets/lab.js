@@ -502,12 +502,20 @@ $('svg').onclick=async()=>{
 };
 const loadingOverlay=$('lab-loading'),loadingMessage=$('lab-loading-message');
 $('lab-loading-retry').onclick=()=>location.reload();
-if(window.surfaceLabPublic && !window.surfaceLabSeedPreview)
+if(window.surfaceLabPublic && !window.surfaceLabStartupPreview)
  loadingMessage.textContent='Reopening your saved exploration and starting exact calculations…';
-if(window.surfaceLabSeedPreview)window.surfaceLabSeedPreview.then(preview=>{
+if(window.surfaceLabStartupPreview)window.surfaceLabStartupPreview.then(preview=>{
  if(window.surfaceLabReady)return;
  state=preview;busy=true;paint();
- loadingMessage.textContent='Diagrams are visible. Starting the exact calculation engine…';
+ loadingOverlay.classList.add('preview');
+ loadingMessage.textContent=window.surfaceLabPreviewKind==='saved'?
+  'Showing your saved diagrams while exact calculations start…':
+  window.surfaceLabPreviewKind==='default-while-restoring'?
+  'Showing the default diagrams while your saved exploration reopens…':
+  'Showing the prepared factorization while exact calculations start…';
+ status(window.surfaceLabPreviewKind==='default-while-restoring'?
+  'Default factorization preview; your saved exploration is still loading. Editing is paused.':
+  'Read-only preview. Editing unlocks when the calculation engine is ready.');
 }).catch(()=>{});
 fetch('/api/state').then(r=>{if(!r.ok)throw new Error('Could not load the lab');return r.json();}).then(data=>{
  window.surfaceLabReady=true;busy=false;state=data;paint();loadingOverlay.hidden=true;

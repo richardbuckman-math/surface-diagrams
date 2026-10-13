@@ -47,9 +47,9 @@ def build():
     xiao_out.mkdir(exist_ok=True)
     (xiao_out/'index.html').write_text(xiao_html, encoding='utf-8')
     for slug in ('6-7', '4-3'):
-        # New visitors see the original diagrams before the browser's Python
-        # runtime finishes loading. This snapshot is never used for a saved
-        # workspace, and the worker remains the authority for every edit.
+        # Keep a prepared default view available while the browser's Python
+        # runtime starts, including when a saved session has no cached preview.
+        # The worker remains the authority for restored sessions and every edit.
         preview = LabServer.__new__(LabServer)
         preview.seed_slug = slug
         preview.seed_factors = starting_factors(slug)
