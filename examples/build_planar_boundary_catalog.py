@@ -10,7 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
-from surface_diagrams.planar_boundary_catalog import structural_types, incidence
+from surface_diagrams.planar_boundary_catalog import structural_types, incidence, pattern_sort_key
 
 OUT = ROOT / 'docs' / 'boundary-factorizations' / 'data'
 EXPECTED = {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 10, 7: 24, 8: 69, 9: 384, 10: 5250}
@@ -19,9 +19,7 @@ EXPECTED = {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 10, 7: 24, 8: 69, 9: 384, 10: 5250}
 def build(ns=range(1, 11)):
     OUT.mkdir(parents=True, exist_ok=True)
     for n in ns:
-        types = sorted(structural_types(n),
-                       key=lambda blocks: (-max((len(block) for block in blocks), default=0),
-                                           len(blocks), blocks))
+        types = sorted(structural_types(n), key=lambda blocks: pattern_sort_key(n, blocks))
         if len(types) != EXPECTED[n]:
             raise AssertionError(f'{n} inner boundaries: {len(types)} types, expected {EXPECTED[n]}')
         for large in types:

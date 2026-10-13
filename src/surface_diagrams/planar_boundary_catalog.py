@@ -52,6 +52,12 @@ def incidence(n, large=(), *, inner_power=0):
     return blocks, singleton_powers
 
 
+def pattern_sort_key(n, large):
+    """Largest twist sizes first, comparing counts from size n down to 2."""
+    counts = Counter(map(len, lines(n, large)))
+    return tuple(-counts[size] for size in range(n, 1, -1)), tuple(large)
+
+
 @lru_cache(maxsize=200000)
 def _signature(n, large):
     blocks = lines(n, large)

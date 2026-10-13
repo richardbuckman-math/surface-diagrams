@@ -1,33 +1,53 @@
 # Handoff: surface-diagrams
 
-## October 13: planar boundary incidence catalog
+## October 13: positive boundary relations and double exterior twist
 
-A separate static Pages catalog now enumerates candidate products of Dehn
-twists on planar surfaces with **no marked points**, one through ten labeled
-inner boundaries, modulo row order and simultaneous relabeling of inner
-boundaries. The generator constructs every pair-once block system by adding
-one boundary to disjoint old blocks, completing unused pairs by two-boundary
-blocks, and removing exact incidence-graph isomorphs. There are 24 types for
-an eight-total-boundary surface (seven inner boundaries), 69 for eight inner
-boundaries, and 5,250 for ten inner boundaries. All JSON files are precomputed
-at build time; the browser loads one size at a time and shows 100 patterns per
-page. The matrix explicitly computes the singleton boundary-twist powers
-needed for the target exterior twist times an optional uniform inner-boundary
-multitwist. The generated page is `docs/boundary-factorizations/index.html`.
+The static Pages catalog treats planar surfaces with **no marked points** and
+one through ten inner boundaries, modulo row order and relabeling. It lists
+every pair-once incidence pattern on one page per size, ordered by counts of
+the largest twist supports. There are 24 types for seven inner boundaries, 69
+for eight inner boundaries, and 5,250 for ten. The target displayed alongside
+each positive factorization is `T_outer ∏ T_i^(r_i−1)`, where `r_i` counts
+non-singleton factors enclosing inner boundary `i`. This moves the necessary
+positive inner-boundary powers to the same side as the exterior twist.
 
-These are **abelianized incidence candidates**, not ordered or geometrically
-verified mapping-class factorizations. In particular, at inner power zero,
-every nontrivial pattern needs negative singleton powers. The enumeration
-matches the standard unlabeled finite-linear-space counts through ten points;
-unit tests independently check every saved pair count and signed column total.
-The user's `8Boundaries.pdf` at the supplied OneDrive path remains a zero-byte
-cloud placeholder on this host, so its diagrams could not yet be compared.
-The user confirmed that boundary renumberings should count as one type.
-Next, compare the PDF as soon as its contents hydrate or the user attaches it,
-resolve whether its eight boundaries include the outside boundary, then pick
-the first nontrivial candidate and test explicit curve positions and an
-ordered product in the framed mapping class group. Do not promote a matching
-incidence matrix to a verified factorization.
+Hironaka's real-line-arrangement theorem supplies an **actual framed planar
+mapping-class relation** whenever the program finds an exact rational
+arrangement with the requested incidence sets. Saved slope/intercept equations,
+exact intersection points, and increasing-x factor orders are in
+`docs/boundary-factorizations/data/{n}-relations.json`; every saved certificate
+is rechecked independently in the tests. Found/total counts for n=3..10 inner
+boundaries are `2/2, 3/3, 5/5, 10/10, 18/24, 40/69, 127/384, 3/5250`.
+The n=10 search deliberately covers only the exterior, daisy, and rose cases.
+An unfound entry is **open**, not impossible; the bounded real-arrangement
+search is sufficient but not exhaustive. The compact vertical SVGs show
+boundary subsets schematically; they are not certified isotopy drawings.
+
+`double-outer.html` begins a separate `T_outer²` track. It composes pairs of
+certified single-outer relations for n=3,4,5 inner boundaries, giving 3, 6,
+and 15 explicitly ordered positive products. Inner-boundary exponents add
+because boundary twists are central. This is a partial collection, not a
+complete pair-multiplicity-two catalog. The local/browser checks confirmed the
+single and double pages, size selector, compact vertical rows, and local links.
+`tests.test_planar_boundary_catalog` has six passing tests, including exact
+certificate replay and multiplicity-two incidence; `python examples/build_site.py`
+and both JavaScript syntax checks passed.
+
+The user's `8Boundaries.pdf` was copied into the workspace as a readable
+102,333-byte file while the OneDrive original remains an empty placeholder.
+The sheet has eight drawn inner-boundary columns. A preliminary manual
+transcription of its first 15 apparent configurations mapped into 11 of the
+69 eight-inner classes; the lower-right configuration is ambiguous in the
+handwriting and has not been certified. The PDF is untracked user material and
+must not be added to a commit without a reason.
+
+Next: replace support-only schematics with exact arrangement-induced curve
+routes, then test which open incidence patterns can be reached by lantern
+substitution even without a real-line arrangement. For the double twist,
+generate pair-multiplicity-two incidence types independently of compositions,
+and compare them with the 24 composite examples. Preserve the distinction
+between a counted candidate, a line-arrangement certificate, and an actual
+drawn isotopy class.
 
 ## October 13: Figure 4.7 half-lantern endpoint chart
 
