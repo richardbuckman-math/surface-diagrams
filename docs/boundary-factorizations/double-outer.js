@@ -58,6 +58,35 @@
     const note=document.createElement('p');note.className='source';note.textContent='Every pair occurs twice, but no ordered mapping-class equality has been certified for this type yet.';section.append(note);
     return section;
   }
+  function renderDirect(n, direct, index) {
+    const section=document.createElement('section');section.className='pattern';
+    const title=document.createElement('h2');
+    title.textContent=`${index}. ${direct.factors.length===4?'Four-triple relation':
+      direct.factors.length===6?'One lantern expansion':'Two lantern expansions'}`;
+    const badge=document.createElement('span');badge.className='badge found';
+    badge.textContent='Exact framed relation';title.append(badge);section.append(title);
+    const equation=document.createElement('p');equation.className='equation';
+    equation.textContent=`T₀²${direct.inner_powers.map((power,i)=>power>0?
+      ` · T${i+1}${power===1?'':`^${power}`}`:'').join('')} = ${direct.factors.length} positive twists below`;
+    section.append(equation);
+    const rows=document.createElement('div');rows.className='factor-list';
+    direct.factors.forEach((factor,position)=>{
+      const row=document.createElement('div');row.className='factor-row';
+      const number=document.createElement('b');number.textContent=String(position+1);
+      const picture=document.createElement('img');picture.src=factor.svg;
+      picture.alt=`Twist enclosing boundaries ${factor.support.join(', ')}`;
+      picture.loading='lazy';
+      row.title=`T${factor.support.join('')}; braid conjugator ${factor.conjugator.join(', ')||'identity'}`;
+      const support=document.createElement('span');support.className='block';
+      support.textContent=`T{${factor.support.join(',')}}`;
+      row.append(number,picture,support);rows.append(row);
+    });
+    section.append(rows);
+    const note=document.createElement('p');note.className='source';
+    note.textContent='The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';
+    section.append(note);
+    return section;
+  }
   async function load() {
     const request=++generation,n=Number(size.value);
     status.textContent='Loading certified relations…';list.replaceChildren();
@@ -66,20 +95,24 @@
       const data=await response.json();if(request!==generation)return;
       const expected=names[n].length;
       for(let i=0;i<expected;i++)if(!data[String(i)])throw Error(`missing relation ${i+1}`);
-      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
+      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Direct four-inner relations use exact braid and framing checks. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
       const fragment=document.createDocumentFragment();let found=0,total=0;
       if(n<=5){
         const candidatesResponse=await fetch(`data/${n}-double.json`);if(!candidatesResponse.ok)throw Error(`catalog HTTP ${candidatesResponse.status}`);
         const candidates=await candidatesResponse.json();if(request!==generation)return;
         for(const [index,pattern] of candidates.patterns.entries()){
-          if(pattern.composition){const [i,j]=pattern.composition;fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)],index+1));found++}
-          else fragment.append(renderOpen(n,pattern.blocks,index+1));
+          let entry;
+          if(pattern.direct){entry=renderDirect(n,pattern.direct,index+1);found++}
+          else if(pattern.composition){const [i,j]=pattern.composition;entry=renderPair(n,i,j,data[String(i)],data[String(j)],index+1);found++}
+          else entry=renderOpen(n,pattern.blocks,index+1);
+          entry.id=`pattern-${index+1}`;fragment.append(entry);
           total++;
         }
       } else {
         for(let i=0;i<expected;i++)for(let j=i;j<expected;j++){fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)]));total++;found++}
       }
       list.append(fragment);status.textContent=`${total} pair-twice types · ${found} certified positive relations`;
+      if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView();
     } catch(error) {if(request===generation)status.textContent=`Could not load relations: ${error.message}`}
   }
   size.addEventListener('change',load);
