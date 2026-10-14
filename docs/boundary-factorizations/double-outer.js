@@ -21,11 +21,11 @@
   function powers(n, factors) {
     return Array.from({length:n},(_,i)=>factors.filter(block=>block.includes(i+1)).length-1);
   }
-  function renderPair(n, i, j, first, second) {
+  function renderPair(n, i, j, first, second, index=null) {
     const factors=[...first.ordered_factors,...second.ordered_factors];
     const a=powers(n,first.ordered_factors), b=powers(n,second.ordered_factors);
     const section=document.createElement('section');section.className='pattern';
-    const title=document.createElement('h2');title.textContent=`${names[n][i]} + ${names[n][j]}`;section.append(title);
+    const title=document.createElement('h2');title.textContent=`${index===null?'':`${index}. `}${names[n][i]} + ${names[n][j]}`;section.append(title);
     const badge=document.createElement('span');badge.className='badge found';badge.textContent='Certified composition';title.append(badge);
     const equation=document.createElement('p');equation.className='equation';
     equation.textContent=`T₀²${a.map((v,k)=>v+b[k]>0?` · T${k+1}${v+b[k]===1?'':`^${v+b[k]}`}`:'').join('')} = ${factors.length} positive twists below`;
@@ -41,6 +41,21 @@
     const note=document.createElement('p');note.className='source';note.textContent='Factor order is top to bottom, first relation followed by second. Curves are support schematics; the exact line equations for each component are on its single-twist page.';section.append(note);
     return section;
   }
+  function renderOpen(n, blocks, index) {
+    const section=document.createElement('section');section.className='pattern';
+    const title=document.createElement('h2');title.textContent=`${index}. Additional pair-twice candidate`;section.append(title);
+    const badge=document.createElement('span');badge.className='badge open';badge.textContent='Relation open';title.append(badge);
+    const degrees=Array.from({length:n},(_,i)=>blocks.filter(block=>block.includes(i+1)).length-2);
+    const equation=document.createElement('p');equation.className='equation';
+    equation.textContent=`Candidate: T₀²${degrees.map((power,i)=>power>0?` · T${i+1}${power===1?'':`^${power}`}`:'').join('')}`;
+    section.append(equation);
+    const rows=document.createElement('div');rows.className='blocks';
+    const label=document.createElement('span');label.className='muted';label.textContent='Unordered support rows:';rows.append(label);
+    blocks.forEach(block=>{const chip=document.createElement('span');chip.className='block';chip.textContent=`{${block.join(',')}}`;rows.append(chip)});
+    section.append(rows);
+    const note=document.createElement('p');note.className='source';note.textContent='Every pair occurs twice, but no ordered mapping-class equality has been certified for this type yet.';section.append(note);
+    return section;
+  }
   async function load() {
     const request=++generation,n=Number(size.value);
     status.textContent='Loading certified relations…';list.replaceChildren();
@@ -49,10 +64,20 @@
       const data=await response.json();if(request!==generation)return;
       const expected=names[n].length;
       for(let i=0;i<expected;i++)if(!data[String(i)])throw Error(`missing relation ${i+1}`);
-      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Each component is certified by <a href="${source}">Hironaka’s line-arrangement theorem</a>. View its line equations on <a href="${n}.html">the ${n}-boundary page</a>. These examples are compositions, not a claim that every double-twist pattern arises this way.`;list.append(intro);
-      const fragment=document.createDocumentFragment();let count=0;
-      for(let i=0;i<expected;i++)for(let j=i;j<expected;j++){fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)]));count++}
-      list.append(fragment);status.textContent=`${count} positive double-twist factorizations with ${n} inner boundaries`;
+      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
+      const fragment=document.createDocumentFragment();let found=0,total=0;
+      if(n<=4){
+        const candidatesResponse=await fetch(`data/${n}-double.json`);if(!candidatesResponse.ok)throw Error(`catalog HTTP ${candidatesResponse.status}`);
+        const candidates=await candidatesResponse.json();if(request!==generation)return;
+        for(const [index,pattern] of candidates.patterns.entries()){
+          if(pattern.composition){const [i,j]=pattern.composition;fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)],index+1));found++}
+          else fragment.append(renderOpen(n,pattern.blocks,index+1));
+          total++;
+        }
+      } else {
+        for(let i=0;i<expected;i++)for(let j=i;j<expected;j++){fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)]));total++;found++}
+      }
+      list.append(fragment);status.textContent=n<=4?`${total} pair-twice types · ${found} certified positive relations`:`${found} certified compositions; complete pair-twice catalog not yet generated`;
     } catch(error) {if(request===generation)status.textContent=`Could not load relations: ${error.message}`}
   }
   size.addEventListener('change',load);

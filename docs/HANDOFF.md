@@ -1,5 +1,27 @@
 # Handoff: surface-diagrams
 
+## October 13: complete small double-outer incidence audit
+
+The double exterior-boundary twist catalog now independently enumerates
+unordered positive support multisets with every inner-boundary pair occurring
+**twice**, up to simultaneous boundary relabeling. Completing residual pair
+supports after choosing larger ones gives exactly 3 types for three inner
+boundaries and 9 types for four. All 3 three-inner types are compositions of
+certified single-outer relations. For four inner boundaries, 6 are such
+compositions and 3 are open incidence candidates. The public double-outer
+page shows all these types in descending largest-support order; open entries
+are placeholders with their required positive inner-boundary powers, not
+claimed relations. Five-inner still shows only 15 compositions.
+
+The exact small enumeration lives in `double_boundary_catalog.py`, with
+precomputed `data/{3,4}-double.json`; three focused tests check type counts,
+pair multiplicity, corrections, and composite coverage. Next search for an
+ordered positive equality for the three four-inner open types. The most
+compact has four three-boundary twists, one around each triple, and target
+`T_outer² T_1 T_2 T_3 T_4`; pair counts alone are not a proof. Then extend
+the independent incidence catalog to five inner boundaries with a more
+efficient isomorphism filter.
+
 ## October 13: positive boundary relations and double exterior twist
 
 The static Pages catalog treats planar surfaces with **no marked points** and
