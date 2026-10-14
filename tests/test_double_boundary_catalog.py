@@ -15,7 +15,7 @@ DATA = Path(__file__).resolve().parents[1] / 'docs' / 'boundary-factorizations' 
 
 class DoubleBoundaryCatalogTests(unittest.TestCase):
     def test_all_small_pair_twice_types_and_nonnegative_powers(self):
-        for n, expected in ((2, 1), (3, 3), (4, 9)):
+        for n, expected in ((2, 1), (3, 3), (4, 9), (5, 37)):
             with self.subTest(n=n):
                 types = double_outer_types(n)
                 self.assertEqual(len(types), expected)
@@ -25,7 +25,7 @@ class DoubleBoundaryCatalogTests(unittest.TestCase):
                                         inner_boundary_powers(n, blocks)))
 
     def test_composition_coverage_and_three_new_four_boundary_candidates(self):
-        for n, covered in ((3, 3), (4, 6)):
+        for n, covered in ((3, 3), (4, 6), (5, 15)):
             saved = json.loads((DATA / f'{n}-relations.json').read_text(encoding='utf-8'))
             factors = [entry['ordered_factors'] for entry in saved.values()]
             compositions = {canonical_blocks(n, left + right)
@@ -33,10 +33,10 @@ class DoubleBoundaryCatalogTests(unittest.TestCase):
             types = set(double_outer_types(n))
             self.assertEqual(len(compositions), covered)
             self.assertTrue(compositions <= types)
-            self.assertEqual(len(types - compositions), 0 if n == 3 else 3)
+            self.assertEqual(len(types - compositions), {3: 0, 4: 3, 5: 22}[n])
 
     def test_published_catalog_matches_computed_types(self):
-        for n in (3, 4):
+        for n in (3, 4, 5):
             saved = json.loads((DATA / f'{n}-double.json').read_text(encoding='utf-8'))
             self.assertEqual(saved['n'], n)
             computed = double_outer_types(n)

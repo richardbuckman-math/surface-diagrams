@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## October 14: complete five-inner double-outer incidence catalog
+
+The independent pair-multiplicity-two enumerator now covers five inner
+boundaries. Its residual-pair backtracking examines 925 labeled support
+multisets and yields **37** types after relabeling and row-order reduction.
+Fifteen are certified by concatenating two saved single-outer relations;
+the other 22 remain incidence candidates, with no claimed mapping-class
+equality. `data/5-double.json` records all types and the known compositions.
+The public double-outer selector now displays the complete five-inner list,
+including explicit open placeholders. A `?n=5` link opens it directly.
+
+The focused four-test double-catalog suite passes, including independent
+type counts, nonnegative boundary corrections, and replay of each saved
+composition. JavaScript syntax and the portable-site link check pass. A
+local browser screenshot confirmed the five-inner selector reports 37 types
+and 15 certified relations and renders the first vertical factorization.
+Next seek an ordered, isotopy-accurate positive equality for the compact
+four-inner open pattern with four triple twists, or derive an open five-inner
+type by a checked lantern substitution. Keep these distinct from mere
+incidence matches.
+
 ## October 13: complete small double-outer incidence audit
 
 The double exterior-boundary twist catalog now independently enumerates

@@ -24,14 +24,14 @@ def canonical_blocks(n, blocks):
 
 
 def double_outer_types(n):
-    """All pair-multiplicity-two types for up to four inner boundaries.
+    """All pair-multiplicity-two types for up to five inner boundaries.
 
     Enumerate copies of supports of size at least three, then fill every
     remaining pair with the required number (zero, one, or two) of pair
     twists. This avoids searching pair rows explicitly.
     """
-    if type(n) is not int or not 2 <= n <= 4:
-        raise ValueError('Exact double catalog currently supports n=2..4')
+    if type(n) is not int or not 2 <= n <= 5:
+        raise ValueError('Exact double catalog currently supports n=2..5')
     pairs = tuple(combinations(range(1, n + 1), 2))
     large = tuple(block for size in range(n, 2, -1)
                   for block in combinations(range(1, n + 1), size))

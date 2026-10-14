@@ -13,7 +13,7 @@ DATA = ROOT / 'docs' / 'boundary-factorizations' / 'data'
 
 
 def build():
-    for n in (3, 4):
+    for n in (3, 4, 5):
         relations = json.loads((DATA / f'{n}-relations.json').read_text(encoding='utf-8'))
         pairs = {}
         for i, j in combinations_with_replacement(range(len(relations)), 2):

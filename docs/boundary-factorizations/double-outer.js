@@ -8,6 +8,8 @@
     4: ['Exterior twist itself', 'Daisy', 'Rose'],
     5: ['Exterior twist itself', 'Daisy', 'Two triple supports', 'Doubled daisy', 'Rose'],
   };
+  const requestedSize = Number(new URLSearchParams(location.search).get('n'));
+  if (names[requestedSize]) size.value = String(requestedSize);
   let generation = 0;
 
   function supportSvg(n, block) {
@@ -66,7 +68,7 @@
       for(let i=0;i<expected;i++)if(!data[String(i)])throw Error(`missing relation ${i+1}`);
       const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
       const fragment=document.createDocumentFragment();let found=0,total=0;
-      if(n<=4){
+      if(n<=5){
         const candidatesResponse=await fetch(`data/${n}-double.json`);if(!candidatesResponse.ok)throw Error(`catalog HTTP ${candidatesResponse.status}`);
         const candidates=await candidatesResponse.json();if(request!==generation)return;
         for(const [index,pattern] of candidates.patterns.entries()){
@@ -77,7 +79,7 @@
       } else {
         for(let i=0;i<expected;i++)for(let j=i;j<expected;j++){fragment.append(renderPair(n,i,j,data[String(i)],data[String(j)]));total++;found++}
       }
-      list.append(fragment);status.textContent=n<=4?`${total} pair-twice types · ${found} certified positive relations`:`${found} certified compositions; complete pair-twice catalog not yet generated`;
+      list.append(fragment);status.textContent=`${total} pair-twice types · ${found} certified positive relations`;
     } catch(error) {if(request===generation)status.textContent=`Could not load relations: ${error.message}`}
   }
   size.addEventListener('change',load);
