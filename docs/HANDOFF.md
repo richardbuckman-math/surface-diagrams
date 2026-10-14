@@ -1,5 +1,25 @@
 # Handoff: surface-diagrams
 
+## October 14: graphical four-triple derivation
+
+Added a horizontally browsable three-column page at
+`docs/boundary-factorizations/four-triple-derivation.html`. It reads the
+existing certified `4-double.json` factors and exact individual support SVGs,
+so the seed's four twists, the first lantern expansion to six, and the second
+to eight are shown as ordered vertical factorizations. Arrows name the Q4 and
+Q3 framed-lantern moves; amber rows identify their replacement factors. Each
+column displays its actual inner-boundary correction, and links from the three
+direct rows of the double-outer catalog open the corresponding stage. The
+page explicitly distinguishes framed inner boundaries from marked points.
+
+The nine focused framed/double tests pass, both edited JavaScript files pass
+`node --check`, the portable site builds with local links verified, and a
+local browser render was inspected. This is a visualization of already
+certified relations, not a new claim about their pointed-cap images. Next
+test the pointed-cap projection of these ordered factors against useful
+subproducts in the (6,7), and keep any proposed substitution contingent on
+an exact braid or framed-action certificate.
+
 ## October 14: four-triple framed relation closes the four-inner double catalog
 
 Found an **ordered positive relation** for the previously open four-triple

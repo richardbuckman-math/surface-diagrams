@@ -82,6 +82,12 @@
       row.append(number,picture,support);rows.append(row);
     });
     section.append(rows);
+    if(n===4){
+      const derivation=document.createElement('p');derivation.className='source';
+      const link=document.createElement('a');link.href=`four-triple-derivation.html#stage-${direct.factors.length}`;
+      link.textContent='View this relation in the graphical four-triple derivation';
+      derivation.append(link);section.append(derivation);
+    }
     const note=document.createElement('p');note.className='source';
     note.textContent='The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';
     section.append(note);
