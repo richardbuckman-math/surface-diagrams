@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## October 15: graphical replay of the mixed Hurwitz–lantern move
+
+The public page `docs/boundary-factorizations/mixed-lantern-derivation.html`
+now shows five horizontally browsable vertical factorizations: the 14-factor
+five-boundary source, the states after each of three Hurwitz swaps, and the
+12-factor inverse-lantern result. Arrows name the moved factors. Amber rows
+mark affected curves; stable factor IDs track F4 as it moves. Every column
+prints its own **framed** boundary-power correction, so the final decrease
+at boundaries 2, 3, and 5 is visible. Individual curves open as full-size
+SVGs. The page is linked from type 26 of the double-outer catalog.
+
+`five_boundary_mixed_lantern_states()` exposes the exact checked states.
+`examples/build_mixed_lantern_storyboard.py` writes compact replay data and
+reuses the existing SVGs for all 13 distinct factor pictures, avoiding
+duplicate images. The saved JSON is tested against every exact factor class,
+support label, image path, and framed certificate. Nineteen focused tests,
+both JavaScript syntax checks, and the site link build pass; the browser
+layout was inspected. Next test the pair-triangle candidates from the
+16-factor lift for open types 31 and 32, searching for a short exact local
+lantern route. Keep incidence-only candidates distinct from checked moves.
+
 ## October 15: a mixed five-inner Hurwitz–lantern relation
 
 Found a fourth direct five-inner double-outer relation, closing previously

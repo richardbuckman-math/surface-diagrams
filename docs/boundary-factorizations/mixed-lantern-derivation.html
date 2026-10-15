@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Five-boundary Hurwitz–lantern derivation</title>
+<link rel="stylesheet" href="size.css">
+<style>
+  main{max-width:none;padding-top:4px;padding-left:max(22px,calc((100vw - 1180px)/2))}
+  .storyboard{display:flex;align-items:stretch;gap:10px;overflow-x:auto;padding:8px 3px 20px;scroll-snap-type:x proximity}
+  .stage{box-sizing:border-box;flex:0 0 min(345px,88vw);background:white;border:1px solid #cbded3;border-radius:12px;padding:11px;scroll-snap-align:start}
+  .stage:target{outline:3px solid #c47b31}.stage h2{margin:3px 0 8px}.stage p{margin:5px 0}
+  .stage .factor-list{gap:3px}.stage .factor-row{min-height:58px}
+  .stage .factor-row a{display:inline-flex;align-items:center}.stage .factor-row img{height:53px;max-width:100%}
+  .stage .factor-row .block{white-space:nowrap}.stage .changed{background:#fff2d8;border-color:#e4bc72}
+  .move{box-sizing:border-box;flex:0 0 130px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#385f51;font-size:.85rem}
+  .move strong{font-size:2rem;line-height:1;color:#267c6c}
+  .stage-nav{display:flex;gap:8px;flex-wrap:wrap}.stage-nav a{background:#e4f0e8;padding:5px 9px;border-radius:6px;font-size:.85rem}
+  @media(max-width:650px){main{padding-left:12px}.move{flex-basis:95px}}
+</style>
+<body>
+<header>
+  <p><a href="../../index.html">Surface diagrams</a> / <a href="index.html">Boundary catalog</a> / <a href="double-outer.html?n=5#pattern-26">Five-boundary type 26</a></p>
+  <h1>Three Hurwitz moves and an inverse lantern</h1>
+  <p class="notice">A graphical derivation on a disk with five <strong>inner boundaries</strong>. Read each vertical factor list from top to bottom, then scroll right. F4 stays fixed as it moves down; each crossed factor is conjugated. The final move replaces three pair twists by one triple twist and changes the inner-boundary correction.</p>
+  <p>Every column is checked by the complete capped B₅ Artin action and all five framings. The pictures are routed individual curve classes; click any curve for its full-size SVG. The algebraic checks, rather than apparent proximity in a drawing, certify the moves.</p>
+  <nav class="stage-nav" aria-label="Derivation stages"><a href="#stage-0">Start</a><a href="#stage-1">Swap 1</a><a href="#stage-2">Swap 2</a><a href="#stage-3">Swap 3</a><a href="#stage-4">Lantern</a></nav>
+</header>
+<main><p id="status" role="status">Loading checked factorization states…</p><div id="storyboard" class="storyboard" aria-label="Five exact factorization states"></div>
+  <p class="source">The final framed lantern is <i>T₂₃ T₃₅ T₂₅ = T₂₃₅ T₂ T₃ T₅</i> for the routed curves shown here. Thus replacing the three pair twists lowers the boundary powers at 2, 3, and 5 by one. This is a framed inner-boundary relation; its marked-point projection has different bookkeeping.</p>
+</main><script src="mixed-lantern-derivation.js"></script></body>
+</html>

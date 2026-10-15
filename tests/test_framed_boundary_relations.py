@@ -7,7 +7,8 @@ import unittest
 from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
-    four_triple_relations, framed_outer_certificate,
+    five_boundary_mixed_lantern_states, four_triple_relations,
+    framed_outer_certificate,
 )
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.projected_relations import pc_daisy_terms, pc_rose_terms
@@ -133,6 +134,25 @@ class FramedBoundaryRelationTests(unittest.TestCase):
                                     for factor in result['factors']])
         self.assertEqual(kind, tuple(map(tuple, patterns[25]['blocks'])))
         self.assertIsNone(patterns[25]['composition'])
+
+    def test_graphical_mixed_lantern_states_replay_exactly(self):
+        states = five_boundary_mixed_lantern_states()
+        saved = json.loads((DATA / 'mixed-lantern-states.json').read_text(
+            encoding='utf-8'))
+        self.assertEqual([len(state) for state in states], [14, 14, 14, 14, 12])
+        self.assertEqual(len(saved['stages']), len(states))
+        for index, (state, stage) in enumerate(zip(states, saved['stages'])):
+            with self.subTest(stage=index):
+                self.assertEqual(list(framed_outer_certificate(5, state, 2)),
+                                 stage['inner_powers'])
+                self.assertEqual(len(stage['rows']), len(state))
+                for factor, row in zip(state, stage['rows']):
+                    self.assertEqual((list(factor.conjugator), factor.first,
+                                      factor.points),
+                                     (row['conjugator'], row['first'], row['points']))
+                    self.assertEqual(list(enclosed_boundaries(factor, 5)),
+                                     row['support'])
+                    self.assertTrue((DATA.parent / row['svg']).is_file())
 
     def test_wrong_factor_order_or_target_power_is_rejected(self):
         factors = four_triple_relations()[0]['factors']

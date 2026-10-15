@@ -101,6 +101,12 @@
         'View the four-boundary core and its lantern substitutions';
       derivation.append(link);section.append(derivation);
     }
+    if(direct.hurwitz_positions){
+      const replay=document.createElement('p');replay.className='source';
+      const link=document.createElement('a');link.href='mixed-lantern-derivation.html';
+      link.textContent='Replay every Hurwitz move and the inverse lantern graphically';
+      replay.append(link);section.append(replay);
+    }
     const note=document.createElement('p');note.className='source';
     note.textContent=direct.hurwitz_positions?
       'Starting from the 14-factor five-boundary lift, move its fourth twist downward across the next three factors by exact Hurwitz moves. The resulting consecutive T{2,3}, T{3,5}, T{2,5} are the puncture-capped lantern for T{2,3,5}; the framed replacement lowers the boundary powers at 2, 3, and 5 by one. Exact B₅ action and all five framings certify the final product.':

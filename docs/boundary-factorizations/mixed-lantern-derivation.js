@@ -1,0 +1,52 @@
+(() => {
+  const status=document.getElementById('status');
+  const board=document.getElementById('storyboard');
+  function equation(powers){
+    return 'T₀²'+powers.map((power,i)=>power?` · T${i+1}${power===1?'':`^${power}`}`:'').join('');
+  }
+  function stageCard(stage,index){
+    const card=document.createElement('section');card.className='stage';card.id=`stage-${index}`;
+    const title=document.createElement('h2');title.textContent=stage.title;
+    const left=document.createElement('p');left.className='equation';left.textContent=equation(stage.inner_powers);
+    const equals=document.createElement('p');equals.textContent='= ordered product below';
+    const rows=document.createElement('div');rows.className='factor-list';
+    stage.rows.forEach((factor,position)=>{
+      const row=document.createElement('div');row.className='factor-row';
+      if(stage.highlight_rows.includes(position))row.classList.add('changed');
+      const id=document.createElement('b');id.textContent=factor.id;
+      const image=document.createElement('img');image.src=factor.svg;
+      image.alt=`Curve enclosing inner boundaries ${factor.support.join(', ')}`;
+      image.loading='lazy';
+      const full=document.createElement('a');full.href=factor.svg;
+      full.target='_blank';full.rel='noopener';full.title='Open full-size curve SVG';
+      full.append(image);
+      const label=document.createElement('span');label.className='block';
+      label.textContent=`T{${factor.support.join(',')}}`;
+      row.title=`Factor ${factor.id}; conjugator ${factor.conjugator.join(', ')||'identity'}`;
+      row.append(id,full,label);rows.append(row);
+    });
+    card.append(title,left,equals,rows);return card;
+  }
+  function arrow(caption){
+    const move=document.createElement('div');move.className='move';
+    const mark=document.createElement('strong');mark.textContent='→';mark.setAttribute('aria-hidden','true');
+    const label=document.createElement('span');label.textContent=caption;
+    move.append(mark,label);return move;
+  }
+  async function load(){
+    try{
+      const response=await fetch('data/mixed-lantern-states.json');
+      if(!response.ok)throw Error(`HTTP ${response.status}`);
+      const data=await response.json();
+      if(data.n!==5||data.stages?.length!==5||data.moves?.length!==4)
+        throw Error('Incomplete certified state sequence');
+      for(let index=0;index<data.stages.length;index++){
+        if(index)board.append(arrow(data.moves[index-1]));
+        board.append(stageCard(data.stages[index],index));
+      }
+      status.textContent='Five exact framed states · three Hurwitz moves · one inverse lantern';
+      if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'nearest'});
+    }catch(error){status.textContent=`Could not load the derivation: ${error.message}`}
+  }
+  load();
+})();
