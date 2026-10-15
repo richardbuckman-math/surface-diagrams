@@ -1,5 +1,35 @@
 # Handoff: surface-diagrams
 
+## October 15: a mixed five-inner Hurwitz–lantern relation
+
+Found a fourth direct five-inner double-outer relation, closing previously
+open **type 26** (one-based). Start with the 14-factor lift of the expanded
+four-triple relation. Drag its fourth factor `T_{23}` downward across the
+next three factors by Hurwitz swaps at positions 4, 5, and 6. The resulting
+rows 7–9 are consecutive pair twists with supports `{2,3}`, `{3,5}`, and
+`{2,5}`. Their complete B5 action is exactly the twist `T_{235}` routed
+under boundary 4. Inverse framed lantern replaces those three pair twists
+by `T_{235}`, lowering the required inner-boundary powers at 2, 3, and 5 by
+one. The final 12-factor product has target
+`T_outer(5)^2 T_1^3 T_2^3 T_3^3 T_4^4 T_5^5`.
+
+`five_boundary_mixed_lantern()` checks every adjacent Hurwitz move, the
+local B5 lantern equality, and the final full Artin action plus framing.
+The generated public double-outer catalog shows the ordered 12 exact curve
+SVGs and the move description. It now has **19 certified** five-inner types
+and 18 incidence candidates still open. Eighteen focused tests, JavaScript
+syntax, and site links pass; a nontrivial newly routed support was inspected.
+Pure-twist Hurwitz moves preserve each factor's *labeled enclosed set*, so
+they cannot by themselves change an unordered incidence type. A lantern or
+other substitution is necessary to reach a new catalog type.
+
+Next make a horizontal graphical replay of the three Hurwitz steps and
+inverse lantern, including the actual boundary-power change. The 16-factor
+lift has combinatorial pair-triangle candidates for still-open types 31 and
+32; test whether their exact local products can be brought to a framed
+lantern by short Hurwitz routes. Do not mistake the combinatorial triangle
+for an isotopy-accurate substitution until checked.
+
 ## October 15: three five-inner double-outer relations from the four-triple core
 
 Lifted the four-, six-, and eight-factor four-boundary relations to a disk

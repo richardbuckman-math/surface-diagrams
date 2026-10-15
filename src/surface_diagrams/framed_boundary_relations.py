@@ -8,8 +8,10 @@ relation.  The support drawings are a separate rendering check.
 """
 
 from collections import Counter
+from dataclasses import replace
 from itertools import combinations
 
+from .braid_actions import reduce_word
 from .mapping_classes import ConjugatedTwist, exact_action
 from .projected_relations import pc_daisy_terms, pc_rose_terms
 
@@ -104,3 +106,36 @@ def five_boundary_lifts():
                         'core_factor_count': len(core),
                         'expanded_seed_indices': parent['expanded_seed_indices']})
     return tuple(results)
+
+
+def five_boundary_mixed_lantern():
+    """A new five-hole type by Hurwitz moves followed by inverse lantern.
+
+    Begin with the 14-factor lift. Move its fourth factor T_23 past the
+    following T_24, T_34, and T_45. The next three factors are then precisely
+    T_23, T_35, T_25, whose capped action is the twist T_235 routed under
+    hole 4. Their framed lantern has a T_2 T_3 T_5 correction. The final
+    equality is independently checked in the framed braid model.
+    """
+    from .twist_simplify import simplify_twist
+
+    factors = list(five_boundary_lifts()[1]['factors'])
+    for index in (3, 4, 5):
+        moving, crossed = factors[index:index + 2]
+        changed = simplify_twist(replace(
+            crossed, conjugator=reduce_word(moving.word + crossed.conjugator)),
+            strands=5, max_states=64)
+        if exact_action(moving.word + crossed.word, 5) != exact_action(
+                changed.word + moving.word, 5):
+            raise ValueError('Hurwitz move failed its exact disk check')
+        factors[index:index + 2] = (changed, moving)
+    triple = ConjugatedTwist((-4,), 2, 3)
+    local_word = tuple(letter for factor in factors[6:9] for letter in factor.word)
+    if exact_action(local_word, 5) != exact_action(triple.word, 5):
+        raise ValueError('Three pair twists do not match the inverse lantern')
+    factors[6:9] = (triple,)
+    factors = tuple(factors)
+    powers = framed_outer_certificate(5, factors, 2)
+    return {'name': 'five-hole-mixed-lantern-12', 'factors': factors,
+            'inner_powers': powers, 'hurwitz_positions': (4, 5, 6),
+            'lantern_support': (2, 3, 5)}

@@ -6,8 +6,8 @@ import unittest
 
 from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.framed_boundary_relations import (
-    enclosed_boundaries, five_boundary_lifts, four_triple_relations,
-    framed_outer_certificate,
+    enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
+    four_triple_relations, framed_outer_certificate,
 )
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.projected_relations import pc_daisy_terms, pc_rose_terms
@@ -99,18 +99,40 @@ class FramedBoundaryRelationTests(unittest.TestCase):
         root = DATA.parent
         patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
         self.assertEqual([i for i, row in enumerate(patterns) if row.get('direct')],
-                         [24, 29, 33])
-        for index in (24, 29, 33):
+                         [24, 25, 29, 33])
+        for index in (24, 25, 29, 33):
             direct = patterns[index]['direct']
             factors = tuple(ConjugatedTwist(tuple(row['conjugator']),
                                              row['first'], row['points'])
                             for row in direct['factors'])
             self.assertEqual(list(framed_outer_certificate(5, factors, 2)),
                              direct['inner_powers'])
-            self.assertEqual(len(factors), direct['core_factor_count'] + 8)
+            if index == 25:
+                self.assertEqual(direct['hurwitz_positions'], [4, 5, 6])
+                self.assertEqual(direct['lantern_support'], [2, 3, 5])
+            else:
+                self.assertEqual(len(factors), direct['core_factor_count'] + 8)
             for factor, row in zip(factors, direct['factors']):
                 self.assertEqual(list(enclosed_boundaries(factor, 5)), row['support'])
                 self.assertTrue((root / row['svg']).is_file())
+
+    def test_mixed_hurwitz_lantern_gives_new_five_boundary_type(self):
+        source = five_boundary_lifts()[1]
+        result = five_boundary_mixed_lantern()
+        self.assertEqual(result['hurwitz_positions'], (4, 5, 6))
+        self.assertEqual(result['inner_powers'], (3, 3, 3, 4, 5))
+        self.assertEqual(len(result['factors']), 12)
+        source_word = tuple(letter for factor in source['factors']
+                            for letter in factor.word)
+        result_word = tuple(letter for factor in result['factors']
+                            for letter in factor.word)
+        self.assertEqual(exact_action(source_word, 5), exact_action(result_word, 5))
+        self.assertEqual(result['factors'][6], ConjugatedTwist((-4,), 2, 3))
+        patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
+        kind = canonical_blocks(5, [enclosed_boundaries(factor, 5)
+                                    for factor in result['factors']])
+        self.assertEqual(kind, tuple(map(tuple, patterns[25]['blocks'])))
+        self.assertIsNone(patterns[25]['composition'])
 
     def test_wrong_factor_order_or_target_power_is_rejected(self):
         factors = four_triple_relations()[0]['factors']

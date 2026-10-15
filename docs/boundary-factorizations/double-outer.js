@@ -61,7 +61,8 @@
   function renderDirect(n, direct, index) {
     const section=document.createElement('section');section.className='pattern';
     const title=document.createElement('h2');
-    title.textContent=n===5 ? `${index}. Five-boundary lift of ${direct.core_factor_count}-factor relation` :
+    title.textContent=direct.hurwitz_positions ? `${index}. Hurwitz–lantern reduction` :
+      n===5 ? `${index}. Five-boundary lift of ${direct.core_factor_count}-factor relation` :
       `${index}. ${direct.factors.length===4?'Four-triple relation':
       direct.factors.length===6?'One lantern expansion':'Two lantern expansions'}`;
     const badge=document.createElement('span');badge.className='badge found';
@@ -72,7 +73,8 @@
     section.append(equation);
     const rows=document.createElement('div');rows.className='factor-list';
     direct.factors.forEach((factor,position)=>{
-      if(n===5 && [0,direct.core_factor_count,direct.core_factor_count+4].includes(position)){
+      if(n===5 && !direct.hurwitz_positions &&
+          [0,direct.core_factor_count,direct.core_factor_count+4].includes(position)){
         const group=document.createElement('div');group.className='group-label';
         group.textContent=position===0?'Four-boundary core':
           position===direct.core_factor_count?'First daisy petal cycle':'Second daisy petal cycle';
@@ -92,13 +94,17 @@
     if(n===4 || n===5){
       const derivation=document.createElement('p');derivation.className='source';
       const link=document.createElement('a');
-      link.href=`four-triple-derivation.html#stage-${n===4?direct.factors.length:direct.core_factor_count}`;
+      link.href=`four-triple-derivation.html#stage-${n===4?direct.factors.length:
+        direct.hurwitz_positions?6:direct.core_factor_count}`;
       link.textContent=n===4?'View this relation in the graphical four-triple derivation':
+        direct.hurwitz_positions?'View the six-factor four-boundary source relation':
         'View the four-boundary core and its lantern substitutions';
       derivation.append(link);section.append(derivation);
     }
     const note=document.createElement('p');note.className='source';
-    note.textContent=n===5?
+    note.textContent=direct.hurwitz_positions?
+      'Starting from the 14-factor five-boundary lift, move its fourth twist downward across the next three factors by exact Hurwitz moves. The resulting consecutive T{2,3}, T{3,5}, T{2,5} are the puncture-capped lantern for T{2,3,5}; the framed replacement lowers the boundary powers at 2, 3, and 5 by one. Exact B₅ action and all five framings certify the final product.':
+      n===5?
       'The framed five-boundary daisy gives P·L = T₀·T₁·T₂·T₃·T₄·T₅³, with P the four-boundary outer twist and L the four-petal cycle. The products P and L commute. Replacing P² by the four-triple relation gives the displayed correction powers. Exact B₅ Artin action and all five boundary framings certify the order; every curve is rendered from its individual isotopy class.':
       'The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';
     section.append(note);

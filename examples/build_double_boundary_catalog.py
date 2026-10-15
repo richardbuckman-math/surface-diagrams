@@ -10,7 +10,8 @@ sys.path.insert(0, str(ROOT / 'src'))
 from surface_diagrams.double_boundary_catalog import canonical_blocks, double_outer_types
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
-    enclosed_boundaries, five_boundary_lifts, four_triple_relations,
+    enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
+    four_triple_relations,
 )
 from surface_diagrams.boundary_playground_geometry import support_svg
 
@@ -22,13 +23,14 @@ def direct_relations(n):
     """Pre-render exact curves for four-triple relations and five-hole lifts."""
     SUPPORTS.mkdir(exist_ok=True)
     direct = {}
-    relations = four_triple_relations() if n == 4 else five_boundary_lifts()
+    relations = (four_triple_relations() if n == 4 else
+                 five_boundary_lifts() + (five_boundary_mixed_lantern(),))
     for relation in relations:
         factors = relation['factors']
         blocks = tuple(enclosed_boundaries(factor, n) for factor in factors)
         kind = canonical_blocks(n, blocks)
-        name = (f'four-triple-{len(factors)}' if n == 4 else
-                f'five-hole-lift-{len(factors)}')
+        name = relation.get('name') or (f'four-triple-{len(factors)}' if n == 4 else
+                                        f'five-hole-lift-{len(factors)}')
         rows = []
         for index, (factor, block) in enumerate(zip(factors, blocks), 1):
             path = SUPPORTS / f'{name}-{index}.svg'
@@ -42,9 +44,13 @@ def direct_relations(n):
                          'svg': f'direct-supports/{path.name}'})
         direct[kind] = {'name': name, 'factors': rows,
                         'inner_powers': list(relation['inner_powers']),
-                        'expanded_seed_indices': list(relation['expanded_seed_indices']),
+                        **({'expanded_seed_indices': list(relation['expanded_seed_indices'])}
+                           if 'expanded_seed_indices' in relation else {}),
                         **({'core_factor_count': relation['core_factor_count']}
-                           if n == 5 else {})}
+                           if 'core_factor_count' in relation else {}),
+                        **({'hurwitz_positions': list(relation['hurwitz_positions']),
+                            'lantern_support': list(relation['lantern_support'])}
+                           if 'hurwitz_positions' in relation else {})}
     return direct
 
 
