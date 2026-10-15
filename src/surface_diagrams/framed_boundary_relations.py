@@ -11,7 +11,7 @@ from collections import Counter
 from itertools import combinations
 
 from .mapping_classes import ConjugatedTwist, exact_action
-from .projected_relations import pc_rose_terms
+from .projected_relations import pc_daisy_terms, pc_rose_terms
 
 
 def enclosed_boundaries(twist, n):
@@ -79,4 +79,28 @@ def four_triple_relations():
         powers = framed_outer_certificate(4, factors, 2)
         results.append({'factors': factors, 'inner_powers': powers,
                         'expanded_seed_indices': expanded})
+    return tuple(results)
+
+
+def five_boundary_lifts():
+    """Lift the three four-triple relations to a fifth framed boundary.
+
+    Let P = T_1234 and L be the ordered product of the four petals enclosing
+    the fifth hole and one old hole. The *framed* daisy says
+    P L = T_12345 (T_1 T_2 T_3 T_4) T_5³. Thus P and L commute, since
+    the outer and inner-boundary twists are central. Squaring gives
+    P² L² = T_12345² (T_1 T_2 T_3 T_4)² T_5⁶. Substitute each checked
+    four-triple factorization for P², retaining its boundary corrections.
+    """
+    prefix, *petals = pc_daisy_terms(ConjugatedTwist((), 1, 5))
+    assert prefix == ConjugatedTwist((), 1, 4)
+    petals = tuple(petals)
+    results = []
+    for parent in four_triple_relations():
+        core = parent['factors']
+        factors = core + petals + petals
+        powers = framed_outer_certificate(5, factors, 2)
+        results.append({'factors': factors, 'inner_powers': powers,
+                        'core_factor_count': len(core),
+                        'expanded_seed_indices': parent['expanded_seed_indices']})
     return tuple(results)

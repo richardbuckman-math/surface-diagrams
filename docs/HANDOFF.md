@@ -1,5 +1,32 @@
 # Handoff: surface-diagrams
 
+## October 15: three five-inner double-outer relations from the four-triple core
+
+Lifted the four-, six-, and eight-factor four-boundary relations to a disk
+with **five inner boundaries**. Let `P=T_{1234}` and let `L` be the ordered
+four-petal daisy cycle around the fifth boundary. The **framed** daisy is
+`P L = T_outer(5) T_1 T_2 T_3 T_4 T_5^3`; hence `P` and `L` commute and
+`P² L² = T_outer(5)² (T_1 T_2 T_3 T_4)² T_5^6`. Substituting each checked
+four-triple relation for `P²` yields three ordered positive factorizations,
+with 12, 14, and 16 factors. Their inner powers are respectively
+`(3,3,3,3,6)`, `(3,4,4,4,6)`, and `(4,4,5,5,6)`. They certify previously
+open pair-twice types 25, 30, and 34 of the five-inner catalog (one-based).
+Thus the five-inner catalog now has **18 certified** relations and 19 open
+incidence candidates; the four-inner catalog remains fully covered.
+
+`five_boundary_lifts()` implements the construction. The generated public
+catalog includes all three factorizations as compact vertical lists with
+exact individual support SVGs and group labels for the core and two petal
+cycles. Focused tests replay the complete B5 Artin action, all five framing
+counts, the daisy correction, and the three saved direct entries; 17 focused
+catalog/relation tests pass. JavaScript syntax and site link build pass. A
+browser preview confirmed the updated counts, and simple and nontrivial
+individual SVG curves were inspected. Next seek a new five-inner type by a
+checked substitution that mixes the core and petal factors, rather than
+merely expanding one factor in a known single-outer composition. Keep the
+framed correction explicit when projecting this move to marked points or
+trying it in the (6,7) derivation.
+
 ## October 14: graphical four-triple derivation
 
 Added a horizontally browsable three-column page at

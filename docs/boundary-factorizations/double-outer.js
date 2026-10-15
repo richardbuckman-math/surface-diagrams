@@ -61,7 +61,8 @@
   function renderDirect(n, direct, index) {
     const section=document.createElement('section');section.className='pattern';
     const title=document.createElement('h2');
-    title.textContent=`${index}. ${direct.factors.length===4?'Four-triple relation':
+    title.textContent=n===5 ? `${index}. Five-boundary lift of ${direct.core_factor_count}-factor relation` :
+      `${index}. ${direct.factors.length===4?'Four-triple relation':
       direct.factors.length===6?'One lantern expansion':'Two lantern expansions'}`;
     const badge=document.createElement('span');badge.className='badge found';
     badge.textContent='Exact framed relation';title.append(badge);section.append(title);
@@ -71,6 +72,12 @@
     section.append(equation);
     const rows=document.createElement('div');rows.className='factor-list';
     direct.factors.forEach((factor,position)=>{
+      if(n===5 && [0,direct.core_factor_count,direct.core_factor_count+4].includes(position)){
+        const group=document.createElement('div');group.className='group-label';
+        group.textContent=position===0?'Four-boundary core':
+          position===direct.core_factor_count?'First daisy petal cycle':'Second daisy petal cycle';
+        rows.append(group);
+      }
       const row=document.createElement('div');row.className='factor-row';
       const number=document.createElement('b');number.textContent=String(position+1);
       const picture=document.createElement('img');picture.src=factor.svg;
@@ -82,14 +89,18 @@
       row.append(number,picture,support);rows.append(row);
     });
     section.append(rows);
-    if(n===4){
+    if(n===4 || n===5){
       const derivation=document.createElement('p');derivation.className='source';
-      const link=document.createElement('a');link.href=`four-triple-derivation.html#stage-${direct.factors.length}`;
-      link.textContent='View this relation in the graphical four-triple derivation';
+      const link=document.createElement('a');
+      link.href=`four-triple-derivation.html#stage-${n===4?direct.factors.length:direct.core_factor_count}`;
+      link.textContent=n===4?'View this relation in the graphical four-triple derivation':
+        'View the four-boundary core and its lantern substitutions';
       derivation.append(link);section.append(derivation);
     }
     const note=document.createElement('p');note.className='source';
-    note.textContent='The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';
+    note.textContent=n===5?
+      'The framed five-boundary daisy gives P·L = T₀·T₁·T₂·T₃·T₄·T₅³, with P the four-boundary outer twist and L the four-petal cycle. The products P and L commute. Replacing P² by the four-triple relation gives the displayed correction powers. Exact B₅ Artin action and all five boundary framings certify the order; every curve is rendered from its individual isotopy class.':
+      'The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';
     section.append(note);
     return section;
   }
@@ -101,7 +112,7 @@
       const data=await response.json();if(request!==generation)return;
       const expected=names[n].length;
       for(let i=0;i<expected;i++)if(!data[String(i)])throw Error(`missing relation ${i+1}`);
-      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Direct four-inner relations use exact braid and framing checks. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
+      const intro=document.createElement('p');intro.className='source';intro.innerHTML=`Certified compositions use <a href="${source}">Hironaka’s line-arrangement theorem</a>; their exact line equations are on <a href="${n}.html">the ${n}-boundary page</a>. Direct four- and five-inner relations use exact braid and framing checks. Pair-twice candidates without a certificate are kept separate.`;list.append(intro);
       const fragment=document.createDocumentFragment();let found=0,total=0;
       if(n<=5){
         const candidatesResponse=await fetch(`data/${n}-double.json`);if(!candidatesResponse.ok)throw Error(`catalog HTTP ${candidatesResponse.status}`);
