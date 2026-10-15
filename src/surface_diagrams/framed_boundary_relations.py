@@ -9,7 +9,7 @@ relation.  The support drawings are a separate rendering check.
 
 from collections import Counter
 from dataclasses import replace
-from itertools import combinations
+from itertools import combinations, product
 
 from .braid_actions import reduce_word
 from .mapping_classes import ConjugatedTwist, exact_action
@@ -57,6 +57,55 @@ def framed_outer_certificate(n, factors, outer_power):
     if any(power < 0 for power in powers):
         raise ValueError('A negative inner-boundary correction is required')
     return powers
+
+
+def short_inverse_lantern_matches(factors, n, max_conjugator_length=2):
+    """Find *exact* adjacent pair triples that are a three-hole twist.
+
+    This is a bounded discovery aid, not a proof that unmatched triples can
+    never be lanterns: their enclosing curve may need a longer conjugator.
+    It tests the entire capped braid action, not just the three pair supports.
+    The framed correction is one boundary twist at each of the three holes.
+    """
+    if type(n) is not int or not 3 <= n <= 5 or (
+            type(max_conjugator_length) is not int or
+            not 0 <= max_conjugator_length <= 4):
+        raise ValueError('Use 3–5 holes and a conjugator bound from 0 to 4')
+    factors = tuple(factors)
+    windows = []
+    for start in range(len(factors) - 2):
+        triple = factors[start:start + 3]
+        supports = tuple(enclosed_boundaries(factor, n) for factor in triple)
+        points = tuple(sorted(set().union(*supports)))
+        if (all(len(support) == 2 for support in supports) and
+                len(points) == 3 and
+                set(supports) == set(combinations(points, 2))):
+            windows.append((start, points, triple))
+    if not windows:
+        return ()
+
+    wanted = {points for _, points, _ in windows}
+    candidates = {}
+    letters = tuple(letter for i in range(1, n) for letter in (i, -i))
+    for length in range(max_conjugator_length + 1):
+        for raw in product(letters, repeat=length):
+            conjugator = reduce_word(raw)
+            if len(conjugator) != length:
+                continue
+            for first in range(1, n - 1):
+                twist = ConjugatedTwist(conjugator, first, 3)
+                support = enclosed_boundaries(twist, n)
+                if support in wanted:
+                    candidates.setdefault(support, {}).setdefault(
+                        exact_action(twist.word, n), twist)
+    matches = []
+    for start, points, triple in windows:
+        action = exact_action(tuple(letter for factor in triple
+                                    for letter in factor.word), n)
+        twist = candidates.get(points, {}).get(action)
+        if twist is not None:
+            matches.append((start, points, twist))
+    return tuple(matches)
 
 
 def four_triple_relations():

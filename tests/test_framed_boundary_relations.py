@@ -8,7 +8,7 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
     five_boundary_mixed_lantern_states, four_triple_relations,
-    framed_outer_certificate,
+    framed_outer_certificate, short_inverse_lantern_matches,
 )
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.projected_relations import pc_daisy_terms, pc_rose_terms
@@ -134,6 +134,24 @@ class FramedBoundaryRelationTests(unittest.TestCase):
                                     for factor in result['factors']])
         self.assertEqual(kind, tuple(map(tuple, patterns[25]['blocks'])))
         self.assertIsNone(patterns[25]['composition'])
+
+    def test_bounded_inverse_lantern_search_checks_full_action(self):
+        marked = pc_rose_terms(ConjugatedTwist((), 1, 3))
+        self.assertEqual(short_inverse_lantern_matches(marked, 3),
+                         ((0, (1, 2, 3), ConjugatedTwist((), 1, 3)),))
+        before_combining = five_boundary_mixed_lantern_states()[3]
+        self.assertIn((6, (2, 3, 5), ConjugatedTwist((-4,), 2, 3)),
+                      short_inverse_lantern_matches(before_combining, 5))
+
+        # F8–F10 of the expanded lift contain precisely the three pairs
+        # 34, 45, 35. Their route is not the three-hole lantern product.
+        # Counting pairs alone would incorrectly claim a new relation.
+        expanded = five_boundary_lifts()[2]['factors']
+        self.assertEqual(set(enclosed_boundaries(factor, 5)
+                             for factor in expanded[7:10]),
+                         {(3, 4), (3, 5), (4, 5)})
+        self.assertFalse(any(start == 7 for start, _, _ in
+                             short_inverse_lantern_matches(expanded, 5, 4)))
 
     def test_graphical_mixed_lantern_states_replay_exactly(self):
         states = five_boundary_mixed_lantern_states()

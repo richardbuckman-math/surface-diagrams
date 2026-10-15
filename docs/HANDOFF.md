@@ -1,5 +1,25 @@
 # Handoff: surface-diagrams
 
+## October 15: exact inverse-lantern candidate scanner
+
+Added `short_inverse_lantern_matches()` to the framed-boundary calculation
+engine. It scans adjacent triples of pair twists, checks that their labeled
+supports form a three-hole triangle, and then compares their **full B_n Artin
+action** with three-hole twists having a bounded conjugator. The conjugator
+bound is explicit (default two letters); a miss is not a proof that no
+longer-routed lantern exists. This catches the exact `{2,3,5}` inverse
+lantern in the type-26 walkthrough and the elementary capped lantern, while
+rejecting the tempting F8–F10 `{3,4,5}` triangle in the 16-factor lift:
+those three curves have the correct incidence but the wrong product. The
+16-factor lift does contain a direct `{1,3,4}` inverse lantern at F3–F5,
+but it only recovers the already-certified type 30.
+
+Twenty focused framed-boundary/catalog tests pass. Next look for a short
+Hurwitz route that changes the local isotopy classes before an exact inverse
+lantern for open types 31 or 32; preserve the incidence/action distinction
+and test every proposed substitution in the framed target. The simple
+single-factor drags inspected so far have not supplied that route.
+
 ## October 15: graphical replay of the mixed Hurwitz–lantern move
 
 The public page `docs/boundary-factorizations/mixed-lantern-derivation.html`
