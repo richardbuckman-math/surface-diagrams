@@ -35,11 +35,20 @@
   }
   async function load(){
     try{
-      const response=await fetch('data/mixed-lantern-states.json');
+      const requested=new URLSearchParams(location.search).get('type')||'26';
+      const files={'26':'mixed-lantern-states.json','31':'type31-lantern-states.json'};
+      if(!files[requested])throw Error('Choose type 26 or type 31');
+      const response=await fetch(`data/${files[requested]}`);
       if(!response.ok)throw Error(`HTTP ${response.status}`);
       const data=await response.json();
       if(data.n!==5||data.stages?.length!==5||data.moves?.length!==4)
         throw Error('Incomplete certified state sequence');
+      const catalog=document.getElementById('catalog-link');
+      catalog.href=`double-outer.html?n=5#pattern-${data.target_pattern}`;
+      catalog.textContent=`Five-boundary type ${data.target_pattern}`;
+      document.title=`Type ${data.target_pattern}: five-boundary Hurwitz–lantern derivation`;
+      document.getElementById('moving-factor').textContent=
+        `${data.moving_factor} stays fixed as it moves down; each crossed factor is conjugated.`;
       for(let index=0;index<data.stages.length;index++){
         if(index)board.append(arrow(data.moves[index-1]));
         board.append(stageCard(data.stages[index],index));

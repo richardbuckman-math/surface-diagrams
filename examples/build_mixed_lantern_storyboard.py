@@ -12,7 +12,7 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_mixed_lantern_states,
-    framed_outer_certificate,
+    five_boundary_type31_lantern_states, framed_outer_certificate,
 )
 
 BASE = ROOT / 'docs' / 'boundary-factorizations'
@@ -20,9 +20,8 @@ DATA = BASE / 'data'
 SUPPORTS = BASE / 'direct-supports'
 
 
-def build():
-    states = five_boundary_mixed_lantern_states()
-    patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
+def build_story(states, positions, lantern_start, source_pattern,
+                target_pattern, slug, patterns):
 
     def published(state):
         kind = canonical_blocks(5, [enclosed_boundaries(factor, 5) for factor in state])
@@ -37,26 +36,33 @@ def build():
                 saved['conjugator'], saved['first'], saved['points'])
             picture_by_factor.setdefault(factor, saved['svg'])
 
-    labels = [f'F{index}' for index in range(1, 15)]
+    labels = [f'F{index}' for index in range(1, len(states[0]) + 1)]
     ids = [tuple(labels)]
-    for index in (3, 4, 5):
+    moving_id = labels[positions[0]]
+    moves = []
+    for index in positions:
+        moves.append(f'{moving_id} down past {labels[index + 1]}')
         labels[index:index + 2] = labels[index + 1], labels[index]
         ids.append(tuple(labels))
-    labels[6:9] = ['L235']
+    labels[lantern_start:lantern_start + 3] = ['L235']
     ids.append(tuple(labels))
     assert len(ids) == len(states) == 5
 
-    stage_names = ('Fourteen-factor source', 'First Hurwitz move',
+    stage_names = (f'{len(states[0])}-factor source', 'First Hurwitz move',
                    'Second Hurwitz move', 'Third Hurwitz move',
                    'Inverse framed lantern')
-    highlights = ((3,), (3, 4), (4, 5), (5, 6, 7, 8), (6,))
+    highlights = ((positions[0],), (positions[0], positions[0] + 1),
+                  (positions[1], positions[1] + 1),
+                  tuple(sorted({positions[2], positions[2] + 1,
+                                *range(lantern_start, lantern_start + 3)})),
+                  (lantern_start,))
     stages = []
     for stage_number, (state, names) in enumerate(zip(states, ids)):
         powers = framed_outer_certificate(5, state, 2)
         rows = []
         for factor, label in zip(state, names):
             if factor not in picture_by_factor:
-                path = SUPPORTS / f'mixed-hurwitz-crossed-{len(picture_by_factor)}.svg'
+                path = SUPPORTS / f'{slug}-hurwitz-crossed-{len(picture_by_factor)}.svg'
                 drawing = Factor(label, factor.conjugator, factor.first,
                                  factor.points, factor.power, factor.half)
                 with path.open('w', encoding='utf-8', newline='\n') as out:
@@ -70,17 +76,22 @@ def build():
                        'inner_powers': list(powers), 'rows': rows,
                        'highlight_rows': list(highlights[stage_number])})
 
-    assert [stage['inner_powers'] for stage in stages] == (
-        [[3, 4, 4, 4, 6]] * 4 + [[3, 3, 3, 4, 5]])
-    result = {'n': 5, 'outer_power': 2, 'source_pattern': 30,
-              'target_pattern': 26, 'stages': stages,
-              'moves': ['F4 down past F5', 'F4 down past F6',
-                        'F4 down past F7',
-                        'T{2,3} · T{3,5} · T{2,5} → T{2,3,5}']}
-    (DATA / 'mixed-lantern-states.json').write_text(
+    result = {'n': 5, 'outer_power': 2, 'source_pattern': source_pattern,
+              'target_pattern': target_pattern, 'moving_factor': moving_id,
+              'stages': stages,
+              'moves': moves + ['T{2,3} · T{3,5} · T{2,5} → T{2,3,5}']}
+    (DATA / f'{slug}-lantern-states.json').write_text(
         json.dumps(result, separators=(',', ':')), encoding='utf-8')
-    print('Saved five certified states and', len(picture_by_factor),
+    print(f'Type {target_pattern}: saved five certified states and', len(picture_by_factor),
           'distinct pictured factors')
+
+
+def build():
+    patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
+    build_story(five_boundary_mixed_lantern_states(), (3, 4, 5), 6,
+                30, 26, 'mixed', patterns)
+    build_story(five_boundary_type31_lantern_states(), (5, 6, 7), 8,
+                34, 31, 'type31', patterns)
 
 
 if __name__ == '__main__':

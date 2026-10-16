@@ -194,7 +194,7 @@ def five_boundary_mixed_lantern():
     powers = framed_outer_certificate(5, factors, 2)
     return {'name': 'five-hole-mixed-lantern-12', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (4, 5, 6),
-            'lantern_support': (2, 3, 5)}
+            'lantern_support': (2, 3, 5), 'core_factor_count': 6}
 
 
 def five_boundary_type31_lantern_states():
@@ -233,4 +233,4 @@ def five_boundary_type31_lantern():
     powers = framed_outer_certificate(5, factors, 2)
     return {'name': 'five-hole-type31-lantern-14', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (6, 7, 8),
-            'lantern_support': (2, 3, 5)}
+            'lantern_support': (2, 3, 5), 'core_factor_count': 8}

@@ -180,23 +180,31 @@ class FramedBoundaryRelationTests(unittest.TestCase):
                          tuple(map(tuple, patterns[30]['blocks'])))
 
     def test_graphical_mixed_lantern_states_replay_exactly(self):
-        states = five_boundary_mixed_lantern_states()
-        saved = json.loads((DATA / 'mixed-lantern-states.json').read_text(
-            encoding='utf-8'))
-        self.assertEqual([len(state) for state in states], [14, 14, 14, 14, 12])
-        self.assertEqual(len(saved['stages']), len(states))
-        for index, (state, stage) in enumerate(zip(states, saved['stages'])):
-            with self.subTest(stage=index):
-                self.assertEqual(list(framed_outer_certificate(5, state, 2)),
-                                 stage['inner_powers'])
-                self.assertEqual(len(stage['rows']), len(state))
-                for factor, row in zip(state, stage['rows']):
-                    self.assertEqual((list(factor.conjugator), factor.first,
-                                      factor.points),
-                                     (row['conjugator'], row['first'], row['points']))
-                    self.assertEqual(list(enclosed_boundaries(factor, 5)),
-                                     row['support'])
-                    self.assertTrue((DATA.parent / row['svg']).is_file())
+        stories = ((five_boundary_mixed_lantern_states(), 'mixed', 30, 26, 3),
+                   (five_boundary_type31_lantern_states(), 'type31', 34, 31, 5))
+        for states, slug, source, target, moving in stories:
+            saved = json.loads((DATA / f'{slug}-lantern-states.json').read_text(
+                encoding='utf-8'))
+            self.assertEqual((saved['source_pattern'], saved['target_pattern']),
+                             (source, target))
+            self.assertEqual(saved['moving_factor'], f'F{moving + 1}')
+            self.assertEqual(len(saved['stages']), len(states))
+            for index, (state, stage) in enumerate(zip(states, saved['stages'])):
+                with self.subTest(target=target, stage=index):
+                    self.assertEqual(list(framed_outer_certificate(5, state, 2)),
+                                     stage['inner_powers'])
+                    self.assertEqual(len(stage['rows']), len(state))
+                    if index < 4:
+                        self.assertEqual(stage['rows'][moving + index]['id'],
+                                         saved['moving_factor'])
+                        self.assertEqual(state[moving + index], states[0][moving])
+                    for factor, row in zip(state, stage['rows']):
+                        self.assertEqual((list(factor.conjugator), factor.first,
+                                          factor.points),
+                                         (row['conjugator'], row['first'], row['points']))
+                        self.assertEqual(list(enclosed_boundaries(factor, 5)),
+                                         row['support'])
+                        self.assertTrue((DATA.parent / row['svg']).is_file())
 
     def test_wrong_factor_order_or_target_power_is_rejected(self):
         factors = four_triple_relations()[0]['factors']

@@ -1,5 +1,26 @@
 # Handoff: surface-diagrams
 
+## October 16: graphical replay for type 31
+
+The shared graphical derivation page now supports both five-inner mixed
+relations: `mixed-lantern-derivation.html?type=26` and `?type=31`.
+Type 31 has five horizontally browsable vertical factor lists: the
+16-factor source, all three checked Hurwitz states, and the 14-factor
+inverse-lantern result. Stable IDs follow F6; amber rows show the changed
+curves and the final local replacement. Each column displays its own framed
+boundary powers. The catalog now links to the correct replay and source
+core; its earlier hardcoded F4/14-factor explanation for type 31 is fixed.
+
+`build_mixed_lantern_storyboard.py` builds both saved sequences and reuses
+existing curve SVGs. Tests check every saved exact factor, its support,
+framing, image, and the unchanged moving factor in all four Hurwitz states.
+Twenty-one focused tests, both JavaScript syntax checks, and the site link
+build pass. The start and final type-31 columns were inspected in Chrome.
+Next seek a checked route for type 32 or another open five-inner incidence
+type, using the bounded inverse-lantern scanner and exact local actions.
+The catalog still has 20 certified types and 17 open; this increment adds
+the graphical derivation, not another incidence type.
+
 ## October 16: a second mixed Hurwitz–lantern relation (five inner boundaries)
 
 Found and published a **new positive double-outer factorization, type 31**
