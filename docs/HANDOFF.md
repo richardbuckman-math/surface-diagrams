@@ -1,5 +1,35 @@
 # Handoff: surface-diagrams
 
+## October 16: type 32 certified, with a graphical mixed-direction route
+
+Found another positive five-inner double-outer factorization, **type 32**
+(one-based). In the certified 16-factor lift, move F6 up past F5 by inverse
+Hurwitz, then drag the altered F5 down past F7 and F8. Factors 8–10 now
+form the exact standard `T_{345}` lantern product. Inverse framed lantern
+replaces them by one triple twist, yielding 14 positive factors with target
+`T_outer^2 T_1^4 T_2^4 T_3^4 T_4^4 T_5^5`. Every adjacent move, the local
+lantern equality, the full B5 product, and the boundary framings are checked.
+The catalog now has **21 certified types and 16 open**.
+
+The full five-column graphical replay is at
+`mixed-lantern-derivation.html?type=32`. Its arrows correctly switch from
+F6 moving upward to the altered F5 moving downward. The shared generator
+and page now derive the final lantern equation and support labels from
+the saved states, so the type-32 `{3,4,5}` replacement cannot inherit the
+older `{2,3,5}` text. The catalog also derives each move caption from its
+direction and stable factor IDs.
+
+A crowded exact support encountered a hole-clearance failure while drawing.
+The small-disk support renderer now makes up to two bounded spacing
+increases only for this geometric failure, retaining the same Arc/Loop
+itinerary, routing checks, and route cap. The new regression test checks its
+exact class and successful framed-hole rendering. Twenty-eight focused
+relation/catalog/geometry tests, both JS syntax checks, and the site link
+build pass. The final graphical columns were inspected in Chrome.
+Next test the new type-31/type-32 states for further exact inverse lanterns
+and short Hurwitz routes to remaining open types; do not repeat the failed
+original F8–F10 incidence-only shortcut.
+
 ## October 16: graphical replay for type 31
 
 The shared graphical derivation page now supports both five-inner mixed

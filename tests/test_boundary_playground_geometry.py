@@ -46,6 +46,15 @@ class BoundaryPlaygroundGeometryTests(unittest.TestCase):
             self.assertEqual(support_svg(factor, 6), '<svg/>')
         old.assert_called_once_with(factor.mapping_class)
 
+    def test_crowded_framed_support_gets_space_without_changing_its_class(self):
+        factor = Factor('type32-F7', (1, 3, -2, 3, 2, 2), 1, 2)
+        curve = support_curve(factor.mapping_class, 5)
+        self.assertEqual(free_homotopy_key(loop_ray_word(5, curve)),
+                         supported_class(factor.mapping_class, 5))
+        root = ET.fromstring(support_svg(factor, 5, inner_boundaries=(1, 2, 3, 4, 5)))
+        self.assertIsNotNone(root.find(f"{SVG}path[@class='closed-curve']"))
+        self.assertEqual(len(root.findall(f'{SVG}circle')), 5)
+
     def test_continuous_braid_and_paired_export_retain_factor_boundaries(self):
         factors = (Factor('A', (), 1, 3), Factor('B', (2,), 1, 2, half=True))
         braid = ET.fromstring(braid_svg(factors, 3))

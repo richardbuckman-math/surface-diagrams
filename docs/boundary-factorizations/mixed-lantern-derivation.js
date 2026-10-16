@@ -36,8 +36,8 @@
   async function load(){
     try{
       const requested=new URLSearchParams(location.search).get('type')||'26';
-      const files={'26':'mixed-lantern-states.json','31':'type31-lantern-states.json'};
-      if(!files[requested])throw Error('Choose type 26 or type 31');
+      const files={'26':'mixed-lantern-states.json','31':'type31-lantern-states.json','32':'type32-lantern-states.json'};
+      if(!files[requested])throw Error('Choose type 26, type 31, or type 32');
       const response=await fetch(`data/${files[requested]}`);
       if(!response.ok)throw Error(`HTTP ${response.status}`);
       const data=await response.json();
@@ -47,8 +47,10 @@
       catalog.href=`double-outer.html?n=5#pattern-${data.target_pattern}`;
       catalog.textContent=`Five-boundary type ${data.target_pattern}`;
       document.title=`Type ${data.target_pattern}: five-boundary Hurwitz–lantern derivation`;
-      document.getElementById('moving-factor').textContent=
-        `${data.moving_factor} stays fixed as it moves down; each crossed factor is conjugated.`;
+      document.getElementById('moving-factor').textContent=data.move_description;
+      const twist=support=>`T{${support.join(',')}}`;
+      document.getElementById('lantern-equation').textContent=
+        `The final framed lantern is ${data.lantern_pair_supports.map(twist).join(' · ')} = ${twist(data.lantern_support)} · ${data.lantern_support.map(i=>`T${i}`).join(' · ')} for the routed curves shown. Replacing the three pair twists lowers the boundary powers at ${data.lantern_support.join(', ')} by one. This is a framed inner-boundary relation; its marked-point projection has different bookkeeping.`;
       for(let index=0;index<data.stages.length;index++){
         if(index)board.append(arrow(data.moves[index-1]));
         board.append(stageCard(data.stages[index],index));

@@ -12,7 +12,8 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_mixed_lantern_states,
-    five_boundary_type31_lantern_states, framed_outer_certificate,
+    five_boundary_type31_lantern_states, five_boundary_type32_lantern_states,
+    framed_outer_certificate,
 )
 
 BASE = ROOT / 'docs' / 'boundary-factorizations'
@@ -20,7 +21,7 @@ DATA = BASE / 'data'
 SUPPORTS = BASE / 'direct-supports'
 
 
-def build_story(states, positions, lantern_start, source_pattern,
+def build_story(states, steps, lantern_start, source_pattern,
                 target_pattern, slug, patterns):
 
     def published(state):
@@ -38,20 +39,25 @@ def build_story(states, positions, lantern_start, source_pattern,
 
     labels = [f'F{index}' for index in range(1, len(states[0]) + 1)]
     ids = [tuple(labels)]
-    moving_id = labels[positions[0]]
-    moves = []
-    for index in positions:
-        moves.append(f'{moving_id} down past {labels[index + 1]}')
+    moves, moving_ids = [], []
+    for index, direction in steps:
+        moving_id = labels[index if direction > 0 else index + 1]
+        crossed_id = labels[index + 1 if direction > 0 else index]
+        moving_ids.append(moving_id)
+        moves.append(f'{moving_id} {"down" if direction > 0 else "up"} past {crossed_id}')
         labels[index:index + 2] = labels[index + 1], labels[index]
         ids.append(tuple(labels))
-    labels[lantern_start:lantern_start + 3] = ['L235']
+    lantern_support = enclosed_boundaries(states[-1][lantern_start], 5)
+    labels[lantern_start:lantern_start + 3] = ['L' + ''.join(map(str, lantern_support))]
     ids.append(tuple(labels))
     assert len(ids) == len(states) == 5
 
     stage_names = (f'{len(states[0])}-factor source', 'First Hurwitz move',
                    'Second Hurwitz move', 'Third Hurwitz move',
                    'Inverse framed lantern')
-    highlights = ((positions[0],), (positions[0], positions[0] + 1),
+    positions = tuple(index for index, _ in steps)
+    highlights = ((positions[0], positions[0] + 1),
+                  (positions[0], positions[0] + 1),
                   (positions[1], positions[1] + 1),
                   tuple(sorted({positions[2], positions[2] + 1,
                                 *range(lantern_start, lantern_start + 3)})),
@@ -76,10 +82,21 @@ def build_story(states, positions, lantern_start, source_pattern,
                        'inner_powers': list(powers), 'rows': rows,
                        'highlight_rows': list(highlights[stage_number])})
 
+    local_supports = [enclosed_boundaries(factor, 5) for factor in
+                      states[-2][lantern_start:lantern_start + 3]]
+    def twist_label(support):
+        return 'T{' + ','.join(map(str, support)) + '}'
+    move_description = (f'{moving_ids[0]} stays fixed as it moves down; each crossed factor is conjugated.'
+                        if len(set(moving_ids)) == 1 else
+                        'Move ' + '; then '.join(moves) + '. Each crossed factor is conjugated.')
     result = {'n': 5, 'outer_power': 2, 'source_pattern': source_pattern,
-              'target_pattern': target_pattern, 'moving_factor': moving_id,
+              'target_pattern': target_pattern, 'moving_factor': moving_ids[0],
+              'move_description': move_description,
+              'lantern_support': list(lantern_support),
+              'lantern_pair_supports': [list(support) for support in local_supports],
               'stages': stages,
-              'moves': moves + ['T{2,3} · T{3,5} · T{2,5} → T{2,3,5}']}
+              'moves': moves + [' · '.join(map(twist_label, local_supports)) +
+                                ' → ' + twist_label(lantern_support)]}
     (DATA / f'{slug}-lantern-states.json').write_text(
         json.dumps(result, separators=(',', ':')), encoding='utf-8')
     print(f'Type {target_pattern}: saved five certified states and', len(picture_by_factor),
@@ -88,10 +105,12 @@ def build_story(states, positions, lantern_start, source_pattern,
 
 def build():
     patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
-    build_story(five_boundary_mixed_lantern_states(), (3, 4, 5), 6,
+    build_story(five_boundary_mixed_lantern_states(), ((3, 1), (4, 1), (5, 1)), 6,
                 30, 26, 'mixed', patterns)
-    build_story(five_boundary_type31_lantern_states(), (5, 6, 7), 8,
+    build_story(five_boundary_type31_lantern_states(), ((5, 1), (6, 1), (7, 1)), 8,
                 34, 31, 'type31', patterns)
+    build_story(five_boundary_type32_lantern_states(), ((4, -1), (5, 1), (6, 1)), 7,
+                34, 32, 'type32', patterns)
 
 
 if __name__ == '__main__':

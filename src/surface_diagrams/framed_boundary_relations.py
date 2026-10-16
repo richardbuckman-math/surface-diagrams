@@ -11,7 +11,7 @@ from collections import Counter
 from dataclasses import replace
 from itertools import combinations, product
 
-from .braid_actions import reduce_word
+from .braid_actions import inverse_word, reduce_word
 from .mapping_classes import ConjugatedTwist, exact_action
 from .projected_relations import pc_daisy_terms, pc_rose_terms
 
@@ -234,3 +234,45 @@ def five_boundary_type31_lantern():
     return {'name': 'five-hole-type31-lantern-14', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (6, 7, 8),
             'lantern_support': (2, 3, 5), 'core_factor_count': 8}
+
+
+def five_boundary_type32_lantern_states():
+    """Expose a different lantern in the 16-factor lift, around holes 3–5.
+
+    Move F6 up past F5 (inverse Hurwitz), then move the altered F5 down past
+    F7 and F8. Factors 8–10 now have exactly the action of the standard T_345.
+    """
+    from .twist_simplify import simplify_twist
+
+    factors = list(five_boundary_lifts()[2]['factors'])
+    states = [tuple(factors)]
+    for index, direction in ((4, -1), (5, 1), (6, 1)):
+        left, right = factors[index:index + 2]
+        crossed, moving = (right, left) if direction > 0 else (left, right)
+        conjugating_word = moving.word if direction > 0 else inverse_word(moving.word)
+        changed = simplify_twist(replace(
+            crossed, conjugator=reduce_word(conjugating_word + crossed.conjugator)),
+            strands=5, max_states=64)
+        replacement = (changed, moving) if direction > 0 else (moving, changed)
+        if exact_action(left.word + right.word, 5) != exact_action(
+                replacement[0].word + replacement[1].word, 5):
+            raise ValueError('Hurwitz move failed its exact disk check')
+        factors[index:index + 2] = replacement
+        states.append(tuple(factors))
+    triple = ConjugatedTwist((), 3, 3)
+    local_word = tuple(letter for factor in factors[7:10] for letter in factor.word)
+    if exact_action(local_word, 5) != exact_action(triple.word, 5):
+        raise ValueError('Three pair twists do not match the inverse lantern')
+    factors[7:10] = (triple,)
+    states.append(tuple(factors))
+    return tuple(states)
+
+
+def five_boundary_type32_lantern():
+    """A checked fourteen-factor double-outer relation of incidence type 32."""
+    factors = five_boundary_type32_lantern_states()[-1]
+    powers = framed_outer_certificate(5, factors, 2)
+    return {'name': 'five-hole-type32-lantern-14', 'factors': factors,
+            'inner_powers': powers, 'hurwitz_positions': (5, 6, 7),
+            'hurwitz_directions': (-1, 1, 1),
+            'lantern_support': (3, 4, 5), 'core_factor_count': 8}

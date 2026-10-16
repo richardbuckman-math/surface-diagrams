@@ -108,8 +108,14 @@
       replay.append(link);section.append(replay);
     }
     const note=document.createElement('p');note.className='source';
+    const labels=Array.from({length:direct.factors.length+2},(_,i)=>`F${i+1}`);
+    const moves=(direct.hurwitz_positions||[]).map((position,step)=>{
+      const i=position-1,direction=direct.hurwitz_directions?.[step]??1;
+      const caption=direction>0?`${labels[i]} down past ${labels[i+1]}`:`${labels[i+1]} up past ${labels[i]}`;
+      [labels[i],labels[i+1]]=[labels[i+1],labels[i]];return caption;
+    });
     note.textContent=direct.hurwitz_positions?
-      `Starting from the ${direct.factors.length+2}-factor five-boundary lift, move factor F${direct.hurwitz_positions[0]} downward across the next three factors by exact Hurwitz moves. The resulting consecutive T{2,3}, T{3,5}, T{2,5} are the puncture-capped lantern for T{2,3,5}; the framed replacement lowers the boundary powers at 2, 3, and 5 by one. Exact B₅ action and all five framings certify the final product.`:
+      `Starting from the ${direct.factors.length+2}-factor five-boundary lift, apply these checked Hurwitz moves: ${moves.join('; ')}. The resulting three pair twists have exactly the capped action of T{${direct.lantern_support.join(',')}}; the framed replacement lowers the boundary powers at ${direct.lantern_support.join(', ')} by one. Exact B₅ action and all five framings certify the final product.`:
       n===5?
       'The framed five-boundary daisy gives P·L = T₀·T₁·T₂·T₃·T₄·T₅³, with P the four-boundary outer twist and L the four-petal cycle. The products P and L commute. Replacing P² by the four-triple relation gives the displayed correction powers. Exact B₅ Artin action and all five boundary framings certify the order; every curve is rendered from its individual isotopy class.':
       'The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';

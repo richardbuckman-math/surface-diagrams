@@ -11,7 +11,7 @@ from html import escape
 import re
 
 from .braid_actions import arc_ray_word, free_homotopy_key, inverse_word, loop_ray_word
-from .curves import Arc, Loop, MAX_CUT_VISITS
+from .curves import Arc, Loop, MAX_CUT_VISITS, RoutingError
 from .mapping_classes import ConjugatedTwist, supported_class
 from .model import PlanarSurface, Style
 from .svg import render_svg
@@ -105,12 +105,20 @@ def support_svg(factor, strands, *, mirror_vertical=False, inner_boundaries=()):
     if any(type(point) is not int or not 1 <= point <= strands for point in boundaries):
         raise ValueError('Inner boundary position exceeds the support surface')
     pattern = ''.join('B' if point in boundaries else 'P' for point in range(1, strands + 1))
-    surface = PlanarSurface.row(pattern, spacing=50 * scale,
-                                height=220 * scale, margin=55 * scale).with_curves(curve)
-    return render_svg(surface, style=Style(curve_color='#a21caf', curve_width=1.5,
-                                           marked_point_radius=3.5,
-                                           boundary_shape='circle', boundary_radius=9),
-                      mirror_curve_paths_vertical=mirror_vertical)
+    style = Style(curve_color='#a21caf', curve_width=1.5,
+                  marked_point_radius=3.5, boundary_shape='circle', boundary_radius=9)
+    for attempt in range(3):
+        surface = PlanarSurface.row(pattern, spacing=50 * scale,
+                                    height=220 * scale, margin=55 * scale).with_curves(curve)
+        try:
+            return render_svg(surface, style=style,
+                              mirror_curve_paths_vertical=mirror_vertical)
+        except RoutingError as error:
+            if attempt == 2 or 'curve clearance is too small near a dot' not in str(error):
+                raise
+            # Retain the exact itinerary and all routing checks. More space
+            # separates crowded curve strands from the fixed-size hole rims.
+            scale *= 1.5
 
 
 def target_surface_svg(strands, inner_boundaries=()):
