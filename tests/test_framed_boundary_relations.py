@@ -7,7 +7,8 @@ import unittest
 from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
-    five_boundary_mixed_lantern_states, four_triple_relations,
+    five_boundary_mixed_lantern_states, five_boundary_type31_lantern,
+    five_boundary_type31_lantern_states, four_triple_relations,
     framed_outer_certificate, short_inverse_lantern_matches,
 )
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
@@ -100,16 +101,17 @@ class FramedBoundaryRelationTests(unittest.TestCase):
         root = DATA.parent
         patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
         self.assertEqual([i for i, row in enumerate(patterns) if row.get('direct')],
-                         [24, 25, 29, 33])
-        for index in (24, 25, 29, 33):
+                         [24, 25, 29, 30, 33])
+        for index in (24, 25, 29, 30, 33):
             direct = patterns[index]['direct']
             factors = tuple(ConjugatedTwist(tuple(row['conjugator']),
                                              row['first'], row['points'])
                             for row in direct['factors'])
             self.assertEqual(list(framed_outer_certificate(5, factors, 2)),
                              direct['inner_powers'])
-            if index == 25:
-                self.assertEqual(direct['hurwitz_positions'], [4, 5, 6])
+            if index in (25, 30):
+                self.assertEqual(direct['hurwitz_positions'],
+                                 [4, 5, 6] if index == 25 else [6, 7, 8])
                 self.assertEqual(direct['lantern_support'], [2, 3, 5])
             else:
                 self.assertEqual(len(factors), direct['core_factor_count'] + 8)
@@ -152,6 +154,30 @@ class FramedBoundaryRelationTests(unittest.TestCase):
                          {(3, 4), (3, 5), (4, 5)})
         self.assertFalse(any(start == 7 for start, _, _ in
                              short_inverse_lantern_matches(expanded, 5, 4)))
+
+    def test_type31_hurwitz_lantern_route_is_exact_and_framed(self):
+        source = five_boundary_lifts()[2]['factors']
+        states = five_boundary_type31_lantern_states()
+        relation = five_boundary_type31_lantern()
+        self.assertEqual([len(state) for state in states], [16, 16, 16, 16, 14])
+        self.assertEqual(states[0], source)
+        self.assertEqual(states[-1], relation['factors'])
+        self.assertEqual(relation['hurwitz_positions'], (6, 7, 8))
+        self.assertEqual(relation['inner_powers'], (4, 3, 4, 5, 5))
+        action = exact_action(tuple(letter for factor in source
+                                    for letter in factor.word), 5)
+        for state in states:
+            self.assertEqual(exact_action(tuple(letter for factor in state
+                                                for letter in factor.word), 5), action)
+            self.assertEqual(framed_outer_certificate(5, state, 2),
+                             (4, 3, 4, 5, 5) if len(state) == 14 else
+                             (4, 4, 5, 5, 6))
+        matches = short_inverse_lantern_matches(states[-2], 5)
+        self.assertIn((8, (2, 3, 5), ConjugatedTwist((-4,), 2, 3)), matches)
+        patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
+        self.assertEqual(canonical_blocks(5, [enclosed_boundaries(factor, 5)
+                                               for factor in relation['factors']]),
+                         tuple(map(tuple, patterns[30]['blocks'])))
 
     def test_graphical_mixed_lantern_states_replay_exactly(self):
         states = five_boundary_mixed_lantern_states()

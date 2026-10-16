@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 335.5 245.5" width="335.5" height="245.5" role="img">
+<title>Planar surface</title>
+<defs><clipPath id="sd-4d0f7cef96621fd9fdbf" clipPathUnits="userSpaceOnUse"><path d="M 0 245.5 L 335.5 245.5 L 335.5 0 L 0 0 Z  M 58.75 122.75 A 9 9 0 1 1 76.75 122.75 A 9 9 0 1 1 58.75 122.75 Z  M 108.75 122.75 A 9 9 0 1 1 126.75 122.75 A 9 9 0 1 1 108.75 122.75 Z  M 158.75 122.75 A 9 9 0 1 1 176.75 122.75 A 9 9 0 1 1 158.75 122.75 Z  M 208.75 122.75 A 9 9 0 1 1 226.75 122.75 A 9 9 0 1 1 208.75 122.75 Z  M 258.75 122.75 A 9 9 0 1 1 276.75 122.75 A 9 9 0 1 1 258.75 122.75 Z " clip-rule="evenodd" fill-rule="evenodd"/></clipPath></defs>
+<path class="closed-curve" d="M 242.75 122.75 A 22.5833333333 13.6228494624 0 0 0 197.583333333 122.75 A 77.3333333333 46.6494623656 0 0 1 42.9166666667 122.75 A 49.9166666667 30.1110215054 0 0 1 142.75 122.75 A 22.5833333333 13.6228494624 0 0 0 187.916666667 122.75 A 79.6666666667 48.0569892473 0 0 0 28.5833333333 122.75 A 107.083333333 64.5954301075 0 0 0 242.75 122.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#sd-4d0f7cef96621fd9fdbf)"/>
+<ellipse class="outer-boundary" cx="167.75" cy="122.75" rx="155" ry="110" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="inner-boundary-circle" cx="67.75" cy="122.75" r="9" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="inner-boundary-circle" cx="117.75" cy="122.75" r="9" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="inner-boundary-circle" cx="167.75" cy="122.75" r="9" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="inner-boundary-circle" cx="217.75" cy="122.75" r="9" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="inner-boundary-circle" cx="267.75" cy="122.75" r="9" fill="none" stroke="#000000" stroke-width="1.5"/>
+</svg>

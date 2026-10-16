@@ -195,3 +195,42 @@ def five_boundary_mixed_lantern():
     return {'name': 'five-hole-mixed-lantern-12', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (4, 5, 6),
             'lantern_support': (2, 3, 5)}
+
+
+def five_boundary_type31_lantern_states():
+    """A second exact Hurwitz/inverse-lantern route from the 16-factor lift.
+
+    Drag its sixth factor T_23 across T_24, T_34, and T_45. The resulting
+    factors 9–11 form the routed T_235 lantern product. Their supports alone
+    would not suffice: the complete local capped braid action is checked.
+    """
+    from .twist_simplify import simplify_twist
+
+    factors = list(five_boundary_lifts()[2]['factors'])
+    states = [tuple(factors)]
+    for index in (5, 6, 7):
+        moving, crossed = factors[index:index + 2]
+        changed = simplify_twist(replace(
+            crossed, conjugator=reduce_word(moving.word + crossed.conjugator)),
+            strands=5, max_states=64)
+        if exact_action(moving.word + crossed.word, 5) != exact_action(
+                changed.word + moving.word, 5):
+            raise ValueError('Hurwitz move failed its exact disk check')
+        factors[index:index + 2] = (changed, moving)
+        states.append(tuple(factors))
+    triple = ConjugatedTwist((-4,), 2, 3)
+    local_word = tuple(letter for factor in factors[8:11] for letter in factor.word)
+    if exact_action(local_word, 5) != exact_action(triple.word, 5):
+        raise ValueError('Three pair twists do not match the inverse lantern')
+    factors[8:11] = (triple,)
+    states.append(tuple(factors))
+    return tuple(states)
+
+
+def five_boundary_type31_lantern():
+    """A checked fourteen-factor double-outer relation of incidence type 31."""
+    factors = five_boundary_type31_lantern_states()[-1]
+    powers = framed_outer_certificate(5, factors, 2)
+    return {'name': 'five-hole-type31-lantern-14', 'factors': factors,
+            'inner_powers': powers, 'hurwitz_positions': (6, 7, 8),
+            'lantern_support': (2, 3, 5)}

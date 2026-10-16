@@ -1,5 +1,27 @@
 # Handoff: surface-diagrams
 
+## October 16: a second mixed Hurwitz–lantern relation (five inner boundaries)
+
+Found and published a **new positive double-outer factorization, type 31**
+(one-based) in the five-inner catalog. Start with the certified 16-factor
+daisy lift. Drag its sixth factor, `T_{23}`, down across the next three
+factors by Hurwitz swaps at positions 6, 7, and 8. The resulting factors
+9–11 form the exact routed `T_{235}` PC lantern product: their complete
+`B_5` Artin action, not merely their three pair supports, agrees with the
+three-hole twist. Inverse lantern yields a 14-factor product with inner
+boundary correction `(4,3,4,5,5)` on the `T_outer^2` side. Every intermediate
+Hurwitz state and the final framed equality are checked.
+
+The catalog now includes this ordered vertical factorization and its 14
+individual support SVGs. The five-inner count is **20 certified, 17 open**
+incidence types. Twenty-one focused framed-boundary/catalog tests pass;
+the site builds with local links checked, and a nontrivial support SVG was
+visually inspected. Next make a graphical side-by-side replay of these
+three swaps and the inverse lantern, then continue searching for type 32
+and other open types. Do not infer a substitution from pair incidence alone:
+the immediately adjacent F8–F10 triangle in the original lift fails the
+exact local action check.
+
 ## October 15: exact inverse-lantern candidate scanner
 
 Added `short_inverse_lantern_matches()` to the framed-boundary calculation
