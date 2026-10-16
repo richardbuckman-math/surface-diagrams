@@ -36,12 +36,13 @@
   async function load(){
     try{
       const requested=new URLSearchParams(location.search).get('type')||'26';
-      const files={'26':'mixed-lantern-states.json','31':'type31-lantern-states.json','32':'type32-lantern-states.json'};
-      if(!files[requested])throw Error('Choose type 26, type 31, or type 32');
+      const files={'26':'mixed-lantern-states.json','28':'type28-lantern-states.json','31':'type31-lantern-states.json','32':'type32-lantern-states.json'};
+      if(!files[requested])throw Error('Choose type 26, type 28, type 31, or type 32');
       const response=await fetch(`data/${files[requested]}`);
       if(!response.ok)throw Error(`HTTP ${response.status}`);
       const data=await response.json();
-      if(data.n!==5||data.stages?.length!==5||data.moves?.length!==4)
+      if(data.n!==5||!Array.isArray(data.stages)||!Array.isArray(data.moves)||
+          data.stages.length<3||data.stages.length!==data.moves.length+1)
         throw Error('Incomplete certified state sequence');
       const catalog=document.getElementById('catalog-link');
       catalog.href=`double-outer.html?n=5#pattern-${data.target_pattern}`;
@@ -51,11 +52,15 @@
       const twist=support=>`T{${support.join(',')}}`;
       document.getElementById('lantern-equation').textContent=
         `The final framed lantern is ${data.lantern_pair_supports.map(twist).join(' · ')} = ${twist(data.lantern_support)} · ${data.lantern_support.map(i=>`T${i}`).join(' · ')} for the routed curves shown. Replacing the three pair twists lowers the boundary powers at ${data.lantern_support.join(', ')} by one. This is a framed inner-boundary relation; its marked-point projection has different bookkeeping.`;
+      const nav=document.getElementById('stage-nav');nav.replaceChildren();
       for(let index=0;index<data.stages.length;index++){
         if(index)board.append(arrow(data.moves[index-1]));
         board.append(stageCard(data.stages[index],index));
+        const jump=document.createElement('a');jump.href=`#stage-${index}`;
+        jump.textContent=index===0?'Start':index===data.stages.length-1?'Lantern':`Swap ${index}`;
+        nav.append(jump);
       }
-      status.textContent='Five exact framed states · three Hurwitz moves · one inverse lantern';
+      status.textContent=`${data.stages.length} exact framed states · ${data.moves.length-1} Hurwitz moves · one inverse lantern`;
       if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'nearest'});
     }catch(error){status.textContent=`Could not load the derivation: ${error.message}`}
   }

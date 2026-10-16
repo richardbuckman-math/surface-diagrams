@@ -11,7 +11,8 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks, double_ou
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
-    five_boundary_type31_lantern, five_boundary_type32_lantern, four_triple_relations,
+    five_boundary_type28_lantern, five_boundary_type31_lantern,
+    five_boundary_type32_lantern, four_triple_relations,
 )
 from surface_diagrams.boundary_playground_geometry import support_svg
 
@@ -26,7 +27,8 @@ def direct_relations(n):
     relations = (four_triple_relations() if n == 4 else
                  five_boundary_lifts() + (five_boundary_mixed_lantern(),
                                           five_boundary_type31_lantern(),
-                                          five_boundary_type32_lantern()))
+                                          five_boundary_type32_lantern(),
+                                          five_boundary_type28_lantern()))
     for relation in relations:
         factors = relation['factors']
         blocks = tuple(enclosed_boundaries(factor, n) for factor in factors)
@@ -51,7 +53,8 @@ def direct_relations(n):
                         **({'core_factor_count': relation['core_factor_count']}
                            if 'core_factor_count' in relation else {}),
                         **({'hurwitz_positions': list(relation['hurwitz_positions']),
-                            'lantern_support': list(relation['lantern_support'])}
+                            'lantern_support': list(relation['lantern_support']),
+                            'source_pattern': relation['source_pattern']}
                            if 'hurwitz_positions' in relation else {}),
                         **({'hurwitz_directions': list(relation['hurwitz_directions'])}
                            if 'hurwitz_directions' in relation else {})}

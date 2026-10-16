@@ -97,7 +97,7 @@
       link.href=`four-triple-derivation.html#stage-${n===4?direct.factors.length:
         direct.core_factor_count}`;
       link.textContent=n===4?'View this relation in the graphical four-triple derivation':
-        direct.hurwitz_positions?'View the four-boundary source relation':
+        direct.hurwitz_positions?'View the four-boundary core used in this construction':
         'View the four-boundary core and its lantern substitutions';
       derivation.append(link);section.append(derivation);
     }
@@ -115,7 +115,7 @@
       [labels[i],labels[i+1]]=[labels[i+1],labels[i]];return caption;
     });
     note.textContent=direct.hurwitz_positions?
-      `Starting from the ${direct.factors.length+2}-factor five-boundary lift, apply these checked Hurwitz moves: ${moves.join('; ')}. The resulting three pair twists have exactly the capped action of T{${direct.lantern_support.join(',')}}; the framed replacement lowers the boundary powers at ${direct.lantern_support.join(', ')} by one. Exact B₅ action and all five framings certify the final product.`:
+      `Starting from the ${direct.factors.length+2}-factor source relation (type ${direct.source_pattern}), apply these checked Hurwitz moves: ${moves.join('; ')}. The resulting three pair twists have exactly the capped action of T{${direct.lantern_support.join(',')}}; the framed replacement lowers the boundary powers at ${direct.lantern_support.join(', ')} by one. Exact B₅ action and all five framings certify the final product.`:
       n===5?
       'The framed five-boundary daisy gives P·L = T₀·T₁·T₂·T₃·T₄·T₅³, with P the four-boundary outer twist and L the four-petal cycle. The products P and L commute. Replacing P² by the four-triple relation gives the displayed correction powers. Exact B₅ Artin action and all five boundary framings certify the order; every curve is rendered from its individual isotopy class.':
       'The exact B₄ Artin action equals the double exterior twist. Inner-boundary framing counts agree as shown on the left; the capping kernel then certifies the framed equality. These curves are rendered from their individual exact isotopy classes.';

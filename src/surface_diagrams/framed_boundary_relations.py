@@ -194,7 +194,7 @@ def five_boundary_mixed_lantern():
     powers = framed_outer_certificate(5, factors, 2)
     return {'name': 'five-hole-mixed-lantern-12', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (4, 5, 6),
-            'lantern_support': (2, 3, 5), 'core_factor_count': 6}
+            'lantern_support': (2, 3, 5), 'core_factor_count': 6, 'source_pattern': 30}
 
 
 def five_boundary_type31_lantern_states():
@@ -233,7 +233,7 @@ def five_boundary_type31_lantern():
     powers = framed_outer_certificate(5, factors, 2)
     return {'name': 'five-hole-type31-lantern-14', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (6, 7, 8),
-            'lantern_support': (2, 3, 5), 'core_factor_count': 8}
+            'lantern_support': (2, 3, 5), 'core_factor_count': 8, 'source_pattern': 34}
 
 
 def five_boundary_type32_lantern_states():
@@ -242,11 +242,18 @@ def five_boundary_type32_lantern_states():
     Move F6 up past F5 (inverse Hurwitz), then move the altered F5 down past
     F7 and F8. Factors 8–10 now have exactly the action of the standard T_345.
     """
+    return _five_hole_lantern_route(five_boundary_lifts()[2]['factors'],
+                                    ((4, -1), (5, 1), (6, 1)), 7,
+                                    ConjugatedTwist((), 3, 3))
+
+
+def _five_hole_lantern_route(source, steps, start, triple):
+    """Replay signed adjacent moves and check the final local substitution."""
     from .twist_simplify import simplify_twist
 
-    factors = list(five_boundary_lifts()[2]['factors'])
+    factors = list(source)
     states = [tuple(factors)]
-    for index, direction in ((4, -1), (5, 1), (6, 1)):
+    for index, direction in steps:
         left, right = factors[index:index + 2]
         crossed, moving = (right, left) if direction > 0 else (left, right)
         conjugating_word = moving.word if direction > 0 else inverse_word(moving.word)
@@ -259,11 +266,10 @@ def five_boundary_type32_lantern_states():
             raise ValueError('Hurwitz move failed its exact disk check')
         factors[index:index + 2] = replacement
         states.append(tuple(factors))
-    triple = ConjugatedTwist((), 3, 3)
-    local_word = tuple(letter for factor in factors[7:10] for letter in factor.word)
+    local_word = tuple(letter for factor in factors[start:start + 3] for letter in factor.word)
     if exact_action(local_word, 5) != exact_action(triple.word, 5):
         raise ValueError('Three pair twists do not match the inverse lantern')
-    factors[7:10] = (triple,)
+    factors[start:start + 3] = (triple,)
     states.append(tuple(factors))
     return tuple(states)
 
@@ -275,4 +281,26 @@ def five_boundary_type32_lantern():
     return {'name': 'five-hole-type32-lantern-14', 'factors': factors,
             'inner_powers': powers, 'hurwitz_positions': (5, 6, 7),
             'hurwitz_directions': (-1, 1, 1),
-            'lantern_support': (3, 4, 5), 'core_factor_count': 8}
+            'lantern_support': (3, 4, 5), 'core_factor_count': 8, 'source_pattern': 34}
+
+
+def five_boundary_type28_lantern_states():
+    """Four checked Hurwitz moves from type 32 expose a T_245 lantern.
+
+    Row IDs refer to the fourteen rows of the source relation. Move F7 up
+    past F6, F8 up past F6, F10 up past F9, then F6 down past F10. The
+    resulting rows 9–11 equal the routed three-hole twist exactly.
+    """
+    return _five_hole_lantern_route(five_boundary_type32_lantern()['factors'],
+                                    ((5, -1), (6, -1), (8, -1), (7, 1)), 8,
+                                    ConjugatedTwist((1, 1, 2), 3, 3))
+
+
+def five_boundary_type28_lantern():
+    """A checked twelve-factor double-outer relation of incidence type 28."""
+    factors = five_boundary_type28_lantern_states()[-1]
+    return {'name': 'five-hole-type28-lantern-12', 'factors': factors,
+            'inner_powers': framed_outer_certificate(5, factors, 2),
+            'hurwitz_positions': (6, 7, 9, 8),
+            'hurwitz_directions': (-1, -1, -1, 1),
+            'lantern_support': (2, 4, 5), 'core_factor_count': 8, 'source_pattern': 32}

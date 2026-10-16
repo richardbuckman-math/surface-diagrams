@@ -1,5 +1,34 @@
 # Handoff: surface-diagrams
 
+## October 16: type 28 from a second inverse lantern
+
+The new type-32 relation now feeds another checked positive relation,
+**five-inner double-outer type 28**. Starting with its fourteen source rows,
+move F7 up past F6, F8 up past F6, F10 up past F9, then F6 down past F10.
+Rows 9–11 then have the exact B5 action of the routed `T_{245}` represented
+by `ConjugatedTwist((1,1,2), 3, 3)`. Inverse framed lantern produces twelve
+positive factors with target powers `(4,3,4,3,4)` alongside `T_outer^2`.
+Every intermediate full product and framing, the signed local Hurwitz
+moves, and the local lantern substitution are checked. The five-inner
+catalog now has **22 certified types and 15 open**.
+
+The public replay is `mixed-lantern-derivation.html?type=28`. The storyboard
+builder and page now support a variable number of Hurwitz moves: type 28
+has six columns with four swaps and one substitution. Source type numbers,
+stable row IDs, move directions, highlights, and framed corrections are
+shown explicitly. Row IDs restart for each source, as the page explains.
+The existing three-move replays remain available. Twenty-nine focused
+relation/catalog/geometry tests, both JS syntax checks, and the site link
+build pass; the last three graphical columns were inspected in Chrome.
+
+Next enumerate the pair-triangle candidates in the twelve-factor type-28
+result and test short exact Hurwitz routes toward remaining open types.
+The bounded scratch search `.preview/find_next_lantern.py` found this route
+at depth four from type 32; it is not an exhaustive nonexistence test for
+any other pattern. Keep the exact local curve class check before every
+inverse lantern, and reuse the new relation as a substitution when useful
+to the larger (6,7) derivation.
+
 ## October 16: type 32 certified, with a graphical mixed-direction route
 
 Found another positive five-inner double-outer factorization, **type 32**

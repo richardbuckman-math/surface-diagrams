@@ -12,7 +12,8 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_mixed_lantern_states,
-    five_boundary_type31_lantern_states, five_boundary_type32_lantern_states,
+    five_boundary_type28_lantern_states, five_boundary_type31_lantern_states,
+    five_boundary_type32_lantern_states,
     framed_outer_certificate,
 )
 
@@ -50,18 +51,17 @@ def build_story(states, steps, lantern_start, source_pattern,
     lantern_support = enclosed_boundaries(states[-1][lantern_start], 5)
     labels[lantern_start:lantern_start + 3] = ['L' + ''.join(map(str, lantern_support))]
     ids.append(tuple(labels))
-    assert len(ids) == len(states) == 5
+    assert len(ids) == len(states) == len(steps) + 2
 
-    stage_names = (f'{len(states[0])}-factor source', 'First Hurwitz move',
-                   'Second Hurwitz move', 'Third Hurwitz move',
+    stage_names = (f'{len(states[0])}-factor source (type {source_pattern})',
+                   *(f'Hurwitz move {index + 1}' for index in range(len(steps))),
                    'Inverse framed lantern')
     positions = tuple(index for index, _ in steps)
-    highlights = ((positions[0], positions[0] + 1),
-                  (positions[0], positions[0] + 1),
-                  (positions[1], positions[1] + 1),
-                  tuple(sorted({positions[2], positions[2] + 1,
-                                *range(lantern_start, lantern_start + 3)})),
-                  (lantern_start,))
+    highlights = [(positions[0], positions[0] + 1)]
+    highlights.extend((index, index + 1) for index in positions)
+    highlights[-1] = tuple(sorted({*highlights[-1],
+                                   *range(lantern_start, lantern_start + 3)}))
+    highlights.append((lantern_start,))
     stages = []
     for stage_number, (state, names) in enumerate(zip(states, ids)):
         powers = framed_outer_certificate(5, state, 2)
@@ -99,7 +99,7 @@ def build_story(states, steps, lantern_start, source_pattern,
                                 ' → ' + twist_label(lantern_support)]}
     (DATA / f'{slug}-lantern-states.json').write_text(
         json.dumps(result, separators=(',', ':')), encoding='utf-8')
-    print(f'Type {target_pattern}: saved five certified states and', len(picture_by_factor),
+    print(f'Type {target_pattern}: saved {len(states)} certified states and', len(picture_by_factor),
           'distinct pictured factors')
 
 
@@ -111,6 +111,8 @@ def build():
                 34, 31, 'type31', patterns)
     build_story(five_boundary_type32_lantern_states(), ((4, -1), (5, 1), (6, 1)), 7,
                 34, 32, 'type32', patterns)
+    build_story(five_boundary_type28_lantern_states(), ((5, -1), (6, -1), (8, -1), (7, 1)), 8,
+                32, 28, 'type28', patterns)
 
 
 if __name__ == '__main__':

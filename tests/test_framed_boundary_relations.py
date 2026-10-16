@@ -8,6 +8,7 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_lifts, five_boundary_mixed_lantern,
     five_boundary_mixed_lantern_states, five_boundary_type31_lantern,
+    five_boundary_type28_lantern, five_boundary_type28_lantern_states,
     five_boundary_type31_lantern_states, five_boundary_type32_lantern,
     five_boundary_type32_lantern_states, four_triple_relations,
     framed_outer_certificate, short_inverse_lantern_matches,
@@ -102,19 +103,21 @@ class FramedBoundaryRelationTests(unittest.TestCase):
         root = DATA.parent
         patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
         self.assertEqual([i for i, row in enumerate(patterns) if row.get('direct')],
-                         [24, 25, 29, 30, 31, 33])
-        for index in (24, 25, 29, 30, 31, 33):
+                         [24, 25, 27, 29, 30, 31, 33])
+        for index in (24, 25, 27, 29, 30, 31, 33):
             direct = patterns[index]['direct']
             factors = tuple(ConjugatedTwist(tuple(row['conjugator']),
                                              row['first'], row['points'])
                             for row in direct['factors'])
             self.assertEqual(list(framed_outer_certificate(5, factors, 2)),
                              direct['inner_powers'])
-            if index in (25, 30, 31):
+            if index in (25, 27, 30, 31):
                 self.assertEqual(direct['hurwitz_positions'],
-                                 {25: [4, 5, 6], 30: [6, 7, 8], 31: [5, 6, 7]}[index])
+                                 {25: [4, 5, 6], 27: [6, 7, 9, 8],
+                                  30: [6, 7, 8], 31: [5, 6, 7]}[index])
                 self.assertEqual(direct['lantern_support'],
-                                 [3, 4, 5] if index == 31 else [2, 3, 5])
+                                 {25: [2, 3, 5], 27: [2, 4, 5],
+                                  30: [2, 3, 5], 31: [3, 4, 5]}[index])
             else:
                 self.assertEqual(len(factors), direct['core_factor_count'] + 8)
             for factor, row in zip(factors, direct['factors']):
@@ -184,7 +187,8 @@ class FramedBoundaryRelationTests(unittest.TestCase):
     def test_graphical_mixed_lantern_states_replay_exactly(self):
         stories = ((five_boundary_mixed_lantern_states(), 'mixed', 30, 26, 3),
                    (five_boundary_type31_lantern_states(), 'type31', 34, 31, 5),
-                   (five_boundary_type32_lantern_states(), 'type32', 34, 32, None))
+                   (five_boundary_type32_lantern_states(), 'type32', 34, 32, None),
+                   (five_boundary_type28_lantern_states(), 'type28', 32, 28, None))
         for states, slug, source, target, moving in stories:
             saved = json.loads((DATA / f'{slug}-lantern-states.json').read_text(
                 encoding='utf-8'))
@@ -236,6 +240,30 @@ class FramedBoundaryRelationTests(unittest.TestCase):
         self.assertEqual(saved['moves'][:3], ['F6 up past F5', 'F5 down past F7',
                                               'F5 down past F8'])
         self.assertEqual(saved['lantern_pair_supports'], [[3, 4], [4, 5], [3, 5]])
+
+    def test_type28_reuses_type32_and_preserves_each_exact_move(self):
+        states = five_boundary_type28_lantern_states()
+        relation = five_boundary_type28_lantern()
+        self.assertEqual(states[0], five_boundary_type32_lantern()['factors'])
+        self.assertEqual([len(state) for state in states], [14] * 5 + [12])
+        self.assertEqual(relation['inner_powers'], (4, 3, 4, 3, 4))
+        action = exact_action(tuple(letter for factor in states[0]
+                                    for letter in factor.word), 5)
+        for state in states:
+            self.assertEqual(exact_action(tuple(letter for factor in state
+                                                for letter in factor.word), 5), action)
+            self.assertEqual(framed_outer_certificate(5, state, 2),
+                             (4, 3, 4, 3, 4) if len(state) == 12 else
+                             (4, 4, 4, 4, 5))
+        self.assertEqual(states[-1][8], ConjugatedTwist((1, 1, 2), 3, 3))
+        saved = json.loads((DATA / 'type28-lantern-states.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['moves'][:4], ['F7 up past F6', 'F8 up past F6',
+                                              'F10 up past F9', 'F6 down past F10'])
+        self.assertEqual(saved['lantern_pair_supports'], [[2, 4], [2, 5], [4, 5]])
+        patterns = json.loads((DATA / '5-double.json').read_text(encoding='utf-8'))['patterns']
+        self.assertEqual(canonical_blocks(5, [enclosed_boundaries(factor, 5)
+                                               for factor in relation['factors']]),
+                         tuple(map(tuple, patterns[27]['blocks'])))
 
     def test_wrong_factor_order_or_target_power_is_rejected(self):
         factors = four_triple_relations()[0]['factors']
