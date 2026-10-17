@@ -9,12 +9,14 @@ from itertools import combinations
 from math import gcd
 
 from .braid_actions import inverse_word, reduce_word
-from .factorization_explorer import Factor, initial_factors, product
+from .factorization_explorer import (
+    Factor, combine_factors, initial_factors, move_factor, product, split_factor,
+)
 from .hyperelliptic_homology import (
     IDENTITY, half_twist_class, homology_action, homology_quotient,
 )
-from .mapping_classes import ConjugatedTwist, exact_action
-from .sphere_actions import sphere_inner_certificate
+from .mapping_classes import ConjugatedTwist, exact_action, supported_class
+from .sphere_actions import sphere_curve_action, sphere_inner_certificate
 
 
 def intersection(left, right):
@@ -129,3 +131,118 @@ def sphere_genus_two_lantern(conjugator=()):
     return dict(left=left,right=right,disk_discrepancy=discrepancy,
                 sphere_certificate=sphere,lift_homology=IDENTITY,
                 scope='Six-marked sphere and closed genus two, not the framed disk')
+
+
+def sphere_root_half_transport():
+    """C10 C13 transports the original F3 half twist to F9 on the sphere.
+
+    Cj is one ordinary three-point twist whose square is original Fj.
+    The full sphere action and +I homology check the lifted equality;
+    the nontrivial disk discrepancy is kept explicitly.
+    """
+    factors = {factor.id: factor for factor in initial_factors()}
+    roots = tuple(replace(factors[name], id=name + '.root', power=1)
+                  for name in ('F10', 'F13'))
+    source, target = factors['F3'], factors['F9']
+    transport = product(roots)
+    transported = replace(source, id='C10C13(F3)',
+                          conjugator=reduce_word(transport + source.conjugator))
+    discrepancy = reduce_word(transported.word + inverse_word(target.word))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    return dict(roots=roots, source=source, target=target, transported=transported,
+                transport=transport, disk_discrepancy=discrepancy,
+                sphere_certificate=sphere, lift_homology=IDENTITY,
+                scope='Six-marked sphere and closed genus two; disk discrepancy nontrivial')
+
+
+def root_transport_consolidation():
+    """A replayable partial derivation pairing original F3 and F9.
+
+    Split F10 and F13, move one root of each upward, then apply one explicit
+    sphere-only equality. Every other step is an exact disk split/Hurwitz/
+    combine move. The result is a mixed fourteen-factor state, not a complete
+    structural derivation of (6,7).
+    """
+    state = initial_factors()
+    records = [dict(title='Supplied factorization', kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, factor in enumerate(state) if factor.id == name)
+
+    def move_before(moving_id, target_id):
+        nonlocal state
+        while position(moving_id) > position(target_id):
+            index = position(moving_id)
+            crossed = state[index - 1].id
+            state = move_factor(state, index, index - 1)
+            records.append(dict(title=f'{moving_id} up past {crossed}',
+                                kind='disk_hurwitz', factors=state,
+                                source=index, target=index - 1))
+
+    for name in ('F10', 'F13'):
+        state = split_factor(state, position(name), 'powers')
+        records.append(dict(title=f'Split {name} into ordinary roots',
+                            kind='disk_split', factors=state))
+    move_before('F10.1', 'F9')
+    move_before('F13.1', 'F9')
+    before, source = state[position('F9')], state[position('F3')]
+    discrepancy = reduce_word(before.word + inverse_word(source.word))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    after = replace(source, id='F9.sphere')
+    index = position('F9')
+    state = state[:index] + (after,) + state[index + 1:]
+    records.append(dict(title='Rechart transported F9 as F3 on the sphere',
+                        kind='sphere_rewrite', factors=state,
+                        local_before=before, local_after=after,
+                        disk_discrepancy=discrepancy,
+                        sphere_certificate=sphere, lift_homology=IDENTITY))
+    # Stop immediately after F3, then combine the now identical disk records.
+    while position('F9.sphere') > position('F3') + 1:
+        index = position('F9.sphere')
+        crossed = state[index - 1].id
+        state = move_factor(state, index, index - 1)
+        records.append(dict(title=f'F9.sphere up past {crossed}',
+                            kind='disk_hurwitz', factors=state,
+                            source=index, target=index - 1))
+    state = combine_factors(state, position('F3'))
+    records.append(dict(title='Combine F3 and transported F9 into a pair twist',
+                        kind='disk_combine', factors=state))
+    final_sphere = sphere_inner_certificate(product(state))
+    assert final_sphere['certified']
+    assert homology_action(product(state)) == IDENTITY
+    return dict(stages=tuple(records), final_sphere_certificate=final_sphere,
+                final_lift_homology=IDENTITY, complete_structural_derivation_found=False)
+
+
+def six_half_stabilizer_audit():
+    """Test standard chain arcs and original supports for a curve stabilizer.
+
+    The product is Torelli, but none of these five curve classes is fixed.
+    Every original factor support is moved too. This excludes these specific
+    inputs to a stabilizer-based algorithm;
+    it does not rule out every possible fixed symmetric curve.
+    """
+    halves = tuple(factor for factor in initial_factors() if factor.half)
+    word = product(halves)
+    assert homology_action(word) == IDENTITY
+    rows = []
+    for index in range(1, 6):
+        original = sphere_curve_action((), (index, index + 1))
+        image = sphere_curve_action(word, original)
+        rows.append(dict(endpoints=(index, index + 1), original=original,
+                         image=image, fixed=image == original))
+    supports = []
+    for factor in initial_factors():
+        original = sphere_curve_action((), supported_class(factor.mapping_class))
+        image = sphere_curve_action(word, original)
+        supports.append(dict(id=factor.id, original=original, image=image,
+                             fixed=image == original))
+    return dict(word=word, lift_homology=IDENTITY, arcs=tuple(rows),
+                original_supports=tuple(supports),
+                all_standard_chain_arcs_moved=all(not row['fixed'] for row in rows),
+                all_original_supports_moved=all(not row['fixed'] for row in supports),
+                scope='Only the tested curve classes; no general irreducibility claim')

@@ -1,5 +1,47 @@
 # Handoff: surface-diagrams
 
+## October 17 overnight: a new exact two-root transport in (6,7)
+
+The complete structural derivation remains open. A new positive checkpoint
+uses the original factors rather than repeating H34 consolidation:
+`(C10 C13) F3 (C10 C13)^-1 = F9` on the six-marked sphere and in closed
+genus two, where C10 and C13 are ordinary roots of original F10 and F13.
+The exact disk discrepancy is nontrivial and is recorded. The full sphere
+outer action and +I lift homology independently certify this equality.
+
+`root_transport_consolidation()` saves seventeen checked states. Split F10
+and F13, drag one root of each up before F9, rechart the transported F9 as
+F3 by the one explicitly marked sphere-only step, then move and combine it
+with original F3. All other steps preserve the exact disk braid. The endpoint
+has fourteen mixed factors, including four ordinary three-point roots, so
+it is not a complete derivation or a new shorter Lefschetz factorization.
+The local sphere-rechart whisker is `(1,1,2,3,-4,-3,-2,-1)`.
+
+Run `python examples/build_six_seven_root_research.py`. Its local graphical
+checkpoint and complete JSON certificates are in
+`.preview/six-seven-root-transport/`; all seventeen columns and 28 distinct
+individual support SVGs were generated with no unavailable pictures. The
+sphere-only column was visually inspected. This research snapshot is not
+an importable disk-only lab session. Fifteen focused sphere/structure/homology
+tests pass, checking every whole-state disk equality on each side of the
+sphere step, the exact root transport, and the genus-two lift.
+
+The new `sphere_curve_action()` checks one exact curve class directly in F5
+without expanding unrelated based meridians. It also shows that the six-half
+Torelli product moves every standard adjacent arc (and all original support
+classes), so homology I cannot justify using those as Brendle–Margalit
+stabilizer inputs. Forty homology-filtered original two-root transports found
+only the displayed match/inverse; twenty one/two-root cases in the new state
+found no further match. These are finite geometric tests, not nonexistence
+claims. Details and explicit scope are in `docs/proofs/six-seven-structural-search.md`.
+
+Next work from the saved fourteen-factor endpoint: account for its four
+ordinary roots around the combined `{1,4}` pair twist, test meaningful
+subword stabilizers, or identify a transported squared-lantern configuration
+introducing new curves. Do not redo the completed word proof or H34 route.
+Keep the hourly schedule until the candid first run at/after 8 AM Eastern,
+then restore six-hour pacing with (6,7) still the priority.
+
 ## October 17: return to (6,7), with a global reverse-lantern obstruction
 
 Richard explicitly redirected the overnight work to a creative, structural

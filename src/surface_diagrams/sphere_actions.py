@@ -8,8 +8,8 @@ cannot distinguish the central order-two spherical braid from the identity.
 """
 from functools import lru_cache
 
-from .braid_actions import inverse_word,reduce_word
-from .mapping_classes import exact_action
+from .braid_actions import free_homotopy_key,inverse_word,reduce_word
+from .mapping_classes import VerificationLimitError,exact_action
 
 
 def sphere_reduce(word):
@@ -39,6 +39,43 @@ def sphere_inner_certificate(braid):
     result explicitly verifies all six images in F5, including x6.
     """
     return dict(_cached_certificate(tuple(braid)))
+
+
+@lru_cache(maxsize=1)
+def _curve_maps():
+    maps = {}
+    for crossing in (*range(1, 6), *range(-5, 0)):
+        images = exact_action((crossing,))
+        mapping = {i: sphere_reduce(images[i - 1]) for i in range(1, 6)}
+        mapping.update({-i: inverse_word(mapping[i]) for i in range(1, 6)})
+        maps[crossing] = mapping
+    return maps
+
+
+def sphere_curve_action(braid, boundary_word, *, max_letters=400000):
+    """Exact unoriented free-homotopy class of an image curve on S² minus W.
+
+    Normalize in F5 after each substitution, avoiding unrelated based
+    meridian images. Equality checks isotopy for essential simple curves;
+    it does not by itself certify a braid identity or a genus-two lift.
+    For a two-puncture boundary, also retain its endpoints when using this
+    to check the corresponding arc. A computation at the bound is unknown.
+    """
+    braid = tuple(braid)
+    if any(type(letter) is not int or not 1 <= abs(letter) <= 5 for letter in braid):
+        raise ValueError('six-strand braid letters must be signed 1..5')
+    if type(max_letters) is not int or max_letters < 1:
+        raise ValueError('max_letters must be a positive integer')
+    current = free_homotopy_key(sphere_reduce(tuple(boundary_word)))
+    if len(current) > max_letters:
+        raise VerificationLimitError('Sphere curve action reached its word bound')
+    for crossing in reversed(braid):
+        mapping = _curve_maps()[crossing]
+        current = free_homotopy_key(reduce_word(
+            letter for symbol in current for letter in mapping[symbol]))
+        if len(current) > max_letters:
+            raise VerificationLimitError('Sphere curve action reached its word bound')
+    return current
 
 
 @lru_cache(maxsize=16)

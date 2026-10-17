@@ -104,13 +104,82 @@ E and F pointwise on homology. These provide further necessary constraints
 when transporting curves through original factors. They do not establish
 a covering map, sections, or the fundamental group of the total space.
 
+## Two separating roots give an exact transport of original half twists
+
+Write `C10=T456` and `C13=sigma5^-1 T345 sigma5`, so that their squares
+are the original separating factors F10 and F13. A new exact geometric
+identity is
+
+```text
+(C10 C13) F3 (C10 C13)^-1 = F9
+```
+
+on the six-marked sphere and in the closed genus-two lift. Here F3 and F9
+are the **original supplied half twists**, both with endpoints `{1,4}`.
+This was checked by equality of their complete sphere curve classes,
+then independently by the sphere outer action of the half-twist discrepancy
+and its +I homology action. The disk discrepancy is nontrivial and is retained
+by `sphere_root_half_transport()`; this is not a disk braid equality.
+Reversing the order of C10 and C13 fails the geometric class check.
+
+This gives a concrete seventeen-state route:
+
+1. Split F10 and F13 into their two ordinary three-point roots.
+2. Move F10.1 up past F9, then move F13.1 up to immediately before that
+   transported F9. Each adjacent Hurwitz step is checked in the disk.
+3. The altered F9 is now `(C10 C13)^-1 F9 (C10 C13)`, hence is F3 on the
+   sphere. Rechart it as the original F3 record. The exact common F5 whisker
+   for this local sphere discrepancy is `(1,1,2,3,-4,-3,-2,-1)`; its disk
+   action is nonidentity, and its closed genus-two lift is identity.
+4. Move that unchanged half twist upward to the original F3 and combine
+   them into one ordinary pair twist. These remaining steps preserve the
+   new full disk product exactly.
+
+The endpoint has fourteen **mixed** factors, with four ordinary three-point
+roots still present. It is not a complete derivation or a shorter (n,s)
+positive Lefschetz factorization. Splitting the separating factors into
+roots leaves the hypotheses of the earlier modulo-16 obstruction, so this
+transport does not contradict it.
+
+Run `python examples/build_six_seven_root_research.py` for the local graphical
+route at `.preview/six-seven-root-transport/index.html`, the complete saved
+records and discrepancies in `certificate.json`, and 28 distinct checked
+individual support pictures. All seventeen states are drawn, with the one
+sphere-only step marked purple. These are individual disk-chart supports,
+not a joint cut-system certificate or an importable disk-only lab session.
+
+The original roots supplied forty homology-compatible signed two-root
+transport cases. Only the displayed transport and its inverse matched exact
+sphere classes. In the resulting fourteen-factor state, twenty further
+homology-compatible one/two-root cases among the remaining halves produced
+no exact class match. These finite tests do not rule out longer transports
+or substitutions introducing other curves.
+
+## Check a stabilizer geometrically before Torelli factoring
+
+Let N be the product of the six original half twists in their supplied
+order, omitting the seven separating factors. Its homology action is I,
+but its exact sphere action moves **each** of the five standard adjacent-point
+arcs. Their image boundary-class lengths in the fixed F5 chart are
+`722, 3610, 170, 3568, 1438`, respectively. The same audit also moved every
+original factor's support class. Thus homology alone cannot supply one of
+these curves as the stabilizer input to the Brendle–Margalit algorithm.
+This does not prove that N has no invariant symmetric curve.
+
+`sphere_curve_action()` performs the exact free-homotopy calculation directly
+in F5, normalizing after each generator and avoiding expansion of unrelated
+based meridians. It agrees with the full based action on independently checked
+short examples, including curves enclosing the chart's sixth puncture. A word
+bound returns `VerificationLimitError`, never a claimed inequality.
+
 ## Reproduction and next steps
 
 Run from the repository with its `src` on PYTHONPATH:
 
 ```text
 python examples/analyze_six_seven_structure.py
-python -m unittest tests.test_six_seven_structure tests.test_hyperelliptic_homology -q
+python examples/build_six_seven_root_research.py
+python -m unittest tests.test_sphere_actions tests.test_six_seven_structure tests.test_hyperelliptic_homology -q
 ```
 
 The new tests check both Hurwitz directions, simultaneous conjugation, an
@@ -135,6 +204,12 @@ restricted matrices and fixed complement, and the sphere/disk/lift distinction.
    nonseparating-curve stabilizer; homology I alone does not supply that.
    Check the stabilizer geometrically before applying it. The boundary catalog
    is useful only when an exact local relation matches the transported curves.
+5. **Continue from the saved two-root transport, rather than repeating it.**
+   Account for the four remaining ordinary root factors around the combined
+   `{1,4}` pair twist. Test actual subword stabilizers before applying a
+   Torelli factoring algorithm, or identify a transported local squared-lantern
+   configuration that includes newly introduced curves. Keep the explicit
+   disk discrepancy attached to the sphere recharting step.
 
 Sources for the comparison and possible methods:
 [Szabó, Sections 6 and 8](https://arxiv.org/html/2609.34042v1),
