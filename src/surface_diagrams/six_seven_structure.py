@@ -16,7 +16,7 @@ from .hyperelliptic_homology import (
     IDENTITY, half_twist_class, homology_action, homology_quotient,
 )
 from .mapping_classes import ConjugatedTwist, exact_action, supported_class
-from .sphere_actions import sphere_curve_action, sphere_inner_certificate
+from .sphere_actions import sphere_curve_action, sphere_inner_certificate, sphere_chain_certificate
 
 
 def intersection(left, right):
@@ -270,6 +270,235 @@ def root_transport_consolidation():
                 final_lift_homology=IDENTITY, complete_structural_derivation_found=False)
 
 
+def three_root_half_transport():
+    """C8 C10 C1 transports original F2 to F7 exactly in the disk.
+
+    This is a second original half-twist pair, separate from the F3/F9 route.
+    Apply C1 to F2 first; C8 C10 then transports that new simple arc to F7.
+    All roots here are the actual supplied routed supports.
+    """
+    initial = {f.id: f for f in initial_factors()}
+    roots = tuple(replace(initial[name], id=name + '.root', power=1)
+                  for name in ('F8', 'F10', 'F1'))
+    source, target = initial['F2'], initial['F7']
+    transport = product(roots)
+    transported = replace(source, id='C8C10C1(F2)',
+                          conjugator=reduce_word(transport + source.conjugator))
+    discrepancy = reduce_word(transported.word + inverse_word(target.word))
+    assert exact_action(discrepancy) == tuple((i,) for i in range(1, 7))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    # A short representative helps explain the geometry: after applying C1,
+    # F2 is sigma3^-1 sigma5^-1 H45 sigma5 sigma3.
+    intermediate = Factor('C1(F2)', (-3, -5), 4, 2, half=True)
+    assert exact_action(intermediate.word) == exact_action(
+        roots[2].word + source.word + inverse_word(roots[2].word))
+    assert exact_action(product(roots[:2]) + intermediate.word
+                        + inverse_word(product(roots[:2]))) == exact_action(target.word)
+    return dict(roots=roots, source=source, target=target, transport=transport,
+                transported=transported, intermediate=intermediate,
+                disk_discrepancy=discrepancy, sphere_certificate=sphere,
+                lift_homology=IDENTITY, scope='Exact disk braid equality, hence sphere and closed genus two')
+
+
+def three_root_transport_consolidation():
+    """A positive, disk-exact replay pairing original F2 and F7.
+
+    One C1 root starts before F2, so move it down across F2 first. This
+    turns the source into C1(F2) without incorrectly assuming all three
+    original roots are available after the source. The remaining two roots
+    may then be extracted from later factors. No sphere rechart is needed.
+    """
+    state = initial_factors()
+    records = [dict(title='Supplied factorization', kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        state = move_factor(state, source, target)
+        records.append(dict(title=f'{moving} {"up" if source > target else "down"} past {crossed}',
+                            kind='disk_hurwitz', factors=state, source=source, target=target))
+
+    for name in ('F1', 'F8', 'F10'):
+        state = split_factor(state, position(name), 'powers')
+        records.append(dict(title=f'Split {name} into ordinary roots',
+                            kind='disk_split', factors=state))
+    move_one(position('F1.2'), position('F2'))
+    for name in ('F8.1', 'F10.1'):
+        while position(name) > position('F7'):
+            index = position(name)
+            move_one(index, index - 1)
+
+    before, source = state[position('F7')], state[position('F2')]
+    discrepancy = reduce_word(before.word + inverse_word(source.word))
+    assert exact_action(discrepancy) == tuple((i,) for i in range(1, 7))
+    after = replace(source, id='F7.disk')
+    index = position('F7')
+    state = state[:index] + (after,) + state[index + 1:]
+    records.append(dict(title='Use the exact disk equality of the two simple arcs',
+                        kind='disk_rewrite', factors=state,
+                        local_before=(before,), local_after=(after,),
+                        disk_discrepancy=discrepancy))
+    while position('F7.disk') > position('F2') + 1:
+        index = position('F7.disk')
+        move_one(index, index - 1)
+    state = combine_factors(state, position('F2'))
+    records.append(dict(title='Combine transported F2 and F7 into a pair twist',
+                        kind='disk_combine', factors=state))
+    assert exact_action(product(state)) == exact_action(product(initial_factors()))
+    sphere = sphere_inner_certificate(product(state))
+    assert sphere['certified'] and homology_action(product(state)) == IDENTITY
+    # F9/F11 now have zero algebraic intersection, but not disjoint supports.
+    # An exact moved-curve witness prevents treating that homology coincidence
+    # as another inverse-lantern configuration.
+    a, b = (state[position(name)] for name in ('F9', 'F11'))
+    vectors = tuple(half_twist_class(f.conjugator, f.first) for f in (a, b))
+    boundary = supported_class(b.mapping_class)
+    original = sphere_curve_action((), boundary)
+    image = sphere_curve_action(a.word, boundary)
+    assert intersection(*vectors) == 0 and original != image
+    return dict(stages=tuple(records), final_sphere_certificate=sphere,
+                final_lift_homology=IDENTITY, all_steps_exact_in_disk=True,
+                algebraically_disjoint_pair=dict(ids=('F9', 'F11'), vectors=vectors,
+                    algebraic_intersection=0, original_curve=original, image_curve=image,
+                    sphere_support_fixed=False),
+                complete_structural_derivation_found=False)
+
+
+def f2_f7_cluster_lantern():
+    """A cluster lantern and complementary root behind the F2/F7 route.
+
+    C8 C10 Q2346 = O23456 P34 P26 is an exact PC lantern in B6.
+    The residual F8.2 root in the replay has the same sphere curve as C12,
+    but differs in the genus-two lift by the deck involution. That sign can
+    compensate a peripheral O omission; neither is a separate lift equality.
+    """
+    transport = three_root_half_transport()
+    c8, c10, c1 = transport['roots']
+    chart = (-2, -3, 4)
+    q = Factor('Q2346', (-2, -3, -5), 2, 4)
+    outer = Factor('O23456', (), 2, 5)
+    p34 = Factor('P34', chart, 2, 2)
+    p26 = Factor('P26', chart, 5, 2)
+    left, right = (c8, c10, q), (outer, p34, p26)
+    assert exact_action(product(left)) == exact_action(product(right))
+    for a, b in combinations((outer, p34, p26, q), 2):
+        assert exact_action(a.word + b.word + inverse_word(a.word) + inverse_word(b.word)) == tuple(
+            (i,) for i in range(1, 7))
+    reduced_transport = reduce_word(p34.word + p26.word + inverse_word(q.word) + c1.word)
+    assert exact_action(reduced_transport + transport['source'].word
+                        + inverse_word(reduced_transport)) == exact_action(transport['target'].word)
+
+    endpoint = {f.id: f for f in three_root_transport_consolidation()['stages'][-1]['factors']}
+    common = inverse_word(transport['intermediate'].word)
+    for name, root in zip(('F8.1', 'F10.1'), (c8, c10)):
+        assert exact_action(endpoint[name].word) == exact_action(common + root.word + inverse_word(common))
+    c12 = replace(next(f for f in initial_factors() if f.id == 'F12'),
+                  id='F12.root', power=1)
+    before = endpoint['F8.2']
+    assert exact_action(before.word) == exact_action(inverse_word(c10.word) + c8.word + c10.word)
+    root_discrepancy = reduce_word(before.word + inverse_word(c12.word))
+    root_sphere = sphere_inner_certificate(root_discrepancy)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert root_sphere['certified'] and not root_sphere['disk_identity']
+    assert homology_action(root_discrepancy) == minus_identity
+    assert sphere_curve_action((), supported_class(before.mapping_class)) == sphere_curve_action(
+        (), supported_class(c12.mapping_class))
+    squared_discrepancy = reduce_word(before.word * 2 + inverse_word(c12.word * 2))
+    squared_sphere = sphere_inner_certificate(squared_discrepancy)
+    assert squared_sphere['certified'] and homology_action(squared_discrepancy) == IDENTITY
+    assert homology_action(outer.word) == minus_identity
+
+    # A concrete follow-on, rather than a new broad scan: after the one-Q
+    # lantern fork, its complementary negative pair is exactly the pair term
+    # of this PC half-lantern on the remaining C13 square.
+    from .projected_relations import pc_half_lantern_terms
+    c13 = replace(next(f for f in initial_factors() if f.id == 'F13'), power=1)
+    c13_complement = Factor('C13.complement',
+                           (-5,) + (1, 2, 3, 4, 5) * 2 + (4, 5) * 2, 4, 3)
+    c13_discrepancy = reduce_word(c13.word + inverse_word(c13_complement.word))
+    c13_sphere = sphere_inner_certificate(c13_discrepancy)
+    assert c13_sphere['certified'] and homology_action(c13_discrepancy) == minus_identity
+    c13_squared_discrepancy = reduce_word(c13.word * 2 + inverse_word(c13_complement.word * 2))
+    assert sphere_inner_certificate(c13_squared_discrepancy)['certified']
+    assert homology_action(c13_squared_discrepancy) == IDENTITY
+    half_lantern = tuple(Factor(f'C13.HL{index + 1}', term.conjugator, term.first,
+                                term.points, term.power, term.half)
+                         for index, term in enumerate(pc_half_lantern_terms(c13_complement.mapping_class)))
+    assert exact_action(product(half_lantern)) == exact_action(c13_complement.word)
+    negative_pair_support = Factor('Q.complement',
+        reduce_word(common + (-2, -3, -5) + (1, 2, 3, 4)), 5, 2)
+    assert exact_action(negative_pair_support.word) == exact_action(replace(half_lantern[2], power=1).word)
+    residual_left, residual_right = (c10, c12, negative_pair_support), (p34, p26)
+    residual_discrepancy = reduce_word(product(residual_left) + inverse_word(product(residual_right)))
+    residual_sphere = sphere_inner_certificate(residual_discrepancy)
+    assert residual_sphere['certified'] and not residual_sphere['disk_identity']
+    assert homology_action(residual_discrepancy) == IDENTITY
+    return dict(left=left, right=right, framed_point_correction=(5,),
+                inner_clusters=((3, 4), (2, 6), (5,)), common_chart_conjugator=chart,
+                reduced_transport_word=reduced_transport,
+                endpoint_pair_ids=('F8.1', 'F10.1'), endpoint_pair_conjugator=common,
+                root_rechart_before=before, root_rechart_after=c12,
+                root_disk_discrepancy=root_discrepancy, root_sphere_certificate=root_sphere,
+                root_lift_homology=minus_identity, peripheral_lift_homology=minus_identity,
+                squared_disk_discrepancy=squared_discrepancy,
+                squared_sphere_certificate=squared_sphere, squared_lift_homology=IDENTITY,
+                remaining_c13_complement=c13_complement, remaining_c13_half_lantern=half_lantern,
+                c13_root_disk_discrepancy=c13_discrepancy, c13_root_sphere_certificate=c13_sphere,
+                c13_root_lift_homology=minus_identity,
+                c13_squared_disk_discrepancy=c13_squared_discrepancy,
+                negative_pair_support=negative_pair_support,
+                half_lantern_pair_match_exact_in_disk=True,
+                residual_root_lantern=dict(left=residual_left, right=residual_right,
+                    disk_discrepancy=residual_discrepancy, sphere_certificate=residual_sphere,
+                    lift_homology=IDENTITY, applied_to_endpoint=False),
+                applied_to_full_factorization=False)
+
+
+def three_root_prefix_lantern():
+    """Apply a named sphere genus-two lantern to the new mixed prefix.
+
+    Its three factor records multiply exactly to (C1 D)^2 in the disk,
+    where D=C1(F2). This pair is a common-chart image of T123 and H34.
+    The new boundary pair twists replace the prefix on the sphere and in
+    closed genus two, with its nontrivial disk discrepancy recorded.
+    Four ordinary roots remain later in the word; this is not yet an (8,6)
+    positive Lefschetz factorization or a complete derivation of (6,7).
+    """
+    state = three_root_transport_consolidation()['stages'][-1]['factors']
+    transport = three_root_half_transport()
+    c1, d = transport['roots'][2], transport['intermediate']
+    before = state[:3]
+    assert exact_action(product(before)) == exact_action((c1.word + d.word) * 2)
+    common = (-3, 4) + (1, 2, 3, 4, 5) * 2
+    standard_c = Factor('standard_C', common, 1, 3)
+    standard_h = Factor('standard_H', common, 3, 2, half=True)
+    assert exact_action(standard_c.word) == exact_action(c1.word)
+    assert exact_action(standard_h.word) == exact_action(d.word)
+    local = sphere_genus_two_lantern(common)
+    after = tuple(replace(f, id=name) for f, name in zip(local['right'], ('prefix.P45', 'prefix.P12')))
+    discrepancy = reduce_word(product(before) + inverse_word(product(after)))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    endpoint = after + state[3:]
+    assert sphere_inner_certificate(product(endpoint))['certified']
+    assert homology_action(product(endpoint)) == IDENTITY
+    return dict(stages=(dict(title='Endpoint with the (C1 D)^2 prefix', kind='start', factors=state),
+                        dict(title='Replace that prefix by its two lantern boundary twists',
+                             kind='sphere_rewrite', factors=endpoint,
+                             local_before=before, local_after=after,
+                             disk_discrepancy=discrepancy,
+                             sphere_certificate=sphere, lift_homology=IDENTITY)),
+                follows='three_root_transport_consolidation', common_conjugator=common,
+                complete_structural_derivation_found=False,
+                scope='Six-marked sphere and closed genus two; disk discrepancy nontrivial')
+
+
 @dataclass(frozen=True)
 class SignedResearchFactor(Factor):
     """A signed twist for research routes, outside the positive lab format.
@@ -289,6 +518,135 @@ class SignedResearchFactor(Factor):
     def word(self):
         word = super().word
         return word if self.sign == 1 else inverse_word(word)
+
+
+def three_root_lantern_reduction():
+    """Continue the new sphere lantern through one temporary negative twist.
+
+    A transported PC lantern introduces Q^-1. A paired peripheral/root
+    rechart keeps the closed lift correct. The remaining C13 square has a
+    specific complementary PC half-lantern whose pair term cancels Q^-1
+    exactly in the disk. The endpoint is positive again, but two odd
+    three-point-root records remain, so this is still a partial derivation.
+    """
+    state = tuple(SignedResearchFactor(f.id, f.conjugator, f.first, f.points, f.power, f.half)
+                  for f in three_root_prefix_lantern()['stages'][-1]['factors'])
+    records = [dict(title='After the prefix sphere lantern', kind='start', factors=state)]
+    local = f2_f7_cluster_lantern()
+    common = local['endpoint_pair_conjugator']
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def disk_replace(index, count, replacements, title, kind):
+        nonlocal state
+        before = state[index:index + count]
+        assert exact_action(product(before)) == exact_action(product(replacements))
+        state = state[:index] + tuple(replacements) + state[index + count:]
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=before, local_after=tuple(replacements)))
+
+    def sphere_replace(index, replacement, title):
+        nonlocal state
+        before = state[index]
+        discrepancy = reduce_word(before.word + inverse_word(replacement.word))
+        certificate = sphere_inner_certificate(discrepancy)
+        assert certificate['certified'] and not certificate['disk_identity']
+        assert homology_action(discrepancy) == IDENTITY
+        state = state[:index] + (replacement,) + state[index + 1:]
+        records.append(dict(title=title, kind='sphere_rewrite', factors=state,
+                            local_before=(before,), local_after=(replacement,),
+                            disk_discrepancy=discrepancy, sphere_certificate=certificate,
+                            lift_homology=IDENTITY))
+
+    index = position('F8.1')
+    assert tuple(f.id for f in state[index:index + 2]) == local['endpoint_pair_ids']
+    replacements = tuple(SignedResearchFactor('new.' + f.id,
+        reduce_word(common + f.conjugator), f.first, f.points, f.power, f.half, sign)
+        for f, sign in zip(local['right'] + (local['left'][2],), (1, 1, 1, -1)))
+    disk_replace(index, 2, replacements, 'Apply the {34}, {26}, {5} cluster lantern', 'disk_lantern')
+
+    # These two changes must be one lift step: each component has deck sign -I.
+    before = state
+    peripheral = state[position('new.O23456')]
+    root_before = state[position('F8.2')]
+    c12 = local['root_rechart_after']
+    root_after = SignedResearchFactor(c12.id, c12.conjugator, c12.first, c12.points)
+    state = tuple(root_after if f.id == root_before.id else f for f in state
+                  if f.id != peripheral.id)
+    discrepancy = reduce_word(product(before) + inverse_word(product(state)))
+    certificate = sphere_inner_certificate(discrepancy)
+    assert certificate['certified'] and not certificate['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    records.append(dict(title='Pair the peripheral omission with the complementary-root rechart',
+                        kind='sphere_rewrite', factors=state, removed_factors=(peripheral,),
+                        root_before=root_before, root_after=root_after,
+                        component_lift_homology=local['root_lift_homology'],
+                        disk_discrepancy=discrepancy, sphere_certificate=certificate,
+                        lift_homology=IDENTITY))
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        state = move_factor(state, source, target)
+        records.append(dict(title=f'{moving} {"up" if source > target else "down"} past {crossed}',
+                            kind='disk_hurwitz', factors=state, source=source, target=target))
+
+    while position('F12.root') < position('F12') - 1:
+        index = position('F12.root')
+        move_one(index, index + 1)
+    index = position('F12.root')
+    before = state[index:index + 2]
+    state = combine_factors(state, index)
+    records.append(dict(title='Combine the complementary root with F12 into a cube',
+                        kind='disk_combine', factors=state, local_before=before,
+                        local_after=(state[index],)))
+    pair = local['negative_pair_support']
+    sphere_replace(position('new.Q2346'), SignedResearchFactor('new.Q.complement',
+        pair.conjugator, pair.first, pair.points, sign=-1),
+        'Draw the inverse Q along its complementary {1,5} pair')
+
+    companion = local['remaining_c13_complement']
+    sphere_replace(position('F13'), SignedResearchFactor('C13.complement.square',
+        companion.conjugator, companion.first, companion.points, power=2),
+        'Rechart the whole C13 square along its complementary triple')
+    terms = local['remaining_c13_half_lantern']
+    replacements = tuple(SignedResearchFactor(f'C13.HL{repeat + 1}.{j + 1}',
+        term.conjugator, term.first, term.points, term.power, term.half)
+        for repeat in range(2) for j, term in enumerate(terms))
+    disk_replace(position('C13.complement.square'), 1, replacements,
+                 'Apply the chosen PC half lantern to each C13 unit', 'disk_half_lantern')
+
+    while position('C13.HL2.3') > position('new.Q.complement') + 1:
+        index = position('C13.HL2.3')
+        move_one(index, index - 1)
+    negative = state[position('new.Q.complement')]
+    positive = state[position('C13.HL2.3')]
+    assert negative.sign == -1 and positive.sign == 1 and positive.power == 2
+    replacement = replace(positive, id='P15.after-cancellation', power=1)
+    disk_replace(position('new.Q.complement'), 2, (replacement,),
+                 'Cancel the inverse pair against one unit of the squared pair', 'disk_cancel')
+    assert all(f.sign == 1 for f in state)
+    # The accumulated disk point-push exceeds the based disk-action bound.
+    # Check the complete sphere action by its five exact arc classes instead;
+    # all local disk moves and sphere discrepancies above remain certified.
+    final_sphere = sphere_chain_certificate(product(state))
+    assert final_sphere['certified'] and homology_action(product(state)) == IDENTITY
+    root_chart = inverse_word(local['remaining_c13_half_lantern'][2].word)
+    c10, c12 = local['left'][1], local['root_rechart_after']
+    root_models = (replace(c10, conjugator=reduce_word(c12.word + c10.conjugator)),
+                   replace(c12, power=3))
+    root_ids = ('F10.2', 'F12.root+F12')
+    for name, model in zip(root_ids, root_models):
+        assert exact_action(state[position(name)].word) == exact_action(
+            root_chart + model.word + inverse_word(root_chart))
+    return dict(stages=tuple(records), follows='three_root_prefix_lantern',
+                final_sphere_certificate=final_sphere, final_lift_homology=IDENTITY,
+                final_all_factors_positive=True,
+                remaining_odd_root_ids=tuple(f.id for f in state if f.points == 3 and f.power % 2),
+                residual_root_chart=root_chart, residual_root_models=root_models,
+                complete_structural_derivation_found=False,
+                scope='Partial sphere/closed-genus-two derivation; not an equivalent disk-only workspace')
 
 
 def root_cluster_lantern_route():

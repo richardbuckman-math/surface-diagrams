@@ -1,7 +1,7 @@
 import json
 import unittest
 from dataclasses import replace
-from surface_diagrams.factorization_explorer import initial_factors, move_factor, global_conjugate_factors,product,export_factors,parse_factors
+from surface_diagrams.factorization_explorer import initial_factors, move_factor, global_conjugate_factors,product,export_factors,parse_factors,import_factors
 from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action,supported_class
 from surface_diagrams.braid_actions import inverse_word
@@ -12,6 +12,9 @@ from surface_diagrams.six_seven_structure import (
     sphere_genus_two_lantern,
     sphere_root_half_transport,root_transport_consolidation,six_half_stabilizer_audit,
     root_pair_lantern, root_cluster_lantern_route, SignedResearchFactor,
+    three_root_half_transport, three_root_transport_consolidation,
+    f2_f7_cluster_lantern, three_root_prefix_lantern,
+    three_root_lantern_reduction,
 )
 
 
@@ -170,6 +173,143 @@ class SixSevenStructureTests(unittest.TestCase):
         # A saved research state must not silently enter the positive-only lab.
         with self.assertRaisesRegex(ValueError, 'Saved braid word disagrees'):
             parse_factors(json.loads(json.dumps(export_factors(seed))))
+
+    def test_three_roots_transport_original_f2_to_f7_in_the_disk(self):
+        result = three_root_half_transport()
+        self.assertEqual([f.id for f in result['roots']],
+                         ['F8.root', 'F10.root', 'F1.root'])
+        self.assertEqual(exact_action(result['transported'].word),
+                         exact_action(result['target'].word))
+        self.assertTrue(result['sphere_certificate']['disk_identity'])
+        self.assertEqual(result['lift_homology'], IDENTITY)
+        self.assertEqual(result['intermediate'].conjugator, (-3, -5))
+        self.assertEqual(result['intermediate'].first, 4)
+
+    def test_second_original_pair_route_is_disk_exact_and_lab_importable(self):
+        result = three_root_transport_consolidation()
+        self.assertTrue(result['all_steps_exact_in_disk'])
+        self.assertFalse(result['complete_structural_derivation_found'])
+        expected = exact_action(product(initial_factors()))
+        for stage in result['stages']:
+            self.assertTrue(stage['kind'] == 'start' or stage['kind'].startswith('disk_'))
+            self.assertEqual(exact_action(product(stage['factors'])), expected)
+            self.assertEqual(homology_action(product(stage['factors'])), IDENTITY)
+            document = json.loads(json.dumps(export_factors(stage['factors'])))
+            self.assertEqual(parse_factors(document), stage['factors'])
+        endpoint = result['stages'][-1]['factors']
+        self.assertEqual(len(endpoint), 15)
+        pair = next(f for f in endpoint if f.id == 'F2+F7.disk')
+        self.assertFalse(pair.half)
+        self.assertEqual((pair.points, pair.power), (2, 1))
+        self.assertEqual(import_factors(json.loads(json.dumps(export_factors(endpoint)))), endpoint)
+        audit = result['algebraically_disjoint_pair']
+        self.assertEqual(audit['algebraic_intersection'], 0)
+        self.assertFalse(audit['sphere_support_fixed'])
+        self.assertNotEqual(audit['original_curve'], audit['image_curve'])
+        # C1 started before F2; applying it there is essential to this replay.
+        shift = next(stage for stage in result['stages']
+                     if stage.get('source') == 1 and stage.get('target') == 2)
+        source = next(f for f in shift['factors'] if f.id == 'F2')
+        self.assertEqual(exact_action(source.word),
+                         exact_action(three_root_half_transport()['intermediate'].word))
+
+    def test_second_cluster_lantern_and_complementary_root_keep_the_deck_sign(self):
+        result = f2_f7_cluster_lantern()
+        self.assertEqual(exact_action(product(result['left'])), exact_action(product(result['right'])))
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 6) for f in result['left']],
+                         [(3, 4, 5), (2, 5, 6), (2, 3, 4, 6)])
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 6) for f in result['right']],
+                         [(2, 3, 4, 5, 6), (3, 4), (2, 6)])
+        delta = tuple(sum(point in enclosed_boundaries(f.mapping_class, 6) for f in result['left'])
+                      - sum(point in enclosed_boundaries(f.mapping_class, 6) for f in result['right'])
+                      for point in range(1, 7))
+        self.assertEqual(delta, (0, 0, 0, 0, 1, 0))
+        self.assertTrue(result['root_sphere_certificate']['certified'])
+        self.assertFalse(result['root_sphere_certificate']['disk_identity'])
+        self.assertEqual(result['root_lift_homology'], tuple(tuple(-x for x in row) for row in IDENTITY))
+        self.assertTrue(result['squared_sphere_certificate']['certified'])
+        self.assertEqual(homology_action(result['squared_disk_discrepancy']), IDENTITY)
+        endpoint = {f.id: f for f in three_root_transport_consolidation()['stages'][-1]['factors']}
+        g = result['endpoint_pair_conjugator']
+        for name, root in zip(result['endpoint_pair_ids'], result['left'][:2]):
+            self.assertEqual(exact_action(endpoint[name].word),
+                             exact_action(g + root.word + inverse_word(g)))
+        terms = result['remaining_c13_half_lantern']
+        self.assertEqual(exact_action(product(terms)),
+                         exact_action(result['remaining_c13_complement'].word))
+        self.assertEqual(exact_action(result['negative_pair_support'].word),
+                         exact_action(replace(terms[2], power=1).word))
+        self.assertEqual(result['c13_root_lift_homology'],
+                         tuple(tuple(-x for x in row) for row in IDENTITY))
+        self.assertTrue(sphere_inner_certificate(result['c13_squared_disk_discrepancy'])['certified'])
+        self.assertEqual(homology_action(result['c13_squared_disk_discrepancy']), IDENTITY)
+        residual = result['residual_root_lantern']
+        self.assertTrue(residual['sphere_certificate']['certified'])
+        self.assertFalse(residual['sphere_certificate']['disk_identity'])
+        self.assertEqual(homology_action(residual['disk_discrepancy']), IDENTITY)
+        self.assertFalse(residual['applied_to_endpoint'])
+
+    def test_new_prefix_exposes_a_sphere_genus_two_lantern_but_not_a_disk_step(self):
+        result = three_root_prefix_lantern()
+        before, after = result['stages']
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertEqual(len(before['factors']), 15)
+        self.assertEqual(len(after['factors']), 14)
+        self.assertTrue(after['sphere_certificate']['certified'])
+        self.assertFalse(after['sphere_certificate']['disk_identity'])
+        self.assertEqual(homology_action(after['disk_discrepancy']), IDENTITY)
+        self.assertTrue(sphere_inner_certificate(product(after['factors']))['certified'])
+        self.assertEqual(homology_action(product(after['factors'])), IDENTITY)
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 6) for f in after['local_after']],
+                         [(4, 5), (1, 2)])
+        self.assertEqual(sum(f.points == 3 and f.power % 2 == 1 for f in after['factors']), 4)
+        # These positive records belong to a different disk chart, so an exact
+        # disk-only workspace must reject them despite the valid sphere lift.
+        with self.assertRaisesRegex(ValueError, 'Exact disk action verification failed'):
+            import_factors(json.loads(json.dumps(export_factors(after['factors']))))
+
+    def test_half_lantern_removes_the_temporary_negative_pair(self):
+        result = three_root_lantern_reduction()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        previous = None
+        saw_negative = False
+        for stage in result['stages']:
+            state = stage['factors']
+            saw_negative |= any(f.sign < 0 for f in state)
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                a, b = sorted((stage['source'], stage['target']))
+                self.assertEqual(b - a, 1)
+                self.assertEqual(exact_action(product(previous[a:b + 1])),
+                                 exact_action(product(state[a:b + 1])))
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+            elif stage['kind'] == 'sphere_rewrite':
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertFalse(stage['sphere_certificate']['disk_identity'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+                if 'root_before' in stage:
+                    self.assertEqual(len(stage['removed_factors']), 1)
+                    self.assertEqual(stage['component_lift_homology'],
+                                     tuple(tuple(-x for x in row) for row in IDENTITY))
+            previous = state
+        self.assertTrue(saw_negative)
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(len(previous), 18)
+        self.assertTrue(all(f.sign == 1 for f in previous))
+        self.assertEqual(result['remaining_odd_root_ids'], ('F10.2', 'F12.root+F12'))
+        root_chart = result['residual_root_chart']
+        by_id = {f.id: f for f in previous}
+        for name, model in zip(result['remaining_odd_root_ids'], result['residual_root_models']):
+            self.assertEqual(exact_action(by_id[name].word),
+                             exact_action(root_chart + model.word + inverse_word(root_chart)))
+        self.assertEqual(result['stages'][-1]['kind'], 'disk_cancel')
+        self.assertEqual(result['stages'][-1]['local_before'][0].sign, -1)
+        self.assertEqual(result['stages'][-1]['local_before'][1].power, 2)
+        self.assertEqual(result['stages'][-1]['local_after'][0].power, 1)
+        self.assertTrue(result['final_sphere_certificate']['certified'])
 
     def test_both_transported_cluster_lanterns_have_complete_scope_certificates(self):
         result = root_cluster_lantern_route()

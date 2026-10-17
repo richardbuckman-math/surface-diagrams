@@ -300,6 +300,181 @@ substitutions, and disk/sphere/lift certificates. The pictures are still
 individual supports, not certified joint cut complexes. The complete
 structural derivation remains open.
 
+## A second original pair: an exact three-root disk transport
+
+The supplied roots give another geometric identity:
+
+```text
+(C8 C10 C1) F2 (C8 C10 C1)^-1 = F7            (exact in B6).
+```
+
+This is separate from the old H34 consolidation and the F3/F9 two-root route.
+After C1 acts on F2, its arc has the simple exact representative
+`D = (-3,-5) H45 (5,3)`. Then C8 C10 transports D to original F7.
+`three_root_half_transport()` retains both disk checks and the sphere/lift
+checks. A second transport C10 C12 C1 works on the sphere but not in B6;
+it is explained by the complementary-root relation below, not assumed equal
+as a disk word.
+
+Only five ordered positive three-root configurations passed the homology
+filter for the two remaining original endpoint pairs: for F2/F7,
+`(8,10,1)` and `(10,12,1)`; for F6/F11, `(12,1,4)`, `(12,5,4)`,
+`(12,8,4)`. Testing their eight sign choices found just the two F2/F7
+matches, both with positive signs. These are finite filtered configurations,
+not a nonexistence claim for other transports.
+
+One small symmetry family also failed before exact geometric testing: the
+standard six-point rotation squared, corrected on the left by zero through
+three original separating roots, never had the simultaneous homology images
+F2-to-F6 and F3-to-F7. This excludes only that finite correction family,
+not a different order-three symmetry or equivalence with Xiao's model.
+
+The eighteen-state replay `three_root_transport_consolidation()` applies
+the first transport to the actual ordered factorization. C1 begins before
+F2, so split F1 and move its second root down across F2 first. Extract one
+root each from F8 and F10 before F7. The altered F7 is now exactly D, with
+conjugator `(-5,-3)` versus D's `(-3,-5)`; these commute in B6. Rechart it
+by that disk equality, move it next to D, and combine the halves. Every
+whole state has the original complete B6 action. The fifteen-record endpoint
+has six ordinary three-point roots; it is not a Lefschetz factorization.
+
+## A named inverse sphere lantern is now exposed
+
+The first three endpoint records are C1, D², and D^-1 C1 D. Their product is
+exactly `(C1 D)^2`. The common chart
+
+```text
+k = (-3,4) (1,2,3,4,5)^2
+```
+
+carries the standard T123 and H34 to C1 and D, respectively, checked in B6.
+`three_root_prefix_lantern()` applies the sphere genus-two lantern to replace
+this prefix by two positive pair twists, with endpoint pairs {4,5} and {1,2}.
+The local sphere outer action and +I lift are checked and its nontrivial disk
+discrepancy is saved. This is an actual application of a named relation to
+the supplied factorization, not merely a homology analogy. Four odd ordinary
+roots remain later in the fourteen-record word; it is not an (8,6)
+Lefschetz factorization.
+
+F9 and F11 at the earlier fifteen-record endpoint have algebraic intersection
+zero. Nevertheless F9 moves the exact sphere support class of F11. They are
+not geometrically disjoint, so that apparent second inverse-lantern shortcut
+fails. The moved-curve witness is retained in the replay certificate.
+
+## One cluster lantern and a PC half lantern remove the temporary inverse
+
+There is another exact cluster lantern, with inner clusters {3,4}, {2,6}, {5}:
+
+```text
+Q2346 = (-2,-3,-5) T2345 (5,3,2),
+P34   = (-2,-3,4) T23 (-4,3,2),
+P26   = (-2,-3,4) T56 (-4,3,2),
+O     = T23456,
+
+C8 C10 Q2346 = O P34 P26                     (exact in B6).
+```
+
+Restoring the capped point 5 as a framed boundary adds T5 on the right.
+The original C8 and C12 also satisfy
+
+```text
+C10^-1 C8 C10 = C12                          (sphere only; lift discrepancy -I),
+(C10^-1 C8 C10)^2 = C12^2                    (sphere and closed genus two).
+```
+
+The first equality is an exact sphere curve rechart, with a nontrivial disk
+discrepancy. Its minus sign must not be discarded in an unsquared lift.
+`f2_f7_cluster_lantern()` retains these separate certificates.
+
+The twenty-state `three_root_lantern_reduction()` applies this cluster lantern
+to the adjacent F8.1/F10.1 roots in the fourteen-record endpoint, in their
+common chart D^-1. It introduces Q^-1. The O omission and F8.2-to-C12 rechart
+are performed in **one** sphere step: each component has lift -I, while the
+combined full-state discrepancy has +I. Move that C12 root down and combine
+it with F12 into a cube. Rechart the inverse Q along its complementary {1,5}
+pair, retaining the disk discrepancy.
+
+The remaining original C13 square has a useful complementary triple chart:
+
+```text
+C13.complement = g T456 g^-1,
+g = (-5) (1,2,3,4,5)^2 (4,5)^2.
+```
+
+Its unit differs from original C13 by the deck involution, but their squares
+are equal on the sphere and in closed genus two. Rechart the **whole square**
+at once, then use the PC half lantern on each of its two units. The squared
+pair term in that chosen chart has **exactly the same B6 unit twist** as the
+temporary negative pair. Drag the last squared pair up through the intervening
+factors and cancel its negative neighbor, leaving one positive pair twist.
+Every extraction and cancellation is checked by complete local disk actions.
+
+All eighteen endpoint records are positive again. There are two odd-root
+records left: F10.2 is one ordinary three-point root, and F12.root+F12 has
+power three. Thus this is still a mixed intermediate, not a complete
+derivation of (6,7) and not a new positive Lefschetz factorization. Its final
+sphere identity is independently checked by the five-arc criterion below,
+and its genus-two lift has homology +I.
+
+A next local relation is certified:
+
+```text
+C10 C12 P15 = P34 P26                         (sphere and closed genus two),
+```
+
+where P15 is the unit of the chosen C13 half-lantern's pair term. Its disk
+discrepancy is explicitly retained. This has **not** been applied to the
+endpoint: the actual two root records, in the common chart
+`S=(P15^2)^-1`, are
+
+```text
+S (C12 C10 C12^-1) S^-1,
+S C12^3 S^-1.
+```
+
+Both individual disk equalities are checked. Replacing the first by
+S C10 S^-1 would be incorrect. Reversing the root-pair order transports the
+third lantern curve as well; resolve that actual geometry before cancelling
+a positive P15. Endpoint labels alone do not settle the remaining step.
+
+There are two pairs of duplicated new half supports:
+`C13.HL1.1 = C13.HL2.1` and `C13.HL1.2 = C13.HL2.2`.
+Neither new support equals an original remaining half. The homology vectors
+of the two new halves are `(1,3,-3,3)` and `(1,1,-1,1)`, while F11 has
+`(-1,-5,5,-5)`. This suggests Ha(Hb)=F11 on homology, but the exact sphere
+curve check **fails**. Do not treat that homological match as a transport.
+
+Run `examples/build_six_seven_three_root_research.py` for the graphical replay:
+18 disk states, two prefix-lantern states, and twenty subsequent reduction
+states, with 44 individual support SVGs and no unavailable pictures. Equal
+disk support classes reuse a single image independently of twist power,
+so the negative and positive unit visibly match at cancellation. Only the
+first eighteen states are importable equivalent disk-lab snapshots; the later
+sphere states are explicitly marked research records. All diagrams use the
+shared surface library and the approved vertical convention.
+
+## Sphere identity without expanding a disk point-push
+
+The final positive endpoint's full based disk action exhausted the existing
+400000-letter bound. That is a disk computation limit, not evidence against
+the sphere identity. Raising the cap is unnecessary here.
+
+`sphere_chain_certificate()` checks the exact sphere classes of the five arcs
+between consecutive marked points and verifies that their endpoints are fixed.
+Their union is a tree through all six points, with disk complement on the
+sphere. Straighten the preserved arc classes simultaneously and apply the
+disk Alexander trick; the sphere mapping class is therefore identity.
+Each arc is identified by its exact two-point-neighborhood boundary class,
+using F5 reduction after each braid generator. No based disk whisker is expanded.
+
+The final five classes all equal the reference classes. This is a complete
+exact sphere action check, distinct from both a numerical joint placement
+certificate and the separately required genus-two lift sign. Like the existing
+outer-action check it does not distinguish the central order-two spherical
+braid. Tests include a pure nonidentity fixing the first arc, a separating
+Torelli example, endpoint permutations, known sphere identities, and bounds
+that return unknown rather than a false result.
+
 ## Check a stabilizer geometrically before Torelli factoring
 
 Let N be the product of the six original half twists in their supplied

@@ -1,9 +1,10 @@
 import unittest
+from unittest.mock import patch
 
 from surface_diagrams.factorization_explorer import initial_factors,move_factor,product
 from surface_diagrams.braid_actions import free_homotopy_key,inverse_word,reduce_word
 from surface_diagrams.mapping_classes import VerificationLimitError,exact_action
-from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate,sphere_reduce
+from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate,sphere_reduce,sphere_chain_certificate
 
 
 class SphereActionTests(unittest.TestCase):
@@ -43,3 +44,29 @@ class SphereActionTests(unittest.TestCase):
                 self.assertEqual(sphere_curve_action(braid, inverse_word(path)), expected)
         with self.assertRaises(VerificationLimitError):
             sphere_curve_action((2,), (1, 2), max_letters=2)
+
+    def test_five_sphere_chain_arcs_certify_the_whole_mapping_class(self):
+        for braid in ((), tuple(range(1, 6)) * 6, tuple(range(2, 6)) * 5,
+                      product(initial_factors())):
+            result = sphere_chain_certificate(braid)
+            self.assertTrue(result['certified'])
+            self.assertTrue(result['endpoints_fixed'])
+            self.assertEqual(result['reference_classes'], result['image_classes'])
+            self.assertTrue(sphere_inner_certificate(braid)['certified'])
+        # T34 fixes the first arc but moves later ones. A single-arc or pure
+        # permutation test would incorrectly accept this nonidentity.
+        result = sphere_chain_certificate((3, 3))
+        self.assertTrue(result['endpoints_fixed'])
+        self.assertEqual(result['reference_classes'][0], result['image_classes'][0])
+        self.assertNotEqual(result['reference_classes'], result['image_classes'])
+        self.assertFalse(result['certified'])
+        # A separating genus-two twist has homology I but nontrivial sphere action.
+        self.assertFalse(sphere_chain_certificate((1, 2) * 6)['certified'])
+        self.assertFalse(sphere_chain_certificate((1,))['endpoints_fixed'])
+        def only_generator_actions(word, *args, **kwargs):
+            self.assertEqual(len(word), 1, 'The arc certificate must not expand the full disk action')
+            return exact_action(word, *args, **kwargs)
+        with patch('surface_diagrams.sphere_actions.exact_action', side_effect=only_generator_actions):
+            self.assertTrue(sphere_chain_certificate(product(initial_factors()))['certified'])
+        with self.assertRaises(VerificationLimitError):
+            sphere_chain_certificate((2,), max_letters=2)

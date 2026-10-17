@@ -1,5 +1,74 @@
 # Handoff: surface-diagrams
 
+## October 17, 6 AM run: a second original pair, a named lantern, and no negative factors
+
+The complete (6,7) derivation is **still open**, but the new route goes beyond
+the previous F3/F9 consolidation. It establishes
+`(C8 C10 C1) F2 (C8 C10 C1)^-1 = F7` **exactly in B6**. The eighteen-state
+`three_root_transport_consolidation()` splits F1/F8/F10, moves one C1 root
+down across F2 first, then extracts C8/C10. The two transported arcs become
+the same simple arc `(-3,-5) H45 (5,3)`, and are combined. All eighteen
+snapshots are valid imports into the existing disk-exact (6,7) lab.
+
+The first three resulting records multiply to `(C1 D)^2`, with D=C1(F2).
+`three_root_prefix_lantern()` applies the named sphere genus-two lantern to
+replace that prefix by positive pair twists with endpoints {4,5} and {1,2}.
+Its nontrivial disk discrepancy and +I lift are retained. Four ordinary
+three-point roots remain, so this is not an (8,6) Lefschetz factorization.
+
+The twenty-state `three_root_lantern_reduction()` then applies the **specific**
+PC cluster lantern `C8 C10 Q2346 = O23456 P34 P26`, transported by D^-1.
+It removes O together with the complementary rechart of F8.2 as C12: each
+component alone has lift -I, and the paired whole-state discrepancy has +I.
+The C12 root is combined with F12 into a cube. The temporary inverse Q is
+drawn along {1,5}. The remaining C13 square has a complementary PC half
+lantern whose squared pair term is **exactly the same disk twist** as that
+negative pair's support. Dragging the last such squared pair upward cancels
+the negative unit. The endpoint has eighteen **positive** records again.
+
+Two odd three-point-root records remain: `F10.2` and `F12.root+F12` (power 3).
+This is still a mixed intermediate, not a completed named derivation or a
+new positive Lefschetz factorization. A useful residual relation is checked:
+`C10 C12 P15 = P34 P26` on the sphere and in closed genus two, with its disk
+discrepancy saved. **Do not apply it to the endpoint by name alone.** Its actual
+root records are, in a common chart S=(P15²)^-1,
+`S (C12 C10 C12^-1) S^-1` and `S C12^3 S^-1`; these individual disk actions
+are checked. The first root is not S C10 S^-1. Resolve that order/transport
+when using the residual lantern.
+
+Measured engine improvement: expanding the final full disk point-push hit the
+existing 400000-letter bound. `sphere_chain_certificate()` instead checks the
+five exact adjacent-point sphere arc classes with endpoints fixed. They form
+a filling tree, so this certifies the sphere mapping class without expanding
+the disk whisker or changing any cap. The lift sign is checked separately.
+This is not a numerical joint-drawing certificate; final disk identity is
+not inferred. Twenty-five focused tests pass, including all local moves,
+scope changes, the negative cancellation, and the filling-arc criterion.
+
+Run `examples/build_six_seven_three_root_research.py`. The local snapshot is
+`.preview/six-seven-three-root-transport/index.html`, with **18 disk + 2 prefix
++ 20 reduction states, 44 support SVGs, zero unavailable pictures**, JSON
+certificates, and eighteen importable disk-lab snapshots. The root transport,
+prefix lantern, and final negative cancellation were visually inspected.
+Exactly equal disk supports reuse the same picture across powers and
+conjugator presentations, making the cancellation visually consistent.
+The later sphere states are research replays, not equivalent disk-only lab
+workspaces. Public labs are unchanged; this new snapshot is local, not Pages.
+
+Do not repeat the failed shortcuts: F9/F11 in the first endpoint have zero
+algebraic intersection but the exact sphere curve is moved, so they are not
+disjoint. In the final endpoint the apparent homological match
+`Ha(Hb)=F11`, using the two new C13 half-lantern arcs, also fails exact sphere
+curve equality. Homology is only a filter. The two new half-lantern units
+do give two repeated pairs of half-twist supports, with no original-half
+support match. Preserve these failures in the research note.
+
+Next work from this saved positive endpoint and its exact residual root chart;
+seek a transported inverse PC lantern that removes the last two odd roots,
+or a useful pairing of the duplicated new halves. Do not confuse count
+agreement with a derivation. Keep the candid first report at/after 8 AM Eastern
+and then restore six-hour pacing, retaining (6,7) priority.
+
 ## October 17 before dawn: both cluster lanterns applied, with signed factors
 
 The complete (6,7) derivation is **still open**. The prepared next step below

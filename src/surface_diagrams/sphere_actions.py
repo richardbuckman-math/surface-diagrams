@@ -78,6 +78,36 @@ def sphere_curve_action(braid, boundary_word, *, max_letters=400000):
     return current
 
 
+def sphere_chain_certificate(braid, *, max_letters=400000):
+    """Check sphere identity using the five adjacent-point arc classes.
+
+    Endpoints are checked individually, and each arc is identified by the
+    exact boundary of its two-point neighborhood. The five arcs form an
+    embedded tree through all six punctures; its sphere complement is a
+    disk. Fixing their isotopy classes and endpoints therefore fixes the
+    whole sphere mapping class (straighten the tree, then use the disk
+    Alexander trick). This uses no numerical placement or joint drawing.
+
+    Like the outer-action certificate, this cannot distinguish the central
+    order-two spherical braid. A genus-two lift needs its separate sign check.
+    No disk action is expanded: a large disk point-push whisker cannot by
+    itself exhaust this check. A bounded arc computation raises an unknown,
+    never a claimed identity or inequality.
+    """
+    from .hyperelliptic_homology import braid_permutation
+    braid = tuple(braid)
+    permutation = braid_permutation(braid)
+    pairs = tuple((i, i + 1) for i in range(1, 6))
+    reference = tuple(sphere_curve_action((), pair, max_letters=max_letters) for pair in pairs)
+    images = tuple(sphere_curve_action(braid, pair, max_letters=max_letters) for pair in pairs)
+    endpoints_fixed = permutation == tuple(range(1, 7))
+    return dict(certified=endpoints_fixed and images == reference,
+                method='five exact sphere chain arcs', permutation=permutation,
+                endpoints_fixed=endpoints_fixed, arc_pairs=pairs,
+                reference_classes=reference, image_classes=images,
+                scope='Sphere mapping class; no disk action or genus-two lift sign implied')
+
+
 @lru_cache(maxsize=16)
 def _cached_certificate(braid):
     disk_images=exact_action(braid)
