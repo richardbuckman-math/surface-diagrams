@@ -14,6 +14,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_half_transport, three_root_transport_consolidation,
     f2_f7_cluster_lantern, three_root_prefix_lantern,
     three_root_lantern_reduction, three_root_residual_lantern,
+    three_root_half_lantern_compression,
 )
 
 
@@ -25,8 +26,9 @@ def build():
     prefix_lantern = three_root_prefix_lantern()
     reduction = three_root_lantern_reduction()
     residual = three_root_residual_lantern()
+    compression = three_root_half_lantern_compression()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
-                  reduction=reduction, residual=residual,
+                  reduction=reduction, residual=residual, compression=compression,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -98,6 +100,16 @@ def build():
                  'Exact disk move' if index else 'The positive mixed endpoint above')
         residual_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                               f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
+    compression_cards = []
+    for index, stage in enumerate(compression['stages']):
+        compression_cards.append(f'<section class="stage"><h2>{index}. {escape(stage["title"])}</h2>'
+                                 '<p>Exact disk move within this branch</p>'
+                                 + factor_rows(stage['factors']) + '</section>')
+    compression_attempts = ''.join(
+        f'<li>{escape(attempt["target_id"])}: exact transported sphere support differs</li>'
+        for attempt in compression['direct_cancellation_attempts'])
+    compression_target = image_for(compression['positive_equation_target'])
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -173,15 +185,34 @@ its nontrivial disk discrepancy; the final cancellation itself is disk-exact.</p
 double cover. All odd three-point roots and both temporary inverse factors
 are gone. This count and the exact identity checks do not identify it with a
 known boundary relation. The full requested structural derivation is still open.</p>
-<div class="board">RESIDUAL_CARDS</div></body></html>'''
+<div class="board">RESIDUAL_CARDS</div>
+<h2>An optional shorter branch: reverse the duplicated PC half lanterns</h2>
+<p>Bring the earlier P15 unit down beside the five-term C13 suffix. Together,
+those six factors equal C13² P15⁻¹ exactly in the disk. This compresses the
+display to fourteen records and four squared triple twists, but retains an
+inverse pair twist. The red row is essential.</p>
+<p class="notice"><strong>This is not a positive (12,4) factorization.</strong>
+There are fourteen positive nonseparating units, two negative nonseparating
+units, and four positive separating twists upstairs. The five direct
+cancellation transports below fail on exact sphere support classes. Other
+Hurwitz routes or substitutions remain possible.</p>
+<p>Equivalently, the thirteen positive records above the red row multiply to
+this positive P15 twist on the sphere and in closed genus two:</p>
+<div class="local"><figure><figcaption>The positive target P15</figcaption>COMPRESSION_TARGET</figure></div>
+<p>This is not a factorization confined to a disk bounded by P15: F3 moves
+that boundary's exact sphere class and hence crosses it.</p>
+<ul>COMPRESSION_ATTEMPTS</ul><div class="board">COMPRESSION_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
             .replace('REDUCTION_CARDS', ''.join(reduction_cards))
-            .replace('RESIDUAL_CARDS', ''.join(residual_cards)), encoding='utf-8')
+            .replace('RESIDUAL_CARDS', ''.join(residual_cards))
+            .replace('COMPRESSION_CARDS', ''.join(compression_cards))
+            .replace('COMPRESSION_TARGET', compression_target)
+            .replace('COMPRESSION_ATTEMPTS', compression_attempts), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
-          f'+ {len(residual_cards)} residual states; '
+          f'+ {len(residual_cards)} residual + {len(compression_cards)} compression states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

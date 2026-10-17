@@ -502,6 +502,55 @@ mark disk-discrepant sphere steps; red rows mark temporary inverses. The
 certificate JSON saves every state and local check. These individual
 support drawings are not cumulative joint cut-complex certificates.
 
+## Reverse half-lantern compression and a retained negative pair
+
+An optional continuation, `three_root_half_lantern_compression()`, is exact
+in the disk relative to the positive (24,3) endpoint. Move the earlier
+P15 unit down across five factors, keeping it fixed and conjugating the
+crossed factors. It now precedes the five-term C13 suffix. In that chart
+write P for the unit pair twist, Ha/Hb for its half-lantern arcs, and C for
+the complementary C13 root. The local exact disk relations are
+
+```text
+Ha Hb P^2 = C,     CP=PC,
+P (Ha Hb P^2 Ha Hb) = C^2 P^-1.
+```
+
+The code checks the full six-term local disk action against the two-term
+replacement, not just these abbreviated symbols. There are seven saved
+states including all five adjacent moves. The final fourteen records have
+four squared triple twists and one inverse pair. All five exact reference
+sphere arcs are fixed and the lift homology is +I.
+
+The signed upstairs counts are 14 positive nonseparating, 2 negative
+nonseparating, and 4 positive separating units. Net (12,4) does **not**
+identify a positive (12,4) factorization or a double Matsumoto construction.
+Deleting the negative pair gives nonidentity homology. Every direct
+fixed-neighbor transport of that inverse to an earlier positive pair was
+checked: prefix.P45, new.P34, new.P26, residual.P34, and residual.P26 all have
+different exact sphere classes from the transported inverse. The replay's
+JSON retains each ordered intervening block and both compared classes.
+Other routes remain open; this is not a global cancellation obstruction.
+Moving the inverse to the other side gives an exact sphere/closed-genus-two
+equation between thirteen positive factors and the positive P15 twist.
+F3 moves P15's exact support class, a saved witness that these positive
+factors are not all supported in a disk bounded by that target curve.
+
+The three remaining ordinary roots at the positive endpoint were also used
+as a small geometric filter, without a broad Hurwitz search. Each word of
+length one to three using each root at most once, in every order and sign
+(78 per target pair), failed the homology transport test for F3/F9 and
+F6/F11. This says nothing about repeated-root words or pair twists.
+
+For raw root pairs (C4,C5), (C4,C12), (C5,C12), the homology traces are
+-4, -68, -12. Transporting the later root across the entire intervening
+factor block instead gives traces -4, -4, +4. The last has (M-I)^2=0 but
+both support partitions are {2,4,6}; the exact curves differ. It is not
+the earlier PC cluster-lantern configuration of two different triple
+partitions. None of the endpoint's existing pair curves, nor the direct
+over/under pair arcs tested in the C5 chart, is fixed by that product.
+Thus the parabolic matrix does not supply a geometric lantern certificate.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

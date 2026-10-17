@@ -15,6 +15,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_half_transport, three_root_transport_consolidation,
     f2_f7_cluster_lantern, three_root_prefix_lantern,
     three_root_lantern_reduction, three_root_residual_lantern,
+    three_root_half_lantern_compression,
 )
 
 
@@ -355,6 +356,51 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertTrue(all(f.half or f.points == 2 or f.points == 3 and f.power % 2 == 0
                             for f in previous))
         self.assertTrue(result['final_sphere_certificate']['certified'])
+
+    def test_reverse_half_lantern_compression_keeps_the_uncancelled_inverse(self):
+        result = three_root_half_lantern_compression()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertFalse(result['final_all_factors_positive'])
+        previous = None
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                a, b = sorted((stage['source'], stage['target']))
+                self.assertEqual(b - a, 1)
+                self.assertEqual(exact_action(product(previous[a:b + 1])),
+                                 exact_action(product(state[a:b + 1])))
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'] == 'disk_half_lantern':
+                self.assertEqual(len(stage['local_before']), 6)
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+                self.assertEqual([f.sign for f in stage['local_after']], [1, -1])
+            previous = state
+        self.assertEqual(len(previous), 14)
+        self.assertEqual([f.id for f in previous if f.sign == -1], ['inverse.P15'])
+        self.assertEqual(result['signed_counts'], dict(positive_nonseparating=14,
+            negative_nonseparating=2, positive_separating=4, net_nonseparating=12))
+        self.assertEqual(sum(f.power * (1 if f.half else 2) for f in previous
+                             if f.points == 2 and f.sign > 0), 14)
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        # Omitting the inverse would produce a different closed lift; a net
+        # count is not a positive (12,4) relation or a license to drop a factor.
+        self.assertNotEqual(homology_action(product(previous[:-1])), IDENTITY)
+        self.assertEqual(len(result['positive_equation_left']), 13)
+        self.assertEqual(result['positive_equation_target'].sign, 1)
+        self.assertEqual(homology_action(product(result['positive_equation_left'])),
+                         homology_action(result['positive_equation_target'].word))
+        crossing = result['target_crossing_witness']
+        self.assertEqual(crossing['factor_id'], 'F3')
+        self.assertNotEqual(crossing['target_support'], crossing['image_support'])
+        attempts = result['direct_cancellation_attempts']
+        self.assertEqual(len(attempts), 5)
+        self.assertEqual({a['target_id'] for a in attempts},
+                         {'prefix.P45', 'new.P34', 'new.P26', 'residual.P34', 'residual.P26'})
+        self.assertTrue(all(not a['matches'] for a in attempts))
+        self.assertTrue(all(a['transported_inverse_support'] != a['positive_support']
+                            for a in attempts))
 
     def test_both_transported_cluster_lanterns_have_complete_scope_certificates(self):
         result = root_cluster_lantern_route()

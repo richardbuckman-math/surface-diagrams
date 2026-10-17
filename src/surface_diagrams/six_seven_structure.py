@@ -755,6 +755,87 @@ def three_root_residual_lantern():
                 scope='Positive sphere/closed-genus-two intermediate; exterior-boundary derivation still open')
 
 
+def three_root_half_lantern_compression():
+    """Compress the duplicated half-lantern suffix without assuming positivity.
+
+    The earlier P15 unit and the five-term C13 suffix multiply exactly in
+    B6 to C13^2 P15^-1. Moving that unit next to the suffix changes five
+    intervening factors by checked Hurwitz moves. This gives a shorter
+    signed branch of the (24,3) route, with four separating twists and net
+    twelve nonseparating units. It is NOT a positive (12,4) factorization:
+    its last inverse pair has no direct cancellation with the five positive
+    pair factors under the fixed intervening-product transport tested here.
+    """
+    state = three_root_residual_lantern()['stages'][-1]['factors']
+    records = [dict(title='Positive (24,3) endpoint before reverse half-lantern compression',
+                    kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    while position('P15.after-cancellation') < position('C13.HL1.1') - 1:
+        index = position('P15.after-cancellation')
+        moving, crossed = state[index].id, state[index + 1].id
+        before = state[index:index + 2]
+        state = move_factor(state, index, index + 1)
+        assert exact_action(product(before)) == exact_action(product(state[index:index + 2]))
+        records.append(dict(title=f'{moving} down past {crossed}', kind='disk_hurwitz',
+                            factors=state, source=index, target=index + 1))
+
+    index = position('P15.after-cancellation')
+    pair = state[index]
+    root = f2_f7_cluster_lantern()['remaining_c13_complement']
+    before = state[index:]
+    assert len(before) == 6
+    after = (SignedResearchFactor('C13.recombined', root.conjugator,
+                                 root.first, root.points, power=2),
+             replace(pair, id='inverse.P15', sign=-1))
+    assert exact_action(product(before)) == exact_action(product(after))
+    state = state[:index] + after
+    records.append(dict(title='Reverse the two PC half lanterns and retain the inverse pair',
+                        kind='disk_half_lantern', factors=state,
+                        local_before=before, local_after=after))
+
+    # For a positive candidate before the inverse, fixing intervening
+    # neighbors transports the inverse by their entire ordered product.
+    # Store the exact unequal classes, not just an unlabelled failed search.
+    negative = state[-1]
+    attempts = []
+    for index, candidate in enumerate(state[:-1]):
+        if candidate.half or candidate.points != 2:
+            continue
+        intervening = product(state[index + 1:-1])
+        actual = sphere_curve_action(intervening, supported_class(negative.mapping_class))
+        expected = sphere_curve_action((), supported_class(candidate.mapping_class))
+        attempts.append(dict(target_id=candidate.id,
+                             intervening_ids=tuple(f.id for f in state[index + 1:-1]),
+                             transported_inverse_support=actual, positive_support=expected,
+                             matches=actual == expected))
+    assert len(attempts) == 5 and not any(attempt['matches'] for attempt in attempts)
+    final_sphere = sphere_chain_certificate(product(state))
+    assert final_sphere['certified'] and homology_action(product(state)) == IDENTITY
+    counts = dict(positive_nonseparating=14, negative_nonseparating=2,
+                  positive_separating=4, net_nonseparating=12)
+    assert sum(f.sign * f.power * (1 if f.half else 2)
+               for f in state if f.points == 2) == counts['net_nonseparating']
+    assert sum(f.power // 2 for f in state if f.points == 3) == counts['positive_separating']
+    target = replace(negative, sign=1)
+    target_support = sphere_curve_action((), supported_class(target.mapping_class))
+    crossing_factor = state[1]
+    assert crossing_factor.id == 'F3'
+    crossing_image = sphere_curve_action(crossing_factor.word, target_support)
+    assert crossing_image != target_support
+    return dict(stages=tuple(records), follows='three_root_residual_lantern',
+                final_sphere_certificate=final_sphere, final_lift_homology=IDENTITY,
+                final_all_factors_positive=False, signed_counts=counts,
+                positive_equation_left=state[:-1], positive_equation_target=target,
+                target_crossing_witness=dict(factor_id=crossing_factor.id,
+                    target_support=target_support, image_support=crossing_image),
+                direct_cancellation_attempts=tuple(attempts),
+                complete_structural_derivation_found=False,
+                scope='Disk-exact signed compression of the saved sphere intermediate; not a positive (12,4) relation')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

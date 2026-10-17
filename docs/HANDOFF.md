@@ -1,5 +1,52 @@
 # Handoff: surface-diagrams
 
+## October 17 evening: shorter signed branch, with the obstruction retained
+
+The full structural derivation remains open. The strongest positive endpoint
+is still the checked (24,3) factorization. A new optional branch,
+`three_root_half_lantern_compression()`, moves its earlier P15 unit beside
+the duplicated C13 half-lantern suffix. Those six factors equal
+`C13^2 P15^-1` **exactly in B6**. Five adjacent Hurwitz moves and this reverse
+PC half-lantern substitution reduce eighteen records to fourteen.
+
+The shorter endpoint is signed: fourteen positive nonseparating units,
+two negative nonseparating units (one inverse pair twist), and four positive
+separating twists upstairs. Its net counts (12,4) are **not a positive (12,4)
+factorization**, nor evidence for a fiber-sum identification. The inverse
+cannot be dropped: doing so changes the lift homology. Exact sphere support
+checks rule out direct cancellation with each of the five remaining positive
+pair factors while fixing the intervening neighbors. The actual unequal
+classes and ordered intervening IDs are saved in the returned certificate.
+These failures do not rule out other Hurwitz routes or substitutions.
+Equivalently, the thirteen positive records multiply to the positive P15
+twist on the sphere and in closed genus two. F3 moves P15's exact sphere
+class, so this is not a factorization supported in a disk bounded by P15.
+
+The local graphical replay adds seven columns for this optional branch,
+with the retained inverse row in red. It still shows individual supports,
+not cumulative joint cut-complex certificates. Public labs are unchanged.
+The replay has 64 states, 59 support SVGs, and zero unavailable pictures;
+the final two compression columns were visually inspected.
+All 27 focused tests pass; the new target-equation and crossing-witness
+checks are included in the compression test.
+
+Other bounded findings, to avoid repeating unproductive guesses:
+
+- No product of one, two, or three of the remaining ordinary roots, each
+  used at most once, in any order/sign, passes the homology filter for
+  F3-to-F9 or F6-to-F11 in the current (24,3) state (78 words per pair).
+- The three raw root-pair traces are -4, -68, -12. Transporting the later
+  root across the complete intervening block gives -4, -4, +4. The +4 case
+  (C5 with transported C12) has (M-I)^2=0, but both actual root curves enclose
+  {2,4,6}; it does not match the earlier distinct-partition cluster lantern.
+  No existing pair support or the tested direct over/under pair arcs in C5's
+  chart is fixed by that product. A unipotent homology matrix is only a filter.
+
+Next keep both saved endpoints: use the positive (24,3) state for new
+transported inverse-lantern configurations, or use the shorter signed branch
+to seek a nontrivial substitution involving its inverse P15. Do not rerun
+the five failed direct cancellations or call the signed counts a derivation.
+
 ## October 17 morning report and recurring schedule
 
 The first post-8-AM Eastern report states candidly that the full structural
