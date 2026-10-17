@@ -13,7 +13,7 @@ from surface_diagrams.mapping_classes import supported_class
 from surface_diagrams.six_seven_structure import (
     three_root_half_transport, three_root_transport_consolidation,
     f2_f7_cluster_lantern, three_root_prefix_lantern,
-    three_root_lantern_reduction,
+    three_root_lantern_reduction, three_root_residual_lantern,
 )
 
 
@@ -24,8 +24,9 @@ def build():
     transport = three_root_half_transport()
     prefix_lantern = three_root_prefix_lantern()
     reduction = three_root_lantern_reduction()
+    residual = three_root_residual_lantern()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
-                  reduction=reduction,
+                  reduction=reduction, residual=residual,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -89,6 +90,15 @@ def build():
         reduction_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                                f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
+    residual_cards = []
+    for index, stage in enumerate(residual['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Sphere + closed genus two; disk action changes' if sphere else
+                 'Exact disk move' if index else 'The positive mixed endpoint above')
+        residual_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                              f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
                                           ('After applying C1', transport['intermediate']),
@@ -101,6 +111,8 @@ header{max-width:1100px}.notice{background:#fff0d0;border-left:4px solid #b97720
 .board,.local{display:flex;gap:18px;overflow-x:auto;align-items:stretch;padding:12px 0 24px}
 .stage{flex:0 0 340px;padding:12px;background:white;border:1px solid #b7ccd3;border-radius:10px}
 .stage.sphere{border:3px solid #7654ac}
+.board .stage+.stage{position:relative;margin-left:14px}
+.board .stage+.stage:before{content:'→';position:absolute;left:-30px;top:22px;font-size:24px;color:#596f87}
 h2{font-size:17px;min-height:50px}.factor{display:grid;grid-template-columns:110px 1fr 45px;
 align-items:center;border-top:1px solid #e1e7eb;min-height:70px;font-size:11px;gap:5px}
 .factor b{overflow-wrap:anywhere}.factor img{height:65px;max-width:100%}a{color:#175b7a}
@@ -109,8 +121,10 @@ figure{flex:0 0 300px;margin:0;background:white;padding:12px;border-radius:10px}
 figure img{width:300px;max-width:100%}figcaption{font-weight:bold;margin-bottom:12px}
 </style><body><header><h1>(6,7): pairing original F2 and F7 in the disk</h1>
 <p class="notice"><strong>The full structural derivation is still open.</strong>
-This is a new partial route for a second pair of the original half twists. It ends
-with fifteen mixed positive factors, including ordinary three-point roots.</p>
+This route starts by pairing a second pair of the original half twists. Named
+lantern moves then remove all ordinary three-point roots and temporary negative
+factors, reaching a positive (24,3) intermediate. Identifying a final standard
+boundary relation, and hence a complete structural derivation, remains open.</p>
 <p>The exact disk identity is (C8 C10 C1) F2 (C8 C10 C1)⁻¹ = F7, where Cj is one
 ordinary root of original Fj. The first eighteen states use only exact disk moves.</p>
 <div class="local">LOCAL_ARCS</div>
@@ -144,13 +158,30 @@ Lefschetz factorization. These sphere research states are not disk-only lab work
 <p>The final sphere action is checked on all five exact adjacent-point arc classes,
 with endpoints fixed, plus the separate +I genus-two lift check. This avoids a large
 disk point-push word; it does not assert a joint drawing certificate for these pictures.</p>
-<div class="board">REDUCTION_CARDS</div></body></html>'''
+<div class="board">REDUCTION_CARDS</div>
+<h2>The last root pair: transport the lantern before cancelling</h2>
+<p>Write A=C10 and B=C12. The saved endpoint has BAB⁻¹ and B³ in a common
+chart S. Bring one B unit up past F11: the adjacent pair is BA, not AB.
+Conjugate the checked relation ABP=R1R2 by B to obtain
+BA=(BR1B⁻¹)(BR2B⁻¹)(BPB⁻¹)⁻¹, using the actual common chart SB.</p>
+<p>The remaining two B units combine into a square. Move each intervening
+neighbor down across the inverse pair, so that the inverse curve is transported
+upward. It matches the prefix pair on the sphere. The purple rechart retains
+its nontrivial disk discrepancy; the final cancellation itself is disk-exact.</p>
+<p class="notice">The endpoint is a positive genus-two (24,3) factorization:
+24 nonseparating and 3 separating Dehn twists when powers are expanded in the
+double cover. All odd three-point roots and both temporary inverse factors
+are gone. This count and the exact identity checks do not identify it with a
+known boundary relation. The full requested structural derivation is still open.</p>
+<div class="board">RESIDUAL_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
-            .replace('REDUCTION_CARDS', ''.join(reduction_cards)), encoding='utf-8')
+            .replace('REDUCTION_CARDS', ''.join(reduction_cards))
+            .replace('RESIDUAL_CARDS', ''.join(residual_cards)), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
-    print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction states; '
+    print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
+          f'+ {len(residual_cards)} residual states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

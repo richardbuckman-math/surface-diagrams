@@ -453,6 +453,55 @@ first eighteen states are importable equivalent disk-lab snapshots; the later
 sphere states are explicitly marked research records. All diagrams use the
 shared surface library and the approved vertical convention.
 
+## Residual root lantern: a positive (24,3) intermediate
+
+`three_root_residual_lantern()` continues the eighteen-record mixed endpoint
+above through seventeen saved states. Write A=C10, B=C12 and let S be its
+saved common chart. Its actual odd-root records are S(BAB^-1)S^-1 and
+SB^3S^-1. Split the cube into units, then move the first B unit up across
+F11. The adjacent pair is S(BA)S^-1, so use the **B-conjugate** of the
+certified residual relation ABP=R1R2:
+
+```text
+BA = (B R1 B^-1) (B R2 B^-1) (B P B^-1)^-1.
+```
+
+All three replacement factors use chart SB. The replacement's 174-letter
+reduced disk discrepancy is retained, has exact trivial sphere action, and
+has lift homology +I. Combine the two unused B units into a squared triple
+twist. This removes the last odd-root records without assuming AB=BA.
+
+Transport the new inverse pair toward the earlier `prefix.P12` by dragging
+each intervening neighbor downward. The inverse curve is thereby conjugated
+and moves upward. Its exact sphere support class now equals that positive
+pair's. Rechart the inverse along the positive pair in a separate sphere
+step, retaining its 84-letter nontrivial disk discrepancy and +I lift.
+The adjacent +1 and -1 units then cancel by exact disk action.
+
+The endpoint has eighteen positive records, expanding in the double cover
+to 24 nonseparating and 3 separating Dehn twists. All five exact reference
+sphere arcs are fixed and the closed genus-two homology action is +I.
+Thus this is a positive genus-two (24,3) factorization reached by the
+certified named substitutions, not merely a candidate with matching counts.
+It is **not yet** a complete structural derivation of the original (6,7)
+to a recognized exterior-boundary identity. No disk identity is inferred
+from these sphere checks.
+
+The alternative gathering move, dragging A down across F11 before using
+the same transported relation, did not expose a directly cancellable
+positive pair among the eight available ones. The successful choice moves
+B up. This is a local geometric failure, not a global impossibility result.
+At the successful positive endpoint, exact duplicate sphere supports are
+only Ha1/Ha2, Hb1/Hb2, and P15.after-cancellation/C13.HL1.3. Combining them
+still requires valid transport across the intervening factors.
+
+The graphical builder now includes this continuation as a fourth horizontal
+board, with arrows between vertical factorization columns: 57 total states,
+56 individual support pictures, zero unavailable supports. Purple columns
+mark disk-discrepant sphere steps; red rows mark temporary inverses. The
+certificate JSON saves every state and local check. These individual
+support drawings are not cumulative joint cut-complex certificates.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

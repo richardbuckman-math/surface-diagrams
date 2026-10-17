@@ -649,6 +649,112 @@ def three_root_lantern_reduction():
                 scope='Partial sphere/closed-genus-two derivation; not an equivalent disk-only workspace')
 
 
+def three_root_residual_lantern():
+    """Remove the last odd roots using the actual transported root order.
+
+    Write A=C10, B=C12 and let S be the saved endpoint chart. Its roots
+    are S(BAB^-1)S^-1 and SB^3S^-1. Move one B unit up across F11;
+    the adjacent pair is then S(BA)S^-1. Conjugating the checked relation
+    ABP=R1R2 by B gives BA=(BR1B^-1)(BR2B^-1)(BPB^-1)^-1.
+    The negative pair can be transported to cancel prefix.P12 on the
+    sphere. The resulting positive (24,3) factorization is an intermediate,
+    not a complete derivation to a recognized exterior-boundary relation.
+    """
+    previous = three_root_lantern_reduction()
+    state = previous['stages'][-1]['factors']
+    records = [dict(title='Positive endpoint with two odd-root records',
+                    kind='start', factors=state)]
+    local = f2_f7_cluster_lantern()
+    relation = local['residual_root_lantern']
+    b = local['root_rechart_after']
+    common = reduce_word(previous['residual_root_chart'] + b.word)
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def disk_replace(index, count, replacements, title, kind):
+        nonlocal state
+        before = state[index:index + count]
+        replacements = tuple(replacements)
+        assert exact_action(product(before)) == exact_action(product(replacements))
+        state = state[:index] + replacements + state[index + count:]
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=before, local_after=replacements))
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        before = state[min(source, target):max(source, target) + 1]
+        state = move_factor(state, source, target)
+        after = state[min(source, target):max(source, target) + 1]
+        assert exact_action(product(before)) == exact_action(product(after))
+        records.append(dict(title=f'{moving} down past {crossed}' if source < target else
+                            f'{moving} up past {crossed}', kind='disk_hurwitz',
+                            factors=state, source=source, target=target))
+
+    def sphere_replace(index, count, replacements, title):
+        nonlocal state
+        before = state[index:index + count]
+        replacements = tuple(replacements)
+        discrepancy = reduce_word(product(before) + inverse_word(product(replacements)))
+        certificate = sphere_inner_certificate(discrepancy)
+        assert certificate['certified'] and not certificate['disk_identity']
+        assert homology_action(discrepancy) == IDENTITY
+        state = state[:index] + replacements + state[index + count:]
+        records.append(dict(title=title, kind='sphere_rewrite', factors=state,
+                            local_before=before, local_after=replacements,
+                            disk_discrepancy=discrepancy, sphere_certificate=certificate,
+                            lift_homology=IDENTITY))
+
+    index = position('F12.root+F12')
+    split = split_factor(state, index, 'powers')
+    disk_replace(index, 1, split[index:index + 3], 'Split the C12 cube into three roots',
+                 'disk_split')
+    move_one(position('F12.root+F12.1'), position('F10.2') + 1)
+    index = position('F10.2')
+    assert state[index + 1].id == 'F12.root+F12.1'
+    replacements = tuple(SignedResearchFactor('residual.' + f.id,
+        reduce_word(common + f.conjugator), f.first, f.points, f.power, f.half, sign)
+        for f, sign in zip(relation['right'] + (relation['left'][2],), (1, 1, -1)))
+    sphere_replace(index, 2, replacements,
+                   'Use the residual lantern in the chart S C12, with the roots in their actual order')
+    index = position('F12.root+F12.2')
+    combined = combine_factors(state, index)
+    disk_replace(index, 2, (combined[index],), 'Combine the two unused C12 roots into a square',
+                 'disk_combine')
+
+    # Move each intervening neighbor down. The inverse pair travels upward
+    # and is conjugated; simply dragging it upward would keep it fixed.
+    negative_id = 'residual.Q.complement'
+    while position(negative_id) > position('prefix.P12') + 1:
+        index = position(negative_id)
+        move_one(index - 1, index)
+    index = position('prefix.P12')
+    positive, negative = state[index:index + 2]
+    assert positive.sign == 1 and negative.sign == -1
+    assert positive.points == negative.points == 2 and positive.power == negative.power == 1
+    assert sphere_curve_action((), supported_class(positive.mapping_class)) == sphere_curve_action(
+        (), supported_class(negative.mapping_class))
+    inverse = replace(positive, id='residual.inverse.prefix.P12', sign=-1)
+    sphere_replace(index + 1, 1, (inverse,),
+                   'Rechart the transported inverse pair along the prefix pair on the sphere')
+    disk_replace(index, 2, (), 'Cancel the equal positive and negative pair twists', 'disk_cancel')
+
+    assert all(f.sign == 1 and (f.points == 2 or f.points == 3 and f.power % 2 == 0)
+               for f in state)
+    final_sphere = sphere_chain_certificate(product(state))
+    assert final_sphere['certified'] and homology_action(product(state)) == IDENTITY
+    counts = (sum(f.power * (1 if f.half else 2) for f in state if f.points == 2),
+              sum(f.power // 2 for f in state if f.points == 3))
+    assert counts == (24, 3)
+    return dict(stages=tuple(records), follows='three_root_lantern_reduction',
+                relation_common_conjugator=common, residual_relation=relation,
+                final_sphere_certificate=final_sphere, final_lift_homology=IDENTITY,
+                final_all_factors_positive=True, final_lefschetz_counts=counts,
+                remaining_odd_root_ids=(), complete_structural_derivation_found=False,
+                scope='Positive sphere/closed-genus-two intermediate; exterior-boundary derivation still open')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

@@ -14,7 +14,7 @@ from surface_diagrams.six_seven_structure import (
     root_pair_lantern, root_cluster_lantern_route, SignedResearchFactor,
     three_root_half_transport, three_root_transport_consolidation,
     f2_f7_cluster_lantern, three_root_prefix_lantern,
-    three_root_lantern_reduction,
+    three_root_lantern_reduction, three_root_residual_lantern,
 )
 
 
@@ -309,6 +309,51 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertEqual(result['stages'][-1]['local_before'][0].sign, -1)
         self.assertEqual(result['stages'][-1]['local_before'][1].power, 2)
         self.assertEqual(result['stages'][-1]['local_after'][0].power, 1)
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+
+    def test_residual_lantern_uses_actual_root_order_and_cancels_the_prefix_pair(self):
+        result = three_root_residual_lantern()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertEqual(result['final_lefschetz_counts'], (24, 3))
+        self.assertEqual(result['remaining_odd_root_ids'], ())
+        self.assertTrue(result['final_all_factors_positive'])
+        previous = None
+        sphere_steps = []
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                a, b = sorted((stage['source'], stage['target']))
+                self.assertEqual(b - a, 1)
+                self.assertEqual(exact_action(product(previous[a:b + 1])),
+                                 exact_action(product(state[a:b + 1])))
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+            elif stage['kind'] == 'sphere_rewrite':
+                sphere_steps.append(stage)
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertFalse(stage['sphere_certificate']['disk_identity'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+            previous = state
+        self.assertEqual(len(sphere_steps), 2)
+        lantern, rechart = sphere_steps
+        self.assertEqual([f.id for f in lantern['local_before']],
+                         ['F10.2', 'F12.root+F12.1'])
+        self.assertEqual([f.sign for f in lantern['local_after']], [1, 1, -1])
+        self.assertEqual(rechart['local_before'][0].id, 'residual.Q.complement')
+        self.assertEqual(sphere_curve_action((), supported_class(rechart['local_before'][0].mapping_class)),
+                         sphere_curve_action((), supported_class(rechart['local_after'][0].mapping_class)))
+        last = result['stages'][-1]
+        self.assertEqual(last['kind'], 'disk_cancel')
+        self.assertEqual([f.sign for f in last['local_before']], [1, -1])
+        self.assertEqual(last['local_before'][0].id, 'prefix.P12')
+        self.assertEqual(last['local_after'], ())
+        self.assertEqual(len(previous), 18)
+        self.assertTrue(all(f.sign == 1 for f in previous))
+        self.assertTrue(all(f.half or f.points == 2 or f.points == 3 and f.power % 2 == 0
+                            for f in previous))
         self.assertTrue(result['final_sphere_certificate']['certified'])
 
     def test_both_transported_cluster_lanterns_have_complete_scope_certificates(self):

@@ -1,5 +1,50 @@
 # Handoff: surface-diagrams
 
+## October 17, 7 AM run: residual lantern removes both odd roots
+
+The complete structural (6,7) derivation is **still open**. The previous
+mixed endpoint now continues through `three_root_residual_lantern()` to
+eighteen positive records representing a genus-two **(24,3)** factorization.
+There are no negative factors and no ordinary three-point roots left.
+This is a certified intermediate, not identification with a known relation.
+
+The root order matters. With A=C10, B=C12 and the saved common chart S, the
+actual roots are S(BAB^-1)S^-1 and SB^3S^-1. Split the cube and move its
+first B unit **up across F11**. The adjacent product is S(BA)S^-1. Conjugate
+the certified relation ABP=R1R2 by B, using common chart SB, to replace
+that pair by two positive pair twists and one inverse pair twist. Combine
+the two unused B units into a square.
+
+Moving each intervening neighbor down transports the inverse pair upward
+to `prefix.P12`. Their support classes agree exactly on the sphere. A
+separate sphere rechart saves its nontrivial disk discrepancy; the ensuing
+positive/negative cancellation is exact in B6. Both sphere steps have +I
+lift discrepancy. Moving A down past F11 instead did **not** expose a
+direct pair cancellation; do not repeat that alternative as though untested.
+
+The replay now has **18 disk + 2 prefix + 20 reduction + 17 residual states**,
+56 shared-library support SVGs, and zero unavailable pictures. It remains
+local at `.preview/six-seven-three-root-transport/index.html`; sphere research
+states are not disk-equivalent positive lab imports. All local Hurwitz,
+split/combine and cancellation actions are checked exactly. The final five
+sphere arcs and genus-two lift are checked separately. The pictures show
+individual supports, not certified cumulative cut complexes.
+
+Validation: 26 focused sphere-action, structural-route, and lift-homology
+tests pass. The full replay regenerated without unavailable support pictures;
+the last three columns were visually inspected, including the sphere rechart
+and the exact cancellation. `git diff --check` passes.
+
+Next start from this saved positive (24,3) endpoint and look for an inverse
+named relation leading to a recognizable exterior-boundary identity. Eight
+half twists and eight full-pair units give 24 nonseparating twists upstairs;
+the three remaining squared triple twists give three separating twists.
+Count agreement with a known example would not prove equivalence. The only
+direct duplicate sphere supports here are the two Ha halves, two Hb halves,
+and `P15.after-cancellation` with `C13.HL1.3`; transport must still be checked.
+Give the candid first report at/after 8 AM Eastern, then restore six-hour
+pacing with the structural (6,7) priority retained.
+
 ## October 17, 6 AM run: a second original pair, a named lantern, and no negative factors
 
 The complete (6,7) derivation is **still open**, but the new route goes beyond
