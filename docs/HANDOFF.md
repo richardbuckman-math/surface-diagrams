@@ -1,5 +1,49 @@
 # Handoff: surface-diagrams
 
+## October 17: return to (6,7), with a global reverse-lantern obstruction
+
+Richard explicitly redirected the overnight work to a creative, structural
+derivation of his supplied (6,7), aiming for the morning of October 17.
+**This is now the priority; do not resume filling unrelated catalog types.**
+The complete factor-level derivation remains open. The standing heartbeat was
+updated to hourly runs through the morning, then a candid report on its first
+run at/after 8 AM Eastern and a return to the earlier six-hour interval.
+
+New research note: `docs/proofs/six-seven-structural-search.md`.
+`six_seven_structure.py` proves a useful obstruction: the six original
+nonseparating classes have gcd-4 pairings, and their ancestry-labelled
+pairings remain nonzero modulo 16 through every Hurwitz move and simultaneous
+conjugation. Orientations may change signs, so the implementation also keeps
+unoriented residues. Thus none can become algebraically disjoint or equal.
+This rules out exposing the ordinary reverse genus-two lantern using the
+original six halves, and hence the tempting direct (8,6)->(6,7) lantern
+shortcut, without any bounded Hurwitz search. It does not exclude a complete
+derivation using substitutions that introduce new curves.
+
+Also certified the sphere-only local lantern
+`H34 (T123 H34 T123^-1) T123^2 = T12 T56`, including +I genus-two homology,
+the nontrivial disk discrepancy and its sphere whisker. It is not a new
+framed-boundary/disk equality. The six original halves have a checked
+rank-two width-four monodromy description and a pointwise fixed rank-two
+orthogonal complement. The older tests already knew rank two and divisibility
+by four; the modulo-16 Hurwitz obstruction and complete restricted matrices
+are the new structural conclusions. Do not claim a Gamma(4) subgroup equality,
+a covering map, a section, or Xiao equivalence from these homology facts.
+
+Eight focused structural/homology tests pass, including an exact presentation
+of the same half twist with reversed homology orientation, both Hurwitz
+directions, simultaneous conjugation, and the sphere/disk/lift distinctions.
+Reproduce with `examples/analyze_six_seven_structure.py`; the JSON scratch
+certificate is `.preview/six-seven-structure-certificate.json`.
+
+Next: organize the separating correction around the six width-four parabolics;
+investigate squared-lantern or nonliftable intermediate moves; compare exact
+geometric transports with Szabó's degree-four factorization. For the
+Brendle–Margalit factoring algorithm, first verify its nonseparating-curve
+stabilizer hypothesis: homology I is insufficient. The note links the primary
+papers and spells out the proof and remaining gap. The private Valley Guitar
+Studio project is unrelated and must stay private/offline.
+
 ## October 17: type 21 from the twelve-factor type 28 relation
 
 Found another exact positive five-inner double-outer relation, **type 21**.
