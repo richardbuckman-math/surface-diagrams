@@ -157,6 +157,58 @@ def sphere_root_half_transport():
                 scope='Six-marked sphere and closed genus two; disk discrepancy nontrivial')
 
 
+def root_pair_lantern():
+    """The transported PC lantern explaining C10 C13 and its F3/F9 action.
+
+    Inner clusters are {2,5}, {3,4}, {6}; the last is point-capped.
+    C10 C13 Q2345 = O23456 P25 P34 is exact in B6. Restoring a framed
+    boundary at point 6 requires its boundary twist on the right. Dropping
+    O is legal on the sphere but changes the genus-two lift by -I; O² may
+    be dropped in the closed lift. The reduced conjugator below is an exact
+    disk transport, not merely a same-endpoint or homology match.
+    """
+    initial = {factor.id: factor for factor in initial_factors()}
+    roots = tuple(replace(initial[name], id=name + '.root', power=1)
+                  for name in ('F10', 'F13'))
+    q = Factor('Q2345', (), 2, 4)
+    outer = Factor('O23456', (), 2, 5)
+    p25 = Factor('P25', (-2, -3), 4, 2)
+    p34 = Factor('P34', (), 3, 2)
+    left, right = roots + (q,), (outer, p25, p34)
+    assert exact_action(product(left)) == exact_action(product(right))
+    identity = tuple((i,) for i in range(1, 7))
+    for a, b in combinations((outer, p25, p34, q), 2):
+        commutator = a.word + b.word + inverse_word(a.word) + inverse_word(b.word)
+        assert exact_action(commutator) == identity
+    peripheral = sphere_inner_certificate(outer.word)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert peripheral['certified'] and not peripheral['disk_identity']
+    assert homology_action(outer.word) == minus_identity
+
+    reduced_transport = reduce_word(p25.word + p34.word + inverse_word(q.word))
+    source, target = initial['F3'], initial['F9']
+    assert exact_action(reduced_transport + source.word + inverse_word(reduced_transport)) == exact_action(target.word)
+    squared_left = roots + roots + (replace(q, power=2),)
+    squared_right = (replace(p25, power=2), replace(p34, power=2))
+    discrepancy = reduce_word(product(squared_left) + inverse_word(product(squared_right)))
+    squared_sphere = sphere_inner_certificate(discrepancy)
+    assert squared_sphere['certified'] and not squared_sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    assert exact_action(discrepancy) == exact_action(outer.word + outer.word)
+    return dict(left=left, right=right, inner_clusters=((2, 5), (3, 4), (6,)),
+                framed_point_correction=(6,), common_chart_conjugator=(-2, -3),
+                disk_equality=True, commuting_multitwists=(outer, p25, p34, q),
+                peripheral_sphere_certificate=peripheral, peripheral_lift_homology=minus_identity,
+                reduced_transport_word=reduced_transport, reduced_transport_factors=(p25, p34, q),
+                reduced_transport_signs=(1, 1, -1), source=source, target=target,
+                reduced_transport_disk_equality=True,
+                squared_left=squared_left, squared_right=squared_right,
+                squared_disk_discrepancy=discrepancy, squared_sphere_certificate=squared_sphere,
+                squared_lift_homology=IDENTITY, applied_to_full_factorization=False,
+                endpoint_pair_ids=(('F10.1', 'F13.1'), ('F10.2', 'F13.2')),
+                endpoint_pair_conjugators=(inverse_word(source.word), inverse_word(roots[1].word)))
+
+
 def root_transport_consolidation():
     """A replayable partial derivation pairing original F3 and F9.
 

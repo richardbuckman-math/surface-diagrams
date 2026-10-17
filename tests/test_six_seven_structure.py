@@ -3,11 +3,14 @@ from dataclasses import replace
 from surface_diagrams.factorization_explorer import initial_factors, move_factor, global_conjugate_factors,product
 from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action,supported_class
-from surface_diagrams.sphere_actions import sphere_curve_action
+from surface_diagrams.braid_actions import inverse_word
+from surface_diagrams.framed_boundary_relations import enclosed_boundaries
+from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate
 from surface_diagrams.six_seven_structure import (
     nonseparating_intersection_certificate, six_seven_lattice_certificate,
     sphere_genus_two_lantern,
     sphere_root_half_transport,root_transport_consolidation,six_half_stabilizer_audit,
+    root_pair_lantern,
 )
 
 
@@ -110,6 +113,47 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertEqual(len(certificate['arcs']), 5)
         self.assertTrue(certificate['all_original_supports_moved'])
         self.assertEqual(len(certificate['original_supports']), 13)
+
+    def test_cluster_lantern_is_exact_in_disk_with_point_cap_correction(self):
+        certificate = root_pair_lantern()
+        left, right = certificate['left'], certificate['right']
+        self.assertEqual(exact_action(product(left)), exact_action(product(right)))
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 6) for f in left],
+                         [(2, 5, 6), (3, 4, 6), (2, 3, 4, 5)])
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 6) for f in right],
+                         [(2, 3, 4, 5, 6), (2, 5), (3, 4)])
+        delta = tuple(sum(point in enclosed_boundaries(f.mapping_class, 6) for f in left)
+                      - sum(point in enclosed_boundaries(f.mapping_class, 6) for f in right)
+                      for point in range(1, 7))
+        self.assertEqual(delta, (0, 0, 0, 0, 0, 1))
+        dropped = product(left) + inverse_word(product(right[1:]))
+        self.assertTrue(sphere_inner_certificate(dropped)['certified'])
+        self.assertEqual(homology_action(dropped),
+                         tuple(tuple(-x for x in row) for row in IDENTITY))
+
+    def test_lantern_explains_exact_disk_transport_and_checked_squared_relation(self):
+        certificate = root_pair_lantern()
+        r = certificate['reduced_transport_word']
+        source, target = certificate['source'], certificate['target']
+        self.assertEqual(exact_action(r + source.word + inverse_word(r)),
+                         exact_action(target.word))
+        discrepancy = certificate['squared_disk_discrepancy']
+        self.assertFalse(certificate['squared_sphere_certificate']['disk_identity'])
+        self.assertTrue(certificate['squared_sphere_certificate']['certified'])
+        self.assertEqual(homology_action(discrepancy), IDENTITY)
+        self.assertFalse(certificate['applied_to_full_factorization'])
+        endpoint = root_transport_consolidation()['stages'][-1]['factors']
+        for ids, conjugator in zip(certificate['endpoint_pair_ids'],
+                                   certificate['endpoint_pair_conjugators']):
+            for name, root in zip(ids, certificate['left'][:2]):
+                actual = next(f for f in endpoint if f.id == name)
+                self.assertEqual(exact_action(actual.word),
+                                 exact_action(conjugator + root.word + inverse_word(conjugator)))
+        source_index = next(i for i, f in enumerate(endpoint) if f.id == 'F13.2')
+        ready = move_factor(endpoint, source_index, 11)
+        self.assertEqual([f.id for f in ready[8:12]],
+                         ['F10.1', 'F13.1', 'F10.2', 'F13.2'])
+        self.assertEqual(exact_action(product(ready)), exact_action(product(endpoint)))
 
 
 if __name__=='__main__':

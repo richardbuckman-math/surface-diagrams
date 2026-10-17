@@ -106,7 +106,8 @@ a covering map, sections, or the fundamental group of the total space.
 
 ## Two separating roots give an exact transport of original half twists
 
-Write `C10=T456` and `C13=sigma5^-1 T345 sigma5`, so that their squares
+Write `C10=(sigma2^-1 sigma3^-1) T456 (sigma3 sigma2)` and
+`C13=sigma5^-1 T345 sigma5`, so that their squares
 are the original separating factors F10 and F13. A new exact geometric
 identity is
 
@@ -154,6 +155,86 @@ sphere classes. In the resulting fourteen-factor state, twenty further
 homology-compatible one/two-root cases among the remaining halves produced
 no exact class match. These finite tests do not rule out longer transports
 or substitutions introducing other curves.
+
+## A named cluster lantern explains that transport
+
+The two roots above fit an exact **PC lantern with clusters of sizes 2,2,1**.
+Set
+
+```text
+Q = T2345,
+O = T23456,
+P25 = (sigma2^-1 sigma3^-1) T45 (sigma3 sigma2),
+P34 = T34.
+```
+
+Then
+
+```text
+C10 C13 Q = O P25 P34                        (exact in the marked disk).
+```
+
+The inner clusters are `{2,5}`, `{3,4}`, and `{6}`. The common chart transport
+is `(sigma2^-1 sigma3^-1)`: it carries the standard inner pair clusters
+`{4,5}` and `{2,3}` to the two routed pairs above. The exact left supports
+are `{2,5,6}`, `{3,4,6}`, `{2,3,4,5}`. All four twists O, P25, P34, Q commute
+pairwise, checked by their complete disk actions. If point 6 is restored to
+a framed inner boundary, the genuine boundary lantern includes T6 on the
+right; the multiplicity difference at every other point is zero.
+
+This identifies the **simpler disk conjugator**
+
+```text
+R = P25 P34 Q^-1,
+R F3 R^-1 = F9                              (exact in B6).
+```
+
+Thus the earlier sphere-only transport by C10 C13 has a named local
+explanation and an exact disk representative involving one inverse twist.
+The local lantern and both arc pictures are now drawn above the seventeen
+columns in the research snapshot. The seventeen-column route itself still
+contains its explicitly marked sphere step; it has not been silently changed
+into a disk-only session.
+
+**Lift sign matters.** O acts trivially on the marked sphere but its genus-two
+lift has homology -I, the hyperelliptic involution. Dropping O from the unsquared
+lantern would therefore give the wrong closed-genus-two equality. Squaring
+avoids that error:
+
+```text
+(C10 C13)^2 Q^2 = O^2 P25^2 P34^2            (exact in B6),
+(C10 C13)^2 Q^2 =     P25^2 P34^2            (sphere and closed genus two).
+```
+
+The disk discrepancy in the second line is exactly O²; its sphere whisker is
+`(-1,-1)` and its lift homology is +I. `root_pair_lantern()` retains these
+separate certificates. This is a usable transported squared-lantern relation,
+**not yet a substitution applied to all thirteen original factors**. In the
+saved endpoint, the four ordinary roots have different transported classes;
+they cannot simply be declared to be `(C10 C13)^2`.
+
+There are nevertheless **two separately transported copies** of C10 C13
+available. In the seventeen-state endpoint, the exact individual root classes
+are
+
+```text
+F10.1, F13.1 = H3^-1 (C10, C13) H3,
+F10.2, F13.2 = C13^-1 (C10, C13) C13.
+```
+
+These equalities are checked in B6 factor by factor, not inferred from the
+products. Moving F13.2 upward across F12 and F11 (two disk Hurwitz moves)
+puts the four roots consecutively in rows 9–12. Each adjacent pair can then
+use its own transported **unsquared** cluster lantern. That would introduce
+two inverse Q twists; it requires signed factor records and has not yet been
+performed in the saved positive-factor route.
+
+The two transported O twists may only be omitted as a **paired** sphere/lift
+step, with their full disk discrepancy retained: each separately lifts to the
+deck involution. The complementary pairs of the two inverse Q supports are
+`{4,6}` and `{1,6}`. Together with the existing positive `{1,4}` pair twist,
+these suggest a specific signed PC-lantern configuration to check next.
+The endpoint sets alone do not prove that the three routed curves form it.
 
 ## Check a stabilizer geometrically before Torelli factoring
 

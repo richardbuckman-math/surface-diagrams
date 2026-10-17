@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 from surface_diagrams.boundary_playground_geometry import support_svg
 from surface_diagrams.six_seven_structure import (
-    root_transport_consolidation, six_half_stabilizer_audit, sphere_root_half_transport,
+    root_pair_lantern, root_transport_consolidation, six_half_stabilizer_audit,
+    sphere_root_half_transport,
 )
 
 
@@ -17,30 +18,34 @@ def build():
     destination = ROOT / '.preview' / 'six-seven-root-transport'
     destination.mkdir(parents=True, exist_ok=True)
     route = root_transport_consolidation()
+    lantern = root_pair_lantern()
     report = dict(route=route, root_transport=sphere_root_half_transport(),
-                  stabilizer_audit=six_half_stabilizer_audit())
+                  cluster_lantern=lantern, stabilizer_audit=six_half_stabilizer_audit())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=lambda value: asdict(value) if is_dataclass(value) else value,
         separators=(',', ':')), encoding='utf-8')
     pictures, failures = {}, []
+    def image_for(factor):
+        key = factor.mapping_class
+        if key not in pictures:
+            filename = f'support-{len(pictures)}.svg'
+            try:
+                drawing = support_svg(factor, 6, mirror_vertical=True)
+                (destination / filename).write_text(drawing, encoding='utf-8')
+                pictures[key] = filename
+            except ValueError as error:
+                pictures[key] = None
+                failures.append(dict(factor=factor.id, reason=str(error)))
+        filename = pictures[key]
+        return (f'<a href="{filename}" target="_blank"><img src="{filename}" '
+                f'loading="lazy" alt="Support of {escape(factor.id)}"></a>'
+                if filename else '<span>Support picture unavailable</span>')
+
     cards = []
     for index, stage in enumerate(route['stages']):
         rows = []
         for factor in stage['factors']:
-            key = factor.mapping_class
-            if key not in pictures:
-                filename = f'support-{len(pictures)}.svg'
-                try:
-                    drawing = support_svg(factor, 6, mirror_vertical=True)
-                    (destination / filename).write_text(drawing, encoding='utf-8')
-                    pictures[key] = filename
-                except ValueError as error:
-                    pictures[key] = None
-                    failures.append(dict(factor=factor.id, reason=str(error)))
-            picture = pictures[key]
-            image = (f'<a href="{picture}" target="_blank"><img src="{picture}" '
-                     f'loading="lazy" alt="Support of {escape(factor.id)}"></a>'
-                     if picture else '<span>Support picture unavailable</span>')
+            image = image_for(factor)
             label = ('H' if factor.half else f'T({factor.points})')
             if factor.power != 1:
                 label += f'^{factor.power}'
@@ -53,6 +58,17 @@ def build():
         cards.append(f'<section id="stage-{index}" class="stage {kind}"><h2>{index}. '
                      f'{escape(stage["title"])}</h2><p>{scope}</p>' + ''.join(rows) + '</section>')
     links = ' · '.join(f'<a href="#stage-{index}">{index}</a>' for index in range(len(cards)))
+    local = []
+    for side in ('left', 'right'):
+        rows = ''.join(f'<div class="factor"><b>{escape(factor.id)}</b>'
+                       f'{image_for(factor)}<span>T({factor.points})</span></div>'
+                       for factor in lantern[side])
+        local.append(f'<section class="stage"><h2>{"Left" if side == "left" else "Right"} product</h2>'
+                     + rows + '</section>')
+    relation = '<div class="local">' + '<strong>=</strong>'.join(local) + '</div>'
+    relation += (f'<div class="local"><section class="stage"><h2>Original F3</h2>'
+                 f'{image_for(lantern["source"])}</section><strong>R →</strong>'
+                 f'<section class="stage"><h2>Original F9</h2>{image_for(lantern["target"])}</section></div>')
     page = '''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>(6,7) root transport — incomplete research checkpoint</title>
@@ -64,10 +80,20 @@ header{max-width:1000px}.notice{background:#fff0d0;padding:14px;border-left:4px 
 h2{font-size:17px;min-height:50px}.factor{display:grid;grid-template-columns:110px 1fr 45px;
 align-items:center;border-top:1px solid #e1e7eb;min-height:70px;font-size:11px;gap:5px}
 .factor b{overflow-wrap:anywhere}.factor img{height:65px;max-width:100%}a{color:#175b7a}
+.local{display:flex;align-items:center;gap:16px;overflow-x:auto;margin:14px 0}.local img{max-width:100%}
 </style><body><header><h1>(6,7): transporting and pairing two original half twists</h1>
 <p class="notice"><strong>The complete structural derivation remains open.</strong>
 This checkpoint splits two separating factors into roots, pairs original F3 and F9,
 and ends with fourteen mixed factors. It does not reduce the complete product to a named identity.</p>
+<h2>A local PC lantern explains the transport</h2>
+<p>Its inner clusters are {2,5}, {3,4}, and the capped point {6}. The products below
+are exactly equal in the disk: C10 C13 Q2345 = O23456 P25 P34. If point 6 is restored
+as a framed boundary, include its boundary twist on the right.</p>
+<p>Consequently R = P25 P34 Q2345⁻¹ carries original F3 to original F9 by exact disk
+conjugation. O23456 is trivial on the marked sphere but lifts to the hyperelliptic
+involution (homology −I); it cannot simply be discarded in a genus-two equality.</p>
+LOCAL_RELATION
+<h2>Seventeen-state root-consolidation route</h2>
 <p>Read each vertical column from top to bottom, then scroll right. Purple marks the one
 sphere-only recharting step: its exact nontrivial disk discrepancy and +I genus-two
 homology certificate are saved. Every other move preserves the full disk braid.</p>
@@ -76,7 +102,8 @@ convention. They are not a joint cut-complex certificate. Click a curve to enlar
 <p><a href="certificate.json">Exact route and certificates</a></p><nav>STAGE_LINKS</nav>
 </header><div class="board">CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
-        page.replace('STAGE_LINKS', links).replace('CARDS', ''.join(cards)), encoding='utf-8')
+        page.replace('LOCAL_RELATION', relation).replace('STAGE_LINKS', links)
+            .replace('CARDS', ''.join(cards)), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(failures), encoding='utf-8')
     print(f'{len(cards)} checked states; {len(pictures)} distinct supports; {len(failures)} picture limitations')
     print(destination / 'index.html')

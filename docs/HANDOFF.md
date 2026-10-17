@@ -1,5 +1,48 @@
 # Handoff: surface-diagrams
 
+## October 17 overnight: a cluster lantern and an exact disk transport
+
+The new F3/F9 root transport has a named local explanation. With the
+**actual** roots of F10 and F13, let Q=T2345, O=T23456,
+P25=(-2,-3) T45 (3,2), and P34=T34. The PC lantern for inner clusters
+`{2,5}`, `{3,4}`, `{6}` is exactly `C10 C13 Q = O P25 P34` in B6. The
+four twists O, P25, P34, Q commute pairwise. Restoring the capped point 6
+as a framed inner boundary adds its boundary twist on the right.
+
+Consequently `R=P25 P34 Q^-1` carries original F3 to original F9 by
+**exact disk conjugation**, improving the earlier sphere-only description.
+The research note's shorthand C10=T456 was corrected to include its supplied
+conjugator `(-2,-3)`; the earlier code/certificates already used the correct
+factor. The local lantern and both arc pictures now appear above the saved
+seventeen-state route in `.preview/six-seven-root-transport/index.html`.
+
+O is trivial on the marked sphere but has genus-two lift homology -I.
+It must be retained in an unsquared lift equality. The checked squared
+relation is `(C10 C13)^2 Q^2 = O^2 P25^2 P34^2` in the disk, and the O²
+factor can be dropped on the sphere and in closed genus two. Its exact
+disk discrepancy and F5 whisker `(-1,-1)` are recorded by
+`root_pair_lantern()`. The full (6,7) derivation is still open: this local
+squared lantern has not yet been matched to the four differently
+transported roots in the saved endpoint.
+
+Seventeen focused sphere/structure/homology tests pass, including the
+framing correction, the dangerous -I omission, the exact disk transport,
+and the squared relation's separate scopes. The updated snapshot has 32
+distinct support SVGs and no picture limitations; its local lantern and
+arc diagrams were visually inspected.
+
+The next concrete route is prepared and tested: in the seventeen-state
+endpoint, (F10.1,F13.1) is individually H3^-1(C10,C13)H3, while
+(F10.2,F13.2) is individually C13^-1(C10,C13)C13. Move F13.2 upward across
+F12 and F11 to make both pairs adjacent in rows 9–12. Apply each transported
+unsquared cluster lantern using signed factor records, introducing two
+inverse Q twists. This substitution is the remaining implementation step;
+it is not yet part of the saved route. The two O twists can be omitted only
+as a paired sphere/lift step (+I), retaining the combined disk discrepancy.
+The inverse Q complements have pairs `{4,6}` and `{1,6}`, which together
+with the positive `{1,4}` twist give a specific signed lantern candidate.
+Check their actual curve classes before declaring that cancellation.
+
 ## October 17 overnight: a new exact two-root transport in (6,7)
 
 The complete structural derivation remains open. A new positive checkpoint
