@@ -1,6 +1,7 @@
+import json
 import unittest
 from dataclasses import replace
-from surface_diagrams.factorization_explorer import initial_factors, move_factor, global_conjugate_factors,product
+from surface_diagrams.factorization_explorer import initial_factors, move_factor, global_conjugate_factors,product,export_factors,parse_factors
 from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action,supported_class
 from surface_diagrams.braid_actions import inverse_word
@@ -10,7 +11,7 @@ from surface_diagrams.six_seven_structure import (
     nonseparating_intersection_certificate, six_seven_lattice_certificate,
     sphere_genus_two_lantern,
     sphere_root_half_transport,root_transport_consolidation,six_half_stabilizer_audit,
-    root_pair_lantern,
+    root_pair_lantern, root_cluster_lantern_route, SignedResearchFactor,
 )
 
 
@@ -154,6 +155,66 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertEqual([f.id for f in ready[8:12]],
                          ['F10.1', 'F13.1', 'F10.2', 'F13.2'])
         self.assertEqual(exact_action(product(ready)), exact_action(product(endpoint)))
+
+    def test_signed_research_hurwitz_moves_and_positive_workspace_boundary(self):
+        inverse = SignedResearchFactor('inverse', (), 2, 4, sign=-1)
+        half = SignedResearchFactor('half', (), 1, 2, half=True)
+        self.assertEqual(inverse.word, inverse_word(inverse.mapping_class.word))
+        seed = (inverse, half)
+        for source, target in ((0, 1), (1, 0)):
+            moved = move_factor(seed, source, target)
+            self.assertEqual(exact_action(product(moved)), exact_action(product(seed)))
+            self.assertEqual(next(f for f in moved if f.id == 'inverse').sign, -1)
+        with self.assertRaises(ValueError):
+            SignedResearchFactor('bad', (), 1, 2, sign=0)
+        # A saved research state must not silently enter the positive-only lab.
+        with self.assertRaisesRegex(ValueError, 'Saved braid word disagrees'):
+            parse_factors(json.loads(json.dumps(export_factors(seed))))
+
+    def test_both_transported_cluster_lanterns_have_complete_scope_certificates(self):
+        result = root_cluster_lantern_route()
+        stages = result['stages']
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertEqual(len(stages), 8)
+        self.assertEqual(sum(stage['kind'] == 'disk_lantern' for stage in stages), 2)
+        previous = exact_action(product(stages[0]['factors']))
+        for stage in stages:
+            word = product(stage['factors'])
+            self.assertEqual(homology_action(word), IDENTITY)
+            actual = exact_action(word)
+            if stage['kind'] == 'sphere_rewrite':
+                self.assertNotEqual(actual, previous)
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertFalse(stage['sphere_certificate']['disk_identity'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+                if 'removed_factors' in stage:
+                    self.assertEqual(len(stage['removed_factors']), 2)
+                    minus = tuple(tuple(-x for x in row) for row in IDENTITY)
+                    for peripheral in stage['removed_factors']:
+                        self.assertEqual(homology_action(peripheral.word), minus)
+                else:
+                    before, after = stage['local_before'][0], stage['local_after'][0]
+                    self.assertEqual(sphere_curve_action((), supported_class(before.mapping_class)),
+                                     sphere_curve_action((), supported_class(after.mapping_class)))
+                    self.assertEqual(after.sign, -1)
+            else:
+                self.assertEqual(actual, previous)
+                if stage['kind'] == 'disk_lantern':
+                    self.assertEqual(exact_action(product(stage['local_before'])),
+                                     exact_action(product(stage['local_after'])))
+                    self.assertEqual([f.sign for f in stage['local_after']], [1, 1, 1, -1])
+            previous = actual
+        endpoint = stages[-1]['factors']
+        self.assertEqual(len(endpoint), 16)
+        self.assertEqual([f.id for f in endpoint if f.sign < 0],
+                         ['L1.Q.complement', 'L2.Q.complement'])
+        self.assertTrue(all(f.points == 2 for f in endpoint if f.sign < 0))
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        candidate = result['direct_lantern_candidate']
+        self.assertFalse(candidate['fits_standard_pair_lantern'])
+        matrix = candidate['algebraic_intersections']
+        self.assertEqual([abs(matrix[i][j]) for i, j in ((0, 1), (0, 2), (1, 2))],
+                         [1, 3, 3])
 
 
 if __name__=='__main__':

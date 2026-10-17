@@ -1,5 +1,50 @@
 # Handoff: surface-diagrams
 
+## October 17 before dawn: both cluster lanterns applied, with signed factors
+
+The complete (6,7) derivation is **still open**. The prepared next step below
+is now implemented by `root_cluster_lantern_route()`: two disk Hurwitz moves
+make the two ordinary-root pairs adjacent, then each is replaced by its own
+transported cluster lantern. These are full ordered B6 equalities, not
+endpoint matches. The continuation has eight saved states after the earlier
+seventeen-state route.
+
+The two five-point peripheral factors are removed together in one sphere
+step. Their combined full disk discrepancy (376 reduced letters) is saved
+and has trivial sphere outer action and lift +I. Each individual factor has
+lift -I and cannot be omitted separately in a genus-two equality. The two
+inverse four-point Q twists are then redrawn along their complementary pair
+curves in two separately checked sphere/+I steps, retaining nontrivial disk
+discrepancies of 32 and 38 letters. The final state has sixteen signed factors:
+five squared three-point twists, four half twists, five positive pair twists,
+and two inverse pair twists. This is not a new positive Lefschetz factorization.
+
+The tempting pair triangle `{1,4}`, `{4,6}`, `{1,6}` is **not** another PC
+lantern in the present chart. The exact lifted arc classes have pairwise
+algebraic intersections of absolute values 1,3,3, not 1,1,1. This is a
+geometric obstruction to that specific local substitution, despite the
+matching endpoint sets. Ten direct cancellation checks, transporting each
+negative pair across its intervening block to each positive pair, found no
+same-curve cancellation; this does not rule out other rearrangements.
+
+Signed records are research-only; the public positive-factor labs and their
+formats were not changed. The local builder now produces **17 + 8 states,
+44 distinct support SVGs, zero picture limitations**, with inverse rows shaded
+red and sphere steps purple. Full-page and focused final-column screenshots
+were inspected. These remain individual disk-chart supports, not a joint cut
+complex certificate or a published Pages derivation. Nineteen focused
+sphere/structure/homology tests pass, covering signed Hurwitz operations,
+both transported lanterns, each scope transition, and the false triangle.
+
+Next: work from the saved signed state only if a concrete substitution can
+account for the two negative pairs; do not repeat the failed direct triangle
+or ten block-cancellation checks. Alternatively keep the earlier positive
+mixed endpoint and seek a geometric transport for the remaining original
+half-twist pairs using roots of the other separating factors. The displayed
+algebraic intersection 3 explains why a naive second PC lantern is insufficient.
+Keep the morning-report deadline and restore six-hour pacing on the first
+run at/after 8 AM Eastern; this checkpoint was before that deadline.
+
 ## October 17 overnight: a cluster lantern and an exact disk transport
 
 The new F3/F9 root transport has a named local explanation. With the

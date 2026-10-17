@@ -236,6 +236,70 @@ deck involution. The complementary pairs of the two inverse Q supports are
 these suggest a specific signed PC-lantern configuration to check next.
 The endpoint sets alone do not prove that the three routed curves form it.
 
+## Applying both transported cluster lanterns
+
+`root_cluster_lantern_route()` now implements the prepared continuation.
+Its eight states start at the previous fourteen-factor endpoint, make the
+two indicated disk Hurwitz moves, and apply each pair's **own** transported
+PC lantern. Each replacement is checked against the complete ordered B6
+action, locally and in the full product. It introduces two inverse Q twists.
+`SignedResearchFactor` retains a positive support for the existing shared
+Arc/Loop drawing code while its braid word includes the sign. These records
+are a research format, not positive-factor lab workspaces.
+
+Both transported five-point O factors are omitted in **one** sphere step.
+The full disk discrepancy has 376 reduced letters; its complete sphere outer
+action is identity and its lift homology is +I. Each separate O has lift -I.
+Their individual omission would therefore give an incorrect genus-two
+identity, even though it is legal on the marked sphere. The certificate
+retains the two actual transported peripheral factors and the full discrepancy.
+
+For a clearer picture, set
+
+```text
+P16 = (sigma1 sigma2 sigma3 sigma4) T56
+      (sigma4^-1 sigma3^-1 sigma2^-1 sigma1^-1).
+```
+
+Its curve is exactly the sphere complement of Q2345, checked by the F5 curve
+class rather than the endpoints alone. Replacing each transported Q^-1 with
+its transported P16^-1 is legal both on the sphere and in closed genus two.
+Each step has its own nontrivial disk discrepancy (32 and 38 reduced letters)
+and +I lift certificate. The final sixteen-factor state consists of five
+squared three-point twists, four half twists, five positive pair twists, and
+two negative pair twists. It is **not** a new positive Lefschetz factorization
+or a completed derivation of (6,7).
+
+The natural next endpoint triangle fails a substantive check. For the positive
+pair F3+F9 and the two complementary negative pair supports, orient the lifted
+arc classes as
+
+```text
+v14 = (0,-1, 1,0),
+v46 = (0, 1,-2,1),
+v16 = (2, 2,-1,1).
+
+Intersection matrix = [[0,-1,-3], [1,0,3], [3,-3,0]].
+```
+
+A common chart of the three pair curves in a pointed PC lantern would have
+all three absolute algebraic intersections equal to one upstairs. Two are
+three here, so **these actual routed classes do not form that lantern**.
+Endpoint sets `{1,4}`, `{4,6}`, `{1,6}` alone had suggested it incorrectly.
+The same continuation also admits no immediate positive/negative pair
+cancellation from transporting either negative across its intervening block
+to one of the five positive pair twists (ten exact sphere curve checks).
+This is only a finite failure of those specific arrangements, not an
+obstruction to a different derivation.
+
+The graphical builder now draws both routes: seventeen earlier states and
+eight continuation states, with 44 distinct support SVGs and no unavailable
+support pictures. Red rows explicitly mark inverse twists; purple columns
+mark sphere-only moves. The saved JSON includes all signed records, local
+substitutions, and disk/sphere/lift certificates. The pictures are still
+individual supports, not certified joint cut complexes. The complete
+structural derivation remains open.
+
 ## Check a stabilizer geometrically before Torelli factoring
 
 Let N be the product of the six original half twists in their supplied

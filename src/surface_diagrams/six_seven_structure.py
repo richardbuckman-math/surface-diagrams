@@ -4,7 +4,7 @@ The intersection residues obstruct one specific inverse-lantern strategy.
 The rank-two monodromy and the sphere lantern are independently checkable
 pieces for the continuing search; neither identifies a Hurwitz equivalence.
 """
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from itertools import combinations
 from math import gcd
 
@@ -268,6 +268,137 @@ def root_transport_consolidation():
     assert homology_action(product(state)) == IDENTITY
     return dict(stages=tuple(records), final_sphere_certificate=final_sphere,
                 final_lift_homology=IDENTITY, complete_structural_derivation_found=False)
+
+
+@dataclass(frozen=True)
+class SignedResearchFactor(Factor):
+    """A signed twist for research routes, outside the positive lab format.
+
+    ``mapping_class`` describes the positive support for the existing drawing
+    code. ``word`` includes the sign. Inverse factors are deliberately not
+    accepted by the public positive-factor workspace parser or combine tool.
+    """
+    sign: int = 1
+
+    def __post_init__(self):
+        if type(self.sign) is not int or self.sign not in (-1, 1):
+            raise ValueError('A research factor sign must be +1 or -1')
+        self.mapping_class  # Validate the underlying positive support record.
+
+    @property
+    def word(self):
+        word = super().word
+        return word if self.sign == 1 else inverse_word(word)
+
+
+def root_cluster_lantern_route():
+    """Apply both transported cluster lanterns to the saved mixed endpoint.
+
+    Each substitution is exact in B6 and introduces one inverse Q twist.
+    The two five-point peripheral twists are removed together, with a full
+    disk discrepancy and +I lift check. Each separate removal would have
+    lift -I. This is a partial signed derivation, not a positive lab session.
+    """
+    previous = root_transport_consolidation()
+    state = tuple(SignedResearchFactor(f.id, f.conjugator, f.first, f.points,
+                                       f.power, f.half)
+                  for f in previous['stages'][-1]['factors'])
+    records = [dict(title='Mixed endpoint of the root-transport route',
+                    kind='start', factors=state)]
+    lantern = root_pair_lantern()
+
+    def position(name):
+        return next(i for i, factor in enumerate(state) if factor.id == name)
+
+    while position('F13.2') > position('F10.2') + 1:
+        index = position('F13.2')
+        crossed = state[index - 1].id
+        state = move_factor(state, index, index - 1)
+        records.append(dict(title=f'F13.2 up past {crossed}', kind='disk_hurwitz',
+                            factors=state, source=index, target=index - 1))
+
+    for number, (ids, conjugator) in enumerate(zip(
+            lantern['endpoint_pair_ids'], lantern['endpoint_pair_conjugators']), 1):
+        index = position(ids[0])
+        before = state[index:index + 2]
+        assert tuple(f.id for f in before) == ids
+        replacements = tuple(SignedResearchFactor(
+            f'L{number}.{factor.id}', reduce_word(conjugator + factor.conjugator),
+            factor.first, factor.points, factor.power, factor.half, sign)
+            for factor, sign in zip(lantern['right'] + (lantern['left'][2],),
+                                    (1, 1, 1, -1)))
+        assert exact_action(product(before)) == exact_action(product(replacements))
+        after = state[:index] + replacements + state[index + 2:]
+        assert exact_action(product(state)) == exact_action(product(after))
+        state = after
+        records.append(dict(title=f'Apply transported cluster lantern {number}',
+                            kind='disk_lantern', factors=state,
+                            local_before=before, local_after=replacements,
+                            common_conjugator=conjugator,
+                            framed_point_correction=(6,)))
+
+    peripheral_ids = ('L1.O23456', 'L2.O23456')
+    peripheral_factors = tuple(f for f in state if f.id in peripheral_ids)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert all(sphere_inner_certificate(f.word)['certified']
+               and homology_action(f.word) == minus_identity
+               for f in peripheral_factors)
+    after = tuple(f for f in state if f.id not in peripheral_ids)
+    discrepancy = reduce_word(product(state) + inverse_word(product(after)))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    state = after
+    records.append(dict(title='Remove both peripheral twists together on the sphere',
+                        kind='sphere_rewrite', factors=state,
+                        removed_factors=peripheral_factors,
+                        disk_discrepancy=discrepancy,
+                        sphere_certificate=sphere, lift_homology=IDENTITY))
+
+    # A four-point boundary is the same sphere curve as its complementary
+    # two-point boundary. Retain the disk discrepancy and check the lift sign
+    # separately, rather than identifying curves from their endpoint sets.
+    complementary_pair = Factor('P16', (1, 2, 3, 4), 5, 2)
+    q = lantern['left'][2]
+    assert sphere_curve_action((), supported_class(q.mapping_class)) == sphere_curve_action(
+        (), supported_class(complementary_pair.mapping_class))
+    for number, conjugator in enumerate(lantern['endpoint_pair_conjugators'], 1):
+        index = position(f'L{number}.Q2345')
+        before = state[index]
+        after = SignedResearchFactor(
+            f'L{number}.Q.complement', reduce_word(conjugator + complementary_pair.conjugator),
+            complementary_pair.first, 2, sign=-1)
+        discrepancy = reduce_word(before.word + inverse_word(after.word))
+        sphere = sphere_inner_certificate(discrepancy)
+        assert sphere['certified'] and not sphere['disk_identity']
+        assert homology_action(discrepancy) == IDENTITY
+        state = state[:index] + (after,) + state[index + 1:]
+        records.append(dict(title=f'Draw inverse Q{number} along its complementary pair',
+                            kind='sphere_rewrite', factors=state,
+                            local_before=(before,), local_after=(after,),
+                            disk_discrepancy=discrepancy,
+                            sphere_certificate=sphere, lift_homology=IDENTITY))
+
+    # The obvious {1,4}, {4,6}, {1,6} endpoint triangle is NOT a PC lantern.
+    # Two algebraic intersections are three, already obstructing a common
+    # chart of the three standard pair curves (all intersections one upstairs).
+    triangle = tuple(next(f for f in state if f.id == name) for name in (
+        'F3+F9.sphere', 'L1.Q.complement', 'L2.Q.complement'))
+    vectors = tuple(half_twist_class(f.conjugator, f.first) for f in triangle)
+    pairings = tuple(tuple(intersection(a, b) for b in vectors) for a in vectors)
+    candidate = dict(ids=tuple(f.id for f in triangle), vectors=vectors,
+                     algebraic_intersections=pairings,
+                     fits_standard_pair_lantern=all(abs(pairings[i][j]) == 1
+                                                    for i, j in combinations(range(3), 2)))
+    assert not candidate['fits_standard_pair_lantern']
+    final_sphere = sphere_inner_certificate(product(state))
+    assert final_sphere['certified']
+    assert homology_action(product(state)) == IDENTITY
+    return dict(stages=tuple(records), follows='root_transport_consolidation',
+                final_sphere_certificate=final_sphere, final_lift_homology=IDENTITY,
+                direct_lantern_candidate=candidate,
+                complete_structural_derivation_found=False,
+                scope='Signed research route on the sphere and in closed genus two; not a positive lab workspace')
 
 
 def six_half_stabilizer_audit():
