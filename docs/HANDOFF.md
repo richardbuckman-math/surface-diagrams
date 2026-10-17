@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## October 17: type 21 from the twelve-factor type 28 relation
+
+Found another exact positive five-inner double-outer relation, **type 21**.
+Drag the fifth factor of the twelve-factor type-28 source downward through
+four rows (Hurwitz positions 5, 6, 7, 8). Rows 9–11 then equal the routed
+`T_{235}` with conjugator `(-4,)`. Inverse framed lantern gives ten factors
+and target powers `(4,2,3,3,3)` alongside `T_outer^2`. All six saved states,
+the full B5 products and framings, and the local inverse lantern are checked.
+The catalog now has **23 certified types and 14 open**.
+
+The complete six-column graphical replay is published at
+`mixed-lantern-derivation.html?type=21`, including stable F5 movement, the
+four conjugated crossed factors, and the final boundary-power decrease.
+Thirty focused relation/catalog/geometry tests, both JS syntax checks, and
+the site link build pass. The last three columns were inspected in Chrome.
+
+Next test short Hurwitz routes from type 21 toward **open type 20**.
+Its rows 3–5 have pair supports `{1,3}`, `{1,4}`, `{3,4}`, but the bounded
+adjacent inverse-lantern scanner finds no exact match through conjugator
+length three. This is the only pair-triangle candidate in the ten-factor
+state; its incidence alone does not certify a lantern. The scratch search
+was updated to continue past `VerificationLimitError` branches as explicitly
+unverified rather than treating them as inequalities. It found the present
+route at depth four from type 28; no route or action limits were raised.
+
 ## October 16: type 28 from a second inverse lantern
 
 The new type-32 relation now feeds another checked positive relation,

@@ -36,8 +36,8 @@
   async function load(){
     try{
       const requested=new URLSearchParams(location.search).get('type')||'26';
-      const files={'26':'mixed-lantern-states.json','28':'type28-lantern-states.json','31':'type31-lantern-states.json','32':'type32-lantern-states.json'};
-      if(!files[requested])throw Error('Choose type 26, type 28, type 31, or type 32');
+      const files={'21':'type21-lantern-states.json','26':'mixed-lantern-states.json','28':'type28-lantern-states.json','31':'type31-lantern-states.json','32':'type32-lantern-states.json'};
+      if(!files[requested])throw Error('Choose one of the linked relation types');
       const response=await fetch(`data/${files[requested]}`);
       if(!response.ok)throw Error(`HTTP ${response.status}`);
       const data=await response.json();

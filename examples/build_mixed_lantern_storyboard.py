@@ -12,7 +12,8 @@ from surface_diagrams.double_boundary_catalog import canonical_blocks
 from surface_diagrams.factorization_explorer import Factor
 from surface_diagrams.framed_boundary_relations import (
     enclosed_boundaries, five_boundary_mixed_lantern_states,
-    five_boundary_type28_lantern_states, five_boundary_type31_lantern_states,
+    five_boundary_type21_lantern_states, five_boundary_type28_lantern_states,
+    five_boundary_type31_lantern_states,
     five_boundary_type32_lantern_states,
     framed_outer_certificate,
 )
@@ -113,6 +114,8 @@ def build():
                 34, 32, 'type32', patterns)
     build_story(five_boundary_type28_lantern_states(), ((5, -1), (6, -1), (8, -1), (7, 1)), 8,
                 32, 28, 'type28', patterns)
+    build_story(five_boundary_type21_lantern_states(), ((4, 1), (5, 1), (6, 1), (7, 1)), 8,
+                28, 21, 'type21', patterns)
 
 
 if __name__ == '__main__':

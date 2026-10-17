@@ -304,3 +304,19 @@ def five_boundary_type28_lantern():
             'hurwitz_positions': (6, 7, 9, 8),
             'hurwitz_directions': (-1, -1, -1, 1),
             'lantern_support': (2, 4, 5), 'core_factor_count': 8, 'source_pattern': 32}
+
+
+def five_boundary_type21_lantern_states():
+    """Drag source type 28's F5 across four rows, exposing the T_235 lantern."""
+    return _five_hole_lantern_route(five_boundary_type28_lantern()['factors'],
+                                    ((4, 1), (5, 1), (6, 1), (7, 1)), 8,
+                                    ConjugatedTwist((-4,), 2, 3))
+
+
+def five_boundary_type21_lantern():
+    """A checked ten-factor double-outer relation of incidence type 21."""
+    factors = five_boundary_type21_lantern_states()[-1]
+    return {'name': 'five-hole-type21-lantern-10', 'factors': factors,
+            'inner_powers': framed_outer_certificate(5, factors, 2),
+            'hurwitz_positions': (5, 6, 7, 8),
+            'lantern_support': (2, 3, 5), 'core_factor_count': 8, 'source_pattern': 28}
