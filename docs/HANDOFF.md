@@ -1,5 +1,16 @@
 # Handoff: surface-diagrams
 
+## October 17 morning report and recurring schedule
+
+The first post-8-AM Eastern report states candidly that the full structural
+(6,7) derivation remains unfinished. The strongest verified route is the
+positive (24,3) intermediate below, with its local graphical replay and all
+scope discrepancies saved. Commit `ea72ea7` passed both GitHub Tests and
+Documentation checks. The existing automation is active again at a six-hour
+interval, retaining the structural (6,7) priority and the 15% weekly reserve.
+The overnight deadline/report instructions are retired; do not repeat that
+report or return to the hourly schedule. Continue from the saved endpoint.
+
 ## October 17, 7 AM run: residual lantern removes both odd roots
 
 The complete structural (6,7) derivation is **still open**. The previous
@@ -42,8 +53,7 @@ the three remaining squared triple twists give three separating twists.
 Count agreement with a known example would not prove equivalence. The only
 direct duplicate sphere supports here are the two Ha halves, two Hb halves,
 and `P15.after-cancellation` with `C13.HL1.3`; transport must still be checked.
-Give the candid first report at/after 8 AM Eastern, then restore six-hour
-pacing with the structural (6,7) priority retained.
+The morning report and six-hour schedule restoration are recorded above.
 
 ## October 17, 6 AM run: a second original pair, a named lantern, and no negative factors
 
