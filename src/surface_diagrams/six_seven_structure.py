@@ -1070,6 +1070,104 @@ def three_root_cross_petal_lantern():
         scope='Positive mixed sphere/closed-genus-two branch; one ordinary root prevents an LF count')
 
 
+def three_root_cross_cluster_lantern():
+    """Use the transported C4 cluster lantern and cancel its inverse pair.
+
+    In h=g(4,5)^2, the newly gathered root is T123 and F3(C4) is
+    T124. Their exact PC cluster lantern is ABQ34=O1234 P12. The inverse
+    Q matches the nearby new.P34 in the disk, as does the surviving P with
+    the second C5 P35 petal. One odd root remains; no LF type is claimed.
+    """
+    state = three_root_cross_petal_lantern()['stages'][-1]['factors']
+    records = [dict(title='Cross-stage PC lantern endpoint', kind='start', factors=state)]
+    common = state[0].conjugator + (4, 5, 4, 5)
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        move = research_hurwitz_move(state, source, target)
+        state = move['factors']
+        records.append(dict(move, title=f'{moving} {"up" if source > target else "down"} past {crossed}'))
+
+    def disk_replace(index, count, after, title, kind):
+        nonlocal state
+        before, after = state[index:index + count], tuple(after)
+        assert exact_action(product(before)) == exact_action(product(after))
+        state = state[:index] + after + state[index + count:]
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=before, local_after=after))
+
+    def sphere_replace(index, after, title, witness):
+        nonlocal state
+        before = state[index]
+        discrepancy = reduce_word(before.word + inverse_word(after.word))
+        sphere = sphere_chain_certificate(discrepancy)
+        assert sphere['certified'] and homology_action(discrepancy) == IDENTITY
+        state = state[:index] + (after,) + state[index + 1:]
+        records.append(dict(title=title, kind='sphere_rewrite', factors=state,
+            local_before=(before,), local_after=(after,), disk_discrepancy=discrepancy,
+            sphere_certificate=sphere, lift_homology=IDENTITY,
+            disk_nonidentity_witness=witness(discrepancy)))
+
+    move_one(position('F3'), position('F4'))
+    b = SignedResearchFactor('cross.C4.root', common + (3,), 1, 3)
+
+    def disk_loop_witness(discrepancy):
+        reference = supported_class(ConjugatedTwist((), 2, 2))
+        image = supported_class(ConjugatedTwist(discrepancy, 2, 2))
+        assert image != reference
+        return dict(method='exact disk boundary class of arc 2--3',
+                    reference=reference, image=image)
+
+    sphere_replace(position('F4'), replace(b, id='cross.C4.square', power=2),
+        'Put the transported C4 square in the common {35},4,6 chart', disk_loop_witness)
+    disk_replace(1, 1, (b, replace(b, id='cross.C4.unused')),
+                 'Split the common-chart C4 square', 'disk_split')
+    outer = SignedResearchFactor('cross.O3456', common, 1, 4)
+    pair = SignedResearchFactor('cross.P35', common, 1, 2)
+    inverse = SignedResearchFactor('cross.inverse.Q46', common, 3, 2, sign=-1)
+    disk_replace(0, 2, (outer, pair, inverse),
+                 'Apply the transported cluster lantern AB=O P35 Q46^-1', 'disk_lantern')
+    while position('new.P34') > position(inverse.id) + 1:
+        index = position('new.P34')
+        move_one(index, index - 1)
+    index = position(inverse.id)
+    assert supported_class(state[index].mapping_class) == supported_class(state[index + 1].mapping_class)
+    disk_replace(index, 2, (), 'Cancel the equal inverse and positive Q46 pairs in the disk', 'disk_cancel')
+
+    # T1234 and its complementary T56 are the same sphere twist, with the
+    # same closed genus-two lift. Their disk exponent sums differ by ten.
+    complementary = SignedResearchFactor('cross.P12', common, 5, 2)
+
+    def exponent_witness(discrepancy):
+        exponent = sum(1 if x > 0 else -1 for x in discrepancy)
+        assert exponent == 10
+        return dict(method='disk braid exponent sum', exponent_sum=exponent)
+
+    sphere_replace(position(outer.id), complementary,
+                   'Draw O3456 along its complementary P12 sphere curve', exponent_witness)
+    while position('C5.rose.2.1') > position(pair.id) + 1:
+        index = position('C5.rose.2.1')
+        move_one(index, index - 1)
+    index = position(pair.id)
+    assert supported_class(state[index].mapping_class) == supported_class(state[index + 1].mapping_class)
+    disk_replace(index, 2, (replace(pair, id='cross.P35.square', power=2),),
+                 'Combine the two equal P35 twists in the disk', 'disk_combine')
+    final = sphere_chain_certificate(product(state))
+    assert final['certified'] and homology_action(product(state)) == IDENTITY
+    assert len(state) == 14 and all(f.sign == 1 for f in state)
+    assert tuple(f.id for f in state if f.points == 3 and f.power % 2) == ('cross.C4.unused',)
+    return dict(stages=tuple(records), follows='three_root_cross_petal_lantern',
+        common_conjugator=common, inner_clusters=((3, 5), (4,), (6,)),
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        final_all_factors_positive=True, remaining_odd_root_ids=('cross.C4.unused',),
+        complete_structural_derivation_found=False,
+        scope='Positive mixed sphere/closed-genus-two branch; one ordinary root and two squared triples remain')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

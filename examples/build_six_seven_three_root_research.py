@@ -17,6 +17,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_half_lantern_compression,
     three_root_petal_exchange,
     three_root_cross_petal_lantern,
+    three_root_cross_cluster_lantern,
 )
 
 
@@ -31,10 +32,12 @@ def build():
     compression = three_root_half_lantern_compression()
     exchange = three_root_petal_exchange()
     cross_petal = three_root_cross_petal_lantern()
+    cross_cluster = three_root_cross_cluster_lantern()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
                   cross_petal_lantern=cross_petal,
+                  cross_cluster_lantern=cross_cluster,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -146,6 +149,15 @@ def build():
                  'The positive petal-exchange endpoint above')
         cross_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                            f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
+    cluster_cards = []
+    for index, stage in enumerate(cross_cluster['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+                 'Exact disk move' if index else 'The cross-stage PC lantern endpoint')
+        cluster_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                             f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -276,7 +288,20 @@ three-point twist. It is a mixed mapping-class factorization, not a new
 positive Lefschetz factorization or a complete (6,7) derivation. The
 ordinary root still needs to be accounted for. Pictures show individual
 supports, not cumulative joint cut-complex certificates.</p>
-<div class="board">CROSS_CARDS</div></body></html>'''
+<div class="board">CROSS_CARDS</div>
+<h2>A transported {35},4,6 cluster lantern cancels another inverse</h2>
+<p>Move F3 down across C4 first. In the checked common chart, the new root
+is A=T123 and the transported C4 root is B=T124. Split C4's square and
+apply the exact disk lantern AB=O P35 Q46⁻¹. Bring the nearby positive
+Q46 upward unchanged and cancel it against the inverse in the disk.</p>
+<p>The four-point O3456 curve can then be drawn along its complementary
+P12 on the sphere, with lift +I and disk exponent discrepancy ten.
+Bring the later P35 petal up and combine it with the first P35 in the disk.</p>
+<p class="notice">Fourteen positive records remain, with two squared
+triple twists and one ordinary triple twist. This is still a mixed
+factorization, not a positive LF type or the full (6,7) derivation.
+Individual support drawings do not certify cumulative cut complexes.</p>
+<div class="board">CLUSTER_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -287,11 +312,13 @@ supports, not cumulative joint cut-complex certificates.</p>
             .replace('COMPRESSION_ATTEMPTS', compression_attempts)
             .replace('EXCHANGE_CARDS', ''.join(exchange_cards))
             .replace('CROSS_CARDS', ''.join(cross_cards))
+            .replace('CLUSTER_CARDS', ''.join(cluster_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
-          f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal states; '
+          f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '
+          f'+ {len(cluster_cards)} cross-cluster states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

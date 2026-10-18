@@ -18,10 +18,49 @@ from surface_diagrams.six_seven_structure import (
     three_root_half_lantern_compression,
     three_root_petal_exchange,
     research_hurwitz_move, three_root_cross_petal_lantern,
+    three_root_cross_cluster_lantern,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_cross_cluster_lantern_cancels_the_actual_pair_and_combines_its_petal(self):
+        result = three_root_cross_cluster_lantern()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(result['inner_clusters'], ((3, 5), (4,), (6,)))
+        self.assertEqual(result['remaining_odd_root_ids'], ('cross.C4.unused',))
+        self.assertNotIn('final_lefschetz_counts', result)
+        sphere_steps = []
+        previous = None
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+            elif stage['kind'] == 'sphere_rewrite':
+                sphere_steps.append(stage)
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+            previous = state
+        self.assertEqual(len(sphere_steps), 2)
+        loop_witness = sphere_steps[0]['disk_nonidentity_witness']
+        self.assertNotEqual(loop_witness['reference'], loop_witness['image'])
+        self.assertEqual(loop_witness['image'], supported_class(
+            ConjugatedTwist(sphere_steps[0]['disk_discrepancy'], 2, 2)))
+        self.assertEqual(sphere_steps[1]['disk_nonidentity_witness']['exponent_sum'], 10)
+        cancellation = next(s for s in result['stages'] if s['kind'] == 'disk_cancel')
+        self.assertEqual(tuple(f.sign for f in cancellation['local_before']), (-1, 1))
+        self.assertEqual(cancellation['local_before'][1].id, 'new.P34')
+        self.assertEqual(len(previous), 14)
+        self.assertEqual(sum(f.points == 3 and f.power == 2 for f in previous), 2)
+        self.assertEqual(previous[1].id, 'cross.P35.square')
+        self.assertEqual(previous[1].power, 2)
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+
     def test_research_hurwitz_uses_an_exact_freely_reduced_word_certificate(self):
         seed = (SignedResearchFactor('positive', (2,), 1, 2, half=True),
                 SignedResearchFactor('negative', (-1,), 2, 2, sign=-1))

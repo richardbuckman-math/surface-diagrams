@@ -673,6 +673,52 @@ All 30 focused sphere/structure/lift tests pass. The graphical replay has
 three new columns were visually inspected. Dense disk support representatives
 remain distinct from the simpler sphere classes used in the relation checks.
 
+## The actual C4 cluster chart cancels another inverse pair
+
+`three_root_cross_cluster_lantern()` starts at the cross-petal endpoint.
+Let g be that endpoint's ordinary-root conjugator. Move F3 down across C4,
+then set `h=g+(4,5,4,5)`. The two roots are represented by
+
+```text
+A=h T123 h^-1,
+B=h (sigma3 T123 sigma3^-1) h^-1,
+Q46=h T34 h^-1, P35=h T12 h^-1, O3456=h T1234 h^-1.
+A B Q46 = O3456 P35.
+```
+
+The standard and transported lantern are checked in B6. The actual C4
+square after the F3 move has the same sphere action as B², with +I lift.
+That square rechart is applied before splitting; its nontrivial disk
+discrepancy moves the 2--3 disk-arc boundary to a class of length 698.
+There is no claim of disk equality for that rechart.
+
+Split B² and replace A B by O3456 P35 Q46^-1. Bring new.P34 up unchanged
+past the unused B, F3, and F6. It is exactly the positive Q46 in the disk,
+so the cancellation uses an exact disk action check. No sphere rechart is
+needed for this cancellation. The same is true for the later P35 petal:
+bring C5.rose.2.1 up unchanged and combine the two equal P35 units in B6.
+O3456 is drawn along its complementary P12, h T56 h^-1, on the sphere.
+That unit step has lift +I and disk exponent discrepancy ten.
+
+The 21-state continuation ends in fourteen positive records with one odd
+three-point root and two squared triples. It is still mixed and is not
+assigned a positive LF type. The full sphere identity and +I lift are
+checked again. The next possible cluster is the transported leftover B
+against the complementary side of the remaining C12 square; the intervening
+ordered factors must be included, not inferred from their point partitions.
+
+The small chart diagnostic that led here checked the three natural local
+positions of C4: raw, F3(C4), and F3^-1(C4). For each it tried both standard
+T124 arcs and A powers -3 through 3 after the unique endpoint-compatible
+inside/outside cyclic placements. Only F3(C4) matched. The simplest match
+uses h as above; the other uses the opposite T124 arc and A^-1. This is
+a local chart check, not an exhaustive Hurwitz or common-chart search.
+
+All 31 focused sphere/structure/lift tests pass. The graphical replay now
+has 116 route states and 99 support SVGs with no unavailable drawings. Its
+last three new columns were rendered and visually inspected; the pictures
+remain individual disk representatives, not cumulative cut complexes.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing
@@ -719,6 +765,7 @@ Run from the repository with its `src` on PYTHONPATH:
 ```text
 python examples/analyze_six_seven_structure.py
 python examples/build_six_seven_root_research.py
+python examples/build_six_seven_three_root_research.py
 python -m unittest tests.test_sphere_actions tests.test_six_seven_structure tests.test_hyperelliptic_homology -q
 ```
 

@@ -1,5 +1,39 @@
 # Handoff: surface-diagrams
 
+## October 18 midday: transported C4 lantern and exact inverse cancellation
+
+`three_root_cross_cluster_lantern()` continues the latest cross-petal branch
+through 21 checked states. Move F3 down across C4. If g is the saved
+cross-petal root chart, use `h=g+(4,5,4,5)`: A is h T123 h^-1 and the
+transported C4 root is h T124 h^-1, with T124 represented by (3,) T123 (-3,).
+The cluster lantern AB Q46=O3456 P35 is exact in this marked disk chart.
+
+Rechart the whole C4 square, retaining its sphere discrepancy and +I lift,
+then split it. Replace A and one C4 unit by O3456 P35 Q46^-1. Bring the
+nearby new.P34 (the positive Q46) up unchanged; its cancellation is exact
+in B6. Draw O3456 along its complementary P12 sphere curve, with lift +I
+and disk exponent discrepancy ten. Bring C5.rose.2.1 up and combine the
+two P35 twists; that combination is exact in B6 too.
+
+Fourteen positive records remain: four half twists, two squared triple
+twists, one ordinary triple root, and seven pair records (one squared).
+This is a mixed factorization, not a positive LF type or a completed (6,7)
+derivation. The odd root is now `cross.C4.unused`; its actual conjugator
+includes the subsequent Hurwitz transports. The earlier positive (24,3)
+checkpoint and public lab behavior are preserved.
+
+Next follow this transported odd root toward the remaining C12 square.
+Its {3,5,6} triple and the complementary {3,4,5} C12 side suggest another
+shared-{3,5} cluster, but first account for the intervening F3, F6, F9,
+F11 and pair twists. Test the actual common chart and ordered relation;
+do not repeat the prior branch's root sweeps or infer equality from labels.
+
+Validation: all 31 focused sphere/structure/lift tests pass. The graphical
+replay has 116 route states and 99 shared support SVGs, with zero unavailable
+pictures. The final three new columns were rendered and visually inspected.
+The replay remains `.preview/six-seven-three-root-transport/index.html`;
+individual support pictures are not cumulative joint cut-complex certificates.
+
 ## October 18 dawn: a cross-stage inverse PC lantern
 
 `three_root_cross_petal_lantern()` now continues the positive petal-exchange
