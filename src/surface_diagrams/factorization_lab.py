@@ -15,7 +15,7 @@ from .editor import EditorHandler
 from .factorization_explorer import initial_factors,move_factor,split_factor,combine_factors,export_factors,simplify_factor,checked,product,parse_global_conjugator,checked_global_frame,global_conjugate_factors,validate_size
 from .fibration_lab_seeds import XIAO_FOUR_THREE
 from .braid_actions import free_homotopy_key,reduce_word
-from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg
+from .factorization_geometry import support_svg,braid_svg,row_height,factorization_svg,number_support_points
 from .factorization_audit import support_audit
 from .factorization_explorer import parse_factors
 from .mapping_classes import VerificationLimitError,exact_action
@@ -134,6 +134,7 @@ class LabServer(ThreadingHTTPServer):
         for f in factors:
             try: svg=support_svg(f); warning=''
             except ValueError as error: svg=''; warning=str(error)
+            if svg and self.seed_slug=='10-10': svg=number_support_points(svg)
             options=[]
             if f.power>1: options.append(['powers',f'Split into {f.power} equal factors'])
             if not f.half and f.points==2: options.append(['halves','Split into half twists'])
@@ -412,7 +413,8 @@ class LabHandler(EditorHandler):
                     self._error(409,'State changed; reload before exporting'); return
                 svg=factorization_svg(self.server.history[self.server.position],
                                       mirror_vertical=query.get('mirror',['0'])[0]=='1',
-                                      compact=query.get('compact',['0'])[0]=='1')
+                                     compact=query.get('compact',['0'])[0]=='1',
+                                     number_points=self.server.seed_slug=='10-10')
             self._reply(200,svg,'image/svg+xml; charset=utf-8'); return
         if self.path=='/api/state':
             with self.server.lock: data=self.server.state()

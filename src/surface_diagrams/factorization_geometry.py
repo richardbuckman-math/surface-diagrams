@@ -127,6 +127,22 @@ def support_svg(factor, *, mirror_vertical=False):
             if mirror_vertical else support_drawing(factor.mapping_class))
 
 
+def number_support_points(svg):
+    """Add six readable point numbers without changing any support path."""
+    from xml.etree import ElementTree
+    root=ElementTree.fromstring(svg)
+    points=[node for node in root.iter() if node.get('class')=='marked-point']
+    if len(points)!=6: raise ValueError('Expected six marked points to number')
+    labels=[]
+    for index,point in enumerate(points,1):
+        x,y=float(point.get('cx')),float(point.get('cy'))
+        labels.append(f'<text class="marked-point-label" x="{x:.3f}" y="{y+15:.3f}" '
+                      'text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" '
+                      'fill="#173c67" stroke="#ffffff" stroke-width="3" paint-order="stroke">'
+                      f'{index}</text>')
+    return svg.replace('</svg>',''.join(labels)+'</svg>')
+
+
 def row_height(factor, *, compact=False):
     levels = compact_layer_count(factor.word) if compact else len(factor.word)
     return max(210, levels*12+36)
@@ -167,7 +183,7 @@ def braid_svg(factors, *, compact=False):
     return ''.join(svg)
 
 
-def factorization_svg(factors, *, mirror_vertical=False, compact=False):
+def factorization_svg(factors, *, mirror_vertical=False, compact=False, number_points=False):
     """Portable paired export, retaining support verification labels and failures."""
     from .factorization_audit import support_audit
     height=sum(row_height(f,compact=compact) for f in factors)
@@ -177,8 +193,9 @@ def factorization_svg(factors, *, mirror_vertical=False, compact=False):
         body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
                     f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
         try:
-            svg=re.sub(r'width="[^"]*"','width="340"',
-                       support_svg(f,mirror_vertical=True) if mirror_vertical else support_svg(f),count=1)
+            raw_svg=support_svg(f,mirror_vertical=True) if mirror_vertical else support_svg(f)
+            if number_points: raw_svg=number_support_points(raw_svg)
+            svg=re.sub(r'width="[^"]*"','width="340"',raw_svg,count=1)
             svg=re.sub(r'height="[^"]*"','height="166"',svg,count=1)
             audit=support_audit(f)
             check='Boundary word agrees' if audit['matches'] is True else 'Preview check failed' if audit['matches'] is False else 'Preview check unavailable'

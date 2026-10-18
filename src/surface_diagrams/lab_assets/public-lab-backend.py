@@ -90,7 +90,8 @@ def dispatch(path, method, body):
                 raise ValueError('Invalid display option')
             return json.dumps(dict(status=200, body=factorization_svg(lab.history[lab.position],
                                    mirror_vertical=query.get('mirror',['0'])[0]=='1',
-                                   compact=query.get('compact',['0'])[0]=='1'),
+                                   compact=query.get('compact',['0'])[0]=='1',
+                                   number_points=lab.seed_slug=='10-10'),
                                    mime='image/svg+xml'))
         else:
             return json.dumps(dict(status=404, body=json.dumps({'error': 'Not found'}),

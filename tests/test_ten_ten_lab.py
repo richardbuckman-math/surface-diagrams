@@ -57,6 +57,7 @@ class TenTenLabTests(unittest.TestCase):
         try:
             state = lab.state()
             self.assertEqual(state['export']['seed'], '10-10')
+            self.assertEqual(state['factors'][0]['svg'].count('class="marked-point-label"'), 6)
             self.assertEqual(len(state['source_transcription']), 20)
             self.assertIn('half twist squared', state['source_transcription'][6]['description'].lower())
             lab.mutate(dict(op='move', index=0, target=1, revision=0))
