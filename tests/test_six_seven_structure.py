@@ -16,6 +16,7 @@ from surface_diagrams.six_seven_structure import (
     f2_f7_cluster_lantern, three_root_prefix_lantern,
     three_root_lantern_reduction, three_root_residual_lantern,
     three_root_half_lantern_compression,
+    three_root_petal_exchange,
 )
 
 
@@ -401,6 +402,64 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertTrue(all(not a['matches'] for a in attempts))
         self.assertTrue(all(a['transported_inverse_support'] != a['positive_support']
                             for a in attempts))
+
+    def test_complementary_rose_exchanges_the_separator_and_cancels_the_inverse(self):
+        result = three_root_petal_exchange()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(result['final_lefschetz_counts'], (24, 3))
+        previous = None
+        sphere_steps = []
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                a, b = sorted((stage['source'], stage['target']))
+                self.assertEqual(b - a, 1)
+                self.assertEqual(exact_action(product(previous[a:b + 1])),
+                                 exact_action(product(state[a:b + 1])))
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+            elif stage['kind'] == 'sphere_rewrite':
+                sphere_steps.append(stage)
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertFalse(stage['sphere_certificate']['disk_identity'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+            previous = state
+        self.assertEqual(len(sphere_steps), 1)
+        rechart = sphere_steps[0]
+        self.assertEqual(rechart['local_before'][0].power, 2)
+        self.assertEqual(enclosed_boundaries(rechart['local_before'][0].mapping_class, 6), (2, 4, 6))
+        self.assertEqual(enclosed_boundaries(rechart['local_after'][0].mapping_class, 6), (1, 3, 5))
+        self.assertEqual(result['complement_unit_lift_homology'],
+                         tuple(tuple(-x for x in row) for row in IDENTITY))
+        self.assertTrue(result['complement_unit_sphere_certificate']['certified'])
+        self.assertEqual(len(previous), 17)
+        self.assertEqual(sum(f.half for f in previous), 4)
+        self.assertEqual(sum(f.points == 3 for f in previous), 3)
+        self.assertNotIn('F5', {f.id for f in previous})
+        self.assertIn('C13.recombined', {f.id for f in previous})
+        self.assertTrue(all(f.sign == 1 for f in previous))
+        self.assertEqual(result['stages'][-1]['local_after'], ())
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        lantern = result['prepared_cluster_lantern']
+        self.assertFalse(lantern['applied_to_endpoint'])
+        self.assertTrue(lantern['sphere_certificate']['certified'])
+        self.assertFalse(lantern['sphere_certificate']['disk_identity'])
+        self.assertEqual(homology_action(lantern['disk_discrepancy']), IDENTITY)
+        self.assertTrue(lantern['second_root_sphere_certificate']['certified'])
+        self.assertEqual(homology_action(lantern['second_root_disk_discrepancy']), IDENTITY)
+        two = result['prepared_two_lantern_consequence']
+        self.assertFalse(two['applied_to_endpoint'])
+        self.assertEqual(two['left'], previous[-6:])
+        self.assertEqual(two['disk_exponent_sum'], 20)
+        self.assertTrue(two['sphere_certificate']['certified'])
+        self.assertEqual(homology_action(two['disk_discrepancy']), IDENTITY)
+        self.assertEqual([f.sign for f in two['right']], [1, 1, -1, -1])
+        self.assertNotEqual(sphere_curve_action((), supported_class(two['right'][2].mapping_class)),
+                            sphere_curve_action((), supported_class(two['right'][3].mapping_class)))
 
     def test_both_transported_cluster_lanterns_have_complete_scope_certificates(self):
         result = root_cluster_lantern_route()

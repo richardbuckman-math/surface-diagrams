@@ -836,6 +836,142 @@ def three_root_half_lantern_compression():
                 scope='Disk-exact signed compression of the saved sphere intermediate; not a positive (12,4) relation')
 
 
+def three_root_petal_exchange():
+    """Exchange the C5 separator for C13 using a complementary PC rose.
+
+    Slide C5 unchanged to just before C13. It preserves the exact P15 sphere
+    class there. Its complementary triple is {1,3,5}; a cyclically ordered
+    PC rose ends in the needed P15 petal. Use the whole C5 square when
+    changing hemispheres: a single root rechart has deck sign -I. Cancelling
+    the final petal against the retained inverse gives a different positive
+    (24,3) endpoint, with four half-twist records instead of eight.
+    """
+    from .projected_relations import pc_rose_terms
+
+    state = three_root_half_lantern_compression()['stages'][-1]['factors']
+    records = [dict(title='Signed endpoint before moving C5', kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        before = state[min(source, target):max(source, target) + 1]
+        state = move_factor(state, source, target)
+        after = state[min(source, target):max(source, target) + 1]
+        assert exact_action(product(before)) == exact_action(product(after))
+        records.append(dict(title=f'{moving} down past {crossed}', kind='disk_hurwitz',
+                            factors=state, source=source, target=target))
+
+    def sphere_replace(index, replacement, title):
+        nonlocal state
+        before = state[index]
+        discrepancy = reduce_word(before.word + inverse_word(replacement.word))
+        certificate = sphere_inner_certificate(discrepancy)
+        assert certificate['certified']
+        assert homology_action(discrepancy) == IDENTITY
+        state = state[:index] + (replacement,) + state[index + 1:]
+        kind = 'disk_rechart' if certificate['disk_identity'] else 'sphere_rewrite'
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=(before,), local_after=(replacement,),
+                            disk_discrepancy=discrepancy, sphere_certificate=certificate,
+                            lift_homology=IDENTITY))
+
+    while position('F5') < position('C13.recombined') - 1:
+        index = position('F5')
+        move_one(index, index + 1)
+    index = position('F5')
+    original = state[index]
+    target = replace(state[-1], id='P15.target', sign=1)
+    target_class = sphere_curve_action((), supported_class(target.mapping_class))
+    assert sphere_curve_action(replace(original, power=1).word, target_class) == target_class
+    complement = SignedResearchFactor('C5.complement.square',
+        reduce_word(original.conjugator + (-5, -4, -3, -2, -1)), 1, 3, power=2)
+    a = replace(complement, id='C5.complement.root', power=1)
+    unit_discrepancy = reduce_word(replace(original, power=1).word + inverse_word(a.word))
+    unit_sphere = sphere_inner_certificate(unit_discrepancy)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert unit_sphere['certified'] and homology_action(unit_discrepancy) == minus_identity
+    sphere_replace(index, complement, 'Rechart the whole C5 square along its complementary {1,3,5} triple')
+
+    petals = pc_rose_terms(a.mapping_class)
+    petals = petals[1:] + petals[:1]  # C5 is central in its three-point disk.
+    replacements = tuple(SignedResearchFactor(f'C5.rose.{repeat + 1}.{j + 1}',
+        term.conjugator, term.first, term.points)
+        for repeat in range(2) for j, term in enumerate(petals))
+    before = state[index:index + 1]
+    assert exact_action(product(before)) == exact_action(product(replacements))
+    state = state[:index] + replacements + state[index + 1:]
+    records.append(dict(title='Use two cyclic PC roses, each ending in the P15 petal',
+                        kind='disk_rose', factors=state,
+                        local_before=before, local_after=replacements))
+    last_petal = position('C5.rose.2.3')
+    assert sphere_curve_action((), supported_class(state[last_petal].mapping_class)) == target_class
+    sphere_replace(last_petal, replace(target, id='C5.P15.recharted'),
+                   'Rechart the last petal along the retained inverse pair')
+    index = position('C5.P15.recharted')
+    assert state[index + 1].id == 'C13.recombined'
+    move_one(index, index + 1)
+    before = state[-2:]
+    assert [f.sign for f in before] == [1, -1]
+    assert exact_action(product(before)) == tuple((i,) for i in range(1, 7))
+    state = state[:-2]
+    records.append(dict(title='Cancel the last petal against the inverse pair', kind='disk_cancel',
+                        factors=state, local_before=before, local_after=()))
+    final_sphere = sphere_chain_certificate(product(state))
+    assert final_sphere['certified'] and homology_action(product(state)) == IDENTITY
+    assert all(f.sign == 1 for f in state)
+    counts = (sum(f.power * (1 if f.half else 2) for f in state if f.points == 2),
+              sum(f.power // 2 for f in state if f.points == 3))
+    assert counts == (24, 3)
+
+    # A concrete next local configuration: B is A applied to the standard
+    # T124 curve in A's chart. Plain T124 was checked and does not match.
+    b = f2_f7_cluster_lantern()['remaining_c13_complement']
+    chart = reduce_word(a.word + a.conjugator)
+    b_model = SignedResearchFactor('C13.in.C5.chart', reduce_word(chart + (3,)), 1, 3)
+    b_discrepancy = reduce_word(b.word + inverse_word(b_model.word))
+    b_sphere = sphere_chain_certificate(b_discrepancy)
+    assert b_sphere['certified'] and homology_action(b_discrepancy) == IDENTITY
+    p, q, r = (SignedResearchFactor(name, chart, first, 2)
+               for name, first in (('next.P15', 1), ('next.Q23', 3), ('next.R46', 5)))
+    left, right = (a, b, q), (p, r)
+    discrepancy = reduce_word(product(left) + inverse_word(product(right)))
+    sphere = sphere_inner_certificate(discrepancy)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    # Ordered two-lantern consequence. Keep B's conjugation on the second
+    # inverse Q; replacing the two negatives by Q^-2 would be incorrect.
+    two_left = state[-6:]
+    two_right = (p, replace(r, power=2), replace(q, sign=-1),
+                 replace(q, id='next.Binverse.Qinverse.B', sign=-1,
+                         conjugator=reduce_word(inverse_word(b.word) + q.conjugator)))
+    two_discrepancy = reduce_word(product(two_left) + inverse_word(product(two_right)))
+    two_sphere = sphere_chain_certificate(two_discrepancy)
+    assert two_sphere['certified'] and homology_action(two_discrepancy) == IDENTITY
+    exponent_sum = sum(1 if letter > 0 else -1 for letter in two_discrepancy)
+    assert exponent_sum == 20  # Independently excludes disk identity.
+    return dict(stages=tuple(records), follows='three_root_half_lantern_compression',
+                final_sphere_certificate=final_sphere, final_lift_homology=IDENTITY,
+                final_all_factors_positive=True, final_lefschetz_counts=counts,
+                complement_unit_sphere_certificate=unit_sphere,
+                complement_unit_disk_discrepancy=unit_discrepancy,
+                complement_unit_lift_homology=minus_identity,
+                prepared_cluster_lantern=dict(left=left, right=right,
+                    disk_discrepancy=discrepancy, sphere_certificate=sphere,
+                    lift_homology=IDENTITY, second_root_model=b_model,
+                    second_root_disk_discrepancy=b_discrepancy,
+                    second_root_sphere_certificate=b_sphere,
+                    applied_to_endpoint=False),
+                prepared_two_lantern_consequence=dict(left=two_left, right=two_right,
+                    disk_discrepancy=two_discrepancy, disk_exponent_sum=exponent_sum,
+                    sphere_certificate=two_sphere, lift_homology=IDENTITY,
+                    applied_to_endpoint=False),
+                complete_structural_derivation_found=False,
+                scope='Alternative positive sphere/closed-genus-two intermediate; full derivation still open')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

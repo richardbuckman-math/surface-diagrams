@@ -15,6 +15,7 @@ from surface_diagrams.six_seven_structure import (
     f2_f7_cluster_lantern, three_root_prefix_lantern,
     three_root_lantern_reduction, three_root_residual_lantern,
     three_root_half_lantern_compression,
+    three_root_petal_exchange,
 )
 
 
@@ -27,8 +28,10 @@ def build():
     reduction = three_root_lantern_reduction()
     residual = three_root_residual_lantern()
     compression = three_root_half_lantern_compression()
+    exchange = three_root_petal_exchange()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
+                  petal_exchange=exchange,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -110,6 +113,26 @@ def build():
         f'<li>{escape(attempt["target_id"])}: exact transported sphere support differs</li>'
         for attempt in compression['direct_cancellation_attempts'])
     compression_target = image_for(compression['positive_equation_target'])
+
+    exchange_cards = []
+    for index, stage in enumerate(exchange['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Sphere + closed genus two; disk action changes' if sphere else
+                 'Exact disk move' if index else 'The shorter signed branch above')
+        exchange_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                              f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
+    def prepared_relation_cards(relation, left_title, right_title):
+        return ''.join(f'<section class="stage sphere"><h2>{title}</h2>'
+                       '<p>Checked local sphere/genus-two relation; not applied to the endpoint</p>'
+                       + factor_rows(relation[side]) + '</section>'
+                       for side, title in (('left', left_title), ('right', right_title)))
+
+    next_lantern = prepared_relation_cards(exchange['prepared_cluster_lantern'],
+        'The transported roots A, B, and Q23', 'The two boundary pair twists P15 and R46')
+    next_two = prepared_relation_cards(exchange['prepared_two_lantern_consequence'],
+        'The endpoint’s five petals and C13 square', 'A pair, a squared pair, and two distinct inverse pairs')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -201,7 +224,31 @@ this positive P15 twist on the sphere and in closed genus two:</p>
 <div class="local"><figure><figcaption>The positive target P15</figcaption>COMPRESSION_TARGET</figure></div>
 <p>This is not a factorization confined to a disk bounded by P15: F3 moves
 that boundary's exact sphere class and hence crosses it.</p>
-<ul>COMPRESSION_ATTEMPTS</ul><div class="board">COMPRESSION_CARDS</div></body></html>'''
+<ul>COMPRESSION_ATTEMPTS</ul><div class="board">COMPRESSION_CARDS</div>
+<h2>Continue by moving C5, then using its complementary PC rose</h2>
+<p>The inverse need not be discarded. Slide C5 down unchanged until it is
+just before C13; there it preserves P15’s exact sphere class. Draw the whole
+C5 square along the complementary {1,3,5} triple, then expand each unit by
+a cyclically ordered PC rose ending in the P15 petal. That last petal is
+equal to the inverse pair’s positive unit in the disk. Move it past C13
+and cancel.</p>
+<p class="notice">This returns to a positive (24,3) factorization, now with
+seventeen records and four half-twist records. C5 has been expanded and the
+C13 separating twist restored. Changing a single C5 root’s hemisphere has
+lift −I; changing the whole square is the checked +I step shown in purple.
+The complete structural (6,7) derivation remains open.</p>
+<div class="board">EXCHANGE_CARDS</div>
+<h2>A new local lantern to use next</h2>
+<p>Write A for the complementary C5 root and B for the C13 root. In A’s
+three-point chart, B is A applied to the standard T124 curve; plain T124
+would give the wrong curve. The checked sphere relation is ABQ23=P15R46.</p>
+<div class="board">NEXT_LANTERN</div>
+<p>Two ordered uses of that lantern give the next local relation below.
+The second inverse pair is B⁻¹Q23⁻¹B. Its curve differs from Q23, so the
+two inverse factors cannot be combined into Q23⁻². This consequence is
+checked on all five exact sphere arcs and has lift +I; its disk discrepancy
+has exponent sum 20. It is prepared, not yet applied to the full endpoint.</p>
+<div class="board">NEXT_TWO</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -209,10 +256,13 @@ that boundary's exact sphere class and hence crosses it.</p>
             .replace('RESIDUAL_CARDS', ''.join(residual_cards))
             .replace('COMPRESSION_CARDS', ''.join(compression_cards))
             .replace('COMPRESSION_TARGET', compression_target)
-            .replace('COMPRESSION_ATTEMPTS', compression_attempts), encoding='utf-8')
+            .replace('COMPRESSION_ATTEMPTS', compression_attempts)
+            .replace('EXCHANGE_CARDS', ''.join(exchange_cards))
+            .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
-          f'+ {len(residual_cards)} residual + {len(compression_cards)} compression states; '
+          f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
+          f'+ {len(exchange_cards)} exchange states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

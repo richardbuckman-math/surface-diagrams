@@ -551,6 +551,63 @@ partitions. None of the endpoint's existing pair curves, nor the direct
 over/under pair arcs tested in the C5 chart, is fixed by that product.
 Thus the parabolic matrix does not supply a geometric lantern certificate.
 
+## A complementary PC rose exchanges C5 for C13
+
+`three_root_petal_exchange()` moves C5 down unchanged through eight factors
+in the signed compressed branch, stopping just before C13. At this position
+C5 fixes P15's exact sphere class. Its complementary triple is {1,3,5}.
+The whole squared twist can be recharted with lift +I; the unit-root
+discrepancy has lift -I and is saved, not applied as an isolated equality.
+The complementary conjugator is `g=(-5,2,-5,-4,-3,-2,-1)` after reduction.
+
+Two cyclically ordered PC roses now end in the required P15 petal. The
+last petal is the same positive twist as the retained inverse's unit in
+B6, not just on the sphere. It moves past C13 and cancels exactly in the
+disk. The fourteen-state continuation ends with seventeen positive records,
+of type (24,3) upstairs: four half twists, ten full-pair units, and three
+squared triple twists. The C5 separating ancestor is removed and C13 is
+restored. All five exact sphere arcs and the lift sign are checked again.
+This is another certified intermediate, not the requested complete derivation.
+
+There is now a concrete transported local lantern. Write A for the
+complementary C5 root and B for the C13 root. In the chart g of A, plain
+T124 is **not** B; applying A to that model gives B, with the complete sphere
+action and +I discrepancy checked. Set h=A g. The next relation is
+
+```text
+A B Q23 = P15 R46,
+Q23=h T34 h^-1,  P15=h T12 h^-1,  R46=h T56 h^-1.
+```
+
+Its nontrivial disk discrepancy is retained. The five C5 petals at the
+endpoint multiply to A^2 P15^-1. Two ordered uses of this lantern give
+the prepared relation for that actual six-record suffix:
+
+```text
+(five C5 petals) B^2 = P15 R46^2 Q23^-1 (B^-1 Q23^-1 B).
+```
+
+The full discrepancy fixes each exact sphere reference arc and has lift +I;
+its braid exponent sum is 20, so it cannot be a disk identity. The last two
+inverse support classes differ. They must not be replaced by Q23^-2 or
+treated as identical merely from their endpoint pair {2,3}. These local
+relations are certified but have **not** been applied to the full endpoint.
+
+Two short follow-up filters were checked on the prepared signed state:
+neither inverse has a direct cancellation with a positive pair under the
+fixed intervening-product transport, and neither C4 nor C12 preserves
+either inverse's transported class during a single fixed-root downward
+sweep. At the new positive endpoint, none of the 78 signed root words
+using the three remaining roots at most once passes the F3/F9 or F6/F11
+homology transport filter. These do not exclude other Hurwitz moves.
+
+The local graphical replay now has 78 route states, four prepared-relation
+panels, 71 support SVGs, and zero unavailable supports. Twenty-eight focused
+tests pass, including each local move, the whole-square lift distinction,
+the actual root chart, and the two different inverse curves. The final
+exchange and prepared-relation panels were visually inspected. All pictures
+remain individual support drawings, not cumulative joint certificates.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

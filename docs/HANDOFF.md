@@ -1,5 +1,51 @@
 # Handoff: surface-diagrams
 
+## October 18 overnight: a complementary PC rose cancels the retained inverse
+
+The complete structural derivation is still open. The shorter signed branch
+now continues by `three_root_petal_exchange()` to another positive (24,3)
+endpoint: seventeen records, four half twists, ten full-pair units, and three
+squared triple twists. C5 is expanded; C13 is restored as a separating twist.
+
+Move C5 down unchanged across eight factors to just before C13. It then
+preserves the exact P15 sphere class. Rechart its entire square from the
+{2,4,6} side to the {1,3,5} side, and use two cyclic PC roses ending in the
+P15 petal. The final petal equals the inverse's positive unit in B6; moving
+it past C13 and cancelling is disk-exact. A single C5 root hemisphere change
+has lift -I, so only the whole-square rechart is used as a +I step.
+
+A new local configuration is certified, not merely matched by endpoints.
+Let A be this complementary C5 root, B the C13 root, and g A's conjugator.
+B is represented in the sphere by (A g) T124 (A g)^-1, with a separately
+checked +I lift discrepancy. Plain g T124 g^-1 is the wrong curve.
+In the common chart A g, the checked relation is AB Q23 = P15 R46.
+The prepared two-use consequence replaces the endpoint's last six records by
+P15 R46^2 Q23^-1 (B^-1 Q23^-1 B). The last inverse is NOT Q23^-1:
+their exact sphere support classes differ. The consequence fixes all five
+sphere arcs, has lift +I, and has disk discrepancy exponent sum 20.
+Neither prepared substitution has yet been applied to the complete endpoint.
+
+Further bounded failures are saved here to avoid repetition. Neither of the
+two prepared inverse pairs directly cancels any positive pair under the
+fixed-neighbor transport. A single downward sweep of either remaining C4
+or C12 root does not preserve either transported inverse class. At the new
+positive endpoint, the 78 signed words using each remaining root at most
+once again give no homological F3/F9 or F6/F11 transport. These are local
+filters, not global obstructions.
+
+The replay has 78 route states plus four prepared-relation panels, 71 shared
+support SVGs, and zero unavailable drawings. It is local at
+`.preview/six-seven-three-root-transport/index.html`. The final exchange
+columns and prepared relations were visually inspected. All 28 focused
+sphere/structure/lift tests pass. Individual support pictures are not
+cumulative joint cut-complex certificates; the full derivation is unfinished.
+
+Next use the actual transported four-holed-sphere configuration above.
+Investigate Hurwitz exchanges involving the C5 petals and adjacent F11 half
+before applying the two-use consequence, to change its inverse-pair geometry;
+do not simply repeat the failed fixed-neighbor cancellations or replace the
+two distinct inverses by a square. Preserve the in-progress (10,10) edits.
+
 ## October 17 evening: shorter signed branch, with the obstruction retained
 
 The full structural derivation remains open. The strongest positive endpoint
