@@ -16,6 +16,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_lantern_reduction, three_root_residual_lantern,
     three_root_half_lantern_compression,
     three_root_petal_exchange,
+    three_root_cross_petal_lantern,
 )
 
 
@@ -29,9 +30,11 @@ def build():
     residual = three_root_residual_lantern()
     compression = three_root_half_lantern_compression()
     exchange = three_root_petal_exchange()
+    cross_petal = three_root_cross_petal_lantern()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
+                  cross_petal_lantern=cross_petal,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -133,6 +136,16 @@ def build():
         'The transported roots A, B, and Q23', 'The two boundary pair twists P15 and R46')
     next_two = prepared_relation_cards(exchange['prepared_two_lantern_consequence'],
         'The endpoint’s five petals and C13 square', 'A pair, a squared pair, and two distinct inverse pairs')
+
+    cross_cards = []
+    for index, stage in enumerate(cross_petal['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Exact sphere action and +I lift; disk discrepancy retained' if sphere else
+                 'Exact disk word cancellation; no expanded meridian action needed' if index else
+                 'The positive petal-exchange endpoint above')
+        cross_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                           f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -248,7 +261,22 @@ The second inverse pair is B⁻¹Q23⁻¹B. Its curve differs from Q23, so the
 two inverse factors cannot be combined into Q23⁻². This consequence is
 checked on all five exact sphere arcs and has lift +I; its disk discrepancy
 has exponent sum 20. It is prepared, not yet applied to the full endpoint.</p>
-<div class="board">NEXT_TWO</div></body></html>'''
+<div class="board">NEXT_TWO</div>
+<h2>A cross-stage inverse PC lantern</h2>
+<p>Three pair twists from different parts of the product can be gathered:
+the prefix P45, the residual P34, and the first C5 P35 petal. Bring P34 up
+by moving each intervening neighbor down across it. Then bring P35 up
+unchanged. Simply dragging P34 upward would leave the wrong curve.</p>
+<p>Their three exact sphere support classes match a common-chart PC rose
+around {3,4,5}; the complete replacement also fixes all five sphere arcs
+and has genus-two lift +I. The local Hurwitz steps have freely cancelling
+before/after braid words, avoiding the based-action expansion limit.</p>
+<p class="notice">This branch has fifteen positive records but one ordinary
+three-point twist. It is a mixed mapping-class factorization, not a new
+positive Lefschetz factorization or a complete (6,7) derivation. The
+ordinary root still needs to be accounted for. Pictures show individual
+supports, not cumulative joint cut-complex certificates.</p>
+<div class="board">CROSS_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -258,11 +286,12 @@ has exponent sum 20. It is prepared, not yet applied to the full endpoint.</p>
             .replace('COMPRESSION_TARGET', compression_target)
             .replace('COMPRESSION_ATTEMPTS', compression_attempts)
             .replace('EXCHANGE_CARDS', ''.join(exchange_cards))
+            .replace('CROSS_CARDS', ''.join(cross_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
-          f'+ {len(exchange_cards)} exchange states; '
+          f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

@@ -608,6 +608,71 @@ the actual root chart, and the two different inverse curves. The final
 exchange and prepared-relation panels were visually inspected. All pictures
 remain individual support drawings, not cumulative joint certificates.
 
+## A reverse PC lantern across three earlier stages
+
+`three_root_cross_petal_lantern()` continues the positive petal-exchange
+endpoint, rather than applying the prepared two-negative suffix relation.
+It gathers prefix.P45, residual.P34, and C5.rose.1.1 (the first P35 petal).
+Move each intervening neighbor down across residual.P34, so that P34 is
+transported upward; then drag the P35 petal upward unchanged. The other
+choice of direction leaves the wrong middle curve.
+
+The gathered supports agree, in their actual order, with a PC rose in a
+single chart. Its boundary twist is
+
+```text
+g T123 g^-1,  g=(-5,2,-5,-4,-3,-2,-1,2,1,4,3),
+```
+
+and encloses {3,4,5}. To reproduce the ordered PC rose model, append the
+three-point half rotation (1,2,1) to g before calling `pc_rose_terms`.
+This swaps the standard outer petals without changing T123. All three
+support classes are checked on the sphere, and the whole replacement
+fixes all five exact reference arcs with lift +I.
+
+The replacement is genuinely sphere-only: its disk discrepancy sends the
+boundary class of the first adjacent-point arc to a different class of
+length 6050. The entire witness is retained. Expanding the full based disk
+action reaches the existing bound; the disk loop witness proves nonidentity
+without that expansion and without raising the bound.
+
+The seventeen-state continuation ends with fifteen positive records,
+including one ordinary three-point twist and three squared triples.
+It is a **mixed** mapping-class factorization, not a new positive LF type
+or a complete derivation. Moving that new ordinary root down with either
+of the two consistent Hurwitz choices does not make it equal to any of
+the three existing separator roots. In particular its complementary
+{1,2,6} partition does not identify it with the transported C12 curve.
+
+The local moves use `research_hurwitz_move()`: raw conjugators retain a
+freely cancelling before/after word discrepancy. This is an exact disk
+equality, stronger than an action match, with no large meridian expansion.
+It avoids the public move checker’s expansion limit for this route without
+changing the lab checker, increasing a cap, or accepting a failed check.
+The separate sphere substitution still requires its five-arc and lift checks.
+
+Two bounded negative filters are also recorded to prevent repetition:
+
+* None of the 31 ordered nonempty C5-petal subsequences transports F11 to
+  F6 or F9 to F3 by the inverse action arising when those petals move up.
+  They all fail already in homology.
+* For each of the three squared triples and each pair of the four half
+  twists, gather the three factors in their original order, independently
+  choosing either upward-Hurwitz direction for each later factor. Move
+  the root square to the end unchanged. All 72 configurations fail the
+  necessary homology condition H2=C(H1) for a reverse genus-two lantern.
+  This is a finite local filter, not a global obstruction.
+
+Next inspect the new {3,4,5} root against the nearby transported C4 root
+{3,5,6}. Their shared pair {3,5} suggests a four-holed-sphere chart with
+singleton clusters 4 and 6. The actual curves and the ordered relation
+must be checked; the partitions alone do not supply that lantern.
+
+All 30 focused sphere/structure/lift tests pass. The graphical replay has
+95 route states and 85 support SVGs with no unavailable pictures; the final
+three new columns were visually inspected. Dense disk support representatives
+remain distinct from the simpler sphere classes used in the relation checks.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

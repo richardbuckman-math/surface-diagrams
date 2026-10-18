@@ -972,6 +972,104 @@ def three_root_petal_exchange():
                 scope='Alternative positive sphere/closed-genus-two intermediate; full derivation still open')
 
 
+def research_hurwitz_move(factors, source, target):
+    """Adjacent Hurwitz move with a freely cancelling disk-word certificate.
+
+    Retain the raw conjugator instead of invoking braid simplification or
+    expanding based meridians. The before/after words freely agree, which
+    proves disk equality even when an unrelated point-push exhausts the
+    action bound. This research representation can be longer than a lab's
+    simplified representation; it does not change the public lab algorithm.
+    """
+    state = tuple(factors)
+    if (type(source) is not int or type(target) is not int or
+            not 0 <= source < len(state) or not 0 <= target < len(state) or
+            abs(source - target) != 1):
+        raise ValueError('Research Hurwitz moves need two adjacent valid positions')
+    index = min(source, target)
+    a, b = state[index:index + 2]
+    if source < target:
+        replacement = (replace(b, conjugator=reduce_word(a.word + b.conjugator)), a)
+    else:
+        replacement = (b, replace(a, conjugator=reduce_word(inverse_word(b.word) + a.conjugator)))
+    before = state[index:index + 2]
+    discrepancy = reduce_word(product(before) + inverse_word(product(replacement)))
+    assert not discrepancy
+    after = state[:index] + replacement + state[index + 2:]
+    return dict(factors=after, source=source, target=target,
+                local_before=before, local_after=replacement,
+                disk_word_certificate=dict(method='free reduction', discrepancy=discrepancy),
+                kind='disk_hurwitz')
+
+
+def three_root_cross_petal_lantern():
+    """An inverse PC lantern using pairs from three different earlier stages.
+
+    Gather prefix.P45, the transported residual.P34, and the first C5 P35
+    petal. Moving the residual pair upward by dragging its neighbors down
+    is essential: simply dragging that pair leaves the wrong curve. The
+    three pairs form a PC rose on the sphere in an explicitly checked chart.
+    Replacing them introduces an odd three-point root, so the endpoint is
+    positive but is NOT itself a positive Lefschetz factorization.
+    """
+    state = three_root_petal_exchange()['stages'][-1]['factors']
+    records = [dict(title='Positive petal-exchange endpoint', kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    for destination, name, keep_dragged in (
+            (1, 'residual.P34', False), (2, 'C5.rose.1.1', True)):
+        while position(name) > destination:
+            index = position(name)
+            source, target = ((index, index - 1) if keep_dragged else (index - 1, index))
+            moving, crossed = state[source].id, state[target].id
+            move = research_hurwitz_move(state, source, target)
+            state = move['factors']
+            records.append(dict(move, title=f'{moving} {"up" if source > target else "down"} past {crossed}'))
+
+    before = state[:3]
+    assert tuple(f.id for f in before) == ('prefix.P45', 'residual.P34', 'C5.rose.1.1')
+    root = SignedResearchFactor('cross.rose.root',
+        (-5, 2, -5, -4, -3, -2, -1, 2, 1, 4, 3), 1, 3)
+    from .projected_relations import pc_rose_terms
+    # The outer two petals have the reversed standard order. The three-point
+    # half rotation swaps them while preserving the boundary twist itself.
+    model_root = replace(root, conjugator=root.conjugator + (1, 2, 1))
+    model = tuple(Factor(f'cross.model.{i + 1}', t.conjugator, t.first, t.points)
+                  for i, t in enumerate(pc_rose_terms(model_root.mapping_class)))
+    # The model is an actual disk PC rose. Check that the gathered factors
+    # are the corresponding sphere supports, rather than only a triangle of
+    # endpoint pairs or a match of their homology vectors.
+    actual_classes = tuple(sphere_curve_action((), supported_class(f.mapping_class)) for f in before)
+    model_classes = tuple(sphere_curve_action((), supported_class(f.mapping_class)) for f in model)
+    assert actual_classes == model_classes
+    assert exact_action(product(model)) == exact_action(root.word)
+    discrepancy = reduce_word(product(before) + inverse_word(root.word))
+    sphere = sphere_chain_certificate(discrepancy)
+    assert sphere['certified'] and homology_action(discrepancy) == IDENTITY
+    # A disk loop witness proves this is genuinely sphere-only without
+    # expanding the discrepancy's much larger based-meridian action.
+    disk_reference = supported_class(ConjugatedTwist((), 1, 2))
+    disk_image = supported_class(ConjugatedTwist(discrepancy, 1, 2))
+    assert disk_image != disk_reference
+    state = (root,) + state[3:]
+    records.append(dict(title='Reverse the transported PC lantern on {3,4,5}',
+        kind='sphere_rewrite', factors=state, local_before=before, local_after=(root,),
+        disk_discrepancy=discrepancy, sphere_certificate=sphere, lift_homology=IDENTITY,
+        pc_rose_model=model, exact_sphere_supports=actual_classes,
+        disk_nonidentity_witness=dict(reference=disk_reference, image=disk_image,
+            method='exact disk boundary class of the first adjacent-point arc')))
+    final = sphere_chain_certificate(product(state))
+    assert final['certified'] and homology_action(product(state)) == IDENTITY
+    assert len(state) == 15 and all(f.sign == 1 for f in state)
+    return dict(stages=tuple(records), follows='three_root_petal_exchange',
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        final_all_factors_positive=True, remaining_odd_root_ids=(root.id,),
+        complete_structural_derivation_found=False,
+        scope='Positive mixed sphere/closed-genus-two branch; one ordinary root prevents an LF count')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

@@ -1,5 +1,43 @@
 # Handoff: surface-diagrams
 
+## October 18 dawn: a cross-stage inverse PC lantern
+
+`three_root_cross_petal_lantern()` now continues the positive petal-exchange
+endpoint through seventeen checked states. Gather prefix.P45, transported
+residual.P34, and the first C5 P35 petal; their ordered exact sphere supports
+match one common-chart PC rose. Reverse it to a twist about {3,4,5}, with
+conjugator `(-5,2,-5,-4,-3,-2,-1,2,1,4,3)`. The whole substitution fixes
+all five sphere arcs and has lift +I. Its nontrivial disk discrepancy is
+retained, with a disk-loop image of length 6050 as a nonidentity witness.
+
+The endpoint has fifteen positive records but one ordinary three-point
+root. It is a mixed factorization, not a positive LF type or a complete
+(6,7) derivation. The two consistent downward root sweeps do not match
+any remaining separator root, including the complementary-partition C12.
+The research note also records the failed 31 petal-subsequence transports
+and 72 gathered reverse-genus-two-lantern homology tests; do not repeat them.
+
+`research_hurwitz_move()` certifies the new local moves by freely cancelling
+before/after disk words, retaining raw conjugators. This bypasses the large
+based-action expansion for a formally exact move, without raising the cap
+or changing the public lab verifier. The separate sphere substitution keeps
+its full action and lift certificates. The graphical research replay includes
+the new branch; individual support pictures remain distinct from cumulative
+joint cut-complex certificates.
+
+Next inspect the new {3,4,5} root against nearby C4, whose actual triple is
+{3,5,6}: the shared {3,5} pair and singleton clusters 4,6 suggest a local
+four-holed-sphere chart. Establish the actual transported chart and ordered
+relation before any substitution. Keep the positive (24,3) checkpoint and
+all the separate (10,10) work available.
+
+Validation: all 30 focused sphere/structure/lift tests pass. The replay now
+has 95 route states, 85 support SVGs, and zero unavailable drawings. The
+last three new columns were rendered and visually inspected; their dense
+disk representatives are retained honestly, rather than presented as a
+joint cut-complex certificate. Local page:
+`.preview/six-seven-three-root-transport/index.html`.
+
 ## October 18: full (6,7) control parity for the (10,10) lab
 
 The user requested all the same features as the (6,7) lab. Comparing every

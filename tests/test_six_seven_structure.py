@@ -17,10 +17,61 @@ from surface_diagrams.six_seven_structure import (
     three_root_lantern_reduction, three_root_residual_lantern,
     three_root_half_lantern_compression,
     three_root_petal_exchange,
+    research_hurwitz_move, three_root_cross_petal_lantern,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_research_hurwitz_uses_an_exact_freely_reduced_word_certificate(self):
+        seed = (SignedResearchFactor('positive', (2,), 1, 2, half=True),
+                SignedResearchFactor('negative', (-1,), 2, 2, sign=-1))
+        for source, target in ((0, 1), (1, 0)):
+            result = research_hurwitz_move(seed, source, target)
+            self.assertEqual(result['factors'][target], seed[source])
+            self.assertEqual(result['disk_word_certificate'],
+                             dict(method='free reduction', discrepancy=()))
+            self.assertEqual(exact_action(product(seed)), exact_action(product(result['factors'])))
+            restored = research_hurwitz_move(result['factors'], target, source)
+            self.assertEqual(exact_action(product(restored['factors'])), exact_action(product(seed)))
+        for source, target in ((0, 0), (-1, 0), (0, 2), (True, 0)):
+            with self.assertRaises(ValueError):
+                research_hurwitz_move(seed, source, target)
+
+    def test_cross_stage_petals_have_a_geometric_inverse_pc_lantern(self):
+        result = three_root_cross_petal_lantern()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(result['remaining_odd_root_ids'], ('cross.rose.root',))
+        self.assertNotIn('final_lefschetz_counts', result)
+        previous = None
+        from surface_diagrams.braid_actions import reduce_word
+        for stage in result['stages']:
+            state = stage['factors']
+            if stage['kind'] == 'disk_hurwitz':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(reduce_word(product(stage['local_before']) +
+                                 inverse_word(product(stage['local_after']))), ())
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            previous = state
+        last = result['stages'][-1]
+        self.assertEqual(tuple(f.id for f in last['local_before']),
+                         ('prefix.P45', 'residual.P34', 'C5.rose.1.1'))
+        self.assertEqual(enclosed_boundaries(previous[0].mapping_class, 6), (3, 4, 5))
+        self.assertEqual(last['exact_sphere_supports'], tuple(sphere_curve_action(
+            (), supported_class(f.mapping_class)) for f in last['pc_rose_model']))
+        self.assertEqual(exact_action(product(last['pc_rose_model'])),
+                         exact_action(product(last['local_after'])))
+        self.assertTrue(last['sphere_certificate']['certified'])
+        self.assertEqual(homology_action(last['disk_discrepancy']), IDENTITY)
+        witness = last['disk_nonidentity_witness']
+        self.assertNotEqual(witness['reference'], witness['image'])
+        self.assertEqual(witness['image'], supported_class(
+            ConjugatedTwist(last['disk_discrepancy'], 1, 2)))
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        self.assertEqual(len(previous), 15)
+        self.assertEqual(sum(f.points == 3 and f.power % 2 for f in previous), 1)
+
     def test_mod_sixteen_obstruction_survives_both_hurwitz_directions(self):
         seed=initial_factors()
         expected=nonseparating_intersection_certificate(seed)
