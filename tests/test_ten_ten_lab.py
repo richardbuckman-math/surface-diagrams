@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import runpy
+from html.parser import HTMLParser
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -20,6 +21,46 @@ ASSETS = Path(__file__).resolve().parents[1] / 'src/surface_diagrams/lab_assets'
 
 
 class TenTenLabTests(unittest.TestCase):
+    def test_six_seven_controls_are_all_available_in_ten_ten(self):
+        class Controls(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.ids=set()
+            def handle_starttag(self,tag,attributes):
+                identity=dict(attributes).get('id')
+                if tag in ('button','input','select') and identity:
+                    self.ids.add(identity)
+        original,new=Controls(),Controls()
+        original.feed((ASSETS/'index.html').read_text(encoding='utf-8'))
+        new.feed((ASSETS/'ten-ten.html').read_text(encoding='utf-8'))
+        self.assertFalse(original.ids-new.ids)
+
+    def test_t45_walkthrough_reopens_and_checks_every_state(self):
+        document=json.loads((ASSETS/'ten-ten-t45-session.json').read_text(encoding='utf-8'))
+        self.assertLess(len(json.dumps(dict(op='load_session',session=document,revision=0)).encode()),262144)
+        history,frames,operations,position,limited=validated_session_document(document,'10-10')
+        self.assertEqual(len(history),31)
+        self.assertEqual(position,30)
+        self.assertFalse(limited)
+        self.assertEqual(history[0],TEN_TEN_FACTORS)
+        self.assertEqual(history[-1][0].word,(4,4,4,4))
+        self.assertFalse(document['certificate']['sphere_outer_action_trivial'])
+        adapter=runpy.run_path(str(ASSETS/'public-lab-backend.py'))
+        adapter['select_lab_seed']('10-10')
+        result=json.loads(adapter['dispatch']('/api/action','POST',json.dumps(
+            dict(op='load_session',session=document,revision=0))))
+        self.assertEqual(result['status'],200)
+        loaded=json.loads(result['body'])
+        self.assertEqual(loaded['position'],30)
+        self.assertEqual(loaded['factors'][0]['word'],[4,4,4,4])
+        self.assertTrue(all(f['svg'] and f['audit']['matches'] for f in loaded['factors']))
+        self.assertTrue(loaded['undo'])
+        original=json.loads(adapter['dispatch']('/api/action','POST',json.dumps(
+            dict(op='seek',position=0,revision=1))))
+        self.assertEqual(json.loads(original['body'])['position'],0)
+        with self.assertRaisesRegex(ValueError,'different factorization lab'):
+            validated_session_document(document,'6-7')
+
     def test_every_dictated_route_matches_its_exact_support_and_draws(self):
         self.assertEqual(len(SOURCE_ROUTES), 20)
         self.assertEqual(len(SOURCE_DESCRIPTIONS), 20)

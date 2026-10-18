@@ -35,7 +35,7 @@ def build():
     lab_out = OUT/'lab'
     lab_out.mkdir(exist_ok=True)
     for name in ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js', 'public-lab-worker.mjs',
-                 'public-lab-backend.py', 'six-seven-h34-session.json'):
+                 'public-lab-backend.py', 'six-seven-h34-session.json', 'ten-ten-t45-session.json'):
         shutil.copy2(lab_assets/name, lab_out/name)
     xiao_out = lab_out/'xiao-4-3'
     xiao_out.mkdir(exist_ok=True)
@@ -65,7 +65,8 @@ def build():
     versioned_assets = ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js',
                         'public-lab-worker.mjs', 'public-lab-backend.py',
                         'surface_diagrams.zip', 'seed-preview-6-7.json',
-                        'seed-preview-4-3.json', 'seed-preview-10-10.json')
+                        'seed-preview-4-3.json', 'seed-preview-10-10.json',
+                        'ten-ten-t45-session.json')
     digest = hashlib.sha256()
     for name in versioned_assets:
         digest.update(name.encode('utf-8'))
@@ -73,7 +74,7 @@ def build():
     lab_version = digest.hexdigest()[:12]
 
     def version_lab_html(html, prefix):
-        for name in ('lab.css', 'public-lab.js', 'lab.js', 'sphere-cuts.js'):
+        for name in ('lab.css', 'public-lab.js', 'lab.js', 'sphere-cuts.js', 'ten-ten-t45-session.json'):
             html = html.replace(f'"{prefix}{name}"', f'"{prefix}{name}?v={lab_version}"')
         return html
 

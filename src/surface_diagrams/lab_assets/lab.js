@@ -490,8 +490,8 @@ $('undo').onclick=()=>action({op:'undo'});$('redo').onclick=()=>action({op:'redo
 if($('load-walkthrough'))$('load-walkthrough').onclick=async()=>{
  if(busy||!state)return;
  try{
-  status('Loading the checked H₃₄ walkthrough…');
-  const response=await fetch('six-seven-h34-session.json');
+  status('Loading the checked walkthrough…');
+  const response=await fetch($('load-walkthrough').dataset.sessionUrl||'six-seven-h34-session.json');
   if(!response.ok)throw new Error('Could not load the published walkthrough');
   await action({op:'load_session',session:await response.json()},0);
  }catch(error){status(error.message,true);}

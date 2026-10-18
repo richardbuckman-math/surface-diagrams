@@ -424,7 +424,8 @@ class LabHandler(EditorHandler):
                 '/lab.js':('lab.js','text/javascript; charset=utf-8'),
                 '/sphere-cuts.js':('sphere-cuts.js','text/javascript; charset=utf-8'),
                 '/lab.css':('lab.css','text/css; charset=utf-8'),
-                '/six-seven-h34-session.json':('six-seven-h34-session.json','application/json; charset=utf-8')}
+                '/six-seven-h34-session.json':('six-seven-h34-session.json','application/json; charset=utf-8'),
+                '/ten-ten-t45-session.json':('ten-ten-t45-session.json','application/json; charset=utf-8')}
         if self.path not in assets: self._error(404,'Not found'); return
         name,mime=assets[self.path]
         self._reply(200,resources.files('surface_diagrams').joinpath('lab_assets',name).read_bytes(),mime)

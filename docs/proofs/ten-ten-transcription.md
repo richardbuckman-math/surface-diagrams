@@ -78,3 +78,18 @@ python -m surface_diagrams.factorization_lab --seed 10-10 --no-browser
 The executable source and original routes are in
 `src/surface_diagrams/ten_ten.py`. Tests cover the route correspondences,
 closure failure, exact preservation under editing, and session isolation.
+
+## Checked walkthrough, matching the (6,7) lab
+
+Choose **Load T₄₅² derivation steps** to load a 31-state checked history.
+Split F7 and F18 into ordinary triple twists, apply the PC half lantern to
+their first copies, and apply the PC lantern to F7's second copy. The two
+half-lantern terms H45 combine into T45 after adjacent Hurwitz moves. The
+T45 petal from the other lantern combines with that pair into T45². Further
+Hurwitz moves bring this factor to the front, changing the crossed factors.
+
+Every state preserves the complete starting disk action. This is a local
+consolidation, not a proof or repair of sphere closure. History selection,
+undo/redo, and further edits work exactly as in the (6,7) walkthrough. The
+original twenty-factor state is the first history entry. The session is
+generated reproducibly by `examples/build_ten_ten_walkthrough.py`.

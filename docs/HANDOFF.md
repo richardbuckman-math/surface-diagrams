@@ -1,5 +1,24 @@
 # Handoff: surface-diagrams
 
+## October 18: full (6,7) control parity for the (10,10) lab
+
+The user requested all the same features as the (6,7) lab. Comparing every
+button, input, and select ID found only the checked-walkthrough loader missing.
+The (10,10) page now has **Load T45-squared derivation steps**, using the same
+shared loader and a seed-specific, checked 31-state session. It splits F7 and
+F18, applies two PC half lanterns and one PC lantern, consolidates their H45,
+H45, and T45 terms into T45-squared, then brings that factor to the front.
+All crossed factors change correctly. This preserves the nonclosing starting
+disk product and makes no full-relation claim.
+
+`examples/build_ten_ten_walkthrough.py` reproduces
+`lab_assets/ten-ten-t45-session.json`. Every saved state is reverified against
+the starting disk action. Repeated immutable source metadata is omitted from
+the asset so its 31 states fit the local API's bounded request size. The lab
+reconstructs source descriptions from its seed as usual. Local and public
+routes serve the same replay; the build versions its URL. Tests now enforce
+control parity, exact session restoration, and drawable final supports.
+
 ## October 18 overnight: a complementary PC rose cancels the retained inverse
 
 The complete structural derivation is still open. The shorter signed branch

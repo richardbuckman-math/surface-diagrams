@@ -7,6 +7,8 @@ the exact transcribed disk product, with a separate saved workspace. All twenty
 support classes match their routes. F7's squared Dehn twist is confirmed; the
 current complete product fails sphere closure and +I genus-two homology.
 See the [transcription and checks](proofs/ten-ten-transcription.md).
+It has every control from the (6,7) lab, including a seed-specific checked
+walkthrough: **Load T₄₅² derivation steps** opens 31 replayable states.
 
 The [Xiao (4,3) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/xiao-4-3/index.html)
 starts from seven normalized positive factors (148 braid letters). Use
