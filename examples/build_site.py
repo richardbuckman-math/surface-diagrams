@@ -174,7 +174,7 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
                 body+='<p><a href="../docs/proofs/four-three-thesis-first-stage.html">Inspect the three checked Baykur–Korkmaz thesis columns and their cut complexes</a></p>'
                 body+='<p><a href="../docs/proofs/four-three-thesis-squared-stage.html">Follow the checked squared-boundary regrouping with cut complexes</a></p>'
             if category=='fibrations' and e['slug']=='10-10':
-                body+='<p><a href="../lab/ten-ten/index.html">Open Richard’s twenty-factor (10,10) transcription lab</a>. The dictated routes are encoded; sphere closure currently fails and F7 is provisional. Identification with Nakamura’s example is unproved.</p>'
+                body+='<p><a href="../lab/ten-ten/index.html">Open Richard’s twenty-factor (10,10) transcription lab</a>. The dictated routes are encoded; sphere closure currently fails. F7’s squared Dehn twist is confirmed. Identification with Nakamura’s example is unproved.</p>'
             body += ''.join('<section><h2>'+escape(k)+'</h2><p>'+escape(v)+'</p></section>' for k,v in e['sections'].items())
             body += '<p>Future formats will use common curve and factor IDs, an explicit multiplication order, and documented correspondences. A drawing alone does not verify an equivalence.</p>'
             page(category+'/'+e['slug']+'.html',e['title'],body,'../')

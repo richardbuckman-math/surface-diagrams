@@ -5,7 +5,7 @@ top-to-bottom order in [the lab](../../lab/ten-ten/index.html). This is separate
 from the catalog's literature record for Nakamura's (10,10) example; no
 identification with that example has been established.
 
-## Conventions and one explicit assumption
+## Conventions and confirmed clarification
 
 The six marked points are numbered left to right. “Up through k” means cross
 the open gap after point k from below to above; “down through k” crosses from
@@ -17,10 +17,10 @@ vertical display reflection.
 
 F7 was dictated as “half twist squared; up through 3, down through 6, back to
 start.” That closed route encloses three points (4,5,6), rather than being an
-arc joining two points. Pending confirmation, it is provisionally encoded as
+arc joining two points. The user confirmed on October 18 that this is
 the squared Dehn twist around 4,5,6, exactly like F18. This gives ten half
 twists and ten squared three-point Dehn twists, corresponding to the stated
-(10,10) count under the genus-two branched-cover convention. This assumption
+(10,10) count under the genus-two branched-cover convention. This clarification
 is visible in the lab and retained in exports. A literal squared half twist
 would require a two-endpoint arc that the supplied route does not specify.
 
@@ -48,8 +48,8 @@ transcription. Its genus-two homology action is
 This is not +I. Consequently this exact transcription is not yet a closed
 genus-two identity. Counting factors does not establish closure. The lab
 retains this failure instead of supplying a certificate for the intended
-relation. F7's provisional three-point squared twist acts trivially on this
-homology, so confirming its label alone will not resolve the discrepancy
+relation. F7's confirmed three-point squared twist acts trivially on this
+homology, so clarifying its label alone does not resolve the discrepancy
 among the currently transcribed half-twist factors.
 
 ## Working in the lab

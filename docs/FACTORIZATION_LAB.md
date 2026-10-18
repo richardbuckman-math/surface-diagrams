@@ -4,7 +4,7 @@ The [(10,10) transcription lab](https://richardbuckman-math.github.io/surface-di
 contains Richard's twenty supplied routes in top-to-bottom order. Run it with
 `python -m surface_diagrams.factorization_lab --seed 10-10`. Its edits preserve
 the exact transcribed disk product, with a separate saved workspace. All twenty
-support classes match their routes. F7's twist type is provisional, and the
+support classes match their routes. F7's squared Dehn twist is confirmed; the
 current complete product fails sphere closure and +I genus-two homology.
 See the [transcription and checks](proofs/ten-ten-transcription.md).
 

@@ -1,8 +1,8 @@
 """Richard's twenty dictated supports, in the supplied top-to-bottom order.
 
 This is a transcription workspace, not an identification with Nakamura's
-published example. Factor 7 is provisionally a squared three-point Dehn twist:
-the dictation says "half twist squared" but gives a three-point closed loop.
+published example. The user confirmed factor 7 is a squared three-point Dehn
+twist, clarifying "half twist squared" in the original dictation.
 The present product fails the sphere identity check; retain that evidence.
 """
 from dataclasses import asdict
@@ -92,12 +92,11 @@ TEN_TEN_FACTORS = tuple(
     for i, (g, first, half) in enumerate(_DATA, 1)
 )
 
-FACTOR_SEVEN_NOTE = ('Provisional: the dictation says "half twist squared", '
-                     'but this closed route surrounds 4, 5, 6. Encoded as a '
-                     'squared Dehn twist, matching F18 and the (10,10) count; '
-                     'awaiting confirmation.')
+FACTOR_SEVEN_NOTE = ('Confirmed clarification: the user specified a squared '
+                     'Dehn twist around 4, 5, 6, matching F18 and the '
+                     '(10,10) count. The original wording is retained above.')
 SEED_NOTE = ('Transcription workspace: twenty supplied routes in top-to-bottom '
-             'order. F7 is provisional. The encoded product does not close on '
+             'order. F7 is confirmed as a squared Dehn twist. The encoded product does not close on '
              'the sphere and its genus-two homology is not +I. '
              'Edits preserve this exact starting disk product.')
 
@@ -128,4 +127,4 @@ def transcription_certificate():
                 disk_identity=sphere['disk_identity'], homology=homology,
                 homology_identity=homology == IDENTITY,
                 half_twists=10, squared_three_point_twists=10,
-                provisional_factors=['F7'], braid_letters=len(word))
+                provisional_factors=[], confirmed_clarifications=['F7'], braid_letters=len(word))

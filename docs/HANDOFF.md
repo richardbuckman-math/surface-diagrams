@@ -52,14 +52,14 @@ The user's twenty dictated supports now have a separate lab at
 `lab/ten-ten/index.html`, with local CLI `--seed 10-10`. Source descriptions,
 Arc/Loop routes, and exact braid conjugators are in `ten_ten.py`. All twenty
 boundary classes match exactly and every support draws. Ten half twists and
-ten squared three-point twists assume F7 is a squared Dehn twist around
+ten squared three-point twists use F7 as a squared Dehn twist around
 4,5,6, like F18: the user said "half twist squared" but described a three-point
-closed loop. Confirmation was requested; it remains explicitly provisional.
+closed loop. The user confirmed this clarification on October 18.
 
 The transcribed product FAILS sphere closure and has genus-two homology
 `[[-14,19,19,-20],[12,-15,-16,16],[-9,12,13,-12],[15,-19,-19,21]]`.
 Do not claim a closed (10,10) identity or identify this with Nakamura's example.
-F7's assumed three-point squared twist is homologically trivial, so simply
+F7's confirmed three-point squared twist is homologically trivial, so simply
 confirming its label does not fix the half-twist discrepancy. The original
 dictation stays visible in the lab and exports. The source convention is
 displayed without the older labs' vertical reflection. All edits preserve
