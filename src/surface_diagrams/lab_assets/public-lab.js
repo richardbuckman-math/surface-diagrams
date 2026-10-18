@@ -3,8 +3,10 @@
 // stay on this device; the local HTTP server still uses its ordinary API.
 window.surfaceLabPublic = true;
 window.surfaceLabStorageAvailable = true;
-const labSeed = document.documentElement.dataset.labSeed === '4-3' ? '4-3' : '6-7';
+const requestedLabSeed = document.documentElement.dataset.labSeed;
+const labSeed = ['4-3','10-10'].includes(requestedLabSeed) ? requestedLabSeed : '6-7';
 const labStorageKey = labSeed === '4-3' ? 'surface-diagrams-xiao-four-three-workspace-v1' :
+ labSeed === '10-10' ? 'surface-diagrams-ten-ten-transcription-workspace-v1' :
  'surface-diagrams-six-seven-workspace-v1';
 const labAssetVersion = new URL(document.currentScript.src).searchParams.get('v');
 const labAssetUrl = name => {

@@ -74,7 +74,7 @@ sphereCutFit.onclick=() => {
 function sphereSplitDescription(split,count) {
   document.getElementById('sphere-split-description').textContent=
     `F1–F${split}: after each forward factor. F${split+1}–F${count}: before each factor, worked back from the end. `+
-    `After F${split} and before F${split+1} meet at the same sphere cut system.`;
+    `Compare after F${split} with before F${split+1}; their meeting is checked explicitly.`;
 }
 function openSphereCut(row) {
   const data=sphereCutRows.get(row);
@@ -158,7 +158,7 @@ function refreshSphereCuts() {
       const option=document.createElement('option');option.value=String(split);
       option.textContent=`F${split} (${split} + ${count-split})`;sphereSplit.append(option);
     }
-    const initial=state.seed_slug==='4-3'?4:7;
+    const initial=state.seed_slug==='4-3'?4:state.seed_slug==='10-10'?10:7;
     sphereSplit.value=String(old>=1&&old<count?old:Math.min(initial,count-1));
   }
   const split=Number(sphereSplit.value);

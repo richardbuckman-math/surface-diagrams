@@ -169,13 +169,18 @@ def combine_factors(factors,index):
 
 
 def export_factors(factors,seed_slug='6-7'):
-    if seed_slug not in ('6-7','4-3'):
+    if seed_slug not in ('6-7','4-3','10-10'):
         raise ValueError('Unknown factorization lab seed')
     document={'format':'surface-diagrams-factorization-v1','strands':6,
               'source':('Earlier BraidSixSeven SVG; remaining PDF support correspondence provisional'
-                        if seed_slug=='6-7' else "Xiao's (4,3) normalized seven-factor seed"),
+                        if seed_slug=='6-7' else "Xiao's (4,3) normalized seven-factor seed"
+                        if seed_slug=='4-3' else "Richard's twenty dictated routes; provisional (10,10) transcription"),
               'factors':[dict(asdict(f),word=f.word) for f in factors]}
-    if seed_slug=='4-3': document['seed']='4-3'
+    if seed_slug!='6-7': document['seed']=seed_slug
+    if seed_slug=='10-10':
+        from .ten_ten import source_records,transcription_certificate
+        document['source_transcription']=source_records()
+        document['seed_validation']=transcription_certificate()
     return document
 
 

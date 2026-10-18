@@ -25,10 +25,22 @@ from .braid_actions import inverse_word
 
 
 def starting_factors(seed_slug='6-7'):
-    """Only executable, verified six-strand seeds are available as labs."""
+    """Executable six-strand seeds; closure status is recorded separately."""
     if seed_slug=='6-7': return initial_factors()
     if seed_slug=='4-3': return XIAO_FOUR_THREE.factors
+    if seed_slug=='10-10':
+        from .ten_ten import TEN_TEN_FACTORS
+        return TEN_TEN_FACTORS
     raise ValueError('Unknown factorization lab seed')
+
+
+def seed_message(seed_slug):
+    if seed_slug=='10-10':
+        from .ten_ten import SEED_NOTE
+        return SEED_NOTE
+    if seed_slug=='4-3':
+        return "Loaded Xiao's seven normalized factors; exact disk product fixed to this seed."
+    return 'Loaded 13 factors / 178 braid letters from the earlier SVG.'
 
 
 def validated_session_document(saved,seed_slug='6-7'):
@@ -62,7 +74,7 @@ def validated_session_document(saved,seed_slug='6-7'):
                 raise ValueError('Product does not match its saved global conjugation' if frame else
                                  'Exact disk action verification failed; operation was not applied')
         except VerificationLimitError:
-            if seed_slug=='4-3': raise
+            if seed_slug in ('4-3','10-10'): raise
             limited.append(index+1)
         history.append(factors);frames.append(frame)
     return history,frames,operations,position,limited
@@ -87,8 +99,7 @@ class LabServer(ThreadingHTTPServer):
         self.history=history; self.frames=frames; self.operations=operations
         self.position=position; self.revision=0
         self.message=('Reopened saved exploration and undo history; exact products verified.' if self.session_path and self.session_path.exists()
-                      else ("Loaded Xiao's seven normalized factors; exact disk product fixed to this seed."
-                            if seed_slug=='4-3' else 'Loaded 13 factors / 178 braid letters from the earlier SVG.'))
+                      else seed_message(seed_slug))
         self.verification_notice=('Saved history states '+', '.join(map(str,limited))+
             ' reached the exact verification limit on reopening. Their product equality is not reverified; history is preserved.' if limited else '')
         if limited: self.message='Reopened saved exploration and undo history.'
@@ -115,7 +126,7 @@ class LabServer(ThreadingHTTPServer):
         document=dict(format='surface-diagrams-session-v1',position=self.position,
                       history=[export_factors(factors,self.seed_slug) for factors in self.history],
                       frames=[list(frame) for frame in self.frames],operations=self.operations)
-        if self.seed_slug=='4-3': document['seed']='4-3'
+        if self.seed_slug!='6-7': document['seed']=self.seed_slug
         return document
     def state(self):
         factors=self.history[self.position]
@@ -131,7 +142,11 @@ class LabServer(ThreadingHTTPServer):
             rows.append(dict(asdict(f),word=f.word,core=f.core,label=f.label,svg=svg,warning=warning,
                              height=row_height(f),height_compact=row_height(f,compact=True),
                              splits=options,audit=support_audit(f)))
-        return dict(token=self.token,revision=self.revision,seed_slug=self.seed_slug,
+        extra={}
+        if self.seed_slug=='10-10':
+            from .ten_ten import source_records,transcription_certificate
+            extra=dict(source_transcription=source_records(),seed_validation=transcription_certificate())
+        return dict(token=self.token,revision=self.revision,seed_slug=self.seed_slug,**extra,
                     factors=rows,braid=braid_svg(factors),braid_compact=braid_svg(factors,compact=True),
                     persistent=self.session_path is not None,
                     undo=self.position>0,redo=self.position<len(self.history)-1,message=(self.message+' '+self.verification_notice).strip(),
@@ -323,7 +338,7 @@ class LabServer(ThreadingHTTPServer):
                 message='Loaded saved exploration; exact product and global frame verified.'
                 label='Import verified factorization'
             else: raise ValueError('Unknown operation')
-            if self.seed_slug=='4-3':
+            if self.seed_slug in ('4-3','10-10'):
                 checked_global_frame(result,next_frame,self.seed_factors)
             self.history=self.history[:self.position+1]+[result]
             self.frames=self.frames[:self.position+1]+[next_frame]
@@ -402,7 +417,8 @@ class LabHandler(EditorHandler):
         if self.path=='/api/state':
             with self.server.lock: data=self.server.state()
             self._reply(200,json.dumps(data)); return
-        assets={'/':('xiao-4-3.html' if self.server.seed_slug=='4-3' else 'index.html','text/html; charset=utf-8'),
+        seed_html={'4-3':'xiao-4-3.html','10-10':'ten-ten.html'}.get(self.server.seed_slug,'index.html')
+        assets={'/':(seed_html,'text/html; charset=utf-8'),
                 '/lab.js':('lab.js','text/javascript; charset=utf-8'),
                 '/sphere-cuts.js':('sphere-cuts.js','text/javascript; charset=utf-8'),
                 '/lab.css':('lab.css','text/css; charset=utf-8'),
@@ -437,7 +453,7 @@ def main(argv=None):
     parser.add_argument('--port',type=int,default=0)
     parser.add_argument('--no-browser',action='store_true')
     parser.add_argument('--session',type=Path,help='Save and reopen this workspace file, including undo/redo history')
-    parser.add_argument('--seed',choices=('6-7','4-3'),default='6-7',help='Choose the factorization lab seed')
+    parser.add_argument('--seed',choices=('6-7','4-3','10-10'),default='6-7',help='Choose the factorization lab seed')
     args=parser.parse_args(argv)
     if not 0<=args.port<=65535: parser.error('port must be between 0 and 65535')
     try: server=LabServer(args.port,args.session,args.seed)

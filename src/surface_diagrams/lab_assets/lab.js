@@ -6,6 +6,7 @@ const $=id=>document.getElementById(id);
 const status=(text,error=false)=>{ $('status').textContent=text; $('status').classList.toggle('error',error); };
 const originalPathTransforms=new WeakMap();
 function applyPlanarOrientation(root){
+ if(document.documentElement.dataset.planarOrientation==='source')return;
  for(const path of root.querySelectorAll('svg path.arc, svg path.closed-curve')){
   if(!originalPathTransforms.has(path))
    originalPathTransforms.set(path,path.getAttribute('transform'));
@@ -33,6 +34,8 @@ function setControlsExpanded(expanded){
  document.querySelector('header').classList.toggle('controls-collapsed',!expanded);
 }
 $('toggle-controls').onclick=()=>setControlsExpanded($('top-controls').hidden);
+if(document.documentElement.dataset.labSeed==='10-10'&&window.matchMedia('(max-width:740px)').matches)
+ setControlsExpanded(false);
 const braidLayout=$('braid-layout');
 braidLayout.onchange=()=>{if(state)setBraidLayout();};
 const prefixSystem=$('prefix-system');
@@ -120,6 +123,17 @@ function setBraidLayout(){
  choose(selected);
 }
 function paint(){
+ if($('transcription-list')&&state.source_transcription){
+  $('transcription-list').replaceChildren();
+  for(const source of state.source_transcription){
+   const item=document.createElement('li');
+   const text=document.createElement('p');text.textContent=`${source.id}. ${source.description}`;
+   const itinerary=document.createElement('code');itinerary.textContent=source.itinerary;
+   item.append(text,itinerary);
+   if(source.note){const note=document.createElement('p');note.className='warning';note.textContent=source.note;item.append(note);}
+   $('transcription-list').append(item);
+  }
+ }
  $('history-summary').textContent=`Exploration history · step ${state.position+1} of ${state.steps.length}`;
  $('history-list').replaceChildren();
  state.steps.forEach((label,i)=>{
@@ -174,6 +188,11 @@ function inspectZoom(){
 }
 $('inspect').onclick=()=>{
  const f=state.factors[selected];
+ const source=state.source_transcription?.find(item=>item.id===f.id.match(/^F\d+/)?.[0]);
+ if($('inspect-source')){
+  $('inspect-source').hidden=!source;
+  $('inspect-source').textContent=source?`Original dictation for ${source.id} (moves can change its support): ${source.description} ${source.note}`:'';
+ }
  $('inspect-title').textContent=`${f.id} · ${f.label}`;
  $('inspect-drawing').replaceChildren();
  if(f.svg){displayPlanarSvg($('inspect-drawing'),f.svg);$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
@@ -448,7 +467,8 @@ $('sphere').onclick=async()=>{
    'No common inner-action certificate was found; this check makes no identity claim.';
   $('sphere-disk').textContent=data.disk_identity?
    'The six-point disk action is also the identity.':
-   'The six-point disk action is not the identity; the sphere relation changes the result.';
+   data.certified?'The six-point disk action is nontrivial; capping its boundary gives the sphere identity.':
+   'The six-point disk action is nontrivial. The sphere identity check also did not pass.';
   $('sphere-whisker').textContent=data.certified?`Common whisker w (${data.conjugator.length} letters): ${data.conjugator.join(' ')||'identity'}`:'';
   if(data.chart_svg){sphereChartSvg=data.chart_svg;displayPlanarSvg($('sphere-chart'),sphereChartSvg);$('save-sphere-chart').disabled=false;}
   else $('sphere-chart').textContent=`Identity chart unavailable: ${data.chart_warning}`;
@@ -486,14 +506,15 @@ $('conjugate').onclick=async()=>{
 };
 $('global-word').onkeydown=event=>{if(event.key==='Enter')$('conjugate').click();};
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
-const factorizationFilename=()=>state?.seed_slug==='4-3'?'xiao-four-three-factorization':'six-seven-factorization';
+const factorizationFilename=()=>state?.seed_slug==='4-3'?'xiao-four-three-factorization':
+ state?.seed_slug==='10-10'?'ten-ten-transcription-factorization':'six-seven-factorization';
 $('save').onclick=()=>download(JSON.stringify(state.export,null,2),'application/json',factorizationFilename()+'.json');
 $('open').onclick=()=>$('file').click();
 $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;if(file.size>250000)throw new Error('Choose a JSON file smaller than 250 KB');const document=JSON.parse(await file.text());await action({op:'import',document},0);}catch(e){status(e.message,true);}finally{$('file').value='';}};
 $('svg').onclick=async()=>{
  if(busy||!state)return;
  try{const options=new URLSearchParams({revision:String(state.revision),
-   mirror:'1',
+   mirror:document.documentElement.dataset.planarOrientation==='source'?'0':'1',
    compact:braidLayout.value==='compact'?'1':'0'});
   const response=await fetch('/api/export.svg?'+options);
   if(!response.ok){const data=await response.json();throw new Error(data.error);}

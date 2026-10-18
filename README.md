@@ -3,15 +3,20 @@
 The [interactive factorization prototype](docs/FACTORIZATION_LAB.md) opens with
 `python -m surface_diagrams.factorization_lab`: drag factors through Hurwitz moves,
 inspect a continuous braid, split checked twists, combine, and undo. Use
-`--seed 4-3` for Xiao's seven-factor genus-two relation.
+`--seed 4-3` for Xiao's seven-factor genus-two relation, or `--seed 10-10`
+for the twenty dictated routes in the provisional (10,10) transcription lab.
 
 Public workspaces: [(6,7) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/index.html),
 [(4,3) lab](https://richardbuckman-math.github.io/surface-diagrams/lab/xiao-4-3/index.html),
+[(10,10) transcription lab](https://richardbuckman-math.github.io/surface-diagrams/lab/ten-ten/index.html),
 and [boundary-twist playground](https://richardbuckman-math.github.io/surface-diagrams/boundary-lab/index.html).
 The [(6,2)](https://richardbuckman-math.github.io/surface-diagrams/fibration-lab/6-2.html)
 and [(10,10)](https://richardbuckman-math.github.io/surface-diagrams/fibration-lab/10-10.html)
 pages collect source relations and section leads while their exact braid factors
 are prepared.
+The separate (10,10) transcription lab encodes all twenty supplied supports;
+F7 is provisional and the current product fails sphere closure. See the
+[transcription record](docs/proofs/ten-ten-transcription.md).
 
 Browse the [tutorial and gallery](https://richardbuckman-math.github.io/surface-diagrams/)
 and planned relation and Lefschetz-fibration catalog. See

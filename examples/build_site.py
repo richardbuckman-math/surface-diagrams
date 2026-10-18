@@ -24,7 +24,7 @@ def build():
         sys.path.insert(0, str(ROOT/'src'))
     from surface_diagrams.boundary_playground_geometry import factorization_svg
     from surface_diagrams.fibration_lab_seeds import SEEDS
-    from surface_diagrams.factorization_lab import LabServer, starting_factors
+    from surface_diagrams.factorization_lab import LabServer, starting_factors, seed_message
     from surface_diagrams.hyperelliptic_homology import IDENTITY, homology_action
     from surface_diagrams.sphere_actions import sphere_inner_certificate
 
@@ -39,7 +39,9 @@ def build():
         shutil.copy2(lab_assets/name, lab_out/name)
     xiao_out = lab_out/'xiao-4-3'
     xiao_out.mkdir(exist_ok=True)
-    for slug in ('6-7', '4-3'):
+    ten_ten_out = lab_out/'ten-ten'
+    ten_ten_out.mkdir(exist_ok=True)
+    for slug in ('6-7', '4-3', '10-10'):
         # Keep a prepared default view available while the browser's Python
         # runtime starts, including when a saved session has no cached preview.
         # The worker remains the authority for restored sessions and every edit.
@@ -52,9 +54,7 @@ def build():
         preview.position = preview.revision = 0
         preview.token = 'browser-only'
         preview.session_path = None
-        preview.message = ('Loaded Xiao\'s seven normalized factors; exact disk product fixed to this seed.'
-                           if slug == '4-3' else
-                           'Loaded 13 factors / 178 braid letters from the earlier SVG.')
+        preview.message = seed_message(slug)
         preview.verification_notice = ''
         (lab_out/f'seed-preview-{slug}.json').write_text(
             json.dumps(preview.state(), separators=(',', ':'), ensure_ascii=False),
@@ -65,7 +65,7 @@ def build():
     versioned_assets = ('lab.css', 'lab.js', 'sphere-cuts.js', 'public-lab.js',
                         'public-lab-worker.mjs', 'public-lab-backend.py',
                         'surface_diagrams.zip', 'seed-preview-6-7.json',
-                        'seed-preview-4-3.json')
+                        'seed-preview-4-3.json', 'seed-preview-10-10.json')
     digest = hashlib.sha256()
     for name in versioned_assets:
         digest.update(name.encode('utf-8'))
@@ -85,6 +85,10 @@ def build():
     xiao_html = xiao_html.replace('<script src="../lab.js"></script>',
                                   '<script src="../public-lab.js"></script><script src="../lab.js"></script>')
     (xiao_out/'index.html').write_text(version_lab_html(xiao_html, '../'), encoding='utf-8')
+    ten_ten_html = (lab_assets/'ten-ten.html').read_text(encoding='utf-8')
+    ten_ten_html = ten_ten_html.replace('<script src="../lab.js"></script>',
+        '<script src="../public-lab.js"></script><script src="../lab.js"></script>')
+    (ten_ten_out/'index.html').write_text(version_lab_html(ten_ten_html, '../'), encoding='utf-8')
     boundary_assets = ROOT/'src'/'surface_diagrams'/'boundary_assets'
     boundary_out = OUT/'boundary-lab'
     boundary_out.mkdir(exist_ok=True)
@@ -169,6 +173,8 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
                 body+='<p><a href="../docs/proofs/four-three-thesis-storyboard.html">Follow Buckman’s separate Baykur–Korkmaz derivation diagrams</a></p>'
                 body+='<p><a href="../docs/proofs/four-three-thesis-first-stage.html">Inspect the three checked Baykur–Korkmaz thesis columns and their cut complexes</a></p>'
                 body+='<p><a href="../docs/proofs/four-three-thesis-squared-stage.html">Follow the checked squared-boundary regrouping with cut complexes</a></p>'
+            if category=='fibrations' and e['slug']=='10-10':
+                body+='<p><a href="../lab/ten-ten/index.html">Open Richard’s twenty-factor (10,10) transcription lab</a>. The dictated routes are encoded; sphere closure currently fails and F7 is provisional. Identification with Nakamura’s example is unproved.</p>'
             body += ''.join('<section><h2>'+escape(k)+'</h2><p>'+escape(v)+'</p></section>' for k,v in e['sections'].items())
             body += '<p>Future formats will use common curve and factor IDs, an explicit multiplication order, and documented correspondences. A drawing alone does not verify an equivalence.</p>'
             page(category+'/'+e['slug']+'.html',e['title'],body,'../')
@@ -196,6 +202,8 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
             body+='</section>'
         else:
             body+='<section><h2>Factor workspace</h2><p>An ordered, verified disk-braid encoding is still needed before drag-and-drop Hurwitz moves can be enabled. The source relation and section information above are available now.</p></section>'
+            if seed.slug=='10-10':
+                body+='<p><a href="../lab/ten-ten/index.html">A separate lab now contains Richard’s twenty dictated supports</a>. It preserves the exact transcribed disk product; that product currently fails sphere closure. No equivalence to this source construction is claimed.</p>'
         page('fibration-lab/'+seed.slug+'.html',seed.title+' study',body,'../')
     figures=[]
     for p in sorted((OUT/'examples/output/tutorial').glob('*.svg')):
@@ -204,7 +212,7 @@ U₁₄ = σ₃⁻¹ σ₂⁻¹ σ₁² σ₂ σ₃.</pre>
         tikz=p.with_suffix('.tikz')
         figures.append('<article class="card"><h2>'+escape(label)+'</h2><a href="'+url+'"><img loading="lazy" src="'+url+'" alt="'+escape(label)+'"></a><p><a href="'+url+'">SVG</a>'+(' · <a href="'+tikz.relative_to(OUT).as_posix()+'">TikZ</a>' if tikz.exists() else '')+'</p></article>')
     page('gallery.html','Illustrated gallery','<p>Runnable examples from the <a href="docs/TUTORIAL.html">tutorial</a>. These show implemented drawing features; the mathematical catalog is planned separately.</p>'+''.join(figures))
-    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="lab/index.html">Try the (6,7) factorization lab</a></h2><p>Drag Hurwitz moves, split and combine factors, and inspect the exact action in your browser.</p></section><section><h2><a href="boundary-lab/pc-lantern.html">Explore the PC lantern lab</a></h2><p>Compare three planar twists, their cumulative cut arcs, and one continuous braid.</p></section><section><h2><a href="boundary-lab/index.html">Factor a boundary twist</a></h2><p>Start with three, four, or five marked points, try checked substitutions, and move factors through one another.</p></section><section><h2><a href="docs/proofs/braid-six-seven/braid-six-seven-proof.html">Check the (6,7) sphere proof</a></h2><p>19 sphere substitutions with a machine-checkable move certificate.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
+    page('index.html','Draw surfaces. Explore factorizations.','<p>A Python library and growing mathematical atlas for surface diagrams, relations and Lefschetz fibrations.</p><div class="grid"><section><h2><a href="docs/TUTORIAL.html">Start with the tutorial</a></h2><p>Runnable Python recipes and SVG/TikZ output.</p></section><section><h2><a href="gallery.html">Explore the gallery</a></h2><p>Planar curves, braids, genus surfaces and bordered reference families.</p></section><section><h2><a href="lab/index.html">Try the (6,7) factorization lab</a></h2><p>Drag Hurwitz moves, split and combine factors, and inspect the exact action in your browser.</p></section><section><h2><a href="lab/ten-ten/index.html">Open the (10,10) transcription lab</a></h2><p>Twenty dictated supports, exact braid editing, and visible transcription and closure checks.</p></section><section><h2><a href="boundary-lab/pc-lantern.html">Explore the PC lantern lab</a></h2><p>Compare three planar twists, their cumulative cut arcs, and one continuous braid.</p></section><section><h2><a href="boundary-lab/index.html">Factor a boundary twist</a></h2><p>Start with three, four, or five marked points, try checked substitutions, and move factors through one another.</p></section><section><h2><a href="docs/proofs/braid-six-seven/braid-six-seven-proof.html">Check the (6,7) sphere proof</a></h2><p>19 sphere substitutions with a machine-checkable move certificate.</p></section><section><h2><a href="relations/index.html">Relations</a></h2><p>Lantern, half lantern, rose and daisy.</p></section><section><h2><a href="fibrations/index.html">Lefschetz fibrations</a></h2><p>MCK, hyperelliptic, BK, numbered examples and Gurtas.</p></section></div>')
     page('releases.html','Versioned releases','<p>Development version: 0.1.0a6. This is alpha software; catalog entries are under development.</p><p><a href="https://github.com/richardbuckman-math/surface-diagrams/releases">Published release downloads</a> · <a href="docs/RELEASING.md">Release procedure</a></p>')
     check_links()
     print('Built site and checked local links:', OUT)

@@ -2,7 +2,7 @@
 import json
 from urllib.parse import parse_qs, urlsplit
 
-from surface_diagrams.factorization_lab import LabServer, starting_factors, validated_session_document
+from surface_diagrams.factorization_lab import LabServer, starting_factors, validated_session_document, seed_message
 from surface_diagrams.factorization_geometry import factorization_svg
 
 
@@ -20,7 +20,7 @@ def select_lab_seed(seed_slug='6-7'):
     lab.operations = ['Original factorization']
     lab.position = 0
     lab.revision = 0
-    lab.message = 'Loaded the original factorization in this browser.'
+    lab.message = seed_message(seed_slug)
     lab.verification_notice = ''
 
 

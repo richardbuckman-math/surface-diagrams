@@ -46,6 +46,33 @@ before applying the two-use consequence, to change its inverse-pair geometry;
 do not simply repeat the failed fixed-neighbor cancellations or replace the
 two distinct inverses by a square. Preserve the in-progress (10,10) edits.
 
+## October 17: supplied twenty-factor transcription lab
+
+The user's twenty dictated supports now have a separate lab at
+`lab/ten-ten/index.html`, with local CLI `--seed 10-10`. Source descriptions,
+Arc/Loop routes, and exact braid conjugators are in `ten_ten.py`. All twenty
+boundary classes match exactly and every support draws. Ten half twists and
+ten squared three-point twists assume F7 is a squared Dehn twist around
+4,5,6, like F18: the user said "half twist squared" but described a three-point
+closed loop. Confirmation was requested; it remains explicitly provisional.
+
+The transcribed product FAILS sphere closure and has genus-two homology
+`[[-14,19,19,-20],[12,-15,-16,16],[-9,12,13,-12],[15,-19,-19,21]]`.
+Do not claim a closed (10,10) identity or identify this with Nakamura's example.
+F7's assumed three-point squared twist is homologically trivial, so simply
+confirming its label does not fix the half-twist discrepancy. The original
+dictation stays visible in the lab and exports. The source convention is
+displayed without the older labs' vertical reflection. All edits preserve
+this exact seed product; source correction requires a separate seed revision.
+
+The lab has isolated browser/file sessions, Hurwitz editing, splits and
+substitutions, support and cumulative-action inspectors, and JSON/SVG export.
+The site build links it from the homepage, main lab, and (10,10) catalog.
+Five new lab tests and all 55 existing factorization tests pass. JavaScript
+syntax and the full site/link build pass. Browser checks verified loading,
+source descriptions, an exact Hurwitz move, and undo. See
+`docs/proofs/ten-ten-transcription.md` for the conventions and limitations.
+
 ## October 17 evening: shorter signed branch, with the obstruction retained
 
 The full structural derivation remains open. The strongest positive endpoint
