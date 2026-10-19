@@ -783,6 +783,70 @@ The final three new columns were visually inspected, including the retained
 red inverse. Dense disk representatives remain individual support pictures,
 not cumulative joint cut-complex certificates.
 
+## Exact fixedness from a three-point free-product chart
+
+`three_point_curve_fixedness_certificate(T,w)` avoids constructing T(w).
+Write delta=(1,2,3,4,5). For a twist on an interval starting at i, its
+standardizing chart is g delta^(i-1), where g is its conjugator. Compute
+the unoriented cyclic class of w in the inverse chart, with the existing
+word bound. A bound failure is unknown, not a negative result.
+
+Here is the criterion and its proof. In the T123 chart, put u=x1 x2 x3
+and split F5 as F(x1,x2,x3)*F(x4,x5). T123 acts on the first factor by
+conjugation by u and fixes the second. The same argument applies to every
+positive power of the twist.
+
+If the cyclic word lies in either free factor, its free conjugacy class is
+fixed. Otherwise cut it at an outside-to-inside transition and form its
+alternating nonempty free-product syllables. A mixed cyclically reduced
+free-product word can be conjugate to another such word only by a cyclic
+permutation of its syllables. Therefore, if the twist fixes the class,
+each inside syllable has a finite orbit under conjugation by u. It must
+commute with a power of u, hence belong to <u>; u has no proper root.
+Conversely, if every inside syllable is a power of u, each is fixed and
+the whole word is fixed. An unoriented fixed class has an oriented period
+of at most two, so gives the same condition. This yields an exact negative
+witness: the first inside syllable that is not a power of u.
+
+Tests compare this criterion with direct sphere actions in 80 short
+examples, covering all four intervals, two conjugators, two powers, and
+curves through the sixth-puncture chart. They also test mixed outside
+words and a would-be cyclic permutation that is not a finite orbit.
+
+`three_root_tail_fixedness_audit()` checks the initial signed Q45 curve and
+three repetitions of two adjacent forward Hurwitz moves with its C13
+neighbor. The chart sizes are 146, 832, 4846, 28244. Every case has a
+noncommuting inner syllable (-3,-1), so C12 changes the curve. At repetition
+two, directly computing the C12-unit image exceeds the 400000-letter bound;
+the normal-form certificate settles that same case without expanding the
+image. The regression test requires both outcomes. These are diagnostic
+positions, not new derivation steps or a cumulative drawing certificate.
+
+The following bounded hypotheses also fail. Acting on Q45 by C13 powers
+-3 through 3 gives neither a C12-invariant curve nor an existing positive
+pair. Consider extracting selected factors from the ordered intervening
+block F3, F6, new.P26, F9, residual.P26, F11 upward unchanged, each just
+past the inverse. C12 is unchanged by these moves. Fifteen nonempty
+subsequences preserving endpoints 4,5 fail by direct sphere action. Sixteen
+with one 14 half and one 25 half instead give endpoints 1,2 and also fail
+the new normal-form test. In the latter audit, combining the inverse C12
+chart with the support conjugator before acting keeps the chart sizes
+between 30 and 3930. The empty case was already checked. The other 32
+subsequences give endpoint pairs 1,5 or 2,4, which straddle C12's two
+sides; they cannot be petals. This excludes this extraction family, not
+all Hurwitz routes or all curves with those endpoints.
+
+Next return to the positive C4-cluster checkpoint. It has an unused
+endpoint triangle P12/P23/P13 around {1,2,3}, with two P12 units and two
+P13 candidates. Verify the transported ordered PC rose geometrically
+before any inverse substitution. Keep the signed C13 branch separately;
+its inverse Q45 has not been cancelled and may not be omitted.
+
+All 35 focused sphere/structure/lift tests pass. The report keeps its 133
+derivation states and 111 support SVGs, plus four diagnostic positions
+that are explicitly not derivation progress. The new support comparison
+and result table were rendered and visually inspected.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

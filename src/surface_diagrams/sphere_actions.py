@@ -92,6 +92,52 @@ def sphere_supported_class(twist, *, max_letters=400000):
         tuple(range(twist.first, twist.first + twist.points)), max_letters=max_letters)
 
 
+def three_point_curve_fixedness_certificate(twist, boundary_word, *, max_letters=400000):
+    """Decide whether a three-point twist fixes an unoriented sphere class.
+
+    In the standard T123 chart, F5=F(1,2,3)*F(4,5). The twist conjugates
+    the first factor by u=123 and fixes the second. A cyclic word in one
+    factor is therefore fixed up to conjugacy. A mixed cyclic word is
+    fixed iff every first-factor syllable is a power of u. Indeed, free
+    product conjugacy permits only cyclic permutations of mixed syllables;
+    a finite orbit under conjugation by u^power forces each inner syllable
+    into the centralizer <u>. An unoriented fixed class has an oriented
+    period at most two, giving the same criterion.
+
+    Only the change of chart is expanded. This is a sphere curve-class
+    certificate, not a disk action or genus-two lift certificate. A chart
+    exceeding max_letters raises VerificationLimitError, never False.
+    """
+    if (not isinstance(twist, ConjugatedTwist) or twist.points != 3 or
+            twist.first + 2 > 6):
+        raise ValueError('Use a three-point twist within the six-point chart')
+    # delta^(first-1) T123 delta^-(first-1) is the standard interval twist.
+    chart = twist.conjugator + tuple(range(1, 6)) * (twist.first - 1)
+    word = sphere_curve_action(inverse_word(chart), boundary_word, max_letters=max_letters)
+    inside = lambda letter: abs(letter) <= 3
+    mixed = bool(word and any(inside(x) for x in word) and any(not inside(x) for x in word))
+    bad = ()
+    syllables = []
+    if mixed:
+        start = next(i for i in range(len(word)) if inside(word[i]) and not inside(word[i - 1]))
+        rotated = word[start:] + word[:start]
+        blocks = []
+        for letter in rotated:
+            if not blocks or inside(letter) != inside(blocks[-1][0]):
+                blocks.append([])
+            blocks[-1].append(letter)
+        syllables = [tuple(block) for block in blocks[::2]]
+        for block in syllables:
+            if (block != (1, 2, 3) * (len(block) // 3) and
+                    block != (-3, -2, -1) * (len(block) // 3)):
+                bad = block
+                break
+    return dict(fixed=not bad, method='three-point free-product normal form',
+                chart_conjugator=chart, chart_class=word, mixed=mixed,
+                inner_syllable_count=len(syllables), first_noncommuting_syllable=bad,
+                scope='Unoriented sphere curve class only; no disk action or lift sign implied')
+
+
 def sphere_chain_certificate(braid, *, max_letters=400000):
     """Check sphere identity using the five adjacent-point arc classes.
 

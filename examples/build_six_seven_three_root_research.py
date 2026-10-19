@@ -19,6 +19,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_cross_petal_lantern,
     three_root_cross_cluster_lantern,
     three_root_tail_cluster_lantern,
+    three_root_tail_fixedness_audit,
 )
 
 
@@ -35,12 +36,14 @@ def build():
     cross_petal = three_root_cross_petal_lantern()
     cross_cluster = three_root_cross_cluster_lantern()
     tail_cluster = three_root_tail_cluster_lantern()
+    fixedness = three_root_tail_fixedness_audit(tail_cluster)
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
                   cross_petal_lantern=cross_petal,
                   cross_cluster_lantern=cross_cluster,
                   tail_cluster_lantern=tail_cluster,
+                  tail_fixedness_audit=fixedness,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -171,6 +174,14 @@ def build():
         tail_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                           f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
+    fixedness_pictures = ''.join(
+        f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
+        for label, factor in (('The remaining C12 support', fixedness['samples'][0]['c12']),
+                              ('The inverse Q45 support', fixedness['samples'][0]['inverse'])))
+    fixedness_rows = ''.join(
+        f'<tr><td>{row["double_moves"]}</td><td>{len(row["certificate"]["chart_class"])}</td>'
+        '<td>C12 changes this curve</td></tr>' for row in fixedness['samples'])
+
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
                                           ('After applying C1', transport['intermediate']),
@@ -191,6 +202,7 @@ align-items:center;border-top:1px solid #e1e7eb;min-height:70px;font-size:11px;g
 .factor.inverse{background:#fff0f2;color:#8c2040;border-left:3px solid #a82b4a}
 figure{flex:0 0 300px;margin:0;background:white;padding:12px;border-radius:10px}
 figure img{width:300px;max-width:100%}figcaption{font-weight:bold;margin-bottom:12px}
+table{border-collapse:collapse;background:white}th,td{padding:10px 14px;text-align:left;border:1px solid #cbd5df}
 </style><body><header><h1>(6,7): pairing original F2 and F7 in the disk</h1>
 <p class="notice"><strong>The full structural derivation is still open.</strong>
 This route starts by pairing a second pair of the original half twists. Named
@@ -327,7 +339,22 @@ fail on exact sphere classes.</p>
 The red inverse Q45 is essential: omitting it changes the genus-two action.
 It is not a positive LF relation or a complete (6,7) derivation. The
 earlier positive checkpoint remains available above.</p>
-<div class="board">TAIL_CARDS</div></body></html>'''
+<div class="board">TAIL_CARDS</div>
+<h2>Checking the C12 obstruction without expanding its large image curve</h2>
+<div class="local">FIXEDNESS_PICTURES</div>
+<p>Two adjacent Hurwitz moves between the inverse and its neighboring C13
+root change their supports. At each of the four positions below, C12
+still changes the inverse’s curve class. It therefore cannot be used as
+a petal of a PC rose for C12 in that position.</p>
+<table><thead><tr><th>Two-move repetitions</th><th>Word length in C12’s chart</th>
+<th>Exact result</th></tr></thead><tbody>FIXEDNESS_ROWS</tbody></table>
+<p>The new check moves the curve into C12’s standard chart and checks its
+free-product normal form. At repetition two, direct image expansion hits
+the existing word bound; the chart has only 4,846 letters and gives an
+exact obstruction. The full certificate is in the linked JSON.</p>
+<p class="notice">These are failed local configurations, not new derivation
+steps. The full (6,7) structural derivation remains open. Individual support
+pictures are not cumulative joint cut-complex certificates.</p></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -340,6 +367,7 @@ earlier positive checkpoint remains available above.</p>
             .replace('CROSS_CARDS', ''.join(cross_cards))
             .replace('CLUSTER_CARDS', ''.join(cluster_cards))
             .replace('TAIL_CARDS', ''.join(tail_cards))
+            .replace('FIXEDNESS_PICTURES', fixedness_pictures).replace('FIXEDNESS_ROWS', fixedness_rows)
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '

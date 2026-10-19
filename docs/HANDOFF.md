@@ -1,5 +1,49 @@
 # Handoff: surface-diagrams
 
+## October 19 morning: exact three-point fixedness without the large image
+
+`three_point_curve_fixedness_certificate()` decides whether an ordinary
+three-point twist (or a positive power) fixes an unoriented sphere curve.
+It changes to the T123 chart, then uses the free-product normal form in
+F(1,2,3)*F(4,5), instead of expanding the twist's image. The proof and
+scope are in the research note. It works for all four standard three-point
+intervals via a checked delta rotation; a chart hitting the bound remains
+unknown. It certifies a sphere curve-class comparison, not a disk action,
+a genus-two lift, or a joint drawing.
+
+`three_root_tail_fixedness_audit()` checks four positions of the local
+inverse-Q45/C13 orbit, using two adjacent forward Hurwitz moves per
+repetition. Every position still intersects the C12 support. At repetition
+two, direct C12-unit image expansion exceeds 400000 letters; the exact
+chart has 4846 letters and the noncommuting inner syllable (-3,-1) proves
+nonfixedness. This formerly unknown check is now a definite negative,
+without changing the bound. The graphical research report includes the
+two initial support pictures, a four-row result table, and JSON certificates.
+
+Further local failures, not global obstructions: C13 powers -3 through 3
+do not take Q45 to a C12-invariant class or an existing positive pair.
+For subsequences of the six factors between Q45 and C12, extracting each
+selected factor upward unchanged also fails to give a C12 petal in all
+32 same-side endpoint cases (including the empty subsequence). Fifteen
+nonempty cases preserve endpoints 4,5; sixteen change them to 1,2. The
+other 32 have endpoints 1,5 or 2,4 straddling C12 and cannot be disjoint.
+These tests concern one specific extraction family, not arbitrary Hurwitz
+moves. See the note for the exact ordering and calculation methods.
+
+Next return to the positive fourteen-record `three_root_cross_cluster_lantern()`
+checkpoint and test a different PC rose: one unit of P12, new.P26 (P23),
+and one of the two P13 petals form an endpoint triangle {1,2,3}. Gather
+the actual supports in their ordered Hurwitz charts and check the whole
+relation before contracting. Do not assume the triangle alone is a rose.
+Keep the signed C13 branch and all its failed local tests as a separate
+checkpoint. The full (6,7) structural derivation remains open.
+
+Validation: all 35 focused sphere/structure/lift tests pass, including the
+bounded-image regression and 80 direct-action comparisons. The report
+retains 133 derivation states and 111 support SVGs (none unavailable), plus
+four clearly separate diagnostic positions. Its new support comparison
+and result table were rendered and visually inspected.
+
 ## October 19: direct sphere supports and a signed C13 cluster branch
 
 `sphere_supported_class()` now computes a twist's support directly in F5

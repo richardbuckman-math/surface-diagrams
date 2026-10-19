@@ -4,10 +4,33 @@ from unittest.mock import patch
 from surface_diagrams.factorization_explorer import initial_factors,move_factor,product
 from surface_diagrams.braid_actions import free_homotopy_key,inverse_word,reduce_word
 from surface_diagrams.mapping_classes import ConjugatedTwist,VerificationLimitError,exact_action,supported_class
-from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate,sphere_reduce,sphere_chain_certificate,sphere_supported_class
+from surface_diagrams.sphere_actions import (sphere_curve_action,sphere_inner_certificate,sphere_reduce,
+    sphere_chain_certificate,sphere_supported_class,three_point_curve_fixedness_certificate)
 
 
 class SphereActionTests(unittest.TestCase):
+    def test_three_point_normal_form_matches_direct_actions_in_all_interval_charts(self):
+        from itertools import product
+        words = ((1,2), (4,5), (5,6), (1,4,2,5), (1,2,3,4,-3,-2,-1,5))
+        for first, g, power in product(range(1,5), ((), (3,-5,2,1)), (1,2)):
+            twist = ConjugatedTwist(g, first, 3, power)
+            for word in words:
+                certificate = three_point_curve_fixedness_certificate(twist, word)
+                expected = sphere_curve_action(twist.word, word) == sphere_curve_action((), word)
+                self.assertEqual(certificate['fixed'], expected, (twist,word))
+        twist = ConjugatedTwist((),1,3)
+        # Mixed words carried by the outside side have inner powers of 123.
+        outside = (1,2,3,4,-3,-2,-1,5)
+        self.assertTrue(three_point_curve_fixedness_certificate(twist, outside)['fixed'])
+        self.assertTrue(three_point_curve_fixedness_certificate(twist, (1,-2,3))['fixed'])
+        # A first syllable may be sent to the next one without a finite orbit.
+        periodic_candidate = (1,4,1,2,3,1,-3,-2,-1,4)
+        self.assertFalse(three_point_curve_fixedness_certificate(twist, periodic_candidate)['fixed'])
+        with self.assertRaises(ValueError):
+            three_point_curve_fixedness_certificate(ConjugatedTwist((),1,2),(1,2))
+        with self.assertRaises(VerificationLimitError):
+            three_point_curve_fixedness_certificate(twist,outside,max_letters=2)
+
     def test_supported_sphere_classes_agree_with_disk_reduction_including_infinity(self):
         for g in ((), (5,), (3, -5, 2, 1)):
             for first, points in ((1, 2), (5, 2), (2, 3)):

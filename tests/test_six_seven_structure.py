@@ -20,6 +20,7 @@ from surface_diagrams.six_seven_structure import (
     research_hurwitz_move, three_root_cross_petal_lantern,
     three_root_cross_cluster_lantern,
     three_root_tail_cluster_lantern,
+    three_root_tail_fixedness_audit,
 )
 
 
@@ -57,6 +58,20 @@ class SixSevenStructureTests(unittest.TestCase):
         self.assertTrue(result['final_sphere_certificate']['certified'])
         # Dropping the red inverse row changes the closed lift.
         self.assertNotEqual(homology_action(product(tuple(f for f in previous if f.sign > 0))), IDENTITY)
+        audit = three_root_tail_fixedness_audit(result)
+        self.assertEqual(len(audit['samples']), 4)
+        self.assertEqual(len(audit['disk_moves']), 6)
+        self.assertTrue(all(not row['certificate']['fixed'] for row in audit['samples']))
+        self.assertTrue(all(move['disk_word_certificate']['discrepancy'] == ()
+                            for move in audit['disk_moves']))
+        bounded = audit['samples'][2]
+        self.assertEqual(len(bounded['certificate']['chart_class']), 4846)
+        self.assertEqual(bounded['certificate']['first_noncommuting_syllable'], (-3,-1))
+        # Full image expansion cannot decide this within the existing bound;
+        # the normal-form calculation gives an exact negative certificate.
+        from surface_diagrams.mapping_classes import VerificationLimitError
+        with self.assertRaises(VerificationLimitError):
+            sphere_curve_action(replace(bounded['c12'],power=1).word, bounded['source_class'])
 
     def test_cross_cluster_lantern_cancels_the_actual_pair_and_combines_its_petal(self):
         result = three_root_cross_cluster_lantern()

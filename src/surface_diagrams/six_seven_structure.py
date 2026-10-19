@@ -16,7 +16,8 @@ from .hyperelliptic_homology import (
     IDENTITY, half_twist_class, homology_action, homology_quotient,
 )
 from .mapping_classes import ConjugatedTwist, exact_action, supported_class
-from .sphere_actions import sphere_curve_action, sphere_inner_certificate, sphere_chain_certificate, sphere_supported_class
+from .sphere_actions import (sphere_curve_action, sphere_inner_certificate, sphere_chain_certificate,
+                             sphere_supported_class, three_point_curve_fixedness_certificate)
 
 
 def intersection(left, right):
@@ -1261,6 +1262,36 @@ def three_root_tail_cluster_lantern():
         final_all_factors_positive=False, direct_cancellation_attempts=tuple(attempts),
         remaining_odd_root_ids=('tail.C13.unused',), complete_structural_derivation_found=False,
         scope='Signed mixed sphere/genus-two research branch; the inverse Q45 may not be omitted')
+
+
+def three_root_tail_fixedness_audit(tail=None):
+    """Certify four local Q45/C13 orbit positions without expanding C12(Q45).
+
+    Two adjacent forward Hurwitz moves keep the inverse before the root
+    but change both supports. This is a diagnostic orbit, not progress
+    toward a complete derivation or permission to omit the inverse.
+    """
+    tail = three_root_tail_cluster_lantern() if tail is None else tail
+    state = tail['stages'][-1]['factors']
+    c12 = next(f for f in state if f.points == 3 and f.power == 2)
+    rows, moves = [], []
+    for iteration in range(4):
+        inverse = next(f for f in state if f.sign < 0)
+        source = sphere_supported_class(inverse.mapping_class)
+        certificate = three_point_curve_fixedness_certificate(c12.mapping_class, source)
+        rows.append(dict(double_moves=iteration, inverse=inverse, c12=c12,
+                         source_class=source, certificate=certificate))
+        if iteration < 3:
+            index = next(i for i, f in enumerate(state) if f.sign < 0)
+            assert state[index + 1].id == 'tail.C13.unused'
+            for _ in range(2):
+                move = research_hurwitz_move(state, index, index + 1)
+                moves.append(move)
+                state = move['factors']
+    assert all(not row['certificate']['fixed'] for row in rows)
+    return dict(samples=tuple(rows), disk_moves=tuple(moves),
+                complete_structural_derivation_found=False,
+                scope='Failed local petal configurations; no new relation or joint drawing claimed')
 
 
 def root_cluster_lantern_route():
