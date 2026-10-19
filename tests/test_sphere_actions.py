@@ -3,11 +3,30 @@ from unittest.mock import patch
 
 from surface_diagrams.factorization_explorer import initial_factors,move_factor,product
 from surface_diagrams.braid_actions import free_homotopy_key,inverse_word,reduce_word
-from surface_diagrams.mapping_classes import VerificationLimitError,exact_action
-from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate,sphere_reduce,sphere_chain_certificate
+from surface_diagrams.mapping_classes import ConjugatedTwist,VerificationLimitError,exact_action,supported_class
+from surface_diagrams.sphere_actions import sphere_curve_action,sphere_inner_certificate,sphere_reduce,sphere_chain_certificate,sphere_supported_class
 
 
 class SphereActionTests(unittest.TestCase):
+    def test_supported_sphere_classes_agree_with_disk_reduction_including_infinity(self):
+        for g in ((), (5,), (3, -5, 2, 1)):
+            for first, points in ((1, 2), (5, 2), (2, 3)):
+                twist = ConjugatedTwist(g, first, points)
+                expected = free_homotopy_key(sphere_reduce(supported_class(twist)))
+                self.assertEqual(sphere_supported_class(twist), expected)
+                self.assertEqual(sphere_supported_class(ConjugatedTwist(g, first, points, 2)), expected)
+        with self.assertRaises(ValueError): sphere_supported_class(None)
+        with self.assertRaises(ValueError): sphere_supported_class(ConjugatedTwist((), 6, 2))
+        with self.assertRaises(VerificationLimitError):
+            sphere_supported_class(ConjugatedTwist((2,), 1, 2), max_letters=2)
+
+    def test_supported_sphere_class_discards_peripheral_whiskers_during_transport(self):
+        peripheral = (1, 2, 3, 4, 5, 5, 4, 3, 2, 1)
+        self.assertTrue(sphere_chain_certificate(peripheral)['certified'])
+        twist = ConjugatedTwist(peripheral * 20 + (3, -5, 2, 1), 5, 2)
+        expected = sphere_supported_class(ConjugatedTwist((3, -5, 2, 1), 5, 2))
+        self.assertEqual(sphere_supported_class(twist), expected)
+
     def test_boundary_relation_and_input_validation(self):
         self.assertEqual(sphere_reduce((1,2,3,4,5,6)),())
         self.assertEqual(sphere_reduce((6,)),(-5,-4,-3,-2,-1))

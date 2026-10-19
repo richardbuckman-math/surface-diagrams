@@ -19,10 +19,45 @@ from surface_diagrams.six_seven_structure import (
     three_root_petal_exchange,
     research_hurwitz_move, three_root_cross_petal_lantern,
     three_root_cross_cluster_lantern,
+    three_root_tail_cluster_lantern,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_tail_cluster_retains_the_inverse_and_the_unit_deck_sign(self):
+        result = three_root_tail_cluster_lantern()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertFalse(result['final_all_factors_positive'])
+        self.assertEqual(result['inner_clusters'], ((3, 6), (5,), (4,)))
+        self.assertTrue(result['complement_unit_sphere_certificate']['certified'])
+        self.assertEqual(result['complement_unit_lift_homology'],
+                         tuple(tuple(-x for x in row) for row in IDENTITY))
+        self.assertEqual(homology_action(result['complement_unit_disk_discrepancy']),
+                         result['complement_unit_lift_homology'])
+        previous = None
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 exact_action(product(stage['local_after'])))
+            elif stage['kind'] == 'sphere_rewrite':
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+            previous = state
+        self.assertEqual(len(previous), 15)
+        self.assertEqual(tuple(f.id for f in previous if f.sign < 0), ('tail.inverse.Q45',))
+        self.assertEqual(previous[0].id, 'tail.P12.square')
+        self.assertEqual(previous[0].power, 2)
+        self.assertEqual(len(result['direct_cancellation_attempts']), 8)
+        self.assertTrue(all(not a['matches'] for a in result['direct_cancellation_attempts']))
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        # Dropping the red inverse row changes the closed lift.
+        self.assertNotEqual(homology_action(product(tuple(f for f in previous if f.sign > 0))), IDENTITY)
+
     def test_cross_cluster_lantern_cancels_the_actual_pair_and_combines_its_petal(self):
         result = three_root_cross_cluster_lantern()
         self.assertFalse(result['complete_structural_derivation_found'])

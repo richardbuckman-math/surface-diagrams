@@ -1,5 +1,51 @@
 # Handoff: surface-diagrams
 
+## October 19: direct sphere supports and a signed C13 cluster branch
+
+`sphere_supported_class()` now computes a twist's support directly in F5
+from its standard boundary and conjugator, reducing after every generator.
+It avoids expanding a disk support first. A tail half-extraction diagnostic
+hit the disk support bound; the direct sphere calculation completed the ten
+specific one/two-half routes below without increasing either bound.
+The helper is a sphere curve-class calculation, not a disk action, a lift
+sign check, or a joint drawing certificate.
+
+`three_root_tail_cluster_lantern()` continues the saved positive fourteen-record
+endpoint through seventeen states. The first C12 chart candidates fail;
+C13 fits instead. Put h=A.chart+(1,2,1,2), bring C13 up unchanged, and
+rechart its whole square into h T124 h^-1. The unit hemisphere discrepancy
+has lift -I; the square step has +I. Apply the exact disk cluster lantern
+with inner clusters {3,6},5,4. Rechart its O3456 to complementary P12 on
+the sphere, then combine that P12 with the prefix P12 exactly in B6.
+
+The endpoint has fifteen signed records: one inverse Q45, one ordinary C13
+root, one remaining C12 square, and the other positive factors. It is not
+a positive LF relation or a finished (6,7) derivation. The inverse must stay:
+omitting it changes the genus-two homology action. All eight direct
+fixed-neighbor cancellation attempts fail on exact sphere support classes.
+The earlier positive checkpoint remains intact.
+
+Do not repeat these bounded failures: the fourteen shortest C12 cluster
+chart candidates; the three natural pair supports in the transported C4
+chart (none is fixed by C12); the direct C12/Q45 commutation checks with
+Q45 raw and after fixed-neighbor transport; single F3/F6/F9/F11 actions in
+either sign; and extracting halves in the ten orders F3, F9, F3/F6,
+F3/F11, F9/F6, F9/F11, F6/F3, F6/F9, F11/F3, F11/F9.
+These are local failures, not a proof of a global obstruction.
+
+Next use the actual leftover C13 root and Q45 in this signed branch:
+test a geometric transport of Q45 by that root before trying to match a
+petal of the remaining C12 square. C12 currently does not preserve Q45,
+so it cannot simply be expanded into a rose assumed to contain that petal.
+Retain the whole-square deck-sign rule and the eight saved failed direct
+cancellations; the full structural derivation remains open.
+
+Validation: all 34 focused sphere/structure/lift tests pass. The graphical
+replay now has 133 route states and 111 shared support SVGs, with no
+unavailable drawings. The last three new columns were rendered and visually
+inspected, including the red inverse row. Dense individual SVGs can be
+opened separately to zoom; they are not cumulative joint cut complexes.
+
 ## October 18 midday: transported C4 lantern and exact inverse cancellation
 
 `three_root_cross_cluster_lantern()` continues the latest cross-petal branch

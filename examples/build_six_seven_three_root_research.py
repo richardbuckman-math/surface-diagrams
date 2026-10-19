@@ -18,6 +18,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_petal_exchange,
     three_root_cross_petal_lantern,
     three_root_cross_cluster_lantern,
+    three_root_tail_cluster_lantern,
 )
 
 
@@ -33,11 +34,13 @@ def build():
     exchange = three_root_petal_exchange()
     cross_petal = three_root_cross_petal_lantern()
     cross_cluster = three_root_cross_cluster_lantern()
+    tail_cluster = three_root_tail_cluster_lantern()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
                   cross_petal_lantern=cross_petal,
                   cross_cluster_lantern=cross_cluster,
+                  tail_cluster_lantern=tail_cluster,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -158,6 +161,15 @@ def build():
                  'Exact disk move' if index else 'The cross-stage PC lantern endpoint')
         cluster_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                              f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
+    tail_cards = []
+    for index, stage in enumerate(tail_cluster['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+                 'Exact disk move' if index else 'The positive mixed C4-cluster endpoint')
+        tail_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                          f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -301,7 +313,21 @@ Bring the later P35 petal up and combine it with the first P35 in the disk.</p>
 triple twists and one ordinary triple twist. This is still a mixed
 factorization, not a positive LF type or the full (6,7) derivation.
 Individual support drawings do not certify cumulative cut complexes.</p>
-<div class="board">CLUSTER_CARDS</div></body></html>'''
+<div class="board">CLUSTER_CARDS</div>
+<h2>A C13 cluster branch with an unresolved inverse</h2>
+<p>The first short common-chart tests at C12 fail. Bring C13 up unchanged
+instead: its complementary root fits the {36},5,4 cluster lantern.
+Rechart the whole square before splitting. Recharting just one ordinary
+root would change the genus-two lift by the deck involution.</p>
+<p>The exact disk lantern introduces Q45 inverse. Its outer curve matches
+the prefix P12 on the sphere; after the sphere rechart, the two P12 twists
+combine exactly in the disk. Eight direct transported inverse cancellations
+fail on exact sphere classes.</p>
+<p class="notice">This is a signed research branch with fifteen records.
+The red inverse Q45 is essential: omitting it changes the genus-two action.
+It is not a positive LF relation or a complete (6,7) derivation. The
+earlier positive checkpoint remains available above.</p>
+<div class="board">TAIL_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -313,12 +339,13 @@ Individual support drawings do not certify cumulative cut complexes.</p>
             .replace('EXCHANGE_CARDS', ''.join(exchange_cards))
             .replace('CROSS_CARDS', ''.join(cross_cards))
             .replace('CLUSTER_CARDS', ''.join(cluster_cards))
+            .replace('TAIL_CARDS', ''.join(tail_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
           f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '
-          f'+ {len(cluster_cards)} cross-cluster states; '
+          f'+ {len(cluster_cards)} cross-cluster + {len(tail_cards)} tail-cluster states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

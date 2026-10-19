@@ -719,6 +719,70 @@ has 116 route states and 99 support SVGs with no unavailable drawings. Its
 last three new columns were rendered and visually inspected; the pictures
 remain individual disk representatives, not cumulative cut complexes.
 
+## C12's short chart fails; a C13 chart gives a signed continuation
+
+At the positive C4-cluster endpoint, two consistent downward sweeps of
+the odd root give traces -20 and -4 against the C12 unit root. Only the
+second is compatible with the complementary-root lantern homology model.
+The fourteen endpoint-compatible short chart candidates (both T124 arcs,
+A powers -3 through 3, with cyclic placements inside/outside) do not match
+the actual C12 sphere class. None of the three natural pair supports in
+the transported A chart is fixed by C12. This rules out these charts,
+not every possible transported common chart.
+
+C13 instead has an actual common chart with the odd root A before either
+is changed: `h=A.conjugator+(1,2,1,2)`. Bring the C13 square up unchanged.
+The model `h (3,) T123 (-3,) h^-1` encloses {3,4,6}, complementary to
+C13's {1,2,5}. Its unit discrepancy fixes all five sphere arcs but has
+lift -I. Recharting the entire square has +I; the unit change alone is
+not applied as a lift equality.
+
+`three_root_tail_cluster_lantern()` records seventeen stages. After splitting
+the recharted square, the exact disk cluster lantern is
+
+```text
+A B Q45 = O3456 P36,
+B=h T124 h^-1, Q45=h T34 h^-1,
+O3456=h T1234 h^-1, P36=h T12 h^-1.
+```
+
+Rechart O3456 to h T56 h^-1 on the sphere (disk exponent discrepancy ten,
+lift +I). This P12 matches the existing prefix P12 in the disk, so bring it
+up and combine them. Fifteen signed records remain, including one ordinary
+C13 root, one C12 square, and the essential inverse Q45. Every local disk
+move and the final whole sphere action are checked. Omitting the inverse
+changes the closed genus-two action. This is not a positive LF type or a
+complete structural derivation.
+
+Eight direct fixed-neighbor cancellation transports of Q45 to positive
+pair factors fail; their exact sphere classes are saved in the result.
+C12 does not preserve Q45's raw class or the class obtained by transporting
+the inverse down through the intervening factors. Thus a PC rose of C12
+cannot be assumed to have Q45 as a petal from endpoint containment alone.
+Acting on Q45 by each actual F3/F6/F9/F11 half twist, in either sign, also
+matches no positive pair. Extracting the halves in the ten orders
+`F3`, `F9`, `F3/F6`, `F3/F11`, `F9/F6`, `F9/F11`, `F6/F3`, `F6/F9`,
+`F11/F3`, `F11/F9` gives no immediate cancellation either.
+
+The half-extraction diagnostic originally reached the 400000-letter disk
+support bound. `sphere_supported_class()` now starts at the standard
+boundary and acts directly in F5, reducing after each generator. The ten
+specific routes above finish without that disk expansion; the largest
+negative sphere class in this audit has length 333090. No bound was raised.
+Tests compare the helper against independent disk reduction on short
+examples including the sixth puncture, check peripheral whiskers, and
+require bounded calculations to return unknown rather than an inequality.
+
+Next test transports by the actual leftover C13 root against the Q45/C12
+configuration. The signed continuation is available alongside the positive
+checkpoint; it does not replace it or justify discarding the inverse.
+
+All 34 focused sphere/structure/lift tests pass. The local graphical replay
+contains 133 route states and 111 support SVGs, with no unavailable pictures.
+The final three new columns were visually inspected, including the retained
+red inverse. Dense disk representatives remain individual support pictures,
+not cumulative joint cut-complex certificates.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

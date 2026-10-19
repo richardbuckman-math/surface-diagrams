@@ -9,7 +9,7 @@ cannot distinguish the central order-two spherical braid from the identity.
 from functools import lru_cache
 
 from .braid_actions import free_homotopy_key,inverse_word,reduce_word
-from .mapping_classes import VerificationLimitError,exact_action
+from .mapping_classes import ConjugatedTwist,VerificationLimitError,exact_action
 
 
 def sphere_reduce(word):
@@ -76,6 +76,20 @@ def sphere_curve_action(braid, boundary_word, *, max_letters=400000):
         if len(current) > max_letters:
             raise VerificationLimitError('Sphere curve action reached its word bound')
     return current
+
+
+def sphere_supported_class(twist, *, max_letters=400000):
+    """Unoriented sphere boundary class of a supported twist, directly in F5.
+
+    Start from the standard support and normalize after every conjugator
+    generator. No intermediate disk support or based whisker is expanded.
+    Twist power and half/full type do not affect this boundary class; it
+    alone certifies neither a twist equality in the disk nor a lift sign.
+    """
+    if not isinstance(twist, ConjugatedTwist) or twist.first + twist.points - 1 > 6:
+        raise ValueError('Sphere supports need a twist within the six-point chart')
+    return sphere_curve_action(twist.conjugator,
+        tuple(range(twist.first, twist.first + twist.points)), max_letters=max_letters)
 
 
 def sphere_chain_certificate(braid, *, max_letters=400000):

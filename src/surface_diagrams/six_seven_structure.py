@@ -16,7 +16,7 @@ from .hyperelliptic_homology import (
     IDENTITY, half_twist_class, homology_action, homology_quotient,
 )
 from .mapping_classes import ConjugatedTwist, exact_action, supported_class
-from .sphere_actions import sphere_curve_action, sphere_inner_certificate, sphere_chain_certificate
+from .sphere_actions import sphere_curve_action, sphere_inner_certificate, sphere_chain_certificate, sphere_supported_class
 
 
 def intersection(left, right):
@@ -1166,6 +1166,101 @@ def three_root_cross_cluster_lantern():
         final_all_factors_positive=True, remaining_odd_root_ids=('cross.C4.unused',),
         complete_structural_derivation_found=False,
         scope='Positive mixed sphere/closed-genus-two branch; one ordinary root and two squared triples remain')
+
+
+def three_root_tail_cluster_lantern():
+    """A checked C13 cluster branch whose inverse Q45 is still essential.
+
+    C12's first short chart candidates fail. C13 instead fits the chart
+    h=A.chart (1,2)^2. Its complementary unit differs by deck -I, so change
+    the whole square before splitting. The lantern combines the P12
+    boundary factors, but none of the saved direct inverse cancellations
+    works. This signed branch is not a completed positive derivation.
+    """
+    state = three_root_cross_cluster_lantern()['stages'][-1]['factors']
+    records = [dict(title='Positive mixed C4-cluster endpoint', kind='start', factors=state)]
+    common = state[2].conjugator + (1, 2, 1, 2)
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def move_one(source, target):
+        nonlocal state
+        moving, crossed = state[source].id, state[target].id
+        move = research_hurwitz_move(state, source, target)
+        state = move['factors']
+        records.append(dict(move, title=f'{moving} {"up" if source > target else "down"} past {crossed}'))
+
+    def disk_replace(index, count, after, title, kind):
+        nonlocal state
+        before, after = state[index:index + count], tuple(after)
+        assert exact_action(product(before)) == exact_action(product(after))
+        state = state[:index] + after + state[index + count:]
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=before, local_after=after))
+
+    def sphere_replace(index, after, title):
+        nonlocal state
+        before = state[index]
+        discrepancy = reduce_word(before.word + inverse_word(after.word))
+        sphere = sphere_chain_certificate(discrepancy)
+        assert sphere['certified'] and homology_action(discrepancy) == IDENTITY
+        state = state[:index] + (after,) + state[index + 1:]
+        records.append(dict(title=title, kind='sphere_rewrite', factors=state,
+            local_before=(before,), local_after=(after,), disk_discrepancy=discrepancy,
+            sphere_certificate=sphere, lift_homology=IDENTITY))
+
+    while position('C13.recombined') > position('cross.C4.unused') + 1:
+        index = position('C13.recombined')
+        move_one(index, index - 1)
+    index = position('C13.recombined')
+    b = SignedResearchFactor('tail.C13.root', common + (3,), 1, 3)
+    unit_discrepancy = reduce_word(replace(state[index], power=1).word + inverse_word(b.word))
+    unit_sphere = sphere_chain_certificate(unit_discrepancy)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert unit_sphere['certified'] and homology_action(unit_discrepancy) == minus_identity
+    sphere_replace(index, replace(b, id='tail.C13.square', power=2),
+                   'Rechart the whole C13 square along its complementary triple')
+    disk_replace(index, 1, (b, replace(b, id='tail.C13.unused')),
+                 'Split the complementary C13 square', 'disk_split')
+    outer = SignedResearchFactor('tail.O3456', common, 1, 4)
+    pair = SignedResearchFactor('tail.P36', common, 1, 2)
+    inverse = SignedResearchFactor('tail.inverse.Q45', common, 3, 2, sign=-1)
+    disk_replace(2, 2, (outer, pair, inverse),
+                 'Apply the {36},5,4 cluster lantern and retain Q45 inverse', 'disk_lantern')
+    complement = SignedResearchFactor('tail.P12', common, 5, 2)
+    sphere_replace(position(outer.id), complement,
+                   'Draw O3456 along its complementary P12 sphere curve')
+    assert sum(1 if x > 0 else -1 for x in records[-1]['disk_discrepancy']) == 10
+    move_one(position(complement.id), position('cross.P35.square'))
+    assert supported_class(state[0].mapping_class) == supported_class(state[1].mapping_class)
+    disk_replace(0, 2, (replace(state[0], id='tail.P12.square', power=2),),
+                 'Combine the two equal P12 twists in the disk', 'disk_combine')
+
+    negative_index = position(inverse.id)
+    negative_class = sphere_supported_class(state[negative_index].mapping_class)
+    attempts = []
+    for index, candidate in enumerate(state):
+        if candidate.sign < 0 or candidate.half or candidate.points != 2:
+            continue
+        between = (product(state[index + 1:negative_index]) if index < negative_index else
+                   inverse_word(product(state[negative_index + 1:index])))
+        actual = sphere_curve_action(between, negative_class)
+        expected = sphere_supported_class(candidate.mapping_class)
+        attempts.append(dict(target_id=candidate.id, transported_inverse_support=actual,
+                             positive_support=expected, matches=actual == expected))
+    assert len(attempts) == 8 and not any(a['matches'] for a in attempts)
+    final = sphere_chain_certificate(product(state))
+    assert final['certified'] and homology_action(product(state)) == IDENTITY
+    assert len(state) == 15 and tuple(f.id for f in state if f.sign < 0) == (inverse.id,)
+    return dict(stages=tuple(records), follows='three_root_cross_cluster_lantern',
+        common_conjugator=common, inner_clusters=((3, 6), (5,), (4,)),
+        complement_unit_disk_discrepancy=unit_discrepancy,
+        complement_unit_sphere_certificate=unit_sphere, complement_unit_lift_homology=minus_identity,
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        final_all_factors_positive=False, direct_cancellation_attempts=tuple(attempts),
+        remaining_odd_root_ids=('tail.C13.unused',), complete_structural_derivation_found=False,
+        scope='Signed mixed sphere/genus-two research branch; the inverse Q45 may not be omitted')
 
 
 def root_cluster_lantern_route():
