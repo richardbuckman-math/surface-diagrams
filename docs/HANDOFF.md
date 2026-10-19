@@ -1,5 +1,53 @@
 # Handoff: surface-diagrams
 
+## October 19 afternoon: a different PC half lantern gives a positive (26,2) branch
+
+`three_root_alternate_half_lantern()` returns to the positive fourteen-record
+`three_root_cross_cluster_lantern()` checkpoint. This is a separate branch,
+not a continuation of the signed C13/Q45 endpoint. It records 29 states:
+the checkpoint, 24 adjacent Hurwitz moves, and four exact disk substitutions.
+Gather the three remaining {1,3,5} petals next to P35 squared. The five pair
+units compress to C5 squared followed by inverse P15. Re-expand the square
+using a half-rotated PC half lantern, whose squared-pair term is P15 squared.
+The inverse then cancels exactly. Expand the remaining ordinary C4 root by
+a PC rose. All factors are positive again, with no odd three-point roots.
+
+The endpoint has eighteen records: eight half twists (four newly introduced
+on {1,3}), nine full pair-twist units, and two squared triple twists. Its
+genus-two LF count is (26,2). The full five-arc sphere action is identity
+and the separate genus-two homology action is +I. Every new move is exact
+in B6 relative to this checkpoint, which already follows sphere-only steps.
+It is not an original disk-equivalent lab workspace. The full structural
+(6,7) derivation is still open; no final standard boundary relation is identified.
+
+`disk_common_chart_certificate()` checks local substitutions by stripping a
+shared conjugator, formally reconstructing both products, and checking the
+faithful Artin action of the small model discrepancy. It avoids expanding
+large common disk whiskers without changing any bound or the public verifier.
+
+The previous proposed {1,2,3} rose fails in eight specified gathered charts:
+two P13 petals and two choices of each later factor's upward Hurwitz move.
+In each case the product's genus-two matrix does not square to I, ruling
+out an ordinary triple twist in those positions. Correction to the previous
+note: the positive checkpoint has ONE P12 unit, not two. The alternative
+{1,3,5} compression above succeeds. A first local audit of the two remaining
+separators and pairs of the four new half twists (48 gathered configurations)
+fails the necessary transported-cycle homology equality; this excludes only
+that family, not every reverse genus-two lantern or arbitrary Hurwitz route.
+
+Next work from this positive (26,2) endpoint: inspect transported reverse
+genus-two lanterns involving the new cycles together with original half
+twists or pair factors. Account for actual curve classes and intervening
+transports. Do not repeat the eight triangle tests, the 48 new-half-only
+gatherings, the earlier Q45 orbit, or infer a standard relation from counts.
+The signed C13 branch and the positive (24,3) checkpoint remain available.
+
+Validation: all 37 focused sphere/structure/lift tests pass. The graphical
+research replay has 162 route states and 138 shared support SVGs, with no
+unavailable pictures. The last three new columns were rendered and visually
+inspected, including the red inverse and its cancellation. Dense supports
+remain individual representatives, not cumulative joint cut complexes.
+
 ## October 19 morning: exact three-point fixedness without the large image
 
 `three_point_curve_fixedness_certificate()` decides whether an ordinary

@@ -21,10 +21,70 @@ from surface_diagrams.six_seven_structure import (
     three_root_cross_cluster_lantern,
     three_root_tail_cluster_lantern,
     three_root_tail_fixedness_audit,
+    disk_common_chart_certificate, three_root_alternate_half_lantern,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_common_disk_chart_checks_the_local_relation_without_expanding_its_whisker(self):
+        from unittest.mock import patch
+        from surface_diagrams.braid_actions import reduce_word
+        g = (1,-3,2,-4,5,-2) * 30
+        h1 = SignedResearchFactor('a',g,1,2,half=True)
+        h2 = SignedResearchFactor('b',g,2,2,half=True)
+        def local_action(word):
+            self.assertLessEqual(len(word),6)
+            return exact_action(word)
+        with patch('surface_diagrams.six_seven_structure.exact_action', side_effect=local_action):
+            certificate = disk_common_chart_certificate((h1,h2,h1),(h2,h1,h2),g)
+        self.assertTrue(certificate['disk_equality'])
+        self.assertEqual(exact_action(certificate['model_discrepancy']), tuple((i,) for i in range(1,7)))
+        for factors, model in (((h1,h2,h1),certificate['model_before']),
+                               ((h2,h1,h2),certificate['model_after'])):
+            self.assertEqual(reduce_word(product(factors) + inverse_word(
+                reduce_word(g + product(model) + inverse_word(g)))), ())
+        with self.assertRaises(ValueError): disk_common_chart_certificate((h1,),(h2,),g)
+        with self.assertRaises(ValueError): disk_common_chart_certificate((h1,),(h1,),(6,))
+
+    def test_alternate_half_lantern_reaches_a_positive_26_2_intermediate(self):
+        from surface_diagrams.braid_actions import reduce_word
+        result = three_root_alternate_half_lantern()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertTrue(result['continuation_exact_in_disk'])
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(result['final_lefschetz_counts'], (26,2))
+        previous = None
+        signed_seen = False
+        for stage in result['stages']:
+            state = stage['factors']
+            signed_seen |= any(f.sign < 0 for f in state)
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'disk_hurwitz':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'].startswith('disk_'):
+                cert = stage['disk_certificate']
+                self.assertTrue(cert['disk_equality'])
+                self.assertEqual(exact_action(cert['model_discrepancy']), tuple((i,) for i in range(1,7)))
+                common = cert['common_conjugator']
+                for actual, model in ((stage['local_before'],cert['model_before']),
+                                      (stage['local_after'],cert['model_after'])):
+                    reconstructed = reduce_word(common + product(model) + inverse_word(common))
+                    self.assertEqual(reduce_word(product(actual) + inverse_word(reconstructed)), ())
+            previous = state
+        self.assertTrue(signed_seen)
+        self.assertEqual(len(previous),18)
+        self.assertTrue(all(f.sign > 0 for f in previous))
+        self.assertFalse(any(f.points == 3 and f.power % 2 for f in previous))
+        self.assertEqual(sum(f.half for f in previous),8)
+        new_halves = [f for f in previous if f.half and f.id.startswith('alternate.')]
+        self.assertEqual(len(new_halves),4)
+        self.assertTrue(all(enclosed_boundaries(replace(f.mapping_class,half=False),6) == (1,3)
+                            for f in new_halves))
+        self.assertEqual(previous[0].power,1)  # The positive checkpoint has one P12 unit.
+        self.assertEqual(result['remaining_odd_root_ids'],())
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+
     def test_tail_cluster_retains_the_inverse_and_the_unit_deck_sign(self):
         result = three_root_tail_cluster_lantern()
         self.assertFalse(result['complete_structural_derivation_found'])

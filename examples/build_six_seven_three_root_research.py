@@ -20,6 +20,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_cross_cluster_lantern,
     three_root_tail_cluster_lantern,
     three_root_tail_fixedness_audit,
+    three_root_alternate_half_lantern,
 )
 
 
@@ -37,6 +38,7 @@ def build():
     cross_cluster = three_root_cross_cluster_lantern()
     tail_cluster = three_root_tail_cluster_lantern()
     fixedness = three_root_tail_fixedness_audit(tail_cluster)
+    alternate = three_root_alternate_half_lantern()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
@@ -44,6 +46,7 @@ def build():
                   cross_cluster_lantern=cross_cluster,
                   tail_cluster_lantern=tail_cluster,
                   tail_fixedness_audit=fixedness,
+                  alternate_half_lantern=alternate,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -181,6 +184,14 @@ def build():
     fixedness_rows = ''.join(
         f'<tr><td>{row["double_moves"]}</td><td>{len(row["certificate"]["chart_class"])}</td>'
         '<td>C12 changes this curve</td></tr>' for row in fixedness['samples'])
+
+    alternate_cards = []
+    for index, stage in enumerate(alternate['stages']):
+        scope = ('The earlier positive fourteen-record C4-cluster checkpoint'
+                 if not index else 'Exact disk move within this branch')
+        alternate_cards.append(
+            f'<section class="stage"><h2>{index}. {escape(stage["title"])}</h2>'
+            f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -354,7 +365,28 @@ the existing word bound; the chart has only 4,846 letters and gives an
 exact obstruction. The full certificate is in the linked JSON.</p>
 <p class="notice">These are failed local configurations, not new derivation
 steps. The full (6,7) structural derivation remains open. Individual support
-pictures are not cumulative joint cut-complex certificates.</p></body></html>'''
+pictures are not cumulative joint cut-complex certificates.</p>
+<h2>Return to the positive C4 checkpoint: an alternative PC half lantern</h2>
+<p>This is a separate branch from the earlier fourteen-record positive C4-cluster
+checkpoint, not a continuation of the signed C13 branch. Gather the three
+remaining {1,3,5} petals beside the squared P35 term. Their ordered disk product
+compresses to C5² P15⁻¹. The red inverse is retained explicitly.</p>
+<p>Expand C5² with the rotated PC half lantern whose squared pair term is P15².
+Its final pair cancels one inverse unit exactly in the disk. Expand the last
+ordinary C4 root by a PC rose. This gives four new {1,3} half twists and removes
+all remaining ordinary roots and inverse factors.</p>
+<p class="notice">The endpoint is a positive genus-two (26,2) intermediate:
+eight half-twist records, nine full pair-twist units, and two squared triple
+twists. Every new move is exact in the disk relative to this branch's checkpoint.
+That checkpoint already used sphere relations, so these are not disk-equivalent
+snapshots of the original product. The complete structural (6,7) derivation
+remains open; a final standard boundary identity has not been identified.</p>
+<p>The common-chart certificates check the faithful disk action of each local
+relation without expanding its long surrounding conjugator. The endpoint also
+has an exact five-arc sphere-action certificate and a separate +I genus-two
+homology check. These drawings show individual supports, not cumulative joint
+cut-complex certificates.</p>
+<div class="board" id="alternate-half-lantern">ALTERNATE_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -368,12 +400,14 @@ pictures are not cumulative joint cut-complex certificates.</p></body></html>'''
             .replace('CLUSTER_CARDS', ''.join(cluster_cards))
             .replace('TAIL_CARDS', ''.join(tail_cards))
             .replace('FIXEDNESS_PICTURES', fixedness_pictures).replace('FIXEDNESS_ROWS', fixedness_rows)
+            .replace('ALTERNATE_CARDS', ''.join(alternate_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
           f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '
-          f'+ {len(cluster_cards)} cross-cluster + {len(tail_cards)} tail-cluster states; '
+          f'+ {len(cluster_cards)} cross-cluster + {len(tail_cards)} tail-cluster '
+          f'+ {len(alternate_cards)} alternate-half-lantern states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

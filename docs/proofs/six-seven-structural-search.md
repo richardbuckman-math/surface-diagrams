@@ -837,7 +837,7 @@ sides; they cannot be petals. This excludes this extraction family, not
 all Hurwitz routes or all curves with those endpoints.
 
 Next return to the positive C4-cluster checkpoint. It has an unused
-endpoint triangle P12/P23/P13 around {1,2,3}, with two P12 units and two
+endpoint triangle P12/P23/P13 around {1,2,3}, with one P12 unit and two
 P13 candidates. Verify the transported ordered PC rose geometrically
 before any inverse substitution. Keep the signed C13 branch separately;
 its inverse Q45 has not been cancelled and may not be omitted.
@@ -846,6 +846,86 @@ All 35 focused sphere/structure/lift tests pass. The report keeps its 133
 derivation states and 111 support SVGs, plus four diagnostic positions
 that are explicitly not derivation progress. The new support comparison
 and result table were rendered and visually inspected.
+
+## October 19 afternoon: rotate the half lantern to introduce new cycles
+
+The endpoint-triangle proposal above does not work in the eight tested
+gathered charts. Start with the positive fourteen-record C4-cluster endpoint,
+use its one P12 unit, gather new.P26 (actually P23), then one of the two
+P13 petals. For each later factor, either drag it upward unchanged or move
+each intervening neighbor downward so that the later factor is conjugated.
+This gives four choices per P13 petal. In all eight resulting products the
+genus-two matrix M has M squared unequal to I. An ordinary three-point twist
+has involutive homology, including after a hemisphere change. Thus none of
+these particular ordered triples is a PC rose. This is a bounded local
+failure, not an obstruction to every transported {1,2,3} chart. The earlier
+wording "two P12 units" was a counting error; there is only one here.
+
+A different local block does admit an exact disk compression.
+`three_root_alternate_half_lantern()` starts again at that positive checkpoint,
+before the signed C13 branch. Bring C5.rose.1.2, C5.rose.1.3, C5.rose.2.2
+upward unchanged to positions 2,3,4 (zero indexed), immediately after the
+prefix P35 square. Each takes eight adjacent Hurwitz moves. In the common
+chart
+
+```text
+g = (-5,2,-5,-4,-3,-2,-1),
+C = g T123 g^-1,  P = g T12 g^-1 = P15,
+```
+
+the five gathered pair units equal C squared followed by P inverse exactly
+in B6. The inverse P is the original g T12 curve: the gathered middle petal
+has acquired a conjugation and cannot simply be negated in its place.
+
+Use the half-rotated chart g(1,2,1) for the standard PC half lantern. Its
+two half twists both join marked points 1 and 3; its pair term is P squared.
+Expand C squared by two copies of this three-term relation, then cancel
+one unit of the final P square against the following inverse. Finally
+replace cross.C4.unused by its three PC rose terms. These are four disk
+substitutions after the 24 adjacent Hurwitz moves; the saved branch has
+29 states including its initial checkpoint.
+
+The eighteen positive records at the end comprise eight half twists,
+nine full pair-twist units, and two squared triples, giving genus-two
+counts (26,2). Four of the half twists are newly introduced, on {1,3},
+so this escapes the earlier obstruction involving only the original six
+half twists. No ordinary three-point root or negative factor remains.
+The complete five-arc sphere action is identity and the separate lift
+homology is +I. All new moves are disk-exact relative to the chosen
+checkpoint; that does not undo earlier sphere-only discrepancies. There
+is still no final standard boundary identity or full (6,7) derivation.
+
+The new `disk_common_chart_certificate()` avoids a large based disk action
+for a local relation with a common conjugator. For before/after factor
+lists, remove g from each factor chart, formally reconstruct both products
+as g(model)g^-1 by free cancellation, and check the faithful Artin action
+of the model discrepancy. An incorrect local equality raises an error;
+a bounded action is not accepted. The tests include a long common chart
+around the elementary braid relation and require that the action sees
+only its six-letter discrepancy, as well as rejecting a false relation.
+
+Initial local follow-up failures: the four new halves form two repeated
+classes Ha,Hb with homology vectors (1,0,1,0) and (1,-2,3,-2). Neither sign
+of a single C5, C4, C12, or C13 ordinary-root action takes Ha to Hb in the
+exact sphere support calculation. For each of the two remaining separators,
+choose two of the four new half records (six choices), gather them in their
+existing order using the two upward-move choices independently, and test
+the reverse genus-two-lantern requirement H2 = C(H1) up to orientation.
+All 2*6*4 = 48 gathered configurations fail already on homology. These are
+not exhaustive Hurwitz routes. Next include original half twists and pair
+twists in geometric transported configurations; do not repeat this family
+or equate a (30,0) count with any known standard boundary relation.
+
+The graphical builder includes the new branch separately after the signed
+branch's failed fixedness audit. Its pictures use the shared surface
+library and display individual support representatives only, not cumulative
+joint cut-complex certificates or disk-only lab snapshots of the original.
+
+Validation: all 37 focused sphere-action, structural-route, and genus-two
+homology tests pass. The replay has 162 route states and 138 shared support
+SVGs with zero unavailable drawings. Its final three new columns were
+rendered and visually inspected, showing the retained inverse, its exact
+cancellation, and the last ordinary-root expansion.
 
 ## Sphere identity without expanding a disk point-push
 

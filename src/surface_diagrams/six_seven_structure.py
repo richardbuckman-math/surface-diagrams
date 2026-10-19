@@ -1294,6 +1294,98 @@ def three_root_tail_fixedness_audit(tail=None):
                 scope='Failed local petal configurations; no new relation or joint drawing claimed')
 
 
+def disk_common_chart_certificate(before, after, conjugator):
+    """Prove a disk substitution by checking its unconjugated local words.
+
+    The reconstruction checks are free-word identities, while the model
+    discrepancy is checked by the faithful Artin action. This avoids
+    expanding a shared, potentially large disk whisker. A false or bounded
+    model check is never accepted as a substitution.
+    """
+    before, after, common = tuple(before), tuple(after), reduce_word(conjugator)
+    if (any(not 1 <= abs(x) <= 5 for x in common) or
+            any(f.first + f.points - 1 > 6 or
+                any(not 1 <= abs(x) <= 5 for x in f.conjugator) for f in before + after)):
+        raise ValueError('Use factors and a common chart within six strands')
+    models = tuple(tuple(replace(f, conjugator=reduce_word(inverse_word(common) + f.conjugator))
+                         for f in factors) for factors in (before, after))
+    for factors, model in zip((before, after), models):
+        reconstructed = reduce_word(common + product(model) + inverse_word(common))
+        assert not reduce_word(product(factors) + inverse_word(reconstructed))
+    discrepancy = reduce_word(product(models[0]) + inverse_word(product(models[1])))
+    if exact_action(discrepancy) != tuple((i,) for i in range(1, 7)):
+        raise ValueError('The local disk substitution is not an exact equality')
+    return dict(method='faithful Artin action in a common disk chart',
+                common_conjugator=common, model_before=models[0], model_after=models[1],
+                model_discrepancy=discrepancy, disk_equality=True)
+
+
+def three_root_alternate_half_lantern():
+    """Restore the 135 rose, choose a different half lantern, remove odd roots.
+
+    The five pair units compress to C5^2 P15^-1 exactly in the disk. A
+    half-rotated chart puts P15 in the squared-pair term of each PC half
+    lantern, so the inverse cancels. Expanding the remaining ordinary C4
+    root by a PC rose gives a positive (26,2) intermediate with new H13
+    cycles. This is not a recognizable final boundary identity yet.
+    """
+    from .projected_relations import pc_half_lantern_terms, pc_rose_terms
+    state = three_root_cross_cluster_lantern()['stages'][-1]['factors']
+    records = [dict(title='Positive mixed C4-cluster endpoint', kind='start', factors=state)]
+
+    def position(name):
+        return next(i for i, f in enumerate(state) if f.id == name)
+
+    def disk_replace(index, count, after, title, kind, common):
+        nonlocal state
+        before, after = state[index:index + count], tuple(after)
+        certificate = disk_common_chart_certificate(before, after, common)
+        state = state[:index] + after + state[index + count:]
+        records.append(dict(title=title, kind=kind, factors=state,
+                            local_before=before, local_after=after, disk_certificate=certificate))
+
+    for destination, name in enumerate(('C5.rose.1.2', 'C5.rose.1.3', 'C5.rose.2.2'), 2):
+        while position(name) > destination:
+            source = position(name)
+            crossed = state[source - 1].id
+            move = research_hurwitz_move(state, source, source - 1)
+            state = move['factors']
+            records.append(dict(move, title=f'{name} up past {crossed}'))
+    common = (-5, 2, -5, -4, -3, -2, -1)
+    root = SignedResearchFactor('alternate.C5.square', common, 1, 3, power=2)
+    inverse = SignedResearchFactor('alternate.inverse.P15', common, 1, 2, sign=-1)
+    disk_replace(1, 4, (root, inverse), 'Compress the five 135 petals and retain inverse P15',
+                 'disk_rose', common)
+    chart = common + (1, 2, 1)
+    terms = pc_half_lantern_terms(ConjugatedTwist(chart, 1, 3))
+    halves = tuple(SignedResearchFactor(f'alternate.HL{r + 1}.{i + 1}', t.conjugator,
+        t.first, t.points, t.power, t.half) for r in range(2) for i, t in enumerate(terms))
+    disk_replace(1, 1, halves, 'Use the half-rotated PC half lantern twice',
+                 'disk_half_lantern', common)
+    index = position('alternate.HL2.3')
+    assert state[index + 1].id == inverse.id
+    disk_replace(index, 2, (replace(state[index], id='alternate.P15.remaining', power=1),),
+                 'Cancel inverse P15 against one unit of the last squared pair', 'disk_cancel', common)
+    index = position('cross.C4.unused')
+    odd = state[index]
+    rose = tuple(SignedResearchFactor(f'alternate.C4.rose.{i + 1}', t.conjugator,
+        t.first, t.points, t.power, t.half) for i, t in enumerate(pc_rose_terms(odd.mapping_class)))
+    disk_replace(index, 1, rose, 'Expand the last ordinary C4 root by a PC rose',
+                 'disk_rose', odd.conjugator)
+    assert all(f.sign > 0 and (f.points == 2 or f.points == 3 and f.power % 2 == 0) for f in state)
+    counts = (sum(f.power * (1 if f.half else 2) for f in state if f.points == 2),
+              sum(f.power // 2 for f in state if f.points == 3))
+    assert counts == (26, 2) and len(state) == 18
+    final = sphere_chain_certificate(product(state))
+    assert final['certified'] and homology_action(product(state)) == IDENTITY
+    return dict(stages=tuple(records), follows='three_root_cross_cluster_lantern',
+        continuation_exact_in_disk=True, final_all_factors_positive=True,
+        final_lefschetz_counts=counts, remaining_odd_root_ids=(),
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        complete_structural_derivation_found=False,
+        scope='Positive (26,2) sphere/closed-genus-two intermediate; no final standard identity identified')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 
