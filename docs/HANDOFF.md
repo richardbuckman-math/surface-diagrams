@@ -1,5 +1,53 @@
 # Handoff: surface-diagrams
 
+## October 19 evening: the last separators reduce to one essential inverse
+
+`three_root_last_separator_decomposition()` continues the positive (26,2)
+branch through nine checked states. Both remaining roots preserve the round
+P12 and P34 curves. If B is the C13 root, A has the sphere support of
+H56 inverse applied to B. Rechart the whole C12 square to this short A,
+checking its full sphere action and +I lift. The ordered sphere relation is
+AB Q56=P12 P34. Its two-lantern consequence is
+`A^2 B^2=P12^2 P34^2 Q56^-1 (B^-1 Q56^-1 B)`; the disk discrepancy has
+exponent sum 20 and cannot be omitted from a disk certificate.
+
+Transport the second inverse upward by moving its neighbors downward
+unchanged. It crosses Q56 inverse FIRST, then P34 squared, P12 squared,
+and F11. Only after that coupled transport does it match residual.P26.
+The support match is exact on the sphere but false in the disk. Retain
+the sphere-only rechart discrepancy, then cancel the identical positive
+and negative records by free disk-word cancellation.
+
+The endpoint has eighteen records, all supported on two points: seventeen
+positive records and the simple inverse Q56 last. Upstairs there are 32
+positive and two negative nonseparating units, with no separating twists.
+THIS IS NOT a positive (30,0) factorization. The inverse is essential;
+the positive records multiply to P56 on the sphere and in closed genus two,
+not to identity. The full signed sphere action and separate +I lift pass.
+The complete structural (6,7) derivation is still open.
+
+Bounded failures not to repeat: 176 gathered reverse-genus-two-lantern
+charts using at least one original half twist at the (26,2) checkpoint all
+fail the necessary transported-cycle homology condition. The prior 48
+new-half-only cases also fail. Directly transporting either tail inverse
+across F11 alone gives no residual.P26 match; crossing the other inverse
+first is the useful new step. One full based-disk comparison of the signed
+endpoint with the six-strand full twist reached the existing bound. That
+comparison remains unknown, not an inequality or a boundary identification.
+
+Next use the explicit positive equation (seventeen records)=P56. Seek an
+exact transported PC rose/half-lantern decomposition or cancellation route
+for the final Q56 inverse, accounting for the changed curves. Preserve the
+positive (26,2) and (24,3) checkpoints; do not call the signed count a new LF
+type or use endpoint matching in place of an ordered relation certificate.
+
+Validation: all 38 focused sphere/structure/lift tests pass. The replay has
+171 route states and 143 distinct support entries. One intermediate disk
+support exceeds the unchanged 2048-cut-visit preview limit and is explicitly
+unavailable; the following sphere-rechart column and final state are drawn.
+The last three columns were rendered and visually inspected, including the
+unavailable entry, purple sphere step, and remaining essential red inverse.
+
 ## October 19 afternoon: a different PC half lantern gives a positive (26,2) branch
 
 `three_root_alternate_half_lantern()` returns to the positive fourteen-record

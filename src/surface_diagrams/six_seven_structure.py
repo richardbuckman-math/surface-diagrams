@@ -1386,6 +1386,82 @@ def three_root_alternate_half_lantern():
         scope='Positive (26,2) sphere/closed-genus-two intermediate; no final standard identity identified')
 
 
+def three_root_last_separator_decomposition():
+    """Remove the last separator squares, retaining one essential inverse.
+
+    In a short sphere chart A=H56^-1 B H56, and ABQ56=P12 P34.
+    Consequently A^2 B^2=P12^2 P34^2 Q56^-1 (B^-1 Q56^-1 B).
+    Transporting the second inverse across the first is essential to its
+    eventual sphere match with residual.P26. The endpoint is signed, not
+    a positive (30,0) factorization or a completed structural derivation.
+    """
+    state = three_root_alternate_half_lantern()['stages'][-1]['factors']
+    records = [dict(title='Positive (26,2) checkpoint', kind='start', factors=state)]
+    shared = tuple(ConjugatedTwist((), i, 2) for i in (1, 3))
+    fixedness = tuple(tuple(three_point_curve_fixedness_certificate(
+        f.mapping_class, sphere_supported_class(curve)) for curve in shared) for f in state[-2:])
+    assert all(c['fixed'] for row in fixedness for c in row)
+    b = replace(state[-1], power=1)
+    a = replace(b, id='last.simple.C12', conjugator=reduce_word((-5,) + b.conjugator))
+
+    def sphere_replace(index, count, after, title):
+        nonlocal state
+        before, after = state[index:index + count], tuple(after)
+        discrepancy = reduce_word(product(before) + inverse_word(product(after)))
+        certificate = sphere_chain_certificate(discrepancy)
+        assert certificate['certified'] and homology_action(discrepancy) == IDENTITY
+        state = state[:index] + after + state[index + count:]
+        records.append(dict(title=title, kind='sphere_rewrite', factors=state,
+            local_before=before, local_after=after, disk_discrepancy=discrepancy,
+            disk_exponent_discrepancy=sum(1 if x > 0 else -1 for x in discrepancy),
+            sphere_certificate=certificate, lift_homology=IDENTITY))
+
+    sphere_replace(len(state) - 2, 1, (replace(a, power=2),),
+                   'Draw the whole C12 square as H56 inverse applied to C13')
+    p = SignedResearchFactor('last.P12.square', (), 1, 2, power=2)
+    r = SignedResearchFactor('last.P34.square', (), 3, 2, power=2)
+    q = SignedResearchFactor('last.inverse.Q56', (), 5, 2, sign=-1)
+    transported = replace(q, id='last.inverse.BQ56', conjugator=inverse_word(b.word))
+    sphere_replace(len(state) - 2, 2, (p, r, q, transported),
+                   'Apply the ordered two-lantern consequence; retain both inverses')
+    index = len(state) - 1
+    crossed = []
+    while state[index - 1].id != 'residual.P26':
+        name = state[index - 1].id
+        crossed.append(name)
+        move = research_hurwitz_move(state, index - 1, index)
+        state = move['factors']
+        records.append(dict(move, title=f'Transport the second inverse up across {name}'))
+        index -= 1
+    assert tuple(crossed) == (q.id, r.id, p.id, 'F11')
+    positive, negative = state[index - 1:index + 1]
+    assert sphere_supported_class(positive.mapping_class) == sphere_supported_class(negative.mapping_class)
+    sphere_replace(index, 1, (replace(positive, id=negative.id, sign=-1),),
+                   'Use the exact sphere match with residual.P26')
+    before = state[index - 1:index + 1]
+    discrepancy = reduce_word(product(before))
+    assert not discrepancy
+    state = state[:index - 1] + state[index + 1:]
+    records.append(dict(title='Cancel the matched positive and inverse pair exactly in the disk',
+        kind='disk_cancel', factors=state, local_before=before, local_after=(),
+        disk_word_certificate=dict(method='free reduction', discrepancy=discrepancy)))
+    assert len(state) == 18 and all(f.points == 2 for f in state)
+    assert tuple(f.id for f in state if f.sign < 0) == (q.id,) and state[-1] == q
+    positive_units = sum(f.power * (1 if f.half else 2) for f in state if f.sign > 0)
+    negative_units = sum(f.power * 2 for f in state if f.sign < 0)
+    assert (positive_units, negative_units) == (32, 2)
+    final = sphere_chain_certificate(product(state))
+    assert final['certified'] and homology_action(product(state)) == IDENTITY
+    return dict(stages=tuple(records), follows='three_root_alternate_half_lantern',
+        shared_boundary_fixedness=fixedness, short_roots=(a, b),
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        final_all_factors_positive=False, remaining_separator_records=(),
+        signed_nonseparating_counts=dict(positive=positive_units, negative=negative_units),
+        remaining_inverse_ids=(q.id,), positive_equation_target=replace(q, sign=1),
+        complete_structural_derivation_found=False,
+        scope='Signed sphere/closed-genus-two intermediate; one inverse P56 remains essential')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

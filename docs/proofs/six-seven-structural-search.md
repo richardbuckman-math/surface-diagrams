@@ -927,6 +927,80 @@ SVGs with zero unavailable drawings. Its final three new columns were
 rendered and visually inspected, showing the retained inverse, its exact
 cancellation, and the last ordinary-root expansion.
 
+## October 19 evening: two remaining separators and a coupled inverse transport
+
+The 176 additional local reverse-genus-two-lantern configurations at the
+positive (26,2) endpoint fail on homology. These use two of the eight actual
+half records, at least one from F3/F6/F9/F11, and either remaining separator.
+Gather the later half and separator after the earlier half, choosing either
+upward-unchanged or fixed-neighbor-conjugated transport independently. The
+48 new-half-only configurations were already excluded. This excludes only
+these gathered positions, not arbitrary Hurwitz routes or splitting pair
+twists into new half twists.
+
+The actual adjacent separator roots instead share a useful geometric chart.
+Both fix the round P12 and P34 sphere classes by the exact three-point
+fixedness certificate. Write B for the remaining C13 root, with chart
+`(-5,-5,-4,-3)` on T123. The C12 root's sphere support equals that of
+`A=H56^-1 B H56`. The tested H56 powers -3,1,3 do not give that support;
+power -1 does. Rechart the WHOLE C12 square to A squared and certify the
+full discrepancy on the five sphere arcs and by +I homology. No unit
+hemisphere-change assumption is used.
+
+The short-chart ordered relation, checked on the sphere and in the closed
+genus-two lift, is
+
+```text
+ABQ = K,   Q=T56,   K=T12 T34.
+A^2 B^2 = (AB)(B^-1 A B B)
+        = (K Q^-1)(B^-1 K Q^-1 B)
+        = T12^2 T34^2 Q^-1 (B^-1 Q^-1 B).
+```
+
+K commutes with A, B, and Q in this four-holed-sphere chart. The saved
+whole substitution also has its own five-arc action and +I lift checks;
+its disk discrepancy has exponent sum 20, so it is certainly not an exact
+B6 equality. The earlier whole-square rechart is a separate sphere step.
+
+`three_root_last_separator_decomposition()` makes nine states. After the
+two sphere steps, move the second inverse upward by dragging each preceding
+neighbor DOWN unchanged. It crosses the first inverse Q, then T34 squared,
+T12 squared, and F11. At that position its sphere class equals the nearby
+residual.P26 support. Their disk support classes differ. The inverse's
+replacement by the exact negative residual.P26 is therefore another
+recorded sphere/+I step. The final positive/inverse cancellation itself is
+free disk-word cancellation. Trying either inverse with F11 alone misses
+this match: the interaction with the other inverse is essential.
+
+Eighteen records remain, all two-point supported. Seventeen are positive;
+the last is the round Q56 inverse. The signed count upstairs is 32 positive
+and two negative nonseparating units. It is NOT a positive (30,0) relation.
+The full signed word fixes the five sphere arcs and has lift homology +I.
+Removing Q56 inverse gives nonidentity homology, as required: equivalently
+the positive records multiply to positive P56. This is the next target
+equation, not a standard exterior-boundary identity or the full requested
+structural (6,7) derivation.
+
+One direct based-disk comparison of this endpoint with `(12345)^6` reached
+the unchanged 400000-letter bound. Its disk equality to the full twist is
+unknown. Do not use the signed count or the sphere identity to decide it.
+The test of the new route likewise uses the exact sphere-chain certificate
+instead of trying to derive a sphere certificate by first expanding that
+large disk point-push. The local disk cancellation is checked independently.
+
+Next investigate the positive equation (seventeen records)=P56 using
+transported PC roses and half lanterns, or other exact local decompositions.
+Keep the positive (26,2) checkpoint intact. Individual support pictures in
+the graphical replay are not cumulative joint cut-complex certificates.
+
+Validation: all 38 focused sphere-action, structure, and genus-two homology
+tests pass. The replay has 171 route states and 143 distinct support entries.
+One intermediate disk drawing reaches the existing 2048-cut-visit bound and
+is explicitly unavailable; its following checked sphere representative and
+the final state render successfully. The final three columns were visually
+inspected with the unavailable entry, sphere-only rechart, exact cancellation,
+and essential final red inverse all visible. No computation cap was raised.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

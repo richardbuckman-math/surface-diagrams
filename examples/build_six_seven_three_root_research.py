@@ -21,6 +21,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_tail_cluster_lantern,
     three_root_tail_fixedness_audit,
     three_root_alternate_half_lantern,
+    three_root_last_separator_decomposition,
 )
 
 
@@ -39,6 +40,7 @@ def build():
     tail_cluster = three_root_tail_cluster_lantern()
     fixedness = three_root_tail_fixedness_audit(tail_cluster)
     alternate = three_root_alternate_half_lantern()
+    last_separators = three_root_last_separator_decomposition()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
@@ -47,6 +49,7 @@ def build():
                   tail_cluster_lantern=tail_cluster,
                   tail_fixedness_audit=fixedness,
                   alternate_half_lantern=alternate,
+                  last_separator_decomposition=last_separators,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -192,6 +195,15 @@ def build():
         alternate_cards.append(
             f'<section class="stage"><h2>{index}. {escape(stage["title"])}</h2>'
             f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
+    last_cards = []
+    for index, stage in enumerate(last_separators['stages']):
+        sphere = stage['kind'] == 'sphere_rewrite'
+        kind = ' sphere' if sphere else ''
+        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+                 'Exact disk move' if index else 'The positive (26,2) endpoint above')
+        last_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
+                          f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
@@ -386,7 +398,25 @@ relation without expanding its long surrounding conjugator. The endpoint also
 has an exact five-arc sphere-action certificate and a separate +I genus-two
 homology check. These drawings show individual supports, not cumulative joint
 cut-complex certificates.</p>
-<div class="board" id="alternate-half-lantern">ALTERNATE_CARDS</div></body></html>'''
+<div class="board" id="alternate-half-lantern">ALTERNATE_CARDS</div>
+<h2>The last two separators: a short chart and one remaining inverse</h2>
+<p>Both roots preserve the round {1,2} and {3,4} curves. On the sphere the
+first root A is the second root B transported by the inverse half twist
+on {5,6}. Rechart the whole A square before applying the ordered consequence
+of two lanterns: A² B² = P12² P34² Q56⁻¹ (B⁻¹ Q56⁻¹ B).</p>
+<p>The second inverse must cross the first inverse, then P34², P12², and
+F11. It then matches residual.P26 on the sphere. The purple curve replacement
+retains its disk discrepancy; the subsequent cancellation is exact in B6.</p>
+<p class="notice"><strong>This is not a positive (30,0) factorization.</strong>
+All triple twists are gone, but one inverse Q56 remains. There are 32 positive
+and two negative nonseparating units upstairs. The seventeen positive records
+therefore multiply to the positive round P56 on the sphere and in closed genus
+two. Omitting the red inverse would change the action. A final standard boundary
+identity and the complete structural (6,7) derivation remain open.</p>
+<p>The nine states below retain exact local disk moves, sphere-action and lift
+checks, and all sphere-only discrepancies. These are individual support pictures,
+not cumulative joint cut-complex certificates or equivalent disk-only workspaces.</p>
+<div class="board" id="last-separators">LAST_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -401,13 +431,15 @@ cut-complex certificates.</p>
             .replace('TAIL_CARDS', ''.join(tail_cards))
             .replace('FIXEDNESS_PICTURES', fixedness_pictures).replace('FIXEDNESS_ROWS', fixedness_rows)
             .replace('ALTERNATE_CARDS', ''.join(alternate_cards))
+            .replace('LAST_CARDS', ''.join(last_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
           f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '
           f'+ {len(cluster_cards)} cross-cluster + {len(tail_cards)} tail-cluster '
-          f'+ {len(alternate_cards)} alternate-half-lantern states; '
+          f'+ {len(alternate_cards)} alternate-half-lantern '
+          f'+ {len(last_cards)} last-separator states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

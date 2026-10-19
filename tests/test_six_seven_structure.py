@@ -22,10 +22,52 @@ from surface_diagrams.six_seven_structure import (
     three_root_tail_cluster_lantern,
     three_root_tail_fixedness_audit,
     disk_common_chart_certificate, three_root_alternate_half_lantern,
+    three_root_last_separator_decomposition,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_last_separator_decomposition_retains_one_essential_inverse(self):
+        result = three_root_last_separator_decomposition()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertFalse(result['final_all_factors_positive'])
+        self.assertTrue(all(c['fixed'] for row in result['shared_boundary_fixedness'] for c in row))
+        self.assertEqual(result['signed_nonseparating_counts'], dict(positive=32,negative=2))
+        self.assertEqual(result['remaining_separator_records'], ())
+        previous = None
+        for stage in result['stages']:
+            state = stage['factors']
+            self.assertEqual(homology_action(product(state)), IDENTITY)
+            if stage['kind'] == 'sphere_rewrite':
+                self.assertTrue(stage['sphere_certificate']['certified'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']), IDENTITY)
+                cert = stage['sphere_certificate']
+                self.assertEqual(len(cert['reference_classes']),5)
+                self.assertEqual(cert['image_classes'],cert['reference_classes'])
+                self.assertEqual(cert['permutation'],tuple(range(1,7)))
+                self.assertEqual(stage['disk_exponent_discrepancy'],
+                    sum(1 if x > 0 else -1 for x in stage['disk_discrepancy']))
+            elif stage['kind'] == 'disk_hurwitz':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(previous[stage['source']], state[stage['target']])
+            elif stage['kind'] == 'disk_cancel':
+                self.assertEqual(stage['disk_word_certificate']['discrepancy'], ())
+                self.assertEqual(exact_action(product(stage['local_before'])),
+                                 tuple((i,) for i in range(1,7)))
+            previous = state
+        self.assertEqual(len(result['stages']),9)
+        self.assertEqual(result['stages'][2]['disk_exponent_discrepancy'],20)
+        sphere_match = result['stages'][-2]
+        self.assertNotEqual(supported_class(sphere_match['local_before'][0].mapping_class),
+                            supported_class(sphere_match['local_after'][0].mapping_class))
+        self.assertEqual(len(previous),18)
+        self.assertTrue(all(f.points == 2 for f in previous))
+        self.assertEqual(tuple(f.id for f in previous if f.sign < 0),result['remaining_inverse_ids'])
+        self.assertEqual(result['positive_equation_target'].first,5)
+        self.assertEqual(result['positive_equation_target'].conjugator,())
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        self.assertNotEqual(homology_action(product(previous[:-1])), IDENTITY)
+
     def test_common_disk_chart_checks_the_local_relation_without_expanding_its_whisker(self):
         from unittest.mock import patch
         from surface_diagrams.braid_actions import reduce_word
