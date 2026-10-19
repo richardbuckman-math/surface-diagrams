@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## Standing display convention: explicitly identify every sphere move
+
+Richard requires every sphere move to be shown explicitly. Label every
+sphere-only factorization transition **SPHERE MOVE**, in addition to any
+color or border styling. Show the before/after factorization states and
+retain the exact disk-discrepancy word, sphere-action certificate, and
+separate genus-two lift check. Say whether disk equality is false, unknown,
+or separately proved; a sphere equality never silently becomes a disk move.
+Do not silently omit peripheral twists or rechart a complementary support.
+Label sphere simplifications of cut-complex representatives as such and
+keep them distinct from changes to the factorization or its disk braid.
+This convention applies to future derivations and user-facing explanations.
+
 ## October 19 evening: the last separators reduce to one essential inverse
 
 `three_root_last_separator_decomposition()` continues the positive (26,2)

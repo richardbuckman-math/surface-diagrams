@@ -99,7 +99,7 @@ def build():
     prefix_cards = []
     for index, stage in enumerate(prefix_lantern['stages']):
         kind = ' sphere' if index else ''
-        scope = ('Sphere + closed genus two; disk action changes' if index else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere + closed genus two; disk action changes' if index else
                  'The exact disk endpoint above')
         prefix_cards.append(f'<section class="stage{kind}"><h2>{escape(stage["title"])}</h2>'
                             f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -108,7 +108,7 @@ def build():
     for index, stage in enumerate(reduction['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere + closed genus two; disk action changes' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere + closed genus two; disk action changes' if sphere else
                  'Exact disk move' if index else 'After the prefix sphere lantern')
         reduction_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                                f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -117,7 +117,7 @@ def build():
     for index, stage in enumerate(residual['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere + closed genus two; disk action changes' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere + closed genus two; disk action changes' if sphere else
                  'Exact disk move' if index else 'The positive mixed endpoint above')
         residual_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                               f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -136,7 +136,7 @@ def build():
     for index, stage in enumerate(exchange['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere + closed genus two; disk action changes' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere + closed genus two; disk action changes' if sphere else
                  'Exact disk move' if index else 'The shorter signed branch above')
         exchange_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                               f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -156,7 +156,7 @@ def build():
     for index, stage in enumerate(cross_petal['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Exact sphere action and +I lift; disk discrepancy retained' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Exact sphere action and +I lift; disk discrepancy retained' if sphere else
                  'Exact disk word cancellation; no expanded meridian action needed' if index else
                  'The positive petal-exchange endpoint above')
         cross_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
@@ -166,7 +166,7 @@ def build():
     for index, stage in enumerate(cross_cluster['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere and closed genus two; disk discrepancy retained' if sphere else
                  'Exact disk move' if index else 'The cross-stage PC lantern endpoint')
         cluster_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                              f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -175,7 +175,7 @@ def build():
     for index, stage in enumerate(tail_cluster['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere and closed genus two; disk discrepancy retained' if sphere else
                  'Exact disk move' if index else 'The positive mixed C4-cluster endpoint')
         tail_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                           f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
@@ -200,7 +200,7 @@ def build():
     for index, stage in enumerate(last_separators['stages']):
         sphere = stage['kind'] == 'sphere_rewrite'
         kind = ' sphere' if sphere else ''
-        scope = ('Sphere and closed genus two; disk discrepancy retained' if sphere else
+        scope = ('<strong>SPHERE MOVE</strong> · Sphere and closed genus two; disk discrepancy retained' if sphere else
                  'Exact disk move' if index else 'The positive (26,2) endpoint above')
         last_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                           f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')

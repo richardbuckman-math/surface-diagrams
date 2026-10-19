@@ -927,6 +927,15 @@ SVGs with zero unavailable drawings. Its final three new columns were
 rendered and visually inspected, showing the retained inverse, its exact
 cancellation, and the last ordinary-root expansion.
 
+## Explicit sphere-move display convention
+
+Every sphere-only transition must visibly say **SPHERE MOVE**, with its
+before/after states and saved disk discrepancy, exact sphere-action check,
+and separate lift check. Color alone is insufficient. State disk equality
+as false, unknown, or independently proved rather than silently identifying
+the disk braids. Sphere simplification of a displayed cut representative is
+likewise explicitly identified and is not a factorization change.
+
 ## October 19 evening: two remaining separators and a coupled inverse transport
 
 The 176 additional local reverse-genus-two-lantern configurations at the

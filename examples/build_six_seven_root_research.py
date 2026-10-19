@@ -58,7 +58,7 @@ def build():
                 inverse = ' inverse' if sign < 0 else ''
                 rows.append(f'<div class="factor{inverse}" title="{escape(str(factor.conjugator))}">'
                             f'<b>{escape(factor.id)}</b>{image}<span>{label}</span></div>')
-            scope = ('Sphere + closed genus two; disk action changes'
+            scope = ('<strong>SPHERE MOVE</strong> · Sphere + closed genus two; disk action changes'
                      if stage['kind'] == 'sphere_rewrite' else
                      'Exact disk move' if index else 'Starting product for this route')
             kind = 'sphere' if stage['kind'] == 'sphere_rewrite' else 'disk'
