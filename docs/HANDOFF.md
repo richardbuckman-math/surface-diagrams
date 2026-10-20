@@ -1,5 +1,48 @@
 # Handoff: surface-diagrams
 
+## October 20: puzzle-first book and online folding game
+
+Richard requested the PDF first, then an online game. The revised 73-page book
+was delivered before game development: linked contents, randomized-color
+Puzzles (3-25), matching-color Solutions (26-48), complete catalog (49-72),
+checks/sources (73). The original 49-page output is preserved. New outputs:
+`output/pdf/tetrahedra-puzzles-and-solutions.pdf` and a revised offline gallery
+ZIP with 1,187 SVGs. A copy in `docs/puzzles/` is published with the game.
+Cool net palettes and independently seeded warm target palettes use no
+folding correspondence; Solutions keep the original panel colors. Every
+target and stable shape ID is present in both sections. Contents has 33 links.
+
+The pure-JavaScript game is `experiments/common_nets/game/`, published by
+`examples/build_site.py` to `/tetrahedra/index.html`. It has all 321 net/target
+challenges from 11 nets, not all 523 catalog shapes (many are outside these
+specific nets' coverage). Separate camera drags rotate paper/target;
+double-click selects the nearest hinge, wheel adjusts it; key pairs, slider,
+crease snapping, undo/redo, local progress, reset, and solution animation work.
+Solution-revealed state persists and never earns a solved mark without reset.
+Larger nets use Shift letter pairs for hinges 14-17. No Python startup, external
+3D library, account or server backend is required.
+
+`build_game.py` validates exact source fold maps and exports unit-edge meshes
+plus signed hinge angles. The rendering-free `geometry.mjs` rebuilds every
+target with maximum vertex error <1e-7 in tests. Alternate face assignments,
+rigid placements and mirrors are accepted by whole-surface comparison, with
+numerical 0.012-edge-length tolerance. Preserve this distinction from exact
+source certificates. The game permits intermediate panel intersections and
+does not claim collision-free physical folding. Every hinge remains rigid.
+
+Validation: all 73 PDF pages rendered and reviewed; puzzle/solution lists,
+page manifest, page bounds, and disjoint deterministic palettes checked. Four
+Python atlas tests and four Node folding tests pass. Node tests cover all 321
+reconstructions, arbitrary hinge endpoint/edge preservation, alternate poses,
+wrong-surface rejection and crease stepping. Browser smoke tests check key
+pairs, picking/wheel, undo/redo, scoring, solution/reload, camera rotation and
+390px mobile layout, with no JavaScript errors. Local site generation and
+link checks pass. Verify deployment and remote CI for this batch after pushing.
+
+Next: have Richard play and refine hinge selection/controls from actual use.
+Do not expand net searches or call the end-state checker a collision simulator.
+The prior (6,7) report simplification and nonplanar cube-net work remain open.
+
 ## October 20: complete tetrahedron catalog through eight and puzzle PDF
 
 Richard requested seven/eight tetrahedra, a complete one-through-eight PDF,

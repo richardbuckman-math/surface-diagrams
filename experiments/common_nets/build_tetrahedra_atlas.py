@@ -1,7 +1,9 @@
 """Complete one-to-eight shape catalog and separate, certified puzzle plates."""
+import colorsys
 from hashlib import sha256
 from html import escape
 import json
+import random
 from math import ceil
 from pathlib import Path
 import shutil
@@ -29,20 +31,31 @@ def choose_puzzles(report):
 
 
 def page_plan(report,puzzles):
-    plan=[dict(kind='cover'),dict(kind='small_catalog')]
+    plan=[dict(kind='cover'),dict(kind='contents')]
+    for section in ('puzzles','solutions'):
+        plan += [dict(kind='puzzle_intro',section=section),dict(kind='small_puzzles',section=section)]
+        for puzzle in puzzles:
+            if puzzle['units']<=4:continue
+            indices=puzzle['net']['coverage']
+            plan.append(dict(kind='puzzle',section=section,puzzle=puzzle,indices=indices[:9]))
+            for start in range(9,len(indices),24):
+                plan.append(dict(kind='puzzle_targets',section=section,puzzle=puzzle,indices=indices[start:start+24]))
+    plan.append(dict(kind='small_catalog'))
     for n in range(5,9):
         total=report['levels'][str(n)]['shapes']
         for start in range(0,total,24):
             plan.append(dict(kind='catalog',units=n,indices=list(range(start,min(start+24,total)))))
-    plan += [dict(kind='puzzle_intro'),dict(kind='small_puzzles')]
-    for puzzle in puzzles:
-        if puzzle['units']<=4:continue
-        indices=puzzle['net']['coverage']
-        plan.append(dict(kind='puzzle',puzzle=puzzle,indices=indices[:9]))
-        for start in range(9,len(indices),24):
-            plan.append(dict(kind='puzzle_targets',puzzle=puzzle,indices=indices[start:start+24]))
     plan.append(dict(kind='notes'))
     return plan
+
+
+def puzzle_palette(key,count,role):
+    """Stable, unrelated cool-net / warm-target colors; no folding-map input."""
+    rng=random.Random(int.from_bytes(sha256((role+':'+key).encode()).digest()[:8],'big'))
+    order=list(range(count));rng.shuffle(order)
+    start,span=(165,105) if role=='net' else (325,110)
+    return [colorsys.hls_to_rgb(((start+span*(i+.5)/count)%360)/360,
+                              .70+.09*rng.random(),.48+.22*rng.random()) for i in order]
 
 
 def build():
@@ -60,13 +73,13 @@ def build():
     assert [report['levels'][str(n)]['shapes'] for n in range(1,9)]==EXPECTED_COUNTS
     puzzles=choose_puzzles(report)
     plan=page_plan(report,puzzles)
-    output=root/'output/pdf/tetrahedra-one-through-eight.pdf'
+    output=root/'output/pdf/tetrahedra-puzzles-and-solutions.pdf'
     output.parent.mkdir(parents=True,exist_ok=True)
-    gallery=root/'.preview/tetrahedra-one-through-eight'
+    gallery=root/'.preview/tetrahedra-puzzles-and-solutions'
     gallery.mkdir(exist_ok=True)
     w,h=landscape(A3)
     canvas=Canvas(str(output),pagesize=(w,h),pageCompression=1)
-    canvas.setTitle('Tetrahedra, one through eight: complete catalog and puzzle nets')
+    canvas.setTitle('Tetrahedra, one through eight: puzzles, solutions, and complete catalog')
     canvas.setAuthor('Richard Buckman - computational common-net experiment')
     ink=HexColor('#17344e')
     styles={size:ParagraphStyle('s%d'%size,fontName='Helvetica',fontSize=size,leading=size*1.38,textColor=ink) for size in (9,10,11,12,14,18)}
@@ -85,12 +98,15 @@ def build():
         text(subtitle,35,h-64,w-70,11)
         canvas.setFont('Helvetica',9)
         canvas.drawString(35,18,'One unit = one regular tetrahedron | mirrors identified | exact folded end states')
+        if page!=2:
+            canvas.drawRightString(w-115,18,'Contents')
+            canvas.linkRect('', 'contents', (w-165,12,w-110,30),relative=0,thickness=0)
         canvas.drawRightString(w-35,18,'%d / %d'%(page,len(plan)))
         if bookmark:
             canvas.bookmarkPage(bookmark)
             canvas.addOutlineEntry(value,bookmark,level=level,closed=False)
 
-    def save_asset(name,drawing,surface=None,mapping=None,model_title=''):
+    def save_asset(name,drawing,surface=None,mapping=None,model_title='',custom_palette=None):
         if name in assets:return
         renderSVG.drawToFile(drawing,str(gallery/name));assets[name]=True
         if surface is not None:
@@ -99,55 +115,94 @@ def build():
             high=[max(p[i] for p in points) for i in range(3)]
             center=[(a+b)/2 for a,b in zip(low,high)];scale=max(b-a for a,b in zip(low,high))
             palette={m[0]:i for i,m in enumerate(mapping)} if mapping else {i:i for i in range(len(surface['faces']))}
+            rgb=lambda i:custom_palette[palette[i]] if custom_palette else (color(palette[i]).red,color(palette[i]).green,color(palette[i]).blue)
             models[name]=dict(title=model_title,faces=[[[round((p[i]-center[i])/scale,9) for i in range(3)] for p in f] for f in surface['faces']],
-                              colors=[[round(v,5) for v in (color(palette[i]).red,color(palette[i]).green,color(palette[i]).blue)] for i in range(len(surface['faces']))])
+                              colors=[[round(v,5) for v in rgb(i)] for i in range(len(surface['faces']))])
 
-    def picture(n,i,x,y,width,height,puzzle=None):
+    def picture(n,i,x,y,width,height,puzzle=None,section='solutions'):
         row=report['levels'][str(n)];surface=row['surfaces'][i]
-        mapping=puzzle['net']['mappings'][i] if puzzle else None
-        name=('%s-shape-%03d.svg'%(puzzle['id'],i+1) if puzzle else 'tetra-%d-shape-%03d.svg'%(n,i+1))
-        drawing=shape_drawing(surface,mapping,width,height)
+        challenge=puzzle is not None and section=='puzzles'
+        mapping=puzzle['net']['mappings'][i] if puzzle and not challenge else None
+        palette=puzzle_palette('%s:%d'%(puzzle['id'],i),len(surface['faces']),'target') if challenge else None
+        name=('%s-%s-shape-%03d.svg'%(section,puzzle['id'],i+1) if puzzle else 'tetra-%d-shape-%03d.svg'%(n,i+1))
+        drawing=shape_drawing(surface,mapping,width,height,palette=palette)
         renderPDF.draw(drawing,canvas,x,y)
         label='%d-%03d'%(n,i+1)
         text(label,x,y-2,width,10)
-        save_asset(name,drawing,surface,mapping,'%d tetrahedra - shape %03d%s'%(n,i+1,' / '+puzzle['id'] if puzzle else ''))
+        save_asset(name,drawing,surface,mapping,'%d tetrahedra - shape %03d%s'%(n,i+1,' / '+puzzle['id']+' / '+section if puzzle else ''),palette)
         if not puzzle:gallery_catalog.setdefault(n,[]).append((name,label))
-        else:gallery_puzzles.setdefault(puzzle['id'],[]).append((name,label))
+        else:gallery_puzzles.setdefault((section,puzzle['id']),[]).append((name,label))
 
-    def grid(n,indices,puzzle=None,columns=6,rows=4):
+    def grid(n,indices,puzzle=None,columns=6,rows=4,section='solutions'):
         cw=(w-70)/columns;ch=650/rows
         for k,i in enumerate(indices):
             x=35+(k%columns)*cw;y=h-122-(k//columns+1)*ch+22
-            picture(n,i,x,y,cw-12,ch-27,puzzle)
+            picture(n,i,x,y,cw-12,ch-27,puzzle,section)
 
-    def net_picture(puzzle,x,y,width,height):
-        drawing=net_drawing(puzzle['net'],width,height)
+    def net_picture(puzzle,x,y,width,height,section='solutions'):
+        palette=puzzle_palette(puzzle['id'],len(puzzle['net']['triangles']),'net') if section=='puzzles' else None
+        drawing=net_drawing(puzzle['net'],width,height,palette=palette)
         renderPDF.draw(drawing,canvas,x,y)
-        save_asset(puzzle['id']+'-net.svg',drawing)
+        save_asset(section+'-'+puzzle['id']+'-net.svg',drawing)
         return drawing._slits
 
-    catalog_ranges={n:[] for n in range(1,9)};puzzle_ranges={p['id']:[] for p in puzzles}
+    catalog_ranges={n:[] for n in range(1,9)}
+    puzzle_ranges={(section,p['id']):[] for section in ('puzzles','solutions') for p in puzzles}
+    def section_pages(section,puzzle=None):
+        return [i for i,item in enumerate(plan,1) if item.get('section')==section and
+                (puzzle is None or item.get('puzzle',{}).get('id')==puzzle['id'] or
+                 (puzzle['units']<=4 and item['kind']=='small_puzzles'))]
+    def page_label(pages):return str(pages[0]) if pages[0]==pages[-1] else '%d-%d'%(pages[0],pages[-1])
     for page,item in enumerate(plan,1):
-        kind=item['kind'];meta=dict(page=page,kind=kind)
+        kind=item['kind'];section=item.get('section','');meta=dict(page=page,kind=kind)
+        if section:meta['section']=section
         if kind=='cover':
-            title('Tetrahedra: one through eight','A complete shape catalog, followed by selected common nets for making puzzles.',page,'cover')
-            text('523 shapes. Two ways to explore them.',40,h-130,580,18)
-            text('Part I pictures every face-glued cluster through eight units, counting mirror pairs once. '
-                 'Part II gives selected puzzle nets, followed by <b>only the shapes that each particular net makes</b>. '
-                 'Every matching shape is listed, with the same catalog ID in both sections.',40,h-175,540,14)
-            y=h-320
+            title('Tetrahedra: puzzles and solutions','One through eight units | 11 puzzle nets | 523 catalog shapes',page,'cover')
+            text('Try the puzzles. Check the solutions.',40,h-130,580,18)
+            text('<b>Part I - Puzzles.</b> Fold each net into the targets shown. Cool net colors and independently randomized warm target colors give no panel-matching key.<br/><br/>'
+                 '<b>Part II - Solutions.</b> The same nets and targets, with matching panel colors.<br/><br/>'
+                 '<b>Part III - Complete catalog.</b> All 523 shapes, including shapes outside the selected puzzles. '
+                 'The table of contents and bookmarks link to every puzzle and solution.',40,h-175,540,14)
+            y=h-430
             for n,count in enumerate(EXPECTED_COUNTS,1):
                 text('<b>%d unit%s</b> &nbsp; %d shape%s &nbsp; %d exterior triangles'%(n,'' if n==1 else 's',count,'' if count==1 else 's',2*n+2),50,y,520,12);y-=31
             sample=next(p for p in puzzles if p['units']==8)
-            net_picture(sample,640,340,490,300)
+            net_picture(sample,640,340,490,300,'puzzles')
             text('A selected 18-triangle net for eight units',675,323,450,12)
             text('<b>Cut solid black lines and any red internal lines. Fold blue dashed hinges.</b> '
-                 'Panel colors match the target faces in Part II. Downloadable SVGs and rotatable models accompany this PDF.',640,265,480,12)
+                 'Only the Solutions section matches net colors to target faces. Downloadable SVGs and rotatable models accompany this PDF.',640,265,480,12)
             text('Seven- and eight-unit nets are useful sampled examples; no optimality is claimed. '
                  'The five-unit cobra net is already known from Rick Mabry. These computations certify folded shapes, '
                  'not collision-free folding motions. Templates omit tabs and thickness allowances.',40,125,w-80,11)
+        elif kind=='contents':
+            title('Contents','Click an entry to jump to it. Every page has a Contents link in its footer.',page,'contents')
+            for col,sec in enumerate(('puzzles','solutions')):
+                x=40+col*380;pages=section_pages(sec)
+                text('<b>Part %s - %s</b> &nbsp; %s'%('I' if sec=='puzzles' else 'II',sec.title(),page_label(pages)),x,h-125,350,18)
+                canvas.linkRect('',sec,(x,h-155,x+350,h-118),thickness=0)
+                y=h-185
+                for puzzle in puzzles:
+                    pages=section_pages(sec,puzzle)
+                    count=len(puzzle['net']['coverage']);n=puzzle['units']
+                    text('<b>%s</b> &nbsp; %d unit%s / %d target%s'%(puzzle['id'],n,'' if n==1 else 's',count,'' if count==1 else 's'),x,y,285,12)
+                    text(page_label(pages),x+300,y,45,12)
+                    dest=sec+'-'+puzzle['id'] if puzzle['units']>4 else sec+'-small'
+                    canvas.linkRect('',dest,(x,y-24,x+350,y+2),thickness=0);y-=43
+            x=820
+            text('<b>Part III - Catalog</b>',x,h-125,330,18)
+            for k,n in enumerate(range(1,9)):
+                pages=[i for i,p in enumerate(plan,1) if (n<=4 and p['kind']=='small_catalog') or (p['kind']=='catalog' and p['units']==n)]
+                y=h-185-k*43
+                count=EXPECTED_COUNTS[n-1]
+                text('%d unit%s / %d shape%s'%(n,'' if n==1 else 's',count,'' if count==1 else 's'),x,y,240,12)
+                text(page_label(pages),x+260,y,65,12)
+                canvas.linkRect('','catalog' if n<=4 else 'catalog-%d'%n,(x,y-24,x+330,y+2),thickness=0)
+            text('<b>Checks and sources</b> &nbsp; %d'%len(plan),x,260,330,12)
+            canvas.linkRect('','notes',(x,232,x+330,263),thickness=0)
+            text('The same shape ID appears in Puzzles, Solutions and the Catalog. '
+                 'The puzzle section intentionally hides the panel correspondence; the solution colors reveal it.',x,190,330,12)
         elif kind=='small_catalog':
-            title('Part I - Complete catalog: one through four units','All six shapes at these volumes. IDs give the number of units followed by the shape number.',page,'catalog')
+            title('Part III - Complete catalog: one through four units','All six shapes at these volumes. IDs give the number of units followed by the shape number.',page,'catalog')
             values=[(1,0),(2,0),(3,0)]+[(4,i) for i in range(3)]
             for k,(n,i) in enumerate(values):
                 picture(n,i,40+(k%3)*370,390-(k//3)*310,345,280)
@@ -161,34 +216,41 @@ def build():
             grid(n,indices,columns=4,rows=2) if n==5 else grid(n,indices)
             catalog_ranges[n].append(page);meta.update(units=n,indices=indices)
         elif kind=='puzzle_intro':
-            title('Part II - Puzzle nets and their matching shapes','Each puzzle is separate: keep its own fixed cuts and hinges for every target shown after it.',page,'puzzles')
+            challenge=section=='puzzles'
+            title('Part I - Puzzles' if challenge else 'Part II - Solutions',
+                  'The same fixed cuts and hinges apply to every target shown for a net.',page,section)
             y=h-135
             for n in range(1,9):
                 selected=[p for p in puzzles if p['units']==n]
                 description='; '.join('%s: %d targets'%(p['id'],len(p['net']['coverage'])) for p in selected)
                 text('<b>%d tetrahedra</b> &nbsp; %s'%(n,description),45,y,w-90,14);y-=43
-            text('The first four puzzles are together on the next page. Each larger puzzle begins with a large net '
+            text('The first four nets are together on the next page. Each larger net begins with a large diagram '
                  'and up to nine target shapes; continuation pages contain all its remaining targets. '
                  'No unmatched shapes are mixed into a puzzle.',45,285,w-90,14)
-            text('Catalog colors distinguish faces. Puzzle colors instead identify panels of that puzzle\'s net, '
-                 'so the same catalog shape may have different colors in two puzzles. Mirror pairs count as one shape; '
-                 'the printed side need not always face outward.',45,183,w-90,12)
+            text(('The cool net palette and warm target palette are randomized independently. Colors do not tell you '
+                  'which panel belongs on which face. Use the shape and hinges to solve the puzzle. Matching-color '
+                  'answers appear later in Solutions.' if challenge else
+                  'Colors now identify the same panels on the flat net and the folded target. This is the solution key. '
+                  'The same catalog shape may have different panel colors under a different puzzle net.')+
+                 ' Mirror pairs count as one shape; either paper side may face outward.',45,183,w-90,12)
         elif kind=='small_puzzles':
-            title('Puzzle nets P1A-P4A','One net for each volume; each makes every shape at its volume. Solid edges are cuts; blue dashed edges are hinges.',page)
+            title('%s - P1A-P4A'%section.title(),
+                  'Cool nets / independent warm targets; no color key.' if section=='puzzles' else 'Matching colors show which net panels form the target faces.',
+                  page,section+'-small',1)
             for k,puzzle in enumerate(p for p in puzzles if p['units']<=4):
                 y=h-115-(k+1)*160+22;n=puzzle['units']
-                net_picture(puzzle,40,y,400,140)
-                text('<b>%s</b> - %d units'%(puzzle['id'],n),45,y-2,360,11)
-                for j,i in enumerate(puzzle['net']['coverage']):picture(n,i,500+j*205,y,190,135,puzzle)
-                puzzle_ranges[puzzle['id']].append(page)
+                net_picture(puzzle,40,y,400,140,section)
+                text('<b>%s</b> - %d unit%s'%(puzzle['id'],n,'' if n==1 else 's'),45,y-2,360,11)
+                for j,i in enumerate(puzzle['net']['coverage']):picture(n,i,500+j*205,y,190,135,puzzle,section)
+                puzzle_ranges[section,puzzle['id']].append(page)
         elif kind in ('puzzle','puzzle_targets'):
             puzzle=item['puzzle'];n=puzzle['units'];net=puzzle['net'];row=report['levels'][str(n)]
-            label='Puzzle %s - %d tetrahedra'%(puzzle['id'],n)
-            subtitle='%d matching shapes out of %d catalog shapes. Every shape on these puzzle pages is certified for this fixed net.'%(len(net['coverage']),row['shapes'])
+            label='%s %s - %d tetrahedra'%(section.title(),puzzle['id'],n)
+            subtitle='%d matching shapes out of %d. '%(len(net['coverage']),row['shapes'])+('Colors are independent; the folding correspondence is hidden.' if section=='puzzles' else 'Matching colors identify the net panels on each target.')
             title(label+(' / targets continued' if kind=='puzzle_targets' else ''),subtitle,page,
-                  puzzle['id'] if kind=='puzzle' else None,1)
+                  section+'-'+puzzle['id'] if kind=='puzzle' else None,1)
             if kind=='puzzle':
-                slits=net_picture(puzzle,40,245,510,450)
+                slits=net_picture(puzzle,40,245,510,450,section)
                 text('<b>%s</b> &nbsp; %d panels; %d internal slit%s.'%(puzzle['id'],row['faces'],slits,'' if slits==1 else 's'),50,225,480,12)
                 status=('Known five-unit cobra net (Rick Mabry).' if n==5 else
                         'Six-unit Net A attains the checked 19-target maximum.' if n==6 and puzzle['letter']=='A' else
@@ -196,10 +258,10 @@ def build():
                         'Selected from %d sampled source trees; not proved optimal.'%row['puzzle_search']['attempts'])
                 text(status,50,186,480,11)
                 for k,i in enumerate(item['indices']):
-                    picture(n,i,595+(k%3)*185,540-(k//3)*165,174,139,puzzle)
+                    picture(n,i,595+(k%3)*185,540-(k//3)*165,174,139,puzzle,section)
                 if len(net['coverage'])>9:text('All remaining targets follow on the next page(s).',50,119,480,11)
-            else:grid(n,item['indices'],puzzle)
-            puzzle_ranges[puzzle['id']].append(page)
+            else:grid(n,item['indices'],puzzle,section=section)
+            puzzle_ranges[section,puzzle['id']].append(page)
             meta.update(puzzle=puzzle['id'],units=n,indices=item['indices'])
         else:
             title('Checks, scope, and sources','A complete catalog is different from an exhaustive search for the best possible puzzle net.',page,'notes')
@@ -222,7 +284,8 @@ def build():
     metadata=dict(pages=len(plan),catalog_shapes=sum(EXPECTED_COUNTS),counts=EXPECTED_COUNTS,
                   catalog_pages={str(n):sorted(set(pages)) for n,pages in catalog_ranges.items()},
                   puzzles=[dict(id=p['id'],units=p['units'],coverage=len(p['net']['coverage']),
-                                target_ids=[i+1 for i in p['net']['coverage']],pages=puzzle_ranges[p['id']]) for p in puzzles],
+                                target_ids=[i+1 for i in p['net']['coverage']],pages=puzzle_ranges['puzzles',p['id']],
+                                solution_pages=puzzle_ranges['solutions',p['id']]) for p in puzzles],
                   page_manifest=manifest,input_sha256=sha256(source.read_bytes()).hexdigest())
     writer=PdfWriter(clone_from=output)
     writer.add_attachment('tetrahedra-through-eight.json',source.read_bytes())
@@ -238,19 +301,24 @@ def build():
         return '<div class="grid">'+''.join('<figure><a href="%s"><img loading="lazy" src="%s" alt="Shape %s"></a><figcaption>%s</figcaption></figure>'%(name,name,label,label) for name,label in values)+'</div>'
     html='''<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tetrahedra one through eight</title>
 <style>body{font:17px/1.55 system-ui;max-width:1200px;margin:24px auto;padding:18px;color:#17344e;background:#fbfcfe}h1{line-height:1.2}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}figure{margin:0;background:white;padding:10px;text-align:center}.grid img{width:100%;height:150px;object-fit:contain}.net{width:100%;max-height:400px;object-fit:contain}section{margin:45px 0}a{color:#155e96}summary{font-size:22px;cursor:pointer}dialog{box-sizing:border-box;width:min(900px,92vw);max-width:calc(100vw - 24px);border:1px solid #cbd5e1;border-radius:12px;padding:20px;color:#17344e;background:#fbfcfe}dialog::backdrop{background:#12263b99}#model-canvas{width:100%;height:min(430px,55vh);touch-action:none}button{font:inherit;margin:4px;padding:7px 12px}</style>
-<h1>Tetrahedra: one through eight units</h1><p>Complete catalog: 523 shapes, with mirror pairs counted once. Puzzle sections list only certified matches for their own fixed net. Click a shape to rotate it; click a net to download its SVG.</p>
-<p><a href="tetrahedra-one-through-eight.pdf" download>Download PDF</a> | <a href="atlas-manifest.json">Page and puzzle index</a></p>
-<h2>Part I - Complete catalog</h2>'''
+<h1>Tetrahedra: puzzles and solutions</h1><p>One through eight units. Try the puzzles first: cool nets and independently randomized warm targets hide the color correspondence. Solutions reveal it. Click a shape to rotate it; click a net to download its SVG.</p>
+<p><a href="tetrahedra-puzzles-and-solutions.pdf" download>Download PDF</a> | <a href="#puzzles">Puzzles</a> | <a href="#solutions">Solutions</a> | <a href="#catalog">Complete catalog</a> | <a href="atlas-manifest.json">Page index</a></p>'''
+    for section in ('puzzles','solutions'):
+        html+='<h2 id="%s">%s</h2>'%(section,section.title())
+        if section=='solutions':html+='<details><summary>Reveal the matching-color solutions</summary>'
+        for p in puzzles:
+            name=section+'-'+p['id']+'-net.svg'
+            html+='<section><h2>%s - %d tetrahedra, %d targets</h2><a href="%s" download><img class="net" src="%s" alt="Net %s"></a>%s</section>'%(p['id'],p['units'],len(p['net']['coverage']),name,name,p['id'],cards(gallery_puzzles[section,p['id']]))
+        if section=='solutions':html+='</details>'
+    html+='<h2 id="catalog">Part III - Complete catalog</h2>'
     for n,values in gallery_catalog.items():
         html+='<section><details><summary>%d tetrahedra - all %d shapes</summary>%s</details></section>'%(n,len(values),cards(values))
-    html+='<h2>Part II - Puzzle nets and their matching shapes</h2><p>Blue dashed lines are hinges. Black boundaries and red internal edges are cuts. Seven- and eight-unit examples are not claimed optimal. The five-unit construction is Mabry\'s known cobra net. Folded end states are checked; continuous folding paths are not certified.</p>'
-    for p in puzzles:
-        html+='<section><h2>%s - %d tetrahedra, %d matching shapes</h2><a href="%s-net.svg" download><img class="net" src="%s-net.svg" alt="Net %s"></a>%s</section>'%(p['id'],p['units'],len(p['net']['coverage']),p['id'],p['id'],p['id'],cards(gallery_puzzles[p['id']]))
+    html+='<p>Mirrors count once. Seven/eight-unit nets are not claimed optimal. The five-unit cobra net is known from Rick Mabry. Folded end states are checked; continuous folding paths are not certified.</p>'
     html+='''<dialog id="viewer" aria-labelledby="viewer-title"><h2 id="viewer-title"></h2><p id="viewer-status">Drag to rotate. This is a shape viewer, not a folding animation.</p><canvas id="model-canvas" aria-label="Rotatable target polyhedron"></canvas><div><button id="viewer-left">Turn left</button><button id="viewer-right">Turn right</button><button id="viewer-above">View above</button><button id="viewer-below">View below</button><a id="viewer-download" download>Download SVG</a><button id="viewer-close">Close</button></div></dialog>'''
     html+='<script type="application/json" id="models">'+json.dumps(models,separators=(',',':'))+'</script><script src="viewer.js"></script>'
     (gallery/'index.html').write_text(html,encoding='utf-8')
     shutil.copyfile(Path(__file__).parent/'viewer.js',gallery/'viewer.js')
-    archive=root/'output/tetrahedra-one-through-eight-gallery.zip'
+    archive=root/'output/tetrahedra-puzzles-and-solutions-gallery.zip'
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
         for name in list(assets)+['index.html','viewer.js',output.name,source.name,'atlas-manifest.json']:
             z.write(gallery/name,name)

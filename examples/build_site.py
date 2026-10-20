@@ -16,7 +16,7 @@ CSS = '''body{margin:0;background:#f3f5f4;color:#20342e;font:17px/1.6 system-ui,
 def page(path, title, body, prefix=''):
     dest = OUT / path
     dest.parent.mkdir(parents=True, exist_ok=True)
-    nav = ''.join('<a href="{}{}">{}</a>'.format(prefix, url, label) for url,label in [('index.html','Surface diagrams'),('docs/TUTORIAL.html','Tutorial'),('gallery.html','Gallery'),('docs/boundary-factorizations/index.html','Boundary catalog'),('relations/index.html','Relations'),('fibrations/index.html','Lefschetz fibrations'),('releases.html','Releases')])
+    nav = ''.join('<a href="{}{}">{}</a>'.format(prefix, url, label) for url,label in [('index.html','Surface diagrams'),('docs/TUTORIAL.html','Tutorial'),('gallery.html','Gallery'),('tetrahedra/index.html','Folding puzzles'),('docs/boundary-factorizations/index.html','Boundary catalog'),('relations/index.html','Relations'),('fibrations/index.html','Lefschetz fibrations'),('releases.html','Releases')])
     dest.write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+' | Surface diagrams</title><style>'+CSS+'</style><nav aria-label="Main">'+nav+'</nav><main><h1>'+escape(title)+'</h1>'+body+'<footer>Surface diagrams · SVG and TikZ · Mathematical catalog in development</footer></main></html>',encoding='utf-8')
 
 def build():
@@ -31,6 +31,7 @@ def build():
     OUT.mkdir(exist_ok=True)
     shutil.copytree(ROOT/'docs', OUT/'docs', dirs_exist_ok=True)
     shutil.copytree(ROOT/'examples'/'output', OUT/'examples'/'output', dirs_exist_ok=True)
+    shutil.copytree(ROOT/'experiments'/'common_nets'/'game', OUT/'tetrahedra', dirs_exist_ok=True)
     lab_assets = ROOT/'src'/'surface_diagrams'/'lab_assets'
     lab_out = OUT/'lab'
     lab_out.mkdir(exist_ok=True)

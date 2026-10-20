@@ -2,7 +2,7 @@
 import unittest
 from experiments.common_nets import engine
 from experiments.common_nets.extend_tetrahedra import EXPECTED_COUNTS,sample_puzzles
-from experiments.common_nets.build_tetrahedra_atlas import choose_puzzles,page_plan
+from experiments.common_nets.build_tetrahedra_atlas import choose_puzzles,page_plan,puzzle_palette
 
 
 class LargerTetrahedronTests(unittest.TestCase):
@@ -37,14 +37,26 @@ class LargerTetrahedronTests(unittest.TestCase):
                              puzzle_search=dict(candidates=[first,second]))
         report=dict(levels=rows)
         puzzles=choose_puzzles(report);plan=page_plan(report,puzzles)
+        self.assertEqual([p['kind'] for p in plan[:3]],['cover','contents','puzzle_intro'])
+        self.assertLess(next(i for i,p in enumerate(plan) if p.get('section')=='solutions'),
+                        next(i for i,p in enumerate(plan) if p['kind']=='small_catalog'))
         for n in range(5,9):
             actual=[i for page in plan if page['kind']=='catalog' and page['units']==n for i in page['indices']]
             self.assertEqual(actual,list(range(EXPECTED_COUNTS[n-1])))
         for puzzle in puzzles:
             if puzzle['units']<=4:continue
-            actual=[i for page in plan if page['kind'] in ('puzzle','puzzle_targets')
-                    and page['puzzle']['id']==puzzle['id'] for i in page['indices']]
-            self.assertEqual(actual,puzzle['net']['coverage'])
+            for section in ('puzzles','solutions'):
+                actual=[i for page in plan if page['kind'] in ('puzzle','puzzle_targets')
+                        and page['section']==section and page['puzzle']['id']==puzzle['id'] for i in page['indices']]
+                self.assertEqual(actual,puzzle['net']['coverage'])
+
+    def test_puzzle_palettes_are_stable_independent_and_disjoint(self):
+        net=puzzle_palette('P8A',18,'net')
+        target=puzzle_palette('P8A:4',18,'target')
+        self.assertEqual(net,puzzle_palette('P8A',18,'net'))
+        self.assertEqual(len(set(net)),18)
+        self.assertFalse(set(net)&set(target))
+        self.assertNotEqual(target,puzzle_palette('P8A:5',18,'target'))
 
 
 if __name__=='__main__':unittest.main()

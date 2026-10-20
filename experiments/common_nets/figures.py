@@ -9,9 +9,9 @@ def color(index):
     return Color(*colorsys.hls_to_rgb(((index*137.508+205)%360)/360,.74,.59))
 
 
-def net_drawing(net,width,height,kind='triangle'):
+def net_drawing(net,width,height,kind='triangle',palette=None):
     from reportlab.graphics.shapes import Drawing,Polygon,Line,String
-    from reportlab.lib.colors import HexColor
+    from reportlab.lib.colors import Color,HexColor
     drawing=Drawing(width,height)
     if kind=='triangle':
         cells=[list(map(tuple,t)) for t in net['triangles']]
@@ -32,7 +32,8 @@ def net_drawing(net,width,height,kind='triangle'):
     edges=defaultdict(int)
     for index,cell in enumerate(cells):
         ps=[point(p) for p in cell]
-        drawing.add(Polygon([v for p in ps for v in p],fillColor=color(index),strokeColor=None))
+        fill=Color(*palette[index]) if palette else color(index)
+        drawing.add(Polygon([v for p in ps for v in p],fillColor=fill,strokeColor=None))
         center=[sum(p[i] for p in ps)/len(ps) for i in (0,1)]
         drawing.add(String(center[0],center[1]-3,str(index+1),fontName='Helvetica',
                            fontSize=max(7,min(10,scale*.25)),textAnchor='middle',fillColor=HexColor('#17304b')))
@@ -115,7 +116,7 @@ def on_edge(a,b,original):
     return False
 
 
-def shape_drawing(surface,mapping,width,height,yaw=35,elevation=25):
+def shape_drawing(surface,mapping,width,height,yaw=35,elevation=25,palette=None):
     from reportlab.graphics.shapes import Drawing,Polygon,Line
     from reportlab.lib.colors import Color,HexColor
     allpoints=[p for f in surface['faces'] for p in f]
@@ -136,7 +137,7 @@ def shape_drawing(surface,mapping,width,height,yaw=35,elevation=25):
     tree=bsp(visible);drawing=Drawing(width,height)
     light=(.35,-.15,.92)
     for poly,original,index in ordered(tree,view):
-        n=normal(original);base=color(face_colors[index]);shade=.76+.24*max(0,dot(n,light))
+        n=normal(original);base=Color(*palette[face_colors[index]]) if palette else color(face_colors[index]);shade=.76+.24*max(0,dot(n,light))
         shade_color=Color(base.red*shade,base.green*shade,base.blue*shade)
         ps=[xy(p) for p in poly]
         drawing.add(Polygon([q for p in ps for q in p],fillColor=shade_color,

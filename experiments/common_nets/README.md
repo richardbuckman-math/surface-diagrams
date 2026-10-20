@@ -30,12 +30,29 @@ and exact face/hinge certificates. Selected seven-unit nets cover **40** and
 examples, with no optimality claim; the two nets at each volume are not claimed
 to cover that volume's entire catalog.
 
-`build_tetrahedra_atlas.py` produces a separate **49-page** PDF: a complete
-523-shape catalog, then **11** puzzle nets followed by all and only their matching
-targets. Stable shape IDs link the two sections; puzzle face colors correspond
-to their net panels. The PDF embeds exact JSON data and a page manifest. Its
-offline gallery contains 855 SVGs and rotatable versions of every illustrated
-target. Fixed internal slits are allowed and explicitly marked in red.
+`build_tetrahedra_atlas.py` now produces a **73-page** puzzle book with linked
+contents. Puzzles come first: cool net colors and independently randomized warm
+target colors hide the face correspondence. Solutions repeat the same targets
+with the original matching colors. The complete 523-shape catalog follows.
+Stable shape IDs link all three sections. The PDF embeds exact JSON data and
+a page manifest. Its offline gallery contains 1,187 SVGs and rotatable targets;
+solutions start collapsed. Fixed internal slits are explicitly marked in red.
+The previous 49-page atlas remains available as an earlier output.
+
+The static browser game at `game/index.html` has all **321 net/target
+challenges** from the selected 11 nets. Drag each camera independently;
+double-click a hinge and scroll, or use its key pair / slider / buttons.
+Shift supplies the last four pairs on 17-hinge nets. Snapping steps through
+polytet crease angles; undo/redo and browser-local progress are included.
+Show solution animates the verified fold and reveals matching colors without
+earning a solved mark. The site build publishes it at `/tetrahedra/`.
+
+`build_game.py` checks the original exact mappings and prepares numerical
+meshes and signed crease angles. Rendering-free `geometry.mjs` reconstructs
+all 321 targets in tests, preserving rigid panels and both hinge endpoints.
+Success tests whole triangle surfaces up to rigid placement, panel reassignment
+and reflection, with a 0.012-edge-length vertex tolerance. It does not require
+the particular stored solution. Continuous panel collisions remain unmodeled.
 
 The optimized six-unit **single-net maximum is 19 of the 23 shapes**. A second
 net covers 14, including the four missing from the first; together they cover
@@ -127,6 +144,8 @@ python experiments/common_nets/build_gallery.py
 python -m experiments.common_nets.audit
 python -m experiments.common_nets.extend_tetrahedra --attempts 500
 python -m experiments.common_nets.build_tetrahedra_atlas
+python -m experiments.common_nets.build_game
+node --test tests/common_net_game.test.mjs
 ```
 
 The optional, bounded general search is
@@ -139,9 +158,10 @@ and red internal slits are cuts. Open `index.html`; clicking a target opens the
 rotatable WebGL mesh. It needs no internet connection or third-party runtime.
 Downloadable SVG images remain available when WebGL is unavailable.
 
-The separate one-through-eight deliverables are
-`output/pdf/tetrahedra-one-through-eight.pdf` and
-`output/tetrahedra-one-through-eight-gallery.zip`. The extension reads the
+The revised one-through-eight deliverables are
+`output/pdf/tetrahedra-puzzles-and-solutions.pdf` and
+`output/tetrahedra-puzzles-and-solutions-gallery.zip`. The published PDF is
+copied to `docs/puzzles/`. The extension reads the
 existing optimized one-through-six data, preserving those earlier certificates;
 it writes `.preview/common-nets/tetrahedra-through-eight.json` separately.
 
