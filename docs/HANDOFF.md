@@ -1,5 +1,18 @@
 # Handoff: surface-diagrams
 
+## October 20: folding game extracted to its own project
+
+The user clarified that the cube game does not belong to surface-diagrams.
+It now lives at `C:/GitHub/folding-puzzles`, repository
+https://github.com/richardbuckman-math/folding-puzzles and public game
+https://richardbuckman-math.github.io/folding-puzzles/#C4A.
+The whole game moves together: both families (1,117 challenges), books,
+research/certificates and all 26 game/geometry tests. Seven relevant source
+commits were preserved with filtered Git history. It has its own Pages and CI.
+Do future game work there; do not recreate its code or tests in this project.
+The old `/tetrahedra/` game URL redirects while preserving query and hash.
+Mapping-class library, labs and ongoing research are unchanged.
+
 ## October 20: explicit standard-block untwisting, extraction still open
 
 The heartbeat's positive (24,3) checkpoint is older than the saved positive
