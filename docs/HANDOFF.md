@@ -13,6 +13,47 @@ Label sphere simplifications of cut-complex representatives as such and
 keep them distinct from changes to the factorization or its disk braid.
 This convention applies to future derivations and user-facing explanations.
 
+## October 19: downloadable graphical reverse-route report
+
+Richard requested the entire current derivation in reverse, ending at his
+supplied (6,7), with supports, adjacent braids, a short summary, a roadmap,
+and all graphical steps in a downloadable PDF. The exporter is
+`examples/build_six_seven_derivation_pdf.py`. It consumes the existing
+`.preview/six-seven-three-root-transport/certificate.json` and cached support
+assignments from that replay's HTML, rather than recomputing the research.
+
+The selected connected branch has 146 states / 145 transitions and 14 actual
+sphere moves. It excludes the unsuccessful tail-cluster alternative; the
+larger research replay still contains that branch. The exporter checks every
+shared endpoint, including the unsigned-to-explicit-positive sign transition,
+and reverses the successful branch. Local before/after intervals show every
+changed factor; full ordered checkpoints close each phase. Every sphere move
+is explicitly labeled and its inverse stored disk discrepancy appears in a
+ledger. The embedded JSON attachments retain the complete states and checks.
+
+The report starts with the reference W0 and W1 blocks, then marks the
+UNCOMPUTED theorem-based Hurwitz bridge to our positive fifty-unit word.
+It must not be described as a fully explicit standard-word derivation.
+No new mathematical bridge was found by preparing the document. The next
+research step remains the explicit W0 W1 block extraction/untwisting route.
+
+Final download: `output/pdf/six-seven-backward-graphical-derivation.pdf`.
+Generated PDFs and rendering intermediates are ignored, not committed as
+large binaries. Rebuild the checked replay first if its local cache is absent.
+The PDF uses landscape A3 pages, bookmarks, shared Arc/Loop support drawings,
+and exact braid paths. Figures are vector; long braids fold at safe crossing
+level boundaries with their colors intact. Individual support pictures are
+not cumulative joint cut-complex certificates. The one older unavailable
+disk support (`last.inverse.BQ56`) is explicitly marked, with its braid shown.
+
+Validation: four focused exporter regressions cover connected branch selection,
+lossless changed-interval reconstruction, sphere/lift certificate guards,
+inverse discrepancy direction, and the Artin exponent convention. The PDF's
+219 pages were rendered to PNG, reviewed in contact sheets, and spot-checked
+at reading size. The final 3.4 MB PDF has 342 vector forms and no raster images;
+the attachment hash and every step's reconstruction and page label were checked.
+Public labs are unchanged.
+
 ## October 19 late: the positive 50-twist branch is recognized as standard W0 W1
 
 Richard's suggested 6*5+5*4 led to an actual recognition, beyond counts.

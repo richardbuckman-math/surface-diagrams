@@ -13,3 +13,7 @@ examples/output/*.pdf
 examples/output/*.xdv
 
 public/
+
+# Downloadable documents and PDF rendering intermediates
+output/pdf/
+tmp/pdfs/
