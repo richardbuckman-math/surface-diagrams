@@ -1,5 +1,52 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 20: explicit standard-block untwisting, extraction still open
+
+The heartbeat's positive (24,3) checkpoint is older than the saved positive
+fifty-unit branch and its standard W0 W1 recognition. Preserve all of them.
+No new full (6,7) derivation or W0 block extraction is claimed by this increment.
+
+`standard_block_routes.standard_block_untwisting(name,i)` now constructs
+adjacent Hurwitz moves from sigma_i inverse * F * sigma_i to F, where
+F is T, W0 or W1. It implements Auroux's Lemmas 6-7 constructively: expose
+the chosen twist, sweep it through the block, cycle the other factors,
+restore the transported support using centrality, then undo the exposing
+moves. The centrality rechart is independently checked in the disk, on
+the five sphere arcs, and in genus-two homology. It is labeled SPHERE MOVE
+if the disk equality fails. T lifts to -I, not identity; W0 and W1 lift to I.
+
+All fifteen block/generator combinations pass the exact replay guards.
+T and W0 need one sphere move for generator 1 and disk equalities for
+generators 2-5. All W1 examples are disk-exact. The graphical examples have
+40 W0 states and 68 W1 states (including their starting state). They show
+support arcs beside exact braids, changed intervals or complete vertical
+factorizations, a step selector, and the full disk discrepancy for every
+rechart. These are individual supports, not cumulative joint cut complexes.
+
+Rebuild with `python examples/build_standard_block_untwisting.py`.
+The checked page and certificates are in
+`docs/proofs/standard-block-untwisting/index.html`, copied by the ordinary
+site build. Repeated factor drawings are stored once in its display data.
+The display JSON shrank from 1,475,038 to 77,167 bytes. Browser checks
+cover all 108 displayed states and their image assets, full-factorization
+toggles, explicit sphere labels/discrepancies, and a 390px layout; no
+JavaScript errors or missing images were found. The desktop and mobile
+views were visually inspected. Three focused engine regressions pass.
+
+A narrow preliminary check used the actual standard-letter tail
+U=1^4 3^4 A 55 A, A=43211234, and the 20-unit W0 target. Forty bounded
+word-reversing probes (cyclic starts, reflected generator numbering,
+left/right extraction) produced no positive residual certificate. All
+terminated in at most 901 rewrites. This is not an obstruction to Hurwitz
+equivalence or to an extraction involving earlier transported factors.
+Do not turn it into a broad repeat of the exhausted greedy search.
+
+Next: expose an actual twenty-unit standard block inside the fifty-unit
+source, allowing transported earlier factors. Then apply this explicit
+untwisting routine and check the thirty-unit remainder. Until extraction
+is certified, the theorem-based bridge in the graphical PDF remains
+UNCOMPUTED; this reusable reference-block replay does not fill it.
+
 October 17, 2026. **The complete factor-level derivation remains open.**
 The existing 2,486-rewrite sphere proof establishes the identity but is not the
 requested explanation by Hurwitz moves and named curve substitutions. The

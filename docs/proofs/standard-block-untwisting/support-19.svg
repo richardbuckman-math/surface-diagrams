@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385.5 205.5" width="385.5" height="205.5" role="img">
+<title>Planar surface</title>
+<path class="arc" d="M 67.75 102.75 A 135.583333333 57.6229166667 0 0 1 338.916666667 102.75 A 23.0833333333 9.81041666667 0 0 1 292.75 102.75 A 25 10.625 0 0 0 242.75 102.75 A 102.125 43.403125 0 0 1 38.5 102.75 A 158.291666667 67.2739583333 0 0 1 355.083333333 102.75 A 43.6666666667 18.5583333333 0 0 1 267.75 102.75" fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 205.5) scale(1 -1)"/>
+<ellipse class="outer-boundary" cx="192.75" cy="102.75" rx="180" ry="90" fill="none" stroke="#000000" stroke-width="1.5"/>
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</svg>

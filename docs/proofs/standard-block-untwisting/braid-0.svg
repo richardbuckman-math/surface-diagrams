@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 86" width="190" height="86" role="img">
+<title>Planar surface</title>
+<path class="braid-strand" d="M 40 32 C 40 39.3333333333 62 46.6666666667 62 54" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 62 32 C 62 34.6 59.2345454545 37.2 55.6645950413 39.8 M 46.3354049587 46.2 C 42.7654545455 48.8 40 51.4 40 54" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 84 32 L 84 54" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 106 32 L 106 54" fill="none" stroke="#23964f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 128 32 L 128 54" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 150 32 L 150 54" fill="none" stroke="#5254c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="40" y="24" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="40" y="68" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="62" y="24" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="62" y="68" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="84" y="24" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="84" y="68" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="106" y="24" fill="#23964f" font-size="9" font-family="serif" text-anchor="middle">4</text>
+<text x="106" y="68" fill="#23964f" font-size="9" font-family="serif" text-anchor="middle">4</text>
+<text x="128" y="24" fill="#168aad" font-size="9" font-family="serif" text-anchor="middle">5</text>
+<text x="128" y="68" fill="#168aad" font-size="9" font-family="serif" text-anchor="middle">5</text>
+<text x="150" y="24" fill="#5254c8" font-size="9" font-family="serif" text-anchor="middle">6</text>
+<text x="150" y="68" fill="#5254c8" font-size="9" font-family="serif" text-anchor="middle">6</text>
+<text x="168" y="46" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s1</text>
+</svg>

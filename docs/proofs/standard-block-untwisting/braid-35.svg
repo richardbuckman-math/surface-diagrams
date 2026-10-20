@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226 130" width="226" height="130" role="img">
+<title>Planar surface</title>
+<path class="braid-strand" d="M 58 32 L 58 54" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 80 32 L 80 54" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 102 32 L 102 54" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 124 32 C 124 39.3333333333 146 46.6666666667 146 54" fill="none" stroke="#23964f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 146 32 C 146 34.6 143.234545455 37.2 139.664595041 39.8 M 130.335404959 46.2 C 126.765454545 48.8 124 51.4 124 54" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 168 32 L 168 54" fill="none" stroke="#5254c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 58 54 L 58 76" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 80 54 L 80 76" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 102 54 L 102 76" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 124 54 L 124 76" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 146 54 C 146 61.3333333333 168 68.6666666667 168 76" fill="none" stroke="#23964f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 168 54 C 168 56.6 165.234545455 59.2 161.664595041 61.8 M 152.335404959 68.2 C 148.765454545 70.8 146 73.4 146 76" fill="none" stroke="#5254c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 58 76 L 58 98" fill="none" stroke="#d73027" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 80 76 L 80 98" fill="none" stroke="#e08214" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 102 76 L 102 98" fill="none" stroke="#b59b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 124 76 C 124 78.6 126.765454545 81.2 130.335404959 83.8 M 139.664595041 90.2 C 143.234545455 92.8 146 95.4 146 98" fill="none" stroke="#168aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 146 76 C 146 83.3333333333 124 90.6666666667 124 98" fill="none" stroke="#5254c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="braid-strand" d="M 168 76 L 168 98" fill="none" stroke="#23964f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="58" y="24" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="58" y="112" fill="#d73027" font-size="9" font-family="serif" text-anchor="middle">1</text>
+<text x="80" y="24" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="80" y="112" fill="#e08214" font-size="9" font-family="serif" text-anchor="middle">2</text>
+<text x="102" y="24" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="102" y="112" fill="#b59b00" font-size="9" font-family="serif" text-anchor="middle">3</text>
+<text x="124" y="24" fill="#23964f" font-size="9" font-family="serif" text-anchor="middle">4</text>
+<text x="124" y="112" fill="#5254c8" font-size="9" font-family="serif" text-anchor="middle">6</text>
+<text x="146" y="24" fill="#168aad" font-size="9" font-family="serif" text-anchor="middle">5</text>
+<text x="146" y="112" fill="#168aad" font-size="9" font-family="serif" text-anchor="middle">5</text>
+<text x="168" y="24" fill="#5254c8" font-size="9" font-family="serif" text-anchor="middle">6</text>
+<text x="168" y="112" fill="#23964f" font-size="9" font-family="serif" text-anchor="middle">4</text>
+<text x="195" y="46" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s4</text>
+<text x="195" y="68" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s5</text>
+<text x="195" y="90" fill="#000000" font-size="9" font-family="serif" text-anchor="middle">s4^-1</text>
+</svg>
