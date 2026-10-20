@@ -13,6 +13,45 @@ Label sphere simplifications of cut-complex representatives as such and
 keep them distinct from changes to the factorization or its disk braid.
 This convention applies to future derivations and user-facing explanations.
 
+## October 19 late: the positive 50-twist branch is recognized as standard W0 W1
+
+Richard's suggested 6*5+5*4 led to an actual recognition, beyond counts.
+`positive_fifty_standard_recognition()` checks the Siebert--Tian hypotheses:
+the expanded source has fifty positive nonseparating units, identity sphere
+action and +I lift, and explicitly contains each of the five standard chain
+generators (after splitting pair powers). Their permutation image is all S6.
+
+Theorem 9, page 5, of Auroux, "Fiber sums of genus 2 Lefschetz fibrations"
+https://arxiv.org/pdf/math/0204285 gives Hurwitz normal form W0^k W1^epsilon,
+epsilon in {0,1}. Since 50=20k+30epsilon, k=epsilon=1. Therefore this enlarged
+positive fibration IS recognized as the standard 20+30 fiber sum. This is
+theorem-based recognition, not an explicit computed route. No disk-factorization
+equivalence is claimed, and the graphical (6,7) derivation is still incomplete.
+
+W0=(1234554321)^2 has twenty units and W1=(12345)^6 has thirty.
+The literal alternative (1234)^5 also has twenty units but has lift -I;
+W1*(1234)^5 therefore has lift -I and is not our closed-genus-two identity.
+Do not confuse the valid numerical split with that literal five-strand full twist.
+
+The graphical replay adds two compact REFERENCE panels for W0 and W1, with
+repetition counts, and a focused `standard-fifty.html` page. These panels are
+not performed moves; no new Hurwitz route or sphere substitution is asserted.
+The existing sixteen actual sphere transitions remain explicitly labeled.
+
+Next construct the graphical Hurwitz route from our positive fifty units to
+W0 W1. Use the verified target and Auroux's Lemmas 6--7 on global conjugation
+and full invariance of T, W0, W1 to guide block extraction/untwisting. The new
+replacement already supplies eighteen of a cyclic twenty-unit W0 block;
+exposing its missing two units would isolate a thirty-unit remainder.
+Preserve the shorter signed W=T56 checkpoint and all previous certified moves.
+
+Validation: the targeted recognition regression passes. It checks the expanded
+source, explicit generator witnesses, valid 20/30 target words and lift signs,
+and rejection of the literal five-strand full-twist candidate. The replay still
+has 173 move states, plus two separate reference panels, and 148 support entries
+(one older intermediate disk drawing remains unavailable). The focused reference
+page was rendered and visually inspected; all reference drawings are available.
+
 ## October 19 night: a positive sphere replacement removes the final inverse
 
 Richard asked where the latest derivation is and whether global conjugation

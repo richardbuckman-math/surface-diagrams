@@ -1520,6 +1520,46 @@ def three_root_positive_sphere_expansion():
         scope='Optional longer positive intermediate; the short W=P56 derivation remains open')
 
 
+def positive_fifty_standard_recognition(source=None):
+    """Check the hypotheses recognizing our positive word as W0 W1.
+
+    Auroux, Fiber sums of genus 2 Lefschetz fibrations, Theorem 9
+    (Siebert--Tian) gives the Hurwitz normal form W0^k W1^epsilon.
+    Our explicit standard-generator witnesses give the full S6 image;
+    50=20k+30epsilon, epsilon in {0,1}, forces k=epsilon=1.
+    This invokes a classification theorem; it does not construct a route.
+    """
+    source = three_root_positive_sphere_expansion() if source is None else source
+    factors = source['stages'][-1]['factors']
+    assert all(f.sign > 0 and f.points == 2 for f in factors)
+    expanded = tuple(replace(f, id=f'{f.id}.half{j + 1}', half=True, power=1)
+        for f in factors for j in range(f.power * (1 if f.half else 2)))
+    assert len(expanded) == 50
+    assert not reduce_word(product(expanded) + inverse_word(product(factors)))
+    witnesses = tuple(next(f for f in expanded if f.first == i and not f.conjugator)
+                      for i in range(1, 6))
+    sphere = sphere_chain_certificate(product(expanded))
+    assert sphere['certified'] and homology_action(product(expanded)) == IDENTITY
+    w0 = (1, 2, 3, 4, 5, 5, 4, 3, 2, 1) * 2
+    w1 = (1, 2, 3, 4, 5) * 6
+    certificates = tuple(sphere_inner_certificate(w) for w in (w0, w1))
+    assert all(c['certified'] for c in certificates)
+    assert all(homology_action(w) == IDENTITY for w in (w0, w1))
+    literal_five = (1, 2, 3, 4) * 5
+    literal_lift = homology_action(literal_five)
+    assert literal_lift == tuple(tuple(-x for x in row) for row in IDENTITY)
+    return dict(expanded_source=expanded, standard_generator_witnesses=witnesses,
+        source_sphere_certificate=sphere, source_lift_homology=IDENTITY,
+        w0_word=w0, w1_word=w1, target_word=w0 + w1,
+        target_sphere_certificates=certificates, target_lift_homology=IDENTITY,
+        normal_form_powers=dict(W0=1, W1=1),
+        literal_five_strand_full_twist=literal_five, literal_five_lift=literal_lift,
+        classification_hypotheses_verified=True, theorem_implies_hurwitz_equivalence=True,
+        explicit_hurwitz_route_found=False, complete_structural_derivation_found=False,
+        theorem_url='https://arxiv.org/pdf/math/0204285', theorem='Theorem 9 (Siebert--Tian), page 5',
+        scope='Theorem-based recognition in closed genus two; no disk equivalence or explicit Hurwitz replay claimed')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

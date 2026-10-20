@@ -1066,6 +1066,55 @@ disk-preview limitation remains). A focused two-column page is generated
 as `positive-expansion.html`; both columns were rendered and visually inspected.
 Every sphere-only transition, including this expansion, is explicitly labeled.
 
+## The positive fifty-unit factorization is recognized by classification
+
+Richard suggested the split 6*5+5*4=50. There is a genuine standard 30+20
+target, but the literal words need a lift check. Put
+
+```text
+W0 = (1234554321)^2,  length 20, lift +I,
+W1 = (12345)^6,       length 30, lift +I.
+```
+
+The alternative (1234)^5 is sphere-trivial but has lift -I. Hence its product
+with W1 also has lift -I and cannot equal our positive source in closed genus
+two. The standard twenty-unit W0 is a squared palindromic sphere relator.
+
+More strongly, the classification hypotheses are satisfied by our actual
+fifty-unit source. Expanding each full pair twist into its two half-twist
+units is a formal exact disk equality. All fifty resulting genus-two twists
+are positive and nonseparating. The source's complete sphere action and
+separate +I lift are checked. The replacement block explicitly contains each
+standard generator zeta1,...,zeta5 after expanding its powers, so its image
+generates the full S6, not merely one transitive orbit.
+
+[Auroux, Theorem 9, page 5](https://arxiv.org/pdf/math/0204285), states the
+Siebert--Tian result as a Hurwitz normal form W0^k W1^epsilon, epsilon in {0,1}.
+The count 50 then forces k=epsilon=1. Consequently our enlarged positive
+factorization is Hurwitz equivalent to W0 W1 in closed genus two; its fibration
+is the standard twenty-plus-thirty fiber sum. This conclusion uses the theorem
+AND its verified hypotheses, not the count or total action alone.
+
+`positive_fifty_standard_recognition()` saves the expanded source, five explicit
+generator witnesses, source sphere/lift checks, standard target checks, and
+the theorem reference. It distinguishes theorem-implied equivalence from an
+explicit route: `explicit_hurwitz_route_found` and the full structural-derivation
+flag remain false. The graphical target blocks are separate REFERENCE panels,
+with repetition counts, not additional derivation states or unlabeled moves.
+
+The next task is constructive: expose the standard W0 block using the eighteen
+already inserted positive units and two suitable earlier units, then identify
+the thirty-unit remainder by explicit checked moves. Auroux's Lemmas 6--7 give
+useful Hurwitz invariance under global conjugation and untwisting of these
+standard blocks. The original (6,7) derivation is not declared finished solely
+from this nonconstructive recognition, and no exact disk equivalence is claimed.
+
+The targeted recognition regression passes. The graphical replay retains its
+173 move states and adds two separate reference panels; it has 148 support
+entries with the same one older disk-preview limitation. The focused standard
+target page was rendered and visually inspected with its repetition labels,
+theorem scope, and the literal five-strand lift warning visible.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

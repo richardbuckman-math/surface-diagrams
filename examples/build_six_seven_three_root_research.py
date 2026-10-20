@@ -8,7 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 from surface_diagrams.boundary_playground_geometry import support_svg
-from surface_diagrams.factorization_explorer import export_factors
+from surface_diagrams.factorization_explorer import Factor, export_factors
 from surface_diagrams.mapping_classes import supported_class
 from surface_diagrams.six_seven_structure import (
     three_root_half_transport, three_root_transport_consolidation,
@@ -23,6 +23,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_alternate_half_lantern,
     three_root_last_separator_decomposition,
     three_root_positive_sphere_expansion,
+    positive_fifty_standard_recognition,
 )
 
 
@@ -43,6 +44,7 @@ def build():
     alternate = three_root_alternate_half_lantern()
     last_separators = three_root_last_separator_decomposition()
     positive_expansion = three_root_positive_sphere_expansion()
+    recognition = positive_fifty_standard_recognition(positive_expansion)
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
@@ -53,6 +55,7 @@ def build():
                   alternate_half_lantern=alternate,
                   last_separator_decomposition=last_separators,
                   positive_sphere_expansion=positive_expansion,
+                  standard_fifty_recognition=recognition,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -216,6 +219,17 @@ def build():
         positive_cards.append(f'<section class="stage{kind}"><h2>{escape(stage["title"])}</h2>'
                               f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
+    w0_block = tuple(Factor(f'W0.{i + 1}', (), first, 2, half=i != 4)
+                     for i, first in enumerate((1, 2, 3, 4, 5, 4, 3, 2, 1)))
+    w1_block = tuple(Factor(f'W1.{i}', (), i, 2, half=True) for i in range(1, 6))
+    reference_cards = (
+        '<section class="stage"><h2>W0: standard 20-twist relation</h2>'
+        '<p><strong>Repeat this ten-unit block twice.</strong> Reference target; no replayed move.</p>'
+        + factor_rows(w0_block) + '</section>'
+        '<section class="stage"><h2>W1: standard 30-twist relation</h2>'
+        '<p><strong>Repeat this five-unit block six times.</strong> Reference target; no replayed move.</p>'
+        + factor_rows(w1_block) + '</section>')
+
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
                                           ('After applying C1', transport['intermediate']),
@@ -256,7 +270,8 @@ and cut complexes. These static pictures show individual supports only.</p>
 <p><a href="certificate.json">Exact route and scope certificates</a> ·
 <a href="https://richardbuckman-math.github.io/surface-diagrams/lab/index.html">(6,7) lab</a> ·
 <a href="#last-separators">Latest lantern continuation</a> ·
-<a href="#positive-sphere-expansion">Optional expansion removing the final inverse</a></p>
+<a href="#positive-sphere-expansion">Optional expansion removing the final inverse</a> ·
+<a href="standard-fifty.html">Recognized standard 20+30 target</a></p>
 </header><div class="board">FACTOR_CARDS</div>
 <h2>A subsequent named sphere lantern</h2>
 <p>The first three records now multiply to (C1 D)², where D is the simple arc shown
@@ -440,14 +455,33 @@ their disk discrepancy has exponent sum −20.</p>
 twelve half twists and three full pair twists. This removes the negative
 factor, producing the positive (50,0) intermediate below.</p>
 <p class="notice">Removing the inverse is possible; a short structural
-derivation of W = T56 remains open. This longer positive expansion does not
-identify the resulting word with a standard exterior-boundary factorization,
-nor prove a Hurwitz equivalence to a known fibration. Global conjugation alone
+derivation of W = T56 remains open. The classification check below identifies
+the positive 50-twist fibration; its explicit graphical Hurwitz route has not
+been constructed. Global conjugation alone
 preserves signs and cannot turn the inverse into a positive factor.</p>
 <p>The two columns are individual support pictures, not cumulative joint
 cut-complex certificates. The saved certificate includes the explicit R²
 substitution and separate sphere/lift checks.</p>
-<div class="board">POSITIVE_CARDS</div></body></html>'''
+<div class="board">POSITIVE_CARDS</div>
+<h2 id="standard-fifty-recognition">Recognized target: W0 W1, with 20+30 twists</h2>
+<p class="notice"><strong>Theorem-based recognition, not a replayed move.</strong>
+After expanding pair twists into their half-twist units, our positive word has
+50 nonseparating twists and includes all five standard generators explicitly.
+Its permutation monodromy therefore generates S6. The sphere identity and
+separate +I lift are checked.</p>
+<p>The Siebert–Tian classification, stated as
+<a href="https://arxiv.org/pdf/math/0204285">Theorem 9 in Auroux, page 5</a>,
+then makes it Hurwitz equivalent to W0^k W1^ε with ε=0 or 1. The equation
+50=20k+30ε forces k=1 and ε=1. Thus the enlarged fibration is the standard
+20+30 fiber sum. This recognition does not supply the intermediate Hurwitz
+moves or finish the requested graphical (6,7) derivation.</p>
+<p>W0=(σ1 σ2 σ3 σ4 σ5² σ4 σ3 σ2 σ1)² and
+W1=(σ1 σ2 σ3 σ4 σ5)⁶. The two blocks are drawn below, with repetitions
+stated explicitly. They are reference factorizations, not new steps in the replay.</p>
+<p>The literal five-strand full twist (σ1 σ2 σ3 σ4)⁵ has twenty letters
+but lift −I. Multiplying it by the thirty-letter W1 would still have lift −I,
+so that literal 6×5+5×4 word is not our closed-genus-two identity.</p>
+<div class="local">REFERENCE_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -464,6 +498,7 @@ substitution and separate sphere/lift checks.</p>
             .replace('ALTERNATE_CARDS', ''.join(alternate_cards))
             .replace('LAST_CARDS', ''.join(last_cards))
             .replace('POSITIVE_CARDS', ''.join(positive_cards))
+            .replace('REFERENCE_CARDS', reference_cards)
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
     rendered = (destination / 'index.html').read_text(encoding='utf-8')
@@ -473,6 +508,12 @@ substitution and separate sphere/lift checks.</p>
                 '<a href="index.html">Full graphical replay</a></p>')
     focused += rendered.split('<h2 id="positive-sphere-expansion">', 1)[1].split('</h2>', 1)[1]
     (destination / 'positive-expansion.html').write_text(focused, encoding='utf-8')
+    reference = rendered[:rendered.index('<body>')]
+    reference += ('<body><h1>Recognized standard 20+30 target</h1>'
+                  '<p><a href="positive-expansion.html">Our positive 50-twist word</a> · '
+                  '<a href="index.html">Full research replay</a></p>')
+    reference += rendered.split('<h2 id="standard-fifty-recognition">', 1)[1].split('</h2>', 1)[1]
+    (destination / 'standard-fifty.html').write_text(reference, encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
           f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '

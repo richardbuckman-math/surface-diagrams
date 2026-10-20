@@ -24,10 +24,29 @@ from surface_diagrams.six_seven_structure import (
     disk_common_chart_certificate, three_root_alternate_half_lantern,
     three_root_last_separator_decomposition,
     positive_inverse_pair_sphere_relation, three_root_positive_sphere_expansion,
+    positive_fifty_standard_recognition,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_positive_fifty_is_recognized_by_classification_without_claiming_a_route(self):
+        result = positive_fifty_standard_recognition()
+        self.assertTrue(result['classification_hypotheses_verified'])
+        self.assertTrue(result['theorem_implies_hurwitz_equivalence'])
+        self.assertFalse(result['explicit_hurwitz_route_found'])
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertEqual(len(result['expanded_source']),50)
+        self.assertTrue(all(f.half and f.power==1 and f.sign==1 for f in result['expanded_source']))
+        self.assertEqual(tuple(f.first for f in result['standard_generator_witnesses']),tuple(range(1,6)))
+        self.assertTrue(all(not f.conjugator for f in result['standard_generator_witnesses']))
+        self.assertEqual(result['normal_form_powers'],dict(W0=1,W1=1))
+        self.assertEqual((len(result['w0_word']),len(result['w1_word'])),(20,30))
+        self.assertEqual(homology_action(result['target_word']),IDENTITY)
+        self.assertTrue(all(c['certified'] for c in result['target_sphere_certificates']))
+        self.assertTrue(result['source_sphere_certificate']['certified'])
+        self.assertEqual(result['literal_five_lift'],tuple(tuple(-x for x in row) for row in IDENTITY))
+        self.assertNotEqual(homology_action(result['w1_word']+result['literal_five_strand_full_twist']),IDENTITY)
+
     def test_positive_inverse_replacement_uses_the_squared_sphere_relator(self):
         from surface_diagrams.braid_actions import reduce_word
         relation = positive_inverse_pair_sphere_relation()
