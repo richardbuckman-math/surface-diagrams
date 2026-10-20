@@ -1462,6 +1462,64 @@ def three_root_last_separator_decomposition():
         scope='Signed sphere/closed-genus-two intermediate; one inverse P56 remains essential')
 
 
+def positive_inverse_pair_sphere_relation():
+    """Replace T56 inverse by 18 positive half-twist units, preserving the lift.
+
+    Put A=43211234 and R=5 A 5. The sphere relator R has lift -I,
+    so the shorter eight-letter replacement A would give the WRONG lift.
+    R^2 instead gives T56^-1=A 55 A in the sphere and closed genus two.
+    This deliberately enlarges the positive factorization; it is not a
+    short reduction of the preceding positive word to T56.
+    """
+    a = (4, 3, 2, 1, 1, 2, 3, 4)
+    relator = (5,) + a + (5,)
+    negative = SignedResearchFactor('sphere.inverse.P56', (), 5, 2, sign=-1)
+    right = []
+    for block in range(2):
+        if block:
+            right.append(SignedResearchFactor('sphere.positive.P56', (), 5, 2))
+        for i, first in enumerate((4, 3, 2, 1, 2, 3, 4)):
+            right.append(SignedResearchFactor(f'sphere.A{block + 1}.{i + 1}', (),
+                first, 2, half=i != 3))
+    right = tuple(right)
+    discrepancy = reduce_word(negative.word + inverse_word(product(right)))
+    formal = inverse_word(reduce_word((-5,) + relator + relator + (5,)))
+    assert not reduce_word(discrepancy + inverse_word(formal))
+    sphere = sphere_inner_certificate(discrepancy)
+    minus_identity = tuple(tuple(-x for x in row) for row in IDENTITY)
+    assert sphere['certified'] and not sphere['disk_identity']
+    assert homology_action(discrepancy) == IDENTITY
+    assert sphere_inner_certificate(relator)['certified'] and homology_action(relator) == minus_identity
+    assert product(right) == a + (5, 5) + a
+    return dict(left=(negative,), right=right, positive_word=product(right),
+        point_push_word=relator, point_push_lift=minus_identity,
+        disk_discrepancy=discrepancy, sphere_certificate=sphere, lift_homology=IDENTITY,
+        scope='SPHERE MOVE: squared sphere relator; closed genus-two lift preserved; not disk equality')
+
+
+def three_root_positive_sphere_expansion():
+    """An optional positive (50,0) branch, not the finished (6,7) derivation."""
+    before = three_root_last_separator_decomposition()['stages'][-1]['factors']
+    relation = positive_inverse_pair_sphere_relation()
+    assert before[-1].word == relation['left'][0].word
+    after = before[:-1] + relation['right']
+    assert all(f.sign > 0 and f.points == 2 for f in after)
+    assert sum(f.power * (1 if f.half else 2) for f in after) == 50
+    final = sphere_chain_certificate(product(after))
+    assert final['certified'] and homology_action(product(after)) == IDENTITY
+    return dict(stages=(dict(title='Signed checkpoint: positive W times inverse P56',
+            kind='start', factors=before),
+        dict(title='Replace inverse P56 using the squared sphere relation',
+            kind='sphere_rewrite', factors=after, local_before=before[-1:],
+            local_after=relation['right'], disk_discrepancy=relation['disk_discrepancy'],
+            sphere_certificate=relation['sphere_certificate'], lift_homology=IDENTITY)),
+        follows='three_root_last_separator_decomposition', inverse_relation=relation,
+        final_all_factors_positive=True, final_lefschetz_counts=(50, 0),
+        final_sphere_certificate=final, final_lift_homology=IDENTITY,
+        complete_structural_derivation_found=False,
+        scope='Optional longer positive intermediate; the short W=P56 derivation remains open')
+
+
 def root_cluster_lantern_route():
     """Apply both transported cluster lanterns to the saved mixed endpoint.
 

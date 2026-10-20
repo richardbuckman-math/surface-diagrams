@@ -22,6 +22,7 @@ from surface_diagrams.six_seven_structure import (
     three_root_tail_fixedness_audit,
     three_root_alternate_half_lantern,
     three_root_last_separator_decomposition,
+    three_root_positive_sphere_expansion,
 )
 
 
@@ -41,6 +42,7 @@ def build():
     fixedness = three_root_tail_fixedness_audit(tail_cluster)
     alternate = three_root_alternate_half_lantern()
     last_separators = three_root_last_separator_decomposition()
+    positive_expansion = three_root_positive_sphere_expansion()
     report = dict(route=route, transport=transport, prefix_lantern=prefix_lantern,
                   reduction=reduction, residual=residual, compression=compression,
                   petal_exchange=exchange,
@@ -50,6 +52,7 @@ def build():
                   tail_fixedness_audit=fixedness,
                   alternate_half_lantern=alternate,
                   last_separator_decomposition=last_separators,
+                  positive_sphere_expansion=positive_expansion,
                   prepared_cluster_lantern=f2_f7_cluster_lantern())
     (destination / 'certificate.json').write_text(json.dumps(
         report, default=asdict, separators=(',', ':')), encoding='utf-8')
@@ -205,6 +208,14 @@ def build():
         last_cards.append(f'<section class="stage{kind}"><h2>{index}. {escape(stage["title"])}</h2>'
                           f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
 
+    positive_cards = []
+    for index, stage in enumerate(positive_expansion['stages']):
+        kind = ' sphere' if index else ''
+        scope = ('<strong>SPHERE MOVE</strong> · Squared sphere relation; genus-two lift preserved; not disk equality'
+                 if index else 'The signed endpoint above; inverse still present')
+        positive_cards.append(f'<section class="stage{kind}"><h2>{escape(stage["title"])}</h2>'
+                              f'<p>{scope}</p>' + factor_rows(stage['factors']) + '</section>')
+
     local = ''.join(f'<figure><figcaption>{label}</figcaption>{image_for(factor)}</figure>'
                     for label, factor in (('Original F2', transport['source']),
                                           ('After applying C1', transport['intermediate']),
@@ -243,7 +254,9 @@ opened with <strong>Open JSON</strong> in the existing (6,7) lab to inspect its 
 and cut complexes. These static pictures show individual supports only.</p>
 <p>Points are numbered 1–6 from left to right. The approved vertical display convention is used.</p>
 <p><a href="certificate.json">Exact route and scope certificates</a> ·
-<a href="https://richardbuckman-math.github.io/surface-diagrams/lab/index.html">(6,7) lab</a></p>
+<a href="https://richardbuckman-math.github.io/surface-diagrams/lab/index.html">(6,7) lab</a> ·
+<a href="#last-separators">Latest lantern continuation</a> ·
+<a href="#positive-sphere-expansion">Optional expansion removing the final inverse</a></p>
 </header><div class="board">FACTOR_CARDS</div>
 <h2>A subsequent named sphere lantern</h2>
 <p>The first three records now multiply to (C1 D)², where D is the simple arc shown
@@ -416,7 +429,25 @@ identity and the complete structural (6,7) derivation remain open.</p>
 <p>The nine states below retain exact local disk moves, sphere-action and lift
 checks, and all sphere-only discrepancies. These are individual support pictures,
 not cumulative joint cut-complex certificates or equivalent disk-only workspaces.</p>
-<div class="board" id="last-separators">LAST_CARDS</div></body></html>'''
+<div class="board" id="last-separators">LAST_CARDS</div>
+<h2 id="positive-sphere-expansion">An optional positive expansion removes the last inverse</h2>
+<p><strong>SPHERE MOVE.</strong> Write A = σ4 σ3 σ2 σ1² σ2 σ3 σ4 and
+R = σ5 A σ5. R is a sphere relation, but its genus-two lift is the deck
+involution, with homology −I. Squaring R gives the lift-preserving equality
+T56⁻¹ = A σ5² A. Both sides agree on the sphere and in closed genus two;
+their disk discrepancy has exponent sum −20.</p>
+<p>The right side contains eighteen positive half-twist units, displayed as
+twelve half twists and three full pair twists. This removes the negative
+factor, producing the positive (50,0) intermediate below.</p>
+<p class="notice">Removing the inverse is possible; a short structural
+derivation of W = T56 remains open. This longer positive expansion does not
+identify the resulting word with a standard exterior-boundary factorization,
+nor prove a Hurwitz equivalence to a known fibration. Global conjugation alone
+preserves signs and cannot turn the inverse into a positive factor.</p>
+<p>The two columns are individual support pictures, not cumulative joint
+cut-complex certificates. The saved certificate includes the explicit R²
+substitution and separate sphere/lift checks.</p>
+<div class="board">POSITIVE_CARDS</div></body></html>'''
     (destination / 'index.html').write_text(
         page.replace('LOCAL_ARCS', local).replace('FACTOR_CARDS', ''.join(cards))
             .replace('PREFIX_CARDS', ''.join(prefix_cards))
@@ -432,14 +463,22 @@ not cumulative joint cut-complex certificates or equivalent disk-only workspaces
             .replace('FIXEDNESS_PICTURES', fixedness_pictures).replace('FIXEDNESS_ROWS', fixedness_rows)
             .replace('ALTERNATE_CARDS', ''.join(alternate_cards))
             .replace('LAST_CARDS', ''.join(last_cards))
+            .replace('POSITIVE_CARDS', ''.join(positive_cards))
             .replace('NEXT_LANTERN', next_lantern).replace('NEXT_TWO', next_two), encoding='utf-8')
     (destination / 'picture-limitations.json').write_text(json.dumps(limitations), encoding='utf-8')
+    rendered = (destination / 'index.html').read_text(encoding='utf-8')
+    focused = rendered[:rendered.index('<body>')]
+    focused += ('<body><h1>Optional positive sphere expansion: the inverse is removed</h1>'
+                '<p><a href="index.html#last-separators">Previous lantern continuation</a> · '
+                '<a href="index.html">Full graphical replay</a></p>')
+    focused += rendered.split('<h2 id="positive-sphere-expansion">', 1)[1].split('</h2>', 1)[1]
+    (destination / 'positive-expansion.html').write_text(focused, encoding='utf-8')
     print(f'{len(cards)} exact disk + {len(prefix_cards)} prefix + {len(reduction_cards)} reduction '
           f'+ {len(residual_cards)} residual + {len(compression_cards)} compression '
           f'+ {len(exchange_cards)} exchange + {len(cross_cards)} cross-petal '
           f'+ {len(cluster_cards)} cross-cluster + {len(tail_cards)} tail-cluster '
           f'+ {len(alternate_cards)} alternate-half-lantern '
-          f'+ {len(last_cards)} last-separator states; '
+          f'+ {len(last_cards)} last-separator + {len(positive_cards)} positive-expansion states; '
           f'{len(pictures)} supports; {len(limitations)} picture limitations')
     print(destination / 'index.html')
 

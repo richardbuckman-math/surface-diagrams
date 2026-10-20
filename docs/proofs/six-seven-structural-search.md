@@ -1010,6 +1010,62 @@ the final state render successfully. The final three columns were visually
 inspected with the unavailable entry, sphere-only rechart, exact cancellation,
 and essential final red inverse all visible. No computation cap was raised.
 
+## A positive replacement removes the inverse, but does not finish the short derivation
+
+Richard correctly asked whether the last inverse really has to remain.
+It is essential if the other seventeen records are kept unchanged and no
+replacement is made; it is not an obstruction to a longer positive word.
+
+Put A=43211234 and R=5 A 5, using positive Artin generators. The standard
+sphere relator R is identity on the sphere, but its genus-two lift has
+homology -I. Squaring it instead gives
+
+```text
+5^-1 R^2 5 = A 55 A 55 = 1,
+T56^-1 = 5^-2 = A 55 A.
+```
+
+`positive_inverse_pair_sphere_relation()` checks this explicitly and saves
+the free disk-word derivation from R squared, the nontrivial disk discrepancy,
+the exact sphere outer-action certificate, and the +I lift discrepancy.
+The disk exponent discrepancy is -20, so it is certainly not a disk equality.
+This is labeled **SPHERE MOVE**. The tempting eight-letter replacement A
+alone is sphere-equivalent but has the wrong genus-two lift; the test
+requires that discrepancy to be -I, rather than silently accepting it.
+
+The eighteen positive half-twist units on the right are displayed as twelve
+half twists and three full pair twists. `three_root_positive_sphere_expansion()`
+appends this substitution to the saved signed endpoint. It has 32 entirely
+positive records and genus-two counts (50,0); the full five-arc sphere check
+and separate +I homology pass. This is an optional enlarged intermediate.
+It does not identify that positive word with a standard boundary relation,
+prove a Hurwitz equivalence to a known fibration, or finish the requested
+short factor-level derivation. The useful short equation remains W=T56.
+
+Global conjugation alone cannot remove the negative sign: g T56^-1 g^-1 is
+still an inverse twist. It also transforms every existing factor and target
+together, so it does not create a new direct support equality between them.
+A consistent upward fixed-neighbor sweep of the final inverse through all
+seventeen positive records, including possible half-twist support matches,
+finds no direct cancellation. This is not an exhaustive Hurwitz obstruction.
+
+There is now a definite disk diagnostic beyond the earlier based-action
+bound: act on the unbased boundary of disk arc 1--2 using
+`supported_class(ConjugatedTwist(product(signed_endpoint),1,2))`. Its exact
+cyclic class has 33984 letters, unlike the two-letter reference. An exterior
+boundary twist fixes such interior curve classes, so the signed endpoint
+is noncentral in B6. No global conjugation can turn it into a power of the
+central exterior-boundary twist. The computed class is saved locally as
+`.preview/final-inverse-disk-witness.json`; this diagnostic does not apply
+a sphere move or alter any derivation state.
+
+The two new regression tests pass, including the wrong-lift rejection and
+the complete positive endpoint's sphere and homology checks. The graphical
+replay has 173 route states and 146 support entries (the same single older
+disk-preview limitation remains). A focused two-column page is generated
+as `positive-expansion.html`; both columns were rendered and visually inspected.
+Every sphere-only transition, including this expansion, is explicitly labeled.
+
 ## Sphere identity without expanding a disk point-push
 
 The final positive endpoint's full based disk action exhausted the existing

@@ -23,10 +23,43 @@ from surface_diagrams.six_seven_structure import (
     three_root_tail_fixedness_audit,
     disk_common_chart_certificate, three_root_alternate_half_lantern,
     three_root_last_separator_decomposition,
+    positive_inverse_pair_sphere_relation, three_root_positive_sphere_expansion,
 )
 
 
 class SixSevenStructureTests(unittest.TestCase):
+    def test_positive_inverse_replacement_uses_the_squared_sphere_relator(self):
+        from surface_diagrams.braid_actions import reduce_word
+        relation = positive_inverse_pair_sphere_relation()
+        a = (4,3,2,1,1,2,3,4)
+        self.assertEqual(relation['positive_word'],a+(5,5)+a)
+        self.assertEqual(len(relation['right']),15)
+        self.assertTrue(all(f.sign>0 for f in relation['right']))
+        self.assertTrue(relation['sphere_certificate']['certified'])
+        self.assertFalse(relation['sphere_certificate']['disk_identity'])
+        self.assertEqual(homology_action(relation['disk_discrepancy']),IDENTITY)
+        self.assertEqual(sum(1 if x>0 else -1 for x in relation['disk_discrepancy']),-20)
+        r = relation['point_push_word']
+        self.assertEqual(reduce_word(relation['disk_discrepancy'] +
+            reduce_word((-5,)+r+r+(5,))),())
+        wrong = relation['left'][0].word + inverse_word(a)
+        self.assertTrue(sphere_inner_certificate(wrong)['certified'])
+        self.assertEqual(homology_action(wrong),relation['point_push_lift'])
+        self.assertNotEqual(homology_action(wrong),IDENTITY)
+
+    def test_optional_positive_sphere_expansion_is_not_claimed_as_the_derivation(self):
+        result = three_root_positive_sphere_expansion()
+        self.assertFalse(result['complete_structural_derivation_found'])
+        self.assertTrue(result['final_all_factors_positive'])
+        self.assertEqual(result['final_lefschetz_counts'],(50,0))
+        before,after = result['stages']
+        self.assertEqual(len(before['factors']),18)
+        self.assertEqual(len(after['factors']),32)
+        self.assertEqual(after['kind'],'sphere_rewrite')
+        self.assertTrue(all(f.sign>0 for f in after['factors']))
+        self.assertTrue(result['final_sphere_certificate']['certified'])
+        self.assertEqual(homology_action(product(after['factors'])),IDENTITY)
+
     def test_last_separator_decomposition_retains_one_essential_inverse(self):
         result = three_root_last_separator_decomposition()
         self.assertFalse(result['complete_structural_derivation_found'])
