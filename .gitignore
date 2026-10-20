@@ -17,3 +17,4 @@ public/
 # Downloadable documents and PDF rendering intermediates
 output/pdf/
 tmp/pdfs/
+output/common-nets-gallery.zip

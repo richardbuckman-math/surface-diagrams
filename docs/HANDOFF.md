@@ -1,5 +1,52 @@
 # Handoff: surface-diagrams
 
+## October 20: user temporarily prioritizes a common-net puzzle project
+
+Richard wants the (6,7) write-up simplified substantially, but first requested
+a triangular analogue of Cubigami, starting with one volume unit and working
+up, followed by six- and seven-cube nets. The default model is regular
+tetrahedra glued along faces; the optional clarification remains unanswered.
+This work is isolated in `experiments/common_nets/`, with no mapping-class
+package imports or public-lab changes. See its README for methods and scope.
+
+Checked triangle results: one net each covers all shapes through five units
+(counts 1,1,1,3,7 with mirrors identified). The five-unit common net branches.
+At six units the optimal single net covers **19 of 23** types. A second net
+covers 14, including all four missing types; the pair covers all 23, overlap 10.
+`optimize_six.py` completes four source catalogs (104,201 spanning trees):
+every net of each source covers at most 19, and a net missing all four sources
+can cover only the remaining 19. This supplies a global computational bound
+in the rigid-panel model. The earlier 15/13 pair remains in historical data.
+No single rigid whole-triangle edge net covers all 23 in the stated model.
+The independently implemented edge-subset/union-find enumerator verifies all
+25,645 source spanning trees against the exact Kirchhoff count: 9,316 planar
+overlap rejections and 16,329 target failures. Every positive folding has an
+exact face bijection and hinge-endpoint certificate. These are folded end
+states, not certified continuous collision-free folding motions.
+
+Cube results are PARTIAL: a 26-square net covers all 27 planar six-cube trees,
+and a 30-square net covers 79/83 planar seven-cube trees. They do not cover
+the full 138/822 three-dimensional tree catalogs. Two general five-target
+searches timed out after 75 seconds apiece; do not infer impossibility or
+repeat them blindly. Next seek a constructive multi-band or common-net
+extension that reaches nonplanar targets. Keep this gap explicit.
+
+The short seven-page illustrated atlas is
+`output/pdf/common-nets-triangles-and-cubes.pdf`. The offline gallery and
+151 SVG figures are in `.preview/common-nets/`; the portable archive is
+`output/common-nets-gallery.zip`. The gallery allows rotating the exact target
+meshes to inspect hidden portions. Generated JSON certificates include the
+complete six-unit rejection list. After the puzzle work, return to Richard's
+request for a substantially simpler graphical (6,7) derivation report.
+
+Validation: four calculation regressions pass; all 46 positive triangle
+face/hinge certificates were rechecked from serialized data. The seven-page
+PDF was rendered and visually reviewed, with text inside page bounds and
+three embedded JSON attachments. The ZIP passes its integrity check. Browser
+inspection loads all 151 SVGs, changes mesh pixels on rotation, fits a 390px
+viewport, and reports no JavaScript errors. Net B has one internal slit;
+retain the red cut when making a physical template.
+
 ## Standing display convention: explicitly identify every sphere move
 
 Richard requires every sphere move to be shown explicitly. Label every
