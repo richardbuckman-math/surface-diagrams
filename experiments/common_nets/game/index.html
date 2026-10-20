@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fold: tetrahedron puzzles</title><link rel="stylesheet" href="game.css"></head>
+<title>Fold: cubes and tetrahedra</title><link rel="stylesheet" href="game.css?v=2"></head>
 <body>
 <div id="loading" role="status"><div><strong>Preparing your folding table...</strong><p>Loading the nets and their checked target shapes.</p></div></div>
-<header><div><p class="eyebrow">A COMMON-NET PUZZLE LAB</p><h1>Fold<span> / Tetrahedra</span></h1></div><nav><a href="../docs/puzzles/tetrahedra-puzzles-and-solutions.pdf">Puzzle book PDF</a><a href="../index.html">Surface diagrams</a></nav></header>
+<header><div><p class="eyebrow">A COMMON-NET PUZZLE LAB</p><h1>Fold<span id="family-title"> / Tetrahedra</span></h1></div><nav><a href="../docs/puzzles/cubes-cubigami-puzzles-and-solutions.pdf">Cubes book PDF</a><a href="../docs/puzzles/tetrahedra-puzzles-and-solutions.pdf">Tetrahedra book PDF</a><a href="../index.html">Surface diagrams</a></nav></header>
 <main>
 <div class="chooser">
+<label>Puzzle family<select id="family" aria-label="Puzzle family"><option value="tetrahedra">Tetrahedra</option><option value="cubes">Cubes / Cubigami</option></select></label>
 <label>Choose a net<select id="net" aria-label="Choose a net"></select></label>
 <label>Target shape<select id="target" aria-label="Target shape"></select></label>
 <div class="navigation"><button id="previous" aria-label="Previous target">&#8592;</button><button id="next" aria-label="Next target">&#8594;</button><button id="random">Random target</button></div>
@@ -20,11 +21,12 @@
 <div class="feedback" id="feedback" role="status" aria-live="polite">Choose a hinge and start folding.</div>
 <section class="controls" aria-label="Folding controls">
 <div class="active-control"><label for="angle" id="hinge-name">Hinge 1</label><button id="decrease" aria-label="Decrease selected hinge">&#8722;</button><input id="angle" type="range" min="-180" max="180" step="0.1" value="0" aria-label="Selected hinge angle"><button id="increase" aria-label="Increase selected hinge">+</button><output id="angle-value" for="angle">0&deg;</output></div>
-<div class="actions"><label><input type="checkbox" id="snap" checked>Snap near valid creases</label><button id="undo">Undo</button><button id="redo">Redo</button><button id="flat">Start flat</button><button id="camera">Reset views</button><button id="solution">Show solution</button></div>
+<div class="actions"><label><input type="checkbox" id="snap" checked>Snap to crease angles</label><button id="undo">Undo</button><button id="redo">Redo</button><button id="flat">Start flat</button><button id="camera">Reset views</button><button id="download-net">Download net SVG</button><button id="solution">Show solution</button></div>
 <div id="hinges" class="hinges" aria-label="Select a hinge"></div>
-<details><summary>How to play</summary><p>Fold the cool-colored net into the warm-colored target. Select a hinge from the list or double-click its line on the net. Its first key increases the angle; the second decreases it. Hold a key to keep folding. The last four hinges on the largest nets use Shift with their letter pairs. The slider, +/&minus; buttons and mouse wheel also work.</p><p>With snapping on, keys, buttons and the wheel step between valid crease angles. The slider moves continuously and snaps when released near a valid crease. These angles come from how many tetrahedra meet around an edge. Target orientation, panel assignment and mirror images do not affect success. Dragging a view rotates the camera; it does not change the folds.</p><p>Progress and unfinished folds are saved in this browser. Showing a solution does not earn a solved mark; Start flat lets you try again. Hinges are ideal mathematical joints: this prototype checks folded end shapes and allows panels to pass through one another during folding. It does not simulate collision-free paper assembly.</p></details>
+<details><summary>About this net</summary><p id="net-note"></p><a id="net-source" hidden>Original source</a></details>
+<details><summary>How to play</summary><p>Fold the cool-colored net into the warm-colored target. Select a hinge from the list or double-click its line on the net. Its first key increases the angle; the second decreases it. Hold a key to keep folding. Hinges 14&ndash;26 use Shift with their letter pairs; 27&ndash;33 use number or symbol pairs. The slider, +/&minus; buttons and mouse wheel also work.</p><p>With snapping on, keys, buttons and the wheel step between crease angles. Cubes use quarter turns; tetrahedra use their own dihedral angles. The slider moves continuously and snaps when released near a valid crease. Target orientation and panel assignment do not affect success. Tetrahedron mirrors count together; chiral cube targets are separate. Dragging a view rotates the camera; it does not change the folds.</p><p>Progress and unfinished folds are saved in this browser. Showing a solution does not earn a solved mark; Start flat lets you try again. Hinges are ideal mathematical joints: this prototype checks folded end shapes and allows panels to pass through one another during folding. It does not simulate collision-free paper assembly. Download net SVG for a flat template: cut black/red edges and fold blue dashed edges.</p></details>
 </section>
 </main>
-<footer>11 fixed-cut nets &middot; 321 checked net/target challenges &middot; 1&ndash;8 tetrahedra. The PDF also includes all 523 catalog shapes. Some catalog shapes are outside these nets' target lists. The five-unit cobra net is known from Rick Mabry.</footer>
-<script type="module" src="game.mjs"></script>
+<footer id="family-note">Only the target list belonging to a net is claimed. Loading a family prepares its own puzzle collection.</footer>
+<script type="module" src="game.mjs?v=2"></script>
 </body></html>

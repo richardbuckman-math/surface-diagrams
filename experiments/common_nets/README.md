@@ -104,6 +104,65 @@ glue tabs are supplied.
 
 ## Cube results and remaining gap
 
+The online game now includes **35 cube nets and 796 net/target challenges**,
+alongside the original 321 tetrahedron challenges. Choose **Cubes / Cubigami**
+in the family selector. The classic four-cube Cubigami7 outline uses a checked
+fixed tree-hinge adaptation with internal cuts and covers all seven tree-shaped
+tetracubes. The published five-cube patterns cover 23, 22, and 11 targets;
+together they cover all 27 tree-shaped pentacubes. Further alternatives and
+selected spatial examples extend to eight cubes. The eleven standard single-
+cube nets are all included. No commercial hardware or source photographs are
+redistributed.
+
+`build_cube_book.py` produces the companion **113-page** cube book with linked
+contents, independent puzzle colors first, and matching-color solutions last.
+All 35 nets and every one of their 796 targets occur in both sections. Net IDs
+and target IDs match the game; each net page links directly to its online
+puzzle. The PDF embeds the exported collection and a lossless page manifest.
+It is published at `docs/puzzles/cubes-cubigami-puzzles-and-solutions.pdf`;
+the earlier tetrahedron book remains unchanged.
+
+| Cubes | Tree-shaped catalog | Planar tree shapes | Included nets | Distinct targets represented |
+|---:|---:|---:|---:|---:|
+| 1 | 1 | 1 | 11 | 1 |
+| 2 | 1 | 1 | 2 | 1 |
+| 3 | 2 | 2 | 2 | 2 |
+| 4 | 7 | 4 | 2 | 7 |
+| 5 | 27 | 11 | 4 | 27 |
+| 6 | 138 | 27 | 4 | 36 |
+| 7 | 822 | 83 | 4 | 86 |
+| 8 | 5,154 | 255 | 6 | 265 |
+
+Across the included nets, **every planar tree-shaped cluster through eight
+cubes is available**. This is a collection, not a single universal unfolding.
+The two broad eight-cube nets cover 241 and 237 targets; source-specific
+supplements cover the remaining two planar types. A bounded 15-second common-
+net search for that pair did not finish a common construction; two individually
+checked nets complete the collection instead. Do not infer nonexistence.
+Non-planar coverage at six through eight remains partial.
+
+`cube_puzzles.py` enumerates proper-rotation classes, verifies each retained
+fold map exactly, transcribes the published outlines, and samples larger
+source trees. `python -m experiments.common_nets.build_game --cubes` exports
+the browser data. Its family index and individual net files load on demand;
+entering a cube link does not load the tetrahedron collection. Square panels
+use quarter-turn stops; triangle stops are preserved. Cube chirality is
+distinguished by the success test. Print current flat patterns with **Download
+net SVG**, including the fixed red internal cuts and blue hinges.
+
+Python tests independently regenerate all planar polyominoes through eight,
+filter their adjacency trees (counts 1,1,2,4,11,27,83,255), and compare them with
+the game. Every exported target is checked as exactly the exterior of its
+connected integer cube cluster. Node tests reconstruct all 1,117 cube/triangle
+foldings from their hinge angles and preserve every endpoint and panel edge.
+
+The classic-source drawings are in Aloupis et al.'s
+[full paper](https://erikdemaine.org/papers/Cubigami_CGGA2010full/paper.pdf)
+(Figure 3 and Section 3.3) and
+[earlier version](https://erikdemaine.org/papers/Cubigami_CGGA2010/paper.pdf#page=2)
+(the explicit 23-target pattern). Source geometry is credited; target coverage
+is recalculated, rather than copied from captions with different conventions.
+
 Cube shapes are counted up to the 24 proper rotations; chiral twins count
 separately. The full enumerator reproduces 1, 1, 2, 8, 29, 166, 1023 through
 seven cubes. Restricting to face-adjacency trees leaves 138 six-cube and 822
@@ -145,7 +204,10 @@ python -m experiments.common_nets.audit
 python -m experiments.common_nets.extend_tetrahedra --attempts 500
 python -m experiments.common_nets.build_tetrahedra_atlas
 python -m experiments.common_nets.build_game
+python -m experiments.common_nets.build_game --cubes
+python -m experiments.common_nets.build_cube_book
 node --test tests/common_net_game.test.mjs
+node --test tests/cube_fold_game.test.mjs
 ```
 
 The optional, bounded general search is

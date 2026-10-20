@@ -1,5 +1,71 @@
 # Handoff: surface-diagrams
 
+## October 20: cubes/Cubigami family added through eight units
+
+Richard requested Cubigami, alternatives for small volumes, and larger options
+through eight cubes. The same game now has a family selector: original 321
+tetrahedron challenges plus **35 cube nets / 796 cube challenges**, total 1,117.
+Cube deep link is `/tetrahedra/index.html#C4A`. Old tetrahedron links, scores,
+and controls are preserved. Cube data loads by selected net; no tetrahedron
+download is needed for a cube entry. Maximum panel count is 34 / 33 hinges.
+Keys 14-26 use Shift pairs, 27-33 number/symbol pairs; slider/wheel/buttons also
+work. Flat SVG download supplies fixed cuts/hinges for physical templates.
+Square rendering uses quad fans and dynamic depth bounds, not triangle-only
+assumptions. Cube crease stops are quarter turns. Cube mirrors are distinct;
+tetrahedron mirrors remain identified. Collision-free folding is still unmodeled.
+
+Checked classic sets: C4A is the Cubigami7 outline from Knuth/Miller, as shown
+in Aloupis et al., full paper Figure 3. Its fixed tree-hinge/cut layout covers
+all seven 18-panel tetracubes; do not claim an exact commercial mechanism
+replica. C5A is the earlier paper's explicit 23-target net (page 2), read from
+its vector rectangle coordinates and checked against all 27 tree pentacubes.
+C5B is the full paper's 22-target drawing; C5C is its 11-target planar drawing.
+The early cache mislabeled that planar drawing spatial; this is corrected in
+the published data. These five-cube examples jointly cover all 27 types.
+All eleven ordinary single-cube nets are included; two/three-cube alternatives
+and additional spine/spatial examples cover six through eight.
+
+`cube_puzzles.py` enumerates all polycubes through eight (1,1,2,8,29,166,1023,
+6922) under proper rotations; the tree subcatalog ends at 5,154. Whole-square
+exact face/hinge certificates check every retained positive. The broad eight-
+cube nets cover 241 and 237 targets; their union missed two of 255 planar tree
+types. A 15-second two-target general search timed out without a certificate;
+do not rerun it blindly or infer impossibility. Two checked source nets fill
+the gap. Across included nets ALL planar tree types through eight are present:
+1,1,2,4,11,27,83,255. Full spatial coverage remains partial: unique target
+counts at six/seven/eight are 36/138, 86/822, 265/5154. Nets are examples, not
+claimed optimal or universal. Generated source cache is separate from the
+older cubes.json; preserve both.
+
+Validation: seven Node tests rebuild all 1,117 canonical folded surfaces and
+arbitrary poses, check rigid edges/endpoints and chirality. Five new Python
+tests validate integer cube exteriors, recheck the 23-target net in both cube
+kernels, verify the classic outline, and independently enumerate planar
+polyominoes through eight to certify complete planar coverage, and preserve
+every book target in both sections. Tetrahedron
+browser regressions pass. Cube browser checks pass for lazy loading, classic
+7/23 sets, the 241-target eight-cube net, 33 hinge bindings, scoring, separate
+family progress, animated answers, SVG download (34 panels), and 390px layout,
+with no JavaScript errors. GitHub Actions checks and live publication are the
+final release verification steps. The existing tetrahedron PDF is unchanged.
+
+The new `build_cube_book.py` generates a 113-page cube companion PDF, with
+linked contents and all 796 challenges repeated in matching-color Solutions
+after the independent-color Puzzles. IDs and per-net play links match the
+game; exported data and page plan are embedded. It is copied to
+`docs/puzzles/cubes-cubigami-puzzles-and-solutions.pdf` and linked in the game.
+All 113 pages were rendered and visually inspected; text stays inside page
+bounds, internal contents links resolve, and the page manifest covers each
+target exactly once in each section. Solutions use the game's distinct full-
+hue answer palette. The new book is independent of the tetrahedron book.
+
+Richard also authorized a larger quota share today, superseding today's old
+15% reserve/pacing limit. No reset was requested explicitly or redeemed.
+Never redeem credits without explicit per-use authorization. Future work:
+get feedback on this playable collection, then return to simplifying the
+(6,7) graphical write-up. Avoid unbounded common-net searches or universal
+claims; the two hard planar-eight types already have usable separate nets.
+
 ## October 20: puzzle-first book and online folding game
 
 Richard requested the PDF first, then an online game. The revised 73-page book
