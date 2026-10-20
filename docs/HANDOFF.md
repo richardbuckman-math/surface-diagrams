@@ -1,5 +1,30 @@
 # Handoff: surface-diagrams
 
+## October 20 scheduled follow-up: four-unit count discrepancy RESOLVED
+
+Mabry's full per-pattern catalog agrees with our calculation: 37 common
+outlines and 47 fixed-cut variants for the three four-tetrahedron types.
+The pictured 16 are a narrower selection: membership exactly {1,2,3} and
+one variant per type. Their 16 IDs match the image labels exactly. The
+remaining shared outlines also fold into deltahedra 4/5, or have six internal
+cut variants (IDs 005 and 405). The totals are 35 + 2*6 = 47. Do not keep
+reporting an unresolved discrepancy or suggest either author's code is wrong.
+
+`catalog_compare.py` parses all 448 records, checks each listed net and all
+five complete net-ID ranges, and saves the source URL/hash and comparison.
+The committed reference summary lets the independent audit validate the
+comparison on every run. The illustrated packet now explains the agreement.
+The five-unit construction remains known; six-unit novelty remains unconfirmed.
+Next seek an external audit of six-unit optimality and specific further
+literature, or derive a short human-readable obstruction. No outreach has
+been sent. The previous push passed both full CI workflows.
+
+Validation: ten focused tests pass. The portable extracted packet reruns
+the small audit using only its bundled code and reference summary. ZIP
+integrity passes; all 56 browser images load without JavaScript errors, and
+the corrected explanation fits the 390px viewport. The source catalog PDF
+is not redistributed; its URL and SHA-256 are recorded.
+
 ## October 20: novelty check and second geometric common-net audit
 
 Richard asked for further work on novelty. The five-unit construction is
@@ -16,15 +41,13 @@ not an external review. It finds one fixed-hinge five-unit net in 6,000
 source trees and independently rechecks the 19/23 six-unit bound over all
 104,201 trees in the four source catalogs, plus the positive witness.
 
-The four-unit comparison remains UNRESOLVED: individual inventories match
-203/280/452 exactly, but the intersection is 47 fixed-hinge nets (37 outlines)
-versus Mabry's reported 16. Fixed paper side and ignoring hinge decoration
-do not reconcile this. Do not invent an explanation or declare his count
-wrong. Next isolate a pictured counterexample and compare his downloadable
-catalog before seeking external review. No messages have been sent.
+The four-unit comparison was initially unresolved, but the later catalog
+comparison above resolves it: 47 fixed-cut variants / 37 outlines agree;
+the pictured 16 use a narrower exclusive-membership filter. No messages
+have been sent. Preserve this correction in future reports.
 
 See `docs/proofs/common-net-novelty.md` for sources, exact model, proof of the
-four-source bound, reproduction, and an unsent review question. Novelty of
+four-source bound, reproduction, and the catalog reconciliation. Novelty of
 the six-unit extremal result is still unconfirmed. Preserve the earlier
 atlas and public labs. Seven focused calculation regressions pass.
 

@@ -32,8 +32,10 @@ cover at most the remaining 19. This partitions all possibilities and, together
 with the positive 19-target certificate, establishes the optimum in this model.
 The second geometric implementation in `audit.py` agrees with the six-unit
 bound and finds the unique five-unit fixed-hinge net in its 6,000 source trees.
-It reproduces Mabry's individual four-unit inventory sizes, but our common-net
-intersection count differs from his reported 16. That comparison remains open.
+The four-unit comparison is now reconciled with Mabry's complete catalog:
+37 shared outlines give 47 fixed-cut variants. His pictured 16 are the subset
+exclusive to the three tetrahedron-cluster types, with one variant each.
+`catalog_compare.py` validates all 448 catalog entries and the pictured IDs.
 See [the novelty/audit note](../../docs/proofs/common-net-novelty.md) before
 making any claim of novelty; no six-unit publication priority is established.
 

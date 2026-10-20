@@ -234,14 +234,12 @@ def run(source, destination, six=True):
     for n in ('4', '5'):
         result[n] = calibrate(data['levels'][n])
         print('common nets', n, result[n]['common_net_count'], flush=True)
-    # Mabry's individual inventories agree, but his displayed common count
-    # of 16 does not. Keep that discrepancy explicit rather than claiming a
-    # successful reproduction of every published count.
     counts = single_surface_inventories(data['levels']['4'])
     assert sorted(counts) == [203, 280, 452]
     result['4']['single_surface_inventory_counts'] = counts
-    result['4']['published_common_net_count'] = 16
-    result['4']['common_count_discrepancy_resolved'] = False
+    from .catalog_compare import apply_comparison
+    reference = Path(__file__).parent / 'reference/mabry-four-comparison.json'
+    apply_comparison(result['4'], json.loads(reference.read_text()))
     result['5']['matches_mabry_reference'] = (
         canonical_net(result['5']['common_nets'][0]) == canonical_net(mabry_five_reference()))
     assert result['5']['matches_mabry_reference']
