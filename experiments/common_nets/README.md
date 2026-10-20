@@ -70,6 +70,12 @@ An exact-cover search in straight-spine, paired-foot families finds:
 * A 26-square net for **all 27 planar six-cube trees**.
 * A 30-square net for **79 of the 83 planar seven-cube trees**.
 
+A supplementary 30-square net covers 28 planar seven-cube trees, including
+the four missing from the first. The two nets together cover **all 83 planar
+seven-cube trees**, with overlap 24. Generate its separate illustrated page
+and exact certificates with `python -m experiments.common_nets.complete_planar_cubes`.
+The original seven-page atlas remains unchanged.
+
 These do **not** solve the complete three-dimensional problems. All displayed
 cube targets have full face/hinge certificates. Two bounded general searches
 used a straight bar and four nonplanar targets: each timed out at 75 seconds

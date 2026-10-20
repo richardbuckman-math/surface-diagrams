@@ -47,6 +47,26 @@ inspection loads all 151 SVGs, changes mesh pixels on rotation, fits a 390px
 viewport, and reports no JavaScript errors. Net B has one internal slit;
 retain the red cut when making a physical template.
 
+## October 20 follow-up: two nets cover all planar seven-cube trees
+
+The latest pushed common-net batch passed every remote job: Python 3.9 and
+3.12, editor, LaTeX, and documentation. A bounded complementary-family check
+found 32 patterns shared by the four seven-cube planar targets omitted from
+the first net (zero-based catalog IDs 21,77,219,802). The selected pattern
+is (9365,2): it covers 28 planar targets. Together with the earlier 79-target
+net it covers all 83, with overlap 24. All 28 new face/hinge certificates pass.
+This is still a planar result, not the general 3D cube solution.
+
+Reproduce with `python -m experiments.common_nets.complete_planar_cubes`.
+The generator writes a separate SVG net, four missing target pictures, HTML,
+and JSON certificate. It preserves the original atlas/gallery. A small
+regression checks two tricube targets and the empty-target case. Continue
+with nonplanar common-net constructions; do not rerun the exhausted searches.
+The current heartbeat's (24,3) research checkpoint is stale: the October 19
+handoff already records the later positive-fifty recognition and remaining
+explicit W0 W1 bridge. Richard's newer direct instruction prioritizes the
+puzzle work first, followed by simplifying the (6,7) report.
+
 ## Standing display convention: explicitly identify every sphere move
 
 Richard requires every sphere move to be shown explicitly. Label every

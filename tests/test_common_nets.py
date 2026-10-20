@@ -62,4 +62,15 @@ class CommonNetTests(unittest.TestCase):
             self.assertIsNotNone(mapping);self.assertTrue(cubes.verify_net(net,surface,mapping))
 
 
+    def test_complementary_spine_net_and_empty_target_set(self):
+        from experiments.common_nets.complete_planar_cubes import common_spine_net
+        surfaces=[cubes.surface(shape) for shape in self.polycubes[3]]
+        self.assertIsNone(common_spine_net(surfaces,3,[]))
+        net=common_spine_net(surfaces,3,[0,1])
+        self.assertIsNotNone(net)
+        self.assertEqual(net['coverage'],[0,1])
+        for i,surface in enumerate(surfaces):
+            self.assertTrue(cubes.verify_net(net,surface,net['mappings'][i]))
+
+
 if __name__=='__main__':unittest.main()
