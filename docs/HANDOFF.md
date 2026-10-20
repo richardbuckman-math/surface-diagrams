@@ -1,5 +1,44 @@
 # Handoff: surface-diagrams
 
+## October 20: complete tetrahedron catalog through eight and puzzle PDF
+
+Richard requested seven/eight tetrahedra, a complete one-through-eight PDF,
+and a separate section of interesting puzzle nets showing only their targets.
+Completed enumeration counts (mirrors identified): 1,1,1,3,7,23,89,398, total
+523. All seven/eight surfaces have 2n+2 exposed triangular panels. The new
+`extend_tetrahedra.py` preserves the original six-volume cache and adds a
+separate `tetrahedra-through-eight.json`. Each volume's 500 deterministic
+source-tree samples retain useful nets; coverage is checked on every target
+by the vertex-based kernel, original kernel, and exact face/hinge verifier.
+Seven/eight optimality is NOT established. No new novelty claim is made.
+
+`build_tetrahedra_atlas.py` creates a 49-page vector PDF at
+`output/pdf/tetrahedra-one-through-eight.pdf`, plus a portable offline gallery
+at `output/tetrahedra-one-through-eight-gallery.zip`. Part I shows all 523
+shapes; Part II has 11 fixed-cut puzzle nets and their complete matching lists.
+Seven-unit examples cover 40 and 36 targets; eight-unit examples cover 101
+and 98. These pairs do not claim full-volume coverage. The six-unit pair remains
+19/14, covering all 23. Fixed internal slits, when present, are red; hinges
+are blue dashed lines. The PDF embeds catalog/certificates and page manifest.
+855 SVGs and colored rotatable target models accompany it. Checks certify
+end states, not continuous collision-free folding paths.
+
+Validation: 13 focused tests passed, including complete enumeration through
+eight and certificate/page-plan regressions. All 49 PDF pages were rendered
+and visually reviewed, with full-size checks of dense and puzzle pages.
+Text stays inside page bounds; manifest checks include every catalog target
+and every puzzle match exactly once. ZIP integrity passed. All 855 browser
+images load with no JavaScript errors; eight-unit model rotation changes the
+rendered pixels and the page/dialog fit a 390px viewport. The shared viewer
+also preserves ordinary SVG navigation without WebGL. Check this batch's
+remote CI after pushing; the prior batch passed both workflows.
+
+Concrete next step: let Richard try these nonoptimal seven/eight nets as
+physical puzzles; improve their coverage only if useful. Preserve the earlier
+small atlas/audit and public surface labs. The separate six/seven-cube full
+3D problem and the requested simplification of the (6,7) diagrammatic report
+remain open; do not confuse the new tetrahedron deliverable with either.
+
 ## October 20 scheduled follow-up: four-unit count discrepancy RESOLVED
 
 Mabry's full per-pattern catalog agrees with our calculation: 37 common

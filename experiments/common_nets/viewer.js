@@ -7,10 +7,11 @@
   document.getElementById('viewer-close').onclick=()=>dialog.close();
   document.addEventListener('click',event=>{
     const link=event.target.closest('a');if(!link||!models[link.getAttribute('href')])return;
+    if(!gl)return; // Keep the ordinary SVG link usable without WebGL.
     event.preventDefault();const file=link.getAttribute('href');
     const parts=file.match(/^(tetra|cube)-(\d+)-shape-(\d+)\.svg$/);
-    document.getElementById('viewer-title').textContent=parts?
-      `${parts[2]} ${parts[1]==='tetra'?'tetrahedra':'cubes'} - shape ${Number(parts[3])}`:file;
+    document.getElementById('viewer-title').textContent=models[file].title || (parts?
+      `${parts[2]} ${parts[1]==='tetra'?'tetrahedra':'cubes'} - shape ${Number(parts[3])}`:file);
     document.getElementById('viewer-download').href=file;
     mesh=models[file];yaw=.61;pitch=.44;dialog.showModal();upload();draw();
   });

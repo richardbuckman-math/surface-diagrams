@@ -20,6 +20,23 @@ mirror pairs are identified; the net may be turned over.
 The five-unit net has a branching hinge tree; no ribbon net covers all seven.
 It is a rediscovery of [Mabry's published five-unit net](https://lsusmath.rickmabry.org/rmabry/dodec/delta/common8V.html),
 not a new construction. The exact paper pattern and fixed hinges match.
+
+The complete catalog now extends through **eight** tetrahedra: **89** shapes at
+seven units and **398** at eight, for **523** shapes altogether through eight.
+`extend_tetrahedra.py` samples 500 source spanning trees per new volume and
+checks each retained candidate against every shape using both folding kernels
+and exact face/hinge certificates. Selected seven-unit nets cover **40** and
+**36** shapes; eight-unit nets cover **101** and **98**. These are useful
+examples, with no optimality claim; the two nets at each volume are not claimed
+to cover that volume's entire catalog.
+
+`build_tetrahedra_atlas.py` produces a separate **49-page** PDF: a complete
+523-shape catalog, then **11** puzzle nets followed by all and only their matching
+targets. Stable shape IDs link the two sections; puzzle face colors correspond
+to their net panels. The PDF embeds exact JSON data and a page manifest. Its
+offline gallery contains 855 SVGs and rotatable versions of every illustrated
+target. Fixed internal slits are allowed and explicitly marked in red.
+
 The optimized six-unit **single-net maximum is 19 of the 23 shapes**. A second
 net covers 14, including the four missing from the first; together they cover
 all 23, with ten shapes supporting both. The earlier ribbon/branching pair
@@ -108,6 +125,8 @@ python experiments/common_nets/optimize_six.py
 python experiments/common_nets/cubes.py
 python experiments/common_nets/build_gallery.py
 python -m experiments.common_nets.audit
+python -m experiments.common_nets.extend_tetrahedra --attempts 500
+python -m experiments.common_nets.build_tetrahedra_atlas
 ```
 
 The optional, bounded general search is
@@ -119,6 +138,12 @@ Outputs are in `.preview/common-nets/`, the illustrated PDF is under
 and red internal slits are cuts. Open `index.html`; clicking a target opens the
 rotatable WebGL mesh. It needs no internet connection or third-party runtime.
 Downloadable SVG images remain available when WebGL is unavailable.
+
+The separate one-through-eight deliverables are
+`output/pdf/tetrahedra-one-through-eight.pdf` and
+`output/tetrahedra-one-through-eight-gallery.zip`. The extension reads the
+existing optimized one-through-six data, preserving those earlier certificates;
+it writes `.preview/common-nets/tetrahedra-through-eight.json` separately.
 
 ## Primary references
 
@@ -133,4 +158,4 @@ Downloadable SVG images remain available when WebGL is unavailable.
   the already known net for all seven five-tetrahedron clusters, and the
   important distinction between fixed cuts and cuts changed between targets.
 * [George Sicherman's polytet catalog](https://sicherman.net/polytets/index.html):
-  independent small-cluster counts, matching our enumeration through six.
+  independent small-cluster counts, matching our enumeration through eight.
