@@ -1,11 +1,50 @@
 # Handoff: surface-diagrams
 
+## October 20: novelty check and second geometric common-net audit
+
+Richard asked for further work on novelty. The five-unit construction is
+NOT new: Mabry's `delta/common8V.html` explicitly gives the same cobra net
+for all seven five-tetrahedron clusters. A manual lattice transcription
+matches our delivered net, including hinges, modulo planar symmetry. Stop
+describing it as a candidate new construction. The source also explains
+other paper outlines that require changing cuts between targets.
+
+`experiments/common_nets/audit.py` uses a different folding/unfolding kernel
+derived from actual shared 3D vertices, with no engine neighbor/attach/fold
+calls. It shares input data, tree enumeration, and determinant code; it is
+not an external review. It finds one fixed-hinge five-unit net in 6,000
+source trees and independently rechecks the 19/23 six-unit bound over all
+104,201 trees in the four source catalogs, plus the positive witness.
+
+The four-unit comparison remains UNRESOLVED: individual inventories match
+203/280/452 exactly, but the intersection is 47 fixed-hinge nets (37 outlines)
+versus Mabry's reported 16. Fixed paper side and ignoring hinge decoration
+do not reconcile this. Do not invent an explanation or declare his count
+wrong. Next isolate a pictured counterexample and compare his downloadable
+catalog before seeking external review. No messages have been sent.
+
+See `docs/proofs/common-net-novelty.md` for sources, exact model, proof of the
+four-source bound, reproduction, and an unsent review question. Novelty of
+the six-unit extremal result is still unconfirmed. Preserve the earlier
+atlas and public labs. Seven focused calculation regressions pass.
+
+`python -m experiments.common_nets.build_audit` creates the offline illustrated
+verification packet at `output/common-net-audit.zip` and its page under
+`.preview/common-nets/audit/`. It includes 56 original SVGs, the exact input
+catalog/hash, both positive and negative audit summaries, all 47 disputed
+four-unit fold maps, and standard-library Python code to rerun the audit.
+The full second-kernel audit finishes in about 96 seconds here. The extracted
+packet's small audit was rerun independently of the repository layout; its
+ZIP integrity passes. All 56 browser images load without JavaScript errors,
+and the page fits a 390px viewport. The earlier atlas is unchanged.
+
 ## October 20: user temporarily prioritizes a common-net puzzle project
 
 Richard wants the (6,7) write-up simplified substantially, but first requested
 a triangular analogue of Cubigami, starting with one volume unit and working
-up, followed by six- and seven-cube nets. The default model is regular
-tetrahedra glued along faces; the optional clarification remains unanswered.
+up, followed by six- and seven-cube nets. Richard confirmed on October 20
+that the triangle model is clusters of regular tetrahedra glued along whole
+faces, without overlapping interiors. The delivered nets use this model.
 This work is isolated in `experiments/common_nets/`, with no mapping-class
 package imports or public-lab changes. See its README for methods and scope.
 

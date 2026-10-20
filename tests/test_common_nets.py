@@ -25,6 +25,8 @@ class CommonNetTests(unittest.TestCase):
         self.assertFalse(search['exhausted'])
         net=search['found']
         self.assertEqual(len(net['triangles']),12)
+        from experiments.common_nets.audit import canonical_net,mabry_five_reference
+        self.assertEqual(canonical_net(net),canonical_net(mabry_five_reference()))
         for i,surface in enumerate(surfaces):
             self.assertTrue(engine.verify_net(net,surface,net['mappings'][i]))
         corrupt=deepcopy(net['mappings'][0]);corrupt[1]=corrupt[0]
@@ -71,6 +73,26 @@ class CommonNetTests(unittest.TestCase):
         self.assertEqual(net['coverage'],[0,1])
         for i,surface in enumerate(surfaces):
             self.assertTrue(cubes.verify_net(net,surface,net['mappings'][i]))
+
+    def test_geometric_audit_reproduces_published_individual_inventories(self):
+        from experiments.common_nets.audit import single_surface_inventories
+        row=dict(surfaces=[engine.surface(c) for c in self.polytets[4]])
+        self.assertEqual(sorted(single_surface_inventories(row)),[203,280,452])
+
+    def test_geometric_audit_matches_folder_and_preserves_cut_pattern(self):
+        from experiments.common_nets.audit import Surface,unfold,canonical_net
+        surfaces=[engine.surface(c) for c in self.polytets[4]]
+        checks=[Surface(s) for s in surfaces]
+        for edges,selected in verify_six.trees(checks[0].adjacency):
+            net=unfold(checks[0],edges,selected)
+            if net is None:continue
+            for surface,check in zip(surfaces,checks):
+                self.assertEqual(check.folds(net),engine.fold_net(net,surface) is not None)
+        example=unfold(checks[0],edges,selected)
+        self.assertIsNotNone(example)
+        shifted=deepcopy(example)
+        shifted['triangles']=[[(100-y,50+x+y) for x,y in t] for t in example['triangles']]
+        self.assertEqual(canonical_net(example),canonical_net(shifted))
 
 
 if __name__=='__main__':unittest.main()

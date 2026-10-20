@@ -18,6 +18,8 @@ mirror pairs are identified; the net may be turned over.
 | 6 | 14 | 23 | 2 |
 
 The five-unit net has a branching hinge tree; no ribbon net covers all seven.
+It is a rediscovery of [Mabry's published five-unit net](https://lsusmath.rickmabry.org/rmabry/dodec/delta/common8V.html),
+not a new construction. The exact paper pattern and fixed hinges match.
 The optimized six-unit **single-net maximum is 19 of the 23 shapes**. A second
 net covers 14, including the four missing from the first; together they cover
 all 23, with ten shapes supporting both. The earlier ribbon/branching pair
@@ -28,6 +30,12 @@ catalogs, totaling 104,201 spanning trees. Every net of each selected source
 covers at most 19 targets. A net covering none of those four sources can
 cover at most the remaining 19. This partitions all possibilities and, together
 with the positive 19-target certificate, establishes the optimum in this model.
+The second geometric implementation in `audit.py` agrees with the six-unit
+bound and finds the unique five-unit fixed-hinge net in its 6,000 source trees.
+It reproduces Mabry's individual four-unit inventory sizes, but our common-net
+intersection count differs from his reported 16. That comparison remains open.
+See [the novelty/audit note](../../docs/proofs/common-net-novelty.md) before
+making any claim of novelty; no six-unit publication priority is established.
 
 In this **rigid triangular-panel, whole-edge hinge model**, no single net can
 cover all 23 six-unit targets. This is a finite computational result, not a
@@ -97,6 +105,7 @@ python experiments/common_nets/verify_six.py
 python experiments/common_nets/optimize_six.py
 python experiments/common_nets/cubes.py
 python experiments/common_nets/build_gallery.py
+python -m experiments.common_nets.audit
 ```
 
 The optional, bounded general search is
@@ -118,5 +127,8 @@ Downloadable SVG images remain available when WebGL is unavailable.
   precisely defined generated catalogs for this experiment's denominators.
 * [Rick Mabry's four-tetrahedron common nets](https://lsusmath.rickmabry.org/rmabry/dodec/delta/common.html):
   earlier common nets of all three four-tetrahedron types.
+* [Rick Mabry's twelve-face common nets](https://lsusmath.rickmabry.org/rmabry/dodec/delta/common8V.html):
+  the already known net for all seven five-tetrahedron clusters, and the
+  important distinction between fixed cuts and cuts changed between targets.
 * [George Sicherman's polytet catalog](https://sicherman.net/polytets/index.html):
   independent small-cluster counts, matching our enumeration through six.
