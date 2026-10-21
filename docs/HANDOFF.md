@@ -1,5 +1,59 @@
 # Handoff: surface-diagrams
 
+## October 21 morning: unwind F6 and reach its exact half-lantern support
+
+The existing optional `?phase=transport` now continues through another nine
+disk Hurwitz moves, with two explicit presentation checks. It has 22 states
+and 21 moves in total; no new phase or overview was added. The earlier
+eleven-state PC half-lantern transport remains the first part unchanged.
+
+`align_f6_half_lantern()` first moves the three round-block terms and the
+simple four-point curve DOWN over F6, keeping each of those factors fixed.
+F6 moves up and is conjugated; this is not a drag that keeps F6 fixed.
+Its support-word length falls 16->4 after a temporary peak of 20. This
+sixteen-factor intermediate has maximum/total support scores 10/56 and
+88 braid letters, compared with 16/68 and 100 at this branch's start.
+
+Next carry the earlier H34 right over five neighbors, including F6.
+F3 becomes the consecutive half twist sigma4. F6 becomes
+sigma2^-2 sigma1 sigma2^2, EXACTLY the half previously missing from the
+T123 target. The endpoint has maximum/total support scores 10/58 and
+84 braid letters. It retains all sixteen positive factor types and has
+no negative or temporary root. The whole optional route has gone from
+the original compact chart's 16/86 and 126 letters to 10/58 and 84.
+All source and intermediate products are independently the faithful B5
+double-boundary action, with no sphere move or sphere-only display chart.
+
+The new F6, current F11, and current T13 squared now multiply exactly to
+round T123. They are still separated in the published endpoint. A specific
+seven-move gather DOES bring them together and is saved as a deterministic
+probe in `f6_alignment.rejected_gather_probe`. Standard PC half-lantern
+reexpansion then has support scores 20/90 and 114 braid letters, worsening
+the neighbors. That probe is rechecked but is NOT added to the graphical
+route or called a simplification. Seek a cheaper gathering, or a concrete
+subsequent cancellation that makes the worse intermediate worthwhile.
+Do not repeat the same seven-move probe without such a target.
+
+The earlier `half_lantern_transport.next_relations` u/F3/E45^2 target is tied
+to state 10, before this latest H34 transport. F3 has changed again; do NOT
+reuse that target against the latest endpoint solely by matching IDs. The
+four-point curve itself is unchanged, so its PC daisy still exposes round
+T123 and three pair twists. A short additional geometric option is to carry
+the now-round H45 right past F6, H34 and that four-point curve: H45 commutes
+with F6, changes H34 into a simple 3--5 arc, and makes the four-point curve
+round T1234. This option is a next target, not an applied replay step.
+
+Validation: 28 focused tests pass, including all products, all nine new
+free-word Hurwitz certificates, positive-type preservation, both improved
+endpoints, the aligned exact target, and reproduction of the rejected probe.
+The browser regression covers 63 transitions, connected braids, all 28
+summary sphere moves and 15 existing detailed sphere arrows, disk-only
+support labels, deep links, all-column views and mobile layout. The payload
+is 1,031,782 bytes and stays entirely precalculated. The default seven-checkpoint
+177-move overview and 212-page illustrated PDF remain unchanged. This is
+further geometric simplification and target alignment; the shorter elementary
+identity derivation is still open.
+
 ## October 21: a geometric PC half-lantern transport simplifies the ending
 
 `transport_round_half_lantern()` now gives a concrete disk-only improvement

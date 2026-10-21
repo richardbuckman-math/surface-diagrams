@@ -428,3 +428,90 @@ def transport_round_half_lantern(factors):
         disk_boundary_action_certificate=dict(strands=5,actual=actual,expected=expected,equal=True),
         is_shorter_identity_proof=False,
         scope='Disk-only support simplification using one transported PC half lantern; no new sphere move or shorter proof claim')
+
+
+def align_f6_half_lantern(factors):
+    """Unwind F6 and match an actual half-lantern support, entirely in B5.
+
+    Four Hurwitz moves carry F6 left through the round three-point block
+    and simple four-point curve. Five more carry an earlier H34 right to
+    make F6 exactly the half needed with F11 and the T13 square. Those three
+    factors remain separated; this function does not silently gather them.
+    """
+    from .factorization_explorer import simplify_factor
+    state=tuple(factors)
+    ids=('cross.P12','alternate.HL2.1','alternate.HL2.2','alternate.P15.remaining',
+         'alternate.C4.rose.1','F3','alternate.C4.rose.2','transport.HL.1',
+         'transport.HL.2','transport.HL.3','F6','new.P26','F9','F11',
+         'last.P12.square','last.P34.square')
+    if tuple(f.id for f in state)!=ids or any(f.sign!=1 for f in state):
+        raise ValueError('Expected the positive half-lantern-transport endpoint')
+    expected=exact_action((1,2,3,4)*10,strands=5)
+    if exact_action(product(state),strands=5)!=expected:
+        raise ValueError('The F6 alignment source is not the double boundary')
+    def score(fs):
+        lengths=tuple(len(supported_class(f.mapping_class,strands=5)) for f in fs)
+        return dict(max_support_word=max(lengths),total_support_word=sum(lengths),
+                    braid_letters=len(product(fs)))
+    initial=state;peak=score(state)['max_support_word']
+    stages=[dict(kind='start',title='The simple-curve endpoint before unwinding F6',factors=state)]
+    def move(a,b,title):
+        nonlocal state,peak
+        step=research_hurwitz_move(state,a,b);state=step['factors']
+        peak=max(peak,score(state)['max_support_word'])
+        if peak>24:raise ValueError('The F6 route exceeds its fixed 24-word readability ceiling')
+        stages.append(dict(step,title=title,disk_equality=True))
+    def present(title):
+        nonlocal state
+        compact=tuple(simplify_factor(f) for f in state)
+        for a,b in zip(state,compact):
+            if (supported_class(a.mapping_class,strands=5)!=supported_class(b.mapping_class,strands=5) or
+                    exact_action(a.word,strands=5)!=exact_action(b.word,strands=5)):
+                raise ValueError('An F6 disk presentation changed its support')
+        stages.append(dict(kind='disk_presentation',title=title,factors=compact,
+            local_before=state,local_after=compact,disk_equality=True))
+        state=compact
+    for i in range(9,5,-1):
+        move(i,i+1,'Move '+state[i].id+' down across F6, keeping that factor fixed')
+    present('F6 has unwound: sixteen positive factors, maximum support word 10')
+    unwound_score=score(state)
+    for i in range(1,6):
+        move(i,i+1,'Carry the earlier H34 right past '+state[i+1].id+', keeping H34 fixed')
+    present('F3 is consecutive, and F6 now matches the exact T123 half-lantern target')
+    by_id={f.id:f for f in state}
+    local=(by_id['F6'],by_id['F11'],by_id['last.P12.square'])
+    root=replace(local[0],id='target.round.T123',conjugator=(),first=1,points=3,half=False)
+    actual,wanted=exact_action(product(local),strands=5),exact_action(root.word,strands=5)
+    if actual!=wanted:raise ValueError('The aligned F6 does not match its exact half-lantern target')
+    if exact_action(product(state),strands=5)!=expected:
+        raise ValueError('F6 alignment changed the ordered boundary product')
+    if sorted((f.points,f.power,f.half,f.sign) for f in state)!=sorted(
+            (f.points,f.power,f.half,f.sign) for f in initial):
+        raise ValueError('F6 alignment changed the positive factor types')
+    # Recheck one deterministic gathering witness, rather than storing a
+    # claimed success or readability score without recomputing it.
+    from .projected_relations import pc_half_lantern_terms
+    probe_state=state;probe_peak=score(state)['max_support_word']
+    probe_moves=tuple((i,i+1) for i in range(5,12))
+    for a,b in probe_moves:
+        probe_state=research_hurwitz_move(probe_state,a,b)['factors']
+        probe_peak=max(probe_peak,score(probe_state)['max_support_word'])
+    if exact_action(product(probe_state[12:15]),strands=5)!=wanted:
+        raise ValueError('The deterministic gathering witness lost the target')
+    terms=tuple(replace(root,conjugator=t.conjugator,first=t.first,points=t.points,
+        power=t.power,half=t.half) for t in pc_half_lantern_terms(root.mapping_class))
+    if exact_action(product(terms),strands=5)!=wanted:
+        raise ValueError('The standard target reexpansion failed')
+    probe_end=tuple(simplify_factor(f) for f in probe_state[:12]+terms+probe_state[15:])
+    return dict(stages=tuple(stages),factors=state,before_score=score(initial),
+        unwound_score=unwound_score,after_score=score(state),peak_support_word=peak,
+        readability_ceiling=24,hurwitz_moves=9,sphere_move_count=0,
+        preserves_ordered_disk_product=True,preserves_positive_factor_types=True,
+        aligned_target=dict(local_before=local,local_after=(root,),requires_gathering=True,
+            applied_to_replay=False,disk_action_certificate=dict(strands=5,actual=actual,expected=wanted,equal=True)),
+        rejected_gather_probe=dict(moves=probe_moves,
+            exact_target_after_gather=True,peak_support_word=probe_peak,
+            standard_reexpansion_score=score(probe_end),
+            applied_to_replay=False,reason='The valid gathering route worsens the surrounding supports'),
+        is_shorter_identity_proof=False,
+        scope='Nine exact disk Hurwitz moves simplify supports and align a separated PC half-lantern target; no sphere move')

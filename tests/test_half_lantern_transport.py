@@ -72,9 +72,9 @@ class HalfLanternTransportTests(unittest.TestCase):
         self.assertEqual(json.loads(json.dumps(self.route,default=lambda x:x.__dict__)),raw)
         display=json.loads((self.folder/'display.json').read_text())
         states=display['routes']['transport']
-        self.assertEqual(len(states),11)
+        self.assertEqual(len(states),22)
         self.assertEqual([s['temporary_root'] for s in states],
-                         [False,False]+[True]*8+[False])
+                         [False,False]+[True]*8+[False]*12)
         for stage,shown in zip(raw['stages'],states):
             for source,index in zip(stage['factors'],shown['factors']):
                 row=display['rows'][index]
