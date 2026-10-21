@@ -19,6 +19,10 @@ function applyPlanarOrientation(root){
  }
 }
 function displayPlanarSvg(host,svg){host.innerHTML=svg;applyPlanarOrientation(host);}
+// Factor supports describe the neighborhood at the TOP of their braid.
+// They already use the cylinder convention (4,5,-4 passes below point 5).
+// Prefix/action charts have a separate display convention and are unchanged.
+function displaySupportSvg(host,svg){host.innerHTML=svg;}
 function orientedSvg(svg){
  const parsed=new DOMParser().parseFromString(svg,'image/svg+xml');
  if(parsed.querySelector('parsererror'))throw new Error('The SVG export could not be read.');
@@ -156,7 +160,7 @@ function paint(){
   const buttons=document.createElement('span');buttons.className='row-buttons';
   for(const [label,delta] of [['↑',-1],['↓',1]]){const b=document.createElement('button');b.textContent=label;b.setAttribute('aria-label',`Move ${f.id} ${delta<0?'up':'down'}`);b.disabled=busy||i+delta<0||i+delta>=state.factors.length;b.onclick=e=>{e.stopPropagation();choose(i);action({op:'move',index:i,target:i+delta},i+delta);};buttons.append(b);}
   head.append(title,buttons);const support=document.createElement('div');support.className='support';
-  if(f.svg)displayPlanarSvg(support,f.svg);else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
+  if(f.svg)displaySupportSvg(support,f.svg);else{const warning=document.createElement('p');warning.className='warning';warning.textContent=f.warning;support.append(warning);}
   const word=document.createElement('div');word.className='word';word.textContent=f.word.join(' ');word.title=word.textContent;
   const audit=document.createElement('div');audit.className='support-check '+(f.audit?.status||'unavailable');
   audit.textContent=f.audit?.matches===true?'Boundary word agrees':f.audit?.matches===false?'Preview check failed':'Preview check unavailable';
@@ -195,7 +199,7 @@ $('inspect').onclick=()=>{
  }
  $('inspect-title').textContent=`${f.id} · ${f.label}`;
  $('inspect-drawing').replaceChildren();
- if(f.svg){displayPlanarSvg($('inspect-drawing'),f.svg);$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
+ if(f.svg){displaySupportSvg($('inspect-drawing'),f.svg);$('inspect-drawing').querySelectorAll('path').forEach(p=>{p.setAttribute('vector-effect','non-scaling-stroke');p.setAttribute('stroke-width','1');});}
  else $('inspect-drawing').textContent=f.warning;
  $('inspect-word').textContent='Braid: '+f.word.join(' ');
  $('inspect-conjugator').textContent='Conjugator: '+(f.conjugator.join(' ')||'identity');
@@ -514,7 +518,7 @@ $('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;i
 $('svg').onclick=async()=>{
  if(busy||!state)return;
  try{const options=new URLSearchParams({revision:String(state.revision),
-   mirror:document.documentElement.dataset.planarOrientation==='source'?'0':'1',
+   mirror:'0',
    compact:braidLayout.value==='compact'?'1':'0'});
   const response=await fetch('/api/export.svg?'+options);
   if(!response.ok){const data=await response.json();throw new Error(data.error);}

@@ -17,13 +17,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 from build_six_seven_derivation_pdf import PHASES, factor, reverse_route
 from surface_diagrams.boundary_playground_geometry import support_svg
+from surface_diagrams.braid_stack import braid_fragment_svg, connected_braid_svg
+from surface_diagrams.factorization_simplify import six_seven_simplification
+from surface_diagrams.factorization_explorer import export_factors,Factor
+from surface_diagrams.factorization_geometry import number_support_points
 from surface_diagrams.hyperelliptic_homology import homology_action
 from surface_diagrams.mapping_classes import ConjugatedTwist, supported_class
 from surface_diagrams.sphere_actions import sphere_supported_class
 from surface_diagrams.sphere_support_compact import (
     check_support_replacement, compact_sphere_support, reframe_factors)
 from surface_diagrams.twist_supports import support_curve
-from surface_diagrams.visuals import BraidDiagram
 
 
 def support_key(twist):
@@ -77,6 +80,29 @@ def build(candidate_cache=None):
     unavailable_raw = 0
     raw_sphere_max = 0
     raw_supports = set()
+
+    def register_factor(compact, ci):
+        checked = replacements[ci]
+        c = compact.mapping_class
+        row_key = (compact, ci)
+        if row_key not in row_cache:
+            sk = (c.half, supported_class(c))
+            if sk not in supports:
+                supports[sk] = len(assets['supports'])
+                assets['supports'].append(support_svg(compact, 6, mirror_vertical=False))
+            if compact.word not in braids:
+                braids[compact.word] = len(assets['braids'])
+                assets['braids'].append(braid_fragment_svg(compact.word)['svg'])
+            row_cache[row_key] = len(rows)
+            rows.append(dict(id=compact.id, support=supports[sk], braid=braids[compact.word],
+                label=('H' if compact.half else 'T' + str(compact.points)) +
+                    ('^' + str(compact.power * getattr(compact,'sign',1)) if compact.power * getattr(compact,'sign',1) != 1 else ''),
+                inverse=getattr(compact,'sign',1) < 0, cuts=checked['cuts'],
+                sphere_rechart=not checked['disk_equal'], certificate=ci,
+                factor=asdict(compact), word=compact.word,
+                height=braid_fragment_svg(compact.word)['height']))
+        return row_cache[row_key]
+
     for state_index, (records, frame) in enumerate(zip(states, prescribed['frames'])):
         original = tuple(map(factor, records))
         framed = reframe_factors(original, frame)
@@ -104,27 +130,7 @@ def build(candidate_cache=None):
             checked = replacements[ci]
             c = ConjugatedTwist(**checked['candidate'])
             compact = replace(f, conjugator=c.conjugator, first=c.first)
-            row_key = (compact, ci)
-            if row_key not in row_cache:
-                sk = (c.half, supported_class(c))
-                if sk not in supports:
-                    # Rendering checks the shared Arc/Loop router; a proposed
-                    # itinerary alone is not accepted as a support picture.
-                    supports[sk] = len(assets['supports'])
-                    assets['supports'].append(support_svg(compact, 6, mirror_vertical=True))
-                if compact.word not in braids:
-                    braids[compact.word] = len(assets['braids'])
-                    assets['braids'].append(BraidDiagram(
-                        6, compact.word, spacing=18, step=13,
-                        crossing_style='smooth', show_generators=False)._repr_svg_())
-                row_cache[row_key] = len(rows)
-                rows.append(dict(id=f.id, support=supports[sk], braid=braids[compact.word],
-                                 label=('H' if f.half else 'T' + str(f.points)) +
-                                 ('^' + str(f.power * f.sign) if f.power * f.sign != 1 else ''),
-                                 inverse=f.sign < 0, cuts=checked['cuts'],
-                                 sphere_rechart=not checked['disk_equal'], certificate=ci,
-                                 factor=asdict(compact)))
-            displayed.append(row_cache[row_key])
+            displayed.append(register_factor(compact, ci))
         for f in original:
             if f.mapping_class in raw_supports:
                 continue
@@ -158,6 +164,51 @@ def build(candidate_cache=None):
         g['title'] = ('Reverse ' + str(g['end'] - g['start']) + ' adjacent Hurwitz moves'
                       if g['kind'] == 'disk_hurwitz' else atomic[g['start']]['title'])
         g['sphere_steps'] = [i + 1 for i in range(g['start'], g['end']) if steps[i]['sphere']]
+    forward_atomic = [dict(start=i, end=i+1, phase=s['phase'],
+                           title=s['original']['title'], kind=s['original']['kind'],
+                           sphere=s['sphere'], reverse_disk_discrepancy=s['original'].get('disk_discrepancy', []))
+                      for i,s in enumerate(reversed(steps))]
+    phase_names = dict(route='Simplify the original thirteen factors',
+        prefix_lantern='Apply the prefix sphere lantern', reduction='Reduce the first cluster',
+        residual='Apply the residual lantern', compression='Use the two PC half lanterns',
+        petal_exchange='Exchange complementary petals', cross_petal_lantern='Use the transported PC lantern',
+        cross_cluster_lantern='Use the common-chart cluster lantern',
+        alternate_half_lantern='Use the alternate half lantern',
+        last_separator_decomposition='Decompose the final separating twists',
+        positive_sphere_expansion='Replace the inverse pair by positive sphere factors')
+    forward = dict(atomic=forward_atomic)
+    for name, blocks in [('chapters',chapters),('groups',groups)]:
+        forward[name] = []
+        for block in reversed(blocks):
+            a,b = len(steps)-block['end'],len(steps)-block['start']
+            forward[name].append(dict(start=a,end=b,phase=block['phase'],
+                title=phase_names[block['phase']] if name=='chapters' else
+                    (str(b-a)+' adjacent Hurwitz moves' if block['kind']=='disk_hurwitz' else forward_atomic[a]['title']),
+                sphere_steps=[i+1 for i in range(a,b) if forward_atomic[i]['sphere']]))
+    simple_report = six_seven_simplification()
+    simple_states, simple_moves, identity_supports = [], [], {}
+    for i,stage in enumerate(simple_report['stages']):
+        ids=[]
+        for f in stage['factors']:
+            t=f.mapping_class
+            if t not in identity_supports:
+                identity_supports[t]=len(replacements)
+                replacements.append(dict(source=asdict(t),**check_support_replacement(t,t,max_cuts=40)))
+            ids.append(register_factor(f,identity_supports[t]))
+        simple_states.append(dict(index=i,factors=ids,frame=stage['frame'],
+                                  max_cuts=max(rows[k]['cuts'] for k in ids),score=stage['score']))
+        if i:
+            simple_moves.append(dict(start=i-1,end=i,title=stage['title'],kind=stage['kind'],
+                                     phase='simplification',sphere=False,sphere_steps=[],
+                                     reverse_disk_discrepancy=[]))
+    simplification=dict(states=simple_states,chapters=simple_moves,groups=simple_moves,
+                        atomic=simple_moves,summary=dict(initial=simple_states[0]['score'],
+                        final=simple_states[-1]['score'],sphere_moves=0))
+    (destination/'simplification-certificate.json').write_text(
+        json.dumps(simple_report,default=asdict,separators=(',',':')),encoding='utf-8')
+    session=export_factors(simple_report['stages'][-1]['factors'])
+    session['global_conjugator']=simple_report['frame']
+    (destination/'simplified-six-seven.json').write_text(json.dumps(session,separators=(',',':')),encoding='utf-8')
     summary = dict(atomic_moves=len(steps), chapters=len(chapters), grouped_moves=len(groups),
                    source_sphere_moves=sum(s['sphere'] for s in steps), hard_cut_cap=40,
                    max_displayed_cuts=max(r['cuts'] for r in rows),
@@ -166,7 +217,19 @@ def build(candidate_cache=None):
                    old_max_sphere_class_length=raw_sphere_max,
                    source_sha256=sha256(source).hexdigest(),
                    complete_structural_derivation_found=False,
-                   standard_block_bridge='UNCOMPUTED')
+                   standard_block_bridge='UNCOMPUTED',support_mirror_vertical=False,
+                   braids_continuous=True)
+    # Keep the default thirteen-factor route's pictures in the first chunks.
+    # Otherwise its last-state supports are scattered through the older replay.
+    prioritized=[i for s in simple_states for i in s['factors']]
+    for kind,field in [('supports','support'),('braids','braid')]:
+        order=list(dict.fromkeys(rows[i][field] for i in prioritized))
+        used=set(order)
+        order.extend(i for i in range(len(assets[kind])) if i not in used)
+        remap={old:new for new,old in enumerate(order)}
+        assets[kind]=[assets[kind][i] for i in order]
+        for row in rows:
+            row[field]=remap[row[field]]
     asset_dir = destination / 'assets'
     asset_dir.mkdir(exist_ok=True)
     chunk_size = 32
@@ -177,14 +240,42 @@ def build(candidate_cache=None):
     obsolete = destination / 'assets.json'
     if obsolete.exists():
         obsolete.unlink()  # This builder's superseded single generated asset bundle.
-    for name, data in [('assets-index.json', dict(chunk_size=chunk_size,
+    template = ROOT / 'examples/six_seven_compact.html'
+    viewer=(ROOT/'examples/six_seven_compact.js').read_text(encoding='utf-8')
+    connected=(ROOT/'src/surface_diagrams/lab_assets/connected-braid.js').read_text(encoding='utf-8')
+    version=sha256(json.dumps(dict(assets=assets,rows=rows,states=displays,simple=simplification),
+                             separators=(',',':')).encode()+viewer.encode()+connected.encode()+
+                   template.read_bytes()).hexdigest()[:16]
+    for name, data in [('assets-index.json', dict(chunk_size=chunk_size,version=version,
                                                   counts={k: len(v) for k,v in assets.items()})),
                        ('display.json', dict(summary=summary, states=displays, rows=rows,
-                                             chapters=chapters, groups=groups, atomic=atomic)),
+                                             chapters=chapters, groups=groups, atomic=atomic,
+                                             forward=forward,simplification=simplification)),
                        ('support-certificates.json', dict(summary=summary, replacements=replacements))]:
         (destination / name).write_text(json.dumps(data, separators=(',', ':')), encoding='utf-8')
-    template = ROOT / 'examples/six_seven_compact.html'
-    (destination / 'index.html').write_text(template.read_text(encoding='utf-8'), encoding='utf-8')
+    html=template.read_text(encoding='utf-8').replace('<html lang="en">',
+            '<html lang="en" data-replay-version="'+version+'">',1)
+    for asset in ('connected-braid.js','viewer.js'):
+        html=html.replace('src="'+asset+'"','src="'+asset+'?v='+version+'"')
+    for asset in ('calibration.html','simplified-six-seven.json','simplification-certificate.json',
+                  'source-route.json','support-certificates.json','frames.json'):
+        html=html.replace('href="'+asset+'"','href="'+asset+'?v='+version+'"')
+    (destination / 'index.html').write_text(html, encoding='utf-8')
+    (destination / 'connected-braid.js').write_text(connected, encoding='utf-8')
+    (destination / 'viewer.js').write_text(viewer, encoding='utf-8')
+    half=Factor('Below 5',(4,),5,2,half=True)
+    full=Factor('Neighborhood boundary',(4,),5,2)
+    panels=[]
+    for f,label in [(half,'Half twist: σ₄ σ₅ σ₄⁻¹'),(full,'Its square: σ₄ σ₅² σ₄⁻¹')]:
+        panels.append('<section><h2>'+label+'</h2><div class="pair">'+
+            number_support_points(support_svg(f,6,mirror_vertical=False))+connected_braid_svg((f.word,))+'</div></section>')
+    (destination/'calibration.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1"><title>Arc–braid cylinder calibration</title>'
+        '<style>body{max-width:1000px;margin:30px auto;padding:15px;font:17px/1.6 system-ui;color:#18344a}.pair{display:flex;gap:30px;align-items:center}.pair svg:first-child{width:70%;height:240px}.pair svg:last-child{width:86px;height:130px}section{border-top:1px solid #abc;margin-top:25px}</style>'
+        '<h1>Arc–braid cylinder calibration</h1><p>Points are numbered 1–6 from left to right. Read the braid top to bottom. '
+        'The arc joins 4 to 6 below 5. Its neighborhood boundary supports the square of the half twist. '
+        'Positive crossings and all algebraic words retain their signs; no display reflection is applied to these supports.</p>'+
+        ''.join(panels)+'<p><a href="index.html">Back to the forward (6,7) route</a></p></html>',encoding='utf-8')
     print(json.dumps(dict(summary, support_images=len(assets['supports']), braid_images=len(assets['braids']))))
     return summary
 

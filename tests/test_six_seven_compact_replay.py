@@ -102,6 +102,33 @@ class CompactReplayTests(unittest.TestCase):
         self.assertEqual(digest, self.display['summary']['source_sha256'])
         self.assertEqual(digest, load('frames.json')['source_sha256'])
 
+    def test_forward_replay_is_the_exact_opposite_order_with_no_lost_sphere_moves(self):
+        backwards=self.display['atomic'];forward=self.display['forward']['atomic'];n=len(backwards)
+        self.assertEqual(len(forward),n)
+        for i,(a,b) in enumerate(zip(forward,reversed(backwards))):
+            self.assertEqual((a['start'],a['end']),(i,i+1))
+            self.assertEqual(a['sphere'],b['sphere'])
+            self.assertEqual(a['kind'],b['kind'])
+            self.assertEqual(tuple(a['reverse_disk_discrepancy']),inverse_word(b['reverse_disk_discrepancy']))
+        self.assertEqual(sum(x['sphere'] for x in forward),14)
+        simple=self.display['simplification']
+        self.assertEqual(len(simple['states'][0]['factors']),13)
+        self.assertEqual(simple['summary']['final'],[36,6,48,8])
+        self.assertTrue(all(not m['sphere'] for m in simple['atomic']))
+        self.assertFalse(self.display['summary']['support_mirror_vertical'])
+        self.assertTrue(self.display['summary']['braids_continuous'])
+
+    def test_published_scripts_match_their_editable_sources(self):
+        repository=ROOT.parents[2]
+        self.assertEqual((ROOT/'viewer.js').read_text(encoding='utf-8'),
+                         (repository/'examples/six_seven_compact.js').read_text(encoding='utf-8'))
+        self.assertEqual((ROOT/'connected-braid.js').read_text(encoding='utf-8'),
+                         (repository/'src/surface_diagrams/lab_assets/connected-braid.js').read_text(encoding='utf-8'))
+        version=load('assets-index.json')['version']
+        html=(ROOT/'index.html').read_text(encoding='utf-8')
+        self.assertIn('data-replay-version="'+version+'"',html)
+        self.assertIn('viewer.js?v='+version,html)
+
 
 if __name__ == '__main__':
     unittest.main()

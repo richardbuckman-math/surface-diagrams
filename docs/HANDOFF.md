@@ -1,5 +1,84 @@
 # Handoff: surface-diagrams
 
+## October 20: cylinder calibration, continuous braids, and a simpler (6,7)
+
+Richard supplied an explicit convention: the half-twist arc 4--6 BELOW 5
+has top-to-bottom braid (4,5,-4). It recovers as Arc(4,6,(),direction="down")
+from the existing algebra; the display's added vertical support reflection
+was the mismatch. Positive crossing signs and all algebraic source words
+are unchanged. Compact-replay supports now render without that reflection.
+The live lab's factor cards, support inspector and paired SVG export also
+retain the source support orientation. Prefix/action-chart rendering is a
+separate existing convention and was not changed by this support correction;
+do not silently invert algebra actions to fix an individual support picture.
+
+`docs/proofs/six-seven-compact/calibration.html` shows the exact arc and the
+boundary of its neighborhood next to (4,5,-4) and (4,5,5,-4). The square of
+the half twist equals that full twist by an exact disk action check. Browser
+sampling checks the displayed arc lies below the marked row, not just that
+its internal itinerary says "down". Points are numbered for inspection.
+
+A genuine disk-exact simplification now starts the public compact viewer.
+It keeps all thirteen factors: six half twists and seven squared three-point
+twists. The checked route is an initial disk support normalization, followed
+by Hurwitz (2->3), global conjugation (-3), global conjugation (5), Hurwitz
+(6->7), Hurwitz (7->8), with zero-based positions. Individual conjugators are
+normalized exactly after each operation. Its cumulative global frame is
+(5,-3). It has NO sphere substitutions and preserves the same fibration.
+
+Score (sum conjugator lengths, maximum length, sum cut visits, maximum visits):
+(44,7,59,10) -> (36,6,48,8). Total braid letters fall from 178 to 162.
+The score allows the worst conjugator to increase when the total decreases,
+subject to the support cut cap. Pairwise minimal geometric intersections
+were NOT computed, and no globally shortest representative is claimed.
+A bounded adjacent/single-generator greedy descent reached this checkpoint;
+do not repeat the five-move discovery from the original state.
+
+The calculation module is `factorization_simplify.py`. Its replay retains
+the exact adjacent Hurwitz/free-word certificates, global-conjugation
+certificates, and exact disk support normalization classes. Its final full
+based Artin action equals g * original_product * g^-1, and its lift is +I.
+The saved `simplified-six-seven.json` passes the real lab's import check,
+including the saved global frame. `simplification-certificate.json` preserves
+all seven states. Download it from the compact page and keep exploring.
+
+The viewer now defaults to this forward simplification. The separate longer
+substitution route also defaults to forward from Richard's original (6,7),
+with its previous reverse direction still available. Its 145 atomic moves,
+54 groups, eleven chapters and fourteen explicit sphere moves are retained
+losslessly. The explicit standard-block bridge is still UNCOMPUTED. This
+increment does not claim a completed or shortest structural derivation.
+Richard will check the typo in his (10,10); preserve that transcription.
+
+Braids are now one vertically connected drawing per factorization, with
+blue dotted factor separators and strand colors carried across every row.
+`braid_stack.py` renders margin-free fragments using the existing crossing
+renderer. Browser `connected-braid.js` only stacks/recolors those fragments;
+it never invents crossing geometry, flips signs or reverses words. A Node
+fixture compares its complete output byte-for-byte with the independent
+Python stack, including negative crossings and empty factors. Stale word
+or row-height metadata is rejected. Full continuous SVG download is provided.
+
+Validation: the compact browser test visited every simple/research mode in
+both research directions (438 transition displays), checked row/braid height
+alignment and every separator, a seven-column simple overview, and a 390px
+layout. The cylinder calibration, dense supports, and corrected live lab
+were visually inspected. A real temporary lab imported the final JSON,
+exercised undo/redo, and exported with mirror=0; no browser errors occurred.
+The default route's assets are packed first: 732,836 bytes / seven requests
+on initial local load, without a Python runtime. Timing depends on load.
+Focused exact-action/replay/geometry tests and fourteen Node tests pass.
+The complete regression suite and remote CI are checked before final report.
+
+Next: continue from the (36,6,48,8) thirteen-factor checkpoint, using geometric
+Hurwitz block slides or small lookahead and explicit global conjugation to
+find further simplifications. Prefer short common charts and the user's
+conjugator-length/curve-intersection goals over preserving the original
+ordering. Connect useful local substitutions to the factor-level derivation
+while keeping every sphere move explicit. Avoid restarting the long reverse
+route as the default explanation. The separate standard-block extraction
+remains open; the current (10,10) is pending Richard's correction.
+
 ## October 20: compact sphere charts and bounded support pictures
 
 Richard asked to shorten the (6,7) derivation and cap intermediate curve

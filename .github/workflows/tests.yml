@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: "20"
       - run: node --check src/surface_diagrams/editor_assets/editor.js
-      - run: node --test tests/editor_state.test.cjs
+      - run: node --test tests/editor_state.test.cjs tests/connected_braid.test.cjs
   python:
     runs-on: ubuntu-latest
     strategy:
