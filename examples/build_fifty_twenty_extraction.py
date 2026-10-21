@@ -29,7 +29,9 @@ def build():
     route=extract_twenty_block(fs)
     thirty=recognize_thirty_boundary(route['thirty_factors'])
     working=working_seed_to_legacy_chart()
-    routes=dict(extract=route,thirty=thirty,working=working)
+    # Closing the twenty is an actual sphere step, not an implicit phase jump.
+    thirty_replay=dict(thirty,stages=(route['stages'][-1],route['twenty_closure'])+thirty['stages'][1:])
+    routes=dict(extract=route,thirty=thirty_replay,working=working)
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']

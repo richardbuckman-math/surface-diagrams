@@ -51,7 +51,7 @@ Its local witness computation used only 78 bounded support states, and the
 stored deterministic witnesses recheck in well under a second locally.
 
 `docs/proofs/six-seven-fifty-blocks/index.html` shows the three new phases,
-with 6,9,19 states, connected braids, explicit sphere discrepancies and a
+with 6,9,20 states, connected braids, explicit sphere discrepancies and a
 horizontal all-columns option. The extracted twenty is green. Every display
 support replacement has its own fresh sphere/lift check and yellow label.
 These remain individual factor pictures. Separately, boundary-cut.svg is a
@@ -68,12 +68,18 @@ was verified NOT equal to the B6 six-strand full twist; its raw based action
 hit the existing bound. Neither result is an obstruction to the explicit
 five-point boundary representation now found, and no cap was raised.
 
-Validation: the browser replay checks all 31 new transitions, 13 explicit
-sphere moves, 34 states, all three horizontal overviews, and mobile layout
-without console errors. The precomputed display file is 708,737 bytes. The
-complete vector PDF has 208 pages and retains all 176 atomic transitions:
+The boundary replay begins with the FULL extracted fifty, followed by a
+separate, visibly labeled SPHERE MOVE deleting the verified twenty block.
+The twenty is never silently dropped when switching phases. Its local raw
+word, exact sphere action and +I lift are retained in route.twenty_closure.
+
+Validation: the browser replay checks all 32 new transitions, 14 explicit
+sphere moves, 35 states, all three horizontal overviews, and mobile layout
+without console errors. The precomputed display file is 709,038 bytes. The
+complete vector PDF has 212 pages and retains all 177 atomic transitions:
 five joining moves, 145 saved moves, eight extraction moves, and eighteen
-boundary-ending moves. It starts with a summary and table of contents.
+boundary-ending moves, plus the explicit twenty closure. It starts with a
+summary and table of contents.
 Every page was rasterized without renderer errors; the detailed appendix
 is a full archive, not a claim that the route has become short. The focused
 engine, saved replay, and simplification checks pass (17 tests).

@@ -106,6 +106,10 @@ def extract_twenty_block(factors):
     orbits=permutation_orbits(thirty)
     return dict(stages=tuple(stages),thirty_factors=thirty,twenty_factors=twenty,
         thirty_units=unit_factors(thirty),twenty_units=unit_factors(twenty),
+        twenty_closure=dict(kind='sphere_rewrite',
+            title='SPHERE MOVE: close the isolated standard twenty (W0)',
+            factors=thirty,local_before=twenty,local_after=(),disk_equality=False,
+            disk_discrepancy=model,sphere_certificate=sphere,lift_homology=lift),
         twenty_word=model,twenty_relator=relator,twenty_telescope=telescope,
         twenty_sphere_certificate=sphere,twenty_lift_homology=lift,
         standard_twenty_word=w0,standard_twenty_frame=frame,

@@ -12,6 +12,9 @@ substitution route, isolate an actual standard twenty from its fifty-unit
 endpoint, and close the remaining thirty through a five-point disk model.
 All local sphere changes and the final cap are visibly labeled and retain
 complete discrepancies and +I lift checks.
+The thirty-block proof starts with the full extracted fifty and explicitly
+removes the verified twenty in its own SPHERE MOVE before treating the
+thirty; changing phases never silently discards that block.
 
 This is an independent exact factor-level identity certificate, ending in
 a faithful Artin-action check of an ordered disk boundary relation. It is

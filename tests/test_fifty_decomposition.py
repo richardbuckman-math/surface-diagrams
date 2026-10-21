@@ -55,6 +55,14 @@ class FiftyDecompositionTests(unittest.TestCase):
         self.assertTrue(sphere_chain_certificate(word)['certified'])
         self.assertEqual(homology_action(word),IDENTITY)
         self.assertEqual(r['twenty_telescope'],())
+        cap=r['twenty_closure']
+        self.assertEqual(cap['local_before'],r['twenty_factors'])
+        self.assertEqual(cap['local_after'],())
+        self.assertEqual(cap['factors'],r['thirty_factors'])
+        self.assertIn('SPHERE MOVE',cap['title'])
+        self.assertEqual(cap['disk_discrepancy'],word)
+        self.assertTrue(cap['sphere_certificate']['certified'])
+        self.assertEqual(cap['lift_homology'],IDENTITY)
 
     def test_thirty_remains_positive_but_cannot_be_w1_by_hurwitz_moves_alone(self):
         r=self.route;thirty=r['thirty_factors']
@@ -124,7 +132,9 @@ class FiftyDecompositionTests(unittest.TestCase):
             check=check_support_replacement(old.mapping_class,new.mapping_class,max_cuts=40)
             self.assertEqual(check['disk_equal'],record['certificate']['disk_equal'])
             self.assertEqual(tuple(record['certificate']['disk_discrepancy']),check['disk_discrepancy'])
-        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=19,working=6))
+        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6))
+        self.assertEqual(display['routes']['thirty'][0]['factors'],display['routes']['extract'][-1]['factors'])
+        self.assertIn('SPHERE MOVE',display['routes']['thirty'][1]['title'])
         self.assertTrue(saved['independent_sphere_identity_certificate'])
         self.assertFalse(saved['explicit_w0_w1_hurwitz_route'])
         cut=json.loads((folder/'boundary-cut-certificate.json').read_text())

@@ -219,7 +219,7 @@ def build():
  book.section('III. Isolate an actual standard twenty','Seven disk Hurwitz moves and one explicit sphere rechart isolate the twenty at the bottom. It is a disk conjugate of W0. The remaining thirty is not assumed to be W1.')
  for i,s in enumerate(extract[1:],1):book.move('III',i,s['title'],s['kind'],new,extract[i-1]['factors'],new,s['factors'])
  book.checkpoint('The isolated standard twenty',new,extract[-1]['factors'][new['split']:])
- book.section('IV. The thirty and its exact disk-boundary ending','The following proof does not assume the thirty product is identity. Every chart change is checked locally, the ordered disk product is checked on all five based meridians, and the final double cap is explicit.')
+ book.section('IV. The thirty and its exact disk-boundary ending','First remove the independently verified standard twenty in an explicit sphere move. The remaining proof does not assume the thirty product is identity. Every chart change is checked locally, the ordered disk product is checked on all five based meridians, and the final double cap is explicit.')
  for i,s in enumerate(thirty[1:],1):book.move('IV',i,s['title'],s['kind'],new,thirty[i-1]['factors'],new,s['factors'])
  book.section('V. The decisive joint cut-system certificate','The ordered five-point model and the double outer-boundary twist have independently calculated, identical based actions. The reconstructed disk chain has five paths and a joint normal-placement certificate. This is different from a six-point sphere reference chain.')
  top=H-170;svg=(newroot/'boundary-cut.svg').read_text()
@@ -236,7 +236,7 @@ def build():
   'Auroux, Fiber sums of genus 2 Lefschetz fibrations, https://arxiv.org/pdf/math/0204285. Lemmas 6-7 concern standard-block invariance; Theorem 9 recognizes transitive positive identity factorizations. Its identity hypothesis must not be reversed.',
   'Scope: sphere mapping-class action and the separately checked closed genus-two lift. No hidden disk equality, cumulative joint support drawing, or unperformed elementary Hurwitz normal form is claimed.',
   'Source SHA256: '+cert['source_sha256'],
-  'All 176 atomic transitions in the linked chain are retained: 5 working-chart joins, 145 saved substitutions, 8 twenty-extraction moves, and 18 thirty-closure steps.'
+  'All 177 atomic transitions in the linked chain are retained: 5 working-chart joins, 145 saved substitutions, 8 twenty-extraction moves, 1 explicit twenty closure, and 18 thirty-closure steps.'
  ]:top=book.text(escape(text),M,top,W-2*M,'body')-18
  book.finish()
  overlay=BytesIO();c=canvas.Canvas(overlay,pagesize=(W,H));c.setFillColor(HexColor('#18344a'));c.setFont(BOLD,16);c.drawString(M,H-160,'Complete diagram sequence')
