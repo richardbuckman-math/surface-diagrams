@@ -52,6 +52,12 @@ at 120 dpi. Local HTTP tests need localhost access, and Windows temporary
 files were directed into `tmp/test-runs` to avoid sandbox temp-directory stalls.
 No mathematical route was changed by this presentation work.
 
+The first remote run also caught two presentation-specific test assumptions:
+the six-strand SVG golden hash predating dots/shorter blank rows, and a mirror
+test restricted to root-level paths. Both are updated for the new requested
+layout; the tests still check smooth crossings, endpoint identities, and the
+unmodified routed path with its independent mirror transform.
+
 PDF SHA256: `7ab73071d8989d93b4a2e6b8e90c672b11cdc62092bdec2e664b57865033539d`.
 
 Next: continue shortening the ending from the saved F6 alignment below, using

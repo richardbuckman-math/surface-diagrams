@@ -22,7 +22,9 @@ SVG = '{http://www.w3.org/2000/svg}'
 class LabDisplayOrientationTests(unittest.TestCase):
     def _route(self, svg, role):
         root = ET.fromstring(svg)
-        route = root.find(f"{SVG}path[@class='{role}']")
+        # Frame-free support thumbnails normalize their trimmed viewport with
+        # an enclosing translation. The routed path and mirror stay intact.
+        route = root.find(f".//{SVG}path[@class='{role}']")
         self.assertIsNotNone(route)
         return root, route
 

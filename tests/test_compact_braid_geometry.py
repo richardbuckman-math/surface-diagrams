@@ -59,12 +59,17 @@ def _assert_compact_braid(test, svg, factors, strands, row_height):
 
 
 class CompactBraidGeometryTests(unittest.TestCase):
-    def test_default_svg_is_preserved(self):
+    def test_classic_geometry_and_updated_six_point_layout_are_stable(self):
         boundary = (Factor('A', (), 1, 3), Factor('B', (2,), 1, 2, half=True))
         self.assertEqual(sha256(boundary_braid_svg(boundary, 3).encode()).hexdigest(),
                          'd02a900713176aa859f4a0f80d5fcdbc4d329cb4f3d5e44d6ef48054593f2158')
         self.assertEqual(sha256(six_braid_svg(initial_factors()[:2]).encode()).hexdigest(),
-                         '185ffab418ce1671f7f5cc987d974f2dab4276a0c730c2aa5f17afa315c7ebf6')
+                         '2c82d9f3d8ac2441bdc0612d4eb997dd15b7c8065451faa3a59bfa481124b9d2')
+        # The requested endpoint dots and shorter blank rows intentionally
+        # change the snapshot. Smooth over/under paths remain the default.
+        root=ET.fromstring(six_braid_svg(initial_factors()[:2]))
+        self.assertEqual(len(root.findall(f"{SVG}circle[@class='braid-marked-point']")),18)
+        self.assertTrue(any(' C ' in path.get('d','') for path in root.findall(f'{SVG}path')))
 
     def test_compact_rows_shrink_commuting_blocks_and_preserve_endpoints(self):
         boundary = (_factor('A', (1, 3) * 20), _factor('B', (1, 2, 3)),
