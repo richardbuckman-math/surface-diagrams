@@ -5,10 +5,11 @@ from hashlib import sha256
 from html import escape
 import json,re,sys,xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'src'))
-from surface_diagrams.braid_stack import braid_fragment_svg
+from surface_diagrams.braid_stack import braid_fragment_svg, stack_row_height
+from surface_diagrams.compact_svg import compact_support_svg
 from surface_diagrams.visuals import RAINBOW
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A3,landscape
+from reportlab.lib.pagesizes import letter
 from reportlab.lib.colors import toColor,HexColor
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -28,8 +29,8 @@ if (FONT/'arial.ttf').exists():
 else:Body='Helvetica'
 BODY='Body' if (FONT/'arial.ttf').exists() else 'Helvetica';BOLD='Bold' if BODY=='Body' else 'Helvetica-Bold'
 pdfmetrics.registerFontFamily(BODY,normal=BODY,bold=BOLD,italic=BODY,boldItalic=BOLD)
-W,H=landscape(A3);M=38;CW=(W-2*M-36)/2;BW=57;SCALE=BW/86
-styles={name:ParagraphStyle(name,fontName=BODY,fontSize=size,leading=leading,textColor='#18344a') for name,size,leading in [('body',13,19),('small',9,12),('heading',23,28),('caption',11,15)]}
+W,H=letter;M=30;GAP=20;CW=(W-2*M-GAP)/2;BW=46;SCALE=BW/86
+styles={name:ParagraphStyle(name,fontName=BODY,fontSize=size,leading=leading,textColor='#18344a') for name,size,leading in [('body',10,14),('small',7.5,10),('heading',18,22),('caption',9,12),('label',6.5,8)]}
 styles['heading'].fontName=BOLD
 
 def plain(s):
@@ -87,7 +88,7 @@ class Book:
   top=self.text('<b>'+escape(plain(title))+'</b>',M,H-42,W-2*M,'heading')
   if subtitle:top=self.text(subtitle,M,top-9,W-2*M,'caption')
   self.c.setStrokeColor(HexColor('#b8cbd9'));self.c.line(M,31,W-M,31)
-  self.c.setFont(BODY,9);self.c.drawString(M,16,'21 October 2026 | Individual supports unless explicitly marked as a joint cut certificate')
+  self.c.setFont(BODY,7);self.c.drawString(M,16,'21 October 2026 | Individual supports; joint cut certificates labeled separately')
   self.c.drawRightString(W-M,16,str(self.n));self.index.append(dict(page=self.n,title=plain(title)))
   if bookmark:self.c.bookmarkPage(bookmark);self.c.addOutlineEntry(plain(title),bookmark,level=0)
   return top-16
@@ -98,16 +99,19 @@ class Book:
   name,sw,sh=self.forms[k];scale=min(width/sw,height/sh)
   self.c.saveState();self.c.translate(x+(width-sw*scale)/2,y+(height-sh*scale)/2);self.c.scale(scale,scale);self.c.doForm(name);self.c.restoreState()
  def band(self,s,top,sphere=False):
-  self.c.setFillColor(HexColor('#fff0ce' if sphere else '#e5eff6'));self.c.roundRect(M,top-37,W-2*M,37,5,stroke=0,fill=1)
-  self.text(s,M+10,top-8,W-2*M-20,'small');return top-49
- def height(self,row):return max(92,row['height']*SCALE+22)
- def row(self,data,row,x,top,order,position):
-  h=self.height(row);self.c.setFillColor(HexColor('#ffffff'));self.c.rect(x,top-h,CW,h,stroke=0,fill=1)
-  label=f'{position+1}. {row["id"]} | {row["label"]}'
-  if row.get('sphere_rechart'):label+=' | SPHERE SUPPORT CHART'
-  self.text(escape(label),x+7,top-5,CW-BW-20,'small')
-  self.image(data['supports'][row['support']],x+6,top-h+5,CW-BW-22,h-26)
-  fragment=braid_fragment_svg(row['word'],order=order)
+  height=Paragraph(plain(s),styles['small']).wrap(W-2*M-20,H)[1]+16
+  self.c.setFillColor(HexColor('#fff0ce' if sphere else '#e5eff6'));self.c.roundRect(M,top-height,W-2*M,height,5,stroke=0,fill=1)
+  self.text(s,M+10,top-8,W-2*M-20,'small');return top-height-10
+ def height(self,row):return max(34,stack_row_height(row['word'],compact=True)*SCALE+4)
+ def row(self,data,row,x,top,order,position,width=CW):
+  h=self.height(row);self.c.setFillColor(HexColor('#ffffff'));self.c.rect(x,top-h,width,h,stroke=0,fill=1)
+  lw=72 if width==CW else 100
+  identity=row['id'] if len(row['id'])<=25 else row['id'][:23]+'..'
+  label=f'<b>{position+1}. {escape(identity)}</b><br/>{escape(row["label"])}'
+  if row.get('sphere_rechart'):label+='<br/>SPHERE CHART'
+  self.text(label,x+3,top-3,lw-5,'label')
+  self.image(compact_support_svg(data['supports'][row['support']]),x+lw,top-h+2,width-BW-lw-10,h-4)
+  fragment=braid_fragment_svg(row['word'],order=order,compact=True)
   # Labels occupy the left support column only. Add straight lead-ins to
   # the shared crossing fragment, so the braid reaches both row edges.
   # Crossing paths and their over/under gaps are unchanged, not stretched.
@@ -115,17 +119,21 @@ class Book:
   lead=lambda colors,a,b:''.join(f'<path d="M {13+12*i} {a} V {b}" stroke="{RAINBOW[colors[i]]}" stroke-width=".8" fill="none"/>' for i in range(6))
   body=fragment['svg'].split('>',1)[1].rsplit('</svg>',1)[0]
   svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="86" height="{h/SCALE}" viewBox="0 0 86 {h/SCALE}">'+lead(order,0,pad)+f'<g transform="translate(0 {pad})">'+body+'</g>'+lead(fragment['exit_order'],pad+fragment['height'],h/SCALE)+'</svg>'
-  self.image(svg,x+CW-BW-6,top-h,BW,h)
-  self.c.setStrokeColor(HexColor('#2563eb'));self.c.setDash(2,3);self.c.line(x+CW-BW-8,top-h,x+CW-4,top-h);self.c.setDash()
+  self.image(svg,x+width-BW-3,top-h,BW,h)
+  self.c.setStrokeColor(HexColor('#2563eb'));self.c.setDash(2,3);self.c.line(x+width-BW-5,top-h,x+width-1,top-h);self.c.setDash()
+  # Paint on the page, outside the form's clip box: the endpoint disks must
+  # remain whole even at the top and bottom of a connected braid strip.
+  self.c.setFillColor(HexColor('#006fff'))
+  for edge in (top,top-h):
+   for i in range(6):self.c.circle(x+width-BW-3+(13+12*i)*SCALE,edge,1.9*SCALE,stroke=0,fill=1)
   return top-h,fragment['exit_order']
  def checkpoint(self,title,data,ids):
   pos=0;order=tuple(range(6));part=0
   while pos<len(ids):
-   part+=1;top=self.new(title+(' - continued' if part>1 else ''),'FULL ORDERED FACTORIZATION. Read down the left column, then down the right. Braids continue with strand colors retained.')
-   for side in range(2):
-    y=top
-    while pos<len(ids) and y-self.height(data['rows'][ids[pos]])>45:
-     y,order=self.row(data,data['rows'][ids[pos]],M+side*(CW+36),y,order,pos);pos+=1
+   part+=1;top=self.new(title+(' - continued' if part>1 else ''),'FULL ORDERED FACTORIZATION. Read downward. Braids remain connected, with strand colors retained; disjoint crossings may share a level.')
+   y=top
+   while pos<len(ids) and y-self.height(data['rows'][ids[pos]])>45:
+    y,order=self.row(data,data['rows'][ids[pos]],M,y,order,pos,width=W-2*M);pos+=1
  def move(self,section,number,title,kind,da,ia,db,ib,extra=''):
   before=[da['rows'][i] for i in ia];after=[db['rows'][i] for i in ib]
   key=lambda r:(r['id'],tuple(r['word']),r['label'],r.get('sphere_rechart',False))
@@ -163,13 +171,13 @@ class Book:
    if p==len(before)==len(after):
     bottom=self.text('No displayed row changes. The exact certificate records the change of source presentations.',M,top,W-2*M)
     self.flow_top=bottom-18;break
-   self.text('<b>Before</b>',M,top,CW,'caption');self.text('<b>After</b>',M+CW+36,top,CW,'caption');top-=(20 if packed else 24)
+   self.text('<b>Before</b>',M,top,CW,'caption');self.text('<b>After</b>',M+CW+GAP,top,CW,'caption');top-=(16 if packed else 20)
    bottoms=[]
    for side,rows in enumerate((local_a,local_b)):
     y=top
-    if not rows:self.text('Identity / no factors in this interval.',M+side*(CW+36),y,CW,'caption')
+    if not rows:self.text('Identity / no factors in this interval.',M+side*(CW+GAP),y,CW,'caption')
     while cursors[side]<len(rows) and y-self.height(rows[cursors[side]])>45:
-     j=cursors[side];y,orders[side]=self.row(da if side==0 else db,rows[j],M+side*(CW+36),y,orders[side],p+j);cursors[side]+=1
+     j=cursors[side];y,orders[side]=self.row(da if side==0 else db,rows[j],M+side*(CW+GAP),y,orders[side],p+j);cursors[side]+=1
     bottoms.append(y)
    self.flow_top=min(bottoms)-18
  def section(self,title,description):
@@ -221,13 +229,15 @@ def build():
  book.checkpoint('The isolated standard twenty',new,extract[-1]['factors'][new['split']:])
  book.section('IV. The thirty and its exact disk-boundary ending','First remove the independently verified standard twenty in an explicit sphere move. The remaining proof does not assume the thirty product is identity. Every chart change is checked locally, the ordered disk product is checked on all five based meridians, and the final double cap is explicit.')
  for i,s in enumerate(thirty[1:],1):book.move('IV',i,s['title'],s['kind'],new,thirty[i-1]['factors'],new,s['factors'])
- book.section('V. The decisive joint cut-system certificate','The ordered five-point model and the double outer-boundary twist have independently calculated, identical based actions. The reconstructed disk chain has five paths and a joint normal-placement certificate. This is different from a six-point sphere reference chain.')
- top=H-170;svg=(newroot/'boundary-cut.svg').read_text()
- book.text('<b>Calculated ordered five-point product</b>',M,top,CW,'caption');book.text('<b>Double outer-boundary twist</b>',M+CW+36,top,CW,'caption')
- book.image(svg,M,top-330,CW,300);book.image(svg,M+CW+36,top-330,CW,300)
- y=book.text('The boundary-to-first-point arc has itinerary cuts (5,0,5); the four inner arcs are straight. The normal engine verifies all five paths jointly. The exact actual/reference meridian images are listed next.',M,top-345,W-2*M)
+ book.section('V. The six-point sphere cut-system certificate','The visible comparison uses all six marked points and five consecutive-point arcs. There is no boundary-to-first-point arc. The independent faithful five-point disk calculation is retained as algebraic backup, with point 6 at infinity.')
+ top=H-190;svg=(newroot/'sphere-cut.svg').read_text()
+ book.text('<b>Calculated product, on the sphere</b>',M,top,CW,'caption');book.text('<b>Reference six-point sphere chain</b>',M+CW+GAP,top,CW,'caption')
+ book.image(svg,M,top-95,CW,75);book.image(svg,M+CW+GAP,top-95,CW,75)
+ y=book.text('All five adjacent-point arcs are recovered from the action and jointly certified. The separate disk calculation has the following equal actual/reference meridian images:',M,top-115,W-2*M)
  proof=cert['thirty_boundary']['stages'][-2]['disk_action_certificate']
  for i,image in enumerate(proof['actual'],1):y=book.text('x'+str(i)+' -> '+escape(' '.join(map(str,image))),M,y-8,W-2*M,'small')
+ y=book.band('SPHERE MOVE: a five-point curve is complementary to a singleton curve.',y-15,True)
+ book.text('The singleton twist is trivial in the marked-sphere mapping class group, so (sigma1 sigma2 sigma3 sigma4)^5 caps to that identity. Spherical braids retain a central order-two rotation, which is quotiented out when passing to sphere mapping classes. The chosen genus-two lift of this single twist is -I. Its square caps with +I, preserving the lifted identity in this proof. A framed inner boundary cannot be discarded this way. Both disk discrepancies and lift matrices are saved in sphere-cut-certificate.json.',M,y,W-2*M,'small')
  book.section('VI. Sources, limitations and downloadable certificates','The new ending is an independent exact boundary-action proof. The classification theorem is not used to infer identity. A shorter geometric derivation and an elementary full W0 W1 Hurwitz route remain separate improvements.')
  top=H-175
  for text in [
@@ -243,7 +253,7 @@ def build():
  y=H-205
  for title,page in book.sections:
   c.setFont(BODY,14);c.drawString(M,y,title);c.drawRightString(W-M,y,str(page));y-=43
- c.setFont(BODY,11);c.drawString(M,y-15,'Every atomic move is retained. Sphere moves are explicitly labeled; certificates are linked in Section VI.');c.save();overlay.seek(0)
+ c.setFont(BODY,8);c.drawString(M,y-15,'All atomic moves retained. Sphere moves labeled explicitly; certificates in Section VI.');c.save();overlay.seek(0)
  reader=PdfReader(TMP/'six-seven-body.pdf');writer=PdfWriter();writer.clone_document_from_reader(reader)
  writer.pages[contents_page-1].merge_page(PdfReader(overlay).pages[0])
  with OUT.open('wb') as f:writer.write(f)
@@ -251,6 +261,7 @@ def build():
  (TMP/'six-seven-page-index.json').write_text(json.dumps(book.index,indent=2),encoding='utf-8')
  verified=PdfReader(OUT)
  assert len(verified.pages)==book.n
+ assert all(tuple(map(float,p.mediabox[2:]))==(612.,792.) for p in verified.pages)
  assert 'SPHERE MOVE' in '\n'.join(p.extract_text() or '' for p in verified.pages)
  print('Saved',OUT,'pages',len(verified.pages),'bytes',OUT.stat().st_size,'vector forms',len(book.forms),flush=True)
 

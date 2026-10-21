@@ -123,8 +123,8 @@ def support_points(first,count,half,conjugator):
 
 def support_svg(factor, *, mirror_vertical=False):
     from .twist_supports import support_drawing
-    return (support_drawing(factor.mapping_class, mirror_vertical=True)
-            if mirror_vertical else support_drawing(factor.mapping_class))
+    from .compact_svg import compact_support_svg
+    return compact_support_svg(support_drawing(factor.mapping_class, mirror_vertical=mirror_vertical))
 
 
 def number_support_points(svg):
@@ -145,7 +145,7 @@ def number_support_points(svg):
 
 def row_height(factor, *, compact=False):
     levels = compact_layer_count(factor.word) if compact else len(factor.word)
-    return max(210, levels*12+36)
+    return max(96, levels*12+36)
 
 
 def braid_svg(factors, *, compact=False):
@@ -153,7 +153,7 @@ def braid_svg(factors, *, compact=False):
         letters,levels,boundaries,offset=aligned_compact_steps(
             factors,6,lambda factor: row_height(factor,compact=True))
         paths,_=layered_braid_paths(6,letters,levels,28,RAINBOW,
-                                    Style(curve_width=1.3),'straight')
+                                    Style(curve_width=1.3),'smooth')
     else:
         levels=[0.]; letters=[]; boundaries=[]; offset=0
         for factor in factors:
@@ -179,6 +179,10 @@ def braid_svg(factors, *, compact=False):
         svg.append(f'<path d="{" ".join(commands)}" stroke="{path.stroke}" stroke-width="1.3" fill="none"/>')
     for y in boundaries[:-1]:
         svg.append(f'<path d="M 12 {y} H 228" stroke="#2563eb" stroke-width="1.3" stroke-dasharray="3 5"/>')
+    if factors:
+        for y in (0,*boundaries):
+            for i in range(6):
+                svg.append(f'<circle class="braid-marked-point" cx="{50+28*i}" cy="{y}" r="3.5" fill="#006fff"/>')
     svg.append('</svg>')
     return ''.join(svg)
 
@@ -190,18 +194,19 @@ def factorization_svg(factors, *, mirror_vertical=False, compact=False, number_p
     body=[]; y=0
     for f in factors:
         label=f'{f.id} · {f.label}'
+        h=row_height(f,compact=compact)
         body.append(f'<g transform="translate(0 {y})"><title>{escape(label)}</title>'
-                    f'<text x="12" y="20" font-family="sans-serif" font-size="12">{escape(label[:52])}</text>')
+                    f'<text x="8" y="17" font-family="sans-serif" font-size="10">{escape(f.id[:17])}</text>')
         try:
             raw_svg=support_svg(f,mirror_vertical=True) if mirror_vertical else support_svg(f)
             if number_points: raw_svg=number_support_points(raw_svg)
-            svg=re.sub(r'width="[^"]*"','width="340"',raw_svg,count=1)
-            svg=re.sub(r'height="[^"]*"','height="166"',svg,count=1)
+            svg=re.sub(r'width="[^"]*"','width="230"',raw_svg,count=1)
+            svg=re.sub(r'height="[^"]*"',f'height="{h-8}"',svg,count=1)
             audit=support_audit(f)
             check='Boundary word agrees' if audit['matches'] is True else 'Preview check failed' if audit['matches'] is False else 'Preview check unavailable'
             color='#476b58' if audit['matches'] is True else '#a14b20'
-            body.append(f'<desc>{escape(audit["message"])}</desc><text x="12" y="34" font-family="sans-serif" font-size="10" fill="{color}">{check}</text>')
-            body.append(f'<g transform="translate(0 38)">{svg}</g>')
+            body.append(f'<desc>{escape(audit["message"])}</desc><text x="8" y="34" font-family="sans-serif" font-size="8" fill="{color}">{check}</text>')
+            body.append(f'<g transform="translate(120 4)">{svg}</g>')
         except ValueError as error:
             body.append(f'<desc>{escape(str(error))}</desc><text x="12" y="80" fill="#a14b20" '
                         'font-family="sans-serif" font-size="12">Support preview unavailable.</text>'

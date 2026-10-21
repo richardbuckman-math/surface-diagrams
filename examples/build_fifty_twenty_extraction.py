@@ -7,6 +7,9 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.braid_stack import braid_fragment_svg
+from surface_diagrams.compact_svg import compact_support_svg
+from surface_diagrams.sphere_arc_simplify import _sphere_chain_certificate
+from surface_diagrams.peripheral_sphere import five_point_cap_certificate
 from surface_diagrams.boundary_playground_geometry import support_svg
 from surface_diagrams.factorization_geometry import number_support_points
 from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart,transport_round_half_lantern,align_f6_half_lantern
@@ -70,12 +73,12 @@ def build():
                         raise ValueError('The disk-only transport acquired a sphere display chart')
                     sk=(candidate.half,candidate.points,candidate.first,candidate.conjugator)
                     if sk not in support_cache:
-                        support_cache[sk]=len(supports);supports.append(number_support_points(support_svg(candidate,6,mirror_vertical=False)))
+                        support_cache[sk]=len(supports);supports.append(compact_support_svg(number_support_points(support_svg(candidate,6,mirror_vertical=False))))
                     if candidate.word not in braid_cache:
-                        braid_cache[candidate.word]=len(braids);braids.append(braid_fragment_svg(candidate.word)['svg'])
+                        braid_cache[candidate.word]=len(braids);braids.append(braid_fragment_svg(candidate.word,compact=True)['svg'])
                     row_cache[row_key]=len(rows)
                     rows.append(dict(id=f.id,label=('H' if f.half else 'T'+str(f.points))+('^'+str(f.power) if f.power>1 else ''),
-                        units=len(f.core),word=candidate.word,height=braid_fragment_svg(candidate.word)['height'],
+                        units=len(f.core),word=candidate.word,height=braid_fragment_svg(candidate.word,compact=True)['height'],
                         support=support_cache[sk],braid=braid_cache[candidate.word],sphere_rechart=not check['disk_equal']))
                     recharts.append(dict(source=asdict(f),displayed=asdict(candidate),certificate=check))
                 ids.append(row_cache[row_key])
@@ -135,6 +138,15 @@ def build():
     (out/'boundary-cut-certificate.json').write_text(json.dumps(dict(points=5,arcs=[asdict(a) for a in arcs],
         owners=cuts.owners,joint_verified=True,actual_images=images,
         expected_images=thirty['stages'][-2]['disk_action_certificate']['expected']),separators=(',',':')),encoding='utf-8')
+    sphere_images=images+((6,),)
+    sphere_cuts,sphere_arcs,depths,method=_sphere_chain_certificate(sphere_images)
+    (out/'sphere-cut.svg').write_text(compact_support_svg(render_normal_cut_preview(
+        sphere_cuts,projection='smooth',mirror_vertical=True),hide_cut_guides=True),encoding='utf-8')
+    (out/'sphere-cut-certificate.json').write_text(json.dumps(dict(points=6,
+        arcs=[asdict(a) for a in sphere_arcs],owners=sphere_cuts.owners,
+        joint_verified=True,actual_disk_images_embedded=sphere_images,
+        sphere_search_depths=depths,method=method,
+        single_cap=five_point_cap_certificate(),double_cap=five_point_cap_certificate(2)),separators=(',',':')),encoding='utf-8')
     (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('VERSION',version),encoding='utf-8')
     print('Saved',out,'states',{name:len(states) for name,states in display_routes.items()},'supports',len(supports),'braids',len(braids),'bytes',len(encoded.encode()),'version',version)
     return out

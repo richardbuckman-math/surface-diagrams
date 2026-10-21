@@ -6,6 +6,7 @@ from surface_diagrams.braid_stack import braid_fragment_svg, connected_braid_svg
 from surface_diagrams.braid_actions import arc_ray_word, free_homotopy_key, inverse_word
 from surface_diagrams.mapping_classes import ConjugatedTwist, supported_class, exact_action
 from surface_diagrams.twist_supports import support_curve
+from surface_diagrams.braid_schedule import commuting_layers
 
 
 class BraidStackTests(unittest.TestCase):
@@ -41,6 +42,22 @@ class BraidStackTests(unittest.TestCase):
         self.assertEqual(sum(c.get('class')=='factor-separator' for c in root),2)
         self.assertEqual([c.get('transform') for c in root if c.get('data-factor') is not None],
                          ['translate(0 0)','translate(0 130)','translate(0 260)'])
+        dots=[c for c in root if c.get('class')=='braid-marked-point']
+        self.assertEqual(len(dots),6*(len(words)+1))
+        self.assertEqual({float(c.get('cy')) for c in dots},{0,130,260,390})
+        self.assertTrue(all(c.get('fill')=='#006fff' for c in dots))
+
+    def test_compact_crossings_preserve_word_and_boundary_permutation(self):
+        word=(1,3,5,2,4,-1,-3,-5)
+        compact=braid_fragment_svg(word,compact=True)
+        classic=braid_fragment_svg(word)
+        self.assertLess(compact['height'],classic['height'])
+        self.assertEqual(compact['exit_order'],classic['exit_order'])
+        self.assertEqual(ET.fromstring(compact['svg']).get('data-word'),' '.join(map(str,word)))
+        self.assertEqual(commuting_layers(6,word)[0].letters,(1,3,5))
+        root=ET.fromstring(connected_braid_svg((word,word),compact=True))
+        self.assertEqual(float(root.get('height')),2*compact['height'])
+        self.assertEqual(len([c for c in root if c.get('class')=='braid-marked-point']),18)
 
 
 if __name__=='__main__':unittest.main()
