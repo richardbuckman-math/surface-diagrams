@@ -1,0 +1,139 @@
+"""The actual fifty has an explicit twenty block, but not a standalone W1."""
+from dataclasses import replace
+from hashlib import sha256
+import json
+from pathlib import Path
+import unittest
+
+from surface_diagrams.braid_actions import inverse_word,reduce_word
+from surface_diagrams.factorization_explorer import product
+from surface_diagrams.fifty_decomposition import (extract_twenty_block,unit_factors,permutation_orbits,
+    recognize_thirty_boundary,working_seed_to_legacy_chart)
+from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
+from surface_diagrams.mapping_classes import exact_action
+from surface_diagrams.six_seven_structure import SignedResearchFactor
+from surface_diagrams.sphere_actions import sphere_chain_certificate
+from surface_diagrams.standard_block_routes import standard_block_factors
+from surface_diagrams.sphere_support_compact import check_support_replacement
+from surface_diagrams.curves import Arc
+from surface_diagrams.normal_cut_engine import calculate_cut_system
+from surface_diagrams.factorization_explorer import initial_factors
+
+
+class FiftyDecompositionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        path=Path(__file__).resolve().parents[1]/'docs/proofs/six-seven-compact/source-route.json'
+        data=json.loads(path.read_text())['positive_sphere_expansion']['stages'][-1]['factors']
+        cls.source=tuple(SignedResearchFactor(**dict(f,conjugator=tuple(f['conjugator']))) for f in data)
+        cls.route=extract_twenty_block(cls.source)
+        cls.thirty=recognize_thirty_boundary(cls.route['thirty_factors'])
+
+    def test_seven_disk_moves_and_one_explicit_sphere_rechart_replay(self):
+        r=self.route
+        self.assertEqual(len(r['stages']),9)
+        self.assertEqual(sum(s['kind']=='disk_hurwitz' for s in r['stages']),7)
+        self.assertEqual(r['sphere_move_count'],1)
+        self.assertEqual(r['stages'][0]['factors'],self.source)
+        for before,after in zip(r['stages'],r['stages'][1:]):
+            self.assertEqual(len(before['factors']),len(after['factors']))
+            if after['kind']=='disk_hurwitz':
+                self.assertEqual(after['disk_word_certificate']['discrepancy'],())
+                self.assertEqual(reduce_word(product(before['factors'])+inverse_word(product(after['factors']))),())
+            else:
+                self.assertIn('SPHERE MOVE',after['title'])
+                self.assertFalse(after['disk_equality'])
+                self.assertNotEqual(after['disk_discrepancy'],())
+                self.assertTrue(sphere_chain_certificate(after['disk_discrepancy'])['certified'])
+                self.assertEqual(homology_action(after['disk_discrepancy']),IDENTITY)
+
+    def test_the_twenty_is_a_disk_conjugate_of_w0_and_closes_independently(self):
+        r=self.route;word=product(r['twenty_factors']);g=r['standard_twenty_frame']
+        self.assertEqual(len(r['twenty_units']),20)
+        self.assertEqual(word,r['twenty_word'])
+        self.assertEqual(exact_action(word),exact_action(g+product(standard_block_factors('W0'))+inverse_word(g)))
+        self.assertTrue(sphere_chain_certificate(word)['certified'])
+        self.assertEqual(homology_action(word),IDENTITY)
+        self.assertEqual(r['twenty_telescope'],())
+
+    def test_thirty_remains_positive_but_cannot_be_w1_by_hurwitz_moves_alone(self):
+        r=self.route;thirty=r['thirty_factors']
+        self.assertEqual(len(r['thirty_units']),30)
+        self.assertTrue(all(f.sign==1 and f.points==2 for f in thirty))
+        self.assertEqual(permutation_orbits(thirty),((1,3,4),(2,5),(6,)))
+        self.assertEqual(permutation_orbits(standard_block_factors('W1')),((1,2,3,4,5,6),))
+        self.assertTrue(r['thirty_permutation_obstruction_to_w1'])
+        self.assertFalse(r['thirty_alone_hurwitz_equivalent_to_w1'])
+        self.assertFalse(r['thirty_standard_block_identified'])
+        self.assertFalse(r['complete_structural_derivation_found'])
+        self.assertTrue(sphere_chain_certificate(product(thirty))['certified'])
+        self.assertEqual(homology_action(product(thirty)),IDENTITY)
+
+    def test_unit_expansion_and_invalid_inputs(self):
+        self.assertEqual(len(unit_factors(self.source)),50)
+        for source in (self.source[:-1],tuple(replace(f,id='wrong') for f in self.source),
+                       (replace(self.source[0],sign=-1),)+self.source[1:]):
+            with self.assertRaises(ValueError):extract_twenty_block(source)
+        false=list(self.source);false[9]=replace(false[9],conjugator=(),first=1)
+        with self.assertRaises(ValueError):extract_twenty_block(false)
+
+    def test_thirty_has_an_independent_double_boundary_proof(self):
+        r=self.thirty
+        self.assertTrue(r['independent_sphere_identity_proof'])
+        self.assertFalse(r['uses_source_identity_as_hypothesis'])
+        self.assertFalse(r['hurwitz_equivalence_to_w1_claimed'])
+        self.assertEqual(r['disk_core_length'],40)
+        five=product(r['five_point_factors']);boundary=r['boundary']
+        self.assertTrue(all(abs(g)<=4 for g in five))
+        self.assertEqual(exact_action(five,strands=5),exact_action(boundary.word,strands=5))
+        for stage in r['stages']:
+            if stage['kind']=='sphere_rewrite':
+                self.assertIn('SPHERE MOVE',stage['title'])
+                self.assertTrue(sphere_chain_certificate(stage['disk_discrepancy'])['certified'])
+                self.assertEqual(homology_action(stage['disk_discrepancy']),IDENTITY)
+        self.assertEqual(r['stages'][-2]['kind'],'disk_boundary_relation')
+        self.assertEqual(r['stages'][-1]['factors'],())
+        self.assertEqual(homology_action(boundary.word),IDENTITY)
+        self.assertNotEqual(homology_action(replace(boundary,power=1).word),IDENTITY)
+        false=list(self.route['thirty_factors']);false[0],false[1]=false[1],false[0]
+        with self.assertRaisesRegex(ValueError,'ordered five-point factorization'):
+            recognize_thirty_boundary(false)
+
+    def test_working_seed_is_connected_to_the_saved_route_with_no_sphere_moves(self):
+        r=working_seed_to_legacy_chart()
+        self.assertEqual(len(r['stages']),6)
+        self.assertEqual(len(product(r['stages'][0]['factors'])),154)
+        self.assertEqual(r['stages'][-1]['factors'],initial_factors())
+        self.assertEqual(r['sphere_move_count'],0)
+        self.assertEqual(sum(s['kind']=='disk_hurwitz' for s in r['stages']),3)
+        self.assertEqual(sum(s['kind']=='global_conjugation' for s in r['stages']),1)
+
+    def test_published_replay_is_linked_to_the_actual_source_and_certifies_display_recharts(self):
+        root=Path(__file__).resolve().parents[1]
+        source=root/'docs/proofs/six-seven-compact/source-route.json'
+        folder=root/'docs/proofs/six-seven-fifty-blocks'
+        saved=json.loads((folder/'certificate.json').read_text())
+        display=json.loads((folder/'display.json').read_text())
+        self.assertEqual(saved['source_sha256'],sha256(source.read_bytes()).hexdigest())
+        self.assertEqual(saved['source'],json.loads(json.dumps([f.__dict__ for f in self.source])))
+        self.assertEqual(len(display['states']),9)
+        for state in display['states']:
+            self.assertEqual(sum(display['rows'][i]['units'] for i in state['factors']),50)
+        for record in saved['display_recharts']:
+            old=SignedResearchFactor(**record['source']);new=SignedResearchFactor(**record['displayed'])
+            check=check_support_replacement(old.mapping_class,new.mapping_class,max_cuts=40)
+            self.assertEqual(check['disk_equal'],record['certificate']['disk_equal'])
+            self.assertEqual(tuple(record['certificate']['disk_discrepancy']),check['disk_discrepancy'])
+        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=19,working=6))
+        self.assertTrue(saved['independent_sphere_identity_certificate'])
+        self.assertFalse(saved['explicit_w0_w1_hurwitz_route'])
+        cut=json.loads((folder/'boundary-cut-certificate.json').read_text())
+        self.assertEqual(cut['actual_images'],cut['expected_images'])
+        arcs=tuple(Arc(**dict(a,cuts=tuple(a['cuts']))) for a in cut['arcs'])
+        self.assertEqual(len(calculate_cut_system(arcs,points=5).paths),5)
+        data=(folder/'display.json').read_text();version=sha256(data.encode()).hexdigest()[:16]
+        expected=(root/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('VERSION',version)
+        self.assertEqual((folder/'index.html').read_text(encoding='utf-8'),expected)
+
+
+if __name__=='__main__':unittest.main()

@@ -5,8 +5,11 @@
 The forward (6,7) simplification retains all thirteen factors and now reaches
 conjugator sum 32 / maximum cut visits 6, with explicit global frame
 (2,3,2,5,-3). Interactive labs support checked cyclic block rotations,
-undo/redo and saved basepoint frames. Continue the structural derivation
-from this checkpoint; the standard-block bridge remains open. See
+undo/redo and saved basepoint frames. The new closure certificate joins this
+working seed to fifty, extracts an actual standard twenty, and independently
+closes the thirty remainder through a five-point double-boundary relation.
+Its ending uses a faithful Artin-action check and a separate sphere cap;
+an elementary W0 W1 Hurwitz normal form remains open. See
 [HANDOFF](HANDOFF.md) for exact scope, bounded failures and validation.
 
 ## Active October 5 prototypes

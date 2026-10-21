@@ -1,5 +1,93 @@
 # Handoff: surface-diagrams
 
+## October 21 overnight: an actual twenty block and an independent closure of the thirty
+
+Richard now calls the 154-letter simplified ending THE working (6,7). His
+requested target is a graphical path from it to the positive fifty, then a
+30+20 closure. The new `fifty_decomposition.py` connects these components:
+
+1. `working_seed_to_legacy_chart()` joins the working seed to the literal
+   source of the saved 145-step substitution route. It has six states:
+   inverse Hurwitz moves (8->7),(7->6),(3->2), then explicit conjugation by
+   the inverse of (2,3,2,5,-3), then exact disk support presentations. No
+   sphere move or identity hypothesis is used in this joining calculation.
+2. The preserved 145-step named-substitution route reaches its actual fifty.
+   Its source JSON and SHA remain unchanged. Do not recompute that route.
+3. `extract_twenty_block(actual_fifty)` has nine states. Move F3 (position 10)
+   up past alternate.C4.rose.3 (position 9), using zero-based positions.
+   The transported full pair is sphere-equivalent to round T56. Record that
+   SPHERE MOVE, full disk discrepancy and +I lift, then drag T56 down across
+   six neighbors unchanged. A literal standard twenty now sits at the end.
+   Put A=43211234, Q=55, R=5 A 5. The block is Q A Q A=5 R^2 5^-1. With
+   Delta6=12345 1234 123 12 1, it is exactly (5 Delta6) W0 (5 Delta6)^-1
+   in B6, where W0=(1234554321)^2. Its sphere action and +I lift are proved
+   independently of the whole fifty. Seven disk Hurwitz moves plus one
+   sphere rechart isolate it; this is an actual extraction, not a count.
+4. The remaining thirty has permutation orbits {1,3,4},{2,5},{6}. Therefore
+   it CANNOT by itself be Hurwitz-equivalent to transitive W1. Do not waste
+   a search trying that: Hurwitz/global conjugation preserves orbit sizes.
+   Interacting with the twenty can still change a chosen block decomposition.
+5. `recognize_thirty_boundary(actual_remainder)` gives a different independent
+   closure proof. Put point 6 at infinity and check every support representative
+   explicitly. All new words use only generators 1--4. One {3,6} pair loop
+   becomes its complementary four-point loop; its positive core expands from
+   length 2 to length 12. The resulting five-point-disk core length is 40,
+   not 30. The ordered product's faithful Artin action equals exactly
+   (1234)^10, the DOUBLE outer-boundary twist, on all five based meridians.
+   This check does NOT assume the source identity. Finally cap that double
+   boundary in a separate SPHERE MOVE with its +I lift. A single five-point
+   boundary twist would have lift -I and is not an allowable replacement.
+
+The boundary proof has nineteen states: sixteen checked representatives,
+one exact disk boundary relation and the final cap, plus its start. Twelve
+of its arrows are explicitly sphere-only (including the cap). It is an
+independent factor-level sphere/closed-genus-two identity CERTIFICATE, ending
+in a faithful disk-action computation. It is NOT an elementary Hurwitz route
+to W0 W1. Keep `independent_sphere_identity_certificate=true` separate from
+`explicit_w0_w1_hurwitz_route=false`; do not silently promote the latter.
+The classification theorem in Auroux Theorem 9 assumes identity, so it cannot
+itself prove the closure. This new boundary proof avoids that circularity.
+Its local witness computation used only 78 bounded support states, and the
+stored deterministic witnesses recheck in well under a second locally.
+
+`docs/proofs/six-seven-fifty-blocks/index.html` shows the three new phases,
+with 6,9,19 states, connected braids, explicit sphere discrepancies and a
+horizontal all-columns option. The extracted twenty is green. Every display
+support replacement has its own fresh sphere/lift check and yellow label.
+These remain individual factor pictures. Separately, boundary-cut.svg is a
+TRUE joint five-edge DISK chain certificate, reconstructed from the five
+based images. The source product and double boundary have identical images.
+Its first boundary-to-point arc has cuts (5,0,5), the four inner arcs are
+straight, and the normal engine certifies all five paths jointly. Do not
+confuse this disk chain with the five adjacent-point arcs on the sphere.
+
+Rebuild with `python examples/build_fifty_twenty_extraction.py`. Its certificate
+records the raw source SHA and factor states; no display representative is
+silently used as an actual source factor. A preliminary compact remainder
+was verified NOT equal to the B6 six-strand full twist; its raw based action
+hit the existing bound. Neither result is an obstruction to the explicit
+five-point boundary representation now found, and no cap was raised.
+
+Validation: the browser replay checks all 31 new transitions, 13 explicit
+sphere moves, 34 states, all three horizontal overviews, and mobile layout
+without console errors. The precomputed display file is 708,737 bytes. The
+complete vector PDF has 208 pages and retains all 176 atomic transitions:
+five joining moves, 145 saved moves, eight extraction moves, and eighteen
+boundary-ending moves. It starts with a summary and table of contents.
+Every page was rasterized without renderer errors; the detailed appendix
+is a full archive, not a claim that the route has become short. The focused
+engine, saved replay, and simplification checks pass (17 tests).
+
+Next: shorten the named-substitution route and replace the final faithful
+disk-action computation with a short recognizable geometric disk relation
+if possible. The independent identity certificate is complete. An elementary
+all-Hurwitz W0 W1 normal form remains optional further work; do not try to
+get it by cancelling the extracted W0 block. The public replay and PDF are
+in docs/proofs/six-seven-fifty-blocks; the PDF authoring source is
+examples/build_six_seven_identity_pdf.py.
+The overnight automation is hourly until the first run at/after 8 AM Eastern
+October 21, then must report candidly and restore the six-hour schedule.
+
 ## October 21: circular starting points and the 32-length checkpoint
 
 Richard pointed out that factors lie around a circle and the starting point
