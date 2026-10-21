@@ -203,7 +203,9 @@ def build(candidate_cache=None):
                                      reverse_disk_discrepancy=[]))
     simplification=dict(states=simple_states,chapters=simple_moves,groups=simple_moves,
                         atomic=simple_moves,summary=dict(initial=simple_states[0]['score'],
-                        final=simple_states[-1]['score'],sphere_moves=0))
+                        final=simple_states[-1]['score'],sphere_moves=0,
+                        hurwitz_moves=sum(s['kind']=='disk_hurwitz' for s in simple_report['stages']),
+                        global_conjugations=sum(s['kind']=='global_conjugation' for s in simple_report['stages'])))
     (destination/'simplification-certificate.json').write_text(
         json.dumps(simple_report,default=asdict,separators=(',',':')),encoding='utf-8')
     session=export_factors(simple_report['stages'][-1]['factors'])

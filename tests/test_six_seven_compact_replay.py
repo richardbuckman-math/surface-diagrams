@@ -113,7 +113,7 @@ class CompactReplayTests(unittest.TestCase):
         self.assertEqual(sum(x['sphere'] for x in forward),14)
         simple=self.display['simplification']
         self.assertEqual(len(simple['states'][0]['factors']),13)
-        self.assertEqual(simple['summary']['final'],[36,6,48,8])
+        self.assertEqual(simple['summary']['final'],[32,6,46,6])
         self.assertTrue(all(not m['sphere'] for m in simple['atomic']))
         self.assertFalse(self.display['summary']['support_mirror_vertical'])
         self.assertTrue(self.display['summary']['braids_continuous'])

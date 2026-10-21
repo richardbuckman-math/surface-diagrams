@@ -22,6 +22,7 @@ from .mapping_classes import VerificationLimitError,exact_action
 from .sphere_actions import sphere_inner_certificate,sphere_reduce
 from .sphere_cut_system import sphere_chart_drawing
 from .braid_actions import inverse_word
+from .cyclic_factorizations import rotate_factors
 
 
 def starting_factors(seed_slug='6-7'):
@@ -295,7 +296,7 @@ class LabServer(ThreadingHTTPServer):
             self.position=destination;self.message=f'Opened saved history step {destination+1}.'
         else:
             i=payload.get('index')
-            if op not in ('reset','import','simplify','conjugate') and (type(i) is not int or not 0<=i<len(factors)):
+            if op not in ('reset','import','simplify','conjugate','rotate') and (type(i) is not int or not 0<=i<len(factors)):
                 raise ValueError('Choose a valid factor')
             next_frame=frame
             if op=='move':
@@ -322,6 +323,15 @@ class LabServer(ThreadingHTTPServer):
                 checked_global_frame(result,next_frame,self.seed_factors)
                 message='Globally conjugated every factor; the complete conjugated disk action was verified.'
                 label=('Global conjugation: '+' '.join(map(str,word)))[:300]
+            elif op=='rotate':
+                rotation=rotate_factors(factors,payload.get('offset'))
+                result=rotation['factors']
+                next_frame=parse_global_conjugator(reduce_word(rotation['frame']+frame))
+                checked_global_frame(result,next_frame,self.seed_factors)
+                direction='top to bottom' if rotation['offset']>0 else 'bottom to top'
+                label=f'Cyclic basepoint: {len(rotation["moved_ids"])} factors {direction}'
+                message=('Changed the circular starting point; individual factors are unchanged. '
+                         'The product is explicitly globally conjugate; its complete disk action was verified.')
             elif op=='simplify':
                 result=checked(factors,tuple(simplify_factor(f) for f in factors))
                 if result==factors:

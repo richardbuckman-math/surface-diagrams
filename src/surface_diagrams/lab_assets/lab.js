@@ -101,6 +101,8 @@ function controls(){
  $('undo').disabled=busy||!state?.undo; $('redo').disabled=busy||!state?.redo;
  document.querySelectorAll('#history-list button').forEach(button=>button.disabled=busy||Number(button.dataset.position)===state?.position);
  for(const id of ['reset','save','open','svg','simplify','sphere','conjugate','global-word']) $(id).disabled=busy||!state;
+ for(const id of ['rotate-count','rotate-down','rotate-up'])$(id).disabled=busy||!state||state.factors.length<2;
+ if(state)$('rotate-count').max=Math.max(1,state.factors.length-1);
  if($('load-walkthrough'))$('load-walkthrough').disabled=busy||!state;
  $('selected').textContent=f?`${f.id} · ${f.label}`:'Select a factor';
  const picker=$('split-kind');picker.replaceChildren();
@@ -509,6 +511,14 @@ $('conjugate').onclick=async()=>{
  if(state.revision!==revision)$('global-word').value='';
 };
 $('global-word').onkeydown=event=>{if(event.key==='Enter')$('conjugate').click();};
+for(const [id,sign] of [['rotate-down',1],['rotate-up',-1]])$(id).onclick=async()=>{
+ const count=Number($('rotate-count').value);
+ if(!Number.isInteger(count)||count<1||count>=state.factors.length){
+  status('Choose a block size from 1 to '+(state.factors.length-1)+'.',true);return;
+ }
+ await action({op:'rotate',offset:sign*count},
+              (selected-sign*count+state.factors.length)%state.factors.length);
+};
 $('split').onclick=()=>action({op:'split',index:selected,kind:$('split-kind').value});$('combine').onclick=()=>action({op:'combine',index:selected});
 const factorizationFilename=()=>state?.seed_slug==='4-3'?'xiao-four-three-factorization':
  state?.seed_slug==='10-10'?'ten-ten-transcription-factorization':'six-seven-factorization';

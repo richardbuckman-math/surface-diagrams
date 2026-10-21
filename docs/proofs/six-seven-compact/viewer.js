@@ -43,7 +43,7 @@ function column(n,title){
 function statistics(){
  if(simple()){
   const s=D.simplification.summary;
-  $('statistics').textContent=`Same thirteen-factor (6,7): total conjugator length ${s.initial[0]} → ${s.final[0]}, longest ${s.initial[1]} → ${s.final[1]}, maximum support cut visits ${s.initial[3]} → ${s.final[3]}. Three Hurwitz moves, two explicit global conjugations, and checked disk normalizations. No sphere substitutions in this simplification.`;
+  $('statistics').textContent=`Same thirteen-factor (6,7): total conjugator length ${s.initial[0]} → ${s.final[0]}, longest ${s.initial[1]} → ${s.final[1]}, maximum support cut visits ${s.initial[3]} → ${s.final[3]}. ${s.hurwitz_moves} Hurwitz moves, ${s.global_conjugations} explicit global conjugations, and checked disk normalizations. No sphere substitutions in this simplification.`;
  }else{
   const s=D.summary;
   $('statistics').textContent=`${s.chapters} chapters · ${s.grouped_moves} grouped transitions · ${s.atomic_moves} retained atomic moves. All support pictures fit the ${s.max_displayed_cuts}-visit ceiling. The default direction starts from the original (6,7).`;
@@ -62,12 +62,12 @@ async function render(){
  $('step').value=index;$('position').value=index;$('title').textContent=(index+1)+' / '+list.length+' — '+s.title;
  const atomic=current().atomic,sphere=atomic.slice(s.start,s.end).filter(x=>x.sphere);
  $('scope').className='notice'+(sphere.length?' sphere':'');
- $('scope').textContent=simple()?(s.kind==='global_conjugation'?'EXPLICIT GLOBAL CONJUGATION. Applied to all thirteen factors.':'DISK EQUALITY. Hurwitz move or exact support normalization.'):
+ $('scope').textContent=simple()?(s.kind==='global_conjugation'?'EXPLICIT GLOBAL CONJUGATION. Applied to all thirteen factors.':s.kind==='cyclic_hurwitz'?'EXPLICIT CYCLIC BASEPOINT CHANGE, then a disk Hurwitz move. The product is globally conjugated.':'DISK EQUALITY. Hurwitz move or exact support normalization.'):
   (s.end-s.start)+' recorded source moves. '+(sphere.length?sphere.length+' explicit SPHERE MOVES.':'These source moves are disk-exact.')+' Column frames and additional sphere support recharts are listed below.';
  $('explanation').textContent=s.explanation||'';statistics();
  $('strip').className='strip'+(overview?' overview':'');
  $('strip').innerHTML=points.map((n,i)=>(i?'<div class="arrow" aria-label="Recorded moves">→</div>':'')+column(n,overview?(i===0?(simple()||forward()?'Original (6,7)':'Positive fifty-unit source'):current().chapters[i-1].title):(i?'After':'Before'))).join('');
- $('moves').innerHTML=atomic.slice(s.start,s.end).map((m,i)=>`<li value="${s.start+i+1}"><b>${m.sphere?'SPHERE MOVE':m.kind==='global_conjugation'?'GLOBAL CONJUGATION':'DISK MOVE'}</b> · ${m.title}${m.sphere?'<details><summary>Disk discrepancy for this direction (sphere and +I lift checked)</summary><pre>'+word(m.reverse_disk_discrepancy)+'</pre></details>':''}</li>`).join('');
+ $('moves').innerHTML=atomic.slice(s.start,s.end).map((m,i)=>`<li value="${s.start+i+1}"><b>${m.sphere?'SPHERE MOVE':m.kind==='cyclic_hurwitz'?'CYCLIC GLOBAL CONJUGATION + HURWITZ':m.kind==='global_conjugation'?'GLOBAL CONJUGATION':'DISK MOVE'}</b> · ${m.title}${m.sphere?'<details><summary>Disk discrepancy for this direction (sphere and +I lift checked)</summary><pre>'+word(m.reverse_disk_discrepancy)+'</pre></details>':''}</li>`).join('');
 }
 function choose(){
  if(simple())$('direction').value='forward';

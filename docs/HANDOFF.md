@@ -1,5 +1,69 @@
 # Handoff: surface-diagrams
 
+## October 21: circular starting points and the 32-length checkpoint
+
+Richard pointed out that factors lie around a circle and the starting point
+can be changed. `cyclic_factorizations.rotate_factors()` now records this
+exactly: if P=A B, the unchanged rotated list B,A has product A^-1 P A
+(or B P B^-1). The shorter of these two explicit conjugators is retained.
+A telescoping free-word certificate accompanies every rotation. This is a
+global change of basepoint, not an assumed disk equality and not a hidden
+sphere substitution. Disk equality requires the relevant commutation.
+Tests include a noncentral counterexample and the actual (6,7) discrepancy,
+which is sphere-trivial with +I genus-two lift but not disk-trivial.
+
+All three six-strand interactive labs have a block-size input and Top ->
+bottom / Bottom -> top buttons. The individual factor records, supports,
+powers and words stay unchanged; only their order and the saved global
+frame change. A complete exact disk action checks that frame before commit.
+Selection follows its factor. Undo/redo, JSON export/import, persistent
+sessions and the public browser backend preserve the new starting point.
+
+The bounded simplifier now also considers the circular last/first Hurwitz
+adjacency. Only two extra directed neighbors are needed, not every rotation
+of every already adjacent pair. Its certificate separates the explicit
+basepoint rotation from the subsequent local disk Hurwitz move. Pure
+rotations are score-neutral; the strict descent does not loop through them.
+
+A bounded two-step global-frame lookahead from the previous (36,6,48,8)
+checkpoint found conjugations (2), then (3), reaching (35,7,49,8). A further
+(2) reaches (32,6,46,6). Applying the combined frame (2,3,2) directly gives
+the same final score, so the published forward replay adds ONE checked
+whole-column conjugation, with cumulative frame (2,3,2,5,-3). Its eight
+states retain three Hurwitz moves, three explicit global conjugations and
+the initial exact disk support normalization. All thirteen original types
+remain: six half twists and seven squared three-point twists. No sphere
+substitution was used. Total braid letters fall 178 -> 154; conjugator sum
+44 -> 32; maximum support cut visits 10 -> 6. The complete final disk action
+and +I lift pass, and the downloadable JSON passes the real lab import.
+No minimal pairwise geometric intersection or global optimality is claimed.
+
+Bounded failures, to avoid repeating them: cross-seam fixed-factor slides
+of length <=5, retaining all prefixes below 24 cut visits and conjugator
+sum <=48, gave seven accepted seam-crossing prefixes and no gain from 36.
+From 32, a four-layer beam (width10 plus up to4 seam-bearing states,
+36 candidate operations per state, cut cap24 and sum cap38) evaluated 1,404
+operations  / 1,042 distinct circular states without a further improvement.
+These are work-bounded failures, not obstructions. Full probe inputs/results
+are in ignored .preview/cyclic-slide-probe.json and cyclic-beam-third.json.
+
+Validation: new cyclic/action/replay tests pass, including all block sizes,
+positive and negative rotations, scope distinctions and rollback on invalid
+input. Chrome checks the live controls, unchanged complete factor drawings,
+selection, undo/redo, frame-preserving JSON import/export and 390px layout.
+The updated precalculated viewer passes all 441 transition displays, connected
+braid alignment/separators, an eight-column overview and mobile checks.
+Default load remains seven requests  / 737,581 bytes locally; no browser Python
+startup is added to that viewer. Existing lab and Node regressions and remote
+CI are checked before final delivery.
+
+Next: continue from 32, not the old36 checkpoint. Use the circular adjacency
+for transported local lantern/half-lantern configurations and geometric
+block decompositions, with explicit basepoint frames and every actual sphere
+move labeled. The standard-block-to-positive-fifty bridge is STILL OPEN;
+this simplification does not complete the structural derivation. Preserve
+the pending (10,10) transcription and the user's untracked 8Boundaries.pdf.
+
 ## October 20: cylinder calibration, continuous braids, and a simpler (6,7)
 
 Richard supplied an explicit convention: the half-twist arc 4--6 BELOW 5

@@ -8,6 +8,7 @@ from dataclasses import replace
 from functools import lru_cache
 
 from .braid_actions import reduce_word
+from .cyclic_factorizations import rotate_factors
 from .factorization_explorer import initial_factors
 from .mapping_classes import supported_class
 from .six_seven_structure import research_hurwitz_move
@@ -52,8 +53,15 @@ def apply_simplification(factors, kind, args):
         certificate = research_hurwitz_move(factors, *args)
     elif kind == 'global_conjugation':
         certificate = reframe_factors(factors, args)
+    elif kind == 'cyclic_hurwitz':
+        if len(args) != 3:
+            raise ValueError('A cyclic Hurwitz move needs a rotation and two adjacent positions')
+        rotation = rotate_factors(factors,args[0])
+        hurwitz = research_hurwitz_move(rotation['factors'],*args[1:])
+        certificate = dict(kind=kind,rotation=rotation,hurwitz=hurwitz,
+                           factors=hurwitz['factors'],frame=rotation['frame'])
     else:
-        raise ValueError('Only disk Hurwitz moves and explicit global conjugation are allowed')
+        raise ValueError('Only disk Hurwitz moves and explicit global conjugation, including cyclic starts, are allowed')
     after, normalizations = _normalize(certificate['factors'])
     return dict(kind=kind, args=tuple(args), factors=after, certificate=certificate,
                 disk_normalizations=normalizations)
@@ -80,23 +88,26 @@ def replay_simplification(factors, moves, *, max_cuts=24):
         if kind == 'global_conjugation':
             frame = reduce_word(tuple(args)+frame)
             title = 'Global conjugation by ' + ' '.join(map(str,args))
+        elif kind == 'cyclic_hurwitz':
+            frame = reduce_word(record['certificate']['frame']+frame)
+            title = 'Change circular starting point, then an adjacent Hurwitz move'
         else:
             title = 'Move ' + before[args[0]].id + (' down' if args[0]<args[1] else ' up')
         stages.append(dict(record,title=title,score=score,frame=frame))
     return dict(stages=tuple(stages),frame=frame,max_cuts=max_cuts,
-                method='bounded greedy disk Hurwitz/global conjugation',
+                method='bounded disk Hurwitz/global conjugation with cyclic starts',
                 sphere_moves=0,globally_optimal=False)
 
 
 def six_seven_simplification():
-    """Replay the five checked improvements found on October 20."""
+    """Replay the checked improvements, including the October 21 short frame."""
     return replay_simplification(initial_factors(),(
         ('disk_hurwitz',(2,3)), ('global_conjugation',(-3,)),
         ('global_conjugation',(5,)), ('disk_hurwitz',(6,7)),
-        ('disk_hurwitz',(7,8))))
+        ('disk_hurwitz',(7,8)), ('global_conjugation',(2,3,2))))
 
 
-def greedy_simplify(factors, *, max_steps=14, max_cuts=24):
+def greedy_simplify(factors, *, max_steps=14, max_cuts=24, include_cyclic=True):
     """Bounded adjacent-move/single-generator descent, with a replayable plan.
 
     A temporary increase in the largest conjugator is permitted when the
@@ -112,6 +123,13 @@ def greedy_simplify(factors, *, max_steps=14, max_cuts=24):
         moves = [('disk_hurwitz',(a,b)) for i in range(len(state)-1)
                  for a,b in ((i,i+1),(i+1,i))]
         moves += [('global_conjugation',(g,)) for g in (*range(1,6),*range(-5,0))]
+        if include_cyclic and len(state)>1:
+            # Every ordinary adjacency is already present. Changing the start
+            # once exposes the sole missing last/first adjacency; considering
+            # all n rotations would repeat the same circular neighborhood.
+            last=len(state)-1
+            moves += [('cyclic_hurwitz',(1,a,b)) for a,b in
+                      ((last-1,last),(last,last-1))]
         options = []
         for kind,args in moves:
             try:
