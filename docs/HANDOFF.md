@@ -1,5 +1,47 @@
 # Handoff: surface-diagrams
 
+## October 21: one graphical overview of the complete forward proof
+
+The default fifty-blocks page now puts the whole chain in one horizontal
+view: working (6,7), saved calculation chart, actual fifty, thirty plus
+standard twenty, five-point disk model, double boundary, sphere identity.
+These seven checkpoints reuse already certified states. They are NOT a
+new six-move proof. The arrows summarize 5+145+8+17+1+1 = 177 retained atomic
+moves. Each arrow states its move and sphere counts and links to the detailed
+replay. Selecting an arrow lists every contained sphere move, its exact local
+disk discrepancy, and every global conjugation explicitly. All 28 sphere
+moves of the main chain remain accounted for. Display-only sphere support
+charts are still labeled separately on their rows.
+
+`?phase=overview` opens the whole story; `?phase=overview&step=1` opens its
+145-move source span as two columns. The detailed phases also accept a
+zero-based `step` parameter, so links to the twenty cap and disk boundary
+recognition arrive at the stated operation. The ordinary extraction,
+thirty closure, working-chart, and optional compact phases are preserved.
+The 212-page PDF and its full 177-move route are unchanged.
+
+Validation: nine focused tests check source linkage, checkpoint reuse, all
+177 source move titles/kinds, and all 28 nonempty sphere discrepancies.
+Browser checks cover 42 transitions: six summary arrows plus the existing
+36 detailed/optional transitions. Continuous braid alignment, dotted
+separators, the green twenty block, all-column modes, deep links and mobile
+layout pass. The precalculated payload is 876,448 bytes. This is clearer
+navigation, not a new mathematical shortening or a W0 W1 normal form.
+
+Concrete mathematical next step remains the round 234 half-lantern
+configuration saved by compact_thirty_boundary_chart.next_local_relation.
+Two bounded probes this run did NOT resolve it. Moving its single inverse
+rightward through the remaining nine factors produced no matching positive
+pair; the four-point crossing inflated its meridian support word to 132,
+so that route was not published or accepted as a complexity improvement.
+A single pass over all 146 saved source states found nine repeated sphere/
+lift signatures, all adjacent presentation/equivalent-factor changes, and
+no removable longer cycle. Do not hide their chart changes to claim a
+shorter derivation. The separate first-nine-factor 26=20+6 hypothesis is
+ruled out by pair linking; see .preview/compact-thirty-prefix-obstruction.json.
+Keep seeking a specific transported cluster relation rather than repeating
+these probes or the broad scans.
+
 ## October 21: optional smaller five-point ending chart
 
 `compact_thirty_boundary_chart()` applies the explicit four-letter global

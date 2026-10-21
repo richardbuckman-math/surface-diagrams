@@ -2,12 +2,20 @@
 
 [Open the precalculated graphical proof](index.html).
 
+The default view shows the complete forward story as seven horizontally
+arranged vertical factorizations, with connected braids. Its six summary
+arrows retain 5+145+8+17+1+1 = 177 atomic moves. Each arrow lists every
+contained sphere move and discrepancy, records global conjugations, and
+links to the detailed replay. This is a readable overview, not a shorter
+six-move derivation. `?phase=overview&step=1` opens the source-route span;
+the detailed phases also accept a zero-based `step` parameter.
+
 [Download the complete illustrated PDF](six-seven-identity.pdf). It starts
 with a brief summary, a table of contents, and a step-by-step explanation,
 then retains every atomic transition with paired supports and braid strips.
 It is the detailed archive, not a claim that the derivation is already short.
 
-The three phase selectors join the current working (6,7) to the saved
+The three core phases join the current working (6,7) to the saved
 substitution route, isolate an actual standard twenty from its fifty-unit
 endpoint, and close the remaining thirty through a five-point disk model.
 All local sphere changes and the final cap are visibly labeled and retain

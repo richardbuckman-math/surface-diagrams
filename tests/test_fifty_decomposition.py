@@ -157,7 +157,7 @@ class FiftyDecompositionTests(unittest.TestCase):
             check=check_support_replacement(old.mapping_class,new.mapping_class,max_cuts=40)
             self.assertEqual(check['disk_equal'],record['certificate']['disk_equal'])
             self.assertEqual(tuple(record['certificate']['disk_discrepancy']),check['disk_discrepancy'])
-        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6,compact=5))
+        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6,compact=5,overview=7))
         self.assertEqual(display['routes']['thirty'][0]['factors'],display['routes']['extract'][-1]['factors'])
         self.assertIn('SPHERE MOVE',display['routes']['thirty'][1]['title'])
         self.assertTrue(saved['independent_sphere_identity_certificate'])
@@ -169,6 +169,28 @@ class FiftyDecompositionTests(unittest.TestCase):
         data=(folder/'display.json').read_text();version=sha256(data.encode()).hexdigest()[:16]
         expected=(root/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('VERSION',version)
         self.assertEqual((folder/'index.html').read_text(encoding='utf-8'),expected)
+
+    def test_unified_overview_retains_all_atomic_moves_and_every_sphere_discrepancy(self):
+        root=Path(__file__).resolve().parents[1]
+        folder=root/'docs/proofs/six-seven-fifty-blocks'
+        display=json.loads((folder/'display.json').read_text())
+        source=root/'docs/proofs/six-seven-compact/source-route.json'
+        route=display['routes']['overview'];summary=display['overview_summary']
+        self.assertEqual(summary['source_sha256'],sha256(source.read_bytes()).hexdigest())
+        self.assertEqual([len(s['moves']) for s in route[1:]],[5,145,8,17,1,1])
+        self.assertEqual(summary['atomic_moves'],177)
+        self.assertFalse(summary['is_shorter_derivation'])
+        spheres=[m for s in route[1:] for m in s['moves'] if m['kind']=='sphere_rewrite']
+        self.assertEqual(len(spheres),28)
+        self.assertTrue(all(m['disk_discrepancy'] for m in spheres))
+        phases=display['routes']
+        self.assertEqual([s['factors'] for s in route],
+            [phases['working'][0]['factors'],phases['working'][-1]['factors'],
+             phases['extract'][0]['factors'],phases['extract'][-1]['factors'],
+             phases['thirty'][-3]['factors'],phases['thirty'][-2]['factors'],phases['thirty'][-1]['factors']])
+        legacy=json.loads(source.read_text())
+        atoms=[s for phase in legacy.values() if isinstance(phase,dict) and 'stages' in phase for s in phase['stages'][1:]]
+        self.assertEqual([(m['title'],m['kind']) for m in route[2]['moves']],[(s['title'],s['kind']) for s in atoms])
 
 
 if __name__=='__main__':unittest.main()

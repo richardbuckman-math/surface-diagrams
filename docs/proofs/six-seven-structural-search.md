@@ -1,5 +1,40 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 21: a unified seven-checkpoint graphical story
+
+The default fifty-blocks page now presents the complete chain horizontally:
+working (6,7), saved calculation chart, fifty, thirty plus standard twenty,
+five-point disk model, double boundary, sphere identity. The six arrows
+summarize 5+145+8+17+1+1 = 177 retained atomic moves; this is not a new
+six-move proof. Each arrow has a detailed replay link, an explicit ledger
+of its sphere moves and local disk discrepancies, and its global changes
+of frame. All 28 source sphere moves are retained. The seven checkpoints
+are references to existing certified states, not new approximate states.
+The 212-page PDF is unchanged. Deep links with `phase` and zero-based
+`step` open the operation shown by the summary arrow.
+
+Nine focused tests and browser inspection of 42 summary/detailed transitions
+pass, including all source move titles/kinds, nonempty sphere discrepancies,
+continuous braids, separators, green twenty block, deep links and mobile
+layout. Precalculated data is 876,448 bytes; no calculation search runs at
+page load. This increment improves visual navigation, not the elementary
+geometric explanation of the final boundary relation.
+
+Bounded failed hypotheses this run: transporting the compressed prefix's
+inverse rightward through nine remaining factors gives no equal positive
+pair. Its support word spikes to 132 on crossing the four-point twist, so
+this path was rejected for readability. A one-pass signature check over
+146 saved states found nine repeated sphere/lift signatures, all adjacent;
+there is no longer state cycle to delete. Presentation-only changes must
+not be hidden to claim that sphere steps have disappeared. The first-nine
+prefix cannot be one full boundary twist times a positive three-point twist:
+its pure pair-linking difference has negative entries. The saved witness
+is .preview/compact-thirty-prefix-obstruction.json.
+
+Next seek a concrete cluster relation using the round 234 half-lantern
+configuration, without redoing the frame probe, half-pair scan, these
+signature/transport checks, or the old broad scans.
+
 ## October 21: optional smaller five-point ending chart
 
 `compact_thirty_boundary_chart()` applies the explicit four-letter global

@@ -70,12 +70,48 @@ def build():
             states.append(dict(title=stage['title'],kind=stage['kind'],factors=ids,
                                disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality')))
         display_routes[name]=states
-    display=dict(states=display_routes['extract'],routes=display_routes,rows=rows,supports=supports,braids=braids,split=len(route['thirty_factors']))
+    # One readable chain through the already certified route. These arrows
+    # summarize retained atomic moves; they are never called single moves.
+    legacy=tuple(s for phase in report.values() if isinstance(phase,dict) and 'stages' in phase
+                 for s in phase['stages'][1:])
+    spans=(
+        (working['stages'][1:],'?phase=working&step=0'),
+        (legacy,'../six-seven-compact/index.html'),
+        (route['stages'][1:],'?phase=extract&step=0'),
+        (thirty_replay['stages'][1:-2],'?phase=thirty&step=0'),
+        ((thirty_replay['stages'][-2],),'?phase=thirty&step=17'),
+        ((thirty_replay['stages'][-1],),'?phase=thirty&step=18'))
+    checkpoints=(
+        ('working',0,'The working (6,7)','Six half twists and seven squared three-point twists'),
+        ('working',-1,'The saved calculation chart','The same (6,7), after explicit disk moves and a common frame'),
+        ('extract',0,'The actual positive fifty','Fifty positive half-twist units, in 32 supported factors'),
+        ('extract',-1,'Thirty plus a standard twenty','Upper thirty; standard twenty below, highlighted green'),
+        ('thirty',-3,'The five-point disk model','Forty positive disk-core letters after the complementary four-point rechart'),
+        ('thirty',-2,'Double outer-boundary twist','The ordered five-point action agrees with the double boundary twist'),
+        ('thirty',-1,'Sphere identity','The twenty was removed by its sphere relation; the double boundary has now been capped'))
+    overview=[]
+    for i,(name,n,title,caption) in enumerate(checkpoints):
+        state=dict(display_routes[name][n],title=title,caption=caption,kind='start')
+        if i:
+            span_records,href=spans[i-1]
+            state.update(kind='summary_span',detail_href=href,
+                moves=[dict(number=j+1,title=s['title'],kind=s['kind'],
+                            disk_discrepancy=s.get('disk_discrepancy',())) for j,s in enumerate(span_records)])
+        overview.append(state)
+    counts=tuple(len(s.get('moves',())) for s in overview[1:])
+    if counts!=(5,145,8,17,1,1):raise ValueError('The unified overview lost an atomic proof span')
+    overview_summary=dict(checkpoints=7,atomic_moves=sum(counts),span_counts=counts,
+        sphere_moves=sum(m['kind']=='sphere_rewrite' for s in overview for m in s.get('moves',())),
+        source_sha256=sha256(source).hexdigest(),is_shorter_derivation=False)
+    if overview_summary['sphere_moves']!=28:raise ValueError('The overview hid a source sphere move')
+    display_routes['overview']=overview
+    display=dict(states=display_routes['extract'],routes=display_routes,rows=rows,supports=supports,
+                 braids=braids,split=len(route['thirty_factors']),overview_summary=overview_summary)
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
         source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,
-        independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,
+        independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
     arcs=(based_arc_from_meridian(images[0]),)+tuple(
