@@ -1,5 +1,55 @@
 # Handoff: surface-diagrams
 
+## October 21 afternoon: unwind F9 using the existing squared T45
+
+`unwind_f9_pair_square()` continues from the saved F6-aligned endpoint.
+It carries the final round T45 squared UP over last.P12.square, F11, and
+F9, keeping the squared pair twist fixed. Its action commutes exactly
+with the first two factors. Its inverse conjugation then removes F9's
+excess winding around points 4--5. Only F9 changes its supported mapping
+class; all sixteen positive twist types and the ordered B5 double-boundary
+action are preserved. No sphere move, negative factor, or temporary root
+is used. The previously aligned F6/F11/T13-squared target is preserved,
+although those factors still need a useful gathering.
+
+The three Hurwitz steps plus one explicit exact presentation extend the
+existing optional transport phase from 22 to 26 states (25 moves). The
+F9 conjugator changes from (1,2,4,4,4,-3) to (-4,1,2,-3), with core sigma2.
+Its support-word length falls 10->4. The endpoint's maximum/total support
+scores improve 10/58 -> 8/52; braid letters fall 84->80. Maximum support
+length never exceeds 10 during these new moves. Raw braid presentations
+reach 108 before the explicit presentation step; every displayed support
+is separately simplified with exact disk equality, preserving compact
+connected braid pictures. These are fixed-chart scores, not globally
+minimal intersections or a shorter identity proof.
+
+A different concrete candidate was checked first against the PRE-unwinding
+F6-aligned source: carry F3=H45 right across F6, H34 and the four-point curve,
+using moves (4,5), (5,6), (6,7), zero-based. This does make that curve round
+T1234, but its endpoint has scores 10/60 and 84 braid letters, worsening
+the total 58->60. It is NOT appended. Use it only if exposing that particular
+round PC daisy provides a concrete subsequent benefit; do not call it an
+independent complexity improvement or repeat the same probe blindly.
+
+The default seven-checkpoint 177-move identity proof and the 125-page portrait
+PDF are unchanged. This addition improves the optional ending diagram and
+preserves all explicit sphere scopes. The new route is stored in certificate
+field f9_unwinding; ?phase=transport&step=23 shows F9 before/after, and
+step=24 shows the final exact presentation. Validation: 31 focused Python tests and all 67 browser transitions pass,
+including the 28 unchanged summary sphere moves, deep links and mobile layout.
+The 938,532-byte replay remains fully precalculated. New tests check
+each fixed-factor transport, exact B5 products, the local free-word and +I
+lift certificates, positive types, unchanged disjoint supports and the
+preserved half-lantern target. Existing replay tests now expect 26 states.
+
+Next work from the simpler F9 endpoint, not the old 10/58 presentation.
+Seek a short geometric cluster gathering for the preserved F6/F11/T13-squared
+PC half lantern, or a named relation involving the now-short F9. The
+round-four-point alternative is conditional on a useful daisy application.
+Any verified closure/decomposition is allowed; 20+30 and W0 W1 are not
+requirements. Keep every actual sphere move explicit with disk discrepancy
+and the chosen genus-two lift.
+
 ## October 21: compact displays, strand dots, portrait PDF and the full sphere chain
 
 Richard requested display changes and explicitly removed the requirement to

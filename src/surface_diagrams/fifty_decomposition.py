@@ -515,3 +515,84 @@ def align_f6_half_lantern(factors):
             applied_to_replay=False,reason='The valid gathering route worsens the surrounding supports'),
         is_shorter_identity_proof=False,
         scope='Nine exact disk Hurwitz moves simplify supports and align a separated PC half-lantern target; no sphere move')
+
+
+def unwind_f9_pair_square(factors):
+    """Three disk Hurwitz moves remove F9's excess winding around 4--5.
+
+    Carry the final squared pair twist T45^2 upward over the T13 square,
+    F11, and F9. It commutes with the first two; its inverse conjugation
+    unwinds F9. No temporary root, negative factor, or sphere move occurs.
+    """
+    from .factorization_explorer import simplify_factor
+    state=tuple(factors)
+    ids=('cross.P12','alternate.HL2.2','alternate.P15.remaining',
+         'alternate.C4.rose.1','F3','F6','alternate.HL2.1',
+         'alternate.C4.rose.2','transport.HL.1','transport.HL.2',
+         'transport.HL.3','new.P26','F9','F11','last.P12.square','last.P34.square')
+    if tuple(f.id for f in state)!=ids or any(f.sign!=1 for f in state):
+        raise ValueError('Expected the positive F6-aligned endpoint')
+    dragged=state[-1]
+    if (dragged.conjugator,dragged.first,dragged.points,dragged.power,dragged.half)!=((),4,2,2,False):
+        raise ValueError('The last factor must be the round T45 squared')
+    expected=exact_action((1,2,3,4)*10,strands=5)
+    if exact_action(product(state),strands=5)!=expected:
+        raise ValueError('The F9 unwinding source is not the double boundary')
+    def score(fs):
+        lengths=tuple(len(supported_class(f.mapping_class,strands=5)) for f in fs)
+        return dict(max_support_word=max(lengths),total_support_word=sum(lengths),
+                    braid_letters=len(product(fs)))
+    initial=state;before=score(state);peak=before['max_support_word']
+    stages=[dict(kind='start',title='The F6-aligned ending before unwinding F9',factors=state)]
+    for a in (15,14,13):
+        crossed=state[a-1]
+        step=research_hurwitz_move(state,a,a-1);state=step['factors']
+        if state[a-1]!=dragged:
+            raise ValueError('The dragged squared pair twist changed')
+        actual=exact_action(product(state),strands=5)
+        if actual!=expected:
+            raise ValueError('An F9 Hurwitz transport changed the exact boundary action')
+        discrepancy=reduce_word(product(step['local_before'])+inverse_word(product(step['local_after'])))
+        if discrepancy or homology_action(discrepancy)!=IDENTITY:
+            raise ValueError('An F9 transport lost its local disk/lift certificate')
+        peak=max(peak,score(state)['max_support_word'])
+        if peak>before['max_support_word']:
+            raise ValueError('F9 unwinding exceeded the initial geometric ceiling')
+        stages.append(dict(step,title='Carry round T45 squared up across '+crossed.id+', keeping T45 squared fixed',
+            disk_equality=True,lift_homology=IDENTITY,
+            disk_action_certificate=dict(strands=5,actual=actual,expected=expected,equal=True)))
+    compact=tuple(simplify_factor(f) for f in state)
+    checks=[]
+    for old,new in zip(state,compact):
+        support=supported_class(old.mapping_class,strands=5)
+        actual,wanted=exact_action(old.word,strands=5),exact_action(new.word,strands=5)
+        discrepancy=reduce_word(old.word+inverse_word(new.word))
+        if support!=supported_class(new.mapping_class,strands=5) or actual!=wanted or homology_action(discrepancy)!=IDENTITY:
+            raise ValueError('An F9 presentation changed its disk support or lift')
+        checks.append(dict(id=old.id,disk_support_class=support,disk_equal=True,lift_homology=IDENTITY))
+    stages.append(dict(kind='disk_presentation',title='F9 has unwound: maximum support word 8, sixteen positive factors',
+        factors=compact,local_before=state,local_after=compact,disk_equality=True,disk_support_checks=tuple(checks)))
+    state=compact
+    if sorted((f.points,f.power,f.half,f.sign) for f in state)!=sorted(
+            (f.points,f.power,f.half,f.sign) for f in initial):
+        raise ValueError('F9 unwinding changed the positive factor types')
+    old_by_id={f.id:f for f in initial};new_by_id={f.id:f for f in state}
+    commuting_ids=('last.P12.square','F11')
+    if any(exact_action(old_by_id[i].word,strands=5)!=exact_action(new_by_id[i].word,strands=5) for i in commuting_ids):
+        raise ValueError('The allegedly disjoint supports changed')
+    target_ids=('F6','F11','last.P12.square')
+    if any(exact_action(old_by_id[i].word,strands=5)!=exact_action(new_by_id[i].word,strands=5) for i in target_ids):
+        raise ValueError('The previously aligned half-lantern target changed')
+    after=score(state)
+    if after['max_support_word']>=before['max_support_word'] or after['total_support_word']>=before['total_support_word']:
+        raise ValueError('F9 unwinding is not a strict support-score improvement')
+    return dict(stages=tuple(stages),factors=state,before_score=before,after_score=after,
+        peak_support_word=peak,hurwitz_moves=3,sphere_move_count=0,
+        dragged_id=dragged.id,commuting_supports_unchanged=commuting_ids,
+        aligned_target_preserved=True,preserves_positive_factor_types=True,
+        preserves_ordered_disk_product=True,
+        f9_support_lengths=(len(supported_class(old_by_id['F9'].mapping_class,strands=5)),
+                            len(supported_class(new_by_id['F9'].mapping_class,strands=5))),
+        disk_boundary_action_certificate=dict(strands=5,actual=exact_action(product(state),strands=5),expected=expected,equal=True),
+        is_shorter_identity_proof=False,
+        scope='Three exact disk Hurwitz moves unwind F9; this simplifies the ending, not the archived identity proof')

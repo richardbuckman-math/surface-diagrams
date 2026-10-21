@@ -67,7 +67,7 @@ class F6AlignmentTests(unittest.TestCase):
     def test_published_route_is_linked_and_invalid_source_rejected(self):
         self.assertEqual(json.loads(json.dumps(self.route,default=lambda f:f.__dict__)),self.saved['f6_alignment'])
         d=json.loads((self.folder/'display.json').read_text())
-        self.assertEqual(len(d['routes']['transport']),22)
+        self.assertEqual(len(d['routes']['transport']),26)
         for state,shown in zip(self.route['stages'][1:],d['routes']['transport'][11:]):
             for f,i in zip(state['factors'],shown['factors']):
                 self.assertFalse(d['rows'][i]['sphere_rechart'])
