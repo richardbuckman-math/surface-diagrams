@@ -1,5 +1,68 @@
 # Handoff: surface-diagrams
 
+## October 21: a geometric PC half-lantern transport simplifies the ending
+
+`transport_round_half_lantern()` now gives a concrete disk-only improvement
+of the optional compact five-point boundary model. It is published as the
+additional `?phase=transport` replay, with eleven states and ten moves:
+
+1. Move F3 above the complicated four-point curve, keeping F3 fixed.
+2. Compress the first three prefix terms by the inverse PC half lantern to
+   temporary R=T234. This is one ordinary planar three-point twist, not an
+   asserted individual genus-two Lefschetz factor.
+3. Carry R right across six factors. The first four are supported inside its
+   disk and commute with it; the last two are F3 and the four-point curve.
+   All six Hurwitz arrows and their free disk-word certificates are retained.
+4. Check exact disk presentations for the transported supports, then reexpand
+   R by the PC half lantern. No temporary root or negative is left over.
+
+The endpoint again has sixteen positive factors with the original twist
+types. F3 now has conjugator (4,), core sigma3; the four-point curve has
+conjugator (-4,), core T1234. Their meridian support-word lengths fall
+10->4 and 16->4. The total falls 86->68 and the braid presentation 126->100
+letters; the maximum remains 16, attained by F6. Every intermediate stays
+within that original maximum. These are fixed-chart support scores, not
+global minimum intersections. This is a simpler ending diagram, NOT a claim
+that the 177-move / 212-page identity proof has been shortened.
+
+All eleven states independently have the faithful five-meridian disk action
+of (1234)^10, the same double boundary. The two named substitutions also
+retain their local based-action and genus-two lift checks. There is no sphere
+move in this branch. Unlike the other phases' explicitly labeled optional
+sphere support pictures, this phase shows disk-exact representatives only,
+with the shared Arc/Loop renderer and vertically connected braids.
+The seven-checkpoint default story, all 28 source sphere moves and their
+discrepancies, the other phases, and the full PDF are unchanged.
+
+The new simple four-point curve C exposes a SPECIFIC next named configuration.
+Its PC daisy is round T123 followed by three pair twists, the first of which
+is u^2 with u=sigma4^-1 sigma3 sigma4 (the arc from 3 to 5 on the other side
+of point 4 from F3). Put E=T45. Now F3=E u E^-1, and u, F3, E^2 multiply
+exactly to round T345. The final E^2 is already present as the record
+last.P34.square, whose inherited ID does not name its current support.
+Both relations are saved in `half_lantern_transport.next_relations`, with
+all five based images, and BOTH are marked not applied to the replay.
+One u can be exposed by splitting the daisy's u^2, but a route gathering
+u, F3 and the separated E^2 in the required order is still open. Do not
+treat these exact local equalities as an already successful global move.
+
+Validation: 24 focused engine/artifact tests pass, including every state's
+disk product, both PC half-lantern directions, all seven Hurwitz certificates,
+positive-type recovery, the support ceiling, the two next local targets,
+and disk-exact display/braid correspondence. Browser checks cover 52
+transitions, all 28 summary sphere moves and 15 existing detailed/optional
+sphere arrows, connected braid alignment, root notices, deep links, all-column
+views and mobile layout. The new ten transitions use no sphere display badge.
+The precomputed display is 929,974 bytes; no search runs when the page loads.
+The full PDF remains byte-for-byte unchanged.
+
+Next work from this simpler endpoint. Try the concrete PC daisy / u-F3-E^2
+configuration with explicit ordering and transport checks, using a cyclic
+start of the central double-boundary product or a split of the final E^2
+if helpful. Alternatively the daisy exposes the exact round T123 needed
+by the earlier F6/F11 target. Do not repeat the already saved tail-only
+exclusion, root transport, or old failed gathers.
+
 ## October 21: a finite obstruction narrows the compact ending target
 
 The seven-factor tail of the optional compact five-point boundary chart is

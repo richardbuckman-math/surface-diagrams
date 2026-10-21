@@ -9,7 +9,7 @@ from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.boundary_playground_geometry import support_svg
 from surface_diagrams.factorization_geometry import number_support_points
-from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart
+from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart,transport_round_half_lantern
 from surface_diagrams.hyperelliptic_homology import homology_action
 from surface_diagrams.six_seven_structure import SignedResearchFactor
 from surface_diagrams.sphere_actions import sphere_supported_class
@@ -32,7 +32,8 @@ def build():
     # Closing the twenty is an actual sphere step, not an implicit phase jump.
     thirty_replay=dict(thirty,stages=(route['stages'][-1],route['twenty_closure'])+thirty['stages'][1:])
     compact=compact_thirty_boundary_chart(thirty['five_point_factors'])
-    routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact)
+    transport=transport_round_half_lantern(compact['factors'])
+    routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport)
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']
@@ -53,22 +54,33 @@ def build():
         for stage in replay['stages']:
             ids=[]
             for f in stage['factors']:
-                if f not in row_cache:
-                    candidate=replace(pool[key(f.mapping_class)],id=f.id)
+                row_key=(f,name=='transport')
+                if row_key not in row_cache:
+                    # The geometric transport shows actual disk supports,
+                    # without the other phases' labeled sphere display charts.
+                    if name=='transport':
+                        t=simplify_twist(f.mapping_class)
+                        candidate=replace(f,conjugator=t.conjugator,first=t.first)
+                    else:
+                        candidate=replace(pool[key(f.mapping_class)],id=f.id)
                     check=check_support_replacement(f.mapping_class,candidate.mapping_class,max_cuts=40)
+                    if name=='transport' and not check['disk_equal']:
+                        raise ValueError('The disk-only transport acquired a sphere display chart')
                     sk=(candidate.half,candidate.points,candidate.first,candidate.conjugator)
                     if sk not in support_cache:
                         support_cache[sk]=len(supports);supports.append(number_support_points(support_svg(candidate,6,mirror_vertical=False)))
                     if candidate.word not in braid_cache:
                         braid_cache[candidate.word]=len(braids);braids.append(braid_fragment_svg(candidate.word)['svg'])
-                    row_cache[f]=len(rows)
+                    row_cache[row_key]=len(rows)
                     rows.append(dict(id=f.id,label=('H' if f.half else 'T'+str(f.points))+('^'+str(f.power) if f.power>1 else ''),
                         units=len(f.core),word=candidate.word,height=braid_fragment_svg(candidate.word)['height'],
                         support=support_cache[sk],braid=braid_cache[candidate.word],sphere_rechart=not check['disk_equal']))
                     recharts.append(dict(source=asdict(f),displayed=asdict(candidate),certificate=check))
-                ids.append(row_cache[f])
-            states.append(dict(title=stage['title'],kind=stage['kind'],factors=ids,
-                               disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality')))
+                ids.append(row_cache[row_key])
+            shown=dict(title=stage['title'],kind=stage['kind'],factors=ids,
+                       disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality'))
+            if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
+            states.append(shown)
         display_routes[name]=states
     # One readable chain through the already certified route. These arrows
     # summarize retained atomic moves; they are never called single moves.
@@ -110,7 +122,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))

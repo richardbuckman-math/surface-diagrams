@@ -322,3 +322,109 @@ def compact_thirty_boundary_chart(factors):
         next_local_relation=next_relation,
         preserves_ordered_disk_product=True,sphere_move_count=1,
         scope='Optional explicit disk chart of the established ending; not a new W0 W1 derivation.')
+
+
+def transport_round_half_lantern(factors):
+    """A checked disk-only geometric simplification of the compact ending.
+
+    Compress one PC half lantern to round R=T234, carry it past four
+    interior factors and the next two supports, then reexpand it. The
+    temporary odd three-point root is not left as a Lefschetz factor.
+    The endpoint retains the original positive twist types. This shortens
+    support presentations, not the archived identity proof's move count.
+    """
+    from .factorization_explorer import simplify_factor
+    state=tuple(factors)
+    ids=('cross.P12','alternate.HL1.1','alternate.HL1.2','alternate.HL1.3',
+         'alternate.HL2.1','alternate.HL2.2','alternate.P15.remaining',
+         'alternate.C4.rose.1','alternate.C4.rose.2','F3','F6','new.P26',
+         'F9','F11','last.P12.square','last.P34.square')
+    if tuple(f.id for f in state)!=ids or any(f.sign!=1 for f in state):
+        raise ValueError('Expected the positive compact five-point ending')
+    boundary=(1,2,3,4)*10
+    expected=exact_action(boundary,strands=5)
+    if exact_action(product(state),strands=5)!=expected:
+        raise ValueError('The transport source is not the double boundary')
+    def score(fs):
+        lengths=tuple(len(supported_class(f.mapping_class,strands=5)) for f in fs)
+        return dict(max_support_word=max(lengths),total_support_word=sum(lengths),
+                    braid_letters=len(product(fs)))
+    initial=state;before_score=score(state)
+    stages=[dict(kind='start',title='The compact five-point ending before geometric transport',factors=state)]
+    def hurwitz(a,b,title):
+        nonlocal state
+        step=research_hurwitz_move(state,a,b);state=step['factors']
+        if score(state)['max_support_word']>before_score['max_support_word']:
+            raise ValueError('Geometric transport exceeds its initial support-word ceiling')
+        stages.append(dict(step,title=title,disk_equality=True))
+    hurwitz(9,8,'Move F3 above the four-point curve, keeping F3 fixed')
+    root=replace(initial[3],id='transport.R234',conjugator=(),first=2,points=3,power=1)
+    def half_lantern(index,old,new,title,direction):
+        nonlocal state
+        actual=exact_action(product(old),strands=5)
+        wanted=exact_action(product(new),strands=5)
+        discrepancy=reduce_word(product(old)+inverse_word(product(new)))
+        if actual!=wanted or homology_action(discrepancy)!=IDENTITY:
+            raise ValueError('The transported PC half lantern changed the disk action')
+        state=state[:index]+tuple(new)+state[index+len(old):]
+        stages.append(dict(kind='disk_pc_half_lantern',direction=direction,title=title,
+            factors=state,local_before=tuple(old),local_after=tuple(new),disk_equality=True,
+            disk_action_certificate=dict(strands=5,actual=actual,expected=wanted,equal=True),
+            lift_homology=IDENTITY,temporary_root=True))
+    half_lantern(1,state[1:4],(root,),
+        'Inverse PC half lantern: replace the first three terms by temporary R = T234','compress')
+    # R commutes with the first four crossed factors because they are inside
+    # its three-point disk. Their raw presentations are retained until the
+    # separate exact presentation step; all six Hurwitz arrows stay visible.
+    for i in range(1,7):
+        hurwitz(i,i+1,'Carry R right past '+state[i+1].id+', keeping R fixed')
+    compact=tuple(simplify_factor(f) for f in state)
+    checks=[]
+    for old,new in zip(state,compact):
+        support=supported_class(old.mapping_class,strands=5)
+        if (support!=supported_class(new.mapping_class,strands=5) or
+                exact_action(old.word,strands=5)!=exact_action(new.word,strands=5)):
+            raise ValueError('A transported disk support presentation changed')
+        checks.append(dict(id=old.id,disk_equal=True,disk_support_class=support))
+    stages.append(dict(kind='disk_presentation',title='Show the now-simple arc and four-point curve in the same disk chart',
+        factors=compact,local_before=state,local_after=compact,disk_equality=True,
+        disk_support_checks=tuple(checks)))
+    state=compact
+    if state[7]!=root:
+        raise ValueError('The temporary root did not arrive at its intended position')
+    terms=tuple(replace(f,id='transport.HL.'+str(i+1)) for i,f in enumerate(initial[1:4]))
+    half_lantern(7,(root,),terms,
+        'PC half lantern: reexpand R into two half twists and a squared pair twist','expand')
+    if sorted((f.points,f.power,f.half,f.sign) for f in state)!=sorted(
+            (f.points,f.power,f.half,f.sign) for f in initial):
+        raise ValueError('The endpoint did not recover its original positive twist types')
+    actual=exact_action(product(state),strands=5)
+    if actual!=expected:
+        raise ValueError('The geometric endpoint changed the double boundary')
+    # The simple four-point curve exposes a specific next configuration.
+    # Save the named exact relations, without pretending their separated
+    # factors have already been gathered into a usable substitution block.
+    from .projected_relations import pc_daisy_terms
+    by_id={f.id:f for f in state};curve=by_id['alternate.C4.rose.2']
+    daisy=tuple(simplify_factor(replace(curve,id='transport.C.daisy.'+str(i+1),
+        conjugator=t.conjugator,first=t.first,points=t.points,power=t.power,half=t.half))
+        for i,t in enumerate(pc_daisy_terms(curve.mapping_class)))
+    u=replace(daisy[1],id='target.u35',half=True)
+    half_terms=(u,by_id['F3'],by_id['last.P34.square'])
+    round345=replace(root,id='target.T345',first=3)
+    def target(before,after,kind):
+        left,right=exact_action(product(before),strands=5),exact_action(product(after),strands=5)
+        if left!=right:raise ValueError('The next named disk configuration failed')
+        return dict(kind=kind,local_before=before,local_after=after,
+            disk_action_certificate=dict(strands=5,actual=left,expected=right,equal=True),
+            applied_to_replay=False)
+    next_relations=dict(daisy=target((curve,),daisy,'disk_pc_daisy'),
+        half_lantern=target(half_terms,(round345,),'disk_pc_half_lantern'),
+        requires_gathering=True,route_to_gather_not_found=True)
+    return dict(stages=tuple(stages),factors=state,before_score=before_score,
+        after_score=score(state),sphere_move_count=0,hurwitz_moves=7,next_relations=next_relations,
+        half_lantern_moves=2,temporary_root_reexpanded=True,
+        preserves_ordered_disk_product=True,preserves_positive_factor_types=True,
+        disk_boundary_action_certificate=dict(strands=5,actual=actual,expected=expected,equal=True),
+        is_shorter_identity_proof=False,
+        scope='Disk-only support simplification using one transported PC half lantern; no new sphere move or shorter proof claim')

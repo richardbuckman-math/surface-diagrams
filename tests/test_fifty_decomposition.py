@@ -157,7 +157,7 @@ class FiftyDecompositionTests(unittest.TestCase):
             check=check_support_replacement(old.mapping_class,new.mapping_class,max_cuts=40)
             self.assertEqual(check['disk_equal'],record['certificate']['disk_equal'])
             self.assertEqual(tuple(record['certificate']['disk_discrepancy']),check['disk_discrepancy'])
-        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6,compact=5,overview=7))
+        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6,compact=5,transport=11,overview=7))
         self.assertEqual(display['routes']['thirty'][0]['factors'],display['routes']['extract'][-1]['factors'])
         self.assertIn('SPHERE MOVE',display['routes']['thirty'][1]['title'])
         self.assertTrue(saved['independent_sphere_identity_certificate'])
