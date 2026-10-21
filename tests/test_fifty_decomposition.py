@@ -8,7 +8,7 @@ import unittest
 from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.factorization_explorer import product
 from surface_diagrams.fifty_decomposition import (extract_twenty_block,unit_factors,permutation_orbits,
-    recognize_thirty_boundary,working_seed_to_legacy_chart)
+    recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart)
 from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.six_seven_structure import SignedResearchFactor
@@ -116,6 +116,31 @@ class FiftyDecompositionTests(unittest.TestCase):
         self.assertEqual(sum(s['kind']=='disk_hurwitz' for s in r['stages']),3)
         self.assertEqual(sum(s['kind']=='global_conjugation' for s in r['stages']),1)
 
+    def test_compact_boundary_chart_preserves_each_disk_support_and_the_central_product(self):
+        old=self.thirty['five_point_factors'];r=compact_thirty_boundary_chart(old)
+        self.assertEqual(r['frame'],(-2,-3,-4,1))
+        self.assertEqual(r['before_score'],dict(max_support_word=28,total_support_word=156,braid_letters=150))
+        self.assertEqual(r['after_score'],dict(max_support_word=16,total_support_word=86,braid_letters=126))
+        self.assertEqual([s['kind'] for s in r['stages']],
+                         ['start','global_conjugation','disk_presentation','disk_boundary_relation','sphere_rewrite'])
+        self.assertEqual(r['sphere_move_count'],1)
+        local=r['next_local_relation']
+        self.assertFalse(local['applied_to_replay'])
+        self.assertTrue(local['introduces_temporary_negative'])
+        self.assertEqual(local['local_before'],r['factors'][1:7])
+        self.assertEqual(exact_action(product(local['local_before']),strands=5),exact_action(product(local['local_after']),strands=5))
+        self.assertTrue(all(f.sign==1 for f in r['factors']))
+        self.assertEqual(exact_action(product(old),strands=5),exact_action(product(r['factors']),strands=5))
+        for before,after in zip(r['stages'][1]['factors'],r['factors']):
+            self.assertEqual(exact_action(before.word,strands=5),exact_action(after.word,strands=5))
+            self.assertEqual((before.id,before.points,before.power,before.half),(after.id,after.points,after.power,after.half))
+        self.assertEqual(r['stages'][-1]['factors'],())
+        self.assertTrue(r['stages'][-1]['sphere_certificate']['certified'])
+        self.assertEqual(r['stages'][-1]['lift_homology'],IDENTITY)
+        false=list(old);false[0],false[1]=false[1],false[0]
+        with self.assertRaises(ValueError):compact_thirty_boundary_chart(false)
+        with self.assertRaises(ValueError):compact_thirty_boundary_chart((replace(old[0],sign=-1),)+old[1:])
+
     def test_published_replay_is_linked_to_the_actual_source_and_certifies_display_recharts(self):
         root=Path(__file__).resolve().parents[1]
         source=root/'docs/proofs/six-seven-compact/source-route.json'
@@ -132,7 +157,7 @@ class FiftyDecompositionTests(unittest.TestCase):
             check=check_support_replacement(old.mapping_class,new.mapping_class,max_cuts=40)
             self.assertEqual(check['disk_equal'],record['certificate']['disk_equal'])
             self.assertEqual(tuple(record['certificate']['disk_discrepancy']),check['disk_discrepancy'])
-        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6))
+        self.assertEqual({k:len(v) for k,v in display['routes'].items()},dict(extract=9,thirty=20,working=6,compact=5))
         self.assertEqual(display['routes']['thirty'][0]['factors'],display['routes']['extract'][-1]['factors'])
         self.assertIn('SPHERE MOVE',display['routes']['thirty'][1]['title'])
         self.assertTrue(saved['independent_sphere_identity_certificate'])

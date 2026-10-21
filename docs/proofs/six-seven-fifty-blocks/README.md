@@ -36,3 +36,12 @@ Rebuild with `python examples/build_fifty_twenty_extraction.py`.
 `certificate.json` retains actual factors, source SHA, moves, chart checks,
 and based-action evidence. `boundary-cut-certificate.json` retains the Arc
 itineraries and independent actual/reference images for the joint chain.
+
+The optional fourth phase shows a smaller five-point ending chart. Its
+explicit disk global frame is (-2,-3,-4,1); the central boundary product is
+unchanged. Fixed-chart meridian support-word scores drop from 28/156
+(maximum/total) to 16/86, and braid letters from 150 to 126. Each disk
+support and the full based action are checked. This is an additional
+readability option, outside the unchanged 212-page / 177-move PDF archive.
+It does not replace the remaining boundary-action recognition by named
+geometric moves.

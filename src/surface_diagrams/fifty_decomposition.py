@@ -234,3 +234,91 @@ def working_seed_to_legacy_chart():
         factors=target,disk_support_checks=checks))
     return dict(stages=tuple(stages),initial_frame=frame,final_frame=(),sphere_move_count=0,
         joins_legacy_source=True,scope='Three disk Hurwitz moves, one explicit global conjugation, and exact disk presentations.')
+
+
+def compact_thirty_boundary_chart(factors):
+    """An optional smaller explicit disk chart for the proved boundary model.
+
+    The fixed four-letter global frame is not hidden in individual support
+    pictures. Based Artin actions prove centrality, every disk presentation,
+    and the boundary relation separately. This adds no sphere rechart before
+    the final explicitly recorded cap. Scores refer to fixed-chart meridian
+    boundary words, not globally minimal intersection numbers.
+    """
+    state=tuple(factors)
+    witnesses=(
+        ('cross.P12',(-2,),1),('alternate.HL1.1',(),3),
+        ('alternate.HL1.2',(2,2),3),('alternate.HL1.3',(),2),
+        ('alternate.HL2.1',(),3),('alternate.HL2.2',(2,2),3),
+        ('alternate.P15.remaining',(),2),('alternate.C4.rose.1',(2,),3),
+        ('alternate.C4.rose.2',(-3,-3,-3,-2,4,3,2,2,1),2),
+        ('F3',(-3,4,3,2,-4,-3),2),
+        ('F6',(-2,-3,-4,1,2,-3,2,3,3),4),
+        ('new.P26',(-3,-2),1),('F9',(4,4,4,1,2,-3),2),
+        ('F11',(-2,1,1,1),2),('last.P12.square',(-2,),1),
+        ('last.P34.square',(),4))
+    if tuple(f.id for f in state)!=tuple(w[0] for w in witnesses):
+        raise ValueError('Expected the ordered five-point boundary model')
+    if any(f.sign!=1 for f in state):
+        raise ValueError('The boundary chart requires positive factors')
+    boundary=replace(state[0],id='boundary.five.double',conjugator=(),
+                     first=1,points=5,power=2,half=False)
+    expected=exact_action(boundary.word,strands=5)
+    before_action=exact_action(product(state),strands=5)
+    if before_action!=expected:
+        raise ValueError('The source is not the double boundary twist')
+    frame=(-2,-3,-4,1)
+    raw=tuple(replace(f,conjugator=reduce_word(frame+f.conjugator)) for f in state)
+    telescope=reduce_word(product(raw)+inverse_word(frame+product(state)+inverse_word(frame)))
+    after_action=exact_action(product(raw),strands=5)
+    if telescope or after_action!=before_action:
+        raise ValueError('The explicit global boundary frame failed')
+    compact=tuple(replace(f,conjugator=g,first=i) for f,(_,g,i) in zip(raw,witnesses))
+    checks=[]
+    for a,b in zip(raw,compact):
+        equal=supported_class(a.mapping_class,strands=5)==supported_class(b.mapping_class,strands=5)
+        if not equal or exact_action(a.word,strands=5)!=exact_action(b.word,strands=5):
+            raise ValueError('A compact disk support presentation changed a factor')
+        checks.append(dict(id=a.id,disk_equal=True))
+    action=exact_action(product(compact),strands=5)
+    if action!=expected:
+        raise ValueError('The compact ordered product changed the boundary action')
+    def score(fs):
+        lengths=tuple(len(supported_class(f.mapping_class,strands=5)) for f in fs)
+        return dict(max_support_word=max(lengths),total_support_word=sum(lengths),
+                    braid_letters=len(product(fs)))
+    # Save the now-round named local configuration without introducing a
+    # negative into the published positive replay merely to lower row count.
+    root=replace(compact[1],id='compact.T234.square',conjugator=(),first=2,
+                 points=3,half=False,power=2)
+    negative=replace(compact[6],id='compact.inverse.T23',sign=-1)
+    local_before,local_after=compact[1:7],(root,negative)
+    left,right=exact_action(product(local_before),strands=5),exact_action(product(local_after),strands=5)
+    if left!=right:
+        raise ValueError('The doubled PC half-lantern configuration changed')
+    next_relation=dict(kind='disk_half_lantern',local_before=local_before,
+        local_after=local_after,disk_equality=True,applied_to_replay=False,
+        introduces_temporary_negative=True,
+        disk_action_certificate=dict(strands=5,actual=left,expected=right,equal=True))
+    cap=sphere_chain_certificate(boundary.word)
+    if not cap['certified'] or homology_action(boundary.word)!=IDENTITY:
+        raise ValueError('The double boundary cap changed the closed lift')
+    stages=(dict(kind='start',title='The five-point boundary model before compacting',factors=state),
+        dict(kind='global_conjugation',title='Explicit disk global frame: -2 -3 -4 1',
+             factors=raw,global_conjugator=frame,disk_equality=True,
+             disk_word_certificate=dict(method='telescoping conjugation',discrepancy=telescope),
+             disk_action_certificate=dict(before=before_action,after=after_action,equal=True)),
+        dict(kind='disk_presentation',title='Shorter disk presentations in that explicit frame',
+             factors=compact,local_before=raw,local_after=compact,disk_equality=True,
+             disk_support_checks=tuple(checks)),
+        dict(kind='disk_boundary_relation',title='The same exact double outer-boundary twist',
+             factors=(boundary,),local_before=compact,local_after=(boundary,),disk_equality=True,
+             disk_action_certificate=dict(strands=5,actual=action,expected=expected,equal=True)),
+        dict(kind='sphere_rewrite',title='SPHERE MOVE: cap the double boundary around point 6',
+             factors=(),local_before=(boundary,),local_after=(),disk_equality=False,
+             disk_discrepancy=boundary.word,sphere_certificate=cap,lift_homology=IDENTITY))
+    return dict(stages=stages,frame=frame,factors=compact,
+        before_score=score(state),after_score=score(compact),
+        next_local_relation=next_relation,
+        preserves_ordered_disk_product=True,sphere_move_count=1,
+        scope='Optional explicit disk chart of the established ending; not a new W0 W1 derivation.')

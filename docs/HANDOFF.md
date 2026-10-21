@@ -1,5 +1,51 @@
 # Handoff: surface-diagrams
 
+## October 21: optional smaller five-point ending chart
+
+`compact_thirty_boundary_chart()` applies the explicit four-letter global
+frame (-2,-3,-4,1) to the already proved five-point boundary model. Since
+that product is the central double boundary, its ordered DISK action is
+unchanged. Every shorter factor presentation is checked both by its disk
+support class and its complete five-meridian action. No sphere rechart is
+used here before the separately labeled final cap.
+
+The maximum meridian boundary-word length drops 28 -> 16, the total drops
+156 -> 86, and the expanded braid presentation shrinks 150 -> 126 letters.
+These are fixed-chart word scores, not globally minimal intersections or
+the number of SVG cut crossings. The optional fourth phase has five states:
+start, explicit global frame, exact disk presentations, the same independently
+checked double-boundary relation, and its explicit sphere cap. The main
+three phases and the working 154-letter (6,7) seed are unchanged. The existing
+212-page / 177-move PDF remains the complete original chain; this optional
+chart is additional to that archive and is not falsely presented as a new
+elementary derivation of the five-point boundary relation.
+
+Validation: eight focused tests pass. Browser inspection covers all four
+phases, 40 states, 36 transitions, 15 labeled sphere arrows (including the
+repeated optional cap), continuous braid alignment, all-column overviews,
+and mobile layout without console errors. The new precomputed payload is
+848,377 bytes. The frame came from 86 geometrically motivated candidate
+frames (short prefixes and words of length at most two), taking 0.11 s;
+no frame search runs in the browser.
+
+Concrete next step: the simpler prefix now visibly has H34, T23(H34), T23^2,
+H34, T23(H34), T23, all in the same standard 234 chart. Its first triple
+is exactly the PC half lantern T234 with the chain labels interchanged
+(positive generators and the display convention are unchanged). Two such units with one
+missing T23 give T234^2 T23^-1. The exact local action certificate is saved as next_local_relation. This
+identity was checked in the disk, but
+has NOT been substituted in the published chain because it introduces a
+temporary negative and by itself does not resolve the four-point factor.
+Use this recognizable local configuration for a specific cluster relation.
+
+Bounded probes to avoid repeating: matching-half transport on this exact
+five-point model found only two first choices, (1,4) and (2,5), in zero-based
+positions. After the lower-score (2,5) combination there was no next match.
+Compressing both half-lantern units gives twelve signed records, but its
+inverse P15 is not fixed by the four-point twist, so a simple nested-petal
+cancellation there is invalid. These failures do not obstruct another
+geometric decomposition. Do not repeat the old broad scans.
+
 ## October 21 overnight: an actual twenty block and an independent closure of the thirty
 
 Richard now calls the 154-letter simplified ending THE working (6,7). His

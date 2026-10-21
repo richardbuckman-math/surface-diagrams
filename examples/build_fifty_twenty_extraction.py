@@ -9,7 +9,7 @@ from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.boundary_playground_geometry import support_svg
 from surface_diagrams.factorization_geometry import number_support_points
-from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart
+from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart
 from surface_diagrams.hyperelliptic_homology import homology_action
 from surface_diagrams.six_seven_structure import SignedResearchFactor
 from surface_diagrams.sphere_actions import sphere_supported_class
@@ -31,7 +31,8 @@ def build():
     working=working_seed_to_legacy_chart()
     # Closing the twenty is an actual sphere step, not an implicit phase jump.
     thirty_replay=dict(thirty,stages=(route['stages'][-1],route['twenty_closure'])+thirty['stages'][1:])
-    routes=dict(extract=route,thirty=thirty_replay,working=working)
+    compact=compact_thirty_boundary_chart(thirty['five_point_factors'])
+    routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact)
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']
@@ -41,7 +42,7 @@ def build():
         t=simplify_twist(f.mapping_class);f=replace(f,conjugator=t.conjugator,first=t.first);k=key(t)
         if k not in pool or (len(f.conjugator),len(f.word))<(len(pool[k].conjugator),len(pool[k].word)):pool[k]=f
     extra=tuple(thirty['five_point_factors'])+(thirty['boundary'],)+tuple(
-        f for stage in working['stages'] for f in stage['factors'])
+        f for stage in working['stages'] for f in stage['factors'])+compact['factors']
     for f in candidates+extra:
         for prefix in ((),(5,5),(-5,-5)):
             offer(replace(f,conjugator=reduce_word(prefix+f.conjugator)))
@@ -73,7 +74,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
