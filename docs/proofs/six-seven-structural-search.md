@@ -1,5 +1,62 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 21: a finite obstruction narrows the compact ending target
+
+The seven-factor tail of the optional compact five-point boundary chart is
+F3, F6, new.P26, F9, F11, last.P12.square, last.P34.square. Its last two
+names are inherited source IDs: their CURRENT supports are T13 squared and
+T45 squared, respectively. This run changes no published replay, braid,
+sphere move, PDF, or proof claim. The boundary-action identity certificate
+is complete; a shorter elementary geometric ending remains open.
+
+`homology_orbits.py` now computes complete finite vector orbits under the
+source monodromy generators AND inverses. A state bound raises an unknown
+result, never a false exclusion. Under Hurwitz moves inside this block,
+each ancestry-labelled vanishing cycle remains in its original subgroup
+orbit. All pairings of the two complete orbits overestimate the reachable
+pairings, so excluding a necessary residue is rigorous. Allowing a residue
+does NOT prove a geometric configuration or relation. Simultaneous global
+conjugation preserves this obstruction by symplectic invariance.
+
+For F3/F9, the two mod-4 orbits each have two states. Their pairing residues
+are exactly {0}; the two halves of a PC half lantern need absolute lift
+intersection 2. Therefore NO Hurwitz route confined to these seven records,
+even with global conjugation, can make F3/F9 the two halves of that relation.
+This does not rule out bringing in earlier factors, splitting pair twists,
+other substitutions, or explicit sphere changes. It is a new local exclusion,
+not a homological proof of equivalence or of a global search obstruction.
+
+F6/F11 remains open: its orbit sizes are 4 and 8, with residues {0,2}.
+There is now an exact B5 geometric target, saved in
+`docs/proofs/six-seven-tail-obstruction.json`: H with conjugator (-2,1)
+and core sigma2, then the current F11, then T13 squared, equals round T123.
+Conjugating H by T13 gives F11. All five faithful meridian images agree.
+The CURRENT F6 is not H; no route to this target has been claimed or applied.
+Reproduce the deterministic witness with
+`python examples/analyze_compact_thirty_tail.py` (JSON on stdout).
+
+Bounded failed geometric routes to avoid repeating: four stable front/back
+gathers for each of the two candidate tail triples all exceed a meridian
+support-word ceiling of 24 (first peaks range 32--120). This ceiling is only
+a readability choice, not an impossibility proof. A narrower F6/F11/T13^2
+gather inside positions 10--14 has four adjacent moves with two Hurwitz
+directions per move: six of its sixteen choices meet the ceiling, and all
+six fail the exact PC half-lantern equality. Two satisfy the required braid
+relation with the square's half-root, but neither matches the other half,
+even after powers -4 through 4 of that pair twist. Do not promote the braid
+relation or the modular allowance to a successful substitution.
+
+Validation: five new tests cover finite closure/inverse generators, bounds,
+orientation, a genuine PC half lantern, explicit ancestry transports,
+global frames, source-artifact linkage, and the exact T123 target. Together
+with the existing homology and fifty-decomposition tests, 18 tests pass.
+The saved diagnostic contains no sphere moves and no shorter derivation.
+
+Next use a specific geometric interaction with an earlier factor or a
+checked local substitution to reach the F6/F11 target, or choose a different
+decomposition involving the four-point factor. Do not search tail-only
+F3/F9 half-lantern routes, redo the sixteen gathers, or build another overview.
+
 ## October 21: a unified seven-checkpoint graphical story
 
 The default fifty-blocks page now presents the complete chain horizontally:

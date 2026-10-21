@@ -1,0 +1,378 @@
+{
+  "source": "six-seven-fifty-blocks/certificate.json:compact_boundary_chart.factors[9:]",
+  "source_tail": [
+    {
+      "id": "F3",
+      "conjugator": [
+        -3,
+        4,
+        3,
+        2,
+        -4,
+        -3
+      ],
+      "first": 2,
+      "points": 2,
+      "power": 1,
+      "half": true,
+      "sign": 1
+    },
+    {
+      "id": "F6",
+      "conjugator": [
+        -2,
+        -3,
+        -4,
+        1,
+        2,
+        -3,
+        2,
+        3,
+        3
+      ],
+      "first": 4,
+      "points": 2,
+      "power": 1,
+      "half": true,
+      "sign": 1
+    },
+    {
+      "id": "new.P26",
+      "conjugator": [
+        -3,
+        -2
+      ],
+      "first": 1,
+      "points": 2,
+      "power": 1,
+      "half": false,
+      "sign": 1
+    },
+    {
+      "id": "F9",
+      "conjugator": [
+        4,
+        4,
+        4,
+        1,
+        2,
+        -3
+      ],
+      "first": 2,
+      "points": 2,
+      "power": 1,
+      "half": true,
+      "sign": 1
+    },
+    {
+      "id": "F11",
+      "conjugator": [
+        -2,
+        1,
+        1,
+        1
+      ],
+      "first": 2,
+      "points": 2,
+      "power": 1,
+      "half": true,
+      "sign": 1
+    },
+    {
+      "id": "last.P12.square",
+      "conjugator": [
+        -2
+      ],
+      "first": 1,
+      "points": 2,
+      "power": 2,
+      "half": false,
+      "sign": 1
+    },
+    {
+      "id": "last.P34.square",
+      "conjugator": [],
+      "first": 4,
+      "points": 2,
+      "power": 2,
+      "half": false,
+      "sign": 1
+    }
+  ],
+  "f3_f9": {
+    "left_id": "F3",
+    "right_id": "F9",
+    "modulus": 4,
+    "left_orbit": [
+      [
+        1,
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        1,
+        2,
+        3
+      ]
+    ],
+    "right_orbit": [
+      [
+        1,
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        1,
+        2,
+        3
+      ]
+    ],
+    "pairing_residues": [
+      0
+    ],
+    "target_intersection": 2,
+    "target_residues": [
+      2
+    ],
+    "complete_orbits": true,
+    "obstructed": true,
+    "positive_result_proves_equivalence": false,
+    "scope": "Necessary pairing test for ancestry-labelled factors under block Hurwitz moves and global conjugation only"
+  },
+  "f6_f11": {
+    "left_id": "F6",
+    "right_id": "F11",
+    "modulus": 4,
+    "left_orbit": [
+      [
+        1,
+        0,
+        2,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        2,
+        0
+      ],
+      [
+        3,
+        2,
+        0,
+        0
+      ]
+    ],
+    "right_orbit": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        0,
+        2
+      ],
+      [
+        1,
+        2,
+        2,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        2,
+        2
+      ],
+      [
+        3,
+        2,
+        0,
+        2
+      ],
+      [
+        3,
+        2,
+        2,
+        0
+      ]
+    ],
+    "pairing_residues": [
+      0,
+      2
+    ],
+    "target_intersection": 2,
+    "target_residues": [
+      2
+    ],
+    "complete_orbits": true,
+    "obstructed": false,
+    "positive_result_proves_equivalence": false,
+    "scope": "Necessary pairing test for ancestry-labelled factors under block Hurwitz moves and global conjugation only"
+  },
+  "local_target": {
+    "before": [
+      {
+        "id": "target.H12",
+        "conjugator": [
+          -2,
+          1
+        ],
+        "first": 2,
+        "points": 2,
+        "power": 1,
+        "half": true,
+        "sign": 1
+      },
+      {
+        "id": "F11",
+        "conjugator": [
+          -2,
+          1,
+          1,
+          1
+        ],
+        "first": 2,
+        "points": 2,
+        "power": 1,
+        "half": true,
+        "sign": 1
+      },
+      {
+        "id": "last.P12.square",
+        "conjugator": [
+          -2
+        ],
+        "first": 1,
+        "points": 2,
+        "power": 2,
+        "half": false,
+        "sign": 1
+      }
+    ],
+    "after": [
+      {
+        "id": "target.T123",
+        "conjugator": [],
+        "first": 1,
+        "points": 3,
+        "power": 1,
+        "half": false,
+        "sign": 1
+      }
+    ],
+    "disk_action": {
+      "strands": 5,
+      "actual": [
+        [
+          1,
+          2,
+          3,
+          1,
+          -3,
+          -2,
+          -1
+        ],
+        [
+          1,
+          2,
+          3,
+          2,
+          -3,
+          -2,
+          -1
+        ],
+        [
+          1,
+          2,
+          3,
+          -2,
+          -1
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          2,
+          3,
+          1,
+          -3,
+          -2,
+          -1
+        ],
+        [
+          1,
+          2,
+          3,
+          2,
+          -3,
+          -2,
+          -1
+        ],
+        [
+          1,
+          2,
+          3,
+          -2,
+          -1
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ]
+      ],
+      "equal": true
+    },
+    "conjugating_pair": {
+      "id": "last.P12.square",
+      "conjugator": [
+        -2
+      ],
+      "first": 1,
+      "points": 2,
+      "power": 1,
+      "half": false,
+      "sign": 1
+    },
+    "f6_already_matches": false,
+    "applied_to_replay": false,
+    "route_found": false
+  },
+  "sphere_moves": 0,
+  "shorter_derivation_found": false,
+  "next_step": "Transport F6 into the checked T123 local target using a specific geometric move; F3/F9 require mixing outside the tail or a substitution"
+}
