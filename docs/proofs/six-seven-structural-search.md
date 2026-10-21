@@ -1,5 +1,74 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 20: compact sphere charts and bounded support pictures
+
+Richard asked to shorten the (6,7) derivation and cap intermediate curve
+complexity, with (10,10) as a possible alternative starting point. The new
+`docs/proofs/six-seven-compact/index.html` is a precalculated graphical replay:
+11 chapters, 54 grouped transitions, and all 145 original atomic moves.
+This is a shorter presentation, NOT a new shorter elementary derivation.
+The explicit standard W0 W1 -> actual fifty-unit source bridge remains
+UNCOMPUTED. Do not present chapter grouping as filling that gap.
+
+The existing successful branch is now preserved in the page's
+`source-route.json`, with its original report SHA and all fourteen sphere
+steps. `frames.json` records a whole-column global conjugation at each of
+146 states, linked by a source SHA. Each factor is then replaced by a
+shorter disk-chart support ONLY after exact five-arc sphere and +I genus-two
+lift checks. Every added sphere rechart is explicitly yellow-labeled,
+separately from each column's global frame and the fourteen source sphere
+moves. Full per-factor disk discrepancies are in `support-certificates.json`.
+The final frame is identity and the final thirteen braid factors are
+literally Richard's original words, not only sphere-equivalent supports.
+
+Measured clutter: raw disk boundary classes reached 34,768 letters while
+one corresponding sphere class has length 10; maximum source sphere class
+length was 170. The old available support itineraries reached 1,176 cut
+visits, with one unsupported picture. All newly retained pictures pass the
+shared Arc/Loop renderer and have at most 40 horizontal cut visits. All but
+ONE displayed factor presentation have at most 24. The exception is F10.2
+at reverse state 111, an ordinary three-point root, with 40 visits. A
+24-visit cap was not established there. Bounded nonexpanding support search,
+single/two-generator/cyclic chart candidates and prefixes untwisting that
+root failed to put EVERY simultaneous factor under 24. These are bounded
+failures, not an obstruction theorem; do not repeat a broad search blindly.
+Complementary triple roots can differ by -I upstairs; preserve the +I check.
+
+`sphere_support_compact.py` supplies a work-bounded support shortener,
+independent replacement verification, and telescoping certificates for
+whole-column global conjugation. It never raises a requested drawing cap
+automatically or claims a globally shortest braid. Build the page with
+`python examples/build_six_seven_compact.py`; supplied cached candidates are
+only hints, and are rechecked against each actual framed source. This
+replay does not change the public interactive labs or claim cumulative
+joint cut-complex certificates for these individual support pictures.
+
+Assets load in 32-picture chunks on demand, without Python startup. Local
+Chrome checks visited all 11 chapter, 54 group and 145 atomic transitions,
+the twelve-column side-scroll overview, explicit sphere labels, and a
+390px layout. No JavaScript errors or missing assets were found. Initial
+local display took 159ms / 660,433 bytes / five requests (not an Internet
+speed guarantee). All 677 SVG images were parsed; desktop, dense-root and
+mobile views were visually inspected. Nine focused tests passed, including
+fresh sphere/lift checks of every replacement and source-to-display links.
+
+The saved twenty-factor (10,10) transcription still fails sphere closure
+and homology, so it cannot supply a verified reverse seed. Nakamura's
+primary source https://arxiv.org/pdf/1811.03708 gives a different (10,10)
+from three alternate (4,3) blocks and one lantern. Its Remark 1 calls the
+borrowed-twist intermediate a fake (6,7): it actually has type (8,6), and
+requires a fourth lantern curve from another block. Deleting a (4,3) block
+without tracking that borrowed factor does not establish a closed (6,7).
+No literature factorization has been silently identified with Richard's
+nonclosing transcription.
+
+Next: seek actual route shortcuts by fusing the signed rose/half-lantern
+excursions into transported local substitutions under a fixed chart/cut
+budget. Prefer a common frame over each whole substitution, to avoid extra
+chart changes. A source-encoded, exactly closing Nakamura (10,10) is another
+possible seed, but its Hamada support curves must be transcribed before
+using it. Keep the explicit W0 extraction gap visible throughout.
+
 ## October 20: explicit standard-block untwisting, extraction still open
 
 The heartbeat's positive (24,3) checkpoint is older than the saved positive
