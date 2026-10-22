@@ -88,6 +88,21 @@ class EarlyExteriorLanternTests(unittest.TestCase):
         w = target['conjugating_word']
         self.assertEqual(exact_action(w + target['source'].word + inverse_word(w), 5),
                          exact_action(target['target'].word, 5))
+        cluster = r['next_cluster_lantern']
+        self.assertFalse(cluster['applied_to_replay'])
+        self.assertTrue(cluster['requires_transport'])
+        self.assertEqual(exact_action(product(cluster['local_before']), 5),
+                         exact_action(product(cluster['local_after']), 5))
+        a, b, required = cluster['local_before']
+        actual = cluster['actual_petal']
+        self.assertNotEqual(exact_action(required.word, 5), exact_action(actual.word, 5))
+        self.assertEqual([disk_curve_intersection(f.mapping_class, actual.mapping_class, strands=5)
+                          for f in (a, b)], [14, 10])
+        self.assertEqual([disk_curve_intersection(f.mapping_class, required.mapping_class, strands=5)
+                          for f in (a, b)], [2, 2])
+        supplier = cluster['supplier'].word
+        self.assertEqual(exact_action(supplier + actual.word + inverse_word(supplier), 5),
+                         exact_action(required.word, 5))
         shown = json.loads((self.folder / 'display-pure.json').read_text())
         for actual, display in zip(r['stages'], shown['routes']['earlyexterior'][6:]):
             self.assertEqual(len(actual['factors']), len(display['factors']))

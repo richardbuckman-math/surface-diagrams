@@ -91,11 +91,28 @@ def contract_exterior_petals(factors):
     source, target = by_id['residual.T345'], by_id['F8.2']
     if exact_action(transport + source.word + inverse_word(transport), 5) != exact_action(target.word, 5):
         raise ValueError('The saved two-factor root-alignment target failed its disk check')
+    required = Factor('residual.required15', (1, 2, 3), 4, 2)
+    outer = Factor('residual.target1345', (1,), 2, 4)
+    inner = Factor('residual.target34', (), 3, 2)
+    cluster_before = (by_id['early.daisy.1'], source, required)
+    cluster_after = (outer, inner)
+    # This is the transported PC lantern of the clusters (34,1,5).
+    # The existing U is not this petal; an actual R-transport is still needed.
+    from .factorization_explorer import product
+    supplier = by_id['pure.next.1'].word
+    actual_petal = by_id['exterior.split.1']
+    if (exact_action(product(cluster_before), 5) != exact_action(product(cluster_after), 5)
+            or exact_action(supplier + actual_petal.word + inverse_word(supplier), 5)
+            != exact_action(required.word, 5)):
+        raise ValueError('The next positive cluster-lantern target failed its ordered check')
     return dict(stages=tuple(r.stages), factors=r.factors,
                 graphical_steps=2, adjacent_checks=2, sphere_move_count=0,
                 before_score=_score(tuple(factors)), after_score=_score(r.factors),
                 boundary_power=4, all_factors_positive=True, disk_action_verified=True,
                 exterior_twist_retained=True, exterior_not_capped=True,
+                next_cluster_lantern=dict(local_before=cluster_before, local_after=cluster_after,
+                    actual_petal=actual_petal, supplier=by_id['pure.next.1'],
+                    exact_disk_equality=True, requires_transport=True, applied_to_replay=False),
                 next_root_alignment=dict(source=source, target=target,
                     conjugating_word=transport, positive_factor=by_id['exterior.split.1'],
                     inverse_factor=by_id['pure.next.1'], exact_disk_equality=True,

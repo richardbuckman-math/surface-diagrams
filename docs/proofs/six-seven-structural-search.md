@@ -1,5 +1,59 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 22 post-publication: reached chapter is live; next cluster is explicit
+
+Commit6f424b3 has GREEN remote Tests and Documentation. Chrome verified all44
+LIVE arrows, correct pure-only cold fetch, actual full-twist supports and
+connected-braid rows. The old initial payload and PDF remain unchanged.
+
+NEW EXACT BUT UNAPPLIED CLUSTER: let A=current early.daisy.1 (134),
+B=current residual.T345 (345), E=pair15 chart(1,2,3),coreT45.
+The ordered A,B,E equals O1345 chart(1),coreT2345 plus ROUND T34 exactly
+in B5. This is the ordinary PC cluster lantern for groups(34,1,5), in common
+frame g=(1,2,3,-4). The actual U=exterior.split.1 is NOT E: it crosses A/B
+14/10 times, while E crosses each twice. Actual R=roundT12 pure.next.1
+satisfies R U R^-1 = E EXACTLY. Save this as next_cluster_lantern; it still
+requires an actual transport to supply E in order. No contraction is claimed.
+This is more specific than a count or endpoint target. The existing U R^-1
+root-alignment word ALSO sends A to chart(-1),coreT234, lowering its crossing
+with current F10.2 from18 to2; it already sends B to round F8.2. A concrete
+transport affecting this adjacent two-root block could therefore solve both
+needed configurations. Applying that word to the entire factorization instead
+is rejected: global scores62/435 (inverse68/397), so it is not a simplification.
+The same word does NOT commute with the two-root block product; it cannot be
+used as a local equality. Other actual15-pair factors do not supply the needed
+counterterm by a single conjugation. The candidate inverse correction
+S=U^-1 R U crosses both current123/124 roots16 times and is not their inner
+petal. No negative-factor branch was applied.
+
+Additional rejected targeted probe: carry the two new inner curves as a block
+UP across the first pair curves. Joint endpoint support32/151 and braid332;
+both adjacent orders exceeded20. Their opposite DOWN direction in the
+alternative chart below also exceeded20. Do not repeat these block probes.
+
+CHECKED UNPUBLISHED ALTERNATIVE: .preview/early_unit_exterior.py/.json starts
+at contract_pure_clusters.stages[11], BEFORE the full-square unwind. Split
+that square, move just its FIRST unit up5 neighbors; this already gives the
+needed exterior B and leaves C unchanged. Cyclic start atB, B down across
+P13 only, O up across8 wrap-side factors, the actual exterior lantern, then
+the same2-operation three-petal contraction gives8 operations from that
+EARLIER source. Endpoint15/133,braid214,crossings34/1194. Carry the other
+unit UP across F10.2 once:9 operations, endpoint14/129,braid206,crossings
+34/1152, all positive/B5-exact under20. Thus the full source-to-end count
+matches the published square-unwind+8 branch (9), but the endpoint is smaller
+by all these metrics. It is NOT integrated or visually published; it should
+be considered only if it helps the named closure. Forced134/245 crossings
+return to18 after that final unit move (before it they were28). Continuing
+past inner23 commutes and gives no benefit; past inner14 worsens139/212 and
+1176 crossings; across the first P13 peaks20 and total1200, so stop atF10.
+
+A separate explicit six-factor target is saved in
+.preview/residual-six-factor-target.json. Frame(-2,1,2,3,1,2,3,2) of the
+canonical two-triple boundary template matches current124 early.F5.2 and
+current345 residual.T345 exactly. All four cross-pair petals are absent in
+the current list, so this is a target, not a reached decomposition. The42
+fixed-order homology exclusions still apply; no new exhaustive scan is needed.
+
 ## October 22: an actual exterior lantern is reached in six operations
 
 `early_exterior_lantern.extract_positive_exterior()` now reaches an ACTUAL
