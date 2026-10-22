@@ -123,7 +123,7 @@ class EarlyPurificationTests(unittest.TestCase):
     def test_published_chapters_preserve_disk_supports_and_do_not_slow_the_initial_payload(self):
         r=self.route;shown=json.loads((self.folder/'display-pure.json').read_text())
         phases=dict(r['phases'],earlycontracts=contract_pure_clusters(r['factors'])['stages'])
-        self.assertEqual(set(shown['routes']),set(phases)|{'earlyexterior','earlysecond'})
+        self.assertEqual(set(shown['routes']),set(phases)|{'earlyexterior','earlysecond','earlytwo'})
         for name,phase in phases.items():
             self.assertEqual(len(phase),len(shown['routes'][name]))
             for actual,display in zip(phase,shown['routes'][name]):

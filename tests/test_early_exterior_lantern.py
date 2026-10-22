@@ -3,12 +3,14 @@ import json
 from pathlib import Path
 import unittest
 
-from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster
+from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior
 from surface_diagrams.factorization_explorer import Factor, product
 from surface_diagrams.mapping_classes import exact_action, supported_class
 from surface_diagrams.puncture_boundary import BOUNDARY_WORD
 from surface_diagrams.disk_intersection import disk_curve_intersection
 from surface_diagrams.braid_actions import inverse_word
+from surface_diagrams.hyperelliptic_homology import homology_action
+from surface_diagrams.framed_boundary_relations import enclosed_boundaries
 
 
 class EarlyExteriorLanternTests(unittest.TestCase):
@@ -137,6 +139,62 @@ class EarlyExteriorLanternTests(unittest.TestCase):
             for f, j in zip(actual['factors'], display['factors']):
                 self.assertEqual(exact_action(f.word), exact_action(public['rows'][j]['word']))
                 self.assertFalse(public['rows'][j]['sphere_rechart'])
+
+
+
+    def test_two_matched_lanterns_reach_a_second_exterior_in_five_operations(self):
+        residual = contract_exterior_petals(self.route['factors'])
+        source = contract_transported_cluster(residual['factors'])['factors']
+        r = contract_second_exterior(source)
+        self.assertEqual((r['graphical_steps'], r['adjacent_checks'], r['sphere_move_count']), (5, 4, 0))
+        expected = exact_action(BOUNDARY_WORD * 4, 5)
+        lift = homology_action(BOUNDARY_WORD * 4)
+        for stage in r['stages']:
+            for state in (stage,) + stage.get('atomic_steps', ()):
+                self.assertEqual(exact_action(product(state['factors']), 5), expected)
+                self.assertEqual(homology_action(product(state['factors'])), lift)
+                self.assertTrue(all(not f.half and f.power == 1 for f in state['factors']))
+                self.assertLessEqual(max(len(supported_class(f.mapping_class, 5)) for f in state['factors']), 14)
+        self.assertEqual([sum(f.points == k for f in r['factors']) for k in (2, 3, 4, 5)], [11, 3, 0, 2])
+        exteriors = tuple(f for f in r['factors'] if f.points == 5)
+        self.assertEqual([f.id for f in exteriors], ['exterior.boundary', 'second.exterior'])
+        rest = tuple(f for f in r['factors'] if f.points != 5)
+        self.assertEqual(exact_action(product(rest), 5), exact_action(BOUNDARY_WORD * 2, 5))
+        self.assertTrue(r['exterior_not_capped'])
+        self.assertFalse(r['complete_named_derivation'])
+        self.assertEqual(r['after_score'], dict(max_support_word=12, total_support_word=101, braid_letters=160))
+        counts = [disk_curve_intersection(a.mapping_class, b.mapping_class, strands=5)
+                  for i, a in enumerate(r['factors']) for b in r['factors'][:i]]
+        self.assertEqual((max(counts), sum(counts)), (28, 440))
+        public = json.loads((self.folder / 'display-pure.json').read_text())
+        self.assertEqual(len(public['routes']['earlytwo']), 6)
+        for actual, display in zip(r['stages'], public['routes']['earlytwo']):
+            self.assertEqual(display['kind'], actual['kind'])
+            for f, j in zip(actual['factors'], display['factors']):
+                self.assertEqual(exact_action(f.word), exact_action(public['rows'][j]['word']))
+                self.assertFalse(public['rows'][j]['sphere_rechart'])
+
+    def test_cluster_order_and_framed_corrections_are_explicit(self):
+        residual = contract_exterior_petals(self.route['factors'])
+        source = contract_transported_cluster(residual['factors'])['factors']
+        r = contract_second_exterior(source)
+        for stage, correction in ((r['stages'][3], (0, 0, 1, 1, 0)),
+                                  (r['stages'][5], (0, 1, 0, 0, 1))):
+            before, after = stage['local_before'], stage['local_after']
+            self.assertEqual(exact_action(product(before), 5), exact_action(product(after), 5))
+            self.assertNotEqual(exact_action(product(before), 5),
+                                exact_action(product((before[1], before[0], before[2])), 5))
+            before_sets = [enclosed_boundaries(f.mapping_class, 5) for f in before]
+            after_sets = [enclosed_boundaries(f.mapping_class, 5) for f in after]
+            difference = tuple(sum(i in block for block in before_sets) -
+                               sum(i in block for block in after_sets) for i in range(1, 6))
+            self.assertEqual(difference, correction)
+            self.assertEqual(stage['framed_inner_corrections'], correction)
+        # The two gathers labeled as commutations really leave both classes fixed.
+        for step in (2, 4):
+            before = {f.id: exact_action(f.word, 5) for f in r['stages'][step - 1]['factors']}
+            after = {f.id: exact_action(f.word, 5) for f in r['stages'][step]['factors']}
+            self.assertEqual(before, after)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,67 @@
 # Handoff: surface-diagrams
 
+## October 22 newest: TWO exterior twists are now visibly extracted
+
+`contract_second_exterior()` continues from the reached 18-factor
+`contract_transported_cluster()` endpoint. It uses FIVE graphical disk
+operations / FOUR adjacent checks and NO sphere move:
+
+1. Carry `pure.prefix.root` (123) DOWN across `early.daisy.4` and commuting
+   `pure.T23`. The actual 35 petal becomes chart(-3),coreT45; support14->2.
+2. Commute the new round `residual.T34` UP past its containing O1345.
+3. The ACTUAL adjacent 123,124,34 curves satisfy the PC cluster lantern
+   (groups12,3,4), producing ROUND T1234 plus a common 12 curve,
+   chart(-2,1,-3,2),coreT34. The order is checked; swapping the first roots fails.
+4. Commute round T1234 past its contained 12 curve. It is now immediately
+   followed by the actual O1345 and the actual changed P25 from the prior cycle.
+5. Those THREE ACTUAL factors satisfy the PC cluster lantern(groups134,2,5)
+   and become a SECOND exterior T12345 plus inner134 chart(1),coreT234.
+
+Both exterior twists stay VISIBLE; neither is capped. All factors stay
+positive full Dehn twists. Every retained state has independent faithful B5
+boundary^4 action and the same genus-two homology action; support maximum
+never exceeds14. The endpoint has16 factors: TWO exteriors, THREE triple
+curves and ELEVEN pairs. The remaining14-factor product independently equals
+boundary^2. Its short NAMED geometric closure remains OPEN, so this is not
+an under-20 complete derivation. Endpoint scores improve14/117->12/101,
+braid184->160, and exact pairwise curve crossings34/774->28/440.
+
+The two local PC lanterns record framed inner-boundary corrections explicitly:
+(0,0,1,1,0) and (0,1,0,0,1) on their respective output sides. These vanish
+only for the displayed marked points, not for framed holes. No framed
+conversion is implicit. Two intervening arrows are actual commutations and
+are tested to preserve both individual curve classes.
+
+The new lazy public phase is `?phase=earlytwo&step=0` (6 states /5 arrows).
+All earlier phases, initial943823-byte payload/hash05e6c888cf352a48, early
+payload and125-page PDF are preserved. Thirty focused tests pass, including
+local wrong-order rejection, every atomic disk/lift action, framing counts,
+positivity, cap bounds, visible exteriors, residual boundary^2 and actual
+published row words. Chrome verified55 local research arrows, lazy fetching,
+blob switching and mobile layout. Inspect/publish this batch and verify its
+new remote CI/live five arrows; prior fd71a3d was already green/live.
+
+CONCRETE NEXT DECOMPOSITION: the remaining triples are actual245(F10.2),
+actual134(second.inner134) and round345(F8.2). Pair multiplicity forces an
+outer-one decomposition to put134 and245 together (four additional petals
+12,15,23,35), and345 in the other block (seven pairs12,13,14,15,23,24,25).
+This is ONLY an incidence target, not a reached ordered factorization.
+Current134/245 crossings are6. Positive roundT12 conjugation of245 reduces
+that to2/support7, but that conjugation is NOT a reached route. The available
+roundT12 currently follows245. Moving it UP once gives the WRONG negative
+conjugation (crossing10/support15); the next inverse two-factor swap breaches
+20. The forward two-factor swap also breaches20 immediately. Do not repeat
+those local two-factor cycles or claim they exclude longer routes.
+
+Other small failed targets at this NEW endpoint: actual15 petals with the
+134/345 roots do not form an ordered PC lantern; the nearer15 has counts2,2,2
+but no order centralizes its product. Its crossing with the common round34
+curve is4, so it is not a petal in that fixed cluster. The two prefix15/25
+petals and new inner12 are NOT an immediate three-petal lantern (counts2,6,10).
+A direct roundT12 drag down across prefix24 and15 worsens scores and hits
+support>20 at prefix25; not applied. Seek a concrete geometric transport or
+an actual daisy supplying a matching petal, rather than count-only triples.
+
 ## October 22 newest: the missing cluster is REACHED by a local braid
 
 `contract_transported_cluster()` now APPLIES the cluster that was only a target

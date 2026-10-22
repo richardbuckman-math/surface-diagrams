@@ -176,3 +176,63 @@ def contract_transported_cluster(factors):
                     local_after=pattern_after, retained_inverse_hurwitz_swaps=3),
                 complete_named_derivation=False,
                 scope='Three inverse Hurwitz swaps reach a positive cluster lantern, then two actual transports reduce geometric crossings; the named boundary closure is open.')
+
+
+def contract_second_exterior(factors):
+    """Two matched PC cluster lanterns extract a second visible exterior.
+
+    The actual 123 and 124 curves, together with the newly round T34,
+    give T1234 and their common 12 curve.  That ROUND four-point curve,
+    the existing O1345 and its actual 25 petal then give the exterior and
+    their common 134 curve.  Three intervening commutations/gathers are
+    retained, rather than silently treating nonadjacent factors as adjacent.
+    """
+    factors = tuple(factors)
+    r = _PositiveReplay(factors)
+    if len(factors) != 18 or sum(f.points == 5 for f in factors) != 1:
+        raise ValueError('Use the reached transported-cluster endpoint')
+    r.stages[0]['title'] = 'The positive endpoint with one visible exterior twist'
+    r.drag('pure.prefix.root', 'pure.T23',
+           title='Carry the 123 curve through the 35 petal and commuting T23; the petal becomes short')
+    r.drag('residual.T34', 'residual.O1345',
+           title='Commute the round T34 past its containing O1345 curve')
+    index = r.position('pure.prefix.root')
+    if tuple(f.id for f in r.factors[index:index + 3]) != (
+            'pure.prefix.root', 'early.F5.2', 'residual.T34'):
+        raise ValueError('The actual 123, 124, 34 cluster was not gathered in order')
+    outer = Factor('second.O1234', (), 1, 4)
+    inner12 = Factor('second.inner12', (-2, 1, -3, 2), 3, 2)
+    r.substitute(index, 3, (outer, inner12),
+                 'PC lantern for the clusters 12, 3, 4 produces round T1234 and the common 12 curve',
+                 'disk_cluster_lantern')
+    r.stages[-1].update(clusters=((1, 2), (3,), (4,)),
+                        framed_inner_corrections=(0, 0, 1, 1, 0))
+    r.drag('second.O1234', 'second.inner12',
+           title='Commute the new outer curve past its common inner curve to the actual O1345 and 25 petal')
+    index = r.position('second.O1234')
+    if tuple(f.id for f in r.factors[index:index + 3]) != (
+            'second.O1234', 'residual.O1345', 'early.P24.pair'):
+        raise ValueError('The second exterior-lantern triple was not gathered in order')
+    exterior = Factor('second.exterior', (), 1, 5)
+    inner134 = Factor('second.inner134', (1,), 2, 3)
+    r.substitute(index, 3, (exterior, inner134),
+                 'PC lantern for the clusters 134, 2, 5 extracts the SECOND visible exterior twist',
+                 'disk_cluster_lantern')
+    r.stages[-1].update(clusters=((1, 3, 4), (2,), (5,)),
+                        framed_inner_corrections=(0, 1, 0, 0, 1))
+    retained = tuple(s['factors'] for s in r.stages) + tuple(
+        a['factors'] for s in r.stages for a in s.get('atomic_steps', ()))
+    peak = max(_score(state)['max_support_word'] for state in retained)
+    if peak > 14 or any(f.half or f.power != 1 for state in retained for f in state):
+        raise ValueError('The two lanterns lost positivity or their support bound')
+    return dict(stages=tuple(r.stages), factors=r.factors,
+                graphical_steps=len(r.stages) - 1,
+                adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
+                sphere_move_count=0, all_factors_positive=True, half_twists_remaining=0,
+                before_score=_score(factors), after_score=_score(r.factors),
+                actual_peak_support_word=peak, peak_support_bound=14,
+                boundary_power=4, explicit_exterior_twists=2,
+                residual_boundary_power=2, exterior_twists_retained=True,
+                exterior_not_capped=True, disk_action_verified=True,
+                complete_named_derivation=False, applied_to_public_replay=False,
+                scope='Two actual positive PC cluster lanterns extract a second visible exterior twist in five disk operations; the remaining named double-boundary closure is open.')
