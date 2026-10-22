@@ -1,5 +1,112 @@
 # Handoff: surface-diagrams
 
+## October 22 latest: the intersection-guided square drag is a genuine simplification
+
+The newest `contract_pure_clusters()` endpoint NOW includes one additional
+operation after the two lantern contractions: drag the UNCHANGED squared
+pair `early.T12.square` UP across exactly five neighbors: F10.2, F12.1,
+P13.pair, F13.1, F8.2. All five local disk checks are retained. The fourth
+and fifth crossings remove real winding from the worst-intersecting roots.
+Do NOT cross the next P24 pair: that sixth crossing worsens the total and
+was rejected. This is a fixed-factor single drag, not a summary rebranding.
+
+The optional phase `?phase=earlycontracts&step=0` now has13 states /12
+operations /15 adjacent checks. Its all-positive20-factor endpoint improves
+support maximum/total17/147 ->12/119 and braid250 ->232 letters. Exact
+pairwise curve crossings improve maximum72 ->36 and total2116 ->1220.
+That is also below the earlier nineteen-factor pure endpoint's48/1324,
+although that earlier endpoint still has a shorter196-letter braid. The
+new drag is a REAL geometric simplification, not merely a chart-score drop.
+The shared support-word bound20 is respected throughout; there is no sphere
+move, inverse or half twist. All36 new graphical arrows are retained across
+the four chapters. The under-twenty NAMED boundary closure remains OPEN.
+
+A CONSTRUCTED EXTERIOR LANTERN is now saved in
+`contract_pure_clusters()['next_exterior_lantern']`:
+O=round T1234; B=current F13.1; desired C has chart(-3,-3,-1,2), coreT345.
+The ordered product O,desired C,B is EXACTLY exterior T12345, Q23,Q14,
+where Q23 has chart(-3,-1,-1,-3), coreT23, and Q14 chart(-3,-3,-1,-3),
+coreT23. This was recovered from the actual two-crossing normal form, not
+endpoint matching. The actual current F12.1 is NOT desired C. Both orders
+using that actual middle root fail the target. The target is NOT applied;
+requires_transport is true. No match was found by conjugating current C by
+one sign of the existing factors preserving Q23 (O, the fixed square, B,
+or C itself). That is a record of those specific local probes, not a global
+nonexistence claim. Keep an introduced exterior twist visible; do not cap
+one silently while asserting a +I lift.
+
+The exact missing middle curve is now drawn beside the actual current one
+in `docs/proofs/six-seven-fifty-blocks/exterior-target.html`, with its own
+matching braids and the complete checked local target relation. It is labeled
+TARGET ONLY throughout: no transport to the needed curve is claimed, and
+the exterior boundary twist stays visible. All eight supports are drawn by
+the shared Arc/Loop renderer, contained within their rows, and connected
+braid alignment plus mobile layout were visually checked. The page loads
+only when opened. Tests compare its actual and required words, reject their
+identification, and verify the displayed ordered local equality.
+
+The new exact `disk_intersection` engine now supplies a useful search metric.
+Before the square drag O/B/C had pairwise counts6,2,2; afterward all three
+are2,2,2, yet the full ordered relation still fails for actual C. This is a
+concrete warning that even pairwise minimal counts plus matching sets do not
+certify a compatible lantern triple. Test the actual proposed curve class.
+Read docs/proofs/disk-curve-intersection.md and run
+examples/analyze_pure_intersections.py for the matrices and explicit witness.
+
+Next prioritize a specific transport or named substitution taking the actual
+middle C to the saved target, or another real contraction from this now
+less-intersecting endpoint. Do not redo the five-neighbor unwinding or the
+six targeted neighboring metric probes: the first two B/P13 exchanges
+worsened totals, P13/C12 transports exceeded the support cap, and only the
+square-over-F10 move led to this successful continuation. Preserve the
+unchanged old startup payload/PDF and every scope distinction.
+
+## October 22: exact closed-curve intersections now guide the geometric search
+
+The new `disk_intersection` engine computes minimal CLOSED-curve crossings
+directly from the shared exact support words, by cyclic normal form in the
+disk group split along the left curve. No route/drawing search is used.
+`disk_intersection_certificate()` retains the relative curve word, interval,
+edge marker and cyclic syllables; these re-embed to the same free-homotopy
+class. Both vertex groups reducing to the common edge group are handled.
+A work/word limit raises VerificationLimitError, never a false zero. Arc
+half-twist inputs are rejected; powers do not multiply the geometric curve.
+See docs/proofs/disk-curve-intersection.md for the proof and primary source.
+
+This matters for Richard's requested simplicity criterion: the nineteen-factor
+all-pure endpoint has maximum48 / total1324 pairwise curve crossings. The
+optional next two-lantern endpoint has maximum72 / total2116. Those counts
+are chart-independent, unlike meridian support-word scores. The two lanterns
+are structural substitutions, NOT an overall geometric simplification.
+Both values are now visible in the appropriate on-demand graphical captions;
+use the earlier pure endpoint when prioritizing the simpler curve collection.
+All361 pairs took about0.13seconds together on this machine. The initial
+startup payload, earlier early payload and PDF remain unchanged.
+
+The latest tempting exterior-lantern triple has actual pairwise crossings
+O1234/F13.1=6, O1234/F12.1=2, F13.1/F12.1=2. Six rules out that DIRECT
+lantern, irrespective of matching point sets. A specific inverse-C12-root
+transport changes the first6 to2, but the actual root-up route changes the
+intervening P13 pair to support30, beyond our20 cap; it is NOT applied.
+Testing four C-internal pair-twist charts and an explicitly recovered inner14
+loop did not certify an ordered exterior lantern. This is a record of those
+particular failures, not an exclusion of every transported configuration.
+
+`examples/analyze_pure_intersections.py` reproduces the full matrices and
+explicit normal-form witnesses, including that rejected transport. Tests
+check standard curves,300 symmetry/faithful Dehn-twist commutation examples,
+45 independent twist-growth examples with powers-1,1,2, common-frame invariance,
+cyclic/edge cancellations, bounds, and the saved diagram scores. New scores
+are precalculated only for the all-full-twist stages; arc pictures are not
+silently assigned neighborhood-boundary intersection numbers.
+
+Next use these actual pairwise counts to choose a SPECIFIC transported
+cluster or simplify the worst intersecting curves. Retain exact ordered
+B5 checks for every proposed substitution: pairwise counts alone do not
+certify a compatible triple. Prefer the earlier all-pure endpoint if a
+proposed named contraction raises geometric complexity without a concrete
+next benefit. The under-twenty named boundary^4 closure remains OPEN.
+
 ## October 22 morning: all half twists removed positively in a bounded disk route
 
 NEWER NEXT CHECKPOINT (after publication): the next Q15 target now has a

@@ -10,6 +10,7 @@ from surface_diagrams.puncture_boundary import early_boundary_derivation
 from surface_diagrams.early_boundary_cluster import positive_early_cluster
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.braid_stack import braid_fragment_svg
+from surface_diagrams.disk_intersection import disk_curve_intersection
 from surface_diagrams.compact_svg import compact_support_svg
 from surface_diagrams.sphere_arc_simplify import _sphere_chain_certificate
 from surface_diagrams.peripheral_sphere import five_point_cap_certificate
@@ -25,6 +26,38 @@ from surface_diagrams.based_cut_system import based_arc_from_meridian
 from surface_diagrams.twist_supports import arc_from_class
 from surface_diagrams.normal_cut_engine import calculate_cut_system
 from surface_diagrams.normal_cut_preview import render_normal_cut_preview
+
+
+def build_exterior_target(target, out, version):
+    """Show the actual missing curve without suggesting a route has reached it."""
+    columns=dict(present=(target['actual_middle'],),needed=(target['local_before'][1],),
+                 left=target['local_before'],right=target['local_after'])
+    data={};fragments=[]
+    for name,factors in columns.items():
+        data[name]=[]
+        for f in factors:
+            fragment=braid_fragment_svg(f.word,compact=True)
+            data[name].append(dict(id=f.id,word=f.word,units=len(f.core),height=fragment['height'],
+                braid=len(fragments),support=compact_support_svg(number_support_points(support_svg(f,6,mirror_vertical=False)))))
+            fragments.append(fragment['svg'])
+    payload=json.dumps(dict(columns=data,braids=fragments),separators=(',',':')).replace('<',chr(92)+'u003c')
+    html="""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The missing exterior-lantern curve</title><style>
+*{box-sizing:border-box}body{margin:24px auto;padding:0 20px;max-width:1400px;font:16px/1.5 system-ui;color:#18384d;background:#f3f6f9}h1{font-size:26px}.notice{padding:14px;background:#fff0d2;border-left:4px solid #b37620}.comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.column{padding:12px;background:white;border:1px solid #c9d5df;border-radius:8px;min-width:0}.aligned{display:grid;grid-template-columns:minmax(0,1fr) 86px}.row{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:center;border-bottom:1px dotted #7caafa;min-width:0}.label{font-size:11px;color:#08628e;overflow-wrap:anywhere}.support{height:100%;min-width:0;min-height:0;display:flex;align-items:center;overflow:hidden}.support img{height:auto;max-height:100%;width:100%;object-fit:contain;display:block}.braid svg{display:block;width:86px;height:auto}h2{font-size:18px}@media(max-width:700px){.comparison{grid-template-columns:1fr}.aligned{grid-template-columns:minmax(0,1fr) 86px}.row{grid-template-columns:80px minmax(0,1fr)}}
+</style><h1>The missing exterior-lantern curve</h1><p><a href="index.html?phase=earlycontracts&amp;step=11">Return to the latest reached endpoint</a></p>
+<p class="notice"><b>TARGET ONLY: the required middle curve has not been reached.</b> Both middle curves contain points 1,4,5, but their actual isotopy classes differ. No Hurwitz transport between them is claimed.</p>
+<div class="comparison"><section class="column"><h2>Current middle curve: F12.1</h2><div id="present"></div></section><section class="column"><h2>Required middle curve: not yet present</h2><div id="needed"></div></section></div>
+<h2>The exact local relation available if that curve is exposed</h2><p>The ordered products below agree exactly in B5: O1234, required C145, current B235 = exterior twist, Q23, Q14. The exterior twist is retained visibly. No sphere cap or framed-boundary substitution is applied.</p>
+<div class="comparison"><section class="column"><h2>Hypothetical local input</h2><div id="left"></div></section><section class="column"><h2>Checked replacement</h2><div id="right"></div></section></div>
+<p>The pictures are individual disk-exact supports, with corresponding connected braids. They are not cumulative joint cut-system certificates. The reached factorization still requires a named boundary closure. <a href="certificate.json">Full checked target and actual curve records</a>.</p>
+<script src="../six-seven-compact/connected-braid.js?v=VERSION"></script><script>
+const targetData=PAYLOAD;
+for(const [id,rows] of Object.entries(targetData.columns)){
+ const supports=rows.map(f=>`<div class="row" style="height:${f.height}px"><div class="label">${f.id}</div><div class="support"><img src="data:image/svg+xml,${encodeURIComponent(f.support)}" alt="Exact support of ${f.id}"></div></div>`).join('');
+ document.getElementById(id).innerHTML=`<div class="aligned"><div>${supports}</div><div class="braid">${connectedBraid.assemble(rows,targetData.braids).svg}</div></div>`;
+}
+</script></html>"""
+    (out/'exterior-target.html').write_text(html.replace('VERSION',version).replace('PAYLOAD',payload),encoding='utf-8')
 
 
 def build():
@@ -67,6 +100,7 @@ def build():
             offer(replace(f,conjugator=reduce_word(prefix+f.conjugator)))
         for i in range(1,8-f.points):offer(replace(f,first=i,conjugator=()))
     supports=[];braids=[];rows=[];recharts=[];support_cache={};braid_cache={};row_cache={};display_routes={}
+    intersection_cache={}
     for name,replay in routes.items():
         if name=='early':base_sizes=(len(rows),len(supports),len(braids))
         states=[]
@@ -101,6 +135,16 @@ def build():
             if stage.get('caption'):shown['caption']=stage['caption']
             if name in pure_names:
                 shown['caption']=str(stage['half_twists'])+' half twists remaining; '+str(len(stage['factors']))+' positive factors; support-word maximum '+str(stage['score']['max_support_word'])
+                if not any(f.half for f in stage['factors']):
+                    curves=tuple(replace(f.mapping_class,power=1) for f in stage['factors'])
+                    crossings=[]
+                    for j,a in enumerate(curves):
+                        for b in curves[j+1:]:
+                            pair_key=frozenset((a,b))
+                            if pair_key not in intersection_cache:intersection_cache[pair_key]=disk_curve_intersection(a,b,strands=5)
+                            crossings.append(intersection_cache[pair_key])
+                    shown['curve_intersections']=dict(maximum=max(crossings,default=0),total=sum(crossings),pairs=len(crossings))
+                    shown['caption']+='; pairwise curve crossings max '+str(max(crossings,default=0))+' / sum '+str(sum(crossings))
             if stage.get('boundary_power'):shown['boundary_power']=stage['boundary_power']
             if stage.get('adjacent_moves'):shown['adjacent_moves']=stage['adjacent_moves']
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
@@ -197,6 +241,7 @@ def build():
         method=early_method,boundary_power=4,fixed_working_point=2,
         source='early_boundary_derivation',source_identity_assumed=False),separators=(',',':')),encoding='utf-8')
     (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('PUREVERSION',pure_version).replace('VERSION',version),encoding='utf-8')
+    build_exterior_target(pure_contractions['next_exterior_lantern'],out,version)
     print('Saved',out,'states',{name:len(states) for name,states in display_routes.items()},'supports',len(supports),'braids',len(braids),'bytes',len(encoded.encode()),'version',version)
     return out
 

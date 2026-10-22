@@ -276,11 +276,27 @@ def contract_pure_clusters(factors):
     root = Factor('pure.prefix.root', (-3, -2, 1), 2, 3)
     r.substitute(0, 3, (root,), 'PC lantern contracts the two long prefix curves and their actual petal',
                  'disk_cluster_lantern')
+    r.drag('early.T12.square', 'F8.2',
+           title='Carry the fixed pair square up across five neighbors; geometric crossings drop')
+    by_id = {f.id: f for f in r.factors}
+    target = Factor('outer.target.C145', (-3, -3, -1, 2), 3, 3)
+    q23 = Factor('outer.target.Q23', (-3, -1, -1, -3), 2, 2)
+    q14 = Factor('outer.target.Q14', (-3, -3, -1, -3), 2, 2)
+    exterior = Factor('outer.boundary', (), 1, 5)
+    next_before = (by_id['pure.O1234'], target, by_id['early.F13.1'])
+    next_after = (exterior, q23, q14)
+    if exact_action(product(next_before), 5) != exact_action(product(next_after), 5):
+        raise ValueError('The constructed exterior-lantern target failed its ordered B5 check')
+    actual_middle = by_id['early.F12.1']
     return dict(stages=tuple(r.stages), factors=r.factors, graphical_steps=len(r.stages) - 1,
                 adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
                 first_contraction=first_contraction, sphere_move_count=0,
+                next_exterior_lantern=dict(local_before=next_before, local_after=next_after,
+                    actual_middle=actual_middle, current_middle_already_matches=
+                    exact_action(actual_middle.word, 5) == exact_action(target.word, 5),
+                    exact_disk_equality=True, requires_transport=True, applied_to_replay=False),
                 all_factors_positive=True, half_twists_remaining=0,
                 before_score=_score(factors), after_score=_score(r.factors), peak_support_bound=20,
                 boundary_power=4, disk_action_verified=True, complete_named_derivation=False,
                 applied_to_public_replay=False,
-                scope='Two further positive lantern contractions are exactly replayed; the named boundary closure remains open.')
+                scope='Two positive lantern contractions and a geometric unwinding are exactly replayed; the named boundary closure remains open.')

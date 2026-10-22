@@ -85,11 +85,11 @@ class EarlyPurificationTests(unittest.TestCase):
 
     def test_two_pure_lanterns_have_a_bounded_exact_route_and_explicit_publication_scope(self):
         r=contract_pure_clusters(self.route['factors']);expected=exact_action(BOUNDARY_WORD*4,5)
-        self.assertEqual((r['graphical_steps'],r['adjacent_checks'],r['first_contraction']),(11,10,6))
+        self.assertEqual((r['graphical_steps'],r['adjacent_checks'],r['first_contraction']),(12,15,6))
         self.assertFalse(r['applied_to_public_replay']);self.assertFalse(r['complete_named_derivation'])
         public=json.loads((self.folder/'certificate.json').read_text())['pure_cluster_contractions']
         self.assertTrue(public['applied_to_public_replay'])
-        self.assertEqual(r['after_score'],dict(max_support_word=17,total_support_word=147,braid_letters=250))
+        self.assertEqual(r['after_score'],dict(max_support_word=12,total_support_word=119,braid_letters=232))
         self.assertEqual(sum(s['kind']=='disk_cluster_lantern' for s in r['stages']),2)
         for stage in r['stages']:
             for s in (stage,)+stage.get('atomic_steps',()):
@@ -99,8 +99,26 @@ class EarlyPurificationTests(unittest.TestCase):
             if 'local_before' in stage:
                 self.assertEqual(exact_action(product(stage['local_before']),5),
                                  exact_action(product(stage['local_after']),5))
+        target=r['next_exterior_lantern']
+        self.assertFalse(target['current_middle_already_matches']);self.assertFalse(target['applied_to_replay'])
+        self.assertEqual(exact_action(product(target['local_before']),5),exact_action(product(target['local_after']),5))
+        self.assertEqual(r['stages'][-1]['adjacent_moves'],5)
         self.assertEqual(r['stages'][6]['factors'][3],Factor('pure.O1234',(),1,4))
         with self.assertRaises(ValueError):contract_pure_clusters(self.source)
+
+    def test_missing_middle_curve_page_is_an_exact_unapplied_target(self):
+        import re
+        html=(self.folder/'exterior-target.html').read_text(encoding='utf-8')
+        self.assertIn('TARGET ONLY',html);self.assertIn('No sphere cap',html)
+        data=json.loads(re.search(r'const targetData=(.*?);\nfor',html).group(1))
+        columns=data['columns'];target=contract_pure_clusters(self.route['factors'])['next_exterior_lantern']
+        self.assertEqual(exact_action(columns['present'][0]['word'],5),exact_action(target['actual_middle'].word,5))
+        self.assertEqual(exact_action(columns['needed'][0]['word'],5),exact_action(target['local_before'][1].word,5))
+        self.assertNotEqual(exact_action(columns['present'][0]['word'],5),exact_action(columns['needed'][0]['word'],5))
+        self.assertEqual(exact_action(tuple(x for f in columns['left'] for x in f['word']),5),
+                         exact_action(tuple(x for f in columns['right'] for x in f['word']),5))
+        self.assertEqual(columns['right'][0]['id'],'outer.boundary')
+        self.assertTrue(all(f['support'].startswith('<svg') for fs in columns.values() for f in fs))
 
     def test_published_chapters_preserve_disk_supports_and_do_not_slow_the_initial_payload(self):
         r=self.route;shown=json.loads((self.folder/'display-pure.json').read_text())
