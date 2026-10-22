@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import unittest
 
-from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals
+from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster
 from surface_diagrams.factorization_explorer import Factor, product
 from surface_diagrams.mapping_classes import exact_action, supported_class
 from surface_diagrams.puncture_boundary import BOUNDARY_WORD
@@ -108,6 +108,35 @@ class EarlyExteriorLanternTests(unittest.TestCase):
             self.assertEqual(len(actual['factors']), len(display['factors']))
             for f, i in zip(actual['factors'], display['factors']):
                 self.assertEqual(exact_action(f.word), exact_action(shown['rows'][i]['word']))
+
+
+    def test_three_local_swaps_reach_the_next_actual_cluster_lantern(self):
+        residual = contract_exterior_petals(self.route['factors'])
+        r = contract_transported_cluster(residual['factors'])
+        self.assertEqual((r['graphical_steps'], r['adjacent_checks'], r['sphere_move_count']), (6, 6, 0))
+        expected = exact_action(BOUNDARY_WORD * 4, 5)
+        for stage in r['stages']:
+            for s in (stage,) + stage.get('atomic_steps', ()):
+                self.assertEqual(exact_action(product(s['factors']), 5), expected)
+                self.assertTrue(all(not f.half and f.power == 1 for f in s['factors']))
+                self.assertLessEqual(max(len(supported_class(f.mapping_class, 5)) for f in s['factors']), 18)
+        self.assertEqual([s.get('adjacent_moves') for s in r['stages'][1:4]], [1, 1, 1])
+        target = residual['next_cluster_lantern']['local_before'][-1]
+        self.assertEqual(exact_action(r['actual_required_petal'].word, 5), exact_action(target.word, 5))
+        self.assertEqual(exact_action(product(r['stages'][4]['local_before']), 5),
+                         exact_action(product(r['stages'][4]['local_after']), 5))
+        self.assertEqual(r['after_score'], dict(max_support_word=14, total_support_word=117, braid_letters=184))
+        self.assertEqual([sum(f.points == k for f in r['factors']) for k in (2, 3, 4, 5)], [12, 4, 1, 1])
+        counts = [disk_curve_intersection(a.mapping_class, b.mapping_class, strands=5)
+                  for i, a in enumerate(r['factors']) for b in r['factors'][:i]]
+        self.assertEqual((max(counts), sum(counts)), (34, 774))
+        self.assertFalse(r['complete_named_derivation'])
+        self.assertTrue(r['exterior_not_capped'])
+        public = json.loads((self.folder / 'display-pure.json').read_text())
+        for actual, display in zip(r['stages'], public['routes']['earlysecond']):
+            for f, j in zip(actual['factors'], display['factors']):
+                self.assertEqual(exact_action(f.word), exact_action(public['rows'][j]['word']))
+                self.assertFalse(public['rows'][j]['sphere_rechart'])
 
 
 if __name__ == '__main__':

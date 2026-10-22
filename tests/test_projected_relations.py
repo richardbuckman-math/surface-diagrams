@@ -3,10 +3,11 @@
 import unittest
 from dataclasses import replace
 
+from surface_diagrams.braid_actions import inverse_word
 from surface_diagrams.factorization_explorer import initial_factors
 from surface_diagrams.mapping_classes import ConjugatedTwist, exact_action
 from surface_diagrams.projected_relations import (
-    pc_daisy_terms, pc_half_lantern_terms, pc_rose_terms,
+    pc_daisy_terms, pc_half_lantern_terms, pc_rose_terms, pc_lantern_petal_cycle_terms,
 )
 
 
@@ -61,6 +62,23 @@ class ProjectedRelationsTests(unittest.TestCase):
                                  [(True, 1), (True, 1), (False, 2)])
                 self.assertEqual(exact_action(product(halves), strands),
                                  exact_action(outer.word, strands))
+
+    def test_petal_cycle_retains_three_actual_swaps_and_transports_with_the_root(self):
+        for g, first, strands in (((), 1, 3), ((-4, -3), 1, 5), ((3, -1), 2, 5)):
+            root = ConjugatedTwist(g, first, 3)
+            before, after = pc_lantern_petal_cycle_terms(root)
+            current = before
+            for _ in range(3):
+                a, b = current
+                current = (b, replace(a, conjugator=inverse_word(b.word) + a.conjugator))
+            self.assertEqual(exact_action(product(before), strands), exact_action(product(after), strands))
+            for actual, expected in zip(current, after):
+                self.assertEqual(exact_action(actual.word, strands), exact_action(expected.word, strands))
+            self.assertTrue(all(not f.half and f.power == 1 and f.points == 2 for f in before + after))
+        for bad in (ConjugatedTwist((), 1, 2), ConjugatedTwist((), 1, 3, power=2),
+                    ConjugatedTwist((), 1, 2, half=True)):
+            with self.assertRaises(ValueError):
+                pc_lantern_petal_cycle_terms(bad)
 
     def test_six_seven_half_lantern_first_arc_pairing(self):
         factors = {factor.id: factor for factor in initial_factors()}

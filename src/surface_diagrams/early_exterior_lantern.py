@@ -8,6 +8,7 @@ from .early_boundary_pure import _PositiveReplay, _score
 from .factorization_explorer import Factor
 from .mapping_classes import exact_action
 from .braid_actions import inverse_word
+from .projected_relations import pc_lantern_petal_cycle_terms
 
 
 def extract_positive_exterior(factors):
@@ -119,3 +120,59 @@ def contract_exterior_petals(factors):
                     applied_to_replay=False, requires_transport=True),
                 complete_named_derivation=False,
                 scope='A positive PC lantern leaves six triple curves and twelve pair curves beside the visible exterior twist; their named third-boundary closure is open.')
+
+
+
+def contract_transported_cluster(factors):
+    """Three local inverse Hurwitz swaps expose the actual missing petal.
+
+    This is a reached positive cluster lantern, not the earlier R-conjugation
+    target used as a local rechart. Each of the three swaps is retained.
+    """
+    r = _PositiveReplay(tuple(factors))
+    if len(r.factors) != 19 or not any(f.id == 'residual.T345' for f in r.factors):
+        raise ValueError('Use the saved exterior-petal contraction endpoint')
+    r.stages[0]['title'] = 'The reached exterior twist and its eighteen-factor remainder'
+    pattern_root = Factor('pattern.root125', (-4, -3), 1, 3).mapping_class
+    pattern_before, pattern_after = pc_lantern_petal_cycle_terms(pattern_root)
+    actual_before = tuple(r.factors[r.position(name)] for name in ('early.P24.pair', 'exterior.split.1'))
+    if any(exact_action(a.word, 5) != exact_action(b.word, 5)
+           for a, b in zip(actual_before, pattern_before)):
+        raise ValueError('The current pair factors do not match the named PC petal cycle')
+    r.drag('exterior.split.1', 'early.P24.pair',
+           title='First inverse Hurwitz swap of the adjacent pair twists')
+    r.drag('early.P24.pair', 'exterior.split.1',
+           title='Second inverse Hurwitz swap of the same two pair factors')
+    r.drag('exterior.split.1', 'early.P24.pair',
+           title='Third inverse Hurwitz swap exposes the exact missing pair curve')
+    actual_after = tuple(r.factors[r.position(name)] for name in ('exterior.split.1', 'early.P24.pair'))
+    if any(exact_action(a.word, 5) != exact_action(b.word, 5)
+           for a, b in zip(actual_after, pattern_after)):
+        raise ValueError('The actual three swaps do not match the named PC petal cycle')
+    petal = r.factors[r.position('exterior.split.1')]
+    required = Factor('residual.required15', (1, 2, 3), 4, 2)
+    if exact_action(petal.word, 5) != exact_action(required.word, 5):
+        raise ValueError('The three-swap braid failed to expose the actual required petal')
+    i = r.position('early.daisy.1')
+    if tuple(f.id for f in r.factors[i:i + 3]) != (
+            'early.daisy.1', 'residual.T345', 'exterior.split.1'):
+        raise ValueError('The actual cluster lantern is not adjacent in order')
+    r.substitute(i, 3, (Factor('residual.O1345', (1,), 2, 4),
+                        Factor('residual.T34', (), 3, 2)),
+                 'PC cluster lantern contracts the two actual roots and the exposed petal',
+                 'disk_cluster_lantern')
+    r.drag('exterior.split.2', 'early.P13.pair',
+           title='Unwind the leading pair by carrying the fixed neighboring pair down once')
+    r.drag('exterior.inner14', 'exterior.split.2',
+           title='The new inner curve unwinds the other leading pair across the visible exterior')
+    return dict(stages=tuple(r.stages), factors=r.factors,
+                graphical_steps=len(r.stages) - 1,
+                adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages), sphere_move_count=0,
+                before_score=_score(tuple(factors)), after_score=_score(r.factors),
+                boundary_power=4, all_factors_positive=True, disk_action_verified=True,
+                exterior_twist_retained=True, exterior_not_capped=True,
+                actual_required_petal=petal,
+                named_petal_cycle=dict(root=pattern_root, local_before=pattern_before,
+                    local_after=pattern_after, retained_inverse_hurwitz_swaps=3),
+                complete_named_derivation=False,
+                scope='Three inverse Hurwitz swaps reach a positive cluster lantern, then two actual transports reduce geometric crossings; the named boundary closure is open.')

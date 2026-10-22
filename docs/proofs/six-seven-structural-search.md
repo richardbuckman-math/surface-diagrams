@@ -1,5 +1,63 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 22 newest: the missing cluster is REACHED by a local braid
+
+`contract_transported_cluster()` now APPLIES the cluster that was only a target
+in the preceding checkpoint. Starting from contract_exterior_petals()'s19-factor
+endpoint, perform THREE inverse adjacent Hurwitz swaps of the SAME two pair
+factors: U=exterior.split.1 up across early.P24.pair; the changed P24 up acrossU;
+thenU up across the changed P24. This exposes EXACTLY the required E15,
+chart(1,2,3),coreT45. All factors remain positive full twists. The adjacent
+A=early.daisy.1, B=residual.T345, E now contract by the PC cluster lantern
+(groups34,1,5) to actual O1345 chart(1),coreT2345 plus ROUND T34. No R-wide
+transport, temporary negative or sphere move is needed. Do not repeat the old
+one-factor supplier probes or continue treating this particular target as open.
+The historical target flags remain false in the SOURCE function; this separate
+chapter is the explicit reached route applying it.
+
+Those FOUR operations yield18 factors, support18/127,braid190, crossings38/850.
+TWO further fixed-factor transports then improve the actual geometry: carry
+exterior.split.2 DOWN across the leading P13 pair (one check), then carry new
+exterior.inner14 UP across the visible central exterior twist and split.2
+(two checks). This lowers support to14/117, braid184, crossings34/774.
+Crossing inner23 as well only commutes and gives no further benefit, so it
+is omitted. The earlier inner-pair block-up probe FAILED because it crossed
+both leading pairs at once; after first unwinding P13 this targeted inner14
+move is safe. Do not confuse those orders or rerun the rejected block.
+
+The reusable `pc_lantern_petal_cycle_terms()` now records this standard positive
+two-petal relation from a three-point PC lantern L=R U Q. Input(R^-1 Q R,U)
+cycles by the three retained inverse Hurwitz swaps to(R U R^-1,R Q R^-1).
+The actual current pair matches this template in root125 chart(-4,-3).
+Generic tests retain all three swaps and verify transported frames; this is a
+reusable sub-derivation, not an unverified local rechart or hidden move group.
+
+The new on-demand chapter `?phase=earlysecond&step=0` has7 states /6 operations
+/6 adjacent checks, all positive B5 boundary^4 and support<=18 throughout.
+Its endpoint is ONE visibly retained exterior twist, ONE four-point twist,
+FOUR triple twists and TWELVE pairs. Removing the visible central exterior
+for analysis still gives boundary^3. The short NAMED closure is OPEN.
+All prior public chapters, startup payload and PDF are preserved. The current
+replay has50 research arrows including this chapter. Shared supports and
+connected braids are disk-exact; none are cumulative joint cut certificates.
+
+Concrete remaining exterior candidate: O1345/current F10.2(245)/prefix.root(123)
+have pairwise crossings6,2,10. Positive roundR12 conjugation of F10 lowers both
+its crossings withO andprefix to2 and gives support7, but ALL SIX orders of
+that hypothetical triple fail the necessary centralization of the local
+product. Thus it is NOT a compatible lantern even though all counts become2.
+Do not claim that R transport alone solves the next exterior lantern. The new
+P24 pair and T34 transports did not fix this configuration; canonical rose
+petals ofO did not give a single-full-twist reduction of prefix/F10's10.
+Half T34 onF10 leaves its O crossing6 and has F5 intersection10/14; not applied.
+Seek a new actual cluster or an explicitly compatible transported exterior
+configuration. Do not raise the cap or repeat broad scans.
+
+Local validation:28 focused relation/route/publication/archive tests pass. Prior commit
+6d324e2 already has green Documentation and earlier6f424b3 was green on both
+workflows with44 LIVE arrows verified. Check this batch's full remote CI and
+all50 LIVE arrows after publication; local visual checks precede that push.
+
 ## October 22 post-publication: reached chapter is live; next cluster is explicit
 
 Commit6f424b3 has GREEN remote Tests and Documentation. Chrome verified all44
