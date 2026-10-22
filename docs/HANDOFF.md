@@ -1,5 +1,127 @@
 # Handoff: surface-diagrams
 
+## October 22: early boundary reduction, nineteen operations, and a positive cluster branch
+
+Richard's fixed-point suggestion bypasses the long fifty expansion. The new
+`puncture_boundary.early_boundary_derivation()` starts at the designated
+working (6,7), absorbs the F2/F7 half-twist pair, and makes WORKING POINT 2
+(old calculation-chart point 3) the exterior point, displayed as point 6.
+Both incident halves are gone before this change. The working F4-before-F3
+order is retained; it makes F4 exactly the ROUND T123 squared in the disk.
+Only the other two initial Hurwitz changes are undone. The old common frame
+is retained until a single composed global frame places the exterior point.
+
+The public phase `?phase=early&step=0` has NINETEEN operations and FOUR
+explicit sphere steps. It retains TWENTY-FIVE adjacent/presentation checks
+in `atomic_stages`. One operation is a genuine single Hurwitz drag of the
+same matched arc across seven neighbors; all seven checks are retained as
+`atomic_steps`, not discarded or counted as seven new substitutions. This
+is a new shortcut through an early boundary chart, not a relabeling of the
+old 177-move overview. HOWEVER, its final fourteen-factor disk equality is
+still proved by faithful based Artin action. A complete under-twenty NAMED
+geometric derivation of that last equality remains OPEN. Do not describe
+that gap as solved or the archive's overview as a short elementary proof.
+
+The fourteen positive B5 factors multiply independently to boundary^4.
+The chosen framed chart retains SIX additional boundary twists, so its full
+framed product is boundary^10. The SIX corrections are shown first and
+removed in a SEPARATE explicit sphere move; the fourth boundary power has
+its own later visible cap. Both caps have +I lift. The other two sphere
+steps are the prefix genus-two lantern and the framed puncture rechart.
+Individual odd three-point-root complements may have -I discrepancy; they
+are NOT individually omitted as lift-preserving operations. The joint
+correction is recorded and checked. Source identity is not a hypothesis in
+the independent B5 product calculation. Ordinary roots are calculation
+factors, not individual genus-two Lefschetz singularities.
+
+The new reusable engine `puncture_boundary.puncture_to_boundary()` uses
+Schreier strand tracking, not routing search or strand deletion. Its chosen
+framed lift sends sigma5^2 to T1234, not the identity. A k-point twist
+containing the exterior puncture becomes the complementary (6-k)-point
+twist with boundary^(k-2) correction. Signs, powers, incident half-twist
+rejection, all thirty Schreier edges, exact B5 actions, sphere action and
+lift signs are tested. Every interval and puncture position is checked.
+The early normalized chart has maximum/total support scores 16/104 and
+202 raw braid letters; the displayed disk-equal presentations may be shorter.
+
+NEW POSITIVE GEOMETRIC PROGRESS: `early_boundary_cluster.positive_early_cluster()`
+is published as `?phase=earlycluster&step=0`. Seven disk operations expose
+one four-point curve O1345 without an inverse factor or any sphere move.
+The round square supplies K=sigma2 sigma1, using
+R123^2 = K R123 (sigma1 sigma2 sigma1^2). Carry K upward over the first two
+pair twists: K^-1 P34 K is EXACTLY the required Q14, and the other pair is
+T23. Carry Q down over seven neighbors. Reorder the two roots B,A BEFORE
+carrying their product over F6: B goes up across A, then F6, then the changed
+A goes up across F6. The resulting Q,B,B^-1 A B are an exact PC cluster
+lantern and become O1345 and P35. All states preserve boundary^4 in B5.
+The endpoint has eighteen positive factors and scores max/total 20/130,
+222 braid letters. This is a named structural advance, NOT an overall score
+improvement or complete closure. Its next PC daisy is checked, NOT applied.
+
+The new O1345 has chart (1,), core T2345. Its inner P35 has chart (-4,),
+core T34, and is exactly its third canonical PC-daisy term. The daisy gives
+R134, T45, P35, and a routed T15. The current F3/F9 pairing is 6 and neither
+sign of P35 transports one to the other: do NOT claim an inverse half-lantern
+there. Carrying O1345 down across P35 and F6 would lower F6 support 20->16;
+carrying P35 alone would raise it to 24. These follow-ons are checked
+conditionally but NOT appended. Use one only with a concrete next benefit.
+
+Other explicit local targets remain in `early_boundary.next_relations`:
+A=current C12 unit, B=current C13 unit, Q=round T45 satisfy
+A B Q = O1245 T12 exactly in B5, with common chart (-4,-4,-3,-4).
+B^-1 A B has short chart (-4,-3), reducing its support word 7->3.
+The separate early C4/C5 units also satisfy
+C4 C5 Q15 = O1235 T23, with Q15 chart (-4,-3,-2), core T12,
+and O1235 chart (-4,), core T1234. This second relation is checked but not
+applied. Seek a small collection of these named cluster contractions followed
+by daisies, rather than returning to the fifty or doing a broad word search.
+
+REJECTED PROBES, do not repeat blindly: all seven matching-arc join positions
+with either fixed point worsened the early chart beyond the chosen join;
+merging C8.2 and C12 by a root carry worsened scores; frames sigma4^1,^2,^3
+failed the fixed maximum-16 criterion. Moving the C13 root up four neighbors
+can shorten F9 and C12, but its proposed negative Q45 fails both F9 transports
+and is not contained in the resulting C10 root, so no cancellation was claimed.
+For the adopted positive cluster, the naive A-first root-block carry peaks
+at 40 and the alternate A-to-right order at 86; the B-first order stays <=20.
+
+Presentation and validation: existing initial `display.json` is BYTE-IDENTICAL
+(943,823 bytes, version 05e6c888cf352a48). New phases load separately on demand
+from `display-early.json`, with correct blob-cache clearing and request-order
+guards. All supports and adjoining connected braids are disk-exact in these
+new phases. No extra sphere display representatives are used. Their final
+comparison retains SIX points and FIVE jointly certified arcs, in
+`early-sphere-cut-certificate.json`. The old 125-page PDF and its SHA256
+7ab73071d8989d93b4a2e6b8e90c672b11cdc62092bdec2e664b57865033539d are unchanged.
+The page explicitly distinguishes the new certificate from that PDF archive.
+
+A measured performance improvement memoizes only successful exact five-arc
+sphere certificates: 128 entries, word keys <=8192, the calculation bound in
+the key, fresh dictionary outputs, strict validation before lookup, no failed
+or unknown result cached, and a lock for shared callers. Lift checks remain
+separate. A saved 722-letter legacy word measured 0.681 seconds cold and
+0.00040 seconds repeated. This addresses the repeated sphere checks located
+by the full-suite diagnostic trace; it changes no mathematical result.
+
+Local validation: 583 tests in the full run pass, plus 16 focused tests
+covering the new engine, early proof, positive cluster and cache. The later
+cluster/cache tests were added after full-suite discovery and are included
+in those focused tests. Chrome checks every old proof transition and all new
+nineteen plus seven operations, connected braid alignment, explicit sphere
+labels, deep links, mobile layout and dataset-switch picture correctness.
+New diagrams were visually inspected. Remote CI is checked after publication.
+
+Next: continue from the NEW fourteen-factor early B5 boundary^4 chart and
+its positive cluster contraction, not the old fifty endpoint. Find a short
+named derivation of the remaining boundary relation. Preserve all explicit
+framing/cap steps and the difference between a based-action certificate and
+a geometric factor derivation. Richard explicitly permits using the remaining
+weekly allowance before his expiring reset; the account lists expiry TODAY,
+October 22 at 20:55:44 UTC / 4:55 PM Eastern. The schedule is temporarily
+hourly; never redeem a reset automatically. Restore six-hour pacing after
+that deadline unless Richard directs otherwise.
+
+
 ## October 22: one adjacent transport makes F11 consecutive
 
 `round_f11_half_twist()` starts from the short F9 endpoint. Carry the final

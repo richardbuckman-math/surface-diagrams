@@ -7,10 +7,20 @@ derivation or a geometric cut-system drawing. In particular, the outer action
 cannot distinguish the central order-two spherical braid from the identity.
 """
 from functools import lru_cache
+from collections import OrderedDict
+from threading import Lock
 
 from .braid_actions import free_homotopy_key,inverse_word,reduce_word
 from .mapping_classes import ConjugatedTwist,VerificationLimitError,exact_action
 
+
+# Successful five-arc certificates have small immutable tuple payloads even
+# when their intermediate curve words are large. Failed/unknown results are
+# never retained. Returned dictionaries are copies, and bounds are in the key.
+_sphere_chain_cache = OrderedDict()
+_sphere_chain_cache_lock = Lock()
+_SPHERE_CHAIN_CACHE_SIZE = 128
+_SPHERE_CHAIN_CACHE_MAX_WORD = 8192
 
 def sphere_reduce(word):
     """Reduce a based six-meridian word in F5 using x1...x6=1."""
@@ -157,15 +167,32 @@ def sphere_chain_certificate(braid, *, max_letters=400000):
     from .hyperelliptic_homology import braid_permutation
     braid = tuple(braid)
     permutation = braid_permutation(braid)
+    if type(max_letters) is not int or max_letters < 1:
+        raise ValueError('max_letters must be a positive integer')
+    key = (braid, max_letters)
+    cacheable = len(braid) <= _SPHERE_CHAIN_CACHE_MAX_WORD
+    if cacheable:
+        with _sphere_chain_cache_lock:
+            cached = _sphere_chain_cache.get(key)
+            if cached is not None:
+                _sphere_chain_cache.move_to_end(key)
+                return dict(cached)
     pairs = tuple((i, i + 1) for i in range(1, 6))
     reference = tuple(sphere_curve_action((), pair, max_letters=max_letters) for pair in pairs)
     images = tuple(sphere_curve_action(braid, pair, max_letters=max_letters) for pair in pairs)
     endpoints_fixed = permutation == tuple(range(1, 7))
-    return dict(certified=endpoints_fixed and images == reference,
+    result = dict(certified=endpoints_fixed and images == reference,
                 method='five exact sphere chain arcs', permutation=permutation,
                 endpoints_fixed=endpoints_fixed, arc_pairs=pairs,
                 reference_classes=reference, image_classes=images,
                 scope='Sphere mapping class; no disk action or genus-two lift sign implied')
+    if cacheable and result['certified']:
+        with _sphere_chain_cache_lock:
+            _sphere_chain_cache[key] = dict(result)
+            _sphere_chain_cache.move_to_end(key)
+            while len(_sphere_chain_cache) > _SPHERE_CHAIN_CACHE_SIZE:
+                _sphere_chain_cache.popitem(last=False)
+    return result
 
 
 @lru_cache(maxsize=16)

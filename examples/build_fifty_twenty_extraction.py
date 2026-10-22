@@ -6,6 +6,8 @@ import json,sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from surface_diagrams.braid_actions import inverse_word,reduce_word
+from surface_diagrams.puncture_boundary import early_boundary_derivation
+from surface_diagrams.early_boundary_cluster import positive_early_cluster
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.compact_svg import compact_support_svg
 from surface_diagrams.sphere_arc_simplify import _sphere_chain_certificate
@@ -40,7 +42,9 @@ def build():
     unwinding=unwind_f9_pair_square(alignment['factors'])
     rounding=round_f11_half_twist(unwinding['factors'])
     transport_replay=dict(transport,stages=transport['stages']+alignment['stages'][1:]+unwinding['stages'][1:]+rounding['stages'][1:])
-    routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay)
+    early=early_boundary_derivation()
+    earlycluster=positive_early_cluster(early['chart']['factors'])
+    routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay,early=early,earlycluster=earlycluster)
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']
@@ -57,21 +61,22 @@ def build():
         for i in range(1,8-f.points):offer(replace(f,first=i,conjugator=()))
     supports=[];braids=[];rows=[];recharts=[];support_cache={};braid_cache={};row_cache={};display_routes={}
     for name,replay in routes.items():
+        if name=='early':base_sizes=(len(rows),len(supports),len(braids))
         states=[]
         for stage in replay['stages']:
             ids=[]
             for f in stage['factors']:
-                row_key=(f,name=='transport')
+                row_key=(f,name in ('transport','early','earlycluster'))
                 if row_key not in row_cache:
                     # The geometric transport shows actual disk supports,
                     # without the other phases' labeled sphere display charts.
-                    if name=='transport':
+                    if name in ('transport','early','earlycluster'):
                         t=simplify_twist(f.mapping_class)
                         candidate=replace(f,conjugator=t.conjugator,first=t.first)
                     else:
                         candidate=replace(pool[key(f.mapping_class)],id=f.id)
                     check=check_support_replacement(f.mapping_class,candidate.mapping_class,max_cuts=40)
-                    if name=='transport' and not check['disk_equal']:
+                    if name in ('transport','early','earlycluster') and not check['disk_equal']:
                         raise ValueError('The disk-only transport acquired a sphere display chart')
                     sk=(candidate.half,candidate.points,candidate.first,candidate.conjugator)
                     if sk not in support_cache:
@@ -86,6 +91,9 @@ def build():
                 ids.append(row_cache[row_key])
             shown=dict(title=stage['title'],kind=stage['kind'],factors=ids,
                        disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality'))
+            if stage.get('caption'):shown['caption']=stage['caption']
+            if stage.get('boundary_power'):shown['boundary_power']=stage['boundary_power']
+            if stage.get('adjacent_moves'):shown['adjacent_moves']=stage['adjacent_moves']
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
             states.append(shown)
         display_routes[name]=states
@@ -124,12 +132,23 @@ def build():
         source_sha256=sha256(source).hexdigest(),is_shorter_derivation=False)
     if overview_summary['sphere_moves']!=28:raise ValueError('The overview hid a source sphere move')
     display_routes['overview']=overview
-    display=dict(states=display_routes['extract'],routes=display_routes,rows=rows,supports=supports,
-                 braids=braids,split=len(route['thirty_factors']),overview_summary=overview_summary)
+    early_ids=sorted({i for name in ('early','earlycluster') for state in display_routes[name] for i in state['factors']})
+    early_support_ids=sorted({rows[i]['support'] for i in early_ids})
+    early_braid_ids=sorted({rows[i]['braid'] for i in early_ids})
+    early_rows=[]
+    for i in early_ids:
+        row=dict(rows[i]);row.update(support=early_support_ids.index(row['support']),braid=early_braid_ids.index(row['braid']));early_rows.append(row)
+    early_states={name:[dict(state,factors=[early_ids.index(i) for i in state['factors']]) for state in display_routes[name]] for name in ('early','earlycluster')}
+    early_display=dict(routes=early_states,rows=early_rows,
+        supports=[supports[i] for i in early_support_ids],braids=[braids[i] for i in early_braid_ids])
+    early_encoded=json.dumps(early_display,separators=(',',':'));early_version=sha256(early_encoded.encode()).hexdigest()[:16]
+    (out/'display-early.json').write_text(early_encoded,encoding='utf-8')
+    display=dict(states=display_routes['extract'],routes={k:v for k,v in display_routes.items() if k not in ('early','earlycluster')},rows=rows[:base_sizes[0]],supports=supports[:base_sizes[1]],
+                 braids=braids[:base_sizes[2]],split=len(route['thirty_factors']),overview_summary=overview_summary)
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
@@ -149,7 +168,16 @@ def build():
         joint_verified=True,actual_disk_images_embedded=sphere_images,
         sphere_search_depths=depths,method=method,
         single_cap=five_point_cap_certificate(),double_cap=five_point_cap_certificate(2)),separators=(',',':')),encoding='utf-8')
-    (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('VERSION',version),encoding='utf-8')
+    early_images=tuple(map(tuple,early['chart']['normalized_disk_action']))+((6,),)
+    early_cuts,early_arcs,early_depths,early_method=_sphere_chain_certificate(early_images)
+    (out/'early-sphere-cut.svg').write_text(compact_support_svg(render_normal_cut_preview(
+        early_cuts,projection='smooth',mirror_vertical=True),hide_cut_guides=True),encoding='utf-8')
+    (out/'early-sphere-cut-certificate.json').write_text(json.dumps(dict(points=6,
+        arcs=[asdict(a) for a in early_arcs],owners=early_cuts.owners,joint_verified=True,
+        actual_disk_images_embedded=early_images,sphere_search_depths=early_depths,
+        method=early_method,boundary_power=4,fixed_working_point=2,
+        source='early_boundary_derivation',source_identity_assumed=False),separators=(',',':')),encoding='utf-8')
+    (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('VERSION',version),encoding='utf-8')
     print('Saved',out,'states',{name:len(states) for name,states in display_routes.items()},'supports',len(supports),'braids',len(braids),'bytes',len(encoded.encode()),'version',version)
     return out
 
