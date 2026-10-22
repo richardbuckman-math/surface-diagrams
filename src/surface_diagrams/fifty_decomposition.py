@@ -596,3 +596,82 @@ def unwind_f9_pair_square(factors):
         disk_boundary_action_certificate=dict(strands=5,actual=exact_action(product(state),strands=5),expected=expected,equal=True),
         is_shorter_identity_proof=False,
         scope='Three exact disk Hurwitz moves unwind F9; this simplifies the ending, not the archived identity proof')
+
+
+def round_f11_half_twist(factors):
+    """One adjacent disk Hurwitz move turns F11 into the consecutive H12.
+
+    The old F11 is b^-1 a^3 b a^-3 b, with a=sigma1 and b=sigma2.
+    Carrying the following T13 squared upward conjugates it by
+    b^-1 a^-4 b; its resulting half twist equals a exactly in B5.
+    The nonadjacent T123 target now has order F6, T13 squared, F11.
+    """
+    from .factorization_explorer import simplify_factor
+    state=tuple(factors)
+    ids=('cross.P12','alternate.HL2.2','alternate.P15.remaining',
+         'alternate.C4.rose.1','F3','F6','alternate.HL2.1',
+         'alternate.C4.rose.2','transport.HL.1','transport.HL.2',
+         'transport.HL.3','new.P26','last.P34.square','F9','F11','last.P12.square')
+    if tuple(f.id for f in state)!=ids or any(f.sign!=1 for f in state):
+        raise ValueError('Expected the positive F9-unwound endpoint')
+    expected=exact_action((1,2,3,4)*10,strands=5)
+    if exact_action(product(state),strands=5)!=expected:
+        raise ValueError('The F11 source is not the double boundary')
+    def score(fs):
+        lengths=tuple(len(supported_class(f.mapping_class,strands=5)) for f in fs)
+        return dict(max_support_word=max(lengths),total_support_word=sum(lengths),braid_letters=len(product(fs)))
+    initial=state;by_id={f.id:f for f in state}
+    before_target=(by_id['F6'],by_id['F11'],by_id['last.P12.square'])
+    root=replace(by_id['F6'],id='target.round.T123',conjugator=(),first=1,points=3,power=1,half=False)
+    if exact_action(product(before_target),strands=5)!=exact_action(root.word,strands=5):
+        raise ValueError('The old separated half-lantern target is missing')
+    stages=[dict(kind='start',title='The F9-unwound ending before rounding F11',factors=state)]
+    step=research_hurwitz_move(state,15,14);state=step['factors']
+    if state[14]!=initial[15]:raise ValueError('The dragged squared T13 changed')
+    discrepancy=reduce_word(product(step['local_before'])+inverse_word(product(step['local_after'])))
+    if discrepancy or homology_action(discrepancy)!=IDENTITY:
+        raise ValueError('The F11 move lost its disk/lift certificate')
+    stages.append(dict(step,title='Carry squared T13 up across F11, keeping the squared twist fixed',disk_equality=True,lift_homology=IDENTITY))
+    old=state[15];new=simplify_factor(old)
+    if (new.conjugator,new.first,new.points,new.power,new.half)!=((),1,2,1,True):
+        raise ValueError('F11 did not become the consecutive H12')
+    actual,wanted=exact_action(old.word,strands=5),exact_action(new.word,strands=5)
+    presentation_discrepancy=reduce_word(old.word+inverse_word(new.word))
+    if actual!=wanted or supported_class(old.mapping_class,strands=5)!=supported_class(new.mapping_class,strands=5) or homology_action(presentation_discrepancy)!=IDENTITY:
+        raise ValueError('The H12 presentation changed F11')
+    state=state[:15]+(new,)
+    stages.append(dict(kind='disk_presentation',title='F11 is the consecutive half twist H12',factors=state,
+        local_before=(old,),local_after=(new,),disk_equality=True,lift_homology=IDENTITY,
+        disk_action_certificate=dict(strands=5,actual=actual,expected=wanted,equal=True)))
+    current={f.id:f for f in state};after_target=(current['F6'],current['last.P12.square'],current['F11'])
+    actual=exact_action(product(after_target),strands=5);wanted=exact_action(root.word,strands=5)
+    if actual!=wanted:raise ValueError('The reordered T123 half-lantern target failed')
+    if exact_action(product(state),strands=5)!=expected:raise ValueError('F11 rounding changed the boundary product')
+    if sorted((f.points,f.power,f.half,f.sign) for f in state)!=sorted((f.points,f.power,f.half,f.sign) for f in initial):
+        raise ValueError('F11 rounding changed the positive factor types')
+    # A single geometrically chosen frame matches the new short F9 to a
+    # specific petal of C's existing PC daisy. Save the target, not a claimed
+    # applied move: its worse support score needs a concrete next benefit.
+    from .projected_relations import pc_daisy_terms
+    frame=(-2,-1)
+    framed=tuple(simplify_factor(replace(f,conjugator=reduce_word(frame+f.conjugator))) for f in state)
+    framed_by_id={f.id:f for f in framed};curve=current['alternate.C4.rose.2']
+    petal=pc_daisy_terms(curve.mapping_class)[2]
+    petal_actual=exact_action(framed_by_id['F9'].word*2,strands=5)
+    petal_expected=exact_action(petal.word,strands=5)
+    if (petal_actual!=petal_expected or exact_action(curve.word,strands=5)!=exact_action(framed_by_id[curve.id].word,strands=5)
+            or exact_action(product(framed),strands=5)!=expected):
+        raise ValueError('The focused F9 daisy-petal target failed')
+    petal_target=dict(kind='global_conjugation',frame=frame,f9_after=framed_by_id['F9'],
+        daisy_petal=petal,curve_unchanged=True,framed_score=score(framed),
+        applied_to_replay=False,requires_further_benefit=True,
+        disk_action_certificate=dict(strands=5,actual=petal_actual,expected=petal_expected,equal=True))
+    return dict(stages=tuple(stages),factors=state,before_score=score(initial),after_score=score(state),
+        next_petal_target=petal_target,
+        peak_support_word=max(score(s['factors'])['max_support_word'] for s in stages),
+        f11_support_lengths=(len(supported_class(by_id['F11'].mapping_class,strands=5)),len(supported_class(new.mapping_class,strands=5))),
+        hurwitz_moves=1,sphere_move_count=0,preserves_positive_factor_types=True,preserves_ordered_disk_product=True,
+        reordered_target=dict(order=('F6','last.P12.square','F11'),local_before=after_target,local_after=(root,),
+            requires_gathering=True,applied_to_replay=False,disk_action_certificate=dict(strands=5,actual=actual,expected=wanted,equal=True)),
+        is_shorter_identity_proof=False,
+        scope='One exact disk Hurwitz move makes F11 consecutive; the separated T123 target has explicitly changed order')

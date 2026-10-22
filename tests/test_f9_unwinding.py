@@ -54,7 +54,7 @@ class F9UnwindingTests(unittest.TestCase):
         r=self.route
         self.assertEqual(json.loads(json.dumps(r,default=lambda f:f.__dict__)),self.saved['f9_unwinding'])
         d=json.loads((self.folder/'display.json').read_text())
-        self.assertEqual(len(d['routes']['transport']),26)
+        self.assertEqual(len(d['routes']['transport']),28)
         for stage,shown in zip(r['stages'][1:],d['routes']['transport'][22:]):
             for factor,index in zip(stage['factors'],shown['factors']):
                 row=d['rows'][index]

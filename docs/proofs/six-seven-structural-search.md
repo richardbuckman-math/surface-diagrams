@@ -1,5 +1,53 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 22: one adjacent transport makes F11 consecutive
+
+`round_f11_half_twist()` starts from the short F9 endpoint. Carry the final
+squared T13 UP past F11, keeping the squared twist fixed, then use one
+explicit disk presentation. F11 becomes exactly H12 (word sigma1,
+empty conjugator). All other supported mapping classes are unchanged.
+The sixteen positive factor types and the independently checked B5 double
+outer-boundary action survive. No sphere move, negative factor, or temporary
+root occurs.
+
+The optional transport replay now has 28 states / 27 moves. This extension
+adds ONE Hurwitz move and one exact presentation. F11's support-word length
+falls 8->2. The endpoint maximum/total scores fall 8/52 -> 6/46, and braid
+letters 80->72. The new extension never exceeds its starting maximum 8.
+Its raw intermediate has 76 braid letters. The preceding F9 and F6 stages
+remain replayable, and the 177-move main proof and 125-page PDF are unchanged.
+
+IMPORTANT: the separated PC half-lantern target has CHANGED ORDER.
+It is now F6, last.P12.square (T13 squared), F11 (round H12), in that order,
+and its exact ordered disk action is round T123. The older order
+F6, F11, T13 squared is now wrong and is explicitly rejected by a test.
+The pair Hurwitz move is applied; the three-term inverse half-lantern
+substitution and gathering are NOT. The current target is saved in
+f11_rounding.reordered_target, with requires_gathering true.
+
+A focused geometric next configuration is also checked, NOT applied.
+The global frame (-2,-1) leaves the four-point curve C unchanged and maps
+F9 squared EXACTLY to the middle pair petal (the 2--5 petal) of C's already
+checked PC daisy. There is no need to make C round to expose its round T123
+prefix: that prefix already commutes with C's sigma4^-1 chart conjugator.
+This frame alone worsens support scores to 8/54 while reducing braid letters
+to 70, so it is not appended or called a support improvement. It is saved in
+f11_rounding.next_petal_target for a concrete subsequent substitution; do not
+repeat it without such a benefit. The chosen frame is a single targeted
+configuration on the NEW endpoint, not a rerun of the old 86-frame scan.
+
+Validation: 35 focused Python tests and all 69 graphical browser transitions
+pass, including every existing sphere label, deep links and mobile layout.
+The new endpoint and its braid were visually inspected in Chrome. The replay
+payload is 943,823 bytes and remains fully precalculated. The existing PDF
+SHA256 remains 7ab73071d8989d93b4a2e6b8e90c672b11cdc62092bdec2e664b57865033539d.
+
+Next: gather the REORDERED F6/T13-squared/H12 triple with a concrete plan
+for its R123 root, or use the matched C-daisy petal only if a specific inverse
+lantern/decomposition becomes available. Avoid the previously recorded
+worse gather and frame probes. A shorter elementary identity proof is still
+open; this is a small exact geometric simplification of the optional ending.
+
 ## October 21 afternoon: unwind F9 using the existing squared T45
 
 `unwind_f9_pair_square()` continues from the saved F6-aligned endpoint.

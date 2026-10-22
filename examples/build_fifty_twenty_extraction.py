@@ -12,7 +12,7 @@ from surface_diagrams.sphere_arc_simplify import _sphere_chain_certificate
 from surface_diagrams.peripheral_sphere import five_point_cap_certificate
 from surface_diagrams.boundary_playground_geometry import support_svg
 from surface_diagrams.factorization_geometry import number_support_points
-from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart,transport_round_half_lantern,align_f6_half_lantern,unwind_f9_pair_square
+from surface_diagrams.fifty_decomposition import extract_twenty_block,recognize_thirty_boundary,working_seed_to_legacy_chart,compact_thirty_boundary_chart,transport_round_half_lantern,align_f6_half_lantern,unwind_f9_pair_square,round_f11_half_twist
 from surface_diagrams.hyperelliptic_homology import homology_action
 from surface_diagrams.six_seven_structure import SignedResearchFactor
 from surface_diagrams.sphere_actions import sphere_supported_class
@@ -38,7 +38,8 @@ def build():
     transport=transport_round_half_lantern(compact['factors'])
     alignment=align_f6_half_lantern(transport['factors'])
     unwinding=unwind_f9_pair_square(alignment['factors'])
-    transport_replay=dict(transport,stages=transport['stages']+alignment['stages'][1:]+unwinding['stages'][1:])
+    rounding=round_f11_half_twist(unwinding['factors'])
+    transport_replay=dict(transport,stages=transport['stages']+alignment['stages'][1:]+unwinding['stages'][1:]+rounding['stages'][1:])
     routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay)
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
@@ -128,7 +129,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
