@@ -36,7 +36,7 @@ Tests cover every signed Schreier edge for2..7strands,200random mixed
 reconstructions, basis orientation/anti-multiplication, known common frames,
 nontrivial kernels, saved-report reproduction and fail-closed limits. Forty
 focused point-pushing/braid/puncture/closure tests pass. No graphical assets
-were changed. Check NEW publication CI after committing this isolated engine.
+were changed. Engine publication0b4221d has passed remote Tests/Documentation.
 
 Concrete next step: seek a small named relation among the early B4 shadows,
 then use the retained pushing loops to choose an ACTUAL lifted Hurwitz or
@@ -44,6 +44,24 @@ PC substitution. A transported factor involving point5 can change this
 obstruction; a common frame alone cannot. Never infer the B5 relation from
 its B4 shadow or silently remove its kernel. The existing121-step named
 proof remains the complete, checked fallback.
+
+Engine publication0b4221d has GREEN remote Tests and Documentation. No public
+UI, braid drawing, payload or PDF changed, so unchanged graphical checks were
+not repeated. The untracked8Boundaries.pdf remains untouched.
+
+NEW bounded NOT-APPLIED probes: kernel exponents singled out two disjoint
+adjacent swaps in the original early chart: F5 UP acrossF3, then F12 UP across
+F11. Both are exact positive B5 moves; endpoint max/total20/110, braid202.
+The necessary common-frame equations are now CONSISTENT, not a common-disk
+certificate. Saved .preview/early-two-half-cocycle.json retains both checks.
+Four actual support-derived pushing frames were tested on this endpoint:
+none puts all four halves in B4, and all exceed20 (maxima116,24,44,70 for
+F3,F6,F9,F11 frames). Saved .preview/early-half-support-frames.json. These
+four failures do not exclude other frames; do not repeat the same audit.
+A different three-swap F5/F3/F6 attempt reaches max60 and is rejected;
+.preview/early-half-adjacent-cocycle.json retains it. No new probe is appended
+to the public121-step proof. The next problem is a SPECIFIC nonabelian kernel
+transport or named shadow relation, not another simultaneous-frame guess.
 
 ## October 22 NEW COMPLETE NAMED CLOSURE: four visible exteriors
 
