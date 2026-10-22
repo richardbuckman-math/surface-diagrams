@@ -10,7 +10,7 @@ from surface_diagrams.factorization_explorer import Factor, product
 from surface_diagrams.framed_boundary_relations import framed_outer_certificate
 from surface_diagrams.mapping_classes import exact_action, supported_class
 from surface_diagrams.puncture_boundary import BOUNDARY_WORD
-from surface_diagrams.early_boundary_pure import purify_early_cluster
+from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 
 
 class EarlyPurificationTests(unittest.TestCase):
@@ -83,10 +83,30 @@ class EarlyPurificationTests(unittest.TestCase):
         wrong=self.source[:8]+(replace(self.source[8],power=1),)+self.source[9:]
         with self.assertRaises(ValueError):purify_early_cluster(wrong)
 
+    def test_two_pure_lanterns_have_a_bounded_exact_route_and_explicit_publication_scope(self):
+        r=contract_pure_clusters(self.route['factors']);expected=exact_action(BOUNDARY_WORD*4,5)
+        self.assertEqual((r['graphical_steps'],r['adjacent_checks'],r['first_contraction']),(11,10,6))
+        self.assertFalse(r['applied_to_public_replay']);self.assertFalse(r['complete_named_derivation'])
+        public=json.loads((self.folder/'certificate.json').read_text())['pure_cluster_contractions']
+        self.assertTrue(public['applied_to_public_replay'])
+        self.assertEqual(r['after_score'],dict(max_support_word=17,total_support_word=147,braid_letters=250))
+        self.assertEqual(sum(s['kind']=='disk_cluster_lantern' for s in r['stages']),2)
+        for stage in r['stages']:
+            for s in (stage,)+stage.get('atomic_steps',()):
+                self.assertEqual(exact_action(product(s['factors']),5),expected)
+                self.assertTrue(all(not f.half for f in s['factors']))
+                self.assertLessEqual(max(len(supported_class(f.mapping_class,5)) for f in s['factors']),20)
+            if 'local_before' in stage:
+                self.assertEqual(exact_action(product(stage['local_before']),5),
+                                 exact_action(product(stage['local_after']),5))
+        self.assertEqual(r['stages'][6]['factors'][3],Factor('pure.O1234',(),1,4))
+        with self.assertRaises(ValueError):contract_pure_clusters(self.source)
+
     def test_published_chapters_preserve_disk_supports_and_do_not_slow_the_initial_payload(self):
         r=self.route;shown=json.loads((self.folder/'display-pure.json').read_text())
-        self.assertEqual(set(shown['routes']),set(r['phases']))
-        for name,phase in r['phases'].items():
+        phases=dict(r['phases'],earlycontracts=contract_pure_clusters(r['factors'])['stages'])
+        self.assertEqual(set(shown['routes']),set(phases))
+        for name,phase in phases.items():
             self.assertEqual(len(phase),len(shown['routes'][name]))
             for actual,display in zip(phase,shown['routes'][name]):
                 self.assertEqual(display['kind'],actual['kind'])

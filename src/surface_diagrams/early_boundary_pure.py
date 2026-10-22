@@ -27,7 +27,8 @@ class _PositiveReplay:
         self.expected = exact_action(BOUNDARY_WORD * 4, 5)
         self.factors = self.check(tuple(factors))
         self.stages = [dict(kind='start', title='The positive cluster-lantern endpoint',
-                            factors=self.factors, score=_score(self.factors), half_twists=8)]
+                            factors=self.factors, score=_score(self.factors),
+                            half_twists=sum(f.half for f in self.factors))]
 
     def position(self, name):
         return next(i for i, f in enumerate(self.factors) if f.id == name)
@@ -217,3 +218,69 @@ def purify_early_cluster(factors):
                     exact_capped_action_and_framing=True,
                     scope='A separately framed five-hole relation; the new disk moves do not silently turn the sphere points into holes.'),
                 scope='All eight halves in this branch have become positive full twists. This is not the missing short named derivation of the fourth-boundary product.')
+
+
+def contract_pure_clusters(factors):
+    """Compute two positive cluster contractions; the caller controls publication.
+
+    Two actual daisy petals supply a cluster lantern and a three-point PC
+    lantern.  The canonical OUTER frame (-4,-3) is essential: using the
+    unframed cyclic gather peaks at 36, whereas this route stays at most 20.
+    This is additional geometric progress, not the missing named closure.
+    """
+    factors = tuple(factors)
+    if (len(factors) != 19 or any(f.half for f in factors)
+            or factors[-2].id != 'early.F12.2' or factors[-1].id != 'early.F13.2'):
+        raise ValueError('Use the all-pure endpoint of purify_early_cluster')
+    r = _PositiveReplay(factors)
+    r.stages[0]['title'] = 'The all-pure nineteen-factor endpoint'
+    frame = (-4, -3)
+    source_root = factors[-2]
+    r.factors = r.check(tuple(r.normalize(replace(f, conjugator=reduce_word(frame + f.conjugator)))
+                              for f in r.factors))
+    r.record('Put the next four-point outer curve in its round disk chart',
+             'global_conjugation', frame=frame, central_product=BOUNDARY_WORD * 4,
+             exact_disk_equality=True)
+    terms = tuple(r.normalize(Factor('pure.next.' + str(j + 1), frame + t.conjugator,
+                                    t.first, t.points, t.power, t.half))
+                  for j, t in enumerate(pc_daisy_terms(source_root.mapping_class)))
+    r.substitute(r.position(source_root.id), 1, terms,
+                 'PC daisy of the actual C12 unit exposes Q15', 'disk_pc_daisy')
+    r.drag('pure.next.3', 'early.F13.2', title='Carry Q15 past the final three-point root')
+    moved = r.factors[-1]
+    r.factors = r.check(r.factors[-1:] + r.factors[:-1])
+    r.record('Rotate the last Q15 to the top of the central disk product', 'disk_cyclic_start',
+             moved_factor=moved, central_product=BOUNDARY_WORD * 4, exact_disk_equality=True)
+    r.drag('pure.next.3', 'early.F5.1', title='Bring Q15 through the leading pair curves and the two roots')
+    outer = Factor('pure.O1234', (), 1, 4)
+    inner = Factor('pure.T23', (), 2, 2)
+    r.substitute(r.position('early.R123.remaining'), 3, (outer, inner),
+                 'PC cluster lantern produces a round four-point curve and T23',
+                 'disk_cluster_lantern')
+    first_contraction = len(r.stages) - 1
+
+    source_root = r.factors[-1]
+    terms = tuple(r.normalize(Factor('pure.prefix.daisy.' + str(j + 1), t.conjugator,
+                                    t.first, t.points, t.power, t.half))
+                  for j, t in enumerate(pc_daisy_terms(source_root.mapping_class)))
+    r.substitute(len(r.factors) - 1, 1, terms,
+                 'The final C13 daisy supplies the precise missing prefix petal', 'disk_pc_daisy')
+    r.drag('pure.prefix.daisy.1', 'pure.prefix.daisy.3',
+           title='Carry the first petal through the other two daisy petals')
+    moved = r.factors[-1]
+    r.factors = r.check(r.factors[-1:] + r.factors[:-1])
+    r.record('Rotate this last petal to the top of the central product', 'disk_cyclic_start',
+             moved_factor=moved, central_product=BOUNDARY_WORD * 4, exact_disk_equality=True)
+    r.drag('pure.prefix.daisy.1', 'early.H12.pair',
+           title='The supplied petal joins the two leading pair curves')
+    root = Factor('pure.prefix.root', (-3, -2, 1), 2, 3)
+    r.substitute(0, 3, (root,), 'PC lantern contracts the two long prefix curves and their actual petal',
+                 'disk_cluster_lantern')
+    return dict(stages=tuple(r.stages), factors=r.factors, graphical_steps=len(r.stages) - 1,
+                adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
+                first_contraction=first_contraction, sphere_move_count=0,
+                all_factors_positive=True, half_twists_remaining=0,
+                before_score=_score(factors), after_score=_score(r.factors), peak_support_bound=20,
+                boundary_power=4, disk_action_verified=True, complete_named_derivation=False,
+                applied_to_public_replay=False,
+                scope='Two further positive lantern contractions are exactly replayed; the named boundary closure remains open.')

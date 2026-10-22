@@ -8,7 +8,7 @@ sys.path.insert(0,str(ROOT/'src'))
 from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.puncture_boundary import early_boundary_derivation
 from surface_diagrams.early_boundary_cluster import positive_early_cluster
-from surface_diagrams.early_boundary_pure import purify_early_cluster
+from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.compact_svg import compact_support_svg
 from surface_diagrams.sphere_arc_simplify import _sphere_chain_certificate
@@ -46,9 +46,11 @@ def build():
     early=early_boundary_derivation()
     earlycluster=positive_early_cluster(early['chart']['factors'])
     purification=purify_early_cluster(earlycluster['factors'])
+    pure_contractions=contract_pure_clusters(purification['factors'])
+    pure_phases=dict(purification['phases'],earlycontracts=pure_contractions['stages'])
     routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay,early=early,earlycluster=earlycluster)
-    routes.update({name:dict(stages=stages) for name,stages in purification['phases'].items()})
-    pure_names=tuple(purification['phases'])
+    routes.update({name:dict(stages=stages) for name,stages in pure_phases.items()})
+    pure_names=tuple(pure_phases)
     disk_phases=('transport','early','earlycluster')+pure_names
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
@@ -165,7 +167,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))

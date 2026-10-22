@@ -2,6 +2,48 @@
 
 ## October 22 morning: all half twists removed positively in a bounded disk route
 
+NEWER NEXT CHECKPOINT (after publication): the next Q15 target now has a
+bounded route, saved in `contract_pure_clusters()` in the same computation
+module and now displayed in `?phase=earlycontracts&step=0`. Its eleven
+operations / ten adjacent checks perform TWO positive lantern contractions.
+First use the specific common OUTER frame(-4,-3); apply the transported PC
+daisy of early.F12.2, carry its actual Q15 down across the last C13, rotate
+that last petal to the top of the central product, and carry it down across
+the first five factors. The cluster lantern then gives ROUND T1234 and
+round T23 (six operations). The unframed cyclic gather's peak36 is thereby
+avoided; the petal's own consecutive frame(2,-3,4) peaks29 and is rejected.
+Direct Q-up peaks89; carrying the ordered A/B block right already reaches66.
+Do not repeat these.
+
+Second, the two long prefix pairs have a precise missing PC-lantern petal:
+it is the FIRST canonical PC-daisy term of the new last C13 unit. Expand
+that unit, carry the first petal through its two companions, rotate it from
+bottom to top, carry it down across the first two pair curves, and contract
+the resulting triple to chart(-3,-2,1), core T234. These five operations
+remove the long prefix pair supports18/14 in favor of a support5 root.
+All eleven operations and all adjacent checks remain positive/full and
+boundary^4-exact, with support cap20 (observed new maximum18). The ending
+has20 positive full-twist factors, scores17/147 and250 braid letters. The
+braid length is NOT an improvement over the published pure endpoint. A round
+four-point curve and two named contractions are the structural gain.
+
+One further outer-lantern hypothesis has been tested, NOT proved: round
+O1234 and roots F13.1 (235), F12.1 (145) have compatible SET counts, but the
+canonical pair petals do not certify their proposed exterior-boundary
+lantern. The 23 petal of F13.1 commutes with O1234 and F12.1; the 14 petal
+of F12.1 commutes with O1234 but NOT F13.1. Neither proposed ordered triple
+matches the exterior twist times these two petals. This rules out that
+specific presentation, not all possible internal charts or transported
+configurations. Do not promote this endpoint-set match to a relation.
+
+NEXT ACTION: continue from the eleven-operation cluster ending; do not
+re-search it or build another overview. Seek the next ACTUAL transported
+cluster cancellation involving its round four-point curve or short prefix
+root. `contract_pure_clusters()` itself is a computation; its public builder
+records applied_to_public_replay true. Complete_named_derivation is false. The remaining short named closure is still
+open. Publication b533758, with all24 new arrows inspected, has GREEN Tests
+and Documentation. Tests also check this newer unpublished calculation.
+
 `early_boundary_pure.purify_early_cluster()` now starts at the NEW positive
 cluster endpoint and eliminates all eight half twists in that branch. Its
 three graphical chapters have 7, 6 and 11 operations (24 total, retaining
