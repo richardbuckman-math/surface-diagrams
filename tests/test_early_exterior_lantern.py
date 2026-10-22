@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import unittest
 
-from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior
+from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
 from surface_diagrams.factorization_explorer import Factor, product
 from surface_diagrams.mapping_classes import exact_action, supported_class
 from surface_diagrams.puncture_boundary import BOUNDARY_WORD
@@ -195,6 +195,66 @@ class EarlyExteriorLanternTests(unittest.TestCase):
             before = {f.id: exact_action(f.word, 5) for f in r['stages'][step - 1]['factors']}
             after = {f.id: exact_action(f.word, 5) for f in r['stages'][step]['factors']}
             self.assertEqual(before, after)
+
+
+
+    def test_actual_petals_align_twelve_and_rebuild_a_round_four_point_curve(self):
+        residual = contract_exterior_petals(self.route['factors'])
+        second = contract_transported_cluster(residual['factors'])
+        source = contract_second_exterior(second['factors'])['factors']
+        r = rebuild_round_four_point(source)
+        self.assertEqual((r['graphical_steps'], r['adjacent_checks'], r['sphere_move_count']), (7, 8, 0))
+        expected, lift = exact_action(BOUNDARY_WORD * 4, 5), homology_action(BOUNDARY_WORD * 4)
+        for stage in r['stages']:
+            for state in (stage,) + stage.get('atomic_steps', ()):
+                self.assertEqual(exact_action(product(state['factors']), 5), expected)
+                self.assertEqual(homology_action(product(state['factors'])), lift)
+                self.assertTrue(all(not f.half and f.power == 1 for f in state['factors']))
+                self.assertLessEqual(max(len(supported_class(f.mapping_class, 5)) for f in state['factors']), 12)
+            if 'local_before' in stage:
+                self.assertEqual(exact_action(product(stage['local_before']), 5),
+                                 exact_action(product(stage['local_after']), 5))
+                if 'framed_balance_before_minus_after' in stage:
+                    sets = [[enclosed_boundaries(f.mapping_class, 5) for f in stage[key]]
+                            for key in ('local_before', 'local_after')]
+                    balance = tuple(sum(i in b for b in sets[0]) - sum(i in b for b in sets[1])
+                                    for i in range(1, 6))
+                    self.assertEqual(balance, stage['framed_balance_before_minus_after'])
+        aligned = next(f for f in r['stages'][5]['factors'] if f.id == 'second.inner12')
+        self.assertEqual(aligned.word, Factor('round', (), 1, 2).word)
+        self.assertEqual([sum(f.points == k for f in r['factors']) for k in (2, 3, 4, 5)], [11, 1, 1, 2])
+        self.assertEqual(r['after_score'], dict(max_support_word=12, total_support_word=95, braid_letters=146))
+        counts = [disk_curve_intersection(a.mapping_class, b.mapping_class, strands=5)
+                  for i, a in enumerate(r['factors']) for b in r['factors'][:i]]
+        self.assertEqual((max(counts), sum(counts)), (12, 212))
+        rest = tuple(f for f in r['factors'] if f.points != 5)
+        self.assertEqual(exact_action(product(rest), 5), exact_action(BOUNDARY_WORD * 2, 5))
+        self.assertFalse(r['complete_named_derivation'])
+        target = r['next_exterior_lantern']
+        self.assertTrue(target['requires_transport'])
+        self.assertFalse(target['applied_to_replay'])
+        self.assertEqual(exact_action(product(target['local_before']), 5),
+                         exact_action(product(target['local_after']), 5))
+        self.assertEqual(exact_action(target['required_petals'][1].word, 5),
+                         exact_action(target['actual_matching_petal'].word, 5))
+        self.assertFalse(any(exact_action(f.word, 5) == exact_action(target['required_root'].word, 5)
+                             for f in r['factors'] if f.points == 3))
+        required = target['required_root']
+        actual35 = tuple(f for f in r['factors'] if f.id in ('early.daisy.4', 'round.rose345.1'))
+        self.assertEqual([disk_curve_intersection(f.mapping_class, required.mapping_class, strands=5)
+                          for f in actual35], [4, 4])
+        self.assertEqual(disk_curve_intersection(target['required_petals'][2], required.mapping_class,
+                                                strands=5), 0)
+        for petal in target['required_petals'][:2]:
+            self.assertEqual(exact_action(petal.word + required.word, 5),
+                             exact_action(required.word + petal.word, 5))
+
+        public = json.loads((self.folder / 'display-pure.json').read_text())
+        self.assertEqual(len(public['routes']['earlyround']), 8)
+        for actual, shown in zip(r['stages'], public['routes']['earlyround']):
+            for f, j in zip(actual['factors'], shown['factors']):
+                self.assertEqual(exact_action(f.word), exact_action(public['rows'][j]['word']))
+                self.assertFalse(public['rows'][j]['sphere_rechart'])
 
 
 if __name__ == '__main__':

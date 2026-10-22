@@ -1,5 +1,78 @@
 # Handoff: surface-diagrams
 
+## October 22 newest: a rose aligns 12 and two lanterns rebuild ROUND T1234
+
+`rebuild_round_four_point()` continues from the TWO-exterior endpoint reached
+in6328415 (that commit now has GREEN remote Tests/Documentation and55 LIVE
+arrows verified). The new chapter is SEVEN positive disk operations /EIGHT
+adjacent checks, with no sphere move and support maximum<=12 throughout:
+
+1. Expand the actual round F8.2=T345 by its PC rose into T34, above35, T45.
+2. Carry actual under24 (`pure.next.2`) down past the three intervening pairs.
+3. Carry the supplied round34 up across134, the exterior and the routed12.
+   Those three crossings commute: all individual supported classes survive.
+4. The adjacent ACTUAL24,23,34 petals contract to ROUND T234.
+5. Carry T234 down across `second.inner12`. This removes EXACTLY its winding:
+   that curve equals T234^-1 T12 T234, and the transported result is ROUND T12.
+6. Commute the actual134 root past the visible central exterior.
+7. The adjacent round12, round234, actual134 satisfy the PC cluster lantern
+   (groups1,2,34), producing ROUND T1234 and ROUND T34.
+
+The new endpoint has15 positive full-twist factors: TWO visible exteriors,
+ONE round four-point curve, ONE triple245 and ELEVEN pairs. Its independent
+B5 product is boundary^4, and its13-factor non-exterior residual is boundary^2.
+Scores12/101->12/95, braid160->146, exact curve crossings28/440->12/212.
+This is an actual geometric simplification, not a complete named closure.
+The short named derivation of boundary^2 remains OPEN. Both exterior twists
+remain visible and no cap/lift correction is silently removed.
+
+The on-demand phase is `?phase=earlyround&step=0` (8 states /7 arrows); the
+full research replay now has62 arrows. The initial943823-byte display.json,
+early payload and old125-page PDF remain unchanged. Signed local framed
+balances (before minus after) are recorded for the rose and both lanterns:
+(0,0,-1,-1,-1), (0,1,1,1,0), (1,1,0,0,0). Negative entries mean the marked
+rewrite introduces the corresponding framing turn; none of these marked
+pictures is an implicit equality with framed holes. Exact tests verify them.
+
+SPECIFIC NEXT EXTERIOR TARGET (NOT REACHED): common disk frame
+h=(-3,-1,-1,-3,-2) preserves round O1234 and takes round T345 to actual245.
+The required third135 is h(4,3) T123, support15. Ordered
+O1234, required135, actual245 equals exterior plus hT12 and hT34 EXACTLY inB5.
+This is a cabled PC lantern for clusters13,24,5. `next_exterior_lantern`
+retains the entire exact local target, with applied=false/requires_transport.
+Its PC rose has13(support6),15(support12),35(support18). The15 petal is
+EXACTLY existing exterior.split.2. Neither other required petal is currently
+matched. The previous incidence split involving134/245 is now OBSOLETE:
+those134/234 roots have been consumed to rebuild O1234.
+
+CHECKED UNPUBLISHED next route: .preview/second_outer_twelve_cycle.json starts
+from this endpoint, drags fixed roundT12 DOWN to the bottom, rotates it top,
+then down past leading13. Three operations /9checks, all positive and <=14,
+change the leading13 to EXACTLY the required135 rose's FIRST petal while
+preserving its matched15. It worsens the endpoint to14/99,braid150,
+crossings14/240; NOT appended. Source reproduction can use the IDs in
+.preview/probe_second_outer_followup.py, with follow.* corresponding to the
+new public round.* IDs. This is an actual route, not just a conjugating word.
+Use only if the missing35 petal can be supplied by a concrete next operation.
+
+GEOMETRIC LOCAL EXCLUSION: both actual35 curves cross the required135
+boundary FOUR times; its desired35 petal is inside and crosses it ZERO.
+The two matched/target13 and15 petals preserve that135 boundary exactly.
+Therefore transports using only those two petal twists CANNOT turn either
+actual35 into its desired class (intersection with that boundary is invariant).
+This does not exclude an interaction with an outside factor. A targeted audit
+of actual exterior.inner23 and prefix25 full twists, either sign, on either
+actual35 gave no exact match; do not repeat those eight checks. Half-splitting
+could change endpoint assignments but no such route is claimed.
+
+Another UNPUBLISHED alternative .preview/second_outer_followup_cycle.json
+uses roundT34 around the short cyclic side to unwind leading13. It worsens
+crossings212->276 (score12/93,braid146), and its matching13,15,35 root is
+chart(-1,-1,-1,4),coreT234, NOT the required exterior135. Gathering that
+leading13 DOWN past round34 already exceeds20; no contraction route was
+applied. Do not confuse this alternative with the better T12 supplier above.
+Prefer the public212-crossing endpoint until an actual later benefit exists.
+
 ## October 22 newest: TWO exterior twists are now visibly extracted
 
 `contract_second_exterior()` continues from the reached 18-factor

@@ -1,14 +1,14 @@
-"""A positive, disk-exact extraction of one actual exterior boundary twist.
+"""Positive disk-exact exterior extractions and bounded PC contractions.
 
-This is a six-operation research branch from the latest pure endpoint.  The
-single exterior twist stays visible; no sphere or genus-two cap is performed.
-The remaining named derivation of the boundary product is still open.
+These research branches keep every extracted exterior twist visible and use
+no sphere cap. The short named derivation of the residual boundary product
+remains open.
 """
 from .early_boundary_pure import _PositiveReplay, _score
-from .factorization_explorer import Factor
+from .factorization_explorer import Factor, product
 from .mapping_classes import exact_action
 from .braid_actions import inverse_word
-from .projected_relations import pc_lantern_petal_cycle_terms
+from .projected_relations import pc_lantern_petal_cycle_terms, pc_rose_terms
 
 
 def extract_positive_exterior(factors):
@@ -236,3 +236,85 @@ def contract_second_exterior(factors):
                 exterior_not_capped=True, disk_action_verified=True,
                 complete_named_derivation=False, applied_to_public_replay=False,
                 scope='Two actual positive PC cluster lanterns extract a second visible exterior twist in five disk operations; the remaining named double-boundary closure is open.')
+
+
+def rebuild_round_four_point(factors):
+    """A rose and two actual PC lanterns align a routed pair and rebuild T1234.
+
+    The 12 curve is exactly R234^-1 T12 R234.  The available 24,23 petals
+    and a rose petal from the actual T345 make THAT round R234, not a curve
+    with the same enclosed points.  Its fixed transport makes the 12 curve
+    round, and a second cluster lantern uses it with the actual 234/134 roots.
+    """
+    factors = tuple(factors)
+    r = _PositiveReplay(factors)
+    if len(factors) != 16 or sum(f.points == 5 for f in factors) != 2:
+        raise ValueError('Use the reached endpoint with two visible exterior twists')
+    r.stages[0]['title'] = 'Two exterior twists remain visible beside the positive residual'
+    root = r.factors[r.position('F8.2')]
+    terms = tuple(Factor('round.rose345.' + str(i), t.conjugator, t.first, t.points)
+                  for i, t in enumerate(pc_rose_terms(root.mapping_class)))
+    r.substitute(r.position('F8.2'), 1, terms,
+                 'PC rose of the actual round T345 supplies its round 34 petal', 'disk_pc_rose')
+    r.stages[-1]['framed_balance_before_minus_after'] = (0, 0, -1, -1, -1)
+    r.drag('pure.next.2', 'early.daisy.4',
+           title='Carry the under-going 24 petal through three pairs to its actual 23 and 34 companions')
+    r.drag('round.rose345.0', 'second.inner12',
+           title='Commute the round 34 petal up past the 134 root, exterior and routed 12 curve')
+    index = r.position('pure.next.2')
+    if tuple(f.id for f in r.factors[index:index + 3]) != (
+            'pure.next.2', 'pure.T23', 'round.rose345.0'):
+        raise ValueError('The round 234 lantern petals were not gathered in order')
+    round234 = Factor('round.R234', (), 2, 3)
+    r.substitute(index, 3, (round234,),
+                 'PC lantern contracts the actual 24, 23, 34 petals to ROUND T234', 'disk_cluster_lantern')
+    r.stages[-1]['framed_balance_before_minus_after'] = (0, 1, 1, 1, 0)
+    r.drag('round.R234', 'second.inner12',
+           title='The actual T234 removes exactly the winding of the common 12 curve')
+    pair = r.factors[r.position('second.inner12')]
+    if exact_action(pair.word, 5) != exact_action(Factor('target.round12', (), 1, 2).word, 5):
+        raise ValueError('The available 234 transport did not make the common 12 curve round')
+    r.drag('second.inner134', 'second.exterior',
+           title='Commute the 134 root past the visible central exterior to the matched 12 and 234 curves')
+    index = r.position('second.inner12')
+    if tuple(f.id for f in r.factors[index:index + 3]) != (
+            'second.inner12', 'round.R234', 'second.inner134'):
+        raise ValueError('The actual 1,2,34 cluster was not adjacent in its checked order')
+    outer = Factor('round.O1234', (), 1, 4)
+    r.substitute(index, 3, (outer, Factor('round.T34', (), 3, 2)),
+                 'PC cluster lantern for 1, 2, 34 produces ROUND T1234 and T34', 'disk_cluster_lantern')
+    r.stages[-1].update(clusters=((1,), (2,), (3, 4)),
+                        framed_balance_before_minus_after=(1, 1, 0, 0, 0))
+    # Explicit cabled PC lantern target: NOT a reached factorization.
+    frame = (-3, -1, -1, -3, -2)
+    required = Factor('round.required135', frame + (4, 3), 1, 3)
+    by_id = {f.id: f for f in r.factors}
+    before = (outer, required, by_id['F10.2'])
+    after = (Factor('round.next.exterior', (), 1, 5),
+             Factor('round.next.inner13', frame, 1, 2),
+             Factor('round.next.inner24', frame, 3, 2))
+    petals = pc_rose_terms(required.mapping_class)
+    petal15 = by_id['exterior.split.2']
+    if (exact_action(product(before), 5) != exact_action(product(after), 5)
+            or exact_action(petals[1].word, 5) != exact_action(petal15.word, 5)):
+        raise ValueError('The next explicit exterior target or its actual 15 petal failed in B5')
+    retained = tuple(s['factors'] for s in r.stages) + tuple(
+        a['factors'] for s in r.stages for a in s.get('atomic_steps', ()))
+    peak = max(_score(state)['max_support_word'] for state in retained)
+    if peak > 12 or any(f.half or f.power != 1 for state in retained for f in state):
+        raise ValueError('The round-four-point reconstruction lost its positive support bound')
+    return dict(stages=tuple(r.stages), factors=r.factors,
+                graphical_steps=len(r.stages) - 1,
+                adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
+                sphere_move_count=0, all_factors_positive=True, half_twists_remaining=0,
+                before_score=_score(factors), after_score=_score(r.factors),
+                actual_peak_support_word=peak, peak_support_bound=12,
+                boundary_power=4, explicit_exterior_twists=2, residual_boundary_power=2,
+                exterior_twists_retained=True, exterior_not_capped=True,
+                disk_action_verified=True, complete_named_derivation=False,
+                applied_to_public_replay=False,
+                next_exterior_lantern=dict(local_before=before, local_after=after,
+                    common_frame=frame, required_root=required, required_petals=petals,
+                    actual_matching_petal=petal15, exact_disk_equality=True,
+                    requires_transport=True, applied_to_replay=False),
+                scope='Seven positive disk operations align the routed 12 curve and rebuild a round four-point curve; two exteriors remain visible and the named double-boundary closure remains open.')
