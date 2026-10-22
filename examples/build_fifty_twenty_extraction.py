@@ -9,6 +9,7 @@ from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.puncture_boundary import early_boundary_derivation
 from surface_diagrams.early_boundary_cluster import positive_early_cluster
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
+from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.disk_intersection import disk_curve_intersection
 from surface_diagrams.compact_svg import compact_support_svg
@@ -45,6 +46,7 @@ def build_exterior_target(target, out, version):
 <title>The missing exterior-lantern curve</title><style>
 *{box-sizing:border-box}body{margin:24px auto;padding:0 20px;max-width:1400px;font:16px/1.5 system-ui;color:#18384d;background:#f3f6f9}h1{font-size:26px}.notice{padding:14px;background:#fff0d2;border-left:4px solid #b37620}.comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.column{padding:12px;background:white;border:1px solid #c9d5df;border-radius:8px;min-width:0}.aligned{display:grid;grid-template-columns:minmax(0,1fr) 86px}.row{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:center;border-bottom:1px dotted #7caafa;min-width:0}.label{font-size:11px;color:#08628e;overflow-wrap:anywhere}.support{height:100%;min-width:0;min-height:0;display:flex;align-items:center;overflow:hidden}.support img{height:auto;max-height:100%;width:100%;object-fit:contain;display:block}.braid svg{display:block;width:86px;height:auto}h2{font-size:18px}@media(max-width:700px){.comparison{grid-template-columns:1fr}.aligned{grid-template-columns:minmax(0,1fr) 86px}.row{grid-template-columns:80px minmax(0,1fr)}}
 </style><h1>The missing exterior-lantern curve</h1><p><a href="index.html?phase=earlycontracts&amp;step=11">Return to the latest reached endpoint</a></p>
+<p><a href="index.html?phase=earlyexterior&amp;step=0">A different exterior lantern has now been reached in six positive operations</a>: retain the actual C below and transport B using one unit of the existing square. This older required-C target remains unapplied.</p>
 <p class="notice"><b>TARGET ONLY: the required middle curve has not been reached.</b> Both middle curves contain points 1,4,5, but their actual isotopy classes differ. No Hurwitz transport between them is claimed.</p>
 <div class="comparison"><section class="column"><h2>Current middle curve: F12.1</h2><div id="present"></div></section><section class="column"><h2>Required middle curve: not yet present</h2><div id="needed"></div></section></div>
 <h2>The exact local relation available if that curve is exposed</h2><p>The ordered products below agree exactly in B5: O1234, required C145, current B235 = exterior twist, Q23, Q14. The exterior twist is retained visibly. No sphere cap or framed-boundary substitution is applied.</p>
@@ -80,7 +82,10 @@ def build():
     earlycluster=positive_early_cluster(early['chart']['factors'])
     purification=purify_early_cluster(earlycluster['factors'])
     pure_contractions=contract_pure_clusters(purification['factors'])
-    pure_phases=dict(purification['phases'],earlycontracts=pure_contractions['stages'])
+    exterior=extract_positive_exterior(pure_contractions['factors'])
+    residual=contract_exterior_petals(exterior['factors'])
+    pure_phases=dict(purification['phases'],earlycontracts=pure_contractions['stages'],
+                    earlyexterior=exterior['stages']+residual['stages'][1:])
     routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay,early=early,earlycluster=earlycluster)
     routes.update({name:dict(stages=stages) for name,stages in pure_phases.items()})
     pure_names=tuple(pure_phases)
@@ -211,7 +216,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))

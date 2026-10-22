@@ -1,5 +1,69 @@
 # Handoff: surface-diagrams
 
+## October 22: an actual exterior lantern is reached in six operations
+
+`early_exterior_lantern.extract_positive_exterior()` now reaches an ACTUAL
+exterior twist from the saved twenty-factor `contract_pure_clusters()` endpoint.
+The key is a different lantern using the ACTUAL C, rather than trying to reach
+the older missing-C target. Split `early.T12.square` into two positive units;
+carry the second DOWN past F8 and B. B becomes chart(-3,-1,-1,2), coreT345.
+Choose the cyclic start at this B, carry B past the square unit and P13,
+then bring round O up the short cyclic side across seven factors. The adjacent
+ordered triple B,C,O equals exterior T12345, inner14 chart(-1,-1,-1,-3)/T23,
+inner23 chart(-3,-1,-1,-3)/T23 EXACTLY in B5. Apply this positive PC cluster
+lantern. The exterior is retained visibly; there is NO sphere move or cap.
+
+This extraction is 6 operations /11 adjacent checks; actual support peak18,
+under the existing bound20. Direct linear gathers were rejected (peaks24 or23;
+the left gather exceeded100). The central cyclic start is what makes the
+successful route bounded. Endpoint21 positive full twists, support18/146,
+braid224, pairwise crossings38/1412. This is structural extraction, NOT an
+overall intersection reduction from36/1220. The old required-C target page
+remains an unapplied alternative and now links to the reached route.
+
+`contract_exterior_petals()` adds TWO operations: carry actual T34 (`early.P35`)
+down across F5.2 and early.daisy.1; its following two actual petals complete
+an exact PC lantern, replaced by `residual.T345` chart(1,2,3,-4),coreT234.
+This leaves19 factors: ONE visible exterior, SIX triple curves, TWELVE pairs.
+Its score is18/139, braid212, crossings38/1252. All remain positive/B5-exact.
+The public on-demand phase `?phase=earlyexterior&step=0` combines these eight
+operations /13 adjacent checks in nine states. Initial display.json remains
+943823 bytes with hash prefix05e6c888cf352a48; earlier phases and PDF unchanged.
+
+The product of the eighteen remaining factors is independently boundary^3,
+but a short NAMED derivation remains OPEN. No elementary closure is claimed.
+In the incidence-compatible six-factor patterns, triples must pair as
+(124,345), (134,245), (123,345), with the two actual345 curves assigned once
+each. All42 fixed-order incidence candidates FAIL the necessary genus-two
+homology target; this rules out those current subsequences, not transported
+configurations. Their compatible triple intersection counts are2/4 for124
+or123 versus the two345 curves, and18 for134 versus245. Do not repeat this
+42-candidate check as a new result. Before homology filtering, one Artin
+subproduct exceeded its word limit; that was unknown, never a false equality.
+
+NEW UNAPPLIED exact transport target: U=actual `exterior.split.1`, R=actual
+round T12 `pure.next.1`. The word U R^-1 conjugates `residual.T345` EXACTLY
+to current round `F8.2`. U and R do NOT commute. This is saved as
+`next_root_alignment`, requires_transport=true; no Hurwitz route claimed.
+A specific cyclic gathering that realizes this two-factor transport while
+keeping the rest readable is a concrete next opportunity.
+
+A useful named six-factor boundary pattern is:
+T123, pair(chart3,T23), pair(chart3,-2,T12), T345,
+pair(chart-4,-3,T23), pair(chart-4,-3,-2,T12) = T12345.
+It follows from two PC daisies, carrying fixed T34 past two petals, then a
+PC lantern. This is a target pattern, not a claim the current groups match.
+Scratch `.preview/boundary_decomposition_audit.py` also proves the OLD20
+factors cannot split into4 boundary^1 groups by pure Hurwitz moves alone:
+one4-point twist excludes triples from its group; seven triples cannot fit
+in the remaining3 groups, which can hold at most2 each. Substitutions change
+that type count, so the obstruction does not prevent this new route.
+
+Local validation:21 focused route/publication/archive tests and all44 browser
+arrows pass, including cold pure-only fetch, blob switching, connected-braid
+alignment and mobile. The unchanged intersection engine had7 passing tests.
+Remote CI and final live publication are checked after committing this batch.
+
 ## October 22 latest: the intersection-guided square drag is a genuine simplification
 
 The newest `contract_pure_clusters()` endpoint NOW includes one additional
