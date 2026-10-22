@@ -1,5 +1,81 @@
 # Handoff: surface-diagrams
 
+## October 22 morning: all half twists removed positively in a bounded disk route
+
+`early_boundary_pure.purify_early_cluster()` now starts at the NEW positive
+cluster endpoint and eliminates all eight half twists in that branch. Its
+three graphical chapters have 7, 6 and 11 operations (24 total, retaining
+46 adjacent checks). There is NO sphere move and NO negative factor. The
+same independent B5 boundary^4 action is checked after every operation and
+every adjacent substep. Every retained support word stays <=20. This is
+substantive geometric progress, NOT a completed under-20 named boundary proof.
+The earlier 19-operation boundary-action certificate and old PDF are unchanged.
+
+Chapter `?phase=earlypair&step=0` removes ORIGINAL F3/F9. Split F5 and F13;
+one F5 root goes up over F3 and one F13 root up over four neighbors. The
+actual P35 then takes F3 EXACTLY to the new F9. Carry the matched F3 DOWN
+across five neighbors and combine it with F9. This direction also reduces
+F6 support 20->8. The rejected upward gather peaks at32. The accepted endpoint
+has six half twists, scores maximum/total12/104 and208 braid letters, improving
+the positive cluster's20/130 and222. It does not use the earlier false
+untransported F3/F9 half-lantern guess.
+
+Chapter `?phase=earlydaisy&step=0` applies the saved internally sigma4-inverse
+conjugated PC daisy of O1345. Its actual last petal Q14 goes up; this restores
+the round R123, makes the two H12 arcs match, and makes their neighboring
+full twist round. Gather/combine H12, then gather/combine H23. This removes
+all four extra halves introduced by the earlier K split. Only F6/F11 remain.
+Maximum support is12 throughout this extension. No new sphere rechart occurs.
+
+Chapter `?phase=earlypure&step=0` matches the LAST pair. One C12 root goes
+up over F11. Gather the two actual round T12 units across R123 and combine
+into T12 squared. Bring it to the TOP, rotate that first factor to the BOTTOM
+of the independently checked CENTRAL boundary^4 product, and carry it UP the
+short side. F11 now equals F6 exactly. The direct long-side square transport
+peaks35 and is rejected. Apply common disk frame(3,4,4), reorder C12 before
+C10, carry F11 up to F6, and combine. The root reorder and common frame are
+both necessary for the chosen support bound: before the frame the good order
+peaks21; without the order change the cyclic gathers peak31/37. Merely
+reordering C13 before C8 worsens things to27; do not redo these probes.
+
+The endpoint has NINETEEN positive full-twist factors, zero halves, maximum/
+total support17/152 and196 braid letters. Total support is not minimized.
+It also supplies a separately certified FIVE-HOLE framed relation with
+outer power4 and inner powers(6,5,7,7,5), checked using the existing exact
+capped braid + framing engine. The displayed diagrams still have marked
+points; no boundary conversion is silently applied to the sphere replay.
+Individual supports remain distinct from cumulative joint cut certificates.
+
+NEW NEXT TARGET, checked but NOT gathered: at this all-pure endpoint,
+A=early.R123.remaining and B=early.F5.1 satisfy
+A B Q15 = O1245 T24, where Q15 has chart(-4,3,-2), coreT12;
+O1245 has chart(3,4), coreT1234; T24 has chart(3,), coreT23.
+The last canonical PC-daisy petal of early.F12.2 is EXACTLY this Q15.
+The output saves this in `next_lantern`, with applied_to_replay false.
+The first tested short cyclic gather is exact but peaks36 from the two
+leading pair curves, so it is NOT appended. Scratch witness:
+.preview/early-pure-next-lantern.json. Find a bounded geometric gather or
+another concrete contraction before applying it; endpoint sets alone do not
+identify the needed curves. The pure incidence pattern has every pair
+multiplicity4. Its triple blocks are all three-subsets except134, with125
+twice, and its pair blocks compensate; this is only an incidence observation,
+not a claimed symmetric named relation.
+
+All three new chapters load `display-pure.json` ONLY on demand. Existing
+initial display.json is byte-identical(943823bytes,05e6c888cf352a48); the
+previous display-early.json and the PDF are unchanged. Chrome checks all24
+new arrows, connected braids, explicit common frame/cyclic labels, three-way
+blob-cache switching, and mobile layout. Endpoint and complex rows were
+visually inspected. Exact tests cover every retained state and adjacent move,
+positivity, the support bound, actual half matching, framed corrections and
+an intentionally wrong ordering. Existing proof regression tests pass.
+
+Next prioritize a short NAMED boundary^4 closure from this all-pure endpoint,
+using actual transported lantern clusters and the available Q15 daisy petal.
+Do not restart the old fifty route or repeat the failed direct square/gather
+probes. Source functions and their raw checks remain reproducible in the
+certificate; none of this is relabeled as a complete short derivation.
+
 ## October 22: early boundary reduction, nineteen operations, and a positive cluster branch
 
 Richard's fixed-point suggestion bypasses the long fifty expansion. The new
