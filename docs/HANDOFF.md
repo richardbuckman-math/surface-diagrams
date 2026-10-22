@@ -1,5 +1,98 @@
 # Handoff: surface-diagrams
 
+## October 22 NEW COMPLETE NAMED CLOSURE: four visible exteriors
+
+The former named-boundary gap is NOW SOLVED by `early_boundary_closure.close_round_boundary()`.
+It starts from `rebuild_round_four_point()`'s15-factor endpoint and reaches
+FOUR visibly round exterior twists by33 positive disk operations /55 retained
+adjacent checks. No sphere move or negative/half twist is used; support maximum
+never exceeds14. This is NOT the under-twenty solution, which remains open.
+Do not continue treating the missing135 petal or the named boundary^2 closure
+as required open tasks: the new route bypasses that missing-root target.
+
+The four actual chapters are:
+
+* `earlycollect`:9 operations. Explicit common frameT12 removes shared winding;
+  PC rose of245 separates its inside-four petal. Three fixed gathers collect
+  the other inside-four pairs. Carry roundT34, then roundT1234 around their
+  SHORT cyclic sides (two actual drags and two explicit cyclic starts), avoiding
+  the rejected direct T1234-up gather which exceeded20. All inside-four factors
+  are now consecutive. This succeeds at peak14; it is not a cap increase.
+* `earlyrose`:3 operations. The actual34,13,14 petals contract by a PC lantern;
+  one inverse Hurwitz swap makes23 round; the actual four factors are the PC
+  daisy ofT1234 in common frame(2,3). The result is TWO roundT1234 units and
+  EIGHT point-5 pair petals, beside the two retained exteriors.
+* `earlypetals`:16 fixed-factor drags, retaining21 actual noncentral adjacent
+  petal interchanges and all crossed central exteriors. A cancellation-driven
+  F4 point-pushing calculation FOUND the saved route; replay does not search.
+  Every resulting factor is checked individually against the canonical PC
+  daisy petals45,35-under,25-under,15-under, repeated TWICE. Consecutive checks
+  of the SAME fixed factor are grouped as one genuine drag; all atomics remain.
+* `earlyclosed`:5 operations. Commute the two visible exteriors to the front;
+  contract the first T1234+four actual canonical petals by the PC daisy;
+  commute that new exterior past the remaining T1234; contract the SECOND
+  actual PC daisy. The endpoint is FOUR exteriors, all retained visibly.
+
+All actual moves, local PC patterns, framing balances, global/cyclic frames,
+positivity and the support bound are tested. The 8-petal result is not inferred
+from a free-group word alone: each actual B5 factor equals its stated standard
+petal. The initial sorted point-pushing loops are conjugates of meridians; their
+reverse product is(1234)^2. The saved21-interchange route reduces total loop
+length72->8 and actual support to maximum5, ending exactly at the two daisy
+lists. Never rerun an unrestricted factorization scan to rediscover this route.
+
+IMPORTANT LOGICAL INDEPENDENCE: every new cyclic start is recorded as an
+explicit common conjugation, not justified by assuming the source product is
+already central. The terminal four-exterior product IS central, so undoing
+all common/cyclic conjugations proves the source boundary equality. The
+faithful-action checks remain independent validation, not the final recognition
+step or an assumed identity. Local PC lantern/rose/daisy terms are explicit.
+
+The NEW complete graphical route `?phase=namedfull&step=0` follows the working
+(6,7) through the early fixed-point chart and all actual positive named stages,
+then combines the four identical exterior twists and performs the original
+EXPLICIT fourth-boundary SPHERE CAP (+I). It has121 retained graphical steps
+and FOUR explicit sphere operations; ZERO disk_boundary_relation/action-only
+recognition steps. The six framing corrections are capped separately earlier,
+as before. This is shorter than the archived177-step proof, not an under20
+proof. The old125-page PDF and initial943823-byte payload remain preserved.
+The full route lives in the lazy pure payload, including its early-prefix rows.
+
+Current batch is not yet published/remote-validated. Run focused tests including
+`tests.test_early_boundary_closure`, inspect all95 chapter arrows plus the new
+121-step full route (especially all four visible sphere labels), commit/push,
+and verify remote CI/live publication. Then prioritize shortening THIS actual
+named proof with reusable patterns rather than searching for a missing closure.
+The older missing135/petal targets and failed cyclic supplier probes below are
+historical alternatives, not gaps in the new completed derivation.
+
+Publication-ready validation for the named proof:36 focused tests pass,
+including actual local PC patterns, every retained disk/lift check, framing
+balances, exact cyclic conjugation identities, four visible exteriors and
+zero action-only recognition stages in the full route. Chrome checked all95
+research arrows plus all121 full-route arrows, with exactly four visible sphere
+labels, connected braid alignment, correct lazy fetching and mobile layout.
+
+A NEW separate PDF is output/pdf/six-seven-named.pdf, with a public copy beside
+the proof page, generated by examples/build_six_seven_named_pdf.py. It has97
+portrait US Letter pages, a brief summary, contents, plan, all121 step numbers,
+connected braids, a six-point/five-arc joint comparison and a full disk-word
+appendix for all four sphere discrepancies. Every page was rendered for QA;
+summary/contents, dense diagrams, ending and sphere appendix were inspected.
+The old125-page PDF is BYTE-IDENTICAL (SHA2567ab73071d8989d93b4a2e6b8e90c672b11cdc62092bdec2e664b57865033539d).
+The initial display.json remains943823 bytes/hash05e6c888cf352a48.
+
+Next shortening opportunity: in the ORIGINAL early14-factor B5 chart ALL FOUR
+half twists have endpoints entirely among1..4: F3/F9=(1,3), F6/F11=(2,4).
+They fix point5, suggesting a direct point-pushing/B4 separation that could
+bypass the long positive purification detour. HOWEVER their neighborhood
+curves meet ROUND T1234 in4,8,12,8 crossings respectively. They are NOT already
+supported in that four-point subdisk; endpoint sets alone do not authorize a
+B4 factorization. A new exact strand-stabilizer/point-pushing computation or
+a specific common supporting disk/transport is needed. This is a concrete
+new shortening direction, not an established shortcut. Do not redo the new
+33-operation closure or the saved21-petal interchange calculation.
+
 ## October 22 newest: a rose aligns 12 and two lanterns rebuild ROUND T1234
 
 `rebuild_round_four_point()` continues from the TWO-exterior endpoint reached

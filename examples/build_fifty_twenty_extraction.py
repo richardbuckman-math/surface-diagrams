@@ -10,6 +10,7 @@ from surface_diagrams.puncture_boundary import early_boundary_derivation
 from surface_diagrams.early_boundary_cluster import positive_early_cluster
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
+from surface_diagrams.early_boundary_closure import close_round_boundary
 from surface_diagrams.braid_stack import braid_fragment_svg
 from surface_diagrams.disk_intersection import disk_curve_intersection
 from surface_diagrams.compact_svg import compact_support_svg
@@ -23,6 +24,7 @@ from surface_diagrams.six_seven_structure import SignedResearchFactor
 from surface_diagrams.sphere_actions import sphere_supported_class
 from surface_diagrams.sphere_support_compact import check_support_replacement,reframe_factors
 from surface_diagrams.twist_simplify import simplify_twist
+from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.based_cut_system import based_arc_from_meridian
 from surface_diagrams.twist_supports import arc_from_class
 from surface_diagrams.normal_cut_engine import calculate_cut_system
@@ -87,8 +89,10 @@ def build():
     second=contract_transported_cluster(residual['factors'])
     outer_two=contract_second_exterior(second['factors'])
     rebuilt=rebuild_round_four_point(outer_two['factors'])
+    closed=close_round_boundary(rebuilt['factors'])
     pure_phases=dict(purification['phases'],earlycontracts=pure_contractions['stages'],
                     earlyexterior=exterior['stages']+residual['stages'][1:],earlysecond=second['stages'],earlytwo=outer_two['stages'],earlyround=rebuilt['stages'])
+    pure_phases.update(closed['phases'])
     routes=dict(extract=route,thirty=thirty_replay,working=working,compact=compact,transport=transport_replay,early=early,earlycluster=earlycluster)
     routes.update({name:dict(stages=stages) for name,stages in pure_phases.items()})
     pure_names=tuple(pure_phases)
@@ -158,6 +162,48 @@ def build():
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
             states.append(shown)
         display_routes[name]=states
+    # The NEW complete named route replaces the old action-only boundary
+    # recognition by the actual positive research route and its four exteriors.
+    named_raw = list(early['stages'][:18]) + list(earlycluster['stages'][1:])
+    named_shown = list(display_routes['early'][:18]) + list(display_routes['earlycluster'][1:])
+    for phase in pure_names:
+        named_raw.extend(pure_phases[phase][1:])
+        named_shown.extend(display_routes[phase][1:])
+    fourth = early['stages'][-2]['factors'][0]
+    if exact_action(tuple(x for f in closed['factors'] for x in f.word), 5) != exact_action(fourth.word, 5):
+        raise ValueError('Four identical visible exteriors did not combine to their fourth power')
+    combine = dict(kind='disk_combine', title='Combine the FOUR identical visible exterior twists',
+                   factors=(fourth,), local_before=closed['factors'], local_after=(fourth,),
+                   exact_disk_equality=True, not_an_action_recognition=True)
+    named_raw.extend((combine, early['stages'][-1]))
+    named_shown.extend((dict(display_routes['early'][-2], kind='disk_combine',
+                            title=combine['title'], caption='Four identical round twists combine; this is not a whole-product action recognition.'),
+                        display_routes['early'][-1]))
+    # Record every cyclic start as a common conjugation, so this proof does
+    # not assume centrality of the SOURCE product to justify a cyclic start.
+    audited = []
+    for i, original in enumerate(named_raw):
+        stage = dict(original)
+        if i and stage['kind'] == 'disk_cyclic_start':
+            before = named_raw[i - 1]['factors']; after = stage['factors']
+            before_ids = tuple(f.id for f in before); after_ids = tuple(f.id for f in after)
+            shift = next((j for j in range(len(before)) if before_ids[j:] + before_ids[:j] == after_ids), None)
+            if shift is None:
+                raise ValueError('A named cyclic start is not the claimed cyclic ordering')
+            stage['frame'] = inverse_word(tuple(x for f in before[:shift] for x in f.word))
+            stage['exact_conjugation'] = True
+        audited.append(stage)
+    named_raw = tuple(audited)
+    named_summary = dict(graphical_steps=len(named_raw) - 1,
+        sphere_moves=sum(s['kind'] == 'sphere_rewrite' for s in named_raw),
+        action_only_boundary_recognitions=sum(s['kind'] == 'disk_boundary_relation' for s in named_raw),
+        complete_named_derivation=True, complete_under_twenty_derivation=False,
+        cyclic_starts_are_explicit_conjugations=True, terminal_exteriors=4)
+    if named_summary['graphical_steps'] != 121 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
+        raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
+    display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
+                                   for i, state in enumerate(named_shown)]
+    pure_names += ('namedfull',)
     # One readable chain through the already certified route. These arrows
     # summarize retained atomic moves; they are never called single moves.
     legacy=tuple(s for phase in report.values() if isinstance(phase,dict) and 'stages' in phase
@@ -219,7 +265,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
