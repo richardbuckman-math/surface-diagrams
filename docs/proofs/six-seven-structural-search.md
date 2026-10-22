@@ -1,5 +1,50 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 22 point-pushing engine and a common-frame exclusion
+
+The complete NAMED proof is published in b610d59: 121 graphical steps, FOUR
+explicit sphere operations, zero action-only recognitions. Remote Tests and
+Documentation are GREEN; all121 LIVE arrows and the97-page PDF were checked.
+Do not repeat unchanged publication checks. Under20 is still open.
+
+The proposed early B4 shortcut now has a reusable EXACT DISK splitting engine:
+`point_pushing.split_fixed_last_strand()`. It retains the F4 pushing loop AND
+B4 shadow, with signed Schreier edges and a reconstructed disk word. It uses
+only the smaller shadow action, not a full source Artin action or a route
+search. Canonical under-passing pair pushes have loop x_i; pushing reverses
+multiplication order. Word/work exhaustion raises VerificationLimitError.
+Ordinary deletion is NOT the framed puncture-to-boundary chart.
+
+NEW rigorous exclusion: no SINGLE common conjugation fixing point5 puts all
+FOUR original early-chart halves in one embedded B4. F3/F9 have the SAME(13)
+shadow permutation but pushing exponents(-1,0,1,0)/(1,0,-1,0), requiring
+Z3-Z1=-1 AND +1. Independently F6/F11 have(24), exponents0/(0,2,0,-2),
+requiring Z4-Z2=0 AND2. A retained inconsistent integer-constraint cycle is
+an exact obstruction, NOT a count-only guess. This excludes that common-frame
+shortcut, not actual Hurwitz transports, substitutions or all shorter routes.
+Do not search again for a simultaneous common supporting disk for these
+UNCHANGED four halves. Endpoint sets were insufficient, as suspected.
+
+Reproduction: examples/analyze_early_point_pushing.py runs in about0.10s and
+saves docs/proofs/six-seven-point-pushing.json; explanations are in the matching
+.md. Every original factor has its B5 reconstruction independently checked.
+The full product retains kernel loop(1234)^4 as well as shadow D4^4; discarding
+the kernel would be wrong. This is a new algebraic diagnostic, NOT a shorter
+graphical derivation. The published proof/PDF/payloads are unchanged.
+
+Tests cover every signed Schreier edge for2..7strands,200random mixed
+reconstructions, basis orientation/anti-multiplication, known common frames,
+nontrivial kernels, saved-report reproduction and fail-closed limits. Forty
+focused point-pushing/braid/puncture/closure tests pass. No graphical assets
+were changed. Check NEW publication CI after committing this isolated engine.
+
+Concrete next step: seek a small named relation among the early B4 shadows,
+then use the retained pushing loops to choose an ACTUAL lifted Hurwitz or
+PC substitution. A transported factor involving point5 can change this
+obstruction; a common frame alone cannot. Never infer the B5 relation from
+its B4 shadow or silently remove its kernel. The existing121-step named
+proof remains the complete, checked fallback.
+
 ## October 22 NEW COMPLETE NAMED CLOSURE: four visible exteriors
 
 The former named-boundary gap is NOW SOLVED by `early_boundary_closure.close_round_boundary()`.
@@ -58,11 +103,9 @@ as before. This is shorter than the archived177-step proof, not an under20
 proof. The old125-page PDF and initial943823-byte payload remain preserved.
 The full route lives in the lazy pure payload, including its early-prefix rows.
 
-Current batch is not yet published/remote-validated. Run focused tests including
-`tests.test_early_boundary_closure`, inspect all95 chapter arrows plus the new
-121-step full route (especially all four visible sphere labels), commit/push,
-and verify remote CI/live publication. Then prioritize shortening THIS actual
-named proof with reusable patterns rather than searching for a missing closure.
+Publication b610d59 is fully validated: remote Tests/Documentation GREEN,
+all121 LIVE full-route arrows and the LIVE PDF verified. Prioritize actual
+mathematical shortening of THIS named proof; do not repeat unchanged checks.
 The older missing135/petal targets and failed cyclic supplier probes below are
 historical alternatives, not gaps in the new completed derivation.
 

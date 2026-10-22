@@ -1,0 +1,4990 @@
+{
+  "scope": "Exact DISK stabilizer decomposition retaining both the B4 shadow and the F4 point-pushing kernel. This is a calculation diagnostic, not a new positive graphical proof, sphere move, or framed-puncture chart.",
+  "source": "certificate.json / early_boundary / chart / factors",
+  "factors": [
+    {
+      "id": "prefix.P45",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          4
+        ],
+        "shadow_word": [
+          2,
+          1,
+          1,
+          2,
+          3,
+          3,
+          -2,
+          -1,
+          -1,
+          -2
+        ],
+        "kernel_loop": [
+          1,
+          2,
+          3,
+          -2,
+          -1,
+          4,
+          1,
+          2,
+          -3,
+          -2,
+          -1,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          -3,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          -3,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          2,
+          1,
+          1,
+          2,
+          3,
+          3,
+          -2,
+          -1,
+          -1,
+          -2
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 474
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "prefix.P12",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          1,
+          1
+        ],
+        "shadow_word": [
+          1,
+          1
+        ],
+        "kernel_loop": [],
+        "kernel_braid": [],
+        "reconstructed_word": [
+          1,
+          1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          }
+        ],
+        "work": 18
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F4",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ],
+        "shadow_word": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ],
+        "kernel_loop": [],
+        "kernel_braid": [],
+        "reconstructed_word": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          }
+        ],
+        "work": 254
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F3",
+      "half": true,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -1,
+          -2,
+          -4,
+          -3,
+          -3,
+          2,
+          3,
+          3,
+          4,
+          2,
+          1
+        ],
+        "shadow_word": [
+          -1,
+          2,
+          1
+        ],
+        "kernel_loop": [
+          -2,
+          -1,
+          2,
+          3
+        ],
+        "kernel_braid": [
+          -4,
+          3,
+          2,
+          -1,
+          -1,
+          -2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          3,
+          2,
+          -1,
+          -1,
+          -2,
+          3,
+          4,
+          -1,
+          2,
+          1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          }
+        ],
+        "work": 99
+      },
+      "kernel_exponents": [
+        -1,
+        0,
+        1,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F5",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          4
+        ],
+        "shadow_word": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "kernel_loop": [
+          2,
+          3,
+          2,
+          3
+        ],
+        "kernel_braid": [
+          -4,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          3,
+          4,
+          2,
+          2,
+          2,
+          2
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 3,
+            "next_position": 2,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 3,
+            "next_position": 2,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 124
+      },
+      "kernel_exponents": [
+        0,
+        2,
+        2,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F6",
+      "half": true,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -2,
+          3,
+          -4,
+          -3,
+          -3,
+          2,
+          -4,
+          -3,
+          2,
+          3,
+          4,
+          -2,
+          3,
+          3,
+          4,
+          -3,
+          2
+        ],
+        "shadow_word": [
+          -2,
+          3,
+          2,
+          -3,
+          2,
+          3,
+          -2,
+          -3,
+          2
+        ],
+        "kernel_loop": [
+          2,
+          3,
+          4,
+          -3,
+          -2,
+          -3,
+          -2,
+          -3,
+          2,
+          3,
+          2,
+          3,
+          -4,
+          -3,
+          -2,
+          3
+        ],
+        "kernel_braid": [
+          -4,
+          3,
+          -2,
+          -2,
+          -3,
+          -4,
+          -4,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          -3,
+          -3,
+          -2,
+          -2,
+          -3,
+          -3,
+          -2,
+          -2,
+          -3,
+          4,
+          4,
+          3,
+          2,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          3,
+          -2,
+          -2,
+          -3,
+          -4,
+          -4,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          -3,
+          -3,
+          -2,
+          -2,
+          -3,
+          -3,
+          -2,
+          -2,
+          -3,
+          4,
+          4,
+          3,
+          2,
+          2,
+          3,
+          4,
+          -2,
+          3,
+          2,
+          -3,
+          2,
+          3,
+          -2,
+          -3,
+          2
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          }
+        ],
+        "work": 345
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F8.1",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          1,
+          2,
+          3,
+          -4,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          4,
+          -3,
+          -2,
+          -1,
+          4
+        ],
+        "shadow_word": [
+          1,
+          2,
+          -3,
+          2,
+          2,
+          3,
+          -2,
+          -1
+        ],
+        "kernel_loop": [
+          1,
+          3,
+          -1,
+          4,
+          1,
+          -3,
+          -1,
+          -4,
+          -1,
+          4,
+          1,
+          3
+        ],
+        "kernel_braid": [
+          -4,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          -3,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          -3,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          1,
+          2,
+          -3,
+          2,
+          2,
+          3,
+          -2,
+          -1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": -4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 3,
+            "next_position": 2,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 318
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F10.1",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          -1,
+          4
+        ],
+        "shadow_word": [
+          1,
+          2,
+          2,
+          -1
+        ],
+        "kernel_loop": [
+          1,
+          3
+        ],
+        "kernel_braid": [
+          -4,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          1,
+          2,
+          2,
+          -1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 3,
+            "next_position": 2,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 78
+      },
+      "kernel_exponents": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F8.2",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4
+        ],
+        "shadow_word": [
+          1,
+          1
+        ],
+        "kernel_loop": [
+          4,
+          1,
+          2,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4,
+          1,
+          1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 1,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 1,
+            "next_position": 1,
+            "kind": "point_push",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 2,
+            "next_position": 1,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 1,
+            "next_position": 2,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 78
+      },
+      "kernel_exponents": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F9",
+      "half": true,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          -3,
+          -4,
+          -3,
+          1,
+          2,
+          2,
+          1,
+          -4,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          4,
+          -1,
+          -2,
+          -2,
+          -1,
+          3,
+          4,
+          3,
+          4
+        ],
+        "shadow_word": [
+          -3,
+          1,
+          2,
+          2,
+          1,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          -1,
+          -2,
+          -2,
+          -1,
+          3
+        ],
+        "kernel_loop": [
+          1,
+          2,
+          4,
+          1,
+          -4,
+          -2,
+          -1,
+          -4,
+          -3,
+          4,
+          1,
+          -4,
+          -2,
+          -1,
+          -4,
+          -3,
+          4,
+          1,
+          2,
+          4,
+          -2,
+          -1,
+          -4,
+          3,
+          4,
+          1,
+          2,
+          4,
+          -1,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          3,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          3,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          -3,
+          1,
+          2,
+          2,
+          1,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          -1,
+          -2,
+          -2,
+          -1,
+          3
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": -4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 857
+      },
+      "kernel_exponents": [
+        1,
+        0,
+        -1,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F10.2",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          1,
+          1,
+          2,
+          3,
+          4,
+          3,
+          4,
+          3,
+          4,
+          -2,
+          -1,
+          -1
+        ],
+        "shadow_word": [
+          1,
+          1,
+          2,
+          3,
+          3,
+          -2,
+          -1,
+          -1
+        ],
+        "kernel_loop": [
+          1,
+          2,
+          -1,
+          4
+        ],
+        "kernel_braid": [
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          4,
+          -3,
+          -2,
+          -1,
+          -1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          1,
+          1,
+          2,
+          3,
+          3,
+          -2,
+          -1,
+          -1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 4,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": -1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 5,
+            "crossing": -1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -1
+          }
+        ],
+        "work": 228
+      },
+      "kernel_exponents": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F11",
+      "half": true,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          -4,
+          -4,
+          1,
+          1,
+          1,
+          -4,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          4,
+          -1,
+          -1,
+          -1,
+          4,
+          4,
+          4
+        ],
+        "shadow_word": [
+          1,
+          1,
+          1,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          -1,
+          -1,
+          -1
+        ],
+        "kernel_loop": [
+          1,
+          2,
+          1,
+          2,
+          2,
+          -1,
+          -2,
+          -1,
+          -4,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          -2,
+          -1,
+          -1,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          -2,
+          -1,
+          -1,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          1,
+          1,
+          1,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          -1,
+          -1,
+          -1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": -1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -1
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 473
+      },
+      "kernel_exponents": [
+        0,
+        2,
+        0,
+        -2
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F12",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4
+        ],
+        "shadow_word": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "kernel_loop": [
+          4,
+          1,
+          2,
+          1,
+          2,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          4,
+          1,
+          1,
+          1,
+          1
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 1,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 1,
+            "next_position": 1,
+            "kind": "point_push",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 2,
+            "next_position": 1,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 1,
+            "next_position": 2,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 1,
+            "next_position": 3,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 3,
+            "crossing": 2,
+            "next_position": 2,
+            "kind": "point_push",
+            "generator": 2
+          },
+          {
+            "position": 2,
+            "crossing": 1,
+            "next_position": 1,
+            "kind": "point_push",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 2,
+            "next_position": 1,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 1,
+            "crossing": 1,
+            "next_position": 2,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 2,
+            "crossing": 2,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 156
+      },
+      "kernel_exponents": [
+        2,
+        2,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    },
+    {
+      "id": "F13",
+      "half": false,
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -4,
+          -4,
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3,
+          4,
+          4
+        ],
+        "shadow_word": [
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ],
+        "kernel_loop": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          4,
+          -2,
+          -1,
+          -4,
+          -2,
+          -1,
+          -4
+        ],
+        "kernel_braid": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          -4,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          -4,
+          -4,
+          -3,
+          -2,
+          -1,
+          -1,
+          -2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          4,
+          -3,
+          2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          }
+        ],
+        "work": 408
+      },
+      "kernel_exponents": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_disk_reconstruction": true
+    }
+  ],
+  "half_common_frame_obstruction": {
+    "status": "obstructed",
+    "common_conjugation_excluded": true,
+    "cycle": [
+      {
+        "source": 0,
+        "start": 3,
+        "end": 1,
+        "difference": 1
+      },
+      {
+        "source": 2,
+        "start": 1,
+        "end": 3,
+        "difference": 1
+      }
+    ],
+    "cycle_sum": 2,
+    "constraints": [
+      {
+        "source": 0,
+        "start": 3,
+        "end": 1,
+        "difference": 1
+      },
+      {
+        "source": 0,
+        "start": 2,
+        "end": 2,
+        "difference": 0
+      },
+      {
+        "source": 0,
+        "start": 1,
+        "end": 3,
+        "difference": -1
+      },
+      {
+        "source": 0,
+        "start": 4,
+        "end": 4,
+        "difference": 0
+      },
+      {
+        "source": 1,
+        "start": 1,
+        "end": 1,
+        "difference": 0
+      },
+      {
+        "source": 1,
+        "start": 4,
+        "end": 2,
+        "difference": 0
+      },
+      {
+        "source": 1,
+        "start": 3,
+        "end": 3,
+        "difference": 0
+      },
+      {
+        "source": 1,
+        "start": 2,
+        "end": 4,
+        "difference": 0
+      },
+      {
+        "source": 2,
+        "start": 3,
+        "end": 1,
+        "difference": -1
+      }
+    ],
+    "scope": "No simultaneous conjugation fixing the last strand puts all these disk braids in the embedded smaller braid group. This does not exclude Hurwitz transports or substitutions.",
+    "source_ids": [
+      "F3",
+      "F6",
+      "F9",
+      "F11"
+    ],
+    "other_pair": {
+      "status": "obstructed",
+      "common_conjugation_excluded": true,
+      "cycle": [
+        {
+          "source": 0,
+          "start": 4,
+          "end": 2,
+          "difference": 0
+        },
+        {
+          "source": 1,
+          "start": 2,
+          "end": 4,
+          "difference": 2
+        }
+      ],
+      "cycle_sum": 2,
+      "constraints": [
+        {
+          "source": 0,
+          "start": 1,
+          "end": 1,
+          "difference": 0
+        },
+        {
+          "source": 0,
+          "start": 4,
+          "end": 2,
+          "difference": 0
+        },
+        {
+          "source": 0,
+          "start": 3,
+          "end": 3,
+          "difference": 0
+        },
+        {
+          "source": 0,
+          "start": 2,
+          "end": 4,
+          "difference": 0
+        },
+        {
+          "source": 1,
+          "start": 1,
+          "end": 1,
+          "difference": 0
+        },
+        {
+          "source": 1,
+          "start": 4,
+          "end": 2,
+          "difference": -2
+        }
+      ],
+      "scope": "No simultaneous conjugation fixing the last strand puts all these disk braids in the embedded smaller braid group. This does not exclude Hurwitz transports or substitutions."
+    }
+  },
+  "product_split": {
+    "strands": 5,
+    "source_word": [
+      -4,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      -3,
+      -2,
+      -1,
+      -1,
+      -2,
+      4,
+      1,
+      1,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      -1,
+      -2,
+      -4,
+      -3,
+      -3,
+      2,
+      3,
+      3,
+      4,
+      2,
+      1,
+      -4,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      4,
+      -2,
+      3,
+      -4,
+      -3,
+      -3,
+      2,
+      -4,
+      -3,
+      2,
+      3,
+      4,
+      -2,
+      3,
+      3,
+      4,
+      -3,
+      2,
+      -4,
+      1,
+      2,
+      3,
+      -4,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      4,
+      -3,
+      -2,
+      -1,
+      4,
+      -4,
+      1,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      -1,
+      4,
+      -4,
+      -4,
+      -4,
+      -3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3,
+      4,
+      4,
+      4,
+      -4,
+      -3,
+      -4,
+      -3,
+      1,
+      2,
+      2,
+      1,
+      -4,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      4,
+      -1,
+      -2,
+      -2,
+      -1,
+      3,
+      4,
+      3,
+      4,
+      1,
+      1,
+      2,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      -2,
+      -1,
+      -1,
+      -4,
+      -4,
+      -4,
+      1,
+      1,
+      1,
+      -4,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      4,
+      -1,
+      -1,
+      -1,
+      4,
+      4,
+      4,
+      -4,
+      -4,
+      -4,
+      -3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3,
+      4,
+      4,
+      4,
+      -4,
+      -4,
+      -3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3,
+      4,
+      4
+    ],
+    "shadow_word": [
+      2,
+      1,
+      1,
+      2,
+      3,
+      3,
+      -2,
+      -1,
+      -1,
+      -2,
+      1,
+      1,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      -1,
+      2,
+      1,
+      2,
+      2,
+      2,
+      3,
+      2,
+      -3,
+      2,
+      3,
+      -2,
+      -3,
+      2,
+      1,
+      2,
+      -3,
+      2,
+      2,
+      3,
+      2,
+      1,
+      -3,
+      1,
+      2,
+      2,
+      1,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      -1,
+      -2,
+      -2,
+      -1,
+      3,
+      1,
+      1,
+      2,
+      3,
+      3,
+      -2,
+      1,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      1,
+      -3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3
+    ],
+    "kernel_loop": [
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4
+    ],
+    "kernel_braid": [
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4
+    ],
+    "reconstructed_word": [
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      4,
+      3,
+      2,
+      1,
+      1,
+      2,
+      3,
+      4,
+      2,
+      1,
+      1,
+      2,
+      3,
+      3,
+      -2,
+      -1,
+      -1,
+      -2,
+      1,
+      1,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      -1,
+      2,
+      1,
+      2,
+      2,
+      2,
+      3,
+      2,
+      -3,
+      2,
+      3,
+      -2,
+      -3,
+      2,
+      1,
+      2,
+      -3,
+      2,
+      2,
+      3,
+      2,
+      1,
+      -3,
+      1,
+      2,
+      2,
+      1,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      -1,
+      -2,
+      -2,
+      -1,
+      3,
+      1,
+      1,
+      2,
+      3,
+      3,
+      -2,
+      1,
+      -3,
+      -2,
+      1,
+      2,
+      3,
+      1,
+      -3,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3
+    ],
+    "edges": [
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": -3,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": -3
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": -1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 5,
+        "crossing": -2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -3,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": -3,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": -3
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 3,
+        "next_position": 2,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 3,
+        "next_position": 2,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -3,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": -3,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": -3
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": -4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 3,
+        "next_position": 2,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": -3,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": -3
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 3,
+        "next_position": 2,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -3,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 1,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 1,
+        "next_position": 1,
+        "kind": "point_push",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 2,
+        "next_position": 1,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 1,
+        "next_position": 2,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -3,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": -4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 3,
+        "crossing": -3,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": -3
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 5,
+        "crossing": -2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": -2,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": 3,
+        "next_position": 3,
+        "kind": "point_push",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 4,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 5,
+        "crossing": -1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 5,
+        "crossing": -1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": 1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 5,
+        "crossing": -2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": -1,
+        "next_position": 4,
+        "kind": "shadow",
+        "generator": -1
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -3,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 1,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 1,
+        "next_position": 1,
+        "kind": "point_push",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 2,
+        "next_position": 1,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 1,
+        "next_position": 2,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 1,
+        "next_position": 3,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 3,
+        "crossing": 2,
+        "next_position": 2,
+        "kind": "point_push",
+        "generator": 2
+      },
+      {
+        "position": 2,
+        "crossing": 1,
+        "next_position": 1,
+        "kind": "point_push",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 2,
+        "next_position": 1,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 1,
+        "crossing": 1,
+        "next_position": 2,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 2,
+        "crossing": 2,
+        "next_position": 3,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 3,
+        "crossing": 3,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 5,
+        "crossing": -4,
+        "next_position": 4,
+        "kind": "identity",
+        "generator": 0
+      },
+      {
+        "position": 4,
+        "crossing": -4,
+        "next_position": 5,
+        "kind": "point_push",
+        "generator": -4
+      },
+      {
+        "position": 5,
+        "crossing": -3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": -3
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 1,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 1
+      },
+      {
+        "position": 5,
+        "crossing": 2,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 2
+      },
+      {
+        "position": 5,
+        "crossing": 3,
+        "next_position": 5,
+        "kind": "shadow",
+        "generator": 3
+      },
+      {
+        "position": 5,
+        "crossing": 4,
+        "next_position": 4,
+        "kind": "point_push",
+        "generator": 4
+      },
+      {
+        "position": 4,
+        "crossing": 4,
+        "next_position": 5,
+        "kind": "identity",
+        "generator": 0
+      }
+    ],
+    "work": 15774
+  },
+  "kernel_is_four_boundary_loops": true,
+  "shadow_is_four_four_point_boundaries": true,
+  "graphical_proof_changed": false,
+  "graphical_step_count": 121,
+  "complete_under_twenty_derivation": false,
+  "next_step": "Use the exact kernel as a transport invariant while seeking a shorter named route in the four-strand shadow; one simultaneous common frame cannot put all four original halves inside the four-point subdisk."
+}
