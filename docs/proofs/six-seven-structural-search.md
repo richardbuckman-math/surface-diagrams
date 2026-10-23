@@ -1,5 +1,74 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 23 residual geometry: 39-operation research route
+
+The published existing-root RESEARCH branch now has39 operations/57 retained
+adjacent checks. Three new positive disk operations extend the old36-operation
+endpoint; they do NOT shorten the complete106-step named proof. No PDF,
+main-proof record, sphere operation or startup payload changes.
+
+NEW REACHED GEOMETRY: carry alternative.T12.square UP across F10.2,
+alternative.F12.1, alternative.P13, alternative.S1 and F8.2. These are the
+five actual neighbors in this NEW endpoint; every adjacent check is saved.
+The support maximum/total drops17/126 ->13/98. Commute the first123 root
+past T23, then contract the ACTUAL ordered123,34,124 curves by a cabled PC
+lantern. Necessary centralization alone first suggested this configuration,
+but the tempting round B4 chart g=(-3,1,2,2,3) FAILS its actual34 and124
+inputs. Do not infer the lantern from its enclosed sets or crossing counts.
+
+The EXACT common chart is h=Q45^-1 R234^-1, where Q45 has chartg,coreT45
+and R234 is ROUND T234. Before the earlier45-petal gather, the frame
+R234^-1 identifies this root123 and round34; undo the known inverseQ45
+transport to obtainh. EVERY actual input separately matches canonical
+R123,T34,sigma3^-1 R123 sigma3. Their outputs are h*T1234*h^-1 and
+h*T12*h^-1. Saved individual disk-presentation checks shorten these to
+O:chart(1,2,3,3,-4,-4),coreT1234 and I:chart(-2,-3,-3,-2),coreT12.
+The latter is EXACTLY the old second.inner12, not merely another12 curve.
+
+NEW ENDPOINT:15 positive full-twist records =1visible exterior,1four-point
+curve,5triples,8pair records(one squared). The remaining14 records have
+boundary^3 action; their named residual closure is still open IN THIS BRANCH.
+Support maximum/total12/90, braid182. Exact CLOSED-curve crossings fall
+74/1536 ->34/672. All three new states are independently B5/lift-exact;
+the branch's earlier peak remains20. No inverse factor, auxiliary half or
+sphere move is introduced; the single exterior remains visibly retained.
+This is a real geometric simplification, not a shorter complete derivation.
+
+REJECTED/UNAPPLIED this run: the single common Q45 frame makes the outer
+round but peaks69; a common R234 frame makes the shared12 round but peaks27.
+The three roots incident to45 do not supply actualQ45 as direct canonical
+daisy/rose petals. A different six-operation rose/cyclic gathering DOES
+supply round34, gather24/23/34 into roundR234, and make I12round. However its
+endpoint worsens to16/106,braid192; the134 root still has support13 and
+fails the next round-four-point lantern. Positive R234 transport of that
+root gives support11 but neither canonical134 chart; the inverse gives25.
+This longer route is checked in .preview/probe_alt_round12.py, NOT appended.
+Do not repeat it without a concrete subsequent payoff.
+
+Two other fixed-order candidate triples fail necessary centralization in
+ALL six orders: F8.2,S1,currentunder24 and F8.2,F10.2,currentT23. This excludes
+only those untransported triples. Further235/245/34 candidates reached an
+exact-action bound and remain UNKNOWN, not false. The new outer with S1
+and C12 has two failed and four UNKNOWN orders; no compatible exterior
+lantern is claimed. Scripts .preview/probe_alt_*.py retain these checks.
+
+Validation:51 focused tests pass, including actual common-frame matches,
+positive disk/lift states, every retained adjacent check, framed balances,
+wrong round-chart rejection and exact intersection counts. Chrome checked
+all39 LOCAL arrows, lazy loading, mobile and connected braids; the new
+lantern was visually inspected. Complete106 raw/resolved graphics, the
+previous36 research arrows, both PDFs and initial943823-byte/early payloads
+were compared with077c3bf and are IDENTICAL. Commit/push the finished
+increment and verify NEW remoteCI/live39arrows. Keep the
+active six-hour schedule and weekly interactive reserve.
+
+Concrete next step: work from operation39's routed four-point outer and its
+EXACT known shared12 class, rather than undoing the new contraction. Find a
+transported named pattern that uses the residual134/235/145/245 roots or
+supplies the missing useful exterior petal. Reusing the old roundR234 trick
+requires a concrete following contraction; simply making one pair round did
+not shorten or simplify the surrounding factorization.
+
 ## October 23 reached existing-root transport: original halves gone, one exterior visible
 
 transport_alternative_roots() now reaches an ACTUAL positive research endpoint

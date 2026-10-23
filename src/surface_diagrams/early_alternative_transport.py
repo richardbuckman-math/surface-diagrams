@@ -29,7 +29,7 @@ def _matches(actual, pattern):
 
 
 def transport_alternative_roots(factors):
-    """Remove all original halves and reach one visible exterior in 36 moves.
+    """Remove original halves and simplify the positive residual in 39 moves.
 
     Borrow the actual Q14 from the existing four-point daisy. A transported
     daisy replaces Q14 and the remaining 345 petals by O1345. Carry O1345 up
@@ -155,6 +155,34 @@ def transport_alternative_roots(factors):
     r.stages[-1]['named_pattern_witness'] = dict(frame=g, canonical=canonical, individual_matches=matches,
         canonical_relation='Cyclic cabled PC lantern S R Q = exterior T123', exact_disk_equality=True)
 
+    exterior_step = len(r.stages) - 1
+    exterior_score = _score(r.factors)
+    # Reuse the same fixed square on the NEW residual, keeping all five
+    # adjacent checks. The newly exposed prefix is a cabled lantern in
+    # h=Q45^-1 R234^-1, not in the tempting but incorrect round B4 chart.
+    r.drag('alternative.T12.square', 'F8.2',
+           title='Unwind five actual residual curves with the fixed positive square')
+    r.drag('alternative.inner123', 'alternative.T23',
+           title='Commute the 123 root past T23 to its actual 34 and 124 companions')
+    q45 = Factor('pattern.borrowed45', g, 4, 2)
+    round234 = Factor('pattern.R234', (), 2, 3)
+    h = reduce_word(inverse_word(q45.word) + inverse_word(round234.word))
+    canonical = (Factor('pattern.R123', (), 1, 3), Factor('pattern.Q34', (), 3, 2),
+                 Factor('pattern.S124', (-3,), 1, 3))
+    pattern = tuple(replace(f, conjugator=reduce_word(h + f.conjugator)) for f in canonical)
+    index = r.position('alternative.inner123')
+    prefix_matches = _matches(r.factors[index:index + 3], pattern)
+    raw_after = (Factor('alternative.residual.O1234', h, 1, 4),
+                 Factor('alternative.residual.I12', h, 1, 2))
+    after = tuple(r.normalize(f) for f in raw_after)
+    presentations = _matches(raw_after, after)
+    r.substitute(index, 3, after,
+                 'Cabled PC lantern contracts the ACTUAL 123, 34 and 124 curves', 'disk_cluster_lantern')
+    r.stages[-1]['named_pattern_witness'] = dict(canonical=canonical, frame=h,
+        frame_decomposition=(inverse_word(q45.word), inverse_word(round234.word)),
+        individual_matches=prefix_matches, raw_after=raw_after,
+        presentation_matches=presentations, exact_disk_equality=True)
+
     for stage in r.stages:
         if stage['kind'] in ('disk_cluster_lantern', 'disk_pc_daisy'):
             sets = [[(f.power, enclosed_boundaries(f.mapping_class, 5)) for f in stage[k]]
@@ -164,6 +192,7 @@ def transport_alternative_roots(factors):
     retained = tuple(s['factors'] for s in r.stages) + tuple(a['factors'] for s in r.stages for a in s.get('atomic_steps', ()))
     return dict(stages=tuple(r.stages), factors=r.factors, graphical_steps=len(r.stages) - 1,
                 first_pair_step=first_pair_step, all_pure_step=pure_step, all_pure_factors=pure_factors,
+                first_exterior_step=exterior_step, first_exterior_score=exterior_score,
                 first_half_match=first_match, second_half_match=second_match,
                 adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
                 actual_peak_support_word=max(_score(fs)['max_support_word'] for fs in retained),
@@ -172,4 +201,4 @@ def transport_alternative_roots(factors):
                 before_score=_score(source), after_score=_score(r.factors),
                 boundary_power=4, all_factors_positive=True, replacement_for_full_proof=False,
                 applied_to_public_replay=False,
-                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')
+                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible and a bounded cabled lantern reduces its residual curves. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')
