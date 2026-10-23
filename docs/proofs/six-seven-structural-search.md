@@ -1,5 +1,76 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 23 reached existing-root transport: original halves gone, one exterior visible
+
+transport_alternative_roots() now reaches an ACTUAL positive research endpoint
+in36 operations /51 retained adjacent checks, published as
+?phase=earlyalttransport&step=0. This extends the seven-operation alternative,
+but does NOT shorten or replace the complete106-step named proof. The full
+proof's raw/resolved graphical states, both PDFs, and initial943823-byte and
+early payloads are unchanged. No sphere move or auxiliary half occurs here.
+
+The formerly missing Q14 transport IS REACHED. Use the saved five-operation
+preparation after alternative.stage6. Expand its O1234 daisy and carry Q14
+DOWN through F3, F6, and the remaining345 petals to F10.1. The actual four
+transported factors form O1345: a canonical PC daisy in common frame
+Q14*sigma4^-1, with TWO retained inverse petal interchanges and a cyclic
+start. EVERY input matches individually. Carry this new O1345 UP over F6
+BEFORE gathering F3/F9. This is essential: the direct gathers exceed20.
+The first original pair is combined at operation17; its endpoint12/94,
+braid206 has F6 exactly equal to the old purified F6 (support8).
+
+Expand that O1345 in its internally sigma4^-1-conjugated daisy to return the
+ACTUAL SAME Q14. Carry it up to the prefix square: the round T12 square and
+round T123 are recovered exactly. The original four-point daisy closes too.
+A C12-unit preparation, short cyclic square transport, frame(3,4,4), root
+reorder and matching-half gather remove F6/F11. At operation29 there are
+SIXTEEN positive full-twist factors, beginning with ROUND T1234; score17/129,
+braid178. Fifteen following classes individually match the old purification
+endpoint's shared core. Its three leading pairs and final T123 have instead
+been replaced by this one four-point factor. Do not reintroduce those extra
+factors merely to force the branch back into the old record list.
+
+SEVEN more actual operations reach an exterior. Apply frame(-4,-3), expand
+the final C12 daisy, use the cyclic start at actual Q15 and drag it through
+the combined prefix and the two roots. A cabled PC lantern gives a second
+four-point twist. They are A=chart(-3,1,2,2,3,-4),coreT1234 and B=roundT1234.
+Common chart g=(-3,1,2,2,3) fixes B and identifies A with the standard under
+1235 curve. The REQUIRED 45 petal g*T45*g^-1 is ALREADY the actual
+alternative.return.1. Carry it up four neighbors, then apply the actual
+cabled PC lantern A B Q45 = exterior * (g*T123*g^-1). Every input matches
+individually. The exterior remains VISIBLE: do not cap its -I lift.
+
+Final endpoint:16 full-twist factors =1exterior +7triples +8pair records,
+one pair record squared. Residual fifteen-factor product has boundary^3
+action, but its named closure is NOT supplied by this branch. Endpoint
+support17/126,braid220; geometric closed-curve crossings74/1536. These are
+not an overall crossing improvement. Peak support20 includes every retained
+adjacent state; no negative, temporary root or sphere move occurs.
+
+REJECTED bounded variants: Q down only through F3 or F6 followed by either
+direct half gather exceeds20. A common matching-half frame in either sign
+also exceeds20 (max28..36); the inverse Q frame does not rescue the direct
+gather. A short cyclic Q-up route can match F9 if C12 first shortens F11,
+but gives worse pair endpoints19/166 or15/144 and no square-only final-half
+match. Do not repeat these limited probes; they exclude only these routes.
+The accepted route instead contracts the supplied daisy and transports its
+outer before gathering. Scratch reproductions are .preview/probe_alternative_*.py.
+
+Validation:50 focused tests pass, all36 local graphical arrows/connected
+braids and lazy/mobile switching passed Chrome, and the exterior-lantern
+picture was inspected. Full106 raw/graphical states and archived assets were
+compared with2176c2e and are IDENTICAL. Commit/push and verify NEW CI/live36
+arrows. The six-hour schedule remains active; the historical target flags
+in early_alternative_lantern remain false because this NEW separate chapter
+contains the actual application.
+
+Concrete next step: work from the new operation29 round-four-point state or
+operation36 exterior state. Seek transported cabled lanterns/daisies for its
+actual15-factor boundary^3 remainder, keeping the visible exterior. Prefer
+matching the common core and borrowing an actual petal over reconstructing
+the old auxiliary-half or prefix-pair detour. A shorter full join is still
+required before changing the published106-step count or PDF.
+
 ## October 23 alternative early lantern: no auxiliary half twists
 
 A new SEPARATE research branch, early_alternative.expose_alternative_early_daisy(),
