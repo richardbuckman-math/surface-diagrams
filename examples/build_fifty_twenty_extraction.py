@@ -157,6 +157,9 @@ def build():
                             crossings.append(intersection_cache[pair_key])
                     shown['curve_intersections']=dict(maximum=max(crossings,default=0),total=sum(crossings),pairs=len(crossings))
                     shown['caption']+='; pairwise curve crossings max '+str(max(crossings,default=0))+' / sum '+str(sum(crossings))
+            if stage.get('daisy_frame'):
+                shown['daisy_frame']=stage['daisy_frame']
+                shown['caption']+='; exact PC daisy chart '+str(stage['daisy_frame'])
             if stage.get('boundary_power'):shown['boundary_power']=stage['boundary_power']
             if stage.get('adjacent_moves'):shown['adjacent_moves']=stage['adjacent_moves']
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
@@ -199,7 +202,7 @@ def build():
         action_only_boundary_recognitions=sum(s['kind'] == 'disk_boundary_relation' for s in named_raw),
         complete_named_derivation=True, complete_under_twenty_derivation=False,
         cyclic_starts_are_explicit_conjugations=True, terminal_exteriors=4)
-    if named_summary['graphical_steps'] != 121 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
+    if named_summary['graphical_steps'] != 106 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
         raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
     display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
                                    for i, state in enumerate(named_shown)]

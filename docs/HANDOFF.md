@@ -1,5 +1,65 @@
 # Handoff: surface-diagrams
 
+## October 23 genuine shortening: 121 -> 106 graphical steps
+
+The complete named proof has been MATHEMATICALLY SHORTENED by15 steps.
+The last boundary closure is now18 operations /29 retained adjacent checks,
+down from33/55. Full proof:106 graphical operations, FOUR explicit sphere
+moves, ZERO action-only recognitions. This is not yet an under20 full proof.
+
+The shortcut is two ALREADY MATCHED PC daisies in different common B4 charts.
+At close_round_boundary stage12, carry the spare ROUND T1234 DOWN through
+only the two leading point-5 petals (and the intervening central exterior).
+This both supplies the prefix of the middle daisy and removes the leading
+petals' boundary winding. The next five ACTUAL factors individually equal
+pc_daisy_terms(T12345) in common frame(-3,1,1,1,-3,-2,-1). Contract them.
+Commute the three visible exteriors to the front. The remaining five ACTUAL
+factors individually equal the PC daisy in frame(3,3,3,2,3,1,2,-3). Contract
+them too. Every term is checked as a B5 braid, not merely as a kernel loop,
+endpoint set or ordered product. Both chart words lie in B4, preserving the
+round T1234 and central exterior. No global frame is added to the replay.
+
+This replaces the old16 petal drags +5 closing operations by SIX operations:
+one fixed T1234 drag, one matched daisy, three central-exterior drags, one
+matched daisy. It BYPASSES all21 old noncentral petal interchanges; replay
+never runs that old search. The new tail never drags an individual pair
+petal. Scores at its start14/98,braid160; after T1234 drag14/82,braid152;
+after first daisy12/47,braid120; terminal5/20,braid80. Peak stays<=14 and
+all factors are positive full twists. All four exteriors remain visible.
+
+Phases: earlycollect9, earlyrose3, earlypetals2, earlyclosed4. The old phase
+URLs remain, with earlypetals now showing direct recognition of the middle
+daisy. The raw certificate retains both full daisy witnesses and individual
+checks, signed framed balances, all29 adjacent checks, and zero new sphere
+moves. The full route still includes the separate six-correction sphere cap
+and final fourth-power sphere cap; no singleton cap is silently removed.
+
+The updated PDF is output/pdf/six-seven-named.pdf (90 portrait US Letter
+pages), with matching public copy. All106 steps and all4 full disk discrepancy
+appendices are retained. All90 pages were rendered; the old125-page/177-step
+archive remains BYTE-IDENTICAL. Initial display.json remains943823bytes/
+05e6c888cf352a48; new pure chapters load separately. The point-pushing report's
+proof-count metadata is updated; its kernel calculations are unchanged.
+Forty-four focused tests pass; Chrome checked all106 full proof arrows and
+all80 research arrows, connected-braid alignment, lazy loads and mobile.
+PDF visual review passed (all-page contact sheet, summary/contents, both new
+daisies, ending and sphere appendix). Commit/push and verify NEW remote
+CI/live assets; do not rerun unchanged historical publication checks.
+
+Concrete next step: apply this same recognition of TRANSPORTED named patterns
+to the earlier positive-purification detour, instead of forcing every petal
+into the canonical chart first. A full factor-by-factor common-chart match
+is required. Do not redo the bypassed21-petal search, or call the remaining
+full106-step derivation under20. The complete named closure remains solved.
+
+Other bounded NOT-APPLIED checks this run: original half neighborhoods have
+F3/F9 intersection12 and F6/F11 intersection40; the two earlier cocycle swaps
+worsen these to20/44. Neither pair's B4 shadows is equal after those swaps.
+Using original F3 instead of the extra K halves to transport the prefix
+across three neighbors reaches support22 and does NOT expose exact Q14.
+F9's analogous direct conjugations also fail (support74/86). Do not repeat
+these limited checks or interpret them as exclusions of all shorter routes.
+
 ## October 22 point-pushing engine and a common-frame exclusion
 
 The complete NAMED proof is published in b610d59: 121 graphical steps, FOUR

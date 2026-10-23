@@ -4984,7 +4984,7 @@
   "kernel_is_four_boundary_loops": true,
   "shadow_is_four_four_point_boundaries": true,
   "graphical_proof_changed": false,
-  "graphical_step_count": 121,
+  "graphical_step_count": 106,
   "complete_under_twenty_derivation": false,
   "next_step": "Use the exact kernel as a transport invariant while seeking a shorter named route in the four-strand shadow; one simultaneous common frame cannot put all four original halves inside the four-point subdisk."
 }

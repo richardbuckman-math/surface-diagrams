@@ -96,7 +96,7 @@ class PointPushingTests(unittest.TestCase):
         report = early_point_pushing_report()
         self.assertEqual(json.loads(json.dumps(report)), json.loads(path.read_text()))
         self.assertFalse(report['graphical_proof_changed'])
-        self.assertEqual(report['graphical_step_count'], 121)
+        self.assertEqual(report['graphical_step_count'], 106)
         self.assertFalse(report['complete_under_twenty_derivation'])
 
     def test_validation_and_exhaustion_never_return_partial_certificates(self):

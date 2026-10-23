@@ -13,14 +13,6 @@ from .framed_boundary_relations import enclosed_boundaries
 from .mapping_classes import exact_action
 from .projected_relations import pc_rose_terms, pc_daisy_terms
 
-# Found by cancelling the based point-pushing loops; replay never searches.
-_PETAL_ROUTE = ((4, 'up'), (3, 'up'), (0, 'up'), (0, 'up'), (2, 'up'),
-                (4, 'down'), (4, 'down'), (6, 'down'), (6, 'down'),
-                (0, 'up'), (1, 'up'), (0, 'up'), (2, 'up'), (1, 'up'),
-                (0, 'up'), (4, 'down'), (5, 'down'), (4, 'down'),
-                (6, 'down'), (5, 'down'), (4, 'down'))
-
-
 def _cyclic_last_first(r, title):
     before = r.factors
     moved = before[-1]
@@ -29,19 +21,12 @@ def _cyclic_last_first(r, title):
              exact_conjugation=True, local_before=before, local_after=r.factors)
 
 
-def _pushes(factors):
-    result = tuple(f for f in factors if f.points == 2)
-    if len(result) != 8 or any(5 not in enclosed_boundaries(f.mapping_class, 5) for f in result):
-        raise ValueError('The petal route needs exactly eight twists incident to point 5')
-    return result
-
-
 def close_round_boundary(factors):
     """Reach FOUR visible exteriors by named PC relations and fixed drags.
 
     Collect the inside-four-point factors around the short cyclic side, close
-    their six-pair rose by a lantern, a Hurwitz move and a PC daisy, untwist
-    the eight remaining point-pushing petals, then contract TWO PC daisies.
+    their six-pair rose by a lantern, a Hurwitz move and a PC daisy, recognize
+    TWO already matched PC daisies without the old 21 petal interchanges.
     This completes the named boundary closure, not the under-twenty-step goal.
     """
     factors = tuple(factors)
@@ -81,39 +66,38 @@ def close_round_boundary(factors):
                  'disk_pc_daisy')
     inside_end = len(r.stages) - 1
 
-    # Every arrow is an actual disk Hurwitz move. Consecutive crossings of the
-    # SAME fixed factor are one drag, with every adjacent check retained.
-    fixed_previous = None
-    for index, direction in _PETAL_ROUTE:
-        a, b = _pushes(r.factors)[index:index + 2]
-        fixed = b.id if direction == 'up' else a.id
-        r.drag(fixed, a.id if direction == 'up' else b.id,
-               title='Untwist the point-5 petal ' + fixed + ' by a disk Hurwitz move')
-        r.stages[-1]['fixed_factor_id'] = fixed
-        if fixed == fixed_previous:
-            previous, current = r.stages[-2:]
-            atomic = previous['atomic_steps'] + current['atomic_steps']
-            current = dict(current, atomic_steps=atomic, adjacent_moves=len(atomic),
-                           title='Carry the SAME point-5 petal ' + fixed + ' across its successive neighbors')
-            r.stages[-2:] = [current]
-        fixed_previous = fixed
-    canonical = pc_daisy_terms(Factor('close.standard.outer', (), 1, 5).mapping_class)[1:]
-    checks = tuple(dict(actual=f, canonical=canonical[i % 4], exact_disk_equal=
-                        exact_action(f.word, 5) == exact_action(canonical[i % 4].word, 5))
-                   for i, f in enumerate(_pushes(r.factors)))
-    if not all(check['exact_disk_equal'] for check in checks):
-        raise ValueError('The actual point-pushing factors did not become two canonical daisy lists')
-    petal_end = len(r.stages) - 1
+    # The middle FOUR petals already form a PC daisy in a common B4
+    # frame. Carrying the spare T1234 through the two leading petals both
+    # supplies its prefix and removes their boundary winding. No search or
+    # petal interchange is performed by this replay.
+    witnesses = []
+    checks = []
 
-    for name in ('exterior.boundary', 'second.exterior'):
+    def contract_daisy(index, frame, name, title):
+        before = r.factors[index:index + 5]
+        generic = pc_daisy_terms(Factor('daisy.outer', frame, 1, 5).mapping_class)
+        local_checks = tuple(dict(actual=f, canonical=t,
+            exact_disk_equal=exact_action(f.word, 5) == exact_action(t.word, 5))
+            for f, t in zip(before, generic))
+        if len(before) != 5 or not all(c['exact_disk_equal'] for c in local_checks):
+            raise ValueError('The actual factors do not match the transported PC daisy individually')
+        witnesses.append(dict(frame=frame, actual=before, generic=generic,
+                              individual_checks=local_checks, exact_disk_equal=True))
+        checks.extend(local_checks[1:])
+        r.substitute(index, 5, (Factor(name, (), 1, 5),), title, 'disk_pc_daisy')
+        r.stages[-1]['daisy_frame'] = frame
+        r.stages[-1]['individual_daisy_checks'] = local_checks
+
+    r.drag('close.O1234', 'close.rose245.1',
+           title='Carry T1234 through only the TWO leading petals; their boundary winding disappears')
+    contract_daisy(r.position('close.O1234'), (-3, 1, 1, 1, -3, -2, -1),
+                   'close.outer3', 'PC daisy: the FOUR middle petals already match in one disk chart')
+    petal_end = len(r.stages) - 1
+    for name in ('exterior.boundary', 'close.outer3', 'second.exterior'):
         r.drag(name, r.factors[0].id,
-               title='Commute the already visible exterior twist out of the daisy petals')
-    r.substitute(3, 5, (Factor('close.outer3', (), 1, 5),),
-                 'PC daisy contracts T1234 and the FIRST four actual canonical petals', 'disk_pc_daisy')
-    r.drag('close.outer3', 'round.O1234',
-           title='Commute the third visible exterior past the remaining T1234')
-    r.substitute(r.position('round.O1234'), 5, (Factor('close.outer4', (), 1, 5),),
-                 'PC daisy contracts T1234 and the SECOND four actual canonical petals', 'disk_pc_daisy')
+               title='Commute the visible exterior ' + name + ' out of the remaining daisy')
+    contract_daisy(3, (3, 3, 3, 2, 3, 1, 2, -3), 'close.outer4',
+                   'PC daisy: the FOUR remaining actual petals give the fourth exterior')
     if len(r.factors) != 4 or any(f.points != 5 or f.conjugator for f in r.factors):
         raise ValueError('The named closure did not reach four visibly round exterior twists')
     retained = tuple(s['factors'] for s in r.stages) + tuple(
@@ -136,7 +120,9 @@ def close_round_boundary(factors):
                 graphical_steps=len(r.stages) - 1,
                 adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
                 phase_operations={name: len(stages) - 1 for name, stages in phases.items()},
-                petal_crossing_route=_PETAL_ROUTE, canonical_petal_checks=checks,
+                petal_crossing_route=(), canonical_petal_checks=tuple(checks),
+                daisy_witnesses=tuple(witnesses), bypassed_noncentral_petal_interchanges=21,
+                previous_graphical_steps=33, graphical_steps_saved=15, boundary_closure_under_twenty=True,
                 sphere_move_count=0, all_factors_positive=True, half_twists_remaining=0,
                 before_score=_score(factors), after_score=_score(r.factors),
                 actual_peak_support_word=peak, peak_support_bound=14,

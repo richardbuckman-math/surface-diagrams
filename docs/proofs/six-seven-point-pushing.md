@@ -1,6 +1,6 @@
 # Exact point-pushing separation of the early chart
 
-The published named graphical derivation is complete at **121 steps**, including
+The published named graphical derivation is complete at **106 steps**, including
 four explicit sphere operations. This calculation does **not** shorten that
 route. It makes the proposed four-strand shortcut testable without discarding
 its point-pushing kernel.

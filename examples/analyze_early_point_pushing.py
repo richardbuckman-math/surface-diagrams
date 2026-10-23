@@ -34,7 +34,7 @@ def early_point_pushing_report():
                 source='certificate.json / early_boundary / chart / factors', factors=records,
                 half_common_frame_obstruction=obstruction, product_split=asdict(total),
                 kernel_is_four_boundary_loops=True, shadow_is_four_four_point_boundaries=True,
-                graphical_proof_changed=False, graphical_step_count=121,
+                graphical_proof_changed=False, graphical_step_count=106,
                 complete_under_twenty_derivation=False,
                 next_step='Use the exact kernel as a transport invariant while seeking a shorter named route in the four-strand shadow; one simultaneous common frame cannot put all four original halves inside the four-point subdisk.')
 
@@ -45,4 +45,4 @@ if __name__ == '__main__':
     target = Path(__file__).resolve().parents[1] / 'docs/proofs/six-seven-point-pushing.json'
     target.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print('Saved full point-pushing kernel and exact common-frame obstruction in', round(time.perf_counter() - start, 3), 'seconds')
-    print('The published graphical proof remains 121 steps; no sphere or framed conversion was performed.')
+    print('The published graphical proof has 106 steps; this diagnostic performs no sphere or framed conversion.')

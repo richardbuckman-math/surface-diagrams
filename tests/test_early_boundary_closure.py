@@ -64,18 +64,34 @@ class EarlyBoundaryClosureTests(unittest.TestCase):
 
     def test_eight_actual_petals_match_two_daisies_and_every_exterior_stays_visible(self):
         r = self.route
-        self.assertEqual((r['graphical_steps'], r['adjacent_checks']), (33, 55))
-        self.assertEqual(r['phase_operations'], dict(earlycollect=9, earlyrose=3, earlypetals=16, earlyclosed=5))
-        self.assertEqual(len(r['petal_crossing_route']), 21)
+        self.assertEqual((r['graphical_steps'], r['adjacent_checks']), (18, 29))
+        self.assertEqual(r['phase_operations'], dict(earlycollect=9, earlyrose=3, earlypetals=2, earlyclosed=4))
+        self.assertEqual(r['petal_crossing_route'], ())
+        self.assertEqual(r['bypassed_noncentral_petal_interchanges'], 21)
+        self.assertEqual(r['graphical_steps_saved'], 15)
+        self.assertTrue(r['boundary_closure_under_twenty'])
         self.assertEqual(len(r['canonical_petal_checks']), 8)
         for check in r['canonical_petal_checks']:
             self.assertTrue(check['exact_disk_equal'])
             self.assertEqual(exact_action(check['actual'].word, 5), exact_action(check['canonical'].word, 5))
-        for stage in r['phases']['earlyclosed'][1:]:
-            if stage['kind'] == 'disk_pc_daisy':
-                canonical = pc_daisy_terms(Factor('outer', (), 1, 5).mapping_class)
-                for f, t in zip(stage['local_before'], canonical):
-                    self.assertEqual(exact_action(f.word, 5), exact_action(t.word, 5))
+        self.assertEqual(len(r['daisy_witnesses']), 2)
+        for witness in r['daisy_witnesses']:
+            generic = pc_daisy_terms(Factor('outer', witness['frame'], 1, 5).mapping_class)
+            for actual, term in zip(witness['actual'], generic):
+                self.assertEqual(exact_action(actual.word, 5), exact_action(term.word, 5))
+            unframed = pc_daisy_terms(Factor('outer', (), 1, 5).mapping_class)
+            self.assertFalse(all(exact_action(a.word, 5) == exact_action(b.word, 5)
+                                 for a, b in zip(witness['actual'], unframed)))
+            wrong = witness['actual'][:1] + tuple(reversed(witness['actual'][1:]))
+            self.assertNotEqual(exact_action(product(wrong), 5), exact_action(Factor('outer', (), 1, 5).word, 5))
+        tail = r['stages'][12:]
+        self.assertEqual([s['kind'] for s in tail[1:]], ['disk_hurwitz_block', 'disk_pc_daisy',
+            'disk_hurwitz_block', 'disk_hurwitz_block', 'disk_hurwitz_block', 'disk_pc_daisy'])
+        # Only T1234 and central exteriors are dragged, never an individual petal.
+        for stage in tail[1:]:
+            for atomic in stage.get('atomic_steps', ()):
+                dragged = atomic['local_before'][0 if atomic['source'] < atomic['target'] else 1]
+                self.assertIn(dragged.points, (4, 5))
         self.assertEqual(len(r['factors']), 4)
         self.assertTrue(all(f.points == 5 and not f.conjugator for f in r['factors']))
         self.assertTrue(r['complete_named_boundary_derivation'])
@@ -101,7 +117,7 @@ class EarlyBoundaryClosureTests(unittest.TestCase):
     def test_complete_named_route_retains_four_sphere_moves_without_action_recognition(self):
         saved = json.loads((self.folder / 'certificate.json').read_text())['named_full_route']
         summary, stages = saved['summary'], saved['stages']
-        self.assertEqual(summary['graphical_steps'], 121)
+        self.assertEqual(summary['graphical_steps'], 106)
         self.assertTrue(summary['complete_named_derivation'])
         self.assertFalse(summary['complete_under_twenty_derivation'])
         self.assertEqual(summary['action_only_boundary_recognitions'], 0)
@@ -130,7 +146,7 @@ class EarlyBoundaryClosureTests(unittest.TestCase):
         self.assertEqual(stages[-2]['factors'][0]['power'], 4)
         self.assertEqual(stages[-1]['factors'], [])
         public = json.loads((self.folder / 'display-pure.json').read_text())['routes']['namedfull']
-        self.assertEqual(len(public), 122)
+        self.assertEqual(len(public), 107)
         self.assertEqual(sum(s['kind'] == 'sphere_rewrite' for s in public), 4)
         self.assertFalse(any(s['kind'] == 'disk_boundary_relation' for s in public))
 
