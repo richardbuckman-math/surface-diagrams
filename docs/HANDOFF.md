@@ -1,5 +1,71 @@
 # Handoff: surface-diagrams
 
+## October 23 alternative early lantern: no auxiliary half twists
+
+A new SEPARATE research branch, early_alternative.expose_alternative_early_daisy(),
+reaches a different useful configuration in SEVEN positive B5 operations. It
+is published as ?phase=earlyalternate&step=0. The complete named proof remains
+106 steps; neither PDF, its106 raw/graphical states nor the initial943823-byte
+payload is changed. This is NOT a shorter complete proof or an under20 claim.
+
+Use the ORIGINAL early14-factor chart. The original routed pair prefix.P45
+contains34; F4 is roundT123 squared, and F13 is a routedT124 squared. Their
+actual unit curves have pairwise2intersections, AND the ordered full B5 match
+is explicitly checked (counts alone were not used). SplitF4 andF13; choose
+the cyclic start at finalF13unit; commute one round123 root across roundT12.
+The ACTUAL adjacent124,34,123 curves contract by a cabled PC lantern to
+O1234=chart(-4,-4),coreT1234 and roundT12. Combine with the original roundT12
+into T12 squared. Expand O1234 by its PC daisy: its LAST petal is EXACT Q14,
+chart(-4,1,2,3),coreT45. This is a reached factor, not only a target.
+
+The canonical cabled lantern is R Q S = O I, with R=roundT123,
+Q=roundT34, S=chart(-3),coreT123, O=roundT1234,I=roundT12.
+The witness retains the cyclic ordering S,R,Q and ONE actual internal Hurwitz
+interchange R down acrossQ, yielding S,(R Q R^-1),R. Common frame(-4,-4)
+matches EACH of these three actual source factors in B5. That frame preserves
+round123 and T12. It sends O to the actual routed four-point curve. This
+pattern's retained interchange is distinct from the phase's one commuting
+adjacent check. Both lantern/daisy signed framed balances are recorded.
+
+All FOUR ORIGINAL half twists remain literally unchanged throughout all7
+operations; NO extra K halves, negative factors or sphere moves appear.
+Support maximum stays<=16 (the source maximum), and each state has the same
+independently checked fourth-boundary disk product and lift. The cyclic start
+is recorded as an explicit common conjugation, not inferred from centrality.
+The endpoint has17positive factors/four halves. The existing ORIGINAL345 root
+F8.1 also has a PC daisy whose FIRST petal is EXACT P35=chart(-4),coreT34.
+That second daisy is verified but NOT applied in the published phase.
+
+NEW EXACT NEXT HALF TARGET (NOT REACHED): a separate unappended11-operation
+probe starts from the phase's stage6, splitsF5, carries oneF5root up overF3,
+expands originalF8.1 to exposeP35, carries the remaining124root up acrossF9,
+and carriesP35up acrossF3. The naive claim that these make F3=F9 is FALSE.
+However a FURTHER positive Q14 conjugation matches them EXACTLY in B5:
+Q14 * currentF3 * Q14^-1 = currentF9. Endpoint score12/86,braid198.
+The versioned early_alternative_lantern.next_half_target certificate now retains
+every probe state; .preview/early-alternative-half-target.json is a scratch backup.
+It stores current halves and the exact Q14 target; .preview/early_alternative_root_pair.py
+reproduces the failed naive guess. Q14 is available from the new O1234 daisy,
+but a bounded actual gathering/transport has NOT been performed. Do not
+confuse the saved conjugating word with a reached route. Seek that concrete
+positive transport while preserving or recovering the supplied T12 square.
+
+Another NOT-APPLIED calculation: the old pure frame(3,4,4), followed three
+operations later by(-4,-3), composes to sigma4. Transporting the latter frame
+back through those operations stays<=17 and would remove one frame operation.
+This has not been integrated; it would require updating the framed hole labels
+and the dependent charts, not just removing a navigation checkpoint.
+
+Validation:43 focused tests pass, including the generic cabled-lantern witness,
+all source-factor matches, wrong-order rejection, positivity, unchanged halves,
+framed balances, source validation and separation from the full106-step proof.
+Chrome checked all7new arrows, connected-braid alignment, explicit cyclic label,
+honest RESEARCH ONLY notice, mobile and pure-only lazy startup. Both new
+lantern/daisy pictures were inspected. Main proof raw records and resolved
+supports/braids were compared with ee79211 and are IDENTICAL; both PDFs and
+initial payload are byte-identical. Commit/push and verify NEW CI/live7arrows.
+Do not repeat unchanged106-arrow/PDF checks. The six-hour schedule stays active.
+
 ## October 23 genuine shortening: 121 -> 106 graphical steps
 
 The complete named proof has been MATHEMATICALLY SHORTENED by15 steps.
