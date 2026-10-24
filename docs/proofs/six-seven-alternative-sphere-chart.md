@@ -1,5 +1,7 @@
 # Optional point-four sphere-chart audit
 
+This saved audit is pinned to the operation39 factors, independently of later research-route extensions. The reproduction script selects that retained checkpoint explicitly.
+
 This is a checked research calculation, **not applied to the published replay**.
 The complete named proof remains106 steps and the existing-root branch39.
 Neither PDF, diagram payload nor graphical proof changes. This audit does

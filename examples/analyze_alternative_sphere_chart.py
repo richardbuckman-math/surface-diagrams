@@ -12,7 +12,7 @@ from surface_diagrams.factorization_explorer import Factor
 
 def build():
     source = ROOT / 'docs/proofs/six-seven-fifty-blocks/certificate.json'
-    rows = json.loads(source.read_text(encoding='utf-8'))['early_alternative_transport']['factors']
+    rows = json.loads(source.read_text(encoding='utf-8'))['early_alternative_transport']['stages'][39]['factors']
     factors = tuple(Factor(**dict(f, conjugator=tuple(f['conjugator']))) for f in rows)
     report = audit_alternative_point_four(factors)
     output = ROOT / 'docs/proofs/six-seven-alternative-sphere-chart.json'

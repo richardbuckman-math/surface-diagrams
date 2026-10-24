@@ -18,7 +18,7 @@ class AlternativeSphereChartTests(unittest.TestCase):
     def setUpClass(cls):
         cls.root = Path(__file__).resolve().parents[1]
         c = json.loads((cls.root / 'docs/proofs/six-seven-fifty-blocks/certificate.json').read_text(encoding='utf-8'))
-        cls.source = tuple(Factor(**dict(f, conjugator=tuple(f['conjugator']))) for f in c['early_alternative_transport']['factors'])
+        cls.source = tuple(Factor(**dict(f, conjugator=tuple(f['conjugator']))) for f in c['early_alternative_transport']['stages'][39]['factors'])
         cls.report = audit_alternative_point_four(cls.source)
 
     def test_incidence_selects_only_point4_but_is_not_a_relation_certificate(self):
@@ -114,7 +114,7 @@ class AlternativeSphereChartTests(unittest.TestCase):
         self.assertFalse(saved['applied_to_public_replay'])
         c = json.loads((self.root / 'docs/proofs/six-seven-fifty-blocks/certificate.json').read_text(encoding='utf-8'))
         self.assertEqual(c['named_full_route']['summary']['graphical_steps'], 106)
-        self.assertEqual(c['early_alternative_transport']['graphical_steps'], 39)
+        self.assertEqual(c['early_alternative_transport']['graphical_steps'], 45)
 
 
 if __name__ == '__main__': unittest.main()

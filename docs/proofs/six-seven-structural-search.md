@@ -1,5 +1,70 @@
 # Structural search for Richard's (6,7) derivation
 
+## October24 shared-petal lantern: research endpoint45
+
+The existing-root research route now has45 operations/66 adjacent checks.
+SIX new positive DISK operations extend the reached operation39 endpoint;
+they do not shorten or replace the complete106-step named proof. No sphere
+move, inverse factor, auxiliary half or PDF change is introduced.
+
+NEW ACTUAL CLUSTER: expand the existing F8.2(345) by its PC daisy. Its first
+petal is EXACT roundT34. Carry F10.2(245) UP over the neighboring145 root
+and13 pair (two checks), then carry round34 DOWN through its own two remaining
+petals (two checks). The actual adjacent34,235,245 factors individually match
+Q34,S124,R123 in common chart h=(-1,-4,-3,-2,3,4,-3). The canonical cyclic
+cabled PC lantern Q S R = O1234 I12 therefore contracts these THREE actual
+factors. Every input and normalized output has its own faithful B5 match.
+Outputs are O2345:chart(-1,2,3,-4),coreT1234, and I25:chart(-4,-3),coreT23.
+The latter is a short25 pair, not a boundary or a capped correction.
+
+Two further ACTUAL transports unwind the geometry. The existing35 pair UP
+across the134 root makes that root EXACT chart(1),coreT234 (support7->3).
+The new short25 pair UP across its four actual neighbors (the new four-point
+curve, the35/45 petals, and the15 square) makes the square EXACT
+chart(-4,-3,-2),coreT12 squared. All adjacent checks remain in atomic_steps.
+The endpoint support maximum/total is12/83 (was12/90), braid178 (was182),
+and exact CLOSED-curve crossings30/430 (was34/672). Maximum support stays12
+throughout these six operations; the earlier full branch peak remains20.
+
+The endpoint has16 positive records: ONE VISIBLE exterior, TWO four-point
+curves, TWO triples and ELEVEN pair records (one squared). The remaining15
+records independently have boundary^3 action. Its short named closure is
+still open IN THIS RESEARCH BRANCH; the complete106-step proof is solved.
+The single visible exterior remains retained (its chosen lift is-I).
+
+NEXT: use the newly simplified134/145 roots and the two actual four-point
+curves, or the145 daisy's actual15 petal (matching one unit of the square).
+Require a common chart matching every actual input. Do not restore the three
+roots just contracted or canonicalize every petal individually. The new
+shared25 transport leaves point-pushing kernels explicit; ordinary deletion
+still proves no B5 equality by itself.
+
+REJECTED/NOT APPENDED: carrying the old25 pair up to the134 root exceeds20.
+Global inverse charts for the new2345 outer and145 root peak42 and26.
+Splitting the simplified15 square, carrying the final round12 up to the
+short25 pair and contracting one individually matched125 daisy DOES reach
+round125, but worsens the endpoint to12/96,braid190. Its proposed exterior
+triple with the new2345 outer and short134 root has intersections2,10,2;
+all six orders fail necessary centralization. The unchanged pre-gather
+2345/round125/short134 triple also fails (2,6,2). These are local failures,
+not orbit exclusions. Scratch .preview/probe_alt_shared_petals.py and
+.preview/alt-shared-petal-route.json reproduce the reached four-operation
+cluster; the last two unwindings are now in the source replay.
+
+An efficient closed-support check also resolves the previously UNKNOWN
+orders of operation39's O1234/S1/C12 triple: all six fail necessary
+centralization (their crossings are22,26,2). This is a fixed-curve exclusion,
+not an obstruction to transports. No new sphere chart is used. The optional
+point4 audit is PINNED to the unchanged operation39 factors; its example and
+tests no longer accidentally follow whichever research endpoint is newest.
+
+Validation:51 focused exact/lift/framing/intersection tests pass. Chrome
+verified all45 LOCAL arrows, connected-braid alignment, cyclic/scope labels,
+pure-only lazy loading and mobile layout; the new lantern picture was inspected.
+The first39 raw/resolved research states and complete106 proof are IDENTICAL.
+Both PDFs/public copies, the historical sphere audit and initial startup/early
+payloads remain byte-identical. Verify NEW remote CI and the45 live arrows.
+Keep the active six-hour schedule and ordinary weekly interactive reserve.
 ## October24 optional sphere-chart audit: all nine corrections retained
 
 A NEW checked optional calculation is saved in alternative_sphere_chart.py,

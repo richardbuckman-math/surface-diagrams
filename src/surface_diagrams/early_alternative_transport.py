@@ -29,7 +29,7 @@ def _matches(actual, pattern):
 
 
 def transport_alternative_roots(factors):
-    """Remove original halves and simplify the positive residual in 39 moves.
+    """Remove original halves and simplify the positive residual in 45 moves.
 
     Borrow the actual Q14 from the existing four-point daisy. A transported
     daisy replaces Q14 and the remaining 345 petals by O1345. Carry O1345 up
@@ -183,6 +183,49 @@ def transport_alternative_roots(factors):
         individual_matches=prefix_matches, raw_after=raw_after,
         presentation_matches=presentations, exact_disk_equality=True)
 
+
+    residual_lantern_step = len(r.stages) - 1
+    # The actual 345 daisy lends round34.  The 245 root can cross the
+    # neighboring 145 and 13 factors without changing this named target.
+    supplier = r.factors[r.position('F8.2')]
+    terms = tuple(r.normalize(f) for f in _terms(supplier.mapping_class, 'alternative.shared.'))
+    _matches((terms[0],), (Factor('pattern.round34', (), 3, 2),))
+    r.substitute(r.position(supplier.id), 1, terms,
+                 'The actual 345 daisy lends its round 34 petal', 'disk_pc_daisy')
+    r.drag('F10.2', 'alternative.P13',
+           title='Carry the 245 root up across the 145 root and the 13 pair')
+    r.drag(terms[0].id, terms[2].id,
+           title='Carry round 34 down through its own two remaining petals')
+    # R Q S = O I is the canonical cabled lantern. Its cyclic Q S R
+    # presentation has the SAME outputs: R commutes with O and I.
+    h = (-1, -4, -3, -2, 3, 4, -3)
+    canonical = (Factor('pattern.Q34', (), 3, 2),
+                 Factor('pattern.S124', (-3,), 1, 3), Factor('pattern.R123', (), 1, 3))
+    canonical_after = (Factor('pattern.O1234', (), 1, 4), Factor('pattern.I12', (), 1, 2))
+    if exact_action(product(canonical), 5) != exact_action(product(canonical_after), 5):
+        raise ValueError('The cyclic shared-inner-pair cabled lantern failed')
+    pattern = tuple(replace(f, conjugator=reduce_word(h + f.conjugator)) for f in canonical)
+    index = r.position(terms[0].id)
+    matches = _matches(r.factors[index:index + 3], pattern)
+    raw_after = (Factor('alternative.shared.O2345', h, 1, 4),
+                 Factor('alternative.shared.I25', h, 1, 2))
+    after = tuple(r.normalize(f) for f in raw_after)
+    r.substitute(index, 3, after,
+                 'Cabled PC lantern closes the actual 34, 235 and 245 cluster', 'disk_cluster_lantern')
+    r.stages[-1]['named_pattern_witness'] = dict(frame=h, canonical=canonical,
+        canonical_after=canonical_after, canonical_cyclic_order='Q S R',
+        individual_matches=matches, raw_after=raw_after,
+        presentation_matches=_matches(raw_after, after), exact_disk_equality=True)
+    shared_petal_step = len(r.stages) - 1
+    r.drag('alternative.return.2', 'alternative.return.0',
+           title='The actual 35 pair unwinds the 134 root to a short chart')
+    _matches((r.factors[r.position('alternative.return.0')],),
+             (Factor('pattern.short134', (1,), 2, 3),))
+    r.drag('alternative.shared.I25', 'alternative.T12.square',
+           title='Carry the shared 25 pair up; unwind the square and its two petals')
+    _matches((r.factors[r.position('alternative.T12.square')],),
+             (Factor('pattern.under15.square', (-4, -3, -2), 1, 2, 2),))
+
     for stage in r.stages:
         if stage['kind'] in ('disk_cluster_lantern', 'disk_pc_daisy'):
             sets = [[(f.power, enclosed_boundaries(f.mapping_class, 5)) for f in stage[k]]
@@ -193,6 +236,7 @@ def transport_alternative_roots(factors):
     return dict(stages=tuple(r.stages), factors=r.factors, graphical_steps=len(r.stages) - 1,
                 first_pair_step=first_pair_step, all_pure_step=pure_step, all_pure_factors=pure_factors,
                 first_exterior_step=exterior_step, first_exterior_score=exterior_score,
+                residual_lantern_step=residual_lantern_step, shared_petal_step=shared_petal_step,
                 first_half_match=first_match, second_half_match=second_match,
                 adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
                 actual_peak_support_word=max(_score(fs)['max_support_word'] for fs in retained),
@@ -201,4 +245,4 @@ def transport_alternative_roots(factors):
                 before_score=_score(source), after_score=_score(r.factors),
                 boundary_power=4, all_factors_positive=True, replacement_for_full_proof=False,
                 applied_to_public_replay=False,
-                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible and a bounded cabled lantern reduces its residual curves. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')
+                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible, two bounded cabled lanterns and shared-petal transports reduce its residual curves. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')
