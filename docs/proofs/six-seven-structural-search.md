@@ -1,5 +1,62 @@
 # Structural search for Richard's (6,7) derivation
 
+## October24 optional sphere-chart audit: all nine corrections retained
+
+A NEW checked optional calculation is saved in alternative_sphere_chart.py,
+examples/analyze_alternative_sphere_chart.py and
+[the sphere-chart audit](six-seven-alternative-sphere-chart.md).
+This is NOT applied to either public replay: main proof106, research branch39,
+both PDFs and all graphical payloads are unchanged. The shorter full join
+remains open. Do not call this another complete derivation or an overall
+curve-complexity improvement.
+
+The source is the CURRENT operation39 endpoint. Incidence predicts the six
+normalized boundary powers(5,5,4,3,5,4), selecting WORKING POINT4 as the new
+exterior. Actual Schreier rewriting and individual sphere/lift checks verify
+normalized power3 PLUS NINE retained positive boundary corrections, total
+framed power12. The old visible exterior accounts for THREE of those nine.
+No strand is forgotten, no boundary is capped. The explicit frame is(5,4).
+
+SPHERE MOVE: the new coupled replacement includes an explicit D^9 factor.
+The FULL disk discrepancy has writhe-160 and an exact sphere certificate;
+the separately checked chosen lift is+I. The normalized part and correction
+part EACH have-I lift. Never show the fourteen normalized factors alone as
+though the rechart preserved the lifted relation. sphere_move and disk_move
+records retain the correction factor, all component discrepancies and the
+boundary_caps=0 / applied_to_public_replay=false scope flags.
+
+NEW adjacent exact cabled lantern: new F12.1,F10.2,next.0 match individually
+R234,(sigma1 R234 sigma1^-1),T12 in common chart
+h=(-1,-1,2,1,1,2,3,3,4). The cyclic canonical relation R S Q = O1234 T34
+therefore applies locally, leaving13 normalized factors PLUS the sameD^9.
+Every actual input and normalized output presentation has its own B5 check;
+signed framed balance is saved. Normalized endpoint18/107,braid192. This
+exposes a named pattern but is geometrically worse than public39's12/90.
+Keep this branch an audit until it gives a useful complete shortcut.
+
+Concrete next opportunity: its two four-point curves have sets1235 and1345,
+intersection2, but the current24 pair fails all6 necessary ordered-product
+centralization checks. A needed transported24 petal or different residual
+closure remains open. Neither sign of a unit14 twist on that pair solves it;
+positive square hits the exact-action bound, UNKNOWN. Do not treat the
+unrun negative-square cases as checked. The eight specific unit14/unit23
+transports of either four-point curve all worsen their intersection to6/10.
+Scratch .preview/probe_alt_four_*.py retains the actual scope and unknowns.
+
+Another rejected explicit chart: the inverse of the operation39 outer's
+SHORTEST known conjugator(4,4,-3,-3,-2,-1) makes that outer round but gives
+support51 globally, over20. This is distinct from the previously rejected
+Q45(69) andR234(27) frames; do not repeat it. No broad frame scan was run.
+
+Validation:43 focused tests pass, covering the new predictor, complete
+correction/discrepancy/lift records, individual lantern matches, wrong-order
+rejection, unknown-sphere handling and saved report. Both public proof
+records, all graphical payloads and both PDFs are byte-identical; HTML text
+is unchanged after Git line-ending normalization. No graphical/PDF change
+needs visual retesting. Verify NEW CI after committing; do not repeat
+unchanged106/39-arrow or PDF checks.
+Keep the active six-hour schedule, usage pacing and interactive reserve.
+
 ## October 23 residual geometry: 39-operation research route
 
 The published existing-root RESEARCH branch now has39 operations/57 retained
