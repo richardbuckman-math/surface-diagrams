@@ -29,7 +29,7 @@ def _matches(actual, pattern):
 
 
 def transport_alternative_roots(factors):
-    """Remove original halves and simplify the positive residual in 45 moves.
+    """Remove original halves and simplify the positive residual in 51 moves.
 
     Borrow the actual Q14 from the existing four-point daisy. A transported
     daisy replaces Q14 and the remaining 345 petals by O1345. Carry O1345 up
@@ -226,17 +226,69 @@ def transport_alternative_roots(factors):
     _matches((r.factors[r.position('alternative.T12.square')],),
              (Factor('pattern.under15.square', (-4, -3, -2), 1, 2, 2),))
 
+    shared_unwinding_step = len(r.stages) - 1
+    # In the old chart, the same daisy gathering reaches support30. The
+    # common B4 frame (3,2), followed by the root-first route, keeps EVERY
+    # retained state within18. Gathering the three pair petals first in
+    # this frame instead reaches40; the order here is essential.
+    h = (3, 2)
+    before = r.factors
+    r.factors = r.check(tuple(r.normalize(replace(f, conjugator=reduce_word(h + f.conjugator))) for f in before))
+    r.record('Common disk frame keeps the inside-four daisy readable', 'global_conjugation',
+             frame=h, local_before=before, local_after=r.factors, exact_conjugation=True)
+    before = r.factors
+    index = r.position('alternative.return.0')
+    tail = before[index:]
+    r.factors = r.check(tail + before[:index])
+    r.record('Choose the cyclic start at the actual three-point root', 'disk_cyclic_start',
+             frame=product(tail), local_before=before, local_after=r.factors, exact_conjugation=True)
+    r.drag('alternative.return.0', r.factors[r.position('alternative.next.0') - 1].id,
+           title='Carry the three-point root down through the eight residual factors')
+    r.drag('alternative.T23', 'alternative.exterior',
+           title='Commute the final pair petal past the visible exterior')
+    chart = h + (1, 1, 2, 3)
+    canonical = _terms(Factor('pattern.inside.D4', chart, 1, 4).mapping_class, 'pattern.inside.')
+    changed, interchanges = canonical, []
+    for src, dst in ((3, 2), (2, 1)):
+        move = research_hurwitz_move(changed, src, dst)
+        interchanges.append(move)
+        changed = move['factors']
+    index = r.position('alternative.return.0')
+    matches = _matches(r.factors[index:index + 4], changed)
+    outer_preserved = exact_action(Factor('pattern.inside.D4', chart, 1, 4).word, 5) == exact_action(Factor('pattern.roundD4', (), 1, 4).word, 5)
+    if not outer_preserved:
+        raise ValueError('The transported inside daisy did not preserve the round four-point boundary')
+    r.substitute(index, 4, (Factor('alternative.inside.D4', (), 1, 4),),
+                 'Transported PC daisy closes the actual root and its three pair petals', 'disk_pc_daisy')
+    r.stages[-1]['named_pattern_witness'] = dict(frame=chart, canonical=canonical,
+        retained_interchanges=tuple(interchanges), individual_matches=matches,
+        outer_preserved=outer_preserved, exact_disk_equality=True)
+    inside_daisy_step = len(r.stages) - 1
+    r.drag('alternative.inside.D4', 'alternative.P24',
+           title='Carry the new round four-point twist up to unwind the residual block')
+
     for stage in r.stages:
         if stage['kind'] in ('disk_cluster_lantern', 'disk_pc_daisy'):
             sets = [[(f.power, enclosed_boundaries(f.mapping_class, 5)) for f in stage[k]]
                     for k in ('local_before', 'local_after')]
             stage['framed_balance_before_minus_after'] = tuple(
                 sum(p for p, b in sets[0] if i in b) - sum(p for p, b in sets[1] if i in b) for i in range(1, 6))
+    outer_daisy = _terms(r.factors[r.position('alternative.shared.O2345')].mapping_class, 'target.outer.')
+    triple_daisy = _terms(r.factors[r.position('alternative.F12.1')].mapping_class, 'target.triple.')
+    next_daisy_targets = dict(outer_daisy=outer_daisy, triple_daisy=triple_daisy,
+        shared_35_match=_matches((outer_daisy[2],), (triple_daisy[2],)),
+        existing_45_match=_matches((r.factors[r.position('alternative.shared.I25')],), (outer_daisy[1],)),
+        existing_25_match=_matches((r.factors[r.position('alternative.return.2')],), (outer_daisy[3],)),
+        existing_15_unit_match=_matches((replace(r.factors[r.position('alternative.T12.square')], power=1),), (triple_daisy[1],)),
+        applied=False, requires_transport=True,
+        scope='Exact shared petal targets only; neither daisy has been expanded or gathered here.')
     retained = tuple(s['factors'] for s in r.stages) + tuple(a['factors'] for s in r.stages for a in s.get('atomic_steps', ()))
     return dict(stages=tuple(r.stages), factors=r.factors, graphical_steps=len(r.stages) - 1,
                 first_pair_step=first_pair_step, all_pure_step=pure_step, all_pure_factors=pure_factors,
                 first_exterior_step=exterior_step, first_exterior_score=exterior_score,
                 residual_lantern_step=residual_lantern_step, shared_petal_step=shared_petal_step,
+                shared_unwinding_step=shared_unwinding_step, inside_daisy_step=inside_daisy_step,
+                next_daisy_targets=next_daisy_targets,
                 first_half_match=first_match, second_half_match=second_match,
                 adjacent_checks=sum(s.get('adjacent_moves', 0) for s in r.stages),
                 actual_peak_support_word=max(_score(fs)['max_support_word'] for fs in retained),
@@ -245,4 +297,4 @@ def transport_alternative_roots(factors):
                 before_score=_score(source), after_score=_score(r.factors),
                 boundary_power=4, all_factors_positive=True, replacement_for_full_proof=False,
                 applied_to_public_replay=False,
-                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible, two bounded cabled lanterns and shared-petal transports reduce its residual curves. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')
+                scope='Reached positive existing-root research route: original halves removed, round square recovered, one exterior kept visible, two bounded cabled lanterns, shared-petal transports and an inside-four daisy reduce its residual curve intersections. This has not been joined to a shorter complete proof; the complete named proof remains 106 steps.')

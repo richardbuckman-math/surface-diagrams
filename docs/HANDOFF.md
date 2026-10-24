@@ -1,5 +1,83 @@
 # Handoff: surface-diagrams
 
+## October24 inside-four daisy: research endpoint51
+
+SIX reached positive DISK operations extend the existing-root research route
+from45 to51 operations, with83 retained adjacent checks. This is a geometric
+contraction, not a shorter complete proof: the solved106-step named route
+and both PDFs remain unchanged. No sphere move or negative/half factor is
+introduced. Continue from the NEW endpoint51, not source45.
+
+THE NAMED PATTERN: at checkpoint45 the actual134 root and actual12,under24,
+23 pairs already have a transported PC daisy relation in THAT cyclic order.
+A common chart(1,1,2,3) of the standard four-point daisy, followed by TWO
+retained inverse internal petal interchanges(3->2,2->1), matches EVERY input
+individually. A product or incidence match alone was not used.
+
+The naive unframed gathering reaches support30. PRECONDITION by the explicit
+common B4 frame(3,2), then choose the cyclic start at the actual three-point
+root. Carry that SAME root down across eight residual factors, commute23
+past the visible exterior, contract the four adjacent actual daisy factors,
+then carry the resulting ROUND T1234 back up across those eight factors.
+This root-first order keeps every retained intermediate support at most18.
+The tempting pair-first route in this frame peaks40 and is rejected. The
+full branch peak remains20. The daisy witness uses common chart
+(3,2,1,1,2,3), retains both internal swaps and checks its outer is roundT1234.
+The cyclic start records its FULL suffix-product common conjugation, without
+assuming source centrality. All17 actual transport checks are retained.
+
+NEW GEOMETRY: exact closed-curve crossings30/430 ->10/160. The endpoint
+support maximum/total is12/86 and braid192, versus12/83 and178 before these
+six moves. Do not claim every complexity measure falls. There are13positive
+records:1VISIBLE exterior,3four-point curves,1triple,8pair records(one squared).
+The roundT1234 is first; the original exterior is in the MIDDLE and remains
+visible(-I lift). The other12 records independently have boundary^3 action.
+Its short NAMED residual closure is still open IN THIS RESEARCH BRANCH;
+the complete106-step named proof is solved and unchanged.
+
+SPECIFIC NEXT CONFIGURATION: the remaining triple is now135 (its inherited
+ID is alternative.F12.1; labels changed under the explicit common frame).
+Its canonical daisy gives13,15,35, and its15 petal matches one unit of the
+actual square. The remaining2345 outer's canonical daisy gives234,45,35,25;
+its45 petal matches actual alternative.shared.I25 and its25 petal matches
+actual alternative.return.2. The two daisies also share EXACTLY the same35
+petal. All FOUR local matches are saved in next_daisy_targets, explicitly
+applied=false / requires_transport=true. Seek a useful borrowed petal or a
+transported named contraction, preserving actual input matches. The routed old1234
+outer is still present; do not assume it is the new ROUND1234.
+
+UNAPPLIED TARGET/FAILURES from SOURCE45: expanding145, carrying actual25
+down across seven neighbors, then its borrowed15 up across two, DOES expose
+the exact45 pair with kernel(1,4,-1) that unwinds the old1234 outer. A cyclic
+short-side carry makes that outer round in five operations total, but the
+endpoint worsens to16/112,braid216,crossings68/1156. Do not append that route
+without a concrete following cancellation. The earlier direct strip using
+an existing15 unit and old35 fails the support20 cap. These are limited
+transport failures, not orbit exclusions; point-pushing kernels remain kept.
+The current successful route instead uses the already matched inside daisy.
+
+FURTHER LIMITED PROBES after endpoint51: an internal14 twist in either sign
+on the old1234 outer's point1 daisy does not match all four proposed donors
+from the2345/135 daisies plus actual12/14; negative14 matches ONLY the12
+pair. Do not infer a complete common chart from that single match. The
+new2345 daisy's234 root and old1234 point1-daisy234 root differ. The old
+1234 daisy's actual124 root also FAILS the proposed exterior lantern with
+2345/135 in ALL SIX orders, despite all three intersection counts being2.
+Twisting it by their shared35 petal cannot repair this: that twist commutes
+with BOTH fixed outer curves, so it only conjugates the same failed triple. Scripts
+.preview/probe_alt_inside_daisy.py and .preview/alt-inside-daisy-route.json
+reproduce the SIX reached operations and every named-pattern match.
+
+Preserve the first45 raw/resolved research states, complete106 proof,
+startup/early payloads, historical point4 audit and both PDFs. The optional
+sphere audit remains pinned to operation39 with ALL NINE corrections.
+Validation:53 focused exact/lift/framing/intersection tests pass. Chrome
+verified all51 LOCAL arrows, connected-braid alignment, explicit scope/cyclic
+labels, pure-only lazy loading and mobile layout; the new daisy picture was
+inspected. First45 raw/resolved research states, complete106 proof, both
+PDFs/public copies, startup/early payloads and historical sphere audit are
+IDENTICAL. Verify NEW remote CI and live51 arrows after publication. Keep
+the active six-hour schedule and weekly interactive reserve.
 ## October24 shared-petal lantern: research endpoint45
 
 The existing-root research route now has45 operations/66 adjacent checks.

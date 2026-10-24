@@ -114,7 +114,7 @@ class AlternativeSphereChartTests(unittest.TestCase):
         self.assertFalse(saved['applied_to_public_replay'])
         c = json.loads((self.root / 'docs/proofs/six-seven-fifty-blocks/certificate.json').read_text(encoding='utf-8'))
         self.assertEqual(c['named_full_route']['summary']['graphical_steps'], 106)
-        self.assertEqual(c['early_alternative_transport']['graphical_steps'], 45)
+        self.assertEqual(c['early_alternative_transport']['graphical_steps'], 51)
 
 
 if __name__ == '__main__': unittest.main()

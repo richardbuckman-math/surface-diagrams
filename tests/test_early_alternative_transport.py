@@ -23,7 +23,7 @@ class AlternativeTransportTests(unittest.TestCase):
 
     def test_every_reached_and_adjacent_state_is_positive_bounded_disk_and_lift_exact(self):
         r = self.route
-        self.assertEqual((r['graphical_steps'], r['adjacent_checks'], r['first_pair_step'], r['all_pure_step']), (45, 66, 17, 29))
+        self.assertEqual((r['graphical_steps'], r['adjacent_checks'], r['first_pair_step'], r['all_pure_step']), (51, 83, 17, 29))
         expected = exact_action(BOUNDARY_WORD * 4, 5)
         lift = homology_action(BOUNDARY_WORD * 4)
         peak = 0
@@ -89,7 +89,7 @@ class AlternativeTransportTests(unittest.TestCase):
             sets = [[(f.power, enclosed_boundaries(f.mapping_class, 5)) for f in s[k]] for k in ('local_before', 'local_after')]
             expected = tuple(sum(p for p, b in sets[0] if i in b) - sum(p for p, b in sets[1] if i in b) for i in range(1, 6))
             self.assertEqual(s['framed_balance_before_minus_after'], expected)
-        exterior = self.route['factors'][0]
+        exterior = next(f for f in self.route['factors'] if f.id == 'alternative.exterior')
         self.assertEqual(exterior, Factor('alternative.exterior', (), 1, 5))
         self.assertNotEqual(homology_action(exterior.word), homology_action(()))
         self.assertTrue(self.route['exterior_not_capped'])
@@ -98,7 +98,7 @@ class AlternativeTransportTests(unittest.TestCase):
     def test_public_research_route_is_disk_exact_and_full_proof_is_still_106_steps(self):
         d = json.loads((self.folder / 'display-pure.json').read_text(encoding='utf-8'))
         states = d['routes']['earlyalttransport']
-        self.assertEqual(len(states), 46)
+        self.assertEqual(len(states), 52)
         for a, b in zip(self.route['stages'], states):
             self.assertEqual(a['kind'], b['kind'])
             for f, i in zip(a['factors'], b['factors']):
@@ -139,9 +139,9 @@ class AlternativeTransportTests(unittest.TestCase):
         self.assertEqual(exact_action(product(w['canonical']), 5), exact_action(product(w['canonical_after']), 5))
         for c in w['individual_matches'] + w['presentation_matches']:
             self.assertEqual(exact_action(c['actual'].word, 5), exact_action(c['pattern'].word, 5))
-        self.assertEqual([s.get('adjacent_moves', 0) for s in r['stages'][40:]], [0, 2, 2, 0, 1, 4])
-        self.assertEqual(r['after_score'], dict(max_support_word=12, total_support_word=83, braid_letters=178))
-        fs = r['factors']
+        self.assertEqual([s.get('adjacent_moves', 0) for s in r['stages'][40:46]], [0, 2, 2, 0, 1, 4])
+        self.assertEqual(r['stages'][45]['score'], dict(max_support_word=12, total_support_word=83, braid_letters=178))
+        fs = r['stages'][45]['factors']
         self.assertEqual(len(fs), 16)
         self.assertEqual([sum(f.points == n for f in fs) for n in (2, 3, 4, 5)], [11, 2, 2, 1])
         root = next(f for f in fs if f.id == 'alternative.return.0')
@@ -152,6 +152,42 @@ class AlternativeTransportTests(unittest.TestCase):
                   for i, a in enumerate(fs) for b in fs[i + 1:]]
         self.assertEqual((max(counts), sum(counts)), (30, 430))
         self.assertEqual(exact_action(product(fs[1:]), 5), exact_action(BOUNDARY_WORD * 3, 5))
+
+    def test_inside_four_daisy_retains_its_common_frame_and_geometric_reduction(self):
+        from surface_diagrams.disk_intersection import disk_curve_intersection
+        r = self.route
+        self.assertEqual((r['shared_unwinding_step'], r['inside_daisy_step']), (45, 50))
+        self.assertEqual(r['stages'][46]['frame'], (3, 2))
+        w = r['stages'][50]['named_pattern_witness']
+        self.assertTrue(w['outer_preserved'])
+        self.assertEqual(w['frame'], (3, 2, 1, 1, 2, 3))
+        self.assertEqual([(m['source'], m['target']) for m in w['retained_interchanges']], [(3, 2), (2, 1)])
+        for c in w['individual_matches']:
+            self.assertEqual(exact_action(c['actual'].word, 5), exact_action(c['pattern'].word, 5))
+        for m in w['retained_interchanges']:
+            self.assertFalse(m['disk_word_certificate']['discrepancy'])
+        self.assertEqual([s.get('adjacent_moves', 0) for s in r['stages'][46:]], [0, 0, 8, 1, 0, 8])
+        retained = [x['factors'] for s in r['stages'][46:] for x in (s,) + s.get('atomic_steps', ())]
+        self.assertEqual(max(len(supported_class(f.mapping_class, 5)) for fs in retained for f in fs), 18)
+        self.assertEqual(r['after_score'], dict(max_support_word=12, total_support_word=86, braid_letters=192))
+        fs = r['factors']
+        self.assertEqual(len(fs), 13)
+        self.assertEqual([sum(f.points == n for f in fs) for n in (2, 3, 4, 5)], [8, 1, 3, 1])
+        self.assertEqual(fs[0], Factor('alternative.inside.D4', (), 1, 4))
+        counts = [disk_curve_intersection(a.mapping_class, b.mapping_class, strands=5)
+                  for i, a in enumerate(fs) for b in fs[i + 1:]]
+        self.assertEqual((max(counts), sum(counts)), (10, 160))
+        self.assertEqual(exact_action(product(tuple(f for f in fs if f.points != 5)), 5), exact_action(BOUNDARY_WORD * 3, 5))
+
+    def test_next_shared_petal_targets_are_individually_exact_but_unapplied(self):
+        w = self.route['next_daisy_targets']
+        self.assertFalse(w['applied'])
+        self.assertTrue(w['requires_transport'])
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 5) for f in w['outer_daisy']], [(2, 3, 4), (4, 5), (3, 5), (2, 5)])
+        self.assertEqual([enclosed_boundaries(f.mapping_class, 5) for f in w['triple_daisy']], [(1, 3), (1, 5), (3, 5)])
+        for key in ('shared_35_match', 'existing_45_match', 'existing_25_match', 'existing_15_unit_match'):
+            for c in w[key]:
+                self.assertEqual(exact_action(c['actual'].word, 5), exact_action(c['pattern'].word, 5))
 
     def test_wrong_source_is_rejected(self):
         with self.assertRaises(ValueError):
