@@ -117,7 +117,7 @@ class EarlyBoundaryClosureTests(unittest.TestCase):
     def test_complete_named_route_retains_four_sphere_moves_without_action_recognition(self):
         saved = json.loads((self.folder / 'certificate.json').read_text())['named_full_route']
         summary, stages = saved['summary'], saved['stages']
-        self.assertEqual(summary['graphical_steps'], 101)
+        self.assertEqual(summary['graphical_steps'], 99)
         self.assertTrue(summary['complete_named_derivation'])
         self.assertFalse(summary['complete_under_twenty_derivation'])
         self.assertEqual(summary['action_only_boundary_recognitions'], 0)
@@ -146,7 +146,7 @@ class EarlyBoundaryClosureTests(unittest.TestCase):
         self.assertEqual(stages[-2]['factors'][0]['power'], 4)
         self.assertEqual(stages[-1]['factors'], [])
         public = json.loads((self.folder / 'display-pure.json').read_text())['routes']['namedfull']
-        self.assertEqual(len(public), 102)
+        self.assertEqual(len(public), 100)
         self.assertEqual(sum(s['kind'] == 'sphere_rewrite' for s in public), 4)
         self.assertFalse(any(s['kind'] == 'disk_boundary_relation' for s in public))
 

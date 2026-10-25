@@ -12,6 +12,7 @@ from surface_diagrams.early_alternative import expose_alternative_early_daisy
 from surface_diagrams.early_alternative_transport import transport_alternative_roots
 from surface_diagrams.early_alternative_exterior import expose_second_alternative_exterior
 from surface_diagrams.early_alternative_closure import close_alternative_boundary
+from surface_diagrams.named_disk_frames import shorten_named_disk_frames
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
 from surface_diagrams.early_boundary_closure import close_round_boundary
@@ -90,6 +91,7 @@ def build():
     alttransport=transport_alternative_roots(early['chart']['factors'])
     altexterior=expose_second_alternative_exterior(alttransport['factors'])
     altclosed=close_alternative_boundary(altexterior['factors'])
+    named_disk=shorten_named_disk_frames(alttransport['stages']+altexterior['stages'][1:]+altclosed['stages'][1:])
     purification=purify_early_cluster(earlycluster['factors'])
     pure_contractions=contract_pure_clusters(purification['factors'])
     exterior=extract_positive_exterior(pure_contractions['factors'])
@@ -107,8 +109,9 @@ def build():
     routes['earlyalttransport']=alttransport
     routes['earlyaltexterior']=altexterior
     routes['earlyaltclosed']=altclosed
+    routes['_named_disk']=named_disk
     pure_names=tuple(pure_phases)
-    disk_phases=('earlyalternate','earlyalttransport','earlyaltexterior','earlyaltclosed')+('transport','early','earlycluster')+pure_names
+    disk_phases=('_named_disk','earlyalternate','earlyalttransport','earlyaltexterior','earlyaltclosed')+('transport','early','earlycluster')+pure_names
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']
@@ -157,7 +160,7 @@ def build():
             shown=dict(title=stage['title'],kind=stage['kind'],factors=ids,
                        disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality'))
             if stage.get('caption'):shown['caption']=stage['caption']
-            if name in pure_names+('earlyalternate','earlyalttransport','earlyaltexterior','earlyaltclosed'):
+            if name in pure_names+('_named_disk','earlyalternate','earlyalttransport','earlyaltexterior','earlyaltclosed'):
                 shown['caption']=str(stage['half_twists'])+' half twists remaining; '+str(len(stage['factors']))+' positive factors; support-word maximum '+str(stage['score']['max_support_word'])
                 if not any(f.half for f in stage['factors']):
                     curves=tuple(replace(f.mapping_class,power=1) for f in stage['factors'])
@@ -181,11 +184,10 @@ def build():
     # recognition by the actual positive research route and its four exteriors.
     named_raw = list(early['stages'][:18])
     named_shown = list(display_routes['early'][:18])
-    for phase, replay in (('earlyalttransport', alttransport), ('earlyaltexterior', altexterior), ('earlyaltclosed', altclosed)):
-        if named_raw[-1]['factors'] != replay['stages'][0]['factors']:
-            raise ValueError('The shorter named route has a discontinuous phase join')
-        named_raw.extend(replay['stages'][1:])
-        named_shown.extend(display_routes[phase][1:])
+    if named_raw[-1]['factors'] != named_disk['stages'][0]['factors']:
+        raise ValueError('The shortened disk tail has a discontinuous source join')
+    named_raw.extend(named_disk['stages'][1:])
+    named_shown.extend(display_routes['_named_disk'][1:])
     fourth = early['stages'][-2]['factors'][0]
     if exact_action(tuple(x for f in altclosed['factors'] for x in f.word), 5) != exact_action(fourth.word, 5):
         raise ValueError('Four identical visible exteriors did not combine to their fourth power')
@@ -216,8 +218,9 @@ def build():
         action_only_boundary_recognitions=sum(s['kind'] == 'disk_boundary_relation' for s in named_raw),
         complete_named_derivation=True, complete_under_twenty_derivation=False,
         cyclic_starts_are_explicit_conjugations=True, terminal_exteriors=4,
-        previous_graphical_steps=106, mathematical_steps_saved=5, route_parts=(17,51,8,23,1,1))
-    if named_summary['graphical_steps'] != 101 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
+        previous_graphical_steps=101, mathematical_steps_saved=2, route_parts=(17,80,1,1),
+        unshortened_route_parts=(17,51,8,23,1,1), equivariant_frame_operations_removed=2)
+    if named_summary['graphical_steps'] != 99 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
         raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
     display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
                                    for i, state in enumerate(named_shown)]
@@ -278,12 +281,12 @@ def build():
         rows=pure_rows,supports=[supports[i] for i in pure_support_ids],braids=[braids[i] for i in pure_braid_ids])
     pure_encoded=json.dumps(pure_display,separators=(',',':'));pure_version=sha256(pure_encoded.encode()).hexdigest()[:16]
     (out/'display-pure.json').write_text(pure_encoded,encoding='utf-8')
-    display=dict(states=display_routes['extract'],routes={k:v for k,v in display_routes.items() if k not in ('early','earlycluster')+pure_names},rows=rows[:base_sizes[0]],supports=supports[:base_sizes[1]],
+    display=dict(states=display_routes['extract'],routes={k:v for k,v in display_routes.items() if k not in ('early','earlycluster','_named_disk')+pure_names},rows=rows[:base_sizes[0]],supports=supports[:base_sizes[1]],
                  braids=braids[:base_sizes[2]],split=len(route['thirty_factors']),overview_summary=overview_summary)
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),named_disk_frame_shortening={k:v for k,v in named_disk.items() if k not in ('stages','factors')},
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))

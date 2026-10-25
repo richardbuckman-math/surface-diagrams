@@ -1,5 +1,81 @@
 # Handoff: surface-diagrams
 
+## October25 late run: two frame operations removed, complete proof99
+
+The COMPLETE NAMED derivation is now99 graphical operations, down from101.
+It still has FOUR explicit SPHERE operations and ZERO action-only boundary
+recognitions. Under20 remains open. The route is17 early operations plus an
+80-operation positive B5 tail, then combine and fourth-power sphere cap.
+Public namedfull and the portrait PDF are updated; the PDF has91 pages.
+All original research chapters, including51+8+23, remain unchanged and can
+reconstruct the original101-step source. This is not navigation regrouping:
+two actual global-conjugation operations are deleted and intermediate
+actual configurations are changed equivariantly.
+
+NEW named_disk_frames.shorten_named_disk_frames() retains the entire source
+local certificate, every original named witness, every transported actual
+input match, all117 adjacent disk checks and signed PC framing balances.
+The first global frame344, followed three moves later by -4,-3, is replaced
+by the single frame4. Conjugate the three intervening configurations by
+-4,-3 and remove the second frame. Their support maximum is17; the rejoin
+has exactly the original records. This is the alternative-branch version of
+the earlier pure-branch observation, now actually applied to the full route.
+
+The old final rounding frame(-4,-3,-2,-1,-1) is OMITTED. Transport its entire
+remaining tail by the inverse frame(1,1,2,3,4), including both PC daisy
+patterns and their internal proofs. The actual four-point square remains
+routed, and both daisies match individually in that chart. The transported
+tail stays support<=12 and ends at the SAME FOUR standard exteriors. Exact
+source-presentation matches are retained at the omitted frame; different
+short conjugator strings are not treated as different curves. The full disk
+tail still has peak20 and positive factors throughout, with chosen total
+lift+I. No sphere move is added or removed; no exterior is silently capped.
+Single caps remain -I. Existing separate six-framing and fourth-power caps
+stay visibly labeled with their FULL disk discrepancies and sphere/lift data.
+
+Source witness chart words remain explicitly stored AS SOURCE CHARTS under
+source_stage/source_witness. They are not silently asserted to describe the
+new configuration. The actual transformed inputs/patterns are checked
+separately; every original atomic Hurwitz certificate stays retained with
+its transformed two-factor equality. Cyclic starts are still explicit
+inverse-prefix conjugations. The terminal central four-exterior product
+allows all surviving frames to be undone without assuming source centrality.
+
+FINITE REJECTED COMPOSITIONS, now recorded so they are not repeated: in the
+old101 indexing, pulling frame63 back to47 peaks45; pulling69 back to63
+peaks38. Pulling88 back to69 is valid (peak18) but saves only the same one
+operation as omitting88; omission gives the clearer peak12 tail. Pushing
+43 forward to47 peaks21; pushing47 forward to63 is valid (peak19) but is
+an alternative one-operation saving to the accepted43/47 merge. Pushing63
+forward to69 peaks30; pushing69 forward to88 peaks38. These are measured
+forced-frame configurations, NOT exclusions of other geometric transports.
+Scratch .preview/named-frame-merges.json and named-frame-forward.json retain
+the measurements. Do not redo these nine fixed directions.
+
+Validation:73 focused disk/lift/framing/publication tests pass, INCLUDING
+the strict pure-chapter list regression that failed the preceding initial
+publication. Chrome checked122 LOCAL arrows (99complete+23retained closure),
+connected-braid row alignment, exactly four sphere moves, cold pure-only
+lazy loading and mobile. ALL91 PDF pages rendered and visually inspected;
+all99 step numbers and four full sphere appendices verified. PDF SHA256
+8ffe8266038b4fb6ff261e29561272af1a53dda88f3bff3a0fd21280e6736bbe.
+All prior research raw/resolved records, both optional audits, base943823byte
+payload/hash05e6c888cf352a48, early payload and177-step PDF are unchanged.
+Commit/push finished work and check NEW remoteCI plus new live publication.
+
+NEXT: the returned-root closure and these two frame eliminations are SOLVED.
+Return to an actual named shortcut in the existing-root prefix. A specific
+UNPERFORMED possibility is to split the round T12 square at the original
+alternative state22 and carry only one unit around the short cyclic side.
+The current whole-square transport matches F6/F11; one unit might instead
+expose a PC half-lantern with those two halves and the two actual T12 units.
+It needs a genuine joint B5 common-chart match, retained point-pushing data
+and useful bounded gathering; no root, route or shortening is claimed.
+Do not infer the relation merely from the known square conjugation. Avoid
+more global frame enumeration or restoring canonical petals unnecessarily.
+Keep the six-hour schedule, weekly pacing and interactive reserve. Preserve
+8Boundaries.pdf, all labs and unrelated projects.
+
 ## October25 complete named route shortened from106 to101
 
 NEW COMPLETE JOIN: early_alternative_closure.close_alternative_boundary()

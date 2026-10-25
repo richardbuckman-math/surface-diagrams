@@ -85,7 +85,7 @@ class AlternativeClosureTests(unittest.TestCase):
                     self.assertEqual(exact_action(s['frame'] + a.word + inverse_word(s['frame']), 5), exact_action(b.word, 5))
         self.assertEqual(cycles, 2)
 
-    def test_four_exteriors_remain_visible_and_complete_join_really_saves_five(self):
+    def test_four_exteriors_remain_visible_and_complete_join_includes_two_frame_eliminations(self):
         r = self.route
         self.assertEqual(r['factors'], tuple(Factor(f.id, (), 1, 5) for f in r['factors']))
         self.assertEqual(len(r['factors']), 4)
@@ -93,8 +93,8 @@ class AlternativeClosureTests(unittest.TestCase):
         self.assertEqual(r['exterior_caps'], 0)
         self.assertEqual(r['after_score'], dict(max_support_word=5, total_support_word=20, braid_letters=80))
         summary = self.saved['named_full_route']['summary']
-        self.assertEqual(summary['route_parts'], [17, 51, 8, 23, 1, 1])
-        self.assertEqual((summary['graphical_steps'], summary['mathematical_steps_saved']), (101, 5))
+        self.assertEqual(summary['unshortened_route_parts'], [17, 51, 8, 23, 1, 1])
+        self.assertEqual((summary['graphical_steps'], summary['mathematical_steps_saved']), (99, 2))
         self.assertEqual((summary['sphere_moves'], summary['action_only_boundary_recognitions']), (4, 0))
 
     def test_public_disk_supports_and_source_validation(self):
