@@ -153,7 +153,7 @@ class AlternativeThirtyAuditTests(unittest.TestCase):
         self.assertFalse(self.report['applied_to_public_replay'])
         self.assertFalse(self.report['replacement_for_full_proof'])
         self.assertFalse(self.report['complete_named_derivation'])
-        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 106)
+        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 101)
         self.assertEqual(self.public['early_alternative_exterior']['graphical_steps'], 8)
 
 

@@ -1,5 +1,74 @@
 # Structural search for Richard's (6,7) derivation
 
+## October25 complete named route shortened from106 to101
+
+NEW COMPLETE JOIN: early_alternative_closure.close_alternative_boundary()
+closes the reached second-exterior branch in23 positive disk operations /
+28 external adjacent checks. Together with17 early-prefix operations,
+51 existing-root transports,8 second-exterior operations and the final
+combine/cap, the full NAMED graphical proof is now101, five fewer than106.
+It retains FOUR explicit sphere moves and ZERO action-only recognitions.
+Under20 remains open. This is a mathematical route replacement, not a
+navigation regrouping. Public namedfull and the portrait PDF are updated.
+The new chapter is earlyaltclosed. All old research chapters remain intact.
+
+The first FIVE moves return the ACTUAL transported borrowed root. Move the
+actual45 up to the15/14 pair triangle. A PC rose, conjugated internally by
+the inverse45 and retaining one internal forward interchange, contracts
+those actual15,14,45 to the transported145 root. The untransported old loan
+with the same enclosed points fails; it is not substituted. Return the
+actual12 supplier through the three lent petals, return the root past the
+central exterior and old four-point curve, and close the individually
+matched daisy. This gives11records, score10/62, braid124, crossings10/124.
+
+SEVEN more moves align the remaining four-point curves O,N. With actual
+A=alternative.second.I35 and B=alternative.return.2, the ordered K=B A
+satisfies K O K^-1=N EXACTLY. Choose the cyclic start at B, carry B down the
+short side, then A and B over O; bring N across those two suppliers and
+combine the equal four-point units. Explicit common frame(-4,-3,-2,-1,-1)
+rounds their square. The cyclic frames are inverse-prefix conjugations,
+not an argument assuming source centrality. Endpoint score10/58, braid122.
+
+The final ELEVEN moves split the pair square, retain three actual petal
+swaps, interchange the other pair, choose the cyclic start at the round
+four-point square, split it, and carry one unit through the actual petals.
+Two ordered transported PC daisies then close directly. Canonical daisy
+interchanges(1,2),(1,2),(4,3) match the first five inputs individually.
+For the second, continue with(2,1),(3,2),(4,3), repeated twice. The rose1,
+first daisy3 and second daisy9 internal checks are all retained separately
+from the28 external adjacent checks. Signed PC framing balances are saved.
+All retained closure states are positive, have B5 boundary^4 action and
+chosen +I total lift, and stay support<=16. FOUR standard unit exteriors
+remain visible. The new chapter has ZERO sphere moves or caps. The full
+route combines their fourth power and uses its existing separate SPHERE
+MOVE(+I); the earlier six framing corrections are still capped separately.
+Never silently cap one exterior(-I).
+
+The new complete route is101 graphical operations; the PDF is92 portrait
+USLetter pages (page count is not a mathematical step count). The previous
+177-step/125-page archive is byte-identical. Startup943823bytes/hash
+05e6c888cf352a48, early payload, both optional sphere audits and all prior
+resolved research diagrams are unchanged. Historical target/replacement
+flags in those preserved chapter functions describe their original isolated
+publications; the new full named-route certificate records the actual join.
+
+Validation:59 focused exact/lift/framing/scope tests pass. Chrome checked
+all101 full-proof arrows plus all23 new chapter arrows: connected braids,
+exactly four visible sphere moves, cold pure-only loading and mobile.
+All92 PDF pages were rendered and visually inspected; all101 step numbers
+and all four sphere-discrepancy appendices were verified. New remoteTests/Documentation and live
+publication must be checked after commit/push; do not repeat old checks.
+
+NEXT: seek a real shortening in the existing-root51 prefix, especially
+returning a borrowed root immediately through a transported rose/daisy
+rather than building another canonical cluster. The returned-root closure
+is SOLVED; do not search it again. The old peripheral-star target and its
+finite unchanged-subsequence failures are optional research, not needed by
+this complete positive disk join. Do not redo the previous106 closure,
+the old21-petal canonicalization or already rejected global frames.
+Keep the active six-hour schedule, ordinary weekly pacing and>=15% weekly
+interactive reserve. Preserve8Boundaries.pdf and all unrelated projects.
+
 ## October25 optional thirty audit: two explicit sphere moves, disk obstruction
 
 A SEPARATE checked audit is saved in alternative_thirty_audit.py,
