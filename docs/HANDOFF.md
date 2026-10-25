@@ -1,5 +1,63 @@
 # Handoff: surface-diagrams
 
+## October25 optional thirty audit: two explicit sphere moves, disk obstruction
+
+A SEPARATE checked audit is saved in alternative_thirty_audit.py,
+examples/analyze_alternative_thirty.py and
+[the optional thirty audit](proofs/six-seven-alternative-thirty.md).
+No public graphical replay, mathematical proof record or PDF changes. The
+complete named proof remains106; research51 and second-exterior8 remain intact.
+This is not a new complete derivation or a shorter W1 factor-level route.
+
+The previously untested sphere suggestion is now certified in this OPTIONAL
+report. Three disk checks collect the TWO exterior twists, then a disk combine
+makes their square. SPHERE MOVE1 caps that square, with full/local disk
+writhe discrepancy40, exact marked-sphere action and chosen lift+I. A single
+cap would have-I and is not used. SPHERE MOVE2 complements the remaining
+four-point1345 curve to the actual26 pair, retaining its conjugator. Full/local
+disk discrepancy writhe10, exact sphere action and chosen lift+I are retained
+separately. Fourteen local disk expansions then give30 positive unit halves
+(one squared pair supplies four). The endpoint graph is CONNECTED, unlike
+the older nontransitive thirty, but no equivalence to W1 is claimed.
+
+NEW EXACT DISK EXCLUSION: the chosen B6 product has off-diagonal pair-linking
+spectrum(0:4,1:7,2:4); the standard(12345)^6 has(1:15). This excludes ALL
+DISK-only Hurwitz routes, EVEN AFTER HALF SPLITTING, and disk global
+conjugation to that standard word. Half Hurwitz preserves the whole product;
+global conjugation only permutes linking labels. This corrects the earlier
+suggestion that half splitting alone might remove the incidence obstacle.
+Further sphere-specific disk-representative changes are NOT excluded.
+The exact labeled-crossing trace is retained; nonpure braids are rejected,
+word exhaustion raises VerificationLimitError, never a false invariant.
+
+USEFUL NAMED TARGET: a positive peripheral point2-star can be replaced by a
+positive point6-star on the marked sphere. Both canonical five-petal stars
+have-I lift; their COUPLED SPHERE substitution is checked to have+I, full
+disk discrepancy and writhe0. It would repair the linking matrix but is
+TARGET ONLY/applied=false/requires_transport=true. No current star has been
+gathered. Do not apply it from matching counts, endpoints or writhe alone.
+
+The EIGHT current cyclic point2-star subsequences were checked with complete
+nonabelian kernels after a diagnostic frame(5,4,3,2). Every petal has zero
+shadow, but NONE of the eight full product loops is peripheral. All splits,
+reconstructed words and product loops are saved. This finite failure does
+not exclude transported stars or general sphere Hurwitz equivalence. Do not
+repeat these eight unchanged tests. Next seek one specific positive petal
+transport exposing the actual peripheral configuration, a different explicit
+sphere rechart, or return to the double-boundary disk remainder for a concrete
+rose/daisy payoff. Do not redo the already certified cap/complement audit.
+
+Rejected natural frames of the thirty: inverse old-four-point chart raises
+sphere support max/total to68/384. Moving the central endpoint2 to5 by
+(4,3,2) gives36/176; the negative version gives24/92. Source maximum/total
+is16/88. These are limited frame probes, not universal exclusions.
+
+Validation:32 focused exact/lift/linking/kernel tests pass. Full public proof,
+all prior graphical payloads and both PDFs remain unchanged. No graphical
+artifact was added; no old browser/PDF checks need repeating. Commit/push
+finished work and verify NEW remoteCI plus the new auditJSON only. Keep the
+active six-hour schedule, ordinary weekly pacing and interactive reserve.
+
 ## October25 second-exterior chapter: eight actual disk operations
 
 A NEW REACHED chapter early_alternative_exterior.expose_second_alternative_exterior()
