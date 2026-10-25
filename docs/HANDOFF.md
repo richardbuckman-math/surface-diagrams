@@ -1,5 +1,80 @@
 # Handoff: surface-diagrams
 
+## October25 second-exterior chapter: eight actual disk operations
+
+A NEW REACHED chapter early_alternative_exterior.expose_second_alternative_exterior()
+continues the unchanged operation51 source in EIGHT positive disk operations /
+SIX retained adjacent checks. Public phase is earlyaltexterior; it is separate
+from the preserved51-operation geometric branch. Combined research length59,
+not a shorter complete proof. The complete106-step proof and both PDFs remain
+unchanged. No sphere move or cap is introduced; BOTH exteriors stay visible.
+
+NEW JOINT CHART, not an intersection-count guess: source X=actual2345 and
+Y=actual135 share the EXACT35 petal. The explicit source_chart takes X/shared35
+to standard D4/D12. Under it, Y's full last-strand split has shadow D12 and
+NONABELIAN kernel(-4,-3,1,2,3,4), whereas canonical T125 has kernel(1,2).
+The B4 block frame D12 D34 D4^-1 preserves D4,D12,D34 and carries that full
+kernel EXACTLY to the actual one. Both splits and full individual B5 matches
+are saved. Thus frame0=source_chart*block_frame matches X and Y individually.
+No strand or kernel is dropped, and no source identity is assumed.
+
+The canonical cabled relation is X,Z,Y = exterior,D12,D34. Its other third
+curve Z'=Y^-1 Z Y gives X,Y,Z'. Crucially, actual source51 return.2 (a25 pair)
+conjugates ROUND R124 (chart-3,coreT123) to EXACTLY this missing Z'. This was
+checked as a full B5 equality, not inferred from endpoint sets. The old124
+root still fails, as recorded previously; a DIFFERENT round donor works.
+
+THE ACTUAL ROUTE: apply common disk frame(2,3,4,-2,-1); a PC daisy of the new
+four-point curve lends R124; choose cyclic start at actual25; one adjacent
+transport makes the donor Z'; bring Y up across one neighboring pair; choose
+cyclic start at X; bring Z' up the FOUR-neighbor short side; apply the actual
+ordered cabled lantern. EVERY input and normalized output matches its common
+canonical chart separately. Signed framing balances and both complete cyclic
+conjugations are retained. Eight operations, six transport checks, zero sphere
+moves, zero halves, no inverse factors. The common frame permutes point labels;
+do not infer current sets from inherited IDs.
+
+ENDPOINT:16positive records =2VISIBLE exteriors,1four-point twist,13pair
+records(one squared), no triple roots. The remaining14 records have exact
+DOUBLE-boundary action, but their short NAMED closure is open IN THIS BRANCH.
+The complete106-step named proof remains solved. The local lantern produces
+an exterior from actual factors; no whole-product boundary recognition is used.
+Each exterior has-I lift; their product has+I but NO cap is applied here.
+
+MEASURED LIMITS: every retained state in the new chapter has support<=16;
+full research prefix retains its old peak20. Braid192->164, endpoint support
+12/86 ->16/98, exact curve crossings10/160 ->36/472. This is structural progress,
+NOT an overall geometric simplification. The simpler51 endpoint remains intact.
+The unframed short-side gather peaks38; frame(-1) peaks30; frame(-2,-1)
+peaks24; a further deterministic unfolding of the long outer supplies the
+accepted frame. Gathering X/Y down the opposite side peaks50/42. Do not redo
+these rejected orders or frame variants.
+
+CONCRETE NEXT GAP: seek a transported rose/daisy decomposition of the new
+fourteen-factor double-boundary remainder. Incidence suggests a six-pair rose
+plus point-pushing petals, but the six unchanged candidate inner pairs are NOT
+already jointly inside the remaining four-point curve: one actual lent petal
+has intersection36 with it. Do not claim that rose from incidence alone. Use
+actual common-chart matches, a specific positive unwinding or a useful cyclic
+start. The source51 shared-petal targets remain historical/applied=false in
+that source record; the NEW chapter consumes its2345/135 curves by the reached
+lantern. Do not keep treating the missing third class or its transport as open.
+
+Earlier probes this run: internally twisting the old124 donor by either sign
+of actual14 still fails all six exterior-lantern orders. The new block-frame
+construction bypasses those failed donors. Scratch .preview/probe_alt_second_exterior.py
+and .preview/alt-second-exterior-route.json retain the reached route and the
+limited rejected gathers. Bounds are unknown, never false exclusions.
+
+Validation:60 focused exact/lift/framing/kernel/geometry and published-phase
+tests pass. Chrome verified all8 LOCAL arrows, connected-braid alignment,
+explicit scope/cyclic labels, pure-only lazy loading and mobile; the actual
+lantern picture was inspected. ALL prior raw/resolved graphical routes,
+complete106 proof, both PDFs/public copies, startup/early payloads and historical
+sphere audit are IDENTICAL. Verify NEW remoteCI and live8 arrows after commit/push. Preserve untracked8Boundaries.pdf, the
+point4 audit pinned to39 with all nine corrections, public labs and all other
+projects. Keep the active six-hour schedule and weekly interactive reserve.
+
 ## October24 inside-four daisy: research endpoint51
 
 SIX reached positive DISK operations extend the existing-root research route

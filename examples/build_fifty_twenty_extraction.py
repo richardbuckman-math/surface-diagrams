@@ -10,6 +10,7 @@ from surface_diagrams.puncture_boundary import early_boundary_derivation
 from surface_diagrams.early_boundary_cluster import positive_early_cluster
 from surface_diagrams.early_alternative import expose_alternative_early_daisy
 from surface_diagrams.early_alternative_transport import transport_alternative_roots
+from surface_diagrams.early_alternative_exterior import expose_second_alternative_exterior
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
 from surface_diagrams.early_boundary_closure import close_round_boundary
@@ -86,6 +87,7 @@ def build():
     earlycluster=positive_early_cluster(early['chart']['factors'])
     alternative=expose_alternative_early_daisy(early['chart']['factors'])
     alttransport=transport_alternative_roots(early['chart']['factors'])
+    altexterior=expose_second_alternative_exterior(alttransport['factors'])
     purification=purify_early_cluster(earlycluster['factors'])
     pure_contractions=contract_pure_clusters(purification['factors'])
     exterior=extract_positive_exterior(pure_contractions['factors'])
@@ -101,8 +103,9 @@ def build():
     routes.update({name:dict(stages=stages) for name,stages in pure_phases.items()})
     routes['earlyalternate']=alternative
     routes['earlyalttransport']=alttransport
+    routes['earlyaltexterior']=altexterior
     pure_names=tuple(pure_phases)
-    disk_phases=('earlyalternate','earlyalttransport')+('transport','early','earlycluster')+pure_names
+    disk_phases=('earlyalternate','earlyalttransport','earlyaltexterior')+('transport','early','earlycluster')+pure_names
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
     candidates=tuple(SignedResearchFactor(**dict(data['rows'][i]['factor'],conjugator=tuple(data['rows'][i]['factor']['conjugator']))) for i in first['factors'])
     candidates=reframe_factors(candidates,inverse_word(first['frame']))['factors']
@@ -151,7 +154,7 @@ def build():
             shown=dict(title=stage['title'],kind=stage['kind'],factors=ids,
                        disk_discrepancy=stage.get('disk_discrepancy',()),disk_equality=stage.get('disk_equality'))
             if stage.get('caption'):shown['caption']=stage['caption']
-            if name in pure_names+('earlyalternate','earlyalttransport'):
+            if name in pure_names+('earlyalternate','earlyalttransport','earlyaltexterior'):
                 shown['caption']=str(stage['half_twists'])+' half twists remaining; '+str(len(stage['factors']))+' positive factors; support-word maximum '+str(stage['score']['max_support_word'])
                 if not any(f.half for f in stage['factors']):
                     curves=tuple(replace(f.mapping_class,power=1) for f in stage['factors'])
@@ -212,7 +215,7 @@ def build():
         raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
     display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
                                    for i, state in enumerate(named_shown)]
-    pure_names += ('namedfull','earlyalternate','earlyalttransport')
+    pure_names += ('namedfull','earlyalternate','earlyalttransport','earlyaltexterior')
     # One readable chain through the already certified route. These arrows
     # summarize retained atomic moves; they are never called single moves.
     legacy=tuple(s for phase in report.values() if isinstance(phase,dict) and 'stages' in phase
@@ -274,7 +277,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
