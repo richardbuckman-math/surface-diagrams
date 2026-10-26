@@ -1,5 +1,80 @@
 # Handoff: surface-diagrams
 
+## October26 outside donor REACHES the original-half PC half-lantern
+
+NEW REACHED RESEARCH BRANCH: outside_half_lantern.reach_outside_half_lantern()
+absorbs BOTH original remaining F6/F11 halves by an ACTUAL ordered PC half-
+lantern. It is saved separately in examples/analyze_outside_half_lantern.py
+and docs/proofs/six-seven-outside-half-lantern.md/.json. No public graphical
+phase, payload, main proof record or PDF changes. The complete named proof
+is still99, four explicit sphere moves; its under20 goal remains open.
+This branch is NOT joined to a shorter complete proof.
+
+Start at the preserved original alternative state22. A smarter cyclic start
+performs the earlier one-unit transport in THREE operations instead of4.
+The actual round R123 then lends a T12 by its PC ROSE. This outside unit
+combines with oldQ2. A cyclic start and short-side square transport put the
+new square AFTER F11. OldQ1 is now an UNSELECTED factor: carry it UP to just
+after F6, preconditioning the gathering interval. Carry F6 DOWN through
+that interval. The actual adjacent F6,F11,new square individually match
+the PC half-lantern, which is APPLIED. New square ancestry is oldQ2 plus
+outside.rose.0; it is not the obstructed oldQ1/Q2 selection. No auxiliary
+half, inverse or sphere move is introduced. The old fixed-four-factor
+obstruction remains true but does not apply to this outside substitution.
+Do not continue treating this newly reached half-lantern as merely a target.
+
+Preferred route: ELEVEN positive DISK operations/SIXTEEN adjacent checks;
+common frame(3,4,4) makes the new half-lantern outer ROUND T123. Every retained
+support<=13. All original halves are gone; endpoint17positive full-twist
+records, score13/117,braid174,crossings46/878 over136pairs. Original-chart
+variant: TEN operations, peak19, endpoint19/121,braid208; same crossing
+matrix. Every state has faithful B5 boundary^4 action, exact marked-sphere
+identity and chosen total+I lift. The local target's disk discrepancy,
+sphere action and chosen+I lift discrepancy are retained separately.
+No cap occurs. Parent PC rose signed balances are retained; NO framed-hole
+half-twist convention or holed-surface identity is asserted. All endpoint
+nonabelian kernels/shadows and disk reconstructions are retained.
+
+COUNT HONESTY: source22 follows17 early operations. Thus the new all-full-
+twist working prefixes have50 preferred /49 original-chart operations.
+The older alternative reaches all full twists at working46 (alternative29).
+Its endpoint score17/129,braid178,crossings48/1004 over120pairs is different.
+The new branch improves local curve scores but currently takes MORE moves.
+Do not claim a99-step shortening or redefine its source as an under20 proof.
+The FULL earlier alternative prefix still has its recorded<=20 peak;13 is
+only the new preferred extension's bound. Original99/public chapters remain
+raw/resolved IDENTICAL.
+
+NEW EXACT NEXT TARGETS, unapplied: the new root's PC rose internally
+conjugated by inverseT12 has its middle petal EXACTLY current Q1. First
+petal is roundT12; third is the full twist on the consumed F6 neighborhood.
+That same first T12 plus both actual unused outside-rose petals individually
+restore the original R123 donor in its transported chart. This is a potential
+borrow/return with a duplicate actual pair, NOT a reached return. It needs
+concrete transport preserving the matches and a useful further cancellation
+or complete join. Do not rebuild the old record list without a payoff.
+The earlier O1234 donor/R124 target in one_unit_half_lantern stays historically
+unapplied: the NEW route instead uses the round R123 rose donor.
+
+FAILED LOCAL ROUTES, do not repeat: square-up after B-up, direct A-down,
+and the fixed two-half-block-down gathers all exceed20 without Q1's local
+preconditioning. Extra global T12 to make the dragged half consecutive
+already exceeds20 before the gather. At the preferred new endpoint, actual
+O1234, actual prepare.F5.1(245), actual F12.1(135) have intersections2,2,8;
+ALL6 orders fail exact necessary centralization. Either sign of new round
+R123 on that135 root gives2,2,10; support15 negative /9 positive; ALL6orders
+still fail for each sign. These are specific unchanged/one-transport failures,
+NOT orbit exclusions. Scratch .preview/outside-half-exterior-candidates.json
+and outside-half-root-unwind-target.json retain the probes. Never infer a
+current curve from its inherited ID or from counts alone.
+
+Validation:35 focused outside-route/one-unit/PC/point-pushing/frame tests
+pass; both chart variants reproduce exactly. All public proofs/payloads,
+older optional audits and both PDFs are unchanged. No new browser or PDF
+checks are appropriate for this unintegrated research route. Commit/push
+and verify NEW remoteTests/Documentation plus the new JSON only. Preserve
+8Boundaries.pdf and unrelated projects; keep six-hour pacing and reserve.
+
 ## October26 one-unit audit: exact half-lantern target, ordered obstruction
 
 A SEPARATE audit one_unit_half_lantern.audit_one_unit_half_lantern() tests
