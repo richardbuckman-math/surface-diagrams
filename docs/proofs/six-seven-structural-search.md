@@ -1,5 +1,66 @@
 # Structural search for Richard's (6,7) derivation
 
+## October26 outside rose return reaches an actual exterior, separate research branch
+
+NEW outside_rose_return.return_outside_rose() continues the preferred outside-
+half-lantern endpoint in NINE positive disk operations/SEVEN external adjacent
+checks plus ONE retained internal cabled-lantern interchange. The earlier
+unapplied rose-return target is now REACHED here. Source files/example and
+separate docs/proofs/six-seven-outside-rose-return.md/.json preserve the route.
+No public graphical phase, payload, complete99 proof or PDF changes.
+
+The internally conjugated new root's PC rose is used in cyclic order
+Q1,A-squared,Q12. A cyclic Q12 start and two commuting neighbor crossings
+return the actual loan to the two unused donor petals; their PC rose restores
+R124. The original two Q1 copies remain SEPARATE. Actual125's PC daisy then
+lends its exact last15 petal. Carry it past the four-point outer. Actual
+15,124,245 individually match a cyclic cabled PC lantern in chart(-2,-1,-1),
+creating O1245 and inner24. Its two PC daisy derivation is retained.
+
+The next lantern requires the POSITIVE complement sigma4 D4 sigma4^-1,
+not the tempting negative complement. Common chart H=P15 sigma3 matches
+the two actual outers and the needed35 petal individually. That petal is
+ALREADY actual alternative.return.1. A four-neighbor fixed-pair drag and
+one cabled PC lantern reach one VISIBLE exterior. The canonical E45/Ominus
+interchange giving D4,Oplus,E45 is retained. All full-twist signed framing
+balances, local disk/sphere/+I discrepancies and normalized outputs remain.
+No half, inverse factor, SPHERE move or cap is introduced. Keep the unit
+exterior visible: its lift is-I.
+
+Count honesty: preferred source working50 -> new working59, compared with
+the older first exterior at working53. Thus this is NOT a shorter full proof.
+Endpoint17 unit full twists =1exterior+7triples+9pairs; score19/140,braid206,
+closed intersections70/1420 over136pairs, extension peak19. Source was13/117,
+174letters,46/878. No overall geometric improvement is claimed. All retained
+states/neighbors keep exact B5 boundary^4 action, sphere identity,total+I;
+each endpoint nonabelian kernel/shadow/reconstruction is saved. Complete99,
+four sphere steps, under20 OPEN, all existing graphical/PDF states unchanged.
+
+Specific failed probes: the naive joint seeds(3,1,2,+/-4) fail actual245;
+correct first chart is(-2,-1,-1). The negative complement fails the second
+lantern; actual O1245 is also chart(3,4),coreT1234. Moving both outers down
+as a fixed ordered block exceeds20 on the second neighbor. Earlier Q1 DOWN
+to its duplicate exceeds20; no combine is applied. These are local failures,
+not orbit exclusions. Do not repeat them or infer a hypothetical6triple/
+12pair ledger: the reached endpoint has7triples/9pairs.
+
+NEXT saved target, unapplied: the new inner root's PC rose third petal and
+PC daisy second petal EXACTLY equal actual return.inner24. Other canonical
+petals have no unchanged exact unit matches. Try a specific transported
+rose/petal-cycle around that shared curve, not count-only gathering. A useful
+complete join is still needed before changing99 or the PDF. Historical
+source target flags stayfalse because this separate branch contains the
+actual return. Preserve the earlier outside-half/one-unit audits unchanged.
+
+Validation:43 focused return/outside-half/one-unit/PC/point-pushing/frame
+regressions pass; all8 new tests were rerun after the final shared-petal
+certificate was added. The new report reproduces exactly:239427bytes,
+SHA2561e4f5d60504d9359f90ede031389a8354c8a9873291f0514d15c4c688ce4e6de.
+No existing proof, graphical payload, optional audit or PDF changes. No
+browser/PDF recheck is appropriate for unchanged graphical artifacts.
+Commit/push this increment and verify NEW remoteTests/Documentation and
+the new live JSON only. Preserve8Boundaries.pdf; keep six-hour pacing.
+
 ## October26 outside donor REACHES the original-half PC half-lantern
 
 NEW REACHED RESEARCH BRANCH: outside_half_lantern.reach_outside_half_lantern()
