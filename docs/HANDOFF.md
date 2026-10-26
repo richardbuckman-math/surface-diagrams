@@ -1,5 +1,58 @@
 # Handoff: surface-diagrams
 
+## October26 one-unit audit: exact half-lantern target, ordered obstruction
+
+A SEPARATE audit one_unit_half_lantern.audit_one_unit_half_lantern() tests
+the previously unperformed state22 suggestion. It adds no graphical phase,
+changes NO public proof/payload/PDF, and is not a shorter complete route.
+The full NAMED proof stays99, four explicit sphere moves, under20 open.
+See docs/proofs/six-seven-one-unit-half-lantern.md/.json and the reproduction
+examples/analyze_one_unit_half_lantern.py. All source calculations are pinned
+to early_alternative_transport.stages[22], not the optimized named route.
+
+REACHED IN THIS AUDIT: split roundT12 squared; carry ONE unit to the top;
+cyclic start after it; carry it up the short side to F11. Four positive
+disk operations/three adjacent checks. All retained states have faithful
+B5 boundary^4 action, exact marked-sphere identity and chosen total lift+I;
+no sphere move or cap is used. Peak support11, endpoint11/91,braid192.
+The original B_old=Q^2 A Q^-2 becomes B=Q A Q^-1.
+
+NEW EXACT TARGET A B Q^2=R124: every actual input individually matches the
+PC half-lantern in chart(-4,-4,-3,-1,2,1). The outer normalizes to chart
+(-4,-4,-3),coreT123. The right sigma1 stabilizer of the saved A chart is
+needed; using that shortest chart alone matches only the first half.
+The canonical PC rose and two internal half-Hurwitz checks derive the
+pattern. Its parent full-twist framing balance(1,1,0,1,0) is saved; NO
+framed-hole half-twist convention is chosen or promoted to an identity.
+The local target disk discrepancy has+I lift; that is not a cap of R124.
+Nonabelian point-pushing loops/shadows/reconstructions are retained.
+
+IMPORTANT ORDER GAP, NOW RIGOROUS: the actual four-factor cyclic order is
+Q2,A,Q1,B, not A,B,Q1,Q2. All FOUR unchanged cyclic products are NONCENTRAL
+in their generated subgroup, with full faithful Artin witnesses saved.
+Selected-only disk Hurwitz keeps that subgroup/product; common frames
+conjugate both. A PC half-lantern product is its outer and centralizes all
+inputs. Therefore no selected-four-only disk Hurwitz/common-frame route
+exposes this pattern. This excludes neither OUTSIDE-factor interactions,
+sphere changes nor other substitutions/splitting/combining. It is not an
+orbit exclusion of the whole factorization.
+Do not repeat those four cyclic tests or a stable gather of those factors.
+
+A precise NOT-APPLIED donor is saved: the ACTUAL source four-point outer
+has a PC daisy in chart(-4,-4,-3), whose first term is EXACTLY R124. The
+other three petals have NO unchanged exact unit matches at the reached
+endpoint. No donor expansion or petal transport is applied. Next seek a
+specific outside-petal interaction changing the selected configuration;
+the target equality alone never establishes the needed ordered gathering.
+Do not repeat the three unchanged donor-petal comparisons.
+
+Validation:27 focused audit/PC/point-pushing/frame tests pass. The audit
+reproduces byte-for-byte; all public99/raw research routes, payloads,
+optional older audits and both PDFs remain unchanged. No new browser/PDF
+checks are needed. Commit/push this tested increment and verify NEW remote
+Tests/Documentation plus the new auditJSON only. Keep six-hour pacing and
+interactive reserve; preserve8Boundaries.pdf and unrelated projects.
+
 ## October25 late run: two frame operations removed, complete proof99
 
 The COMPLETE NAMED derivation is now99 graphical operations, down from101.
