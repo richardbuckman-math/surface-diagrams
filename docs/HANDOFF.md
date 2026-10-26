@@ -1,5 +1,79 @@
 # Handoff: surface-diagrams
 
+## October26 evening: actual cyclic-square shortcut, complete proof98
+
+The COMPLETE NAMED proof is now98 operations, down from99. It remains
+SOLVED, with FOUR explicit sphere moves and ZERO action-only boundary
+recognitions. Under20 remains OPEN. New named_cyclic_start.shorten_named_
+cyclic_start() deletes one actual standalone commutation and changes the
+intermediate configurations; this is not navigation regrouping. The route
+parts are17early+79positive disk-tail+combine+fourth-power cap. All117
+external adjacent disk checks remain, including the commuting crossing.
+
+Start at old complete99 step39 (alternative source22), where O1234 precedes
+the roundT12 square. Instead of commuting the square to the top and then
+cycling, choose the cyclic start AFTER BOTH the outer and square. Carry the
+SAME square up the short side, now crossing its commuting outer as well as
+the two former neighbors. Leave O1234 at the BOTTOM. The same sigma4 frame,
+C12 reorder, last-half gather/combine and actual C12 daisy proceed there.
+The later Q15 cyclic start rejoins old step48 EXACTLY, now step47. Everything
+before old39 and after old48 is unchanged. Changed interval9->8operations;
+support peak17, full disk tail peak20; four standard terminal exteriors
+are unchanged. No sphere step is added/removed and no cap is moved.
+
+Both cyclic frames are explicit inverse-prefix common conjugations. The
+Q15 rejoin retains the raw cyclic ordering BEFORE disk presentation changes,
+then checks EVERY actual factor against the original presentation. The
+regression distinguishes those two certificates: the cyclic word is freely
+equal first, and the following presentations are individually B5-exact.
+Do not silently read the source daisy's old chart as a different normalized
+donor chart. Its original local witness and signed framing balance remain.
+The terminal central exterior product allows all common frames to be undone
+without assuming the source was central. named_disk_frames' two earlier
+frame removals remain intact; its preserved component still reports99 as
+its historical output. The additional cyclic shortening supplies98.
+
+Publication artifacts: default namedfull and separate output/pdf/six-seven-
+named.pdf/public copy updated;90portrait USLetter pages. All90 pages rendered
+and visually inspected; all98 step numbers and four FULL sphere discrepancy
+appendices checked. PDF SHA2561c6e0aee6fac0502bdcf369e137eb96c04e8079dd385b95a834800eb2790fdeb.
+Local browser checks pass121arrows (98full+23unchanged closure), connected
+braids, exact four sphere banners/discrepancies, cyclic labels, cold pure-
+only loading and mobile. All older raw certificate chapters and resolved
+research supports/braids remain IDENTICAL. Only namedfull and its supporting
+display-row references change. Base943823byte payload/hash05e6c888cf352a48,
+early payload, optional audits and old125page/177step PDF stay unchanged.
+
+Validation:97 focused exact/scope/framing/lift/publication regressions pass,
+including the strict pure chapter-list test. A previous free-word-only check
+was correctly expanded to verify the newly explicit rejoin presentations
+separately, rather than claiming they freely reduce. Commit/push the tested
+increment and verify NEW remoteTests/Documentation, all121 LIVE arrows and
+the live PDF bytes. Preserve8Boundaries.pdf and unrelated projects.
+
+NEW precise UNAPPLIED first-half target, for another real prefix shortcut:
+use PRESERVED early_alternative_transport.stages[11]. Q14 has chart
+(-4,1,2,3),coreT45. Actual F3,F9,Q14 squared individually match a PC half-
+lantern in chart(-4,1,2,3,-2),coreT345. The outer is R134. BOTH actual
+O1234 and actual alternative.S1 have an EXACT Q14 petal: canonical PC daisy
+indices3 and2 respectively. The earlier five Q14-stabilizer half powers
+alone failed because the required extra sigma2 inverse was missing; in the
+Q14 chart actual F3 is chart(-2),coreH34. The TWO-donor target is saved in
+.preview/f3-two-q14-half-lantern.json with all individual matches, disk
+identity, separate sphere/+I discrepancy. NO donor expansion, gathering or
+half-lantern application is reached. A concrete bounded joint transport is
+needed; do not infer it from two petals or the algebraic local equality.
+This could bypass the long Q14/O1345 borrow-return detour, but no shortening
+beyond98 is claimed. The older source22 F6/F11 outside branch remains a
+separate, longer research route and is not the preferred complete proof.
+
+A rejected naive approach tried to conjugate the entire old tail by the
+inverse O1234 word. That does NOT itself give the desired cyclic factor
+list and already has support43; it was not applied. The accepted route
+instead changes the actual cut, passes the commuting outer within one square
+drag, and retains that outer until the exact later cyclic rejoin. Do not
+repeat the failed whole-tail frame or mistake it for a general exclusion.
+
 ## October26 outside rose return reaches an actual exterior, separate research branch
 
 NEW outside_rose_return.return_outside_rose() continues the preferred outside-
