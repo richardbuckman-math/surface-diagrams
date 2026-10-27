@@ -108,8 +108,8 @@ class EarlyAlternativeTests(unittest.TestCase):
             self.assertEqual(len(a['factors']), len(b['factors']))
             for f, i in zip(a['factors'], b['factors']):
                 self.assertEqual(exact_action(f.word), exact_action(d['rows'][i]['word']))
-        self.assertEqual(c['named_full_route']['summary']['graphical_steps'], 91)
-        self.assertEqual(len(d['routes']['namedfull']), 92)
+        self.assertEqual(c['named_full_route']['summary']['graphical_steps'], 90)
+        self.assertEqual(len(d['routes']['namedfull']), 91)
         self.assertFalse(c['early_alternative_lantern']['replacement_for_full_proof'])
         self.assertFalse(any(s['kind'] == 'sphere_rewrite' for s in d['routes']['earlyalternate']))
 

@@ -82,9 +82,9 @@ class NamedExpandedLoanTests(unittest.TestCase):
  def test_saved_certificate_and_public_proof_counts_are_exact(self):
   saved=self.saved['named_expanded_loan_shortening'];metadata={k:v for k,v in self.r.items() if k not in ('stages','factors')}
   self.assertEqual(json.loads(json.dumps(metadata,default=asdict)),saved)
-  summary=self.saved['named_full_route']['summary'];self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(91,1))
-  self.assertEqual(summary['route_parts'],[17,72,1,1]);self.assertEqual(summary['sphere_moves'],4);self.assertEqual(summary['action_only_boundary_recognitions'],0)
-  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),92)
+  summary=self.saved['named_full_route']['summary'];self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(90,1))
+  self.assertEqual(summary['route_parts'],[17,71,1,1]);self.assertEqual(summary['sphere_moves'],4);self.assertEqual(summary['action_only_boundary_recognitions'],0)
+  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),91)
   inverse=[s for s in d['routes']['namedfull'] if s.get('inverse_hurwitz_transport')];self.assertEqual(len(inverse),1)
   self.assertIn('ONE INVERSE DISK HURWITZ TRANSPORT',(self.folder/'index.html').read_text(encoding='utf-8'))
  def test_bad_sources_are_rejected(self):

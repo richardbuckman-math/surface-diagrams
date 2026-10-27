@@ -1,5 +1,108 @@
 # Structural search for Richard's (6,7) derivation
 
+## October27 midday: earlier cyclic cut and upward daisies, complete proof90
+
+The COMPLETE NAMED proof is now90 graphical operations, ONE fewer than91.
+It remains SOLVED, with FOUR explicit sphere operations and ZERO action-only
+boundary recognitions. Under20 is OPEN. New named_upward_daisies.py reaches
+four visible standard exteriors in14positive disk operations/19external
+adjacent checks, replacing the previous15/21 closure. The full route is
+17early+71positive disk tail+combine+fourth-power sphere cap=90. The tail
+has108external adjacent checks instead of110. New closure peak18; the
+preserved full prefix still peaks20. This changes the actual cyclic cut,
+transport direction and ordered daisy; it is not navigation regrouping.
+
+Start at preserved second-exterior endpoint, fullstep74/disk-tail57. Apply
+the ACTUAL positive roundT45 as one common frame(4,4). Commute the central
+exterior out of the loan, then carry the SAME four-point outer UP by three
+inverse Hurwitz crossings, with NO preliminary loan-petal interchange.
+Carry the12 petal through the actual loan petals. The six actual pair
+inputs match the existing nested PC rose, with ONE retained forward inner
+interchange(0,1). Its inner chart remains kappa=(1,-2,-2), preservingR123.
+Every input/output is individually matched in the positiveT45-transported
+chart. No temporary three-point root or auxiliary half is reconstructed.
+This reaches the expanded-return endpoint after FIVE operations, peak18.
+
+The important NEW change is after that return. Choose the cyclic start at
+return.2 BEFORE gathering the first daisy. Carry the SAME first outer UP
+across its four petals and two central exteriors (SIX actual neighbor
+checks). It never crosses or changes the second outer returned.N. The old
+downward route would change that outer to support22 in this chart; the
+new upward route leaves it literally in its short supported class.
+Split the square, then perform the two retained fixed-petal transports of
+its extra unit. All FIVE actual inputs match the first PC daisy in common
+chart M^-1*(4,4)*(2,3,4), with the old four internal interchanges retained.
+Here M is the actual first outer before that upward drag; the full word is
+stored. Contract it to the third VISIBLE exterior twist.
+
+Choose the next cyclic cut at this new exterior. Carry the extra pair DOWN
+across only TWO central exteriors. Actual last five factors are now
+extra,A,N,B,P24, the cyclic order of the old N,B,P24,extra,A daisy. The
+canonical seven internal petal interchanges are retained. Its additional
+INTERNAL cyclic start has shift3 and the FULL inverse-prefix frame; its
+free-word conjugation is checked before checking the actual individual
+B5 matches. This uses the known central exterior of the PC DAISY, not an
+assumption about the source factorization. Every normalized pair petal has
+EMPTY B4 shadow and its full NONABELIAN kernel/exact reconstruction saved.
+Contract the actual cyclic daisy. Four standard unit exteriors remain
+visible, then the full route combines them and uses the original separate
+fourth-power sphere cap(+I). There is no cap in this14-operation closure.
+
+All34new states/atomic neighbors independently retain faithfulB5 boundary^4
+action, exact marked-sphere identity and chosen total+I. All three local
+named substitutions retain separate sphere/+I discrepancies and signed
+framed balances. Internal named adjacent checks total12: rose1+daisy4+7;
+there is also the explicit local cyclic conjugation. The previous closure
+had11internal checks, so report the TWO saved checks specifically as
+EXTERNAL checks. Neither outer is aligned to the other or squared.
+Historical99/98/92/91component functions and all their source certificates
+remain unchanged. Raw101 now saves9closure+1earlyframe+1cyclic=90.
+
+Validation:120focused exact/lift/framing/kernel/scope/publication tests pass,
+plus5existing compact-support tests. The8new tests were rerun AFTER the final
+payload was generated (the initial publication assertion read before that
+write completed). All113LOCAL arrows (90full+23historical closure) pass
+Chrome: connected-braid alignment, exactly four sphere moves/discrepancies,
+truthful inverse labels, cyclic labels, cold pure-only loading and mobile.
+ALL87portraitLetter PDF pages were rendered and visually inspected; ALL90
+step numbers and four FULL sphere appendices checked. Current named PDF
+and public copy SHA256
+7ed02c3285b9e98b301cf473bb34ad556bf297d67eae8b6247c9d59fd1669be3.
+Richard's uniform unnumbered points remain18pt apart/radius1.26pt in ALL181
+referenced support grids. No browser support-label style was changed.
+
+All earlier RAW research chapters and RESOLVED support/braid states remain
+IDENTICAL, including the23-op closure. Base943823byte display.json/hash
+05e6c888cf352a48,early payload,audits and old125page/177step archive remain
+unchanged. Preserve untracked8Boundaries.pdf and all unrelated files.
+Commit/push and verify NEW remote Tests/Documentation,113LIVE arrows and
+byte-identical LIVE87pagePDF. Prior e12bae0/deeba3c are ALLGREEN and their
+unchanged publication checks must not be repeated.
+
+MEASURED LOCAL FRAME DIRECTIONS, not orbit exclusions: positiveQ45 alone
+bounds the unreordered five-operation prefix at18, but replaying the OLD
+downward-daisy suffix reaches22 when the first outer crosses returned.N.
+The newly reached upward route BYPASSES that specific excursion. Frames
+(1,4,4),(-1,4,4),(3,1,4,4),(-3,1,4,4) give prefix/suffix peaks24/16,
+20/28,30/16,32/16 respectively; none is applied. Do not repeat those four
+attempts, earlyF24, unreordered-unframed28, opposite petal reorder, old
+F-omission22, nine old forced frames or bypassed21-petal canonicalization.
+Scratch expanded-loan-positive-Q-frame.json, expanded-loan-round2345-frame.json,
+expanded-loan-outer-stabilizer-frames.json and expanded-loan-upward-daisies.json
+retain the measurements/reached route. Failure is not a general exclusion.
+
+NEXT SPECIFIC UNPERFORMED IDEA: merge the NEW frame at fullstep75,(4,4),
+back into the previous explicit disk frame at step67,(2,3,4,-2,-1).
+Transport actual states67..74 and all retained checks/individual named
+matches by positiveT45, compose the two frames, and test the full bound20.
+A valid literal rejoin could remove one more frame operation; none is yet
+claimed. This positiveT45 direction is DIFFERENT from the nine old forced
+frame measurements. Keep90 as the solved baseline. Prefer a concrete
+larger named-pattern shortcut in the earlier existing-root prefix if that
+frame move fails; do not merely merge navigation arrows or rebuild the
+old auxiliary-half/prefix-pair detour. All earlier half-lantern targets and
+outside-rose branches retain their precise reached/unapplied scopes.
+
 ## October27 morning: expanded loan return, complete proof91
 
 The COMPLETE NAMED derivation is now91 graphical operations, ONE fewer
