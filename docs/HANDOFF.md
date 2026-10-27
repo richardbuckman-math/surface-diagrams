@@ -1,5 +1,95 @@
 # Handoff: surface-diagrams
 
+## October27 evening: positive T45 frame merge, complete proof89
+
+The COMPLETE NAMED proof is now89 graphical operations, ONE fewer than90.
+It remains SOLVED, with FOUR explicit sphere moves and ZERO action-only
+boundary recognitions. Under20 is OPEN. New named_positive_frame.py merges
+the actual positiveT45 frame into the previous exterior-lantern chart.
+The actual eight configurations change; one standalone common conjugation
+is removed. This is not navigation regrouping. Current parts are17early+
+70positive disk tail+combine+fourth-power sphere cap=89. All108external
+adjacent checks and the existing internal named-pattern checks remain.
+
+The former fullstep67 frame h=(2,3,4,-2,-1) is replaced by
+(4,4,2,3,4,-2,-1). Conjugate actual fullstates67..74 and ALL six retained
+neighbor checks by positiveT45=(4,4). The resulting state74 rejoins the
+old fullstate75 LITERALLY. Omit that former standalone75frame. Everything
+through fullstep66 and after old75 remains identical, merely renumbered.
+The disk-tail source interval is50..58; eight actual states/fourteen total
+retained states are transported. Their support peak is18; the complete
+preserved disk tail still peaks20. Every actual factor is separately
+checked against its raw conjugated presentation. The original source
+stages and local chart words remain explicitly SOURCE certificates.
+
+The loan PC daisy now has an explicit canonical D4 joint chart
+(4,4)+h+(-3). Its actual parent AND each of its four normalized outputs
+are individually checked. The cabled exterior lantern has joint chart
+(4,4)+old_lantern_chart; each actual ordered input and all three output
+presentations match individually. Normalize its three actual inputs in
+that chart and retain COMPLETE point-pushing splits: the kernel loops and
+B4 shadows separately match the canonical inputs and reconstruct the full
+B5 braids. No strand or nonabelian kernel is dropped. These normalized
+splits are NEW-chart data; old source_chart/block_frame/splits remain under
+source_witness, never silently relabeled as transformed chart words.
+
+Both cyclic starts retain RAW conjugated factor words and the full
+conjugated cyclic frame. Their FREE-WORD equality is checked BEFORE each
+actual normalized B5 presentation. Likewise every one of the six adjacent
+checks retains raw local free-word equality plus all normalized factor
+matches. Actual normalized words need not be freely equal after a disk
+presentation change; the two certificate layers stay separate. All14
+changed/atomic configurations independently retain faithfulB5 boundary^4
+action, exact marked-sphere identity and chosen total+I. Both transformed
+named relations have separate sphere/+I discrepancy checks and recomputed
+signed framed balances. No new sphere step, cap, negative or half factor
+is introduced. The four terminal standard exteriors and their separate
+fourth-power cap(+I) are unchanged. Earlier six framing corrections retain
+their DIFFERENT explicit sphere cap.
+
+Historical named_upward_daisies still reports90/14closureoperations and its
+full source certificate is unchanged. The preferred route incorporates
+its positive frame earlier, so only13post-second-exterior operations remain.
+Summary distinguishes raw closure saving9, earlyframe1, cyclicsquare1 and
+NEW positiveframe1: raw101 becomes89. Historical99/98/92/91/90components,
+all old RAW research chapters and RESOLVED support/braid states are IDENTICAL.
+Base943823byte display.json/hash05e6c888cf352a48,early payload,audits and
+old125page/177step archive remain unchanged. Preserve8Boundaries.pdf.
+
+Validation:133focused exact/lift/framing/kernel/scope/publication/support
+tests pass. Chrome verifies all112LOCAL arrows(89full+23historical closure),
+connected-braid alignment, exactly four sphere moves/discrepancies, correct
+cyclic/inverse labels, cold pure-only loading and mobile. The NEW composed
+chart itself was separately inspected on mobile. ALL86portraitLetter PDF
+pages rendered/visually inspected; ALL89step numbers/four FULL sphere
+appendices checked. Uniform UNNUMBERED support points remain18pt apart,
+radius1.26pt, across all173referenced support grids. PDF/public copy SHA256
+21aadc0b2d021b4037f0543997d290222cdc4e166ab578da0c8f115223921815.
+Commit/push, then verify NEW remoteTests/Documentation,112LIVEarrows and
+LIVEPDF bytes. Prior4da5a34 and its unchanged publication are ALLGREEN;
+do not repeat old checks or credential diagnostics.
+
+The previously unperformed75-to67positive-frame direction is now REACHED,
+not an open target or a measured-only probe. Scratch positive-T45-back-to67.json
+and probe_positive_T45_back_to67.py are PINNED to historical4da5a34 so they
+never accidentally double-conjugate the new preferred states. Do not repeat
+this completed merge. The older nine forced-frame directions and the four
+failed positiveQ45 rounding variants retain their exact historical scopes;
+none excludes this new composed-frame route or general frame moves.
+
+NEXT SPECIFIC UNPERFORMED IDEA: test merging the NEW composed frame at
+current fullstep67,(4,4,2,3,4,-2,-1), back into the earlier inside-daisy
+frame at fullstep61,(3,2). Transport actual states61..66 and every neighbor
+check/named match by that EXACT new composed frame, recompute signed
+framing balances and retain raw/source charts separately. Require the full
+bound20 and a genuine individual/literal later join. The new composite is
+DIFFERENT from the historical h-only back-transport measured in the nine
+old directions. No88step proof is claimed. If this bounded merge fails,
+prioritize an actual larger named-pattern shortcut in the existing-root
+prefix, using the preserved source11half-lantern only with a NEW concrete
+outside interaction; do not rerun the old failed gathers or rebuild auxiliary
+halves. Keep89 as the solved baseline and stop at the per-run usage share.
+
 ## October27 midday: earlier cyclic cut and upward daisies, complete proof90
 
 The COMPLETE NAMED proof is now90 graphical operations, ONE fewer than91.
