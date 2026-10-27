@@ -2,7 +2,7 @@
 from io import BytesIO
 from pathlib import Path
 from html import escape
-import json
+import json,re,xml.etree.ElementTree as ET
 import build_six_seven_identity_pdf as base
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor
@@ -12,10 +12,50 @@ ROOT=base.ROOT
 OUT=ROOT/'output/pdf/six-seven-named.pdf'
 PUBLIC=ROOT/'docs/proofs/six-seven-fifty-blocks/six-seven-named.pdf'
 
+def support_grid(svg):
+    """Keep the exact curve, but remove point numbers and register its grid."""
+    svg=re.sub(r'<text\b[^>]*class="marked-point-label"[^>]*>.*?</text>','',svg,flags=re.S)
+    svg=base.compact_support_svg(svg)
+    root=ET.fromstring(svg);width,height=map(float,root.attrib['viewBox'].split()[2:]);marks=[]
+    def visit(node,sx=1,sy=1,tx=0,ty=0):
+        transform=node.get('transform','')
+        for op,args in re.findall(r'(translate|scale)\(([^)]+)\)',transform):
+            v=list(map(float,args.replace(',',' ').split()))
+            if op=='translate':tx+=sx*v[0];ty+=sy*(v[1] if len(v)>1 else 0)
+            else:sx*=v[0];sy*=v[1] if len(v)>1 else v[0]
+        if re.sub(r'(translate|scale)\([^)]+\)','',transform).strip():raise ValueError('Unsupported support-grid transform')
+        if node.get('class')=='marked-point':
+            marks.append((sx*float(node.get('cx'))+tx,sy*float(node.get('cy'))+ty,abs(sx)*float(node.get('r'))))
+        for child in node:visit(child,sx,sy,tx,ty)
+    visit(root);marks.sort()
+    if len(marks)!=6:raise ValueError('The named proof requires six marked points')
+    pitch=marks[1][0]-marks[0][0];cy=marks[0][1];radius=marks[0][2]
+    if pitch<=0 or any(abs(x-marks[0][0]-i*pitch)>1e-5 or abs(y-cy)>1e-5 or abs(r-radius)>1e-5 for i,(x,y,r) in enumerate(marks)):
+        raise ValueError('The source marked-point grid is not uniform')
+    cx=(marks[0][0]+marks[-1][0])/2
+    return dict(svg=svg,width=width,height=height,cx=cx,cy=cy,pitch=pitch,
+                side=max(cx,width-cx)/pitch,vertical=max(cy,height-cy)/pitch,
+                radius_ratio=radius/pitch)
+
 class NamedBook(base.Book):
-    def __init__(self):
+    def __init__(self,data,states):
         super().__init__()
         self.c.setTitle('The working (6,7): complete named graphical derivation')
+        supports={data['rows'][i]['support'] for state in states for i in state['factors']}
+        self.grids={i:support_grid(data['supports'][i]) for i in supports}
+        self.svg_grids={data['supports'][i]:g for i,g in self.grids.items()}
+        # One physical pitch throughout the PDF, including full-page checkpoints.
+        available=base.CW-base.BW-72-10
+        self.point_pitch=min(18.,available/(2*max(g['side'] for g in self.grids.values())))
+        if any(abs(g['radius_ratio']-.07)>1e-5 for g in self.grids.values()):raise ValueError('Inconsistent source dot size')
+    def height(self,row):
+        return max(super().height(row),2*self.grids[row['support']]['vertical']*self.point_pitch+4)
+    def support(self,svg,x,y,width,height):
+        g=self.svg_grids[svg];scale=self.point_pitch/g['pitch']
+        # Anchor the six dots, rather than centering each curve's changing bounds.
+        self.image(g['svg'],x+width/2-g['cx']*scale,
+                   y+height/2-(g['height']-g['cy'])*scale,
+                   g['width']*scale,g['height']*scale)
     def new(self,*args,**kwargs):
         top=super().new(*args,**kwargs)
         self.c.setFillColor(HexColor('#f5f7fa'));self.c.rect(base.M-1,11,base.W-2*base.M-40,16,stroke=0,fill=1)
@@ -29,13 +69,13 @@ def build():
     certificate=json.loads((folder/'certificate.json').read_text())['named_full_route']
     shown=data['routes']['namedfull'];raw=certificate['stages']
     assert len(shown)==len(raw)==92
-    book=NamedBook()
+    book=NamedBook(data,shown)
     top=book.new('The working (6,7): a complete named derivation',
         '91 graphical steps | Four explicit sphere moves | Portrait US Letter',bookmark='start')
     top=book.band('<b>VERY BRIEF SUMMARY.</b> Remove the incident half twists, use a five-point disk, turn the remaining positive factors into FOUR exterior twists by PC lanterns, roses, daisies and Hurwitz transports, then cap their fourth power.',top)
     top=book.text('The previously missing geometric boundary closure is now supplied. The final equality is obtained from actual named substitutions and factor transports, rather than a whole-product action recognition. All four sphere moves retain their disk discrepancies, exact sphere certificates and separately checked genus-two lift.',base.M,top,base.W-2*base.M)-15
     top=book.text('<b>What is still open.</b> This detailed route has 91 retained graphical steps: one fewer than the previous92-step proof and ten fewer than the101-step version and shorter than the earlier 177-step archive. It does not yet meet the goal of fewer than twenty meaningful operations. Reusable named patterns and fixed-factor drags are identified, with all adjacent checks retained in the certificates.',base.M,top,base.W-2*base.M)-15
-    top=book.text('<b>How to read it.</b> Read each factorization downward. Curves are paired with the braid representing that exact support; blue marked-point dots continue at braid separators. Only the changed interval is printed at a move, with the unchanged factors counted above and below. Every actual SPHERE MOVE has a yellow banner. Individual supports are not cumulative joint cut-system certificates.',base.M,top,base.W-2*base.M)-15
+    top=book.text('<b>How to read it.</b> Read each factorization downward. Curves are paired with the braid representing that exact support; blue marked-point dots continue at braid separators. The unnumbered support points use the same size and spacing in every factor. Only the changed interval is printed at a move, with the unchanged factors counted above and below. Every actual SPHERE MOVE has a yellow banner. Individual supports are not cumulative joint cut-system certificates.',base.M,top,base.W-2*base.M)-15
     book.text('<b>Logical scope.</b> Common frames and cyclic starts are explicit conjugations. The terminal four-exterior product is central, so reversing those conjugations recovers the source equality without assuming it was central. Marked points are not framed boundaries; signed framing balances are retained for PC substitutions. A single five-point cap has lift -I; the sixth- and fourth-power caps used here have +I.',base.M,top,base.W-2*base.M)
     book.new('Contents','Full diagrams, named sub-derivations and sphere discrepancies.',bookmark='contents');contents_page=book.n
     top=book.new('What the steps will do',bookmark='plan')

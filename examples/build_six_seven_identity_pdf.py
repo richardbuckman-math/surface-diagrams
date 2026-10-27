@@ -98,6 +98,8 @@ class Book:
    d=vector(svg);name='figure'+str(len(self.forms));self.c.beginForm(name,0,0,d.width,d.height);renderPDF.draw(d,self.c,0,0);self.c.endForm();self.forms[k]=(name,d.width,d.height)
   name,sw,sh=self.forms[k];scale=min(width/sw,height/sh)
   self.c.saveState();self.c.translate(x+(width-sw*scale)/2,y+(height-sh*scale)/2);self.c.scale(scale,scale);self.c.doForm(name);self.c.restoreState()
+ def support(self,svg,x,y,width,height):
+  self.image(compact_support_svg(svg),x,y,width,height)
  def band(self,s,top,sphere=False):
   height=Paragraph(plain(s),styles['small']).wrap(W-2*M-20,H)[1]+16
   self.c.setFillColor(HexColor('#fff0ce' if sphere else '#e5eff6'));self.c.roundRect(M,top-height,W-2*M,height,5,stroke=0,fill=1)
@@ -110,7 +112,7 @@ class Book:
   label=f'<b>{position+1}. {escape(identity)}</b><br/>{escape(row["label"])}'
   if row.get('sphere_rechart'):label+='<br/>SPHERE CHART'
   self.text(label,x+3,top-3,lw-5,'label')
-  self.image(compact_support_svg(data['supports'][row['support']]),x+lw,top-h+2,width-BW-lw-10,h-4)
+  self.support(data['supports'][row['support']],x+lw,top-h+2,width-BW-lw-10,h-4)
   fragment=braid_fragment_svg(row['word'],order=order,compact=True)
   # Labels occupy the left support column only. Add straight lead-ins to
   # the shared crossing fragment, so the braid reaches both row edges.

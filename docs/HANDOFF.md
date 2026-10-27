@@ -1,5 +1,36 @@
 # Handoff: surface-diagrams
 
+## October27 PDF feedback: uniform unnumbered marked points
+
+Richard requested consistent marked-point size and spacing from factor to
+factor, without number labels. The NAMED PDF exporter now registers every
+support to ONE physical grid:18pt point spacing and1.26pt dot radius,
+including full-page checkpoints and both Before/After columns. Support
+numbers are removed in the PDF only. Every exact curve is uniformly scaled
+with its points; its varying bounds no longer determine a per-row scale or
+horizontal shift. Row heights include the registered support's full bounds,
+so complicated curves stay contained and the connected braid style/crossing
+geometry is retained. The annotated page5 has13actual factor grids, measured
+in the OUTPUT PDF as six dots each, spacing18pt/diameter2.52pt throughout.
+
+All182referenced supports were audited for uniform grids, no point-number
+labels and contained bounds. Five existing compact-support tests pass.
+ALL88portraitLetter pages were rendered and visually inspected, ALL91step
+numbers and FOUR full sphere appendices remain present. The named PDF/public
+copy now has88pages instead of86; this is a PRESENTATION edit, not a new
+mathematical move/shortening. All91raw/resolved proof states, graphical web
+payloads, earlier research/audits and the old125page archive are unchanged.
+The shared Book.support hook preserves the old archive export's default
+behavior; only NamedBook uses the registered grid. Preserve this preference
+in future PDF rebuilds and keep untracked8Boundaries.pdf.
+
+Current named PDF SHA256
+02943a3ba2ed7d4ccc62a58ac6d991e53574fb9292409ca9666445f90f263978.
+This supersedes the earlier86page/e488befd PDF presentation metadata below;
+the complete mathematical proof remains91 with FOUR sphere moves and ZERO
+action-only recognitions. Under20 remains open. No mathematical research
+was attempted in this user-feedback increment.
+
 ## October27 morning: expanded loan return, complete proof91
 
 The COMPLETE NAMED derivation is now91 graphical operations, ONE fewer
