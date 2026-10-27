@@ -95,7 +95,7 @@ class AlternativeTransportTests(unittest.TestCase):
         self.assertTrue(self.route['exterior_not_capped'])
         self.assertFalse(self.route['replacement_for_full_proof'])
 
-    def test_public_research_route_is_disk_exact_and_full_proof_is_now_92_steps(self):
+    def test_public_research_route_is_disk_exact_and_full_proof_is_now_91_steps(self):
         d = json.loads((self.folder / 'display-pure.json').read_text(encoding='utf-8'))
         states = d['routes']['earlyalttransport']
         self.assertEqual(len(states), 52)
@@ -104,8 +104,8 @@ class AlternativeTransportTests(unittest.TestCase):
             for f, i in zip(a['factors'], b['factors']):
                 self.assertFalse(d['rows'][i]['sphere_rechart'])
                 self.assertEqual(exact_action(f.word, 5), exact_action(d['rows'][i]['word'], 5))
-        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 92)
-        self.assertEqual(len(d['routes']['namedfull']), 93)
+        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 91)
+        self.assertEqual(len(d['routes']['namedfull']), 92)
         self.assertFalse(self.public['early_alternative_transport']['replacement_for_full_proof'])
 
     def test_new_residual_lantern_uses_its_actual_frame_and_reduces_curve_intersections(self):

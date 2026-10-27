@@ -15,6 +15,7 @@ from surface_diagrams.early_alternative_closure import close_alternative_boundar
 from surface_diagrams.named_disk_frames import shorten_named_disk_frames
 from surface_diagrams.named_cyclic_start import shorten_named_cyclic_start
 from surface_diagrams.named_unaligned_daisies import shorten_named_daisy_closure
+from surface_diagrams.named_expanded_loan import shorten_expanded_loan_return
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
 from surface_diagrams.early_boundary_closure import close_round_boundary
@@ -96,6 +97,7 @@ def build():
     named_disk=shorten_named_disk_frames(alttransport['stages']+altexterior['stages'][1:]+altclosed['stages'][1:])
     named_current=shorten_named_cyclic_start(named_disk['stages'])
     named_latest=shorten_named_daisy_closure(named_current['stages'])
+    named_final=shorten_expanded_loan_return(named_latest['stages'])
     purification=purify_early_cluster(earlycluster['factors'])
     pure_contractions=contract_pure_clusters(purification['factors'])
     exterior=extract_positive_exterior(pure_contractions['factors'])
@@ -113,7 +115,7 @@ def build():
     routes['earlyalttransport']=alttransport
     routes['earlyaltexterior']=altexterior
     routes['earlyaltclosed']=altclosed
-    routes['_named_disk']=named_latest
+    routes['_named_disk']=named_final
     pure_names=tuple(pure_phases)
     disk_phases=('_named_disk','earlyalternate','earlyalttransport','earlyaltexterior','earlyaltclosed')+('transport','early','earlycluster')+pure_names
     data=json.loads((parent/'display.json').read_text());first=data['states'][0]
@@ -181,6 +183,7 @@ def build():
                 shown['caption']+='; exact PC daisy chart '+str(stage['daisy_frame'])
             if stage.get('boundary_power'):shown['boundary_power']=stage['boundary_power']
             if stage.get('adjacent_moves'):shown['adjacent_moves']=stage['adjacent_moves']
+            if stage.get('inverse_hurwitz_transport'):shown['inverse_hurwitz_transport']=True
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
             states.append(shown)
         display_routes[name]=states
@@ -188,15 +191,15 @@ def build():
     # recognition by the actual positive research route and its four exteriors.
     named_raw = list(early['stages'][:18])
     named_shown = list(display_routes['early'][:18])
-    if named_raw[-1]['factors'] != named_latest['stages'][0]['factors']:
+    if named_raw[-1]['factors'] != named_final['stages'][0]['factors']:
         raise ValueError('The shortened disk tail has a discontinuous source join')
-    named_raw.extend(named_latest['stages'][1:])
+    named_raw.extend(named_final['stages'][1:])
     named_shown.extend(display_routes['_named_disk'][1:])
     fourth = early['stages'][-2]['factors'][0]
-    if exact_action(tuple(x for f in named_latest['factors'] for x in f.word), 5) != exact_action(fourth.word, 5):
+    if exact_action(tuple(x for f in named_final['factors'] for x in f.word), 5) != exact_action(fourth.word, 5):
         raise ValueError('Four identical visible exteriors did not combine to their fourth power')
     combine = dict(kind='disk_combine', title='Combine the FOUR identical visible exterior twists',
-                   factors=(fourth,), local_before=named_latest['factors'], local_after=(fourth,),
+                   factors=(fourth,), local_before=named_final['factors'], local_after=(fourth,),
                    exact_disk_equality=True, not_an_action_recognition=True)
     named_raw.extend((combine, early['stages'][-1]))
     named_shown.extend((dict(display_routes['early'][-2], kind='disk_combine',
@@ -222,9 +225,9 @@ def build():
         action_only_boundary_recognitions=sum(s['kind'] == 'disk_boundary_relation' for s in named_raw),
         complete_named_derivation=True, complete_under_twenty_derivation=False,
         cyclic_starts_are_explicit_conjugations=True, terminal_exteriors=4,
-        previous_graphical_steps=98, mathematical_steps_saved=6, route_parts=(17,73,1,1),
-        unshortened_route_parts=(17,51,8,23,1,1), equivariant_frame_operations_removed=1, historical_frame_component_operations_removed=2, cyclic_start_operations_removed=1, raw_closure_operations_removed=7, direct_daisy_operations_removed=6)
-    if named_summary['graphical_steps'] != 92 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
+        previous_graphical_steps=92, mathematical_steps_saved=1, route_parts=(17,72,1,1),
+        unshortened_route_parts=(17,51,8,23,1,1), equivariant_frame_operations_removed=1, historical_frame_component_operations_removed=2, cyclic_start_operations_removed=1, raw_closure_operations_removed=8, historical_direct_daisy_operations_removed=6, expanded_loan_operations_removed=1)
+    if named_summary['graphical_steps'] != 91 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
         raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
     display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
                                    for i, state in enumerate(named_shown)]
@@ -290,7 +293,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),named_disk_frame_shortening={k:v for k,v in named_disk.items() if k not in ('stages','factors')},named_cyclic_start_shortening={k:v for k,v in named_current.items() if k not in ('stages','factors')},named_unaligned_daisy_shortening={k:v for k,v in named_latest.items() if k not in ('stages','factors')},
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),named_disk_frame_shortening={k:v for k,v in named_disk.items() if k not in ('stages','factors')},named_cyclic_start_shortening={k:v for k,v in named_current.items() if k not in ('stages','factors')},named_unaligned_daisy_shortening={k:v for k,v in named_latest.items() if k not in ('stages','factors')},named_expanded_loan_shortening={k:v for k,v in named_final.items() if k not in ('stages','factors')},
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))

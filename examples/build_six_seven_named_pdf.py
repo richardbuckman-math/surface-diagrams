@@ -1,4 +1,4 @@
-"""Portrait vector PDF of the COMPLETE NAMED 92-step working (6,7) proof."""
+"""Portrait vector PDF of the COMPLETE NAMED 91-step working (6,7) proof."""
 from io import BytesIO
 from pathlib import Path
 from html import escape
@@ -28,13 +28,13 @@ def build():
     data=json.loads((folder/'display-pure.json').read_text())
     certificate=json.loads((folder/'certificate.json').read_text())['named_full_route']
     shown=data['routes']['namedfull'];raw=certificate['stages']
-    assert len(shown)==len(raw)==93
+    assert len(shown)==len(raw)==92
     book=NamedBook()
     top=book.new('The working (6,7): a complete named derivation',
-        '92 graphical steps | Four explicit sphere moves | Portrait US Letter',bookmark='start')
+        '91 graphical steps | Four explicit sphere moves | Portrait US Letter',bookmark='start')
     top=book.band('<b>VERY BRIEF SUMMARY.</b> Remove the incident half twists, use a five-point disk, turn the remaining positive factors into FOUR exterior twists by PC lanterns, roses, daisies and Hurwitz transports, then cap their fourth power.',top)
     top=book.text('The previously missing geometric boundary closure is now supplied. The final equality is obtained from actual named substitutions and factor transports, rather than a whole-product action recognition. All four sphere moves retain their disk discrepancies, exact sphere certificates and separately checked genus-two lift.',base.M,top,base.W-2*base.M)-15
-    top=book.text('<b>What is still open.</b> This detailed route has 92 retained graphical steps: six fewer than the previous 98-step named proof, nine fewer than the 101-step version and shorter than the earlier 177-step archive. It does not yet meet the goal of fewer than twenty meaningful operations. Reusable named patterns and fixed-factor drags are identified, with all adjacent checks retained in the certificates.',base.M,top,base.W-2*base.M)-15
+    top=book.text('<b>What is still open.</b> This detailed route has 91 retained graphical steps: one fewer than the previous92-step proof and ten fewer than the101-step version and shorter than the earlier 177-step archive. It does not yet meet the goal of fewer than twenty meaningful operations. Reusable named patterns and fixed-factor drags are identified, with all adjacent checks retained in the certificates.',base.M,top,base.W-2*base.M)-15
     top=book.text('<b>How to read it.</b> Read each factorization downward. Curves are paired with the braid representing that exact support; blue marked-point dots continue at braid separators. Only the changed interval is printed at a move, with the unchanged factors counted above and below. Every actual SPHERE MOVE has a yellow banner. Individual supports are not cumulative joint cut-system certificates.',base.M,top,base.W-2*base.M)-15
     book.text('<b>Logical scope.</b> Common frames and cyclic starts are explicit conjugations. The terminal four-exterior product is central, so reversing those conjugations recovers the source equality without assuming it was central. Marked points are not framed boundaries; signed framing balances are retained for PC substitutions. A single five-point cap has lift -I; the sixth- and fourth-power caps used here have +I.',base.M,top,base.W-2*base.M)
     book.new('Contents','Full diagrams, named sub-derivations and sphere discrepancies.',bookmark='contents');contents_page=book.n
@@ -43,21 +43,22 @@ def build():
         ('1. Reach the five-point chart.','Split the required squares, match and absorb the incident half twists, change the exterior point explicitly, and retain then separately cap the six framing corrections.'),
         ('2. Use the existing roots.','Borrow Q14 from the actual four-point daisy, transport it to match the original half twists, return the same Q14 and remove the last half pair. A cyclic start after the square and outer bypasses a standalone commutation; the short-side drag crosses that outer and later rejoins the same Q15 state. No auxiliary half twists are introduced.'),
         ('3. Extract two exterior twists.','Actual cabled lanterns and borrowed-petal configurations expose two visible exterior twists. Keep both while closing the residual factors.'),
-        ('4. Return the borrowed root.','The actual 15, 14 and 45 curves form a transported PC rose. Return the resulting transported root across the old outer and close its daisy; an untransported root with the same enclosed points would fail.'),
-        ('5. Close the first daisy early.','A joint chart and one pair transport expose the first actual five-factor daisy. Return the extra square unit while keeping its two other petals fixed. All five factors match the PC daisy with four retained internal interchanges; the two outer curves are not aligned or squared.'),
+        ('4. Return the loan as six actual pairs.','Commute the central exterior, reorder the loan petals and transport the same outer upward by inverse Hurwitz moves. The six actual pairs match an expanded PC rose, so the temporary three-point root is never reconstructed. Apply the joint chart only after this contraction.'),
+        ('5. Close the first daisy early.','The exact rejoin has already exposed the first outer in its joint chart. Return the extra square unit while keeping its two other petals fixed. All five factors match the PC daisy with four retained internal interchanges; the two outer curves are not aligned or squared.'),
         ('6. Close the routed second outer and cap.','Its complete nonabelian petal kernels give a seven-interchange PC daisy pattern. Every actual B5 input matches the joint chart. Four identical exterior twists remain visible, then combine and undergo a separate fourth-power sphere cap with +I lift.')]:
         top=book.text('<b>'+title+'</b> '+text,base.M,top,base.W-2*base.M)-15
     groups=[(0,17,'I. The fixed-point boundary chart'),(17,45,'II. Existing roots remove all half twists'),
             (45,66,'III. The first exterior and simpler inside daisy'),(66,74,'IV. Reach the second exterior twist'),
-            (74,79,'V. Return the actual borrowed root'),(79,86,'VI. Close the first daisy before alignment'),
-            (86,90,'VII. Close the still-routed second outer'),(90,92,'VIII. Four exteriors and the sphere cap')]
+            (74,80,'V. Return the loan as an expanded rose'),(80,85,'VI. Close the first daisy before alignment'),
+            (85,89,'VII. Close the still-routed second outer'),(89,91,'VIII. Four exteriors and the sphere cap')]
     for a,z,title in groups:
         book.section(title,'Actual ordered factor supports and their connected braids. All unchanged context is counted, and every retained move is shown.')
-        if a in (0,74,90):book.checkpoint('Complete factorization before '+title.split('. ',1)[-1],data,shown[a]['factors'])
+        if a in (0,74,89):book.checkpoint('Complete factorization before '+title.split('. ',1)[-1],data,shown[a]['factors'])
         for i in range(a,z):
             stage=shown[i+1];record=raw[i+1]
             extra=('Retained adjacent checks: '+str(record['adjacent_moves'])+'. ') if record.get('adjacent_moves') else ''
             if record.get('daisy_frame'):extra+='All five factors individually match the standard PC daisy in common chart '+str(tuple(record['daisy_frame']))+'. '
+            if record.get('inverse_hurwitz_transport'):extra+='Inverse transport: the same outer moves upward and is conjugated at each crossed petal. '
             if stage['kind']=='disk_cyclic_start':extra+='Explicit common conjugation; its full braid frame is saved. '
             if stage['kind']=='sphere_rewrite':extra+='SPHERE MOVE: full disk discrepancy appears in Appendix IX; chosen lift is +I. '
             book.move(title.split('.',1)[0],i+1,stage['title'],stage['kind'],data,shown[i]['factors'],data,stage['factors'],extra)
@@ -76,8 +77,8 @@ def build():
         'Complete named graphical route: https://richardbuckman-math.github.io/surface-diagrams/docs/proofs/six-seven-fifty-blocks/index.html?phase=namedfull',
         'Full raw certificates: https://richardbuckman-math.github.io/surface-diagrams/docs/proofs/six-seven-fifty-blocks/certificate.json',
         'The independent six-point sphere cut comparison has six marked points and five consecutive-point arcs. It is separately jointly certified; the individual factor supports in this book are not joint cut complexes.',
-        'The older 23-operation closure remains available as a separate chapter. This route retains its five root-return operations, then uses eleven direct-daisy operations instead of the former seventeen. It does not align or square the two outer curves. Both PC daisies retain every individual joint-chart match and their four and seven internal interchanges. The new closure stays within support maximum16; the full disk tail stays within20. Four actual exterior twists remain visible. The goal of an under-twenty complete derivation remains open.',
-        'The archived 125-page/177-step PDF is preserved separately. This edition contains the new 92-step named proof, with no action-only boundary-recognition step.'
+        'The older23-operation closure remains available as a separate chapter. This route uses an expanded six-pair rose without reconstructing the loan root, then rejoins the directly matched final daisies. The new return uses one fewer operation and one more adjacent check; its support maximum stays20. It does not align or square the two outer curves. Both PC daisies retain every individual joint-chart match and their four and seven internal interchanges. The final two-daisy portion stays within support maximum16; the expanded-return transport and full disk tail stay within20. Four actual exterior twists remain visible. The goal of an under-twenty complete derivation remains open.',
+        'The archived 125-page/177-step PDF is preserved separately. This edition contains the new 91-step named proof, with no action-only boundary-recognition step.'
     ]:top=book.text(escape(text),base.M,top,base.W-2*base.M)-15
     top-=12
     top=book.text('<b>Independent jointly certified six-point sphere cut comparison</b>',base.M,top,base.W-2*base.M,'caption')-8
@@ -87,7 +88,7 @@ def build():
     overlay=BytesIO();c=canvas.Canvas(overlay,pagesize=(base.W,base.H));c.setFillColor(HexColor('#18344a'));c.setFont(base.BOLD,16);c.drawString(base.M,base.H-155,'Complete named diagram sequence');y=base.H-190
     for title,page in book.sections:
         c.setFont(base.BODY,10);c.drawString(base.M,y,title);c.drawRightString(base.W-base.M,y,str(page));y-=32
-    c.setFont(base.BODY,8);c.drawString(base.M,y-15,'92 graphical steps retained. Four sphere moves labeled; full discrepancies in Section IX.');c.save();overlay.seek(0)
+    c.setFont(base.BODY,8);c.drawString(base.M,y-15,'91 graphical steps retained. Four sphere moves labeled; full discrepancies in Section IX.');c.save();overlay.seek(0)
     reader=PdfReader(base.TMP/'six-seven-body.pdf');writer=PdfWriter();writer.clone_document_from_reader(reader);writer.pages[contents_page-1].merge_page(PdfReader(overlay).pages[0])
     with OUT.open('wb') as f:writer.write(f)
     PUBLIC.write_bytes(OUT.read_bytes())

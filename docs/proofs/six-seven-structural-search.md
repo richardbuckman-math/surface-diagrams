@@ -1,5 +1,101 @@
 # Structural search for Richard's (6,7) derivation
 
+## October27 morning: expanded loan return, complete proof91
+
+The COMPLETE NAMED derivation is now91 graphical operations, ONE fewer
+than92. It remains SOLVED, with FOUR explicit sphere moves and ZERO
+action-only boundary recognitions. Under20 is OPEN. New named_expanded_loan.py
+pulls the direct daisies back through the borrowed-root return: SIX positive
+disk operations replace SEVEN, with a literal later join. The temporary
+three-point loan root is NEVER reconstructed. This changes actual factors,
+transports and the named substitution; it is not navigation regrouping.
+
+Start at the retained second-exterior endpoint (old closure stage0, old92
+full step74, disk-tail index57). Let A=second.I35, X=second.I24, Y=P13,
+O=residual.O1234, Q=residual.I12 and B=return.2. Commute the visible central
+exterior UP across Y,X,A. Move Y UP across X, replacing X by Y^-1 X Y.
+Then transport the SAME outer O UP by THREE inverse Hurwitz crossings.
+Each crossed petal remains fixed while that outer is conjugated. Its new
+class is A X Y O Y^-1 X^-1 A^-1, equal to the old A z O z^-1 A^-1 because
+Q commutes with O and the old rose had z=X Y Q. Carry B DOWN across the
+three actual loan petals, retaining all three neighbor checks. The SIX
+actual adjacent pairs Y,Y^-1 X Y,Q,loan1,changedLoan2,loan3 contract directly
+to returned.N by the expanded PC rose. Only AFTER contraction apply the
+joint chart F=(-4,-3,-2). This rejoins old92 full step81 (disk-tail64)
+LITERALLY, not merely by a whole-product action check. The old prefix and
+subsequent two-daisy suffix remain identical.
+
+The expanded named pattern starts with the canonical D4 PC daisy. Expand
+its R123 prefix by the PC rose internally conjugated by kappa=(1,-2,-2).
+Kappa preserves R123 EXACTLY. Append the parent daisy's three remaining
+petals. Common outer chart g=B.word+(2,3,4,-2,-1,-3) matches EVERY actual
+one of the SIX pair factors individually in B5, and the output is separately
+checked against returned.N:chart(1),coreT2345. The disk discrepancy is zero
+in B5; exact sphere action and chosen+I discrepancy are checked separately.
+Signed full-twist framed balance before-minus-after is(2,0,2,2,2). A single
+matching inner petal is insufficient: the tempting inner chart(1) matches
+ONLY the third, while the first two fail. All actual inputs and the nested
+rose/daisy source patterns remain in named_pattern_witness.
+
+COUNT HONESTY: the replacement has6operations/10adjacent checks versus7/9.
+The full disk tail has72operations/110external adjacent checks versus73/109.
+Full route17early+72positive disk tail+combine+fourth-power cap=91. It saves
+ONE graphical operation with ONE MORE adjacent Hurwitz check. Peak support
+stays20, including every atomic state. No three-point factor, half, negative
+factor, new sphere move or cap is introduced by this replacement. Four
+standard unit exteriors remain visible before the unchanged fourth-power
+sphere cap(+I). New inverse-transport scope labels explicitly state that
+the same outer is conjugated at each crossing; the fixed-factor wording is
+retained only for the ordinary drags. Braid style and label width stay intact.
+
+The second-exterior-to-four-exteriors closure now uses15operations instead
+of16 (historical raw closure23). Summary distinguishes raw closure saving8,
+early frame saving1 and cyclic-square saving1: raw101 becomes91. Historical
+named_disk_frames/named_cyclic_start/named_unaligned_daisies still output
+99/98/92 and retain their original local certificates. ALL older raw research
+chapters and RESOLVED support/braid states are identical, including the
+retained23-operation closure. Base943823byte display.json/hash05e6c888cf352a48,
+early payload, optional sphere/half-lantern audits and old125page/177step PDF
+remain unchanged (pretty-JSON Git newline normalization retained). Preserve
+untracked8Boundaries.pdf and unrelated projects.
+
+Validation:112 focused exact/lift/framing/geometry/kernel/scope/publication
+tests pass. All114 LOCAL arrows (91full+23historical closure) pass Chrome:
+connected-braid alignment, exactly four visible sphere moves/discrepancies,
+truthful inverse-Hurwitz label, cyclic labels, cold pure-only lazy loading
+and current namedfull mobile. Updated named PDF/public copy has86portrait
+USLetter pages; ALL86 were rendered and visually inspected, ALL91 step
+numbers and four FULL sphere appendices checked. New inverse transport,
+six-pair rose and delayed chart were inspected at full detail.
+PDF SHA256 e488befd384a5dbac1517c5aca53c042c83b00b0f9a9c2550e3c7ff118751a28.
+Commit/push and verify NEW remote Tests/Documentation,114LIVE arrows and
+livePDF bytes. The prior806648d pending LaTeX job has now PASSED: ALL its
+remote Tests and Documentation are GREEN. Do not repeat old live/PDF checks
+or credential diagnostics.
+
+MEASURED, NOT ADOPTED: applying F at the uncontracted source raises support
+to24. The unframed inverse-outer drag without the petal reorder has exact
+six-input matches and a literal join but peaks28. It could save one more
+operation only with a genuinely better bounded route/chart; no90-operation
+public proof is claimed. The opposite forward X-down-Y petal reorder still
+exceeds20. The accepted inverse Y-up-X order stays20. Inner charts(1,-2)
+and(1) match only the third petal; (-1,-1,-2,-1) and(-1,2) fail all three.
+These are measured local attempts, not orbit exclusions. Scratch files
+expanded-loan-rose-reached.json and expanded-loan-rose-unreordered-measured.json
+retain reached/measured routes; failed partial drags are not public moves.
+Do not repeat these exact attempts, the old F-omission22 test, nine forced
+frame directions, old outer-alignment detour or bypassed21-petal search.
+
+NEXT specific shortening direction, UNPERFORMED: the unreordered five-move
+variant is algebraically reached but has peak28; investigate a concrete
+alternate cyclic cut or transported common chart that lowers this specific
+inverse-outer excursion while keeping ALL six individual matches. Do not
+simply omit the bounded petal reorder or apply F early. Alternatively exploit
+a same-ancestry inverse outer transport in the earlier existing-root prefix,
+with an actual positive named-pattern payoff. Keep91 as the solved baseline;
+no further shortening is claimed. The earlier source11 Q14 half-lantern and
+outside-donor branches retain their exact reached/unapplied scopes.
+
 ## October27: two directly matched unaligned daisies, complete proof92
 
 The COMPLETE NAMED derivation is now92 operations, SIX fewer than98.

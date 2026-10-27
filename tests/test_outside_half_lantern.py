@@ -91,7 +91,7 @@ class OutsideHalfLanternTests(unittest.TestCase):
   self.assertEqual((r['working_prefix_operations'],self.r['original_chart']['working_prefix_operations']),(50,49))
   self.assertFalse(r['complete_shorter_derivation']);self.assertFalse(self.r['public_graphical_payloads_changed'])
   c=json.loads((self.folder/'certificate.json').read_text(encoding='utf-8'))
-  self.assertEqual(c['named_full_route']['summary']['graphical_steps'],92)
+  self.assertEqual(c['named_full_route']['summary']['graphical_steps'],91)
  def test_bad_sources_and_nonboolean_chart_options_are_rejected(self):
   fs=self.r['preferred']['stages'][0]['factors']
   for bad in (fs[:-1],(replace(fs[0],id='wrong'),)+fs[1:]):
