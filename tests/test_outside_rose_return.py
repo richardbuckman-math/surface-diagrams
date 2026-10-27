@@ -101,7 +101,7 @@ class OutsideRoseReturnTests(unittest.TestCase):
         self.assertEqual(r['after_score'],dict(max_support_word=19,total_support_word=140,braid_letters=206))
         self.assertFalse(r['complete_shorter_derivation']);self.assertFalse(r['public_replay_changed'])
         c=json.loads((self.root/'docs/proofs/six-seven-fifty-blocks/certificate.json').read_text(encoding='utf-8'))
-        self.assertEqual(c['named_full_route']['summary']['graphical_steps'],98)
+        self.assertEqual(c['named_full_route']['summary']['graphical_steps'],92)
 
     def test_wrong_chart_or_non_unit_source_is_rejected(self):
         fs=self.r['stages'][0]['factors']

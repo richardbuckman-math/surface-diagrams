@@ -1,5 +1,108 @@
 # Handoff: surface-diagrams
 
+## October27: two directly matched unaligned daisies, complete proof92
+
+The COMPLETE NAMED derivation is now92 operations, SIX fewer than98.
+It remains SOLVED, with FOUR explicit sphere moves and ZERO action-only
+boundary recognitions. Under20 is OPEN. New named_unaligned_daisies.py
+closes the actual returned-root endpoint in ELEVEN positive disk operations
+instead of the former SEVENTEEN. The two outer curves are NEVER aligned
+or combined into a square. This changes the actual geometric route; it is
+not regrouping navigation or hiding the old petal moves inside an overview.
+
+Keep the existing full proof through step79 (old closure stage5, after the
+actual borrowed root/daisy return). Let A=actual second.I35, B=return.2,
+O=residual.O1234, N=returned.N. Use the joint chart F=h B with
+h=(-4,-3,-2,-1,-1); it reduces to(-4,-3,-2). Carry A down past the central
+exterior and O. The changed first outer M=A O A^-1 becomes ROUND D4 in this
+chart. Move that SAME outer down past four outside neighbors. Split the
+pair square, and carry the two other petals UP across the extra unit, keeping
+those petals fixed. Actual M,P25,E1,P23,P12 then match the FIRST PC daisy
+individually. Canonical internal interchanges(1,2),(1,2),(4,3),(4,3) retain
+the full four-check pattern. Contract it, keeping the third exterior visible.
+
+The SECOND outer remains routed. Choose its explicit cyclic start, commute
+the third exterior to the front, then carry the last petal up across only two
+central exteriors. Its five actual inputs match the second PC daisy in
+G=D4*(h B h^-1). The four complete normalized point-pushing kernels are
+(1), (1,-4,-3,-4,-3,4,3,4,3,4,-1),
+(1,-4,-3,-4,3,4,3,4,-1), and(1,2,-1), with EMPTY B4 shadows.
+They yield FOUR forward(1,2) petal interchanges followed by(4,3),(3,2),(2,1).
+Every one of the FIVE actual B5 matches is checked independently; no kernel
+or strand is discarded, and no whole-product recognition is substituted.
+All seven internal checks and exact reconstructions are retained. Contract
+that actual daisy. FOUR standard unit exteriors remain visible, then combine
+and cap their fourth power in the original SEPARATE sphere step(+I).
+
+New closure:11operations/13external adjacent checks/11internal daisy checks,
+peak support16. It follows the five preserved root-return operations, giving
+16operations from the earlier second-exterior endpoint instead of23. Raw
+101-route saves7 closure operations; current full98 saves6 because its old
+final rounding-frame omission is superseded by the new joint chart. The
+current complete route is17early+73positive disk tail+combine+cap=92. The
+disk tail has109external adjacent checks instead of117, full peak20. Both
+local daisy discrepancies have exact disk equality, separate sphere/+I
+checks, and signed framed balances. All25 direct states/atomic neighbors
+have faithful B5 boundary^4 action, marked-sphere identity,total+I.
+No half, inverse factor, new sphere move or individual exterior cap occurs.
+
+Historical components named_disk_frames and named_cyclic_start retain their
+99/98 outputs and old local certificates. The preferred route now uses their
+preserved prefix, then the new direct closure. Summary counts distinguish
+active early frame merge1, historical frame component2, raw closure saving7,
+and saving6 relative to98. All older raw research chapters and RESOLVED
+support/braid states remain IDENTICAL, including the retained23-op closure.
+Only preferred namedfull/supporting pure rows and current PDF change. Base
+943823byte display.json/hash05e6c888cf352a48, early payload, all optional
+audits and old125-page/177-step PDF stay byte-identical. Public labs and
+all editor/save/reopen/split/combine/Hurwitz behavior are untouched.
+
+Publication artifacts: preferred namedfull and output/pdf/six-seven-named.pdf
+plus public copy updated.87portrait USLetter pages; all87 rendered and
+visually inspected, all92step numbers/four FULL sphere appendices checked.
+PDF SHA256c390e71b13b0f15bfdb84865c01c103ede314995c193f3230db7644902c4201b.
+104focused exact/lift/framing/kernel/scope/publication tests pass; the7new
+tests are rerun after final metadata assertions. All115LOCAL arrows pass
+(92full+23retained closure), connected-braid alignment, exact four sphere
+banners/discrepancies, cyclic labels, cold pure-only loading and CURRENT
+namedfull mobile layout. Commit/push and verify NEW remoteCI,115LIVE arrows
+and livePDF bytes. A transient local Windows file-write failure during a
+redundant regeneration was resolved by a sequential rerun before publication;
+no proof or graphic file was left partial. Preserve8Boundaries.pdf.
+
+Do not repeat completed direct-daisy recognition or the old outer-alignment/
+three-petal detour. Omitting the NEW frame F was measured and is NOT applied:
+it raises the direct tail support bound to22 instead of16. This is one fixed
+frame experiment, not an orbit exclusion. Keep the clearer joint chart.
+
+Earlier first-half target remains UNAPPLIED at preserved alternative.stage11.
+The two Q14 donors and actual F3,F9,Q14^2 half-lantern still match exactly,
+but no ordered gathering was reached. A specific SECOND cabled-lantern target
+also holds: unchanged R123,Q34target,S1 equals O1234,T12, where Q34target
+has chart(-4,-4),coreT34. Current prepare.345.2 is NOT that curve, despite
+its2/2 intersections with the roots. Positive Q14 DOES transport that actual
+pair exactly to Q34target; inverse Q14 and either P35 sign do not. Move R123
+up across its two commuting neighbors before lending Q14 to preserve it.
+Four bounded preparation operations then keep that exact triple available,
+but the R123-down gather exceeds20. The complementary fixed pair/root block
+UP also exceeds20. Neither target is applied; these are local failures, not
+orbit exclusions. The two unused S1 daisy petals in either sign fail to undo
+Q14 on either actual half (8 exact checks). Scratch first-half-second-lantern-
+route.json/block.json retain only reached states, not partial failed drags.
+Do not rerun those specific gathers or infer classes from point sets.
+
+NEXT specific shortening direction, UNPERFORMED: pull the new direct daisies
+back through the five borrowed-root return operations, rather than rebuilding
+that root first. The new first outer is A z O_old z^-1 A^-1, with z the actual
+returned three-point root. Its three pair factors could serve as an ordered
+block instead of first combining them. Then the other exterior might match
+an expanded PC daisy / six-pair rose directly. This needs EVERY actual
+expanded input and an exact bounded transport; no such larger contraction
+or shortening is yet claimed. Alternatively use the preserved source11
+half-lantern only with a concrete new outside interaction. Do not repeat the
+failed20-bound gathers or extend the longer outside-return branch merely
+to replay a known closure. Keep the complete92 proof as the solved baseline.
+
 ## October26 evening: actual cyclic-square shortcut, complete proof98
 
 The COMPLETE NAMED proof is now98 operations, down from99. It remains

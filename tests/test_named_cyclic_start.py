@@ -65,13 +65,13 @@ class NamedCyclicStartTests(unittest.TestCase):
   self.assertEqual(s['source_stage'],old);self.assertEqual(s['local_after'],old['local_after'])
   m=s['actual_donor_match'];self.assertEqual(exact_action(m['actual'].word,5),exact_action(m['pattern'].word,5))
   self.assertEqual(exact_action(product(s['local_before']),5),exact_action(product(s['local_after']),5))
- def test_public_proof_has_98_steps_four_visible_sphere_moves_and_no_action_only_recognition(self):
+ def test_public_proof_has_92_steps_four_visible_sphere_moves_and_no_action_only_recognition(self):
   r=self.saved['named_full_route'];summary=r['summary']
-  self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(98,1))
-  self.assertEqual(summary['route_parts'],[17,79,1,1]);self.assertEqual(summary['sphere_moves'],4)
+  self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(92,6))
+  self.assertEqual(summary['route_parts'],[17,73,1,1]);self.assertEqual(summary['sphere_moves'],4)
   self.assertEqual(summary['action_only_boundary_recognitions'],0)
   d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'))
-  self.assertEqual(len(d['routes']['namedfull']),99)
+  self.assertEqual(len(d['routes']['namedfull']),93)
   self.assertFalse(summary['complete_under_twenty_derivation'])
  def test_wrong_source_is_rejected(self):
   with self.assertRaises(ValueError):shorten_named_cyclic_start(self.old['stages'][:-1])

@@ -70,7 +70,7 @@ class OneUnitHalfLanternTests(unittest.TestCase):
   self.assertEqual(json.loads(json.dumps(self.route,default=asdict)),json.loads(p.read_text(encoding='utf-8')))
   self.assertFalse(self.route['public_replay_changed']);self.assertEqual(self.route['complete_proof_steps'],99)
   c=json.loads((self.root/'docs/proofs/six-seven-fifty-blocks/certificate.json').read_text(encoding='utf-8'))
-  self.assertEqual(c['named_full_route']['summary']['graphical_steps'],98)
+  self.assertEqual(c['named_full_route']['summary']['graphical_steps'],92)
   self.assertEqual(self.route['after_score'],dict(max_support_word=11,total_support_word=91,braid_letters=192))
  def test_wrong_source_is_rejected(self):
   for wrong in (self.source[:-1],(replace(self.source[0],id='wrong'),)+self.source[1:]):
