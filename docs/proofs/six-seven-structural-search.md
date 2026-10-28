@@ -1,5 +1,79 @@
 # Structural search for Richard's (6,7) derivation
 
+## October28: unsplit first sphere lantern, complete named proof79
+
+A NEW reached route shortens82->79. The step014 explanation revealed that the
+original F1 square can enter the sphere lantern directly. New
+named_unsplit_sphere.py provides unsplit_sphere_lantern() and
+shorten_unsplit_first_lantern(); see docs/proofs/unsplit-first-sphere-lantern.md.
+Complete named closure is SOLVED:14early+63positive B5tail+combine+cap=79.
+FOUR explicit sphere moves/ZERO action-only recognitions; under20 remains OPEN.
+
+Keep originalF1 SQUARED and originalF2 unchanged. Split onlyF8/F10 and make the
+same root transports as before. The transported actualF7 has its checked disk
+presentation, but remains DISTINCT from F2. Carry this SAME F7 up SIX neighbors,
+never crossing a temporary F1 root. Actual adjacent F1^2,F2,F7.disk individually
+match C^2,(C^-1 H C),H in ONE common chart, where C=T123,H=H34. The actual sphere
+lantern consumes them directly. No F1 root split, C1 preconditioning move or
+matched-half combine occurs. The ENTIRE tuple rejoins oldfull14 LITERALLY at
+newfull11. Old15frame/16rechart/17six-correctioncap become12/13/14 unchanged.
+
+NAMED RULE: C^2(C^-1 H C)H=T12 T56 on the six-marked sphere. Its left word freely
+reduces to the full-twist PC parent C T34 (H^-1 C H)=T12 T1234. Retain the parent
+and its full signed PC balance; replacing outer1234 by complementary56 has its
+OWN nonzero disk discrepancy, exact marked-sphere certificate and chosen+I lift.
+The complete substitution has its separate discrepancy/lift too. No framed-hole
+half-twist convention is asserted. Every actual input/output is matched; all
+actual nonabelian kernels/B5shadows/B6reconstructions are retained. The actual
+parent balance is(0,1,0,0,1,0), recording the singleton2/5 PC corrections.
+
+COUNT HONESTY: three actual operations disappear; the actual prefix adjacent
+checks fall14->12. Both omitted root/half crossings disappear from the route,
+while all SIX remaining gather checks retain raw free-word and individual B6
+presentation certificates. This is not navigation regrouping. The original
+six-strand prefix peak stays30, exactly the old peak; do NOT call the entire
+prefix bounded by20. The following positive B5tail stays63ops/107externalchecks/
+peak20, unchanged. All22 retained prefix states/atomic neighbors have exact
+sphere identity and chosen total+I; all pre-lantern disk products are faithful
+B6-exact. No auxiliary half, inverse factor, new sphere move or cap appears.
+Four standard terminal exteriors await their separate fourth-powercap; early
+SIX framing corrections keep their DIFFERENT visible cap.
+
+CURRENT namedfull/PDF/publiccopy:83portraitLetterpages,SHA256
+7054aa2f2c60415f8112f673bfd3d04e4d8fc6a1dc4b3dd790cae4e414e9833c.
+All83pages rendered/visually inspected; all79stepnumbers/four FULL sphere
+appendices checked.176focused cases covered;9 stale current-count expectations
+were corrected, and final22 affected/new/support tests pass. Local102arrows
+(79full+23historicalclosure) pass connectedbraids, four sphere banners/full
+discrepancies, direct/partial/powered/repeated/inverse/cyclic scopes, pure-only
+cold loading and mobile. The actual new lantern column was separately checked
+on mobile; new PDF lantern page10 was inspected at full size. UNNUMBERED18pt
+pointpitch/radius1.26pt and braidstyle preserved; actualPDF measurement verifies
+884sixpointgrids/5304dots, all2.52ptdiameter/18ptpitch. NEW CI/live publication
+checks follow the commit. All prior RAW certificates and RESOLVED research
+support/braid states, startup943823bytepayload/hash05e6c888cf352a48,earlypayload,
+optional audits and old125page177step archive are IDENTICAL. Historical82 B5
+component and all earlier local functions remain unchanged. No new publicphase.
+Preserve8Boundaries.pdf and all unrelated work.
+
+NEXT: investigate another specific powered named pattern in the actual existing-
+root prefix, or the borrowed-Q14 detour with a useful outside interaction.
+Original F1 is NOW successfully kept intact; do not redo its old root split/
+preconditioning/gather or repackage the reached direct lantern. The isolated
+coupled block still needs at least FOUR positive full-twist records. Its two
+allowed support ledgers remain only incidence targets; the tested24 fixed
+curve orders fail. Do not redo excluded outer+pair/two-roots+pair targets,
+old half/frame scans or canonicalize every support. A next shortcut must change
+actual configurations, match every ordered input, stay bounded and have a
+useful complete join. Keep79 as solved baseline.
+
+Temporary HOURLY pacing remains through2026-10-29T16:58:20Z; on the FIRST run
+after expiry restore ACTIVE SIX-HOUR cadence. Preserve15% primary/weekly
+interactive reserves, check usage between blocks and budget publication.
+Never redeem reset credits or buy capacity. Notify only meaningful verified
+shortening/completion, material failure or required input. All previous scope,
+framing, sphere-lift and preservation rules below still apply.
+
 ## October28: isolated-block linking graph, complete proof still82
 
 A separate exact audit is saved in linking_ledgers.py,

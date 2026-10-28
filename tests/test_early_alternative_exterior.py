@@ -87,7 +87,7 @@ class AlternativeExteriorTests(unittest.TestCase):
         fs = r['factors'];counts = [disk_curve_intersection(a.mapping_class, b.mapping_class, strands=5) for i, a in enumerate(fs) for b in fs[i + 1:]]
         self.assertEqual((max(counts), sum(counts)), (36, 472))
         self.assertFalse(r['replacement_for_full_proof'])
-        self.assertEqual(self.saved['named_full_route']['summary']['graphical_steps'], 82)
+        self.assertEqual(self.saved['named_full_route']['summary']['graphical_steps'], 79)
 
     def test_public_display_is_disk_exact_and_wrong_sources_are_rejected(self):
         d = json.loads((self.folder / 'display-pure.json').read_text(encoding='utf-8'))

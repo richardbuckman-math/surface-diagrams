@@ -79,21 +79,21 @@ class NamedRepeatedPetalTests(unittest.TestCase):
         expected=tuple(sum(f.power for f in s['local_before'] if j in enclosed_boundaries(f.mapping_class,5))-sum(f.power for f in s['local_after'] if j in enclosed_boundaries(f.mapping_class,5)) for j in range(1,6))
         self.assertEqual(s['framed_balance_before_minus_after'],expected)
 
-    def test_saved_public_proof_is82_and_historical_component_is_unchanged(self):
+    def test_saved_public_proof_is79_and_historical_component_is_unchanged(self):
         c=json.loads((self.folder/'certificate.json').read_text())
         metadata={k:v for k,v in self.r.items() if k not in ('stages','factors')}
         self.assertEqual(json.loads(json.dumps(metadata,default=asdict)),c['named_repeated_petal_shortening'])
         self.assertEqual(c['named_positive_frame_shortening']['whole_named_steps'],89)
         summary=c['named_full_route']['summary']
-        self.assertEqual((summary['graphical_steps'],summary['sphere_moves'],summary['action_only_boundary_recognitions']),(82,4,0))
-        self.assertEqual(summary['route_parts'],[17,63,1,1]);self.assertFalse(summary['complete_under_twenty_derivation'])
+        self.assertEqual((summary['graphical_steps'],summary['sphere_moves'],summary['action_only_boundary_recognitions']),(79,4,0))
+        self.assertEqual(summary['route_parts'],[14,63,1,1]);self.assertFalse(summary['complete_under_twenty_derivation'])
         d=json.loads((self.folder/'display-pure.json').read_text())
-        self.assertEqual(len(d['routes']['namedfull']),83)
-        stage=d['routes']['namedfull'][77]
+        self.assertEqual(len(d['routes']['namedfull']),80)
+        stage=d['routes']['namedfull'][74]
         self.assertIn('squared petal',stage['title'])
         self.assertTrue(stage['repeated_petal_daisy']);self.assertEqual(stage['internal_spare_transports'],2)
         html=(self.folder/'index.html').read_text(encoding='utf-8')
-        self.assertIn('82 retained steps',html);self.assertIn('EXACT DISK REPEATED-PETAL PC DAISY',html)
+        self.assertIn('79 retained steps',html);self.assertIn('EXACT DISK REPEATED-PETAL PC DAISY',html)
 
     def test_invalid_multiplicities_nonpetals_and_source_routes_are_rejected(self):
         outer=Factor('outer',(),1,5)

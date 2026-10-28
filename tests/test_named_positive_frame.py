@@ -74,11 +74,11 @@ class NamedPositiveFrameTests(unittest.TestCase):
    self.assertTrue(witness['sphere_certificate']['certified']);self.assertEqual(witness['chosen_lift_discrepancy'],IDENTITY)
    balance=tuple(sum(f.power for f in stage['local_before'] if j in enclosed_boundaries(f.mapping_class,5))-sum(f.power for f in stage['local_after'] if j in enclosed_boundaries(f.mapping_class,5)) for j in range(1,6))
    self.assertEqual(stage['framed_balance_before_minus_after'],balance)
- def test_saved_public_proof_is82_with_four_explicit_sphere_moves(self):
+ def test_saved_public_proof_is79_with_four_explicit_sphere_moves(self):
   data={k:v for k,v in self.r.items() if k not in ('stages','factors')}
   self.assertEqual(json.loads(json.dumps(data,default=asdict)),self.saved['named_positive_frame_shortening'])
-  s=self.saved['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(82,4,0));self.assertEqual(s['route_parts'],[17,63,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
-  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),83)
+  s=self.saved['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(79,4,0));self.assertEqual(s['route_parts'],[14,63,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
+  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),80)
  def test_changed_source_frames_are_rejected(self):
   with self.assertRaises(ValueError):merge_positive_T45_frame(self.old['stages'][:-1])
   bad=list(self.old['stages']);bad[58]=dict(bad[58],frame=(-4,-4))

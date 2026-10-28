@@ -84,16 +84,16 @@ class PoweredCabledStartTests(unittest.TestCase):
         self.assertNotEqual(exact_action(product(fs[:2]+fs[3:]),5),exact_action(product(p['outputs']),5))
         self.assertEqual(p['outputs'][2].power,2)
 
-    def test_current_public_route_is82_and_historical85_component_is_unchanged(self):
+    def test_current_public_route_is79_and_historical85_component_is_unchanged(self):
         c=json.loads((self.folder/'certificate.json').read_text(encoding='utf-8'))
         metadata={k:v for k,v in self.r.items() if k not in ('stages','factors')}
         self.assertEqual(json.loads(json.dumps(metadata,default=asdict)),c['named_powered_cabled_shortening'])
         self.assertEqual(c['named_early_powered_daisy_shortening']['whole_named_steps'],85)
-        s=c['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(82,4,0))
-        self.assertEqual(s['route_parts'],[17,63,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
+        s=c['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(79,4,0))
+        self.assertEqual(s['route_parts'],[14,63,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
         d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(d['routes']['namedfull']),83);self.assertTrue(d['routes']['namedfull'][19]['powered_cabled_lantern'])
-        html=(self.folder/'index.html').read_text(encoding='utf-8');self.assertIn('82 retained steps',html)
+        self.assertEqual(len(d['routes']['namedfull']),80);self.assertTrue(d['routes']['namedfull'][16]['powered_cabled_lantern'])
+        html=(self.folder/'index.html').read_text(encoding='utf-8');self.assertIn('79 retained steps',html)
         self.assertIn('EXACT DISK POWERED CABLED PC LANTERN',html)
 
     def test_invalid_powers_and_changed_sources_are_rejected(self):
