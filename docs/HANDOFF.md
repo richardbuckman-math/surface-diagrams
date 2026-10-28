@@ -1,5 +1,59 @@
 # Handoff: surface-diagrams
 
+## October 28: post-combine rose route REACHES one exterior; research only
+
+posthalf_exterior.expose_posthalf_exterior() starts at preferredsource85 index43,
+pinned to fixed-half-meeting.json/stages.3.14positive DISK operations/10external
+adjacent checks reach ONE VISIBLE exterior. All25 retained main/atomic states
+are B5boundary^4,sphere-exact,chosen+I,positive,peak18. No half,negativefactor,
+sphere move or cap. Preferred101moves/71steps remains SOLVED and UNCHANGED.
+
+The actual combined pair and squared pair EXACTLY match E,U^2 of a repeated PC
+rose in chart(-4,-3,-1,2,1). Actual round123 PC rose lends the missing round12;
+a cyclic cut and two commuting crossings supply it. The repeated rose is
+APPLIED,creating shortR125 and spareW. Then actualF12.1(R145) in its SOURCE chart
+has normalized45 kernels EMPTY in BOTH B5->B4/B4->B3 splits,B3shadow
+(-1,-1,2,2,1,1). Internal(-1,-1) preserves that outer; first rose petal EXACTLY
+matches spareW,last is ROUND45. This supplier is expanded and45 is carried
+DOWN4,then changed125 commutes past its changed spare. Actual125/124/45 match
+a cabled lantern in chart(4,4,-3,-4),returning round12. The SAME12 loan is
+ACTUALLY returned and its round123 donor restored. The45 supplier stays expanded.
+
+Cyclic O1245 start and round34 UP2 gather match the cyclic exterior lantern in
+chart(-4,-3). Full canonical D5/Ominus daisies,shared petal matches,two internal
+commutations and FULL internal cyclic common frame are retained. Each known
+canonical output is checked before using its invariance; no source-centrality
+assumption. This gather CHANGES the restored123,which is NOT round at endpoint.
+All6 named substitutions retain every ordered input/output match,signed PC
+balance,separate disk/sphere/+I discrepancy. Every external adjacent move is
+reconstructed before individual normalized presentations; endpoint kernels AND
+shadows remain. Exterior-I plus residual-I give total+I; never cap either odd
+piece. Residual boundary^3 action is a diagnostic,NOT a named closure.
+
+Actual endpoint15 UNIT records=1exterior+8triples+6pairs. Source16records has
+score18/111,braid250,CLOSED846/36;endpoint18/119,258,CLOSED862/36. Reference first
+exterior(named_full_route.stage44/preferredsource50) is16records,17/126,220,
+CLOSED1536/74. New first exterior occurs atsource57,SEVEN more moves. Inventories
+differ,source measures also worsen; no whole-proof geometry/shortening claim.
+No complete suffix join has been proved in THIS branch. The main proof isSOLVED.
+
+Limited failures: eitherR125 sign on old return.1 fails round45,support10/10;
+either spareW sign fails,support146/144. These are UNAPPLIED,not reached drags.
+The initial123-loan petals commute with round45 and cannot alone repair a
+different45 class by common conjugation. The successful145 supplier supersedes
+its canonical-petal miss. Initial matchedW and transportedspareW are DIFFERENT
+at endpoint; do not combine them. Do not rerun these scoped tests.
+
+NEXT: actual NEW inner125,CHANGED returned123 and existing return.2(pair35) are
+saved as a candidate ONLY. No joint cabled chart,ordered match or gather is
+claimed. Seek a bounded individually matched contraction/useful complete join,
+or a return of the expanded45 supplier; do not replay old long closures or
+infer curves from IDs/sets. The old R125 HALF-lantern target stays unapplied;
+this new branch uses full twists AFTER the halves disappear. Keep clearfull.
+See analyze_posthalf_exterior.py and six-seven-posthalf-exterior.md/.json.
+The derivation guide's stale prose root-expansion number was corrected036->037;
+no proof,payload,PDF or prior audit changed. Preserve8Boundaries.pdf.
+
 ## October 28: lower half meeting ADOPTED for clarity
 
 Preferred clearfull now uses85 source operations:101 listed moves in71 genuinely

@@ -47,7 +47,7 @@ nonabelian point-pushing kernels, shadows and reconstructions remain retained.
 
 The retained three-point root now stays intact while the last two half twists
 are handled. This keeps 17 factor rows instead of 19 and avoids displaying the
-two initially winding petals. Step 035 combines the half twists; step 036 then
+two initially winding petals. Step 035 combines the half twists; step 037 then
 expands the root on a separate line. This uses one more source operation.
 
 The half-twist classes themselves are unchanged at all eight matched
