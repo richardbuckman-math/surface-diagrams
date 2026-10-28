@@ -63,7 +63,7 @@ class NamedBook(base.Book):
         self.c.drawString(base.M,16,'28 October 2026 | Named relations; individual supports; all sphere moves labeled')
         return top
 
-def build():
+def build_legacy_source():
     folder=ROOT/'docs/proofs/six-seven-fifty-blocks'
     data=json.loads((folder/'display-pure.json').read_text())
     certificate=json.loads((folder/'certificate.json').read_text())['named_full_route']
@@ -142,5 +142,9 @@ def build():
     assert len(verified.pages)==book.n
     print('Saved',OUT,'pages',book.n,'bytes',OUT.stat().st_size,'steps',len(shown)-1,flush=True)
     return OUT
+
+def build():
+    from build_six_seven_clarity_pdf import build as build_clarity
+    return build_clarity()
 
 if __name__=='__main__':build()

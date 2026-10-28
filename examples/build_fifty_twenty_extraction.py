@@ -75,7 +75,7 @@ for(const [id,rows] of Object.entries(targetData.columns)){
  document.getElementById(id).innerHTML=`<div class="aligned"><div>${supports}</div><div class="braid">${connectedBraid.assemble(rows,targetData.braids).svg}</div></div>`;
 }
 </script></html>"""
-    (out/'exterior-target.html').write_text(html.replace('VERSION',version).replace('PAYLOAD',payload),encoding='utf-8')
+    (out/'exterior-target.html').write_text(html.replace('v=VERSION','v='+version).replace('PAYLOAD',payload),encoding='utf-8')
 
 
 def build():
@@ -340,10 +340,13 @@ def build():
         actual_disk_images_embedded=early_images,sphere_search_depths=early_depths,
         method=early_method,boundary_power=4,fixed_working_point=2,
         source='early_boundary_derivation',source_identity_assumed=False),separators=(',',':')),encoding='utf-8')
-    (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('PUREVERSION',pure_version).replace('VERSION',version),encoding='utf-8')
+    (out/'index.html').write_text((ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('PUREVERSION',pure_version).replace('v=VERSION','v='+version),encoding='utf-8')
     build_exterior_target(pure_contractions['next_exterior_lantern'],out,version)
     print('Saved',out,'states',{name:len(states) for name,states in display_routes.items()},'supports',len(supports),'braids',len(braids),'bytes',len(encoded.encode()),'version',version)
     return out
 
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    build()
+    from build_six_seven_clarity import build as build_clarity
+    build_clarity()

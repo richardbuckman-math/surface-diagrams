@@ -138,7 +138,7 @@ class Book:
     y,order=self.row(data,data['rows'][ids[pos]],M,y,order,pos,width=W-2*M);pos+=1
  def move(self,section,number,title,kind,da,ia,db,ib,extra=''):
   before=[da['rows'][i] for i in ia];after=[db['rows'][i] for i in ib]
-  key=lambda r:(r['id'],tuple(r['word']),r['label'],r.get('sphere_rechart',False))
+  key=getattr(self,'move_key',lambda r:(r['id'],tuple(r['word']),r['label'],r.get('sphere_rechart',False)))
   p=0
   while p<min(len(before),len(after)) and key(before[p])==key(after[p]):p+=1
   tail=0

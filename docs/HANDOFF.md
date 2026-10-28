@@ -1,5 +1,54 @@
 # Handoff: surface-diagrams
 
+## October 28: Richard's clarity-first priority supersedes count minimization
+
+Richard asked for sphere moves to redraw ONE arc/closed curve without a mixed
+substitution, and prefers simpler, less tangled geometry even at greater length.
+This is now the preferred presentation. Do not resume the old count-only search
+from the historical sections below. A smaller number of navigation labels is
+not mathematical shortening.
+
+New clarity_derivation.py and the separate clearfull web/PDF layer follow the
+longer82-operation source. At the matched early checkpoint, F2's half-twist
+neighborhood word length is4 instead of12, half-neighborhood total72 instead of80;
+maximum30 is unchanged. These are chart-specific lengths, not exact intersection
+improvements. The shorter79 source and ALL old local certificates/payloads remain
+unchanged. Complete named closure is SOLVED.
+
+Preferred clearfull has98 listed moves in69 certified independent steps. The
+step count is presentation organization, NOT a shortening claim. Each parallel
+card starts from the SAME step input; every disjoint pair has a literal two-order
+certificate. Global frames/cyclic starts/cleanup are barriers. Parallel factor
+edits are not a simultaneous joint-cut ambient-isotopy certificate.
+
+The first lantern is now an exact DISK substitution retaining its four-point
+outer, then a separate one-curve SPHERE redraw. The later fourteen individual
+chart redraws preserve all main factors/order/powers. Four are disk-equal
+presentations; ten are genuine sphere redraws. SIX framing corrections remain
+in a separate LEFT ledger, including each local deck sign. The ledger and final
+fourth-power exterior each have their own peripheral redraw, followed on a
+DIFFERENT line by cleanup. Thirteen genuine redraws have full discrepancies,
+exact marked-sphere action and separate corrected+I checks. Never clear an odd
+exterior: its chosen lift is-I. Named PC balances and all kernels/shadows remain.
+
+See docs/proofs/clarity-first-derivation.md for step references and exact scopes.
+The new files are clarity-certificate.json/display-clear.json; old initial/base,
+early and pure payloads remain byte-identical and load only on archive demand.
+Richard's fixed UNNUMBERED18pt pitch/1.26pt radius and braid style are retained.
+Preserve8Boundaries.pdf, all labs, unrelated files and historical exact routes.
+
+LOCAL VALIDATION:53 distinct focused mathematical/publication/support tests pass,
+including10 new clarity regressions. Chrome checks all69 preferred arrows with98
+cards/13 genuine redraws, same-input parallel panels, separate ledgers, connected
+braids, cache switching, cold clarity-only loading and mobile. The102 historical
+source/closure arrows also pass locally. All86 Letter PDF pages were rendered
+and visually inspected;98 move labels/69 step numbers/13 FULL redraw appendices
+are present. Independent actual-PDF measurement checks874 six-point grids and
+5244 dots:2.52pt diameter/18pt pitch. PDF/public copy SHA256:
+4a327d78d80d68502c460b8c0156e1184684e76feacc214e82796f318f507ade.
+New remote CI/live publication is checked after pushing this change; do not
+reuse old79-source green status as validation of this presentation.
+
 ## October28: unsplit first sphere lantern, complete named proof79
 
 A NEW reached route shortens82->79. The step014 explanation revealed that the
