@@ -1,5 +1,43 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 28: fixed-half gather audit; preferred proof unchanged
+
+Source83 stages40/41 are pinned to named_cyclic_start_shortening's saved
+replacement_interval4/5. The actual K between F6/F11 has SIX neighbors, including
+the T12 SQUARE. KH != HK, first faithful meridian witness1; full commutator114
+letters retains kernel_loop40 AND B4shadow46 with exact reconstruction.
+All7 direct two-sided inverse-gather cuts with unchanged ordered neighbors fail
+half equality. Scope is only these simple carries, not arbitrary Hurwitz loops,
+substitutions, outside interactions or sphere changes. Do not repeat them.
+
+The actual gather changes each neighbor by H^-1 f H. Over the SAME17 records,
+all136 CLOSED-neighborhood pair counts sum512->1094 and peak20->48;42 pairs
+change, ALL increase. Internal K/half pairs and outside/outside pairs are
+unchanged. The growth is coupling to outside factors, especially return.0 with
+F10.2/P13/S1 (8->48 each). These are NOT arc counts or a joint minimal drawing.
+The complementary cyclic-side route retains5 bounded crossings, then rejects
+crossing6 over prepare.F5.2 at47. No gathered halves are reached. Formal common-H
+endpoint chart63/277 is worse than actual17/121. All are scoped measurements.
+
+NEW EXACT TARGET, UNAPPLIED: actualO1234(chart-4,coreT1234) has a PC daisy in chart
+(-4,-3,-1,2,1) whose prefix is exact R125. That root's half-lantern first half is
+currentH, and its square is currentT12.square; the second half has NO current
+match. R125 is not any current triple (F12.2 is a different root). Full parent/
+input matches, signed PC balance, disk/sphere/+I relation and donor kernels/
+shadows are retained. NO expansion, gathering or substitution applied.
+
+NEXT: only a specific useful outside interaction can bypass this direct carry
+obstruction. Use the checked four-point donor's ordered outputs with a concrete
+positive bounded named contraction and full join. Do not replay the old round-
+R123 outside-half route or expand this new donor without a payoff. Preserve the
+adopted delayed presentation. Complete proof stays SOLVED:99moves/70steps; all
+preferred payloads/PDFs, historical sources and8Boundaries.pdf are unchanged.
+
+See docs/proofs/six-seven-fixed-half-gather.md/.json and its example generator.
+18 focused exact gather/intersection/point-pushing tests pass, including3 new
+regressions after final metadata. New remote CI is verified after publication. No new graphical route/phase or geometric improvement is
+claimed by this research-only audit.
+
 ## October 28: delayed petals ADOPTED for clarity, not shortening
 
 Preferred clearfull now keeps the last three-point root intact while the two
