@@ -75,9 +75,11 @@ def refine_sphere_moves(source_stages,factor_certificates):
     source=tuple(dict(s,factors=tuple(s['factors'])) for s in source_stages)
     positions=tuple(i for i,s in enumerate(source) if s['kind']=='sphere_rewrite')
     if len(source)==83 and positions==(14,16,17,82):first,rechart,cap,final=14,16,17,82
+    elif len(source)==84 and positions==(14,16,17,83) and all('_source_ref' in s for s in source):first,rechart,cap,final=14,16,17,83
     elif len(source)==80 and positions==(11,13,14,79):first,rechart,cap,final=11,13,14,79
-    else:raise ValueError('Use the retained79 or clearer82-operation source')
+    else:raise ValueError('Use the retained79, clearer82 or explicitly referenced83-operation source')
     def source_ref(i):
+        if '_source_ref' in source[i]:return source[i]['_source_ref']
         return ('early_boundary.stages.'+str(i) if i<=17 else 'named_full_route.stages.'+str(i-3)) if final==82 else 'named_full_route.stages.'+str(i)
     result=[dict(source[0],ledger=None,source_index=0)];curve_checks=[]
     def append(kind,title,fs,ledger=None,**extra):
@@ -99,7 +101,7 @@ def refine_sphere_moves(source_stages,factor_certificates):
         a,b=_interval(before['factors'],s['factors'])
         s.update(edit_before=a,edit_after=b,touched_ids=tuple(sorted({f.id for f in a+b})))
         if kind in ('curve_redraw','sphere_redraw'):s['family']='redraw'
-        elif kind in ('global_conjugation','disk_cyclic_start','peripheral_cleanup'):s['family']='barrier'
+        elif kind in ('global_conjugation','disk_cyclic_start','peripheral_cleanup') or s.get('parallel_barrier'):s['family']='barrier'
         else:s['family']='disk-local'
         result.append(s);return s
     for i,old in enumerate(source[1:],1):
@@ -109,8 +111,8 @@ def refine_sphere_moves(source_stages,factor_certificates):
             outputs=(old['local_after'][0],outer)
             fs=outputs+previous['factors'][3:]
             c=Factor('canonical.R123',g,1,3);q=Factor('canonical.P34',g,3,2);t=Factor('canonical.R124',g+(-3,),1,3)
-            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if final==82 else ()
-            if final==82 and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
+            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if final in (82,83) else ()
+            if final in (82,83) and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
             balance=tuple(sum(f.power for f in previous['factors'][:3] if j in enclosed_boundaries(f.mapping_class,6))-sum(f.power for f in outputs if j in enclosed_boundaries(f.mapping_class,6)) for j in range(1,7))
             splits=tuple(dict(factor=f,split=split_fixed_last_strand(f.word,6)) for f in previous['factors'][:3]+outputs)
             for item in splits:
@@ -164,7 +166,7 @@ def refine_sphere_moves(source_stages,factor_certificates):
                 redraws=(dict(id=f.id,before=f,after=per,same_sphere_curve=True),),framing_increment=0,source_unit_lift=homology_action(BOUNDARY))
             append('peripheral_cleanup','Remove the already-peripheral FOURTH-power twist',(),source_index=i,chosen_lift=IDENTITY)
         else:
-            copied={k:old[k] for k in ('frame','adjacent_moves','inverse_hurwitz_transport','daisy_frame','caption','framed_balance_before_minus_after') if k in old}
+            copied={k:old[k] for k in ('frame','adjacent_moves','inverse_hurwitz_transport','daisy_frame','caption','framed_balance_before_minus_after','parallel_barrier','parallel_barrier_reason') if k in old}
             s=append(old['kind'],old['title'],old['factors'],source_index=i,**copied)
             s['source_witness_ref']=source_ref(i)
             if old['kind'] in ('global_conjugation','disk_cyclic_start'):
@@ -213,3 +215,77 @@ def parallel_rounds(stages):
             independence_witnesses=tuple(witnesses)))
         i+=1
     return tuple(rounds)
+
+
+def preferred_clarity_source(certificate):
+    """Keep the last root intact until both original halves have combined.
+
+    Nine retained disk operations replace eight early-petal operations. Every
+    source witness is explicitly addressed; none of the source charts is
+    silently treated as a newly normalized chart.
+    """
+    def converted(raw,ref):
+        s=dict(raw,_source_ref=ref)
+        for key in ('factors','local_before','local_after'):
+            if key in s:s[key]=tuple(factor_from_data(f) for f in s[key])
+        return s
+    c=certificate
+    baseline=tuple(converted(s,'early_boundary.stages.'+str(i)) for i,s in enumerate(c['early_boundary']['stages'][:18]))+tuple(
+        converted(s,'named_full_route.stages.'+str(i)) for i,s in enumerate(c['named_full_route']['stages'][15:],15))
+    raw=c['early_alternative_transport']['stages'];cyclic=c['named_cyclic_start_shortening']['replacement_interval']
+    late=tuple(converted(raw[i],'early_alternative_transport.stages.'+str(i)) for i in range(20,23))+tuple(
+        converted(cyclic[i],'named_cyclic_start_shortening.replacement_interval.'+str(i)) for i in range(1,len(cyclic)-1))
+    if baseline[34]['factors']!=late[0]['factors'] or baseline[42]['factors']!=late[-1]['factors']:
+        raise ValueError('The delayed daisy needs literal complete joins')
+    checks=[];expected=exact_action(BOUNDARY*4,5)
+    for i,s in enumerate(late):
+        for j,a in enumerate((s,)+tuple(s.get('atomic_steps',()))):
+            fs=tuple(factor_from_data(f) if isinstance(f,dict) else f for f in a['factors'])
+            maximum=max(len(supported_class(f.mapping_class,5)) for f in fs)
+            sphere=sphere_chain_certificate(product(fs));lift=homology_action(product(fs))
+            if exact_action(product(fs),5)!=expected or maximum>20 or any(getattr(f,'sign',1)!=1 for f in fs) or not sphere['certified'] or lift!=IDENTITY:
+                raise ValueError('A retained delayed state lost its positive disk/sphere/lift certificate')
+            checks.append(dict(stage=i,atomic=j,faithful_disk_equal=True,positive=True,support_maximum=maximum,sphere_certificate=sphere,chosen_lift=lift))
+    frames=[];halves=[]
+    for i,(a,b) in enumerate(zip(late,late[1:]),1):
+        before=product(a['factors']);after=product(b['factors'])
+        if b['kind'] in ('disk_cyclic_start','global_conjugation'):
+            g=tuple(b['frame']);before=g+before+inverse_word(g)
+            if b['kind']=='disk_cyclic_start' and reduce_word(before)!=reduce_word(after):raise ValueError('Retain the raw cyclic free-word equality')
+            if b['kind']=='global_conjugation':
+                matches=tuple(dict(id=x.id,exact_disk_equal=x.id==y.id and exact_action(g+x.word+inverse_word(g),5)==exact_action(y.word,5)) for x,y in zip(a['factors'],b['factors']))
+                if len(a['factors'])!=len(b['factors']) or not all(m['exact_disk_equal'] for m in matches):raise ValueError('The actual common-chart matches failed')
+                frames.append(dict(source_ref=b['_source_ref'],matches=matches))
+        if exact_action(before,5)!=exact_action(after,5):raise ValueError('A delayed ordered transition failed')
+    for i in range(8):
+        old={f.id:f for f in baseline[34+i]['factors'] if f.half};new={f.id:f for f in late[i]['factors'] if f.half}
+        if set(old)!=set(new):raise ValueError('The actual half ancestry changed')
+        for name,f in old.items():
+            if exact_action(f.word,5)!=exact_action(new[name].word,5):raise ValueError('The delay changed a half-twist class')
+            halves.append(dict(stage=i,id=name,early=f,delayed=new[name],exact_disk_equal=True))
+    daisy=late[-1];daisy['source_title']=daisy['title'];daisy['title']='Expand the retained three-point root after the half twists combine';daisy['parallel_barrier']=True
+    daisy['parallel_barrier_reason']='Presentation order: expand only after both half-twist factors are gone; no algebraic noncommutation is asserted.'
+    source=daisy['source_stage']
+    named=[];splits=[]
+    for key in ('local_before','local_after'):
+        pattern=tuple(factor_from_data(f) for f in source[key]);actual=daisy[key]
+        if len(pattern)!=len(actual):raise ValueError('The daisy term count changed')
+        for a,b in zip(actual,pattern):
+            if exact_action(a.word,5)!=exact_action(b.word,5):raise ValueError('A delayed actual daisy input/output lost its source chart')
+            named.append(dict(side=key,actual=a,source_pattern=b,exact_disk_equal=True))
+            split=split_fixed_last_strand(a.word,5)
+            if exact_action(split.reconstructed_word,5)!=exact_action(a.word,5):raise ValueError('Retain the full daisy kernel and shadow')
+            splits.append(dict(actual=a,split=split))
+    balance=tuple(sum(f.power for f in daisy['local_before'] if j in enclosed_boundaries(f.mapping_class,5))-sum(f.power for f in daisy['local_after'] if j in enclosed_boundaries(f.mapping_class,5)) for j in range(1,6))
+    if balance!=tuple(daisy['framed_balance_before_minus_after']):raise ValueError('The actual signed PC balance changed')
+    discrepancy=reduce_word(product(daisy['local_before'])+inverse_word(product(daisy['local_after'])))
+    local_sphere=sphere_chain_certificate(discrepancy);local_lift=homology_action(discrepancy)
+    if not local_sphere['certified'] or local_lift!=IDENTITY:raise ValueError('The delayed disk daisy lost its separate local sphere/lift check')
+    stages=baseline[:35]+late[1:]+baseline[43:]
+    return dict(stages=stages,adoption=dict(previous_source_operations=82,source_operations=len(stages)-1,
+        previous_interval=(34,42),current_interval=(34,43),previous_moves=8,current_moves=9,
+        literal_complete_joins=True,changed_state_checks=tuple(checks),actual_frame_matches=tuple(frames),
+        actual_half_matches=tuple(halves),actual_daisy_matches=tuple(named),actual_daisy_point_pushing=tuple(splits),
+        framed_balance_before_minus_after=balance,source_daisy_ref=daisy['_source_ref'],
+        disk_daisy_discrepancy=discrepancy,disk_daisy_sphere_certificate=local_sphere,disk_daisy_chosen_lift=local_lift,
+        scope='Delay the three-petal expansion until both half twists are gone. This reduces row clutter; the actual half classes, support-length peak and worst-pair intersections are unchanged. One MORE source operation, not a shortening.'))

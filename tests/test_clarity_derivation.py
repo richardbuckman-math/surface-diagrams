@@ -1,7 +1,7 @@
 from dataclasses import asdict
 from pathlib import Path
 import hashlib,json,unittest
-from surface_diagrams.clarity_derivation import factor_from_data,refine_sphere_moves,parallel_rounds,apply_edit,curve_class,word,PeripheralFactor
+from surface_diagrams.clarity_derivation import factor_from_data,refine_sphere_moves,parallel_rounds,apply_edit,curve_class,word,PeripheralFactor,preferred_clarity_source
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.braid_actions import inverse_word,reduce_word
 from surface_diagrams.hyperelliptic_homology import IDENTITY,homology_action
@@ -17,7 +17,7 @@ class ClarityDerivationTests(unittest.TestCase):
             for k in ('factors','local_before','local_after'):
                 if k in t:t[k]=tuple(factor_from_data(f) for f in t[k])
             return t
-        cls.source=tuple(converted(s) for s in cls.raw['early_boundary']['stages'][:18])+tuple(converted(s) for s in cls.raw['named_full_route']['stages'][15:])
+        cls.preferred=preferred_clarity_source(cls.raw);cls.source=cls.preferred['stages']
         cls.result=refine_sphere_moves(cls.source,cls.raw['early_boundary']['chart']['factor_certificates'])
         cls.stages=cls.result['stages'];cls.rounds=parallel_rounds(cls.stages)
 
@@ -111,7 +111,7 @@ class ClarityDerivationTests(unittest.TestCase):
 
     def test_the_preferred_longer_prefix_has_a_simpler_F2_arc_in_this_chart(self):
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'));s=d['summary'];g=s['geometry_preference']
-        self.assertEqual((s['source_operations'],s['archived_source_operations']),(82,79))
+        self.assertEqual((s['source_operations'],s['archived_source_operations']),(83,79))
         self.assertEqual((g['shorter79']['lengths']['F2'],g['clearer82']['lengths']['F2']),(12,4))
         self.assertEqual((g['shorter79']['total'],g['clearer82']['total']),(80,72))
         self.assertEqual((g['shorter79']['maximum'],g['clearer82']['maximum']),(30,30))
@@ -121,11 +121,11 @@ class ClarityDerivationTests(unittest.TestCase):
         c=json.loads((self.folder/'clarity-certificate.json').read_text(encoding='utf-8'))
         self.assertEqual(json.loads(json.dumps(self.stages,default=asdict)),c['stages'])
         self.assertEqual(json.loads(json.dumps(self.rounds,default=asdict)),c['parallel_rounds'])
-        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(98,69,13))
+        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(99,70,13))
         self.assertEqual(c['summary']['source_sha256'],hashlib.sha256((self.folder/'certificate.json').read_bytes()).hexdigest())
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(d['routes']['clearfull']),70)
-        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),98)
+        self.assertEqual(len(d['routes']['clearfull']),71)
+        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),99)
         self.assertEqual(self.raw['named_full_route']['summary']['graphical_steps'],79)
         self.assertTrue(all(not r['word'] for r in d['rows'] if r.get('peripheral')))
 
@@ -134,5 +134,43 @@ class ClarityDerivationTests(unittest.TestCase):
         for item in s['complete_point_pushing']:
             self.assertEqual(exact_action(item['factor'].word,6),exact_action(item['split'].reconstructed_word,6))
         self.assertEqual(len(s['complete_point_pushing']),5)
+
+    def test_delayed_daisy_has_literal_joins_and_expands_after_halves_disappear(self):
+        a=self.preferred['adoption'];self.assertTrue(a['literal_complete_joins'])
+        self.assertEqual((a['previous_moves'],a['current_moves']),(8,9))
+        i=next(i for i,s in enumerate(self.stages) if s.get('parallel_barrier'))
+        self.assertFalse(any(f.half for f in self.stages[i-1]['factors']))
+        round_data=next(r for r in self.rounds if any(c['move_index']==i for c in r['cards']))
+        self.assertEqual(round_data['move_count'],1)
+        self.assertFalse(any(f.half for f in round_data['before']['factors']))
+        self.assertIn('no algebraic noncommutation',self.stages[i]['parallel_barrier_reason'])
+
+    def test_all_explicit_source_refs_resolve_and_retained_states_are_exact(self):
+        for s in self.source:
+            obj=self.raw
+            for k in s['_source_ref'].split('.'):
+                obj=obj[int(k)] if isinstance(obj,list) else obj[k]
+            self.assertEqual(s['factors'],tuple(factor_from_data(f) for f in obj['factors']))
+        a=self.preferred['adoption'];self.assertEqual(len(a['actual_half_matches']),16)
+        self.assertTrue(all(m['exact_disk_equal'] for m in a['actual_half_matches']))
+        self.assertTrue(all(m['faithful_disk_equal'] and m['positive'] and m['chosen_lift']==IDENTITY for m in a['changed_state_checks']))
+
+    def test_delayed_actual_daisy_keeps_its_source_chart_balance_and_full_kernel(self):
+        a=self.preferred['adoption'];self.assertEqual(len(a['actual_daisy_matches']),4)
+        for m in a['actual_daisy_matches']:
+            self.assertEqual(exact_action(m['actual'].word,5),exact_action(m['source_pattern'].word,5))
+        for m in a['actual_daisy_point_pushing']:
+            self.assertEqual(exact_action(m['actual'].word,5),exact_action(m['split'].reconstructed_word,5))
+        self.assertTrue(a['framed_balance_before_minus_after'])
+        self.assertTrue(a['disk_daisy_sphere_certificate']['certified']);self.assertEqual(a['disk_daisy_chosen_lift'],IDENTITY)
+
+    def test_early_comparison_certificate_remains_pinned_and_byte_identical(self):
+        self.assertEqual(hashlib.sha256((self.folder/'clarity-early-certificate.json').read_bytes()).hexdigest(),'af886d08a0e3fb0fe16a12953a9f3325157419be6c5b8849a3d89471e9dc3634')
+
+    def test_sphere_discrepancies_are_identical_to_the_pinned_earlier_view(self):
+        old=json.loads((self.folder/'clarity-early-certificate.json').read_text(encoding='utf-8'))
+        words=[s['disk_discrepancy'] for s in old['stages'] if s['kind']=='sphere_redraw']
+        current=[list(s['disk_discrepancy']) for s in self.stages if s['kind']=='sphere_redraw']
+        self.assertEqual(current,words)
 
 if __name__=='__main__':unittest.main()

@@ -39,7 +39,7 @@ def build_report():
     late=raw[20:23]+cyclic[1:-1]
     if current[31]['factors']!=late[0]['factors'] or current[39]['factors']!=late[-1]['factors']:
         raise ValueError('The late-daisy comparison must have literal complete input/output joins')
-    clarity_path=folder/'clarity-certificate.json';clarity=json.loads(clarity_path.read_text(encoding='utf-8'))
+    clarity_path=folder/'clarity-early-certificate.json';clarity=json.loads(clarity_path.read_text(encoding='utf-8'))
     clear_joins=[next(s for s in clarity['stages'] if s.get('source_index')==i) for i in (34,42)]
     if any(s['ledger'] is not None for s in clear_joins) or any(a['factors']!=b['factors'] for a,b in zip(clear_joins,(late[0],late[-1]))):
         raise ValueError('The complete preferred clarity joins changed')

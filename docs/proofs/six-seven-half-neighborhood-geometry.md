@@ -1,5 +1,10 @@
 # Half-twist neighborhood geometry: early versus delayed petals
 
+The delayed interval has since been adopted in the preferred derivation. This
+audit remains PINNED to the previous early-expansion clarity certificate
+(`clarity-early-certificate.json`); its stored source indices and counts refer
+to that comparison. The exact data and six comparison panels are unchanged.
+
 This research-only audit follows Richard's clarity-first priority. It compares
 already reached disk routes; it applies no new substitution and changes no
 preferred diagram, payload, PDF or mathematical proof.
@@ -60,8 +65,8 @@ individual donor matches, source references, raw cyclic words, kernels and
 literal complete joins. Recompute parallel groups; do not claim a new count in
 advance. Keep every sphere redraw separate when rebuilding the full view.
 
-The complete preferred derivation remains SOLVED and unchanged:98 listed moves
-in69 parallel steps, with13 genuine sphere redraws. This audit alone is not a
+At this audit checkpoint the preferred derivation had 98 listed moves in
+69 parallel steps, with 13 genuine sphere redraws. This audit alone is not a
 new graphical route or an overall geometric-improvement claim.
 
 Reproduce with `examples/analyze_half_neighborhood_geometry.py`. Detailed source

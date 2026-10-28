@@ -5,14 +5,14 @@ needs more moves. Sphere changes now redraw one existing arc or closed curve;
 they never include a lantern substitution or peripheral deletion.
 
 The preferred [interactive derivation](six-seven-fifty-blocks/index.html?phase=clearfull&step=0)
-and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **98 listed moves in
-69 certified independent steps**. This organization is not a mathematical
+and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **99 listed moves in
+70 certified independent steps**. This organization is not a mathematical
 shortening. The complete named derivation remains solved.
 
 ## A longer, clearer source
 
-The view uses the retained 82-operation source rather than the shorter
-79-operation source. At the corresponding early half-twist checkpoint, the F2
+The view uses an 83-operation source with the clearer early prefix and a
+delayed petal expansion. The shorter 79-operation source remains archived. At the corresponding early half-twist checkpoint, the F2
 neighborhood word has length 4 rather than 12; the total for the six half-twist
 neighborhoods is 72 rather than 80. The maximum stays 30. These are support word
 lengths in this chart, not minimal geometric intersections or a claim that all
@@ -33,7 +33,7 @@ local witness remain unchanged.
    diagrams and every complete disk discrepancy. Some uncorrected local redraws
    have lift -I; their corrected discrepancies have +I. No correction is dropped.
 5. Step 014 redraws the six-powered ledger curve around the remaining point.
-   Step 015 separately clears the already-peripheral curve. Steps 068 and 069
+   Step 015 separately clears the already-peripheral curve. Steps 069 and 070
    similarly separate the terminal fourth-power redraw and its cleanup. A unit
    exterior has lift -I; only the checked even powers are cleared.
 
@@ -42,6 +42,26 @@ discrepancy, exact marked-sphere action and separately checked corrected lift.
 The sphere action is in the marked-sphere mapping class quotient, not an
 unqualified spherical braid identity. The signed PC framing balances and full
 nonabelian point-pushing kernels, shadows and reconstructions remain retained.
+
+## Delayed petals, adopted for readability
+
+The retained three-point root now stays intact while the last two half twists
+are handled. This keeps 17 factor rows instead of 19 and avoids displaying the
+two initially winding petals. Step 035 combines the half twists; step 036 then
+expands the root on a separate line. This uses one more source operation.
+
+The half-twist classes themselves are unchanged at all eight matched
+checkpoints. This reduces diagram clutter, not arc complexity. The fixed-half
+gather still winds other curves, and that remains a separate research target.
+The expansion is deliberately kept separate even though its factor interval
+is algebraically independent of the preceding combine. This is a presentation
+choice, not a claim that the two operations fail to commute.
+
+The complete tuple joins the previous source literally at both ends of the
+changed interval. Every actual disk daisy input/output matches its retained
+source chart separately, with its signed PC balance and full nonabelian
+point-pushing kernels, shadows and reconstructions. Source witness addresses
+are explicit throughout the new 83-operation source.
 
 ## What “in parallel” means
 
@@ -55,8 +75,10 @@ it does not assert a simultaneous ambient isotopy of an entire joint cut system.
 
 ## Files and rebuilding
 
-- `clarity-certificate.json` retains the 98-move trace, parallel cards, complete
+- `clarity-certificate.json` retains the 99-move trace, parallel cards, complete
   redraw discrepancies, framing ledger and independence witnesses.
+- `clarity-early-certificate.json` pins the previous 98-move early-expansion
+  presentation byte-for-byte so the historical geometry audit still reproduces.
 - `display-clear.json` is a separate on-demand payload. The old base, early and
   pure payloads are unchanged; the default view does not fetch them.
 - `examples/build_six_seven_clarity.py` rebuilds only the clear view from the

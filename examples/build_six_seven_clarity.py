@@ -3,7 +3,7 @@ from dataclasses import asdict,replace
 from pathlib import Path
 import hashlib,json,re,sys
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'src'))
-from surface_diagrams.clarity_derivation import factor_from_data,refine_sphere_moves,parallel_rounds,PeripheralFactor
+from surface_diagrams.clarity_derivation import factor_from_data,refine_sphere_moves,parallel_rounds,PeripheralFactor,preferred_clarity_source
 from surface_diagrams.mapping_classes import exact_action,supported_class
 from surface_diagrams.twist_simplify import simplify_twist
 from surface_diagrams.boundary_playground_geometry import support_svg
@@ -25,7 +25,7 @@ def build():
     for records,shown,owner in ((c['named_full_route']['stages'],old['routes']['namedfull'],old),(c['early_boundary']['stages'],early['routes']['early'],early)):
         for raw,view in zip(records,shown):
             for f,j in zip(converted(raw)['factors'],view['factors']):pool[f]=(owner,owner['rows'][j])
-    source=[converted(raw) for raw in c['early_boundary']['stages'][:18]]+[converted(raw) for raw in c['named_full_route']['stages'][15:]]
+    preferred=preferred_clarity_source(c);source=preferred['stages']
     def half_score(records):
         fs=[factor_from_data(f) for f in records];values={f.id:len(supported_class(f.mapping_class,6)) for f in fs if f.half}
         return dict(lengths=values,total=sum(values.values()),maximum=max(values.values()))
@@ -73,20 +73,23 @@ def build():
         shown.append(dict(state(r['after'],title),kind='clarity_step',family=r['family'],parallel_moves=moves,
             simultaneous=r['simultaneous'],sphere_redraw_count=sum(m['kind']=='sphere_redraw' for m in moves),
             move_count=len(moves),independence_verified=all(w['literal_two_order_equality'] for w in r['independence_witnesses'])))
-    summary=dict(source_operations=82,archived_source_operations=79,geometry_preference=preference,listed_moves=refined['clarified_moves'],parallel_steps=len(rounds),
+    summary=dict(source_operations=len(source)-1,archived_source_operations=79,geometry_preference=preference,listed_moves=refined['clarified_moves'],parallel_steps=len(rounds),
         genuine_sphere_redraws=refined['sphere_redraw_moves'],sphere_redraws_mix_substitutions=False,
         framing_ledger_explicit=True,framing_corrections=6,peripheral_cleanup_separate=True,
         priority='Clarity and less tangled geometry before smaller step counts.',mathematical_shortening_claimed=False,
         source_sha256=hashlib.sha256(original).hexdigest())
-    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='early_boundary.stages[:18] + named_full_route.stages[15:]',
+    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='preferred_clarity_source: explicit delayed-daisy splice',delayed_daisy_adoption=preferred['adoption'],
         scope='Parallel means independent factor-interval edits with literal two-order certificates; it does not assert a simultaneous ambient isotopy of a joint cut system. The framing ledger is multiplied on the left and is never silently discarded.')
     (folder/'clarity-certificate.json').write_text(json.dumps(certificate,default=asdict,separators=(',',':')),encoding='utf-8')
     payload=dict(routes=dict(clearfull=shown),rows=rows,supports=supports,braids=braids,summary=summary)
     encoded=json.dumps(payload,separators=(',',':'));(folder/'display-clear.json').write_text(encoded,encoding='utf-8')
-    # The existing generator still owns historical route versions.
-    current=(folder/'index.html').read_text(encoding='utf-8')
+    # Compile the shared template; only read archived payloads, never rebuild them.
+    current=(ROOT/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8')
+    for token,name in (('EARLYVERSION','display-early.json'),('PUREVERSION','display-pure.json'),('CLEARVERSION','display-clear.json')):
+        current=current.replace(token,hashlib.sha256((folder/name).read_bytes()).hexdigest()[:16])
+    current=current.replace('v=VERSION','v='+hashlib.sha256((folder/'display.json').read_bytes()).hexdigest()[:16])
     current=re.sub(r'CLARITY FIRST: \d+ independent steps, \d+ listed moves','CLARITY FIRST: '+str(len(rounds))+' independent steps, '+str(refined['clarified_moves'])+' listed moves',current)
-    (folder/'index.html').write_text(re.sub(r'display-clear\.json\?v=(?:CLEARVERSION|[a-f0-9]+)','display-clear.json?v='+hashlib.sha256(encoded.encode()).hexdigest()[:16],current),encoding='utf-8')
+    (folder/'index.html').write_text(re.sub(r'((?:display-clear|clarity-certificate)\.json\?v=)(?:CLEARVERSION|[a-f0-9]+)',lambda m:m.group(1)+hashlib.sha256(encoded.encode()).hexdigest()[:16],current),encoding='utf-8')
     print('Clarity layer:',summary,'rows',len(rows),'bytes',len(encoded))
     return payload,certificate
 

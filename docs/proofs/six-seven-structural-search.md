@@ -1,5 +1,64 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 28: delayed petals ADOPTED for clarity, not shortening
+
+Preferred clearfull now keeps the last three-point root intact while the two
+half twists are handled:17 factor rows instead of19, without the2 initially
+winding petals. Step035 combines the halves; step036 expands that retained
+root on its OWN step. Complete named closure stays SOLVED. The source is now
+83operations rather than82, and the preferred view99listed moves/70independent
+steps rather than98/69. This is a readability benefit, NOT an arc simplification
+or mathematical shortening. All16 actual-half B5 matches remain exact.
+
+The expansion is a presentation barrier so parallel grouping does not move it
+back before the halves disappear. This does NOT assert algebraic dependence
+or noncommutation. Other genuinely independent edits remain certified in
+parallel, each from the SAME round input.
+
+New preferred_clarity_source() in clarity_derivation.py uses explicit witness
+addresses for EVERY source stage. The9-move delayed interval replaces8 moves,
+with LITERAL complete input/output joins at new source34..43 (old34..42).
+All21 retained/atomic delayed states are positive B5-exact, sphere-exact and
+chosen+I, within20. The unchanged six-strand early prefix still peaks30.
+The actual donor and all3 actual daisy outputs separately match the retained
+SOURCE chart; signed PC balance is recomputed, and full kernels/shadows/
+reconstructions are retained. The raw cyclic word and every actual sigma4
+frame input are checked separately. Do not silently reinterpret source charts.
+
+The13 genuine sphere redraws, all full disk-discrepancy words and their lifts
+are IDENTICAL to the pinned previous view. Redraws, substitutions and peripheral
+cleanup remain separate. SIX framing corrections stay in the explicit LEFT
+ledger; no odd exterior is cleared. Terminal FOURTH-power redraw/cleanup are
+now steps069/070. Richard's UNNUMBERED18pt pitch/1.26pt radius and braid style
+remain unchanged. No new research phase is added.
+
+The previous817764-byte clarity certificate is pinned BYTE-IDENTICALLY in
+clarity-early-certificate.json (SHA256af886d08a0e3fb0fe16a12953a9f3325157419be6c5b8849a3d89471e9dc3634).
+The old geometry audit now explicitly reads that archive and still reproduces
+exactly; its report and6 comparison panels are unchanged. ALL older raw source,
+research payloads, base943823-byte payload/hash05e6c888cf352a48 and125page177step
+PDF archive are unchanged. Preserve8Boundaries.pdf and unrelated work.
+
+CURRENT PDF/publiccopy:87portraitLetter pages,SHA256
+d02c4c9f18b3df8b7995864d619344043ade6f9d13f4afea8c01f441d8c65f18.
+All87pages rendered/visually inspected;99move labels/70steps/13FULL redraw
+appendices checked. Independent actual-PDF audit:864six-point grids/5184dots,
+all2.52pt diameter/18pt pitch.44 focused exact/geometry/kernel/support/publication
+tests pass, including5 new clarity checks. All70LOCAL arrows pass connected
+braids,redraw scopes,ledger separation,cold clarity-only loading,archive/blob
+cache switching and mobile. The new step036 was inspected separately on mobile
+and in the PDF; its input has ZERO half twists. New CI/live verification follows
+publication; do not reuse old green status for this updated presentation.
+
+NEXT geometry target: the fixed-F11 UP gather still winds the intervening
+triple/pair curves. Source83 index40 is before that gather,41 after. Before any
+alternative inverse transport, check the ACTUAL ordered intervening block and
+whether it centralizes the actual half; do not infer that from equal half
+classes or individual pictures. No inverse gather or new relation is reached.
+Require bounded positive states, actual ordered named matches, full kernels
+and a useful full join. Do not repeat the completed early/late comparison or
+old broad frame/donor probes; preserve the adopted delayed presentation.
+
 ## October 28: visual early/late comparison; preferred view unchanged
 
 Six standalone source-exact SVG support panels are in
