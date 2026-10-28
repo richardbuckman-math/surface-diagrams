@@ -1,5 +1,60 @@
 # Handoff: surface-diagrams
 
+## October28 morning: reached two-donor/petal branch; complete86 unchanged
+
+New separate audit: examples/analyze_first_half_two_donors.py and
+six-seven-first-half-two-donors.md/.json. THREE reached positive DISK
+operations/SEVEN adjacent checks start at preserved alternative.stage11.
+Expand ACTUAL O1234 andS1 by PC daisies: each last petal is EXACTQ14.
+Then carry the SAME F3 DOWN through seven neighbors to unusedS1's12petal.
+The resulting23pair is EXACTLY the new larger-lantern petal. F3/F9 remain
+unchanged; crossedF6 changes class and must not inherit its old chart.
+All11retained states have faithfulB5 boundary^4 action,sphereidentity,total+I.
+Endpoint22records/fourhalves,score19/130,braid266 is worse than12/86,198.
+Peak19,no auxiliaryhalf,negativefactor,sphere move orcap. No publicphase added.
+
+NEW FULL JOINT CHART g=(-4,1,2,3,-2,1) matches targetR134 andactualS1 to
+R=roundT345,S=sigma2 R sigma2^-1, sharedQ=roundT45. Their actual root
+intersection is2, but the match is verified individually, not inferred from
+counts. Exact cabled relation R S T23=T2345 T45. The required23petal is NOW
+SUPPLIED by the reachedF3 transport:chart(-4,-3,-3),coreT23. Its positiveF3
+conjugation of a round12unit also matches; negativeF3 fails. The new outer
+chart(-4,-3,2,1),coreT2345 is NOT the oldO1234, despite matching enclosedsets.
+OldO does not commute withR134. No larger lantern is applied yet.
+
+NEW COUPLED TARGET: A B Q14^2 P12 P24 P23=new_four_point_outer. Every one
+of six actual inputs(sevenunits) individually matches in commong. Retain
+canonical half-lantern parentrose/twoHurwitzchecks, S daisy's ONE forward
+internal(1,2), cabled lantern, innerQ/P23commutation and algebraic cancellation
+of the SAME innerQ on both sides. Full disk/sphere/+I target discrepancy and
+full nonabelian kernels/shadows/reconstructions are saved. No framed-hole
+half convention is asserted. This is TARGET ONLY/appliedfalse/requiresgathering.
+
+EXACT ORDER GAPS: two expandedQ donors occur Q_outer,A,Q_S1,B. All4cyclic
+products are noncentral in their own generated subgroup. The actual seven
+instances for the coupled target occur Q_outer,P12,P23,A,P24,Q_S1,B and also
+have noncentral product. Full five-meridian witnesses saved. These exclude
+ONLY selected-only DISK Hurwitz/commonframes for those unchanged instances.
+Outsideunusedpetals,spare12unit,newsubstitutions/splitting/sphere moves are
+NOT excluded. Do not repeat these isolated gathers or call them whole-orbit
+exclusions. The prefixT12square has NOT been split here; it supplies P12 plus
+an available UNSELECTED spare12unit. NEXT use that specific outside preconditioner
+and keep/recover every joint-chart match, not more point-set donor guessing.
+
+Four targetedF6 conjugations of current34 andO-daisy34 in both signs failed
+this23target; do not repeat. Those were unapplied tests. The positiveF3 supply
+is reached, so do not keep searching for this petal as if it were missing.
+The S1 parent itself is expanded; restoring it would require its12petal, but
+the coupled target bypasses an actual reconstruction if its order is reached.
+
+Thirty-four focused audit/PC/kernel tests pass(eight new). The public complete
+NAMED proof remains SOLVED at86/four sphere moves/zero action-onlyrecognitions;
+under20 OPEN. ALL public proof records/payloads, old audits and BOTH PDFs are
+UNCHANGED. Do not repeat their alreadyGREEN/live/browser/PDF checks. Save this
+as research progress, not a shorter complete proof. Preserve8Boundaries.pdf.
+
+
+
 ## October28: repeated-petal PC daisy, complete named proof86
 
 Richard asked to cut the proof down further. The COMPLETE NAMED derivation
