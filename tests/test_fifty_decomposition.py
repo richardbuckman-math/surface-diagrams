@@ -169,7 +169,8 @@ class FiftyDecompositionTests(unittest.TestCase):
         data=(folder/'display.json').read_text();version=sha256(data.encode()).hexdigest()[:16]
         early_version=sha256((folder/'display-early.json').read_bytes()).hexdigest()[:16]
         pure_version=sha256((folder/'display-pure.json').read_bytes()).hexdigest()[:16]
-        expected=(root/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('PUREVERSION',pure_version).replace('VERSION',version)
+        clear_version=sha256((folder/'display-clear.json').read_bytes()).hexdigest()[:16]
+        expected=(root/'examples/fifty_twenty_extraction.html').read_text(encoding='utf-8').replace('EARLYVERSION',early_version).replace('PUREVERSION',pure_version).replace('CLEARVERSION',clear_version).replace('v=VERSION','v='+version)
         self.assertEqual((folder/'index.html').read_text(encoding='utf-8'),expected)
 
     def test_unified_overview_retains_all_atomic_moves_and_every_sphere_discrepancy(self):

@@ -37,7 +37,7 @@ early and pure payloads remain byte-identical and load only on archive demand.
 Richard's fixed UNNUMBERED18pt pitch/1.26pt radius and braid style are retained.
 Preserve8Boundaries.pdf, all labs, unrelated files and historical exact routes.
 
-LOCAL VALIDATION:53 distinct focused mathematical/publication/support tests pass,
+LOCAL VALIDATION:62 distinct focused mathematical/publication/support tests pass,
 including10 new clarity regressions. Chrome checks all69 preferred arrows with98
 cards/13 genuine redraws, same-input parallel panels, separate ledgers, connected
 braids, cache switching, cold clarity-only loading and mobile. The102 historical
@@ -46,8 +46,11 @@ and visually inspected;98 move labels/69 step numbers/13 FULL redraw appendices
 are present. Independent actual-PDF measurement checks874 six-point grids and
 5244 dots:2.52pt diameter/18pt pitch. PDF/public copy SHA256:
 4a327d78d80d68502c460b8c0156e1184684e76feacc214e82796f318f507ade.
-New remote CI/live publication is checked after pushing this change; do not
-reuse old79-source green status as validation of this presentation.
+All69 LIVE arrows and the new LIVE payload/PDF bytes are verified. Initial
+remote Python CI exposed a stale exact template-version expectation. The
+assertion now includes the separate clarity payload hash, and all9 tests in
+that publication module pass. New full CI is verified on the follow-up commit;
+no proof, payload or PDF changes in that test correction.
 
 ## October28: unsplit first sphere lantern, complete named proof79
 
