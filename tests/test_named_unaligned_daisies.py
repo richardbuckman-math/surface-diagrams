@@ -73,14 +73,14 @@ class NamedUnalignedDaisyTests(unittest.TestCase):
     before=s['frame']+before+inverse_word(s['frame'])
    self.assertEqual(exact_action(before,5),exact_action(after,5))
    if s['kind']=='disk_cyclic_start':self.assertEqual(reduce_word(before),reduce_word(after))
- def test_current_public_proof_has86_operations_four_sphere_moves_and_no_action_recognition(self):
+ def test_current_public_proof_has85_operations_four_sphere_moves_and_no_action_recognition(self):
   summary=self.saved['named_full_route']['summary']
-  self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(86,3))
-  self.assertEqual(summary['route_parts'],[17,67,1,1]);self.assertEqual(summary['sphere_moves'],4)
+  self.assertEqual((summary['graphical_steps'],summary['mathematical_steps_saved']),(85,1))
+  self.assertEqual(summary['route_parts'],[17,66,1,1]);self.assertEqual(summary['sphere_moves'],4)
   self.assertEqual((summary['equivariant_frame_operations_removed'],summary['historical_frame_component_operations_removed'],summary['raw_closure_operations_removed']),(1,2,9))
   self.assertEqual(summary['action_only_boundary_recognitions'],0);self.assertFalse(summary['complete_under_twenty_derivation'])
   shown=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'))
-  self.assertEqual(len(shown['routes']['namedfull']),87);self.assertEqual(len(shown['routes']['earlyaltclosed']),24)
+  self.assertEqual(len(shown['routes']['namedfull']),86);self.assertEqual(len(shown['routes']['earlyaltclosed']),24)
  def test_bad_sources_are_rejected(self):
   with self.assertRaises(ValueError):shorten_named_daisy_closure(self.old['stages'][:-1])
   with self.assertRaises(ValueError):close_unaligned_daisies(self.direct['stages'][0]['factors'][:-1])

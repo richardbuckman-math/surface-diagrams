@@ -1,5 +1,83 @@
 # Handoff: surface-diagrams
 
+## October28: early partial powered daisy, complete named proof85
+
+Richard requested continued work spread across the five-hour timer before his
+reset expires. Temporary HOURLY research blocks are active until October29,
+2026 at16:58:20UTC/12:58PM Eastern. Read usage before/between blocks, aim roughly
+10-15primary percentagepoints perblock and stop at a coherent share, preserving
+15%five-hour and weekly interactive reserves. Never redeem a credit or buy
+capacity. The FIRST scheduled run after expiry restores ACTIVE SIX-HOUR cadence
+and ordinary weekly pacing unless Richard gives newer instructions.
+
+A NEW reached mathematical route shortens86->85. New named_early_powered_daisy.py
+has partial_powered_daisy() and shorten_early_powered_daisy(). It applies the PC
+daisy to one unit of actualF12^2 EARLY, retaining one positive C12 unit. Common
+internal frame is actual positive roundT12square(1,1,1,1), separately checked to
+preserve that unit parent. All actual powered inputs and each petal match.
+Generic partial rule C^m=C^(m-1)*daisy(C) is tested for m2/3/4,three/four/five
+points andthreecharts. No standalone power split appears in the new replay.
+
+The C12 unit still shortensF11. The actual THREE early petals now travel through
+the same cyclic square transport and sigma4 frame, then rejoin the old late
+PCdaisy outputs individually. The same square retains FIVE crossings instead
+ofTHREE. C12reorder/final-half gather/combine are unchanged. EIGHT operations
+replaceNINE from old86full37..46/disk20..29; the ENTIRE tuple rejoins oldfull46
+LITERALLY. All22 changed/atomic states are faithfulB5 boundary^4,sphereidentity,
+total+I,peak17. Lateractualstates are IDENTICAL, merelyrenumbered. Fulltailpeak20.
+
+COUNT HONESTY: complete proof85=17early+66positive disk tail+combine+cap.
+EXTERNAL adjacentchecks106->108: one fewer named operation with TWO MORE
+actual adjacent checks. SignedfullPCbalance, localdisk/sphere/+Idiscrepancy,
+full source/late nonabelian kernels/B4shadows and explicit power decomposition
+are retained. Historical repeated-petal component stillreports86; historical
+89/90/91/92/98/99components and all raw researchchapters remainunchanged.
+FOURexplicit spheremoves/ZEROaction-onlyrecognitions; under20OPEN. No newhalf,
+negativefactor,sphere move orcap; fourterminalexteriors awaitthe separatefourth-
+powercap, whileearlySIXframingcorrections retain their DIFFERENT cap.
+
+Current namedfull and PDF/publiccopy:85portraitLetterpages,SHA256
+62c0c0eb42043ea68f5d6a4c2ce2644110b7982fc1db8a9efdb841af5486ef9f.
+ALL85pages rendered/visually inspected; all85stepnumbers/FOUR FULL sphere
+appendices checked. Local108arrows(85full+23historicalclosure) pass connected
+braid alignment,truthfulpartial/repeated/inverse/cyclicscopes,pure-onlycold
+loading andmobile.153focused cases are covered(152-suite plus newlinkingcase);
+final7new+9coupled+5compact-supporttests pass after finalpayload. Independent
+actualPDF measurement:882sixpointgrids/5292dots,diameter2.52pt,pitch18pt.
+Allolderrawcertificates/RESOLVEDresearchsupportsbraids,startup943823byte
+payload/hash05e6c888cf352a48,earlypayload,optionalaudits andold125pagearchive
+remainIDENTICAL. Commit/push,verifyNEWCI/live108arrows/LIVEPDFbytes. Do not
+repeat unchanged earlierchecks. Keep8Boundaries.pdf andallpubliclabs.
+
+ALSO TESTED THIS BLOCK: the isolated coupled seven-instance target PLUS its
+spare12unit has B5 pair-linking spectrum(0:5,1:3,2:2). A positive4point twist+
+onepositivepair must have(0:4,1:5,2:1) ifthepairliesinside, or(0:3,1:7) ifituses
+theoutsidepoint. Hence that isolated EIGHT-instance block CANNOT become one
+four-pointouter+onepair by diskHurwitz/globalframes(evenafterhalf/powersplitting
+orotherdiskrewrites preservingitsproduct). Furtheroutsideinteractions,sphere
+changes orotherpositive endforms are NOT excluded. Do not repeat the simple
+spare12-only outer extraction. Reproduce from98312ba's endpoint using
+pure_linking_certificate on selectedQ_outer,T12square,P23,F3,P24,Q_S1,F9.
+The outer-quotient linking has+12,+34,-14, sooneextra12alone cannot repairit.
+
+The reached changed prepare.345.2 is ACTUALLY a14pair, not its old34class.
+It is NOTQ14, intersects actualQ14fourtimes, and doesnot commute with the new
+coupledouter. Its two round12unit conjugations failQ14matching. A direct
+fixed14DOWN carry acrossF10.1,F8.2,P23,F3 exceeds20 at59; it is NOTreached.
+Scratch coupled-spare12-residual-linking.json,coupled-changed14-joint-chart.json
+andcoupled-changed14-down-preconditioner.json retain exact data. These are
+specific failures, not whole-factorization orbit exclusions.
+
+NEXT useful structural direction: a powered cabled lantern on the EARLIER
+squared123/124 roots might avoid a split and leave a root in a different actual
+position, analogously to this accepted early expansion. Require full individual
+matches, bounded transports and a literal join; no such shortcut is reached.
+The coupled source11 target remainsunapplied; it needs more than isolatedspare12
+transport to extractoneouter+onepair. Never infer currentclasses from inheritedIDs,
+pointsets orcrossingcounts, and do not regroup navigation as mathematical saving.
+
+
+
 ## October28 morning: reached two-donor/petal branch; complete86 unchanged
 
 New separate audit: examples/analyze_first_half_two_donors.py and

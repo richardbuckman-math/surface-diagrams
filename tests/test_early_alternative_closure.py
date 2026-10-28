@@ -94,7 +94,7 @@ class AlternativeClosureTests(unittest.TestCase):
         self.assertEqual(r['after_score'], dict(max_support_word=5, total_support_word=20, braid_letters=80))
         summary = self.saved['named_full_route']['summary']
         self.assertEqual(summary['unshortened_route_parts'], [17, 51, 8, 23, 1, 1])
-        self.assertEqual((summary['graphical_steps'], summary['mathematical_steps_saved']), (86, 3))
+        self.assertEqual((summary['graphical_steps'], summary['mathematical_steps_saved']), (85, 1))
         self.assertEqual((summary['sphere_moves'], summary['action_only_boundary_recognitions']), (4, 0))
 
     def test_public_disk_supports_and_source_validation(self):

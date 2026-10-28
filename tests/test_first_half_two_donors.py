@@ -8,6 +8,8 @@ from surface_diagrams.factorization_explorer import product
 from surface_diagrams.mapping_classes import exact_action
 from surface_diagrams.hyperelliptic_homology import IDENTITY
 from surface_diagrams.puncture_boundary import BOUNDARY_WORD
+from surface_diagrams.alternative_thirty_audit import pure_linking_certificate
+from surface_diagrams.factorization_explorer import Factor
 
 
 class FirstHalfTwoDonorTests(unittest.TestCase):
@@ -102,6 +104,19 @@ class FirstHalfTwoDonorTests(unittest.TestCase):
             self.assertEqual(exact_action(x['factor'].word,5),exact_action(x['split'].reconstructed_word,5))
         self.assertEqual(exact_action(product(self.r['selected_only_order_obstruction']['selected']),5),
                          exact_action(self.r['selected_product_split'].reconstructed_word,5))
+
+    def test_isolated_spare12_block_cannot_be_four_point_outer_plus_positive_pair(self):
+        ids=('two.outer.3','alternative.T12.square','two.root.0','F3','two.root.1','two.root.2','F9')
+        selected=tuple(f for f in self.r['stages'][-1]['factors'] if f.id in ids)
+        actual=pure_linking_certificate(product(selected),5)
+        self.assertTrue(actual['pure']);self.assertEqual(actual['off_diagonal_spectrum'],((0,5),(1,3),(2,2)))
+        outer=Factor('round.D4',(),1,4)
+        inside=pure_linking_certificate(outer.word+Factor('inside12',(),1,2).word,5)
+        outside=pure_linking_certificate(outer.word+Factor('outside45',(),4,2).word,5)
+        self.assertEqual(inside['off_diagonal_spectrum'],((0,4),(1,5),(2,1)))
+        self.assertEqual(outside['off_diagonal_spectrum'],((0,3),(1,7)))
+        self.assertNotEqual(actual['off_diagonal_spectrum'],inside['off_diagonal_spectrum'])
+        self.assertNotEqual(actual['off_diagonal_spectrum'],outside['off_diagonal_spectrum'])
 
     def test_saved_audit_is_exact_and_does_not_claim_a_public_shortening(self):
         path=Path(__file__).resolve().parents[1]/'docs/proofs/six-seven-first-half-two-donors.json'
