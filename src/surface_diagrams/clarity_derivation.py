@@ -10,7 +10,7 @@ from .factorization_explorer import Factor,product
 from .mapping_classes import exact_action,supported_class
 from .hyperelliptic_homology import homology_action,IDENTITY
 from .sphere_actions import sphere_supported_class,sphere_curve_action,sphere_chain_certificate
-from .six_seven_structure import SignedResearchFactor
+from .six_seven_structure import SignedResearchFactor,research_hurwitz_move
 from .point_pushing import split_fixed_last_strand
 from .framed_boundary_relations import enclosed_boundaries
 
@@ -75,11 +75,11 @@ def refine_sphere_moves(source_stages,factor_certificates):
     source=tuple(dict(s,factors=tuple(s['factors'])) for s in source_stages)
     positions=tuple(i for i,s in enumerate(source) if s['kind']=='sphere_rewrite')
     if len(source)==83 and positions==(14,16,17,82):first,rechart,cap,final=14,16,17,82
-    elif len(source)==84 and positions==(14,16,17,83) and all('_source_ref' in s for s in source):first,rechart,cap,final=14,16,17,83
+    elif len(source) in (84,86) and positions==(14,16,17,len(source)-1) and all('_source_ref' in s for s in source):first,rechart,cap,final=14,16,17,len(source)-1
     elif len(source)==80 and positions==(11,13,14,79):first,rechart,cap,final=11,13,14,79
-    else:raise ValueError('Use the retained79, clearer82 or explicitly referenced83-operation source')
+    else:raise ValueError('Use the retained79, clearer82 or explicitly referenced83/85-operation source')
     def source_ref(i):
-        if '_source_ref' in source[i]:return source[i]['_source_ref']
+        if '_source_ref' in source[i]:return ((source[i]['_source_file']+':') if '_source_file' in source[i] else '')+source[i]['_source_ref']
         return ('early_boundary.stages.'+str(i) if i<=17 else 'named_full_route.stages.'+str(i-3)) if final==82 else 'named_full_route.stages.'+str(i)
     result=[dict(source[0],ledger=None,source_index=0)];curve_checks=[]
     def append(kind,title,fs,ledger=None,**extra):
@@ -111,8 +111,8 @@ def refine_sphere_moves(source_stages,factor_certificates):
             outputs=(old['local_after'][0],outer)
             fs=outputs+previous['factors'][3:]
             c=Factor('canonical.R123',g,1,3);q=Factor('canonical.P34',g,3,2);t=Factor('canonical.R124',g+(-3,),1,3)
-            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if final in (82,83) else ()
-            if final in (82,83) and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
+            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if final in (82,83,85) else ()
+            if final in (82,83,85) and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
             balance=tuple(sum(f.power for f in previous['factors'][:3] if j in enclosed_boundaries(f.mapping_class,6))-sum(f.power for f in outputs if j in enclosed_boundaries(f.mapping_class,6)) for j in range(1,7))
             splits=tuple(dict(factor=f,split=split_fixed_last_strand(f.word,6)) for f in previous['factors'][:3]+outputs)
             for item in splits:
@@ -217,7 +217,7 @@ def parallel_rounds(stages):
     return tuple(rounds)
 
 
-def preferred_clarity_source(certificate):
+def delayed_clarity_source(certificate):
     """Keep the last root intact until both original halves have combined.
 
     Nine retained disk operations replace eight early-petal operations. Every
@@ -289,3 +289,77 @@ def preferred_clarity_source(certificate):
         framed_balance_before_minus_after=balance,source_daisy_ref=daisy['_source_ref'],
         disk_daisy_discrepancy=discrepancy,disk_daisy_sphere_certificate=local_sphere,disk_daisy_chosen_lift=local_lift,
         scope='Delay the three-petal expansion until both half twists are gone. This reduces row clutter; the actual half classes, support-length peak and worst-pair intersections are unchanged. One MORE source operation, not a shortening.'))
+
+
+
+def preferred_clarity_source(certificate,meeting_route=None):
+    """Adopt the reached lower meeting when its explicit report is supplied.
+
+    Omitting that report retains the historical83-operation delayed source.
+    No archived source witness is overwritten or silently reinterpreted.
+    """
+    delayed=delayed_clarity_source(certificate)
+    if meeting_route is None:return delayed
+    old=delayed['stages'];route=meeting_route
+    def factors(data):return tuple(factor_from_data(f) for f in data)
+    raw=route['stages'];new=[];checks=[];expected=exact_action(BOUNDARY*4,5)
+    if len(raw)!=5 or old[40]['factors']!=factors(raw[0]['factors']) or old[42]['factors']!=factors(raw[-1]['factors']):
+        raise ValueError('The lower meeting needs its literal complete input/output joins')
+    for i,s in enumerate(raw):
+        for j,a in enumerate((s,)+tuple(s.get('atomic_steps',()))):
+            fs=factors(a['factors']);maximum=max(len(supported_class(f.mapping_class,5)) for f in fs)
+            sphere=sphere_chain_certificate(product(fs));lift=homology_action(product(fs))
+            if maximum>20 or exact_action(product(fs),5)!=expected or not sphere['certified'] or lift!=IDENTITY or any(f.power<1 or getattr(f,'sign',1)!=1 for f in fs):
+                raise ValueError('A retained meeting state lost positivity, bound or exact certificates')
+            checks.append(dict(stage=i,atomic=j,support_maximum=maximum,faithful_disk_equal=True,positive=True,sphere_certificate=sphere,chosen_lift=lift))
+        if i:
+            item=dict(s,factors=factors(s['factors']),_source_ref='stages.'+str(i),_source_file='six-seven-fixed-half-meeting.json')
+            item['adjacent_moves']=s.get('adjacent_checks',0)
+            if i in (3,4):
+                item['source_title']=item['title']
+                item['title']=('Combine the unchanged half twists where they meet' if i==3 else 'Carry the combined full twist UP over five neighbors; the lower square stays fixed')
+            new.append(item)
+    adjacent=[];previous=old[40]['factors']
+    for i,s in enumerate(new,1):
+        state=previous
+        for j,a in enumerate(s.get('atomic_steps',())):
+            move=research_hurwitz_move(state,a['source'],a['target'])
+            if move['factors']!=factors(a['factors']):raise ValueError('An actual adjacent route lost its ordered local match')
+            state=move['factors'];adjacent.append(dict(stage=i,atomic=j,source=a['source'],target=a['target'],raw_free_discrepancy=move['disk_word_certificate']['discrepancy'],actual_factor_tuple_equal=True))
+        if i in (1,2) and state!=s['factors']:raise ValueError('A fixed-half carry did not reach its actual endpoint')
+        if i==3:
+            k=next(k for k,f in enumerate(previous) if f.id=='F6')
+            if previous[k+1].id!='F11' or exact_action(previous[k].word,5)!=exact_action(previous[k+1].word,5):raise ValueError('Combine only the adjacent equal original halves')
+            target=replace(previous[k],id=s['factors'][k].id,half=False)
+            if previous[:k]+(target,)+previous[k+2:]!=s['factors']:raise ValueError('The combine must retain all actual context factors')
+        if i==4 and state!=factors(route['complete_join']['raw']):raise ValueError('The last actual transport must reach the checked raw join')
+        previous=s['factors']
+    original_halves=tuple(f for f in old[40]['factors'] if f.half)
+    if any(tuple(f for f in s['factors'] if f.half)!=original_halves for s in new[:2]) or any(f.half for s in new[2:] for f in s['factors']):
+        raise ValueError('Keep both original halves fixed until their separate combine')
+    w=route['independent_carries']
+    if w['left_then_right']!=w['right_then_left'] or factors(w['left_then_right'])!=new[1]['factors']:
+        raise ValueError('The two independent carries lost their literal two-order equality')
+    join=route['complete_join'];raw_join=factors(join['raw']);transport_input=factors(join['raw_transport_input'])
+    if transport_input!=new[2]['factors']:raise ValueError('Use the actual post-combine input for the full-pair transport')
+    raw_discrepancy=reduce_word(product(transport_input)+inverse_word(product(raw_join)))
+    if raw_discrepancy:raise ValueError('Keep the full-pair transport raw equality BEFORE B5 presentations')
+    matches=tuple(dict(actual=a,presentation=b,exact_disk_equal=a.id==b.id and exact_action(a.word,5)==exact_action(b.word,5)) for a,b in zip(raw_join,new[-1]['factors']))
+    if len(raw_join)!=len(new[-1]['factors']) or not all(m['exact_disk_equal'] for m in matches):raise ValueError('Every actual join factor must match separately')
+    kernels=[]
+    for name,entries in route['neighborhood_kernel_splits'].items():
+        for entry in entries:
+            f=factor_from_data(entry['closed_neighborhood']);split=split_fixed_last_strand(f.word,5)
+            if exact_action(f.word,5)!=exact_action(split.reconstructed_word,5):raise ValueError('Keep the full neighborhood kernel and shadow')
+            kernels.append(dict(checkpoint=name,actual_half_or_twist=factor_from_data(entry['actual']),closed_neighborhood=f,split=split))
+    stages=old[:41]+tuple(new)+old[43:]
+    return dict(stages=stages,adoption=delayed['adoption'],meeting_adoption=dict(
+        previous_source_operations=83,source_operations=len(stages)-1,previous_interval=(40,42),current_interval=(40,44),
+        previous_local_moves=2,current_local_moves=4,previous_adjacent_checks=6,current_adjacent_checks=11,
+        source_file='six-seven-fixed-half-meeting.json',source_refs=tuple(s['_source_ref'] for s in new),
+        literal_complete_joins=True,changed_state_checks=tuple(checks),actual_adjacent_matches=tuple(adjacent),original_half_factors=original_halves,
+        independent_carries=w,raw_full_pair_transport_discrepancy=raw_discrepancy,actual_join_matches=matches,
+        neighborhood_point_pushing=tuple(kernels),adopted=True,
+        geometry=dict(original_closed_sum=1094,current_closed_sum=936,original_closed_maximum=48,current_closed_maximum=36,
+            original_support_maximum=17,current_support_maximum=18,actual_half_classes_changed=False,old_endpoint_geometry_restored_after_combine=True),
+        scope='Two MORE local moves and five MORE adjacent checks. Keep the actual half arcs unchanged and combine them where closed-neighborhood coupling is lower. Carry their full twist afterward, restoring the old endpoint. This is a clarity choice, not a shorter proof or lower whole-proof tangle claim.'))

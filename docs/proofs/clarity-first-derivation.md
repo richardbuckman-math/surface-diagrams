@@ -5,13 +5,13 @@ needs more moves. Sphere changes now redraw one existing arc or closed curve;
 they never include a lantern substitution or peripheral deletion.
 
 The preferred [interactive derivation](six-seven-fifty-blocks/index.html?phase=clearfull&step=0)
-and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **99 listed moves in
-70 certified independent steps**. This organization is not a mathematical
+and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **101 listed moves in
+71 certified independent steps**. This organization is not a mathematical
 shortening. The complete named derivation remains solved.
 
 ## A longer, clearer source
 
-The view uses an 83-operation source with the clearer early prefix and a
+The view uses an 85-operation source with the clearer early prefix and a
 delayed petal expansion. The shorter 79-operation source remains archived. At the corresponding early half-twist checkpoint, the F2
 neighborhood word has length 4 rather than 12; the total for the six half-twist
 neighborhoods is 72 rather than 80. The maximum stays 30. These are support word
@@ -33,7 +33,7 @@ local witness remain unchanged.
    diagrams and every complete disk discrepancy. Some uncorrected local redraws
    have lift -I; their corrected discrepancies have +I. No correction is dropped.
 5. Step 014 redraws the six-powered ledger curve around the remaining point.
-   Step 015 separately clears the already-peripheral curve. Steps 069 and 070
+   Step 015 separately clears the already-peripheral curve. Steps 070 and 071
    similarly separate the terminal fourth-power redraw and its cleanup. A unit
    exterior has lift -I; only the checked even powers are cleared.
 
@@ -61,7 +61,30 @@ The complete tuple joins the previous source literally at both ends of the
 changed interval. Every actual disk daisy input/output matches its retained
 source chart separately, with its signed PC balance and full nonabelian
 point-pushing kernels, shadows and reconstructions. Source witness addresses
-are explicit throughout the new 83-operation source.
+are explicit throughout the new 85-operation source.
+
+## A lower meeting for the same final half twists
+
+The upper half twist now moves down through five neighbors while the lower
+half twist moves up across the squared pair. Step034 shows these two independent
+carries from the SAME input. Both actual half arcs remain unchanged. Step035
+combines them where they meet; step036 then carries their full twist upward.
+Step037 separately expands the retained root, after the halves are gone.
+
+During the half-present part, exact closed-neighborhood crossing sums peak at
+936 instead of1094, and the largest pair at36 instead of48. Several surrounding
+curves have less nested winding. The support-word maximum is18 instead of17.
+The final full-twist carry restores the old endpoint after the half twists have
+disappeared. This is a local clarity choice, not a simpler half-arc class, a
+shorter proof or a reduction of the entire proof's geometric complexity.
+Closed-neighborhood counts are not arc crossings or a jointly minimal drawing.
+
+Four local moves and eleven adjacent checks replace two moves and six checks.
+The full factor tuple rejoins the prior source literally in individually
+checked presentations. The combine's B5 certificate and the full-pair
+transport's raw free-word certificate stay separate. Complete neighborhood
+kernels AND shadows, actual half words and exact reconstructions are retained.
+The original research report and its four comparison panels remain unchanged.
 
 ## What “in parallel” means
 
@@ -77,6 +100,8 @@ it does not assert a simultaneous ambient isotopy of an entire joint cut system.
 
 - `clarity-certificate.json` retains the 99-move trace, parallel cards, complete
   redraw discrepancies, framing ledger and independence witnesses.
+- `clarity-delayed-certificate.json` pins the previous99-move/70-step
+  delayed-expansion presentation byte-for-byte.
 - `clarity-early-certificate.json` pins the previous 98-move early-expansion
   presentation byte-for-byte so the historical geometry audit still reproduces.
 - `display-clear.json` is a separate on-demand payload. The old base, early and

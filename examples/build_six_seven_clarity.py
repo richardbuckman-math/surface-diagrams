@@ -25,7 +25,9 @@ def build():
     for records,shown,owner in ((c['named_full_route']['stages'],old['routes']['namedfull'],old),(c['early_boundary']['stages'],early['routes']['early'],early)):
         for raw,view in zip(records,shown):
             for f,j in zip(converted(raw)['factors'],view['factors']):pool[f]=(owner,owner['rows'][j])
-    preferred=preferred_clarity_source(c);source=preferred['stages']
+    meeting_path=folder.parent/'six-seven-fixed-half-meeting.json';meeting=json.loads(meeting_path.read_text(encoding='utf-8'))
+    if meeting['source_archive_sha256']!=hashlib.sha256(original).hexdigest():raise ValueError('Use the pinned source-exact meeting report')
+    preferred=preferred_clarity_source(c,meeting);source=preferred['stages']
     def half_score(records):
         fs=[factor_from_data(f) for f in records];values={f.id:len(supported_class(f.mapping_class,6)) for f in fs if f.half}
         return dict(lengths=values,total=sum(values.values()),maximum=max(values.values()))
@@ -75,10 +77,10 @@ def build():
             move_count=len(moves),independence_verified=all(w['literal_two_order_equality'] for w in r['independence_witnesses'])))
     summary=dict(source_operations=len(source)-1,archived_source_operations=79,geometry_preference=preference,listed_moves=refined['clarified_moves'],parallel_steps=len(rounds),
         genuine_sphere_redraws=refined['sphere_redraw_moves'],sphere_redraws_mix_substitutions=False,
-        framing_ledger_explicit=True,framing_corrections=6,peripheral_cleanup_separate=True,
+        framing_ledger_explicit=True,framing_corrections=6,peripheral_cleanup_separate=True,lower_half_meeting=preferred['meeting_adoption']['geometry'],
         priority='Clarity and less tangled geometry before smaller step counts.',mathematical_shortening_claimed=False,
         source_sha256=hashlib.sha256(original).hexdigest())
-    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='preferred_clarity_source: explicit delayed-daisy splice',delayed_daisy_adoption=preferred['adoption'],
+    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='preferred_clarity_source: delayed daisies and lower fixed-half meeting',delayed_daisy_adoption=preferred['adoption'],lower_half_meeting_adoption=preferred['meeting_adoption'],
         scope='Parallel means independent factor-interval edits with literal two-order certificates; it does not assert a simultaneous ambient isotopy of a joint cut system. The framing ledger is multiplied on the left and is never silently discarded.')
     (folder/'clarity-certificate.json').write_text(json.dumps(certificate,default=asdict,separators=(',',':')),encoding='utf-8')
     payload=dict(routes=dict(clearfull=shown),rows=rows,supports=supports,braids=braids,summary=summary)

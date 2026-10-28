@@ -1,5 +1,69 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 28: lower half meeting ADOPTED for clarity
+
+Preferred clearfull now uses85 source operations:101 listed moves in71 genuinely
+independent steps. Complete named closure is SOLVED. This adds TWO listed moves
+and ONE step to99/70; no shortening or whole-proof tangle reduction is claimed.
+Step034 has two independent carries from the SAME input: originalF6 DOWN5 and
+originalF11 UP1 across the square. Both half arcs stay literally unchanged.
+Step035 combines them HERE;036 carries their FULL twist UP5, keeping the lower
+square fixed. The complete tuple rejoins the old source exactly in individually
+checked presentations. Step037 expands the retained root on its OWN step.
+
+The half-present CLOSED-neighborhood crossing peak is936 rather than1094,
+largest pair36 rather than48; support maximum18 rather than17. Full-pair carry
+restores the old endpoint after halves disappear. This is a local clarity
+choice. Counts are CLOSED neighborhoods, not arc intersections or one jointly
+minimal drawing. Four local moves/11external checks replace2/6. Both orders of
+the disjoint first carries are literal; this is not a joint ambient-isotopy
+certificate. All16 adopted main/atomic states are positive,B5boundary^4,
+sphere-exact,chosen+I,peak18. Full B5 tail bound20 and six-strand prefix30 stay.
+
+preferred_clarity_source(c,meeting_report) retains explicit external SOURCE
+addresses six-seven-fixed-half-meeting.json:stages.1..4; every actual factor is
+checked. The combine B5 certificate stays separate from the last transport's
+raw free-word equality, which precedes individual B5 presentations. All50
+checkpoint neighborhood kernels AND shadows and actual half words remain.
+Omitting the explicit meeting report retains the historical83-operation source.
+The delayed daisy's named matches,balance,kernels and separate lift are intact.
+All13 sphere-redraw full discrepancy WORDS are IDENTICAL. LEFT ledger,SIX
+corrections,early ledger redraw/cleanup014/015 and terminal redraw/cleanup070/071
+stay separate. No new half,negativefactor,sphere redraw,cap or phase is added.
+
+The former99-move/70-step certificate is pinned BYTE-IDENTICALLY as clarity-
+delayed-certificate.json:839193bytes,SHA2561fb1a14e0ba0c48f2aa0d828cacc26efa809c765bef562539474f41456478947.
+The earlier98/69 clarity archive,all historical raw/resolved sources,research
+reports/panels,base943823-byte payload,early/pure payloads,optional audits and
+old125-page177-step archive are unchanged. Preserve8Boundaries.pdf.
+
+CURRENT PDF/publiccopy:90portraitLetter pages,SHA256
+d2ed78a6910762ef6db95e3dcb4c6c196b21cce76535f5eb4ae8764cf59f95a0.
+Preferred clarity-certificate.json:961966bytes,SHA256b7d253b9044695f5653b91f11c14cf0e8d2ec5be4c35e1a5a816ec789a9d513b.
+display-clear.json:2782065bytes,SHA2560010fce9eeef3e1d20af49e0bc34f5401879b2c3411205211bf39470e3ece030.
+All90 pages rendered/visually
+inspected;101move labels,71steps and13FULL redraw appendices checked. A new
+explanation page states the route and tradeoffs. UNNUMBERED points remain18pt
+pitch/radius1.26pt,unchanged braidstyle; actualPDF audit880grids/5280dots,all
+2.52ptdiameter/18ptpitch. Local Chrome passes all71arrows/101cards,connected
+braids,13redraws,ledger/common-input scopes,cold clarity-only loading,archive/
+blob-cache switching and mobile;034..037 are separately inspected. Final
+42 focused cases are covered,including5 new clarity regressions; the final29
+clarity/publication cases pass again after final adjacent-proof data. Both
+orders also have closed-neighborhood trajectory peaks936/36. New remote CI and
+live publication are verified before completion.
+
+NEXT GEOMETRY after fresh usage: new source85 index43 is AFTER combine and
+BEFORE the five-neighbor full-pair carry(index44). First test whether the actual
+adjacent combined pair and squared pair individually match the first two inputs
+of a repeated-petal PC rose of the savedR125 donor chart. NO such new joint
+match is yet claimed. A missing round12 petal might be lent by the retained
+roundR123 donor, but no supply transport/substitution/join is reached. Seek a
+bounded positive named payoff before retangling; do not expand merely to add
+rows,or replay the old PRE-half outside-R123 route. Keep the adopted clear view.
+Do not redo the completed meeting comparison/cuts,failed inverse cuts,or old
+scoped probes. The older R125 HALF-lantern target remains unapplied.
+
 ## October 28: reached lower half meeting; preferred proof unchanged
 
 A NEW fixed-half route keeps BOTH original F6/F11 literally unchanged, unlike

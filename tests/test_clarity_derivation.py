@@ -17,7 +17,8 @@ class ClarityDerivationTests(unittest.TestCase):
             for k in ('factors','local_before','local_after'):
                 if k in t:t[k]=tuple(factor_from_data(f) for f in t[k])
             return t
-        cls.preferred=preferred_clarity_source(cls.raw);cls.source=cls.preferred['stages']
+        cls.meeting=json.loads((cls.folder.parent/'six-seven-fixed-half-meeting.json').read_text(encoding='utf-8'))
+        cls.preferred=preferred_clarity_source(cls.raw,cls.meeting);cls.source=cls.preferred['stages']
         cls.result=refine_sphere_moves(cls.source,cls.raw['early_boundary']['chart']['factor_certificates'])
         cls.stages=cls.result['stages'];cls.rounds=parallel_rounds(cls.stages)
 
@@ -111,7 +112,7 @@ class ClarityDerivationTests(unittest.TestCase):
 
     def test_the_preferred_longer_prefix_has_a_simpler_F2_arc_in_this_chart(self):
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'));s=d['summary'];g=s['geometry_preference']
-        self.assertEqual((s['source_operations'],s['archived_source_operations']),(83,79))
+        self.assertEqual((s['source_operations'],s['archived_source_operations']),(85,79))
         self.assertEqual((g['shorter79']['lengths']['F2'],g['clearer82']['lengths']['F2']),(12,4))
         self.assertEqual((g['shorter79']['total'],g['clearer82']['total']),(80,72))
         self.assertEqual((g['shorter79']['maximum'],g['clearer82']['maximum']),(30,30))
@@ -121,11 +122,11 @@ class ClarityDerivationTests(unittest.TestCase):
         c=json.loads((self.folder/'clarity-certificate.json').read_text(encoding='utf-8'))
         self.assertEqual(json.loads(json.dumps(self.stages,default=asdict)),c['stages'])
         self.assertEqual(json.loads(json.dumps(self.rounds,default=asdict)),c['parallel_rounds'])
-        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(99,70,13))
+        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(101,71,13))
         self.assertEqual(c['summary']['source_sha256'],hashlib.sha256((self.folder/'certificate.json').read_bytes()).hexdigest())
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(d['routes']['clearfull']),71)
-        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),99)
+        self.assertEqual(len(d['routes']['clearfull']),72)
+        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),101)
         self.assertEqual(self.raw['named_full_route']['summary']['graphical_steps'],79)
         self.assertTrue(all(not r['word'] for r in d['rows'] if r.get('peripheral')))
 
@@ -147,7 +148,7 @@ class ClarityDerivationTests(unittest.TestCase):
 
     def test_all_explicit_source_refs_resolve_and_retained_states_are_exact(self):
         for s in self.source:
-            obj=self.raw
+            obj=(json.loads((self.folder.parent/s['_source_file']).read_text(encoding='utf-8')) if '_source_file' in s else self.raw)
             for k in s['_source_ref'].split('.'):
                 obj=obj[int(k)] if isinstance(obj,list) else obj[k]
             self.assertEqual(s['factors'],tuple(factor_from_data(f) for f in obj['factors']))
@@ -172,5 +173,52 @@ class ClarityDerivationTests(unittest.TestCase):
         words=[s['disk_discrepancy'] for s in old['stages'] if s['kind']=='sphere_redraw']
         current=[list(s['disk_discrepancy']) for s in self.stages if s['kind']=='sphere_redraw']
         self.assertEqual(current,words)
+
+
+    def test_lower_meeting_has_literal_joins_and_keeps_both_original_halves(self):
+        a=self.preferred['meeting_adoption'];self.assertTrue(a['adopted']);self.assertTrue(a['literal_complete_joins'])
+        self.assertEqual((a['previous_interval'],a['current_interval']),((40,42),(40,44)))
+        self.assertEqual((a['previous_local_moves'],a['current_local_moves'],a['previous_adjacent_checks'],a['current_adjacent_checks']),(2,4,6,11))
+        self.assertEqual(tuple(f for f in self.source[41]['factors'] if f.half),a['original_half_factors'])
+        self.assertEqual(tuple(f for f in self.source[42]['factors'] if f.half),a['original_half_factors'])
+        self.assertFalse(any(f.half for f in self.source[43]['factors']));self.assertFalse(any(f.half for f in self.source[44]['factors']))
+        self.assertTrue(all(x['exact_disk_equal'] for x in a['actual_join_matches']))
+        self.assertFalse(a['raw_full_pair_transport_discrepancy']);self.assertEqual(len(a['actual_adjacent_matches']),11)
+        self.assertTrue(all(m['actual_factor_tuple_equal'] and not m['raw_free_discrepancy'] for m in a['actual_adjacent_matches']))
+        self.assertTrue(all(c['faithful_disk_equal'] and c['chosen_lift']==IDENTITY and c['support_maximum']<=18 for c in a['changed_state_checks']))
+
+    def test_lower_meeting_carries_share_one_parallel_input_and_are_separate_from_combine(self):
+        r=next(r for r in self.rounds if any(self.stages[c['move_index']].get('source_witness_ref')=='six-seven-fixed-half-meeting.json:stages.1' for c in r['cards']))
+        self.assertEqual(r['move_count'],2);self.assertTrue(r['simultaneous']);self.assertTrue(r['independence_witnesses'][0]['literal_two_order_equality'])
+        self.assertTrue(all(c['before']==r['before'] for c in r['cards']))
+        self.assertTrue(all(self.stages[c['move_index']]['kind']=='disk_hurwitz_block' for c in r['cards']))
+        g=self.preferred['meeting_adoption']['geometry']
+        self.assertEqual((g['original_closed_sum'],g['current_closed_sum'],g['original_closed_maximum'],g['current_closed_maximum']),(1094,936,48,36))
+        self.assertFalse(g['actual_half_classes_changed']);self.assertTrue(g['old_endpoint_geometry_restored_after_combine'])
+
+    def test_lower_meeting_keeps_every_neighborhood_kernel_and_shadow(self):
+        a=self.preferred['meeting_adoption'];self.assertEqual(len(a['neighborhood_point_pushing']),50)
+        for item in a['neighborhood_point_pushing']:
+            self.assertEqual(exact_action(item['closed_neighborhood'].word,5),exact_action(item['split'].reconstructed_word,5))
+        # The historical source remains available without silently reading the
+        # external meeting report as a different archived source witness.
+        old=preferred_clarity_source(self.raw)
+        self.assertEqual(len(old['stages'])-1,83)
+        self.assertEqual(old['stages'][:41],self.source[:41]);self.assertEqual(old['stages'][42]['factors'],self.source[44]['factors']);self.assertEqual(old['stages'][43:],self.source[45:])
+
+    def test_external_meeting_certificates_do_not_replace_actual_state_and_join_checks(self):
+        from copy import deepcopy
+        bad=deepcopy(self.meeting);bad['stages'][2]['factors'][-3]['power']+=1
+        with self.assertRaises(ValueError):preferred_clarity_source(self.raw,bad)
+        bad=deepcopy(self.meeting);bad['complete_join']['raw'][0]['power']+=1
+        with self.assertRaises(ValueError):preferred_clarity_source(self.raw,bad)
+        bad=deepcopy(self.meeting);bad['stages'][4]['atomic_steps'][0]['source']+=1
+        with self.assertRaises(ValueError):preferred_clarity_source(self.raw,bad)
+
+    def test_previous_delayed_clarity_certificate_is_pinned_byte_identically(self):
+        self.assertEqual(hashlib.sha256((self.folder/'clarity-delayed-certificate.json').read_bytes()).hexdigest(),'1fb1a14e0ba0c48f2aa0d828cacc26efa809c765bef562539474f41456478947')
+        previous=json.loads((self.folder/'clarity-delayed-certificate.json').read_text(encoding='utf-8'))
+        current=[list(s['disk_discrepancy']) for s in self.stages if s['kind']=='sphere_redraw']
+        self.assertEqual(current,[s['disk_discrepancy'] for s in previous['stages'] if s['kind']=='sphere_redraw'])
 
 if __name__=='__main__':unittest.main()
