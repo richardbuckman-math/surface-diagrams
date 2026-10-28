@@ -1,5 +1,55 @@
 # Handoff: surface-diagrams
 
+## October28: isolated-block linking graph, complete proof still82
+
+A separate exact audit is saved in linking_ledgers.py,
+examples/analyze_first_half_ledgers.py and docs/proofs/six-seven-first-half-ledgers.md/.json.
+It adds NO transport, graphical phase, substitution, sphere move or shorter
+complete route. Complete named proof remains82, with four explicit sphere
+moves/zero action-only recognitions. All existing graphical payloads, PDFs,
+audits and historical certificates are unchanged. Preserve8Boundaries.pdf.
+
+The proposed two3pointroots+onepair isolated endform is NOW EXCLUDED, superseding
+that suggested next target below. Full linking matrix has12=34=2,
+13=23=24=1,14=all5edges=0. The doubled12/34 edges are DISJOINT, whereas that
+three-record endform's doubled edges would meet. Spectrum alone missed this.
+Bounded exhaustive positive clique-ledger enumeration proves at leastFOUR
+positive full-twist records are needed for this ISOLATED product. Exactly two
+four-support ledgers survive: R123+P12+P24+P34^2 and
+R234+P12^2+P13+P34. These are NECESSARY incidence targets, not ordered products,
+common-chart matches or reached factor combinations. All120 label permutations
+are checked. Intermediate disk rewrites, including half/power splitting, cannot
+change the pure product's linking graph; global frames only permute labels.
+Outside interactions, sphere changes, half-factor endforms and other positive
+endforms remain open. This is NOT a whole-proof lower bound or orbit exclusion.
+
+One precise first-ledger probe uses roundR123,round12,actualtwo.root.1(24),
+and hypothetical square of actualtwo.outer.1(34). ALL24 orders fail faithful B5
+product equality, with full first-different-meridian witnesses retained. No
+actual34 square, gather or substitution is reached. This excludes ONLY those
+unchanged curve classes/orders. Full source/candidate kernels, B4shadows and
+reconstructions are retained; no strand/kernel is dropped. Enumeration bounds
+raise VerificationLimitError, never a false empty answer.
+
+NEXT: a useful outside interaction, or a genuinely new transported joint chart
+for one allowed four-record endform. Do not repeat the excluded two-roots-plus-
+one-pair or old outer-plus-pair targets, nor the24 fixed-class orders. A more
+promising full-proof shortcut may lie in another actual powered named pattern;
+require every ordered input and a bounded literal complete join. Do not spend
+moves reconstructing old record lists or regroup navigation.
+
+Local36 focused ledger/two-donor/outside-probe/intersection/point-pushing tests
+pass, including7 new regressions. NEW CI/live-audit validation will be recorded
+in the hourly checkpoint after publication. Do not rerun unchanged82proof/
+105browser-arrow/PDF checks. c43c8ff already has ALLGREEN remote Tests and
+Documentation; all105LIVEarrows/LIVE84pagePDF bytes were verified. The next
+section's prior pending-publication sentence is historical and superseded.
+
+Temporary HOURLY pacing remains until2026-10-29T16:58:20Z, then restore SIX-HOUR
+cadence on the first run after expiry. Keep at least15% primary/weekly reserve;
+never redeem reset credits or buy capacity. No notification for this research-
+only exclusion unless a material failure or required input arises.
+
 ## October28: powered cabled lantern, complete named proof82
 
 Richard's temporary HOURLY pacing remains active through October29,2026 at
