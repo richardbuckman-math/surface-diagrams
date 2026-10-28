@@ -1,5 +1,68 @@
 # Structural search for Richard's (6,7) derivation
 
+## October28: powered cabled lantern, complete named proof82
+
+Richard's temporary HOURLY pacing remains active through October29,2026 at
+16:58:20UTC/12:58PM Eastern. Read usage before/between blocks; aim roughly
+10-15 primary percentagepoints per block, reserving capacity for tests and
+publication and at least15% primary/weekly for interactive use. Never redeem a
+credit or buy capacity. First scheduled run after expiry restores ACTIVE
+SIX-HOUR cadence and ordinary weekly pacing unless newer instructions apply.
+
+A NEW reached prefix shortens85->82. `named_powered_cabled.py` provides
+`powered_cabled_lantern()` and `shorten_powered_cabled_start()`. From the original
+fourteen-factor early B5 source, cycle at the WHOLE final124 square, apply the
+powered cabled lantern to the actual124-square/34/12/123-square block, then cycle
+after the retained124 unit. THREE actual operations replace SIX. The full tuple
+rejoins the former preferred disk-tail stage6 LITERALLY. Both root squares enter
+the named substitution intact; no standalone split/inner merge appears. All four
+original halves remain literally unchanged. Changed prefix peak16; fulltail20.
+
+GENERIC RULE: from individually matched `A B C=O I` and the certified commutation
+of shared innerI withC,
+`A^m B I^k C^n=A^(m-1) O I^(k+1) C^(n-1)`, m,n,k>=1.
+The actual powers are(2,1,1,2), commonchart(-4,-4), outputpowers(1,1,2,1).
+Both root decompositions, the shared-inner/root crossing, the unit lantern's
+internal interchange and inner merge remain explicit local certificates.
+Every powered input/output matches separately. All eight normalized factors
+retain full point-pushing kernels, B4 shadows and B5 reconstructions. Signed
+PC framing balance is(0,0,1,1,0), with separate disk/sphere/+I discrepancies.
+Both cyclic starts are free-word exact before normalized presentations. See
+`docs/proofs/pc-powered-cabled-lantern.md` for the reusable rule and actual chart.
+
+COUNT HONESTY:82=17early+63positive disk tail+combine+fourth-powercap.
+External adjacentchecks108->107; that one commuting crossing is retained
+INTERNALLY in the generic rule. This does not reduce total atomic verification
+work. FOUR explicit sphere moves/ZERO action-only boundary recognitions;
+under20 remains OPEN. The complete named closure is SOLVED. No half, negative
+factor, sphere move or cap is introduced; retain four standard exteriors until
+the separate fourth-power cap. Early SIX framing corrections keep their
+DIFFERENT visible cap. All historical85/86/89/etc component outputs and raw
+research chapters remain unchanged.
+
+Current namedfull/PDF/publiccopy:84portraitLetterpages,SHA256
+36291a34c24452d6306e4764fcd4fc7100d8f7a8a8ba05419dbcfd591e5167d1.
+All84pages rendered/visually inspected; all82stepnumbers/four FULL sphere
+appendices checked. Local105arrows(82full+23historicalclosure) pass connected
+braids, powered/partial/repeated/inverse/cyclic scopes, four sphere moves,
+pure-only cold loading and mobile. New8 exact tests pass, including81 generic
+power/chart cases. The broader153-case suite also passes (161focused tests total). NEW remote
+CI/live105arrows/LIVEPDF validation is still required after publication. Richard's UNNUMBERED point grid stays18ptpitch/radius1.26pt;
+actualPDF audit verifies896sixpointgrids/5376dots,all2.52ptdiameter/18ptpitch.
+Braidstyle preserved. ALL older raw certificate fields and RESOLVED graphical
+research chapters, startup943823bytepayload/hash05e6c888cf352a48,earlypayload,
+optional audits and old125page177step archive remain IDENTICAL. Keep8Boundaries.pdf.
+
+NEXT: prioritize the borrowed-Q14 detour using the TWO actual source11 donor
+blocks. The isolated coupled block plus spare12 cannot become one4pointouter+
+onepair by disk product-preserving rewrites (retained linking obstruction).
+A different positive endform such as two3pointroots+onepair is not excluded by
+that spectrum, but has NO reached joint chart, gather or join. Check actual
+ordered factors and kernels before any claim; do not repeat the excluded
+spare12-only extraction. Alternatively seek a specific later powered cabled
+pattern with an actual useful join. Do not merely group old navigation moves,
+restore auxiliary halves, or canonicalize every support.
+
 ## October28: early partial powered daisy, complete named proof85
 
 Richard requested continued work spread across the five-hour timer before his

@@ -82,18 +82,18 @@ class EarlyPoweredDaisyTests(unittest.TestCase):
         self.assertTrue(all(f==Factor(f.id,(),1,5) for f in r['factors']))
         self.assertEqual((r['sphere_moves'],r['exterior_caps'],r['action_only_boundary_recognitions']),(0,0,0))
 
-    def test_saved_public_proof_is85_with_truthful_partial_power_scope(self):
+    def test_saved_public_proof_is82_with_truthful_partial_power_scope(self):
         c=json.loads((self.folder/'certificate.json').read_text(encoding='utf-8'))
         metadata={k:v for k,v in self.r.items() if k not in ('stages','factors')}
         self.assertEqual(json.loads(json.dumps(metadata,default=asdict)),c['named_early_powered_daisy_shortening'])
         self.assertEqual(c['named_repeated_petal_shortening']['whole_named_steps'],86)
-        s=c['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(85,4,0))
-        self.assertEqual(s['route_parts'],[17,66,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
+        s=c['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(82,4,0))
+        self.assertEqual(s['route_parts'],[17,63,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
         d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(d['routes']['namedfull']),86)
-        self.assertTrue(d['routes']['namedfull'][38]['partial_powered_daisy'])
+        self.assertEqual(len(d['routes']['namedfull']),83)
+        self.assertTrue(d['routes']['namedfull'][35]['partial_powered_daisy'])
         html=(self.folder/'index.html').read_text(encoding='utf-8')
-        self.assertIn('85 retained steps',html);self.assertIn('EXACT DISK PARTIAL-POWER PC DAISY',html)
+        self.assertIn('82 retained steps',html);self.assertIn('EXACT DISK PARTIAL-POWER PC DAISY',html)
 
     def test_invalid_powers_nonstabilizing_frames_and_changed_source_are_rejected(self):
         for power in (True,1,0,-1,2.5):

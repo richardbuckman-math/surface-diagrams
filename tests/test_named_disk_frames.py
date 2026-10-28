@@ -61,11 +61,11 @@ class NamedDiskFrameTests(unittest.TestCase):
    if s['kind'] in ('global_conjugation','disk_cyclic_start'):
     g=s['frame'];before=g+before+inverse_word(g)
    self.assertEqual(exact_action(before,5),exact_action(after,5))
- def test_public_complete_route_has_85_steps_four_explicit_sphere_moves_and_no_action_recognition(self):
-  r=self.saved['named_full_route'];self.assertEqual(r['summary']['route_parts'],[17,66,1,1]);self.assertEqual(r['summary']['graphical_steps'],85)
+ def test_public_complete_route_has_82_steps_four_explicit_sphere_moves_and_no_action_recognition(self):
+  r=self.saved['named_full_route'];self.assertEqual(r['summary']['route_parts'],[17,63,1,1]);self.assertEqual(r['summary']['graphical_steps'],82)
   self.assertEqual(r['summary']['sphere_moves'],4);self.assertEqual(r['summary']['action_only_boundary_recognitions'],0)
   d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'))
-  self.assertEqual(len(d['routes']['namedfull']),86)
+  self.assertEqual(len(d['routes']['namedfull']),83)
   for s,t in zip(r['stages'][17:-2],d['routes']['namedfull'][17:-2]):
    for f,j in zip(s['factors'],t['factors']):
     f=Factor(**dict(f,conjugator=tuple(f['conjugator'])));self.assertEqual(exact_action(f.word,5),exact_action(d['rows'][j]['word'],5));self.assertFalse(d['rows'][j]['sphere_rechart'])

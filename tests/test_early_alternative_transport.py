@@ -104,8 +104,8 @@ class AlternativeTransportTests(unittest.TestCase):
             for f, i in zip(a['factors'], b['factors']):
                 self.assertFalse(d['rows'][i]['sphere_rechart'])
                 self.assertEqual(exact_action(f.word, 5), exact_action(d['rows'][i]['word'], 5))
-        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 85)
-        self.assertEqual(len(d['routes']['namedfull']), 86)
+        self.assertEqual(self.public['named_full_route']['summary']['graphical_steps'], 82)
+        self.assertEqual(len(d['routes']['namedfull']), 83)
         self.assertFalse(self.public['early_alternative_transport']['replacement_for_full_proof'])
 
     def test_new_residual_lantern_uses_its_actual_frame_and_reduces_curve_intersections(self):
