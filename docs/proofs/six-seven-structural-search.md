@@ -1,5 +1,39 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 28: reached lower half meeting; preferred proof unchanged
+
+A NEW fixed-half route keeps BOTH original F6/F11 literally unchanged, unlike
+prior failed inverse carries that fixed the neighbors. From source83 stage40,
+carryF6 DOWN over first5neighbors andF11 UP over the square. These disjoint edits
+commute literally in both orders. Combine HERE, then carry the resulting FULL
+pair UP5neighbors. Every actual factor matches separately, and the ENTIRE tuple
+rejoins source83 stage42 LITERALLY in its individually checked presentations.
+
+Same17-record CLOSED-neighborhood meeting sum1094->936,max48->36; these are also
+half-present trajectory peaks. Support maximum17->18,total121->117. Half arcs
+are unchanged. The final full-pair carry restores the old endpoint's geometry
+after halves disappear: LOCAL redistribution, NOT whole-proof tangle reduction.
+Four local moves/11adjacent checks replace2/6. All16 retained main/atomic states
+are positive,B5boundary^4,sphere-exact,chosen+I,peak18. No newhalf/sphere/cap.
+The combine B5 certificate is separate from the last transport's raw free word;
+full neighborhood kernels AND shadows and every actual half word remain.
+
+Seven FIXED meeting cuts were measured; do not confuse/repeat them with the
+seven failed inverse cuts. Selectedcut5 keeps the square simple;cut6 gives960/36
+but a windier square. Four source-exact panels are in fixed-half-meeting-
+comparison/index.html. All4 were visually inspected; mobile has no overflow.
+F8.2/S1/F10.2 show less nesting;P13 remains complicated.23 focused exact/kernel/
+intersection tests pass, including5new regressions. No preferred proof,payload,
+PDF,source certificate or archive changed. Complete99moves/70steps staysSOLVED.
+
+NEXT with fresh usage: consider adopting this exact lower meeting for clarity,
+if a coherent full source/payload/PDF/regrouping/publication increment fits.
+Keep the extra moves and support-maximum tradeoff explicit; inspect the whole
+changed sequence. No new preferred total is claimed. Visual comparison is
+complete; do not repeat it. Retain the delayed petals and separate sphere
+redraw/substitution/cleanup/LEFT ledger. O1234/R125 donor stays unapplied.
+See examples/analyze_fixed_half_meeting.py, its JSON/MD and comparison builder.
+
 ## October 28: fixed-half gather audit; preferred proof unchanged
 
 Source83 stages40/41 are pinned to named_cyclic_start_shortening's saved
