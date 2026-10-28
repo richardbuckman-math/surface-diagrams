@@ -80,11 +80,11 @@ class NamedUpwardDaisyTests(unittest.TestCase):
   second=patterns[-1]['named_pattern_witness'];cyc=second['internal_cyclic_start'];self.assertEqual(cyc['shift'],3)
   self.assertEqual(reduce_word(cyc['frame']+product(cyc['local_before'])+inverse_word(cyc['frame'])),reduce_word(product(cyc['local_after'])))
   self.assertEqual([f.points for f in patterns[-1]['local_before']],[2,2,4,2,2])
- def test_current_saved_proof_is89_with_four_explicit_sphere_moves(self):
+ def test_current_saved_proof_is86_with_four_explicit_sphere_moves(self):
   metadata={k:v for k,v in self.r.items() if k not in ('stages','factors')}
   self.assertEqual(json.loads(json.dumps(metadata,default=asdict)),self.saved['named_upward_daisy_shortening'])
-  s=self.saved['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(89,4,0));self.assertEqual(s['route_parts'],[17,70,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
-  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),90)
+  s=self.saved['named_full_route']['summary'];self.assertEqual((s['graphical_steps'],s['sphere_moves'],s['action_only_boundary_recognitions']),(86,4,0));self.assertEqual(s['route_parts'],[17,67,1,1]);self.assertFalse(s['complete_under_twenty_derivation'])
+  d=json.loads((self.folder/'display-pure.json').read_text(encoding='utf-8'));self.assertEqual(len(d['routes']['namedfull']),87)
  def test_changed_sources_are_rejected(self):
   with self.assertRaises(ValueError):shorten_named_upward_daisies(self.old['stages'][:-1])
   source=self.direct['stages'][0]['factors']

@@ -1,5 +1,66 @@
 # Handoff: surface-diagrams
 
+## October28: repeated-petal PC daisy, complete named proof86
+
+Richard asked to cut the proof down further. The COMPLETE NAMED derivation
+is now86 operations instead of89:17early+67positive disk tail+combine+cap.
+It remains SOLVED with FOUR explicit sphere moves and ZERO action-only
+recognitions. Under20 remains OPEN. New named_repeated_petal.py supplies a
+reusable derived PC daisy rule, documented in pc-repeated-petal-daisy.md.
+
+For the individually matched unit daisy A Q C=D, the generic positive rule
+is A Q^m C=D(C^-1 Q^(m-1) C). All powered inputs match separately. The spare
+positive twist is retained; inverse conjugator letters are not inverse twist
+factors. This identity follows by free cancellation after the named daisy,
+without assuming source centrality. Tests cover81 generic cases: three/four/
+five-point daisies, every pair-petal position, multiplicities2/3/4, three frames.
+Wrong suffix direction and wrong input order are separately checked.
+
+At oldfull80/disk63 the actual first daisy already has powers(1,1,2,1,1).
+Apply the rule directly withm2. The new replay creates no two unit factors and
+performs no separate petal carries. It outputs the third standard exterior
+plus direct.E2(chart-4,-4,-3,coreT23). The ENTIRE tuple rejoins oldfull84/disk67
+LITERALLY. Four former operations become ONE generic named substitution;
+the earlier prefix and later second daisy are unchanged. Historical89/90/91/
+92/98/99component functions and all raw research chapters stay intact.
+
+COUNT HONESTY:106EXTERNAL adjacent checks replace108. The two displaced
+crossings remain inside the general rule's explicit split/transport expansion.
+Internal named checks rise12->14; total adjacent verification count is unchanged.
+This is a shortening using a reusable named substitution, NOT a claim of fewer
+atomic Hurwitz crossings. The rule is independently generic, not a source-
+specific regrouping of page navigation. Every actual powered input, normalized
+full kernel/B4shadow, signed PC balance, local sphere/+I discrepancy and literal
+join is retained. Full disk-tail peak20. No half, negative factor, new sphere
+move or cap appears. Four standard exteriors remain visible until the separate
+fourth-power cap; early SIX framing corrections keep their DIFFERENT cap.
+
+Preferred public namedfull and PDF/public copy are updated:85portraitLetter
+pages, all86step numbers and FOUR FULL sphere appendices checked. ALL85pages
+rendered/visually inspected, including the actual new five-input/two-output
+substitution. PDF SHA256c50c68865fb9d4fb38a4ecbbe205a586fcb81ff010296f3551963bd7384dbfe7.
+Uniform UNNUMBERED points remain18pt apart/radius1.26pt; braid style unchanged.
+All older raw certificates and RESOLVED graphical research routes, startup
+943823byte display.json/hash05e6c888cf352a48 and early payload are identical.
+No new research phase is added. Preserve8Boundaries.pdf and both optional audits.
+
+Validation:132focused tests pass; local109arrows(86full+23historical
+closure) pass connected-braid alignment,4sphere banners/discrepancies,pure-only
+loading,mobile. The repeated-petal scope label and CURRENT repeated-petal mobile view are
+explicit and checked. ALL872six-point factor grids/5232dots were independently
+measured:diameter2.52pt,pitch18pt. Final seven new tests plus five compact-support
+tests are rerun after the final payload. Commit/push and NEW remote/live checks
+follow; all older publication checks remain unchanged.
+
+NEXT structural priority remains the earlier borrowed-Q14 detour, using both
+actual source11 Q14 donors as blocks. The new repeated-petal rule might also
+help a concrete repeated-root cabled lantern, but no further shortcut is reached.
+Do not relabel an arbitrary old route as one move. The recent fixed composed
+frame67-to61 failure(66/66/50/22/22/22) and wrong145donor intersections4/8 remain
+scoped negative audits; do not repeat them or infer classes from point sets.
+
+
+
 ## October28 early: scoped first-half probes; complete proof stays89
 
 No shortening or new public graphical phase is claimed. The complete NAMED

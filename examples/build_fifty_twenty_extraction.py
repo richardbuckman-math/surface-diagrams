@@ -18,6 +18,7 @@ from surface_diagrams.named_unaligned_daisies import shorten_named_daisy_closure
 from surface_diagrams.named_expanded_loan import shorten_expanded_loan_return
 from surface_diagrams.named_upward_daisies import shorten_named_upward_daisies
 from surface_diagrams.named_positive_frame import merge_positive_T45_frame
+from surface_diagrams.named_repeated_petal import shorten_repeated_petal_daisy
 from surface_diagrams.early_boundary_pure import purify_early_cluster, contract_pure_clusters
 from surface_diagrams.early_exterior_lantern import extract_positive_exterior, contract_exterior_petals, contract_transported_cluster, contract_second_exterior, rebuild_round_four_point
 from surface_diagrams.early_boundary_closure import close_round_boundary
@@ -101,7 +102,8 @@ def build():
     named_latest=shorten_named_daisy_closure(named_current['stages'])
     named_expanded=shorten_expanded_loan_return(named_latest['stages'])
     named_upward=shorten_named_upward_daisies(named_expanded['stages'])
-    named_final=merge_positive_T45_frame(named_upward['stages'])
+    named_positive=merge_positive_T45_frame(named_upward['stages'])
+    named_final=shorten_repeated_petal_daisy(named_positive['stages'])
     purification=purify_early_cluster(earlycluster['factors'])
     pure_contractions=contract_pure_clusters(purification['factors'])
     exterior=extract_positive_exterior(pure_contractions['factors'])
@@ -188,6 +190,8 @@ def build():
             if stage.get('boundary_power'):shown['boundary_power']=stage['boundary_power']
             if stage.get('adjacent_moves'):shown['adjacent_moves']=stage['adjacent_moves']
             if stage.get('inverse_hurwitz_transport'):shown['inverse_hurwitz_transport']=True
+            if stage.get('named_pattern_witness',{}).get('repeated_petal_pattern'):
+                shown['repeated_petal_daisy']=True;shown['internal_spare_transports']=2
             if name=='transport':shown['temporary_root']=any(f.id=='transport.R234' for f in stage['factors'])
             states.append(shown)
         display_routes[name]=states
@@ -229,9 +233,9 @@ def build():
         action_only_boundary_recognitions=sum(s['kind'] == 'disk_boundary_relation' for s in named_raw),
         complete_named_derivation=True, complete_under_twenty_derivation=False,
         cyclic_starts_are_explicit_conjugations=True, terminal_exteriors=4,
-        previous_graphical_steps=90, mathematical_steps_saved=1, route_parts=(17,70,1,1),
-        unshortened_route_parts=(17,51,8,23,1,1), equivariant_frame_operations_removed=1, historical_frame_component_operations_removed=2, cyclic_start_operations_removed=1, raw_closure_operations_removed=9, historical_direct_daisy_operations_removed=6, expanded_loan_operations_removed=1, upward_daisy_operations_removed=1, positive_T45_frame_operations_removed=1)
-    if named_summary['graphical_steps'] != 89 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
+        previous_graphical_steps=89, mathematical_steps_saved=3, route_parts=(17,67,1,1),
+        unshortened_route_parts=(17,51,8,23,1,1), equivariant_frame_operations_removed=1, historical_frame_component_operations_removed=2, cyclic_start_operations_removed=1, raw_closure_operations_removed=9, historical_direct_daisy_operations_removed=6, expanded_loan_operations_removed=1, upward_daisy_operations_removed=1, positive_T45_frame_operations_removed=1, repeated_petal_operations_removed=3, external_adjacent_checks=106, repeated_petal_expansion_transports=2)
+    if named_summary['graphical_steps'] != 86 or named_summary['sphere_moves'] != 4 or named_summary['action_only_boundary_recognitions']:
         raise ValueError('The new named proof lost a step, sphere move, or reintroduced action-only recognition')
     display_routes['namedfull'] = [dict(state, title=('The complete NAMED derivation: ' + state['title']) if i == 0 else state['title'])
                                    for i, state in enumerate(named_shown)]
@@ -297,7 +301,7 @@ def build():
     encoded=json.dumps(display,separators=(',',':'));version=sha256(encoded.encode()).hexdigest()[:16]
     (out/'display.json').write_text(encoded,encoding='utf-8')
     (out/'certificate.json').write_text(json.dumps(dict(source_sha256=sha256(source).hexdigest(),source_phase='positive_sphere_expansion',
-        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),named_disk_frame_shortening={k:v for k,v in named_disk.items() if k not in ('stages','factors')},named_cyclic_start_shortening={k:v for k,v in named_current.items() if k not in ('stages','factors')},named_unaligned_daisy_shortening={k:v for k,v in named_latest.items() if k not in ('stages','factors')},named_expanded_loan_shortening={k:v for k,v in named_expanded.items() if k not in ('stages','factors')},named_upward_daisy_shortening={k:v for k,v in named_upward.items() if k not in ('stages','factors')},named_positive_frame_shortening={k:v for k,v in named_final.items() if k not in ('stages','factors')},
+        source=records,route=route,thirty_boundary=thirty,working_seed_bridge=working,compact_boundary_chart=compact,half_lantern_transport=transport,f6_alignment=alignment,f9_unwinding=unwinding,f11_rounding=rounding,early_boundary=early,early_positive_cluster=earlycluster,early_alternative_lantern=dict(alternative,applied_to_public_replay=True),early_alternative_transport=dict(alttransport,applied_to_public_replay=True),early_alternative_exterior=dict(altexterior,applied_to_public_replay=True),early_alternative_closure=dict(altclosed,applied_to_public_replay=True),early_purification=purification,pure_cluster_contractions=dict(pure_contractions,applied_to_public_replay=True),early_exterior_lantern=dict(exterior,applied_to_public_replay=True),exterior_residual_lantern=residual,second_residual_cluster=dict(second,applied_to_public_replay=True),second_exterior_lanterns=dict(outer_two,applied_to_public_replay=True),round_four_point_reconstruction=dict(rebuilt,applied_to_public_replay=True),named_boundary_closure=dict(closed,applied_to_public_replay=True),named_full_route=dict(stages=named_raw,summary=named_summary),named_disk_frame_shortening={k:v for k,v in named_disk.items() if k not in ('stages','factors')},named_cyclic_start_shortening={k:v for k,v in named_current.items() if k not in ('stages','factors')},named_unaligned_daisy_shortening={k:v for k,v in named_latest.items() if k not in ('stages','factors')},named_expanded_loan_shortening={k:v for k,v in named_expanded.items() if k not in ('stages','factors')},named_upward_daisy_shortening={k:v for k,v in named_upward.items() if k not in ('stages','factors')},named_positive_frame_shortening={k:v for k,v in named_positive.items() if k not in ('stages','factors')},named_repeated_petal_shortening={k:v for k,v in named_final.items() if k not in ('stages','factors')},
         independent_sphere_identity_certificate=True,explicit_w0_w1_hurwitz_route=False,overview_summary=overview_summary,
         display_recharts=recharts),default=asdict,separators=(',',':')),encoding='utf-8')
     images=tuple(map(tuple,thirty['disk_boundary_action']))
