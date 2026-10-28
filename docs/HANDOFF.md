@@ -1,5 +1,42 @@
 # Handoff: surface-diagrams
 
+## October 28: closed-neighborhood geometry audit; preferred view unchanged
+
+Richard's clarity-first priority remains. A new research-only audit compares
+current early petals, a reached delayed-petal variant and historical outside
+routes. See docs/proofs/six-seven-half-neighborhood-geometry.md/.json and
+examples/analyze_half_neighborhood_geometry.py. No public replay/PDF change.
+
+From the SAME complete source, current early expansion uses8 moves/22 retained
+states, delayed expansion9/21. Both have LITERAL complete joins to the preferred
+clarity source indices34..42 (archived79 source31..39). Deferring the three petals
+keeps at most17 factor records while halves remain, versus19, and lowers the
+peak unweighted CLOSED-neighborhood incident-pair sum252->208. This partly
+reflects fewer factor records: NOT arc intersections or a joint minimum drawing.
+Half support peak12, half-neighborhood mutual peak12 and worst incident pair20
+are UNCHANGED across all5 audited routes. Outside-petal variants have no better
+peaks and prolong mutual intersection4 until contraction. No orbit exclusion.
+
+All normal-form pair certificates, actual half words and full CLOSED-neighborhood
+kernels/shadows/reconstructions are retained. Neighborhood twist=actual half
+squared is checked; no arc/kernel is forgotten. Bounds raise, never returnzero.
+Every retained state and ordered transition is B5-exact and positive. The new
+report retains the complete delayed stages and original named-witness refs.
+
+NEXT: visually compare the8-move early interval to9-move delayed interval. If
+fewer petal rows make the half-twist handling clearer, favor the extra operation.
+The delayed tuple joins literally; do not reconstruct a different old record
+list. Adapt explicit source refs/refinement to the longer source, recompute true
+parallel groups, then inspect rebuilt graphics/PDF before adoption. Do not claim
+new preferred counts or improved arc tangling from this audit alone. Complete
+preferred closure stays SOLVED:98moves/69parallelsteps, all payloads/PDF unchanged.
+
+30 focused geometry/intersection/kernel/clarity tests pass, including5 new tests;
+the5 new tests are rerun after final report metadata. New CI is checked after
+publication. Preserve8Boundaries.pdf and all historical files. The prior
+b143d2a full802-test CI and all live preferred artifacts remain verified; do not
+repeat their unchanged checks.
+
 ## October 28: Richard's clarity-first priority supersedes count minimization
 
 Richard asked for sphere moves to redraw ONE arc/closed curve without a mixed
