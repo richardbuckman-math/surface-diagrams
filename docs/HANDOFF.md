@@ -1,5 +1,47 @@
 # Handoff: surface-diagrams
 
+## October28 early: scoped first-half probes; complete proof stays89
+
+No shortening or new public graphical phase is claimed. The complete NAMED
+proof remains SOLVED at89 operations/four sphere moves/zero action-only
+recognitions; under20 stays OPEN. All published proof payloads, raw research
+chapters, PDFs and fixed18pt unnumbered point grids remain unchanged.
+
+The proposed exact composed-frame67-to61 back-transport is NOW MEASURED:
+(4,4,2,3,4,-2,-1) on preserved alternative stages46..51 gives peaks
+66,66,50,22,22,22 including all atomic neighbors. It fails bound20. The later
+join is individually B5-exact although its normalized tuples are not literal.
+Do not call that presentation difference a geometric/class obstruction or redo
+this fixed direction. No failed transformed named substitution is applied.
+
+New reproducible research audit: examples/analyze_first_half_outside_probes.py
+and docs/proofs/six-seven-first-half-outside-probes.md/.json. It reads preserved
+raw sources only, not changing namedfull indices or Git history. From rawstage11,
+F3 DOWN through the235root/F6, then changedF6 UP through that root, reaches TWO
+positive operations/THREE adjacent checks. Original F3/F9 remain unchanged.
+All6retained states have faithfulB5 boundary^4 action, sphereidentity,total+I.
+Endpoint17records/fourhalves,score19/110,braid232 is worse than12/86,198.
+The resulting145root intersects actualQ14 FOUR times and does not commute;
+all6canonicalrose/daisypetal matches fail. It cannot supplyQ14 as an internal
+petal without further geometric change. Do not infer the donor from set145.
+
+Opposite gather completes1operation; its second drag fails support25. Its
+rejected root is NOT a reached state and intersectsQ14eight times. PositiveF6
+conjugation of unitF8.2/unitF12 also gives intersection8each: these are target
+computations only, with no actual gather. These scoped failures do not exclude
+other transports/orbits. In the actualO1234chart F3/F9 retain nonabelian kernels
+(-4,1,-3,4)/(1,-4,-3,4); S1kernel is empty. Full shadows and reconstructions are
+saved; no ordinary-deletion inference or sphere move occurs.
+
+NEXT specific direction: use BOTH already-exactQ14donors, O1234daisyindex3 and
+S1daisyindex2, keeping their unused ordered petals as blocks. Seek an actual
+bounded nested two-daisy/half-lantern configuration with EVERY input matched,
+rather than a third donor inferred from its point set. No expansion/gathering
+or nested substitution is yet reached. The earlier stage11 half-lantern stays
+TARGET ONLY. Twenty-six focused audit/intersection/point-pushing/PC tests pass (five new); complete89 remains the baseline.
+
+
+
 ## October27 evening: positive T45 frame merge, complete proof89
 
 The COMPLETE NAMED proof is now89 graphical operations, ONE fewer than90.

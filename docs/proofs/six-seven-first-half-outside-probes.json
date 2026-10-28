@@ -1,0 +1,5482 @@
+{
+  "scope": "Scoped DISK research audit; no shortening or orbit exclusion",
+  "source_alternative_stage": 11,
+  "frame_merge": {
+    "frame": [
+      4,
+      4,
+      2,
+      3,
+      4,
+      -2,
+      -1
+    ],
+    "states": [
+      {
+        "raw_stage": 46,
+        "title": "Common disk frame keeps the inside-four daisy readable",
+        "scores": [
+          {
+            "max_support_word": 66,
+            "total_support_word": 343,
+            "braid_letters": 268
+          }
+        ],
+        "peak": 66
+      },
+      {
+        "raw_stage": 47,
+        "title": "Choose the cyclic start at the actual three-point root",
+        "scores": [
+          {
+            "max_support_word": 66,
+            "total_support_word": 343,
+            "braid_letters": 268
+          }
+        ],
+        "peak": 66
+      },
+      {
+        "raw_stage": 48,
+        "title": "Carry the three-point root down through the eight residual factors",
+        "scores": [
+          {
+            "max_support_word": 22,
+            "total_support_word": 177,
+            "braid_letters": 224
+          },
+          {
+            "max_support_word": 50,
+            "total_support_word": 285,
+            "braid_letters": 254
+          },
+          {
+            "max_support_word": 50,
+            "total_support_word": 269,
+            "braid_letters": 246
+          },
+          {
+            "max_support_word": 50,
+            "total_support_word": 275,
+            "braid_letters": 250
+          },
+          {
+            "max_support_word": 50,
+            "total_support_word": 271,
+            "braid_letters": 254
+          },
+          {
+            "max_support_word": 50,
+            "total_support_word": 269,
+            "braid_letters": 256
+          },
+          {
+            "max_support_word": 40,
+            "total_support_word": 233,
+            "braid_letters": 248
+          },
+          {
+            "max_support_word": 35,
+            "total_support_word": 199,
+            "braid_letters": 230
+          },
+          {
+            "max_support_word": 22,
+            "total_support_word": 177,
+            "braid_letters": 224
+          }
+        ],
+        "peak": 50
+      },
+      {
+        "raw_stage": 49,
+        "title": "Commute the final pair petal past the visible exterior",
+        "scores": [
+          {
+            "max_support_word": 22,
+            "total_support_word": 177,
+            "braid_letters": 224
+          },
+          {
+            "max_support_word": 22,
+            "total_support_word": 177,
+            "braid_letters": 224
+          }
+        ],
+        "peak": 22
+      },
+      {
+        "raw_stage": 50,
+        "title": "Transported PC daisy closes the actual root and its three pair petals",
+        "scores": [
+          {
+            "max_support_word": 22,
+            "total_support_word": 126,
+            "braid_letters": 180
+          }
+        ],
+        "peak": 22
+      },
+      {
+        "raw_stage": 51,
+        "title": "Carry the new round four-point twist up to unwind the residual block",
+        "scores": [
+          {
+            "max_support_word": 10,
+            "total_support_word": 62,
+            "braid_letters": 118
+          },
+          {
+            "max_support_word": 22,
+            "total_support_word": 116,
+            "braid_letters": 168
+          },
+          {
+            "max_support_word": 22,
+            "total_support_word": 116,
+            "braid_letters": 168
+          },
+          {
+            "max_support_word": 22,
+            "total_support_word": 106,
+            "braid_letters": 158
+          },
+          {
+            "max_support_word": 18,
+            "total_support_word": 94,
+            "braid_letters": 144
+          },
+          {
+            "max_support_word": 12,
+            "total_support_word": 82,
+            "braid_letters": 130
+          },
+          {
+            "max_support_word": 10,
+            "total_support_word": 72,
+            "braid_letters": 122
+          },
+          {
+            "max_support_word": 10,
+            "total_support_word": 64,
+            "braid_letters": 118
+          },
+          {
+            "max_support_word": 10,
+            "total_support_word": 62,
+            "braid_letters": 118
+          }
+        ],
+        "peak": 22
+      }
+    ],
+    "literal_join": false,
+    "individual_join_matches": [
+      {
+        "id": "alternative.inside.D4",
+        "left": {
+          "id": "alternative.inside.D4",
+          "conjugator": [
+            -1
+          ],
+          "first": 2,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.inside.D4",
+          "conjugator": [
+            -1
+          ],
+          "first": 2,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.P24",
+        "left": {
+          "id": "alternative.P24",
+          "conjugator": [
+            -4,
+            -4,
+            -4,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.P24",
+          "conjugator": [
+            -4,
+            -4,
+            -4,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.shared.I25",
+        "left": {
+          "id": "alternative.shared.I25",
+          "conjugator": [
+            2,
+            3
+          ],
+          "first": 4,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.shared.I25",
+          "conjugator": [
+            -4,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.T12.square",
+        "left": {
+          "id": "alternative.T12.square",
+          "conjugator": [
+            2
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 2,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.T12.square",
+          "conjugator": [
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 2,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.shared.1",
+        "left": {
+          "id": "alternative.shared.1",
+          "conjugator": [
+            -1,
+            2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.shared.1",
+          "conjugator": [
+            -1,
+            2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.shared.2",
+        "left": {
+          "id": "alternative.shared.2",
+          "conjugator": [
+            -1,
+            2,
+            -1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.shared.2",
+          "conjugator": [
+            -1,
+            2,
+            -1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.shared.O2345",
+        "left": {
+          "id": "alternative.shared.O2345",
+          "conjugator": [
+            -4
+          ],
+          "first": 1,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.shared.O2345",
+          "conjugator": [
+            -4
+          ],
+          "first": 1,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.P13",
+        "left": {
+          "id": "alternative.P13",
+          "conjugator": [
+            -1,
+            -2
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.P13",
+          "conjugator": [
+            -1,
+            -2
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.F12.1",
+        "left": {
+          "id": "alternative.F12.1",
+          "conjugator": [],
+          "first": 2,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.F12.1",
+          "conjugator": [],
+          "first": 2,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.exterior",
+        "left": {
+          "id": "alternative.exterior",
+          "conjugator": [],
+          "first": 1,
+          "points": 5,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.exterior",
+          "conjugator": [],
+          "first": 1,
+          "points": 5,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.residual.O1234",
+        "left": {
+          "id": "alternative.residual.O1234",
+          "conjugator": [
+            -2,
+            3,
+            4
+          ],
+          "first": 1,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.residual.O1234",
+          "conjugator": [
+            -2,
+            3,
+            4
+          ],
+          "first": 1,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.residual.I12",
+        "left": {
+          "id": "alternative.residual.I12",
+          "conjugator": [],
+          "first": 4,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.residual.I12",
+          "conjugator": [],
+          "first": 4,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      },
+      {
+        "id": "alternative.return.2",
+        "left": {
+          "id": "alternative.return.2",
+          "conjugator": [],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "right": {
+          "id": "alternative.return.2",
+          "conjugator": [],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "exact_disk_equal": true
+      }
+    ],
+    "applied": false,
+    "reason": "The fixed composed chart exceeds the support bound20"
+  },
+  "source_outer_chart_splits": [
+    {
+      "factor": {
+        "id": "F3",
+        "conjugator": [
+          4,
+          -3,
+          -3,
+          -2
+        ],
+        "first": 1,
+        "points": 2,
+        "power": 1,
+        "half": true
+      },
+      "split": {
+        "strands": 5,
+        "source_word": [
+          4,
+          -3,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          3,
+          -4
+        ],
+        "shadow_word": [
+          -2,
+          1,
+          2
+        ],
+        "kernel_loop": [
+          -4,
+          1,
+          -3,
+          4
+        ],
+        "kernel_braid": [
+          4,
+          -3,
+          -3,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          -4
+        ],
+        "reconstructed_word": [
+          4,
+          -3,
+          -3,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          -4,
+          -2,
+          1,
+          2
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": -3,
+            "next_position": 3,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 3,
+            "crossing": -3,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": -3
+          },
+          {
+            "position": 4,
+            "crossing": -2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 4,
+            "crossing": 1,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 4,
+            "crossing": 2,
+            "next_position": 4,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 4,
+            "crossing": 3,
+            "next_position": 3,
+            "kind": "point_push",
+            "generator": 3
+          },
+          {
+            "position": 3,
+            "crossing": 3,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          }
+        ],
+        "work": 65
+      }
+    },
+    {
+      "factor": {
+        "id": "F9",
+        "conjugator": [
+          -3,
+          -4,
+          -4,
+          -3,
+          -2
+        ],
+        "first": 1,
+        "points": 2,
+        "power": 1,
+        "half": true
+      },
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          4,
+          4,
+          3
+        ],
+        "shadow_word": [
+          -3,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          3
+        ],
+        "kernel_loop": [
+          1,
+          -4,
+          -3,
+          4
+        ],
+        "kernel_braid": [
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4
+        ],
+        "reconstructed_word": [
+          4,
+          -3,
+          -3,
+          -4,
+          -4,
+          -3,
+          -2,
+          1,
+          1,
+          2,
+          3,
+          4,
+          -3,
+          -3,
+          -2,
+          1,
+          2,
+          3,
+          3
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": -4,
+            "next_position": 4,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 4,
+            "crossing": -4,
+            "next_position": 5,
+            "kind": "point_push",
+            "generator": -4
+          },
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": -2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          },
+          {
+            "position": 5,
+            "crossing": 4,
+            "next_position": 4,
+            "kind": "point_push",
+            "generator": 4
+          },
+          {
+            "position": 4,
+            "crossing": 4,
+            "next_position": 5,
+            "kind": "identity",
+            "generator": 0
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          }
+        ],
+        "work": 121
+      }
+    },
+    {
+      "factor": {
+        "id": "alternative.S1",
+        "conjugator": [
+          -3
+        ],
+        "first": 1,
+        "points": 3,
+        "power": 1,
+        "half": false
+      },
+      "split": {
+        "strands": 5,
+        "source_word": [
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ],
+        "shadow_word": [
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ],
+        "kernel_loop": [],
+        "kernel_braid": [],
+        "reconstructed_word": [
+          -3,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ],
+        "edges": [
+          {
+            "position": 5,
+            "crossing": -3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": -3
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 1,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 1
+          },
+          {
+            "position": 5,
+            "crossing": 2,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 2
+          },
+          {
+            "position": 5,
+            "crossing": 3,
+            "next_position": 5,
+            "kind": "shadow",
+            "generator": 3
+          }
+        ],
+        "work": 98
+      }
+    }
+  ],
+  "reached_outside_route": {
+    "stages": [
+      {
+        "kind": "start",
+        "title": "The positive cluster-lantern endpoint",
+        "factors": [
+          {
+            "id": "alternative.O1234",
+            "conjugator": [
+              -4,
+              -4
+            ],
+            "first": 1,
+            "points": 4,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.T12.square",
+            "conjugator": [],
+            "first": 1,
+            "points": 2,
+            "power": 2,
+            "half": false
+          },
+          {
+            "id": "alternative.R2",
+            "conjugator": [],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.1",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.0",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F3",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.F5.2",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F6",
+            "conjugator": [
+              -2,
+              -2,
+              3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.345.1",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 3,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.2",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F10.1",
+            "conjugator": [
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F8.2",
+            "conjugator": [
+              -4,
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.S1",
+            "conjugator": [
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F9",
+            "conjugator": [
+              -3,
+              -4,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F10.2",
+            "conjugator": [
+              -4,
+              -3,
+              1,
+              2,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F11",
+            "conjugator": [
+              -4,
+              1,
+              -3,
+              1,
+              2,
+              2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F12",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 2,
+            "half": false
+          }
+        ],
+        "score": {
+          "max_support_word": 12,
+          "total_support_word": 86,
+          "braid_letters": 198
+        },
+        "half_twists": 4
+      },
+      {
+        "title": "F3 DOWN across the actual235 root and F6",
+        "kind": "disk_hurwitz_block",
+        "factors": [
+          {
+            "id": "alternative.O1234",
+            "conjugator": [
+              -4,
+              -4
+            ],
+            "first": 1,
+            "points": 4,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.T12.square",
+            "conjugator": [],
+            "first": 1,
+            "points": 2,
+            "power": 2,
+            "half": false
+          },
+          {
+            "id": "alternative.R2",
+            "conjugator": [],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.1",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.0",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.2",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F6",
+            "conjugator": [
+              -2,
+              3,
+              -4,
+              -3,
+              -3,
+              -2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F3",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.345.1",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 3,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.2",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F10.1",
+            "conjugator": [
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F8.2",
+            "conjugator": [
+              -4,
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.S1",
+            "conjugator": [
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F9",
+            "conjugator": [
+              -3,
+              -4,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F10.2",
+            "conjugator": [
+              -4,
+              -3,
+              1,
+              2,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F11",
+            "conjugator": [
+              -4,
+              1,
+              -3,
+              1,
+              2,
+              2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F12",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 2,
+            "half": false
+          }
+        ],
+        "score": {
+          "max_support_word": 16,
+          "total_support_word": 98,
+          "braid_letters": 220
+        },
+        "half_twists": 4,
+        "adjacent_moves": 2,
+        "atomic_steps": [
+          {
+            "factors": [
+              {
+                "id": "alternative.O1234",
+                "conjugator": [
+                  -4,
+                  -4
+                ],
+                "first": 1,
+                "points": 4,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.T12.square",
+                "conjugator": [],
+                "first": 1,
+                "points": 2,
+                "power": 2,
+                "half": false
+              },
+              {
+                "id": "alternative.R2",
+                "conjugator": [],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  -2,
+                  3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.1",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 3,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.2",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4,
+                  -3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F10.1",
+                "conjugator": [
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F8.2",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.S1",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F9",
+                "conjugator": [
+                  -3,
+                  -4,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F10.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1,
+                  2,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F11",
+                "conjugator": [
+                  -4,
+                  1,
+                  -3,
+                  1,
+                  2,
+                  2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F12",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 2,
+                "half": false
+              }
+            ],
+            "source": 5,
+            "target": 6,
+            "local_before": [
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              }
+            ],
+            "local_after": [
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  2,
+                  3,
+                  3
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "disk_word_certificate": {
+              "method": "free reduction",
+              "discrepancy": []
+            },
+            "kind": "disk_hurwitz"
+          },
+          {
+            "factors": [
+              {
+                "id": "alternative.O1234",
+                "conjugator": [
+                  -4,
+                  -4
+                ],
+                "first": 1,
+                "points": 4,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.T12.square",
+                "conjugator": [],
+                "first": 1,
+                "points": 2,
+                "power": 2,
+                "half": false
+              },
+              {
+                "id": "alternative.R2",
+                "conjugator": [],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  3,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.1",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 3,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.2",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4,
+                  -3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F10.1",
+                "conjugator": [
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F8.2",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.S1",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F9",
+                "conjugator": [
+                  -3,
+                  -4,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F10.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1,
+                  2,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F11",
+                "conjugator": [
+                  -4,
+                  1,
+                  -3,
+                  1,
+                  2,
+                  2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F12",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 2,
+                "half": false
+              }
+            ],
+            "source": 6,
+            "target": 7,
+            "local_before": [
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  -2,
+                  3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "local_after": [
+              {
+                "id": "F6",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  -2,
+                  -2,
+                  3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "disk_word_certificate": {
+              "method": "free reduction",
+              "discrepancy": []
+            },
+            "kind": "disk_hurwitz"
+          }
+        ]
+      },
+      {
+        "title": "Changed F6 UP across the transported235 root",
+        "kind": "disk_hurwitz_block",
+        "factors": [
+          {
+            "id": "alternative.O1234",
+            "conjugator": [
+              -4,
+              -4
+            ],
+            "first": 1,
+            "points": 4,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.T12.square",
+            "conjugator": [],
+            "first": 1,
+            "points": 2,
+            "power": 2,
+            "half": false
+          },
+          {
+            "id": "alternative.R2",
+            "conjugator": [],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.1",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.0",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F6",
+            "conjugator": [
+              -2,
+              3,
+              -4,
+              -3,
+              -3,
+              -2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.F5.2",
+            "conjugator": [
+              -2,
+              -4,
+              -3,
+              -2,
+              -2,
+              -2,
+              1,
+              -3,
+              -2,
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F3",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.345.1",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 3,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.2",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F10.1",
+            "conjugator": [
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F8.2",
+            "conjugator": [
+              -4,
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.S1",
+            "conjugator": [
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F9",
+            "conjugator": [
+              -3,
+              -4,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F10.2",
+            "conjugator": [
+              -4,
+              -3,
+              1,
+              2,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F11",
+            "conjugator": [
+              -4,
+              1,
+              -3,
+              1,
+              2,
+              2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F12",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 2,
+            "half": false
+          }
+        ],
+        "score": {
+          "max_support_word": 19,
+          "total_support_word": 110,
+          "braid_letters": 232
+        },
+        "half_twists": 4,
+        "adjacent_moves": 1,
+        "atomic_steps": [
+          {
+            "factors": [
+              {
+                "id": "alternative.O1234",
+                "conjugator": [
+                  -4,
+                  -4
+                ],
+                "first": 1,
+                "points": 4,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.T12.square",
+                "conjugator": [],
+                "first": 1,
+                "points": 2,
+                "power": 2,
+                "half": false
+              },
+              {
+                "id": "alternative.R2",
+                "conjugator": [],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  3,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -2,
+                  -4,
+                  -3,
+                  -2,
+                  -2,
+                  -2,
+                  1,
+                  -3,
+                  -2,
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.1",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 3,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.2",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4,
+                  -3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F10.1",
+                "conjugator": [
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F8.2",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.S1",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F9",
+                "conjugator": [
+                  -3,
+                  -4,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F10.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1,
+                  2,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F11",
+                "conjugator": [
+                  -4,
+                  1,
+                  -3,
+                  1,
+                  2,
+                  2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F12",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 2,
+                "half": false
+              }
+            ],
+            "source": 6,
+            "target": 5,
+            "local_before": [
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  3,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "local_after": [
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  3,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -2,
+                  3,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1,
+                  -4,
+                  -3,
+                  -2,
+                  -1,
+                  2,
+                  3,
+                  4,
+                  -1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  -3,
+                  2,
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              }
+            ],
+            "disk_word_certificate": {
+              "method": "free reduction",
+              "discrepancy": []
+            },
+            "kind": "disk_hurwitz"
+          }
+        ]
+      }
+    ],
+    "graphical_operations": 2,
+    "adjacent_checks": 3,
+    "state_sphere_lift_certificates": [
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "sphere_certificate": {
+          "certified": true,
+          "method": "five exact sphere chain arcs",
+          "permutation": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "endpoints_fixed": true,
+          "arc_pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "reference_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "image_classes": [
+            [
+              -2,
+              -1
+            ],
+            [
+              -3,
+              -2
+            ],
+            [
+              -4,
+              -3
+            ],
+            [
+              -5,
+              -4
+            ],
+            [
+              -4,
+              -3,
+              -2,
+              -1
+            ]
+          ],
+          "scope": "Sphere mapping class; no disk action or genus-two lift sign implied"
+        },
+        "chosen_lift": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "after_score": {
+      "max_support_word": 19,
+      "total_support_word": 110,
+      "braid_letters": 232
+    },
+    "original_half_matches": [
+      {
+        "id": "F3",
+        "exact_disk_equal": true
+      },
+      {
+        "id": "F9",
+        "exact_disk_equal": true
+      }
+    ],
+    "donor": {
+      "root": {
+        "id": "alternative.prepare.F5.2",
+        "conjugator": [
+          -2,
+          -4,
+          -3,
+          -2,
+          -2,
+          -2,
+          1,
+          -3,
+          -2,
+          -4,
+          1
+        ],
+        "first": 2,
+        "points": 3,
+        "power": 1,
+        "half": false
+      },
+      "target": {
+        "id": "target.Q14",
+        "conjugator": [
+          -4,
+          1,
+          2,
+          3
+        ],
+        "first": 4,
+        "points": 2,
+        "power": 1,
+        "half": false
+      },
+      "commutes": false,
+      "intersection_certificate": {
+        "intersection_number": 4,
+        "strands": 5,
+        "interval": [
+          2,
+          4
+        ],
+        "edge_word": [
+          2,
+          3,
+          4
+        ],
+        "outside_edge_marker": 6,
+        "relative_curve_word": [
+          -4,
+          -2,
+          1,
+          2,
+          -3,
+          -2,
+          -1,
+          2
+        ],
+        "cyclic_normal_form": [
+          [
+            "B",
+            [
+              1
+            ]
+          ],
+          [
+            "A",
+            [
+              2,
+              -3,
+              -2
+            ]
+          ],
+          [
+            "B",
+            [
+              -1
+            ]
+          ],
+          [
+            "A",
+            [
+              2,
+              -4,
+              -2
+            ]
+          ]
+        ],
+        "exact": true,
+        "method": "Cyclic normal form in the disk group split along the left curve"
+      },
+      "daisy": [
+        {
+          "id": "probe.daisy.0",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.daisy.1",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.daisy.2",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        }
+      ],
+      "rose": [
+        {
+          "id": "probe.rose.0",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.rose.1",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1,
+            3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.rose.2",
+          "conjugator": [
+            -2,
+            -4,
+            -3,
+            -2,
+            -2,
+            -2,
+            1,
+            -3,
+            -2,
+            -4,
+            1
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        }
+      ],
+      "canonical_petal_matches": {
+        "daisy": [
+          false,
+          false,
+          false
+        ],
+        "rose": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    "applied_to_public_replay": false
+  },
+  "rejected_opposite_route": {
+    "reason": "The purification route exceeded its support-word bound of 20",
+    "completed_operations": 1,
+    "completed_stages": [
+      {
+        "kind": "start",
+        "title": "The positive cluster-lantern endpoint",
+        "factors": [
+          {
+            "id": "alternative.O1234",
+            "conjugator": [
+              -4,
+              -4
+            ],
+            "first": 1,
+            "points": 4,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.T12.square",
+            "conjugator": [],
+            "first": 1,
+            "points": 2,
+            "power": 2,
+            "half": false
+          },
+          {
+            "id": "alternative.R2",
+            "conjugator": [],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.1",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.0",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F3",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.F5.2",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F6",
+            "conjugator": [
+              -2,
+              -2,
+              3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.345.1",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 3,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.2",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F10.1",
+            "conjugator": [
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F8.2",
+            "conjugator": [
+              -4,
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.S1",
+            "conjugator": [
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F9",
+            "conjugator": [
+              -3,
+              -4,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F10.2",
+            "conjugator": [
+              -4,
+              -3,
+              1,
+              2,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F11",
+            "conjugator": [
+              -4,
+              1,
+              -3,
+              1,
+              2,
+              2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F12",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 2,
+            "half": false
+          }
+        ],
+        "score": {
+          "max_support_word": 12,
+          "total_support_word": 86,
+          "braid_letters": 198
+        },
+        "half_twists": 4
+      },
+      {
+        "title": "F3 UP across35 and the upper235 root",
+        "kind": "disk_hurwitz_block",
+        "factors": [
+          {
+            "id": "alternative.O1234",
+            "conjugator": [
+              -4,
+              -4
+            ],
+            "first": 1,
+            "points": 4,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.T12.square",
+            "conjugator": [],
+            "first": 1,
+            "points": 2,
+            "power": 2,
+            "half": false
+          },
+          {
+            "id": "alternative.R2",
+            "conjugator": [],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F3",
+            "conjugator": [
+              -4,
+              -3,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.F5.1",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.0",
+            "conjugator": [
+              -4,
+              -3,
+              1
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.F5.2",
+            "conjugator": [
+              -4
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F6",
+            "conjugator": [
+              -2,
+              -2,
+              3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "alternative.prepare.345.1",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4
+            ],
+            "first": 3,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.prepare.345.2",
+            "conjugator": [
+              -4,
+              1,
+              2,
+              3,
+              -4,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F10.1",
+            "conjugator": [
+              -4,
+              1
+            ],
+            "first": 2,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F8.2",
+            "conjugator": [
+              -4,
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "alternative.S1",
+            "conjugator": [
+              -4,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F9",
+            "conjugator": [
+              -3,
+              -4,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F10.2",
+            "conjugator": [
+              -4,
+              -3,
+              1,
+              2,
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "F11",
+            "conjugator": [
+              -4,
+              1,
+              -3,
+              1,
+              2,
+              2,
+              1,
+              -4,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": true
+          },
+          {
+            "id": "F12",
+            "conjugator": [
+              -4,
+              -3
+            ],
+            "first": 1,
+            "points": 3,
+            "power": 2,
+            "half": false
+          }
+        ],
+        "score": {
+          "max_support_word": 12,
+          "total_support_word": 86,
+          "braid_letters": 196
+        },
+        "half_twists": 4,
+        "adjacent_moves": 2,
+        "atomic_steps": [
+          {
+            "factors": [
+              {
+                "id": "alternative.O1234",
+                "conjugator": [
+                  -4,
+                  -4
+                ],
+                "first": 1,
+                "points": 4,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.T12.square",
+                "conjugator": [],
+                "first": 1,
+                "points": 2,
+                "power": 2,
+                "half": false
+              },
+              {
+                "id": "alternative.R2",
+                "conjugator": [],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  -2,
+                  3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.1",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 3,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.2",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4,
+                  -3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F10.1",
+                "conjugator": [
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F8.2",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.S1",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F9",
+                "conjugator": [
+                  -3,
+                  -4,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F10.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1,
+                  2,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F11",
+                "conjugator": [
+                  -4,
+                  1,
+                  -3,
+                  1,
+                  2,
+                  2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F12",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 2,
+                "half": false
+              }
+            ],
+            "source": 5,
+            "target": 4,
+            "local_before": [
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "local_after": [
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  -1,
+                  2,
+                  3,
+                  3,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              }
+            ],
+            "disk_word_certificate": {
+              "method": "free reduction",
+              "discrepancy": []
+            },
+            "kind": "disk_hurwitz"
+          },
+          {
+            "factors": [
+              {
+                "id": "alternative.O1234",
+                "conjugator": [
+                  -4,
+                  -4
+                ],
+                "first": 1,
+                "points": 4,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.T12.square",
+                "conjugator": [],
+                "first": 1,
+                "points": 2,
+                "power": 2,
+                "half": false
+              },
+              {
+                "id": "alternative.R2",
+                "conjugator": [],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.0",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.F5.2",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F6",
+                "conjugator": [
+                  -2,
+                  -2,
+                  3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.345.1",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4
+                ],
+                "first": 3,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.prepare.345.2",
+                "conjugator": [
+                  -4,
+                  1,
+                  2,
+                  3,
+                  -4,
+                  -3
+                ],
+                "first": 2,
+                "points": 2,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F10.1",
+                "conjugator": [
+                  -4,
+                  1
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F8.2",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "alternative.S1",
+                "conjugator": [
+                  -4,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F9",
+                "conjugator": [
+                  -3,
+                  -4,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F10.2",
+                "conjugator": [
+                  -4,
+                  -3,
+                  1,
+                  2,
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F11",
+                "conjugator": [
+                  -4,
+                  1,
+                  -3,
+                  1,
+                  2,
+                  2,
+                  1,
+                  -4,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "F12",
+                "conjugator": [
+                  -4,
+                  -3
+                ],
+                "first": 1,
+                "points": 3,
+                "power": 2,
+                "half": false
+              }
+            ],
+            "source": 4,
+            "target": 3,
+            "local_before": [
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              },
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              }
+            ],
+            "local_after": [
+              {
+                "id": "F3",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2
+                ],
+                "first": 1,
+                "points": 2,
+                "power": 1,
+                "half": true
+              },
+              {
+                "id": "alternative.prepare.F5.1",
+                "conjugator": [
+                  -4,
+                  -3,
+                  -3,
+                  -2,
+                  -1,
+                  2,
+                  3,
+                  3
+                ],
+                "first": 2,
+                "points": 3,
+                "power": 1,
+                "half": false
+              }
+            ],
+            "disk_word_certificate": {
+              "method": "free reduction",
+              "discrepancy": []
+            },
+            "kind": "disk_hurwitz"
+          }
+        ]
+      }
+    ],
+    "rejected_configuration": {
+      "factors": [
+        {
+          "id": "alternative.O1234",
+          "conjugator": [
+            -4,
+            -4
+          ],
+          "first": 1,
+          "points": 4,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.T12.square",
+          "conjugator": [],
+          "first": 1,
+          "points": 2,
+          "power": 2,
+          "half": false
+        },
+        {
+          "id": "alternative.R2",
+          "conjugator": [],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "F3",
+          "conjugator": [
+            -4,
+            -3,
+            -3,
+            -2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": true
+        },
+        {
+          "id": "F6",
+          "conjugator": [
+            -2,
+            -2,
+            3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": true
+        },
+        {
+          "id": "alternative.prepare.F5.1",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.prepare.345.0",
+          "conjugator": [
+            -4,
+            -3,
+            -2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.prepare.F5.2",
+          "conjugator": [
+            -2,
+            -2
+          ],
+          "first": 3,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.prepare.345.1",
+          "conjugator": [
+            -4,
+            1,
+            2,
+            3,
+            -4
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.prepare.345.2",
+          "conjugator": [
+            -4,
+            1,
+            2,
+            3,
+            -4,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "F10.1",
+          "conjugator": [
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "F8.2",
+          "conjugator": [
+            -4,
+            -4,
+            -4,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "alternative.S1",
+          "conjugator": [
+            -4,
+            -4,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "F9",
+          "conjugator": [
+            -3,
+            -4,
+            -4,
+            -3,
+            -2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": true
+        },
+        {
+          "id": "F10.2",
+          "conjugator": [
+            -4,
+            -3,
+            1,
+            2,
+            -4,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "F11",
+          "conjugator": [
+            -4,
+            1,
+            -3,
+            1,
+            2,
+            2,
+            1,
+            -4,
+            -3,
+            -2
+          ],
+          "first": 1,
+          "points": 2,
+          "power": 1,
+          "half": true
+        },
+        {
+          "id": "F12",
+          "conjugator": [
+            -4,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 2,
+          "half": false
+        }
+      ],
+      "score": {
+        "max_support_word": 25,
+        "total_support_word": 112,
+        "braid_letters": 208
+      },
+      "not_a_reached_state": true
+    },
+    "donor": {
+      "root": {
+        "id": "alternative.prepare.F5.1",
+        "conjugator": [
+          -2,
+          -2,
+          3,
+          3,
+          3,
+          -4,
+          1
+        ],
+        "first": 2,
+        "points": 3,
+        "power": 1,
+        "half": false
+      },
+      "target": {
+        "id": "target.Q14",
+        "conjugator": [
+          -4,
+          1,
+          2,
+          3
+        ],
+        "first": 4,
+        "points": 2,
+        "power": 1,
+        "half": false
+      },
+      "commutes": false,
+      "intersection_certificate": {
+        "intersection_number": 8,
+        "strands": 5,
+        "interval": [
+          2,
+          4
+        ],
+        "edge_word": [
+          2,
+          3,
+          4
+        ],
+        "outside_edge_marker": 6,
+        "relative_curve_word": [
+          -5,
+          -4,
+          -3,
+          4,
+          -5,
+          -4,
+          -3,
+          4,
+          5,
+          -4,
+          3,
+          4,
+          5,
+          -2
+        ],
+        "cyclic_normal_form": [
+          [
+            "B",
+            [
+              -5
+            ]
+          ],
+          [
+            "A",
+            [
+              -4,
+              -3,
+              4
+            ]
+          ],
+          [
+            "B",
+            [
+              -5
+            ]
+          ],
+          [
+            "A",
+            [
+              -4,
+              -3,
+              4
+            ]
+          ],
+          [
+            "B",
+            [
+              5
+            ]
+          ],
+          [
+            "A",
+            [
+              -4,
+              3,
+              4
+            ]
+          ],
+          [
+            "B",
+            [
+              5
+            ]
+          ],
+          [
+            "A",
+            [
+              -2
+            ]
+          ]
+        ],
+        "exact": true,
+        "method": "Cyclic normal form in the disk group split along the left curve"
+      },
+      "daisy": [
+        {
+          "id": "probe.daisy.0",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.daisy.1",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.daisy.2",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1,
+            -3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        }
+      ],
+      "rose": [
+        {
+          "id": "probe.rose.0",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.rose.1",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1,
+            3
+          ],
+          "first": 2,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        {
+          "id": "probe.rose.2",
+          "conjugator": [
+            -2,
+            -2,
+            3,
+            3,
+            3,
+            -4,
+            1
+          ],
+          "first": 3,
+          "points": 2,
+          "power": 1,
+          "half": false
+        }
+      ],
+      "canonical_petal_matches": {
+        "daisy": [
+          false,
+          false,
+          false
+        ],
+        "rose": [
+          false,
+          false,
+          false
+        ]
+      }
+    }
+  },
+  "hypothetical_unit_transports": [
+    {
+      "source_unit": {
+        "id": "F8.2",
+        "conjugator": [
+          -4,
+          -4,
+          -4,
+          -3
+        ],
+        "first": 1,
+        "points": 3,
+        "power": 1,
+        "half": false
+      },
+      "positive_half_transport": {
+        "id": "F6",
+        "conjugator": [
+          -2,
+          -2,
+          3
+        ],
+        "first": 2,
+        "points": 2,
+        "power": 1,
+        "half": true
+      },
+      "donor": {
+        "root": {
+          "id": "F8.2",
+          "conjugator": [
+            -2,
+            -2,
+            -2,
+            3,
+            -4,
+            -4,
+            -4,
+            2,
+            2,
+            2,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        "target": {
+          "id": "target.Q14",
+          "conjugator": [
+            -4,
+            1,
+            2,
+            3
+          ],
+          "first": 4,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "commutes": false,
+        "intersection_certificate": {
+          "intersection_number": 8,
+          "strands": 5,
+          "interval": [
+            1,
+            3
+          ],
+          "edge_word": [
+            1,
+            2,
+            3
+          ],
+          "outside_edge_marker": 6,
+          "relative_curve_word": [
+            -5,
+            -4,
+            -3,
+            -2,
+            3,
+            -4,
+            -3,
+            -2,
+            3,
+            4,
+            -3,
+            2,
+            3,
+            4,
+            5,
+            -1
+          ],
+          "cyclic_normal_form": [
+            [
+              "B",
+              [
+                -5,
+                -4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                -2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                -4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                -2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                4,
+                5
+              ]
+            ],
+            [
+              "A",
+              [
+                -1
+              ]
+            ]
+          ],
+          "exact": true,
+          "method": "Cyclic normal form in the disk group split along the left curve"
+        },
+        "daisy": [
+          {
+            "id": "probe.daisy.0",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.daisy.1",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.daisy.2",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          }
+        ],
+        "rose": [
+          {
+            "id": "probe.rose.0",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.rose.1",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3,
+              2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.rose.2",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              -4,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          }
+        ],
+        "canonical_petal_matches": {
+          "daisy": [
+            false,
+            false,
+            false
+          ],
+          "rose": [
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "applied": false,
+      "requires_transport": true
+    },
+    {
+      "source_unit": {
+        "id": "F12",
+        "conjugator": [
+          -4,
+          -3
+        ],
+        "first": 1,
+        "points": 3,
+        "power": 1,
+        "half": false
+      },
+      "positive_half_transport": {
+        "id": "F6",
+        "conjugator": [
+          -2,
+          -2,
+          3
+        ],
+        "first": 2,
+        "points": 2,
+        "power": 1,
+        "half": true
+      },
+      "donor": {
+        "root": {
+          "id": "F12",
+          "conjugator": [
+            -2,
+            -2,
+            -2,
+            3,
+            -4,
+            2,
+            2,
+            2,
+            -3
+          ],
+          "first": 1,
+          "points": 3,
+          "power": 1,
+          "half": false
+        },
+        "target": {
+          "id": "target.Q14",
+          "conjugator": [
+            -4,
+            1,
+            2,
+            3
+          ],
+          "first": 4,
+          "points": 2,
+          "power": 1,
+          "half": false
+        },
+        "commutes": false,
+        "intersection_certificate": {
+          "intersection_number": 8,
+          "strands": 5,
+          "interval": [
+            1,
+            3
+          ],
+          "edge_word": [
+            1,
+            2,
+            3
+          ],
+          "outside_edge_marker": 6,
+          "relative_curve_word": [
+            -5,
+            -4,
+            -3,
+            -2,
+            3,
+            -4,
+            -3,
+            -2,
+            3,
+            4,
+            -3,
+            2,
+            3,
+            4,
+            5,
+            -1
+          ],
+          "cyclic_normal_form": [
+            [
+              "B",
+              [
+                -5,
+                -4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                -2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                -4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                -2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                4
+              ]
+            ],
+            [
+              "A",
+              [
+                -3,
+                2,
+                3
+              ]
+            ],
+            [
+              "B",
+              [
+                4,
+                5
+              ]
+            ],
+            [
+              "A",
+              [
+                -1
+              ]
+            ]
+          ],
+          "exact": true,
+          "method": "Cyclic normal form in the disk group split along the left curve"
+        },
+        "daisy": [
+          {
+            "id": "probe.daisy.0",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.daisy.1",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.daisy.2",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3,
+              -2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          }
+        ],
+        "rose": [
+          {
+            "id": "probe.rose.0",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.rose.1",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3,
+              2
+            ],
+            "first": 1,
+            "points": 2,
+            "power": 1,
+            "half": false
+          },
+          {
+            "id": "probe.rose.2",
+            "conjugator": [
+              -2,
+              -2,
+              -2,
+              3,
+              -4,
+              2,
+              2,
+              2,
+              -3
+            ],
+            "first": 2,
+            "points": 2,
+            "power": 1,
+            "half": false
+          }
+        ],
+        "canonical_petal_matches": {
+          "daisy": [
+            false,
+            false,
+            false
+          ],
+          "rose": [
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "applied": false,
+      "requires_transport": true
+    }
+  ],
+  "public_graphical_payloads_changed": false,
+  "complete_shorter_derivation": false,
+  "sphere_moves": 0,
+  "half_lantern_applied": false
+}
