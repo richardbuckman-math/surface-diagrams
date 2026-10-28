@@ -67,3 +67,20 @@ new graphical route or an overall geometric-improvement claim.
 Reproduce with `examples/analyze_half_neighborhood_geometry.py`. Detailed source
 hashes, actual stages and certificates are in
 [six-seven-half-neighborhood-geometry.json](six-seven-half-neighborhood-geometry.json).
+
+## Visual comparison, October 28
+
+[Six exact support panels](half-neighborhood-comparison/index.html) show both
+variants after expansion/split, after square transport, and just before the
+halves combine. All six were inspected. The delayed version is less cluttered:
+it keeps one three-point root where the early version shows three petal rows,
+including the two initially winding petals. Both gold half-twist arcs remain
+exactly the SAME B5 classes at all eight matched checkpoints (sixteen individual
+checks). This is a readability benefit, not an arc-complexity improvement.
+
+The later winding in the other triple/pair curves persists in BOTH variants
+after the fixed-half gather; delaying expansion does not solve that geometry.
+The comparison is standalone research material, not a new derivation phase.
+The preferred98-move/69-step view and both PDFs remain unchanged. Adoption of
+the delayed interval is deferred until a block can include explicit source-ref
+adaptation, parallel regrouping and full artifact/publication QA.

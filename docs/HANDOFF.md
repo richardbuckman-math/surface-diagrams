@@ -1,5 +1,38 @@
 # Handoff: surface-diagrams
 
+## October 28: visual early/late comparison; preferred view unchanged
+
+Six standalone source-exact SVG support panels are in
+docs/proofs/half-neighborhood-comparison/index.html, built by
+examples/build_half_neighborhood_comparison.py. All6 were inspected at the
+expansion/split, square transport and pre-combine checkpoints. Delaying the
+daisy is visually less cluttered:17 rows instead of19, keeping one root in
+place of3 petals (including the2 initially winding petals). It is NOT an arc
+simplification: both actual half-twist classes are B5-identical at ALL8 matched
+checkpoints,16 exact individual checks. Their gold arc drawings agree.
+
+The fixed-half gather still winds other triple/pair curves in BOTH variants.
+Do not claim that delayed expansion fixes that interaction. No preferred proof,
+payload, PDF or historical data changed. Complete closure remains SOLVED and
+preferred view stays98listed moves/69parallel steps. This is a visual comparison
+of reached routes, not a new graphical derivation phase or shortening.
+
+Local Chrome validates all6 panels/108 six-point grids/648dots at24px pitch,
+3.36px diameter, unnumbered; responsive gallery has no body overflow. Individual
+supports are not joint-cut drawings. The builder uses standard-library SVG
+registration, not optional PDF dependencies. 12 focused comparison/geometry/support tests pass. Tests cover the16 actual
+half matches, all pictured factor ancestry/order and exact asset reproduction.
+New remote CI/live comparison verification follows publication.
+
+NEXT after fresh usage/budget: favor the delayed interval for reduced clutter,
+with the known LITERAL complete input/output joins (see the geometry audit
+below). Adapt source refs/refinement to the longer source, recompute genuine
+parallel groups, and budget the FULL graphics/PDF/CI/live publication before
+adoption. NO new preferred move/step counts are yet computed. Current run only
+had10primary percentage points available above the interactive reserve, so full
+adoption was deliberately deferred. Preserve8Boundaries.pdf and all existing
+proof artifacts; do not repeat unchanged publication checks.
+
 ## October 28: closed-neighborhood geometry audit; preferred view unchanged
 
 Richard's clarity-first priority remains. A new research-only audit compares
