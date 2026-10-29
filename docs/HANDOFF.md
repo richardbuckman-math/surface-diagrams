@@ -1,5 +1,55 @@
 # Handoff: surface-diagrams
 
+## October 28: a matched post-half daisy reaches one four-point outer
+
+posthalf_outer.contract_posthalf_daisy() starts at SELECTED posthalf-spare
+route.factors. FOUR positive DISK moves/ONE external check reach14records:
+1VISIBLE exterior+1four-point outer+6triples+6pairs. Actual125 PC rose lends
+EXACT ROUND12; explicit cyclic start and12 UP across ONLY central exterior
+supply the adjacent ACTUAL14,transported15,245,12. All FOUR inputs individually
+match PC daisy in chart(-1,-1,2,1,2,3,4),canonical D2345. Carry SAME canonical
+root DOWN2,then forward(0,1) interchange:THREE INTERNAL adjacent checks retained.
+No action-only recognition. Actual output isO1245 chart(-3,-4),coreT1234. Every
+normalized input retains FULL nonabelian kernel AND shadow/reconstruction;
+signed PC balance(2,1,0,1,1),separate disk/sphere/+I discrepancies stay explicit.
+
+The12 is CONSUMED in outer,NOT returned; TWO actual125 donor petals15/25 remain.
+ELEVEN shared actual records includingP13/originalW stay LITERALLY unchanged.
+All main/atomic states positive,B5boundary^4,sphere-exact,chosen+I,peak15. Odd
+exterior-I stays visible. No half,negativefactor,sphere move,cap or globalframe;
+cyclic start retains FULL explicit common conjugation/free-word certificate.
+Posthalfbranch20researchmoves/13externalchecks,source-prefix63,NOTpreferredstep63.
+Preferred101/71 remains SOLVED/UNCHANGED; no useful complete suffix join.
+Endpoint15/85,braid200,CLOSED524/34 versus source15/103,232,700/34. Inventories
+DIFFER(15->14),so totals are descriptive,not entrywise dominance/arc/joint-cut/
+whole-proof complexity claims; prior full-prefix peaks stay unchanged.
+
+45alternative is ALSO reached: inverse45 onOTHERW' EXACTLY restoresW;positive
+sign fails with fullmeridian witness. Actual245 rose lends45,UP3 changesOTHERW'
+toW class. Direct V UP overP13 REJECTED at24 BEFORE application. Adjacent V,45,
+restoredOTHERW contract by CYCLIC PC rose,full raw internal frame checked FIRST,
+then known canonical output invariance and EVERY actual B5 input. OriginalW
+stays untouched; matchingOTHERW is consumed,not conflated by ancestry. Actual145
+root reconstructed using new45;245 donor staysTWO petals,45 NOT returned there.
+3ops/3checks,15records,15/101,braid228,CLOSED694/34;UNSELECTED. Further root/P13
+carries26/25 REJECTED before application. These are scoped finite failures.
+
+NEW NEXT,TARGET ONLY: remaining NEW15 loan petal differs individually from BOTH
+old15 records. Old unchanged135 triangle exclusions do NOT cover P13,old35,NEW15.
+First exact necessary ordered relation/full common chart,BEFORE transport; no
+joint135 rose,gather or contraction reached. A useful later payoff must also
+individually match newO1245/actualround234 in one common pattern; NONE claimed.
+Keep both loan petals and odd exterior. Use NEW six-seven-posthalf-outer.json
+route.factors,not45alternative,posthalf-spare orc7. Do not redo daisy/45 route,
+rejected24/26/25 directions,old triangle families or completed comparisons.
+
+28focused outer/spare/point-pushing/PC/lift tests pass,including5new regressions.
+Four exact panels rendered/visually inspected;11 shared supports' SVGs identical.
+ALL61six-point grids/366dots UNNUMBERED24px/1.68px;390px gallery4panels/nooverflow.
+NewJSON303970bytes,SHA25648c8cff482ef3444a546e87a577f1b309fb79ced45ec8deab4d3594387664d8b. See analyze_posthalf_outer.py,
+itsJSON/MD and posthalf-outer-comparison/index.html. Preferred proofs/payloads/
+PDFs,all prior audits/archives and8Boundaries.pdf remain untouched.
+
 ## October 28: the spare crossing simplifies F10; full gather is only a comparison
 
 posthalf_spare.gather_posthalf_spare() starts from the SELECTED shorter-P13
