@@ -1,5 +1,64 @@
 # Handoff: surface-diagrams
 
+## October29: rose-loan hybrid reaches a clearer third checkpoint and complete join
+
+New posthalf_hybrid_rose.expose_hybrid_third_exterior() starts at the SAME
+reached upper-cabled13-record/TWO-exterior source. NINE positiveDISKmoves/SIX
+externalchecks/FIVE namedsubstitutions reach a FIRST third standard exterior.
+Actual125rose lends round12 across ONLYcommuting exterior/45;SAME12 is CONSUMED
+with older15/25 into a matched cyclic125root near134. Original125donor stays
+TWO actual15/25petals;these are DIFFERENT units from the consumed older copies.
+The reconstructed125 internal(+1)rose suppliesNEW15;UP2 through its own leftovers,
+then allFOURactual134/45/35/NEW15 match the modified cyclicPCdaisy toO1345.
+CommuteI24 UP standardO1234;changed25 UP changed12. Actual1234/1345/25 ALLmatch
+cabled lantern chart(-2,-3),with retained internal interchange and fullcanonical
+SOURCEproof. ActualTHIRDexterior+shortR134 output;ONEround12remains.
+
+AtTHIRD,both alternatives11records:old7/44support,126braid,CLOSED118/14;new6/40,
+108,CLOSED62/6. SIXsharedsource/end actualrecords ANDsupportSVGs LITERALapartrow.
+Allsixpanels visuallyinspected;local thirdcheckpoint is clearer. Inventories
+DIFFER,noentrywise/arc/jointminimum/wholeproofbound. PreferredTHIRD8records/6/33,
+96,CLOSED20/2 remains cleaner in rowcount;keep preferred101/71 SOLVED/UNCHANGED.
+
+close_hybrid_residual() gives FULLnamed join toFOURvisibleSTANDARDunitexteriors:
+SIXTEENmoves/FIFTEENexternalchecks. ExplicitcyclicstartR134,orderedactual23/I24
+UP sixneighbors,matchedFOURinputD4daisy chart(1,-3,-3,1,2,3,1,2,1),commutingodd
+exteriorDOWN3,then matched modifiedD5daisy ininverseFULLactorproduct chart.
+THREEcanonical internalchecks retained. Late8-record support12,total51,CLOSED20/2;
+trajectorywordpeak18. Late supportpictures retangle;no uniformclarity/adoption.
+Bothparts25moves/21externalchecks;posthalf73/53,sourceprefix116,terminalcomplete
+SOURCEPLAN118 afterseparatecombine/cap. NOrefinedlisted/parallelcountclaimed.
+ALL7namedinput/outputmatches,PCbalances,rawframewordsFIRST,fulllocaldisk/sphere/+I,
+FULLactual/normalizednonabeliankernels AND B4shadows/reconstructions retained.
+AllstatespositiveB5boundary^4,sphereI,+I. Botholdexteriorsremainliteral;allFOUR
+terminalunitsseparate,each-I. ExplicitID-onlyoldterminaljoin;actual4unitcombine
+rawdiscrepancyEMPTY;historicalcapinput/FULLwordidentical. Combine/cap UNAPPLIED.
+No half/negativefactor/sphere/globalframe/newpreferredphase;earlyB6frameskept.
+
+Separate hybrid-block audit completes the old23/I24 inverseclass probe (MATCH6,
+positiveMISS8) and fullUNSELECTED17operation/15check candidate. Itchanges4curves,
+13records7/52->10/66,136->144braid,CLOSED170/14->194/14;8pairsincrease,5decrease,
+65equal. Hypotheticalchanged125 internal(+3)rose hasneeded15,but BOTHpredicted
+UP/DOWNfollowup ordersFAIL3exactintegralcommutators each;changedold15repair
+signsMISS62/66. NOsupplier/gather/selectedsourcechange inthatfailedcandidate.
+Do notredo these finite probes or countunselectedprefixes asnewpreferredmoves.
+
+29focusedtestsPASS,10newPASSonPython3.12AND3.9. ALL6panels59grids/354dots
+UNNUMBERED24pxpitch/1.68pxeffectiveradius;local390px6images/nooverflow.
+NoPDF/preferredpayload/prioraudit/graphic/archive/8Boundaries.pdfchanged.
+
+NEXTafterfreshauthorizedbudget: use six-seven-posthalf-hybrid-rose.json:
+third_exterior_route.factors (actual11records/THREEexteriors),NOTthefour-unitend.
+The known four-point daisy uses ACTUALR134,round12,old23,I24;longold23/I24UP
+closure isCOMPLETE andmustnotbereplayed. FIRSTmeasure the POSITIVEconjugation
+of actual ordered R134 THEN round12 product on the FOURoutsidepaircurves45,
+first-donor15/25,other35. This opposite block direction is UNTESTED. Compare
+fullactualclasses/support to the saved long-block endpoint BEFOREanygather;
+ifworse,stop. Ifpromising,requireEVERYboundedrawcrossing/contextchange,allnamed
+matches/fullkernels andcompletejoin;no assumedfixedneighbors/globalframe.
+Keep all3oddexteriors anddonorunits;no preferredadoptionwithoutcompleteclearer
+geometry andwholepublicationbudget. Stopnewmathby16:00Z,verifyby16:15Z.
+
 ## October 29: exact hybrid target, with no source move
 
 The proposed hybrid at the reached upper-cabled 13-record endpoint fails its
