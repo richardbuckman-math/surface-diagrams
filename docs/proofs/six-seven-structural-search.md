@@ -1,5 +1,47 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: opposite ordered block completes a lower-peak local closure
+
+New `close_hybrid_opposite_block()` starts at the EXACT reached eleven-record
+third-exterior source in six-seven-posthalf-hybrid-rose.json. It completes the
+previously untested positive R134-then-round12 direction in17 positiveDISKmoves/
+17 externalchecks/TWO individually matched named daisies. The full actual block
+moves DOWN six neighbors (round12 crosses first,thenR134), including both odd
+exteriors. Both actors remain literal. Four actual residual inputs matchD4;
+commuting exteriorDOWN3 and outerUP2 gather the final cyclic modifiedD5daisy.
+Its FULL common chart is the ACTUAL ordered block word, with all three internal
+canonical interchanges, raw cyclic equality FIRST and independentD5 invariance.
+ALL actual input/output matches,PC balances,full disk/sphere/+I and complete
+actual/normalized NONABELIAN kernels AND B4shadows/reconstructions are saved.
+Every crossing is bounded20 before application and raw-reconstructed first.
+
+All main/external-atomic support words stay<=12, versus18 in the saved closure.
+The late eight-record state is12/49support,134braid,CLOSED20/2, versus12/51,
+108,20/2 previously. Outside pair supports old/new:10/6,12/8,6/4,4/12. The
+other35 gets visibly more wound; no uniformclarity/entrywise/arc/jointminimum/
+wholeproofbound or preferred adoption. All4 panels rendered/visually inspected;
+31 six-point grids/186dots UNNUMBERED24pxpitch/1.68pxradius,390px4images/nooverflow.
+Three oldexteriors remainLITERAL;FOUR standard unit exteriors visible,each-I.
+ExplicitID-onlyterminaljoin,actualfourcombine rawEMPTY,oldcapinput/fullword
+unchanged. Combine/fourthpowersphereredraw/cleanup remain separate UNAPPLIED.
+No newhalf,negativefactor,spheremove,cap or globalframe. Preferred101/71UNCHANGED.
+Fullresearchposthalf74moves/55externalchecks,source117atfourD5,completeSOURCE
+PLAN119. No refined listed/parallel count computed; earlyB6frames remainexplicit.
+
+New files:posthalf_opposite_block.py,analyze_posthalf_opposite_block.py,
+build_posthalf_opposite_block_comparison.py,test_posthalf_opposite_block.py,
+six-seven-posthalf-opposite-block.md/.json andfourSVGs/index. FinalJSON349419bytes,
+SHA2565cfb7387b532556075f031c9b47b05781474264ab50a1619d7484f8acf8f03ce. 19focusedcases pass;final5new cases pass onBOTH Python3.12/3.9
+afterfinalregeneration and metadata. Earlierpreferred
+proof/payload/PDF/prioraudit/graphic/archive bytes and8Boundaries.pdf untouched.
+
+This opposite direction and its complete closure are NOWCHECKED;do not repeat
+four probes,six-neighbor transport,or the two named daisies. The localpeak is
+lower but late35winding remains an explicit tradeoff; further clarity work must
+address that actual curve without assuming unchanged neighbors. No next supplier,
+gather or additional named substitution is claimed. Finish publication for this
+checkpoint and await Richard's post-reset allocation before new probing.
+
 ## October29: rose-loan hybrid reaches a clearer third checkpoint and complete join
 
 The initial c825d0c CI caught stale report scope wording after a final prose
