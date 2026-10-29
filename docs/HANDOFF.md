@@ -1,5 +1,58 @@
 # Handoff: surface-diagrams
 
+## October 28: one petal move untangles P13 on the research branch
+
+posthalf_petal.simplify_posthalf_P13() keeps W=posthalf.supply.0 FIXED and carries
+it UP one adjacent P13. Only P13 changes curve; all other records are literal,
+with the two selected records exchanging positions. P13 support18->8 in the
+SAME chart; endpoint max/total18/119->15/109,braid258->240. SAME15records/105CLOSED
+pairs:exactly9 entries change,ALL decrease,rest equal. Sum862->770,max36->34.
+Before/after panels are source-exact; all OTHER supportSVGs are identical apart
+from row position. All30 six-point grids are UNNUMBERED24pxpitch/1.68pxradius.
+This is a reached1DISKmove/1adjacent-check continuation; post-combine branch is
+now15moves/11checks,source-prefix count58. No useful complete suffix join yet.
+Preferred101moves/71steps remains SOLVED and UNCHANGED. Exterior-I stays visible,
+all complete states have+I/fullB5boundary^4/sphere checks; full kernels/shadows
+remain. No new half,negativefactor,sphere move or cap. CLOSED counts are not
+arc crossings or one jointly minimal drawing; full-prefix peaks are unchanged.
+
+Second inverse alternative is reached but worse:18/119,CLOSED818/34;notselected.
+Third inverse and first forward are REJECTED at28,unapplied. Do not repeat these
+finite directions or call them orbit exclusions.
+
+Old inner125/CHANGED returned123/old35 target fails all6 orders,with actual
+CLOSED2,2,6 and full meridian noncentrality witnesses. NEW JOINT CHART for just
+the two roots is(-3,-3,-4),matching every actual root. Correct missing35 is
+chart(-3),coreT45 (equivalent commonchart/coreT34),NOT oldreturn.2. No current
+pair matches. Full target relation,outputs,balances,kernels/shadows and separate
+sphere/+I discrepancy retained,TARGETONLY. Both roots andround12 fix shared12;
+wrong35 does NOT commute12. Words in those stabilizers cannot repair it.
+Only possible unchanged triple suppliers F8.2/S1 both intersect required35FOUR
+times,so no internal PC rechart supplies it. Outside interactions/exterior are
+not excluded. EitherF8 sign onwrong35 fails,support74/74;eitherS1sign fails,
+362/358. All4 hypothetical probes UNAPPLIED; do not rerun them.
+
+Residual incidence suggests the missing135/145 triangles,but all4 actual
+triangle assignments andall6orders have noncentral products BEFORE/AFTER the
+selectedmove. Exact integral lift noncommutation witnesses suffice for DISK
+inequality; zero would be inconclusive. Selected-only unit-factor Hurwitz/
+common-frame rose gathers are excluded,NOT outside/substitution/splitting/
+sphere routes. A preliminary400000-letter Artin exhaustion staysUNKNOWN;
+no inequality was inferred from the bound. Do not redo these24-order families
+or confuse them with old fixed-ledger candidates.
+
+NEXT: simplifiedP13 and other transported15 spare now have closedintersection2,
+but F10.2 and supplier14 lie between them. A two-neighbor spare-UP gather is
+UNPERFORMED. First test the actual F10.2 crossing bound; retain all exact raw/
+normalized matches. Pairwise2 is not a joint certificate. Seek positive named
+payoff/fulljoin; do not merely expand the visible exterior or replay long
+closures. Current lower-meeting preferred view and all source archives stay.
+21 focused petal/posthalf/intersection/lift tests pass,including5new cases;
+all5 pass again after final metadata. Both final panels are visually inspected;
+local390px gallery loads both without overflow. New auditJSON is708472bytes,
+SHA256eaebf2f5b11b13316942cb54fa06519fb6e394e2015293f6e208c88c0eb98c24.
+See analyze_posthalf_petal.py,itsJSON/MD and posthalf-petal-comparison/index.html.
+
 ## October 28: post-combine rose route REACHES one exterior; research only
 
 posthalf_exterior.expose_posthalf_exterior() starts at preferredsource85 index43,
