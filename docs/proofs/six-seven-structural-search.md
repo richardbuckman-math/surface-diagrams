@@ -1,5 +1,55 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: TWO visible exteriors reached by reflected/cyclic cabled lanterns
+
+posthalf_reflected_lantern.expose_posthalf_second_exterior() starts at the
+selected cyclic135 endpoint. SEVEN positive DISK moves/THREE external checks:
+cyclicS1 start; actual returned123 rose lendsROUND12; SAME12 UP2 through ONLY
+commuting exterior/O1245; actual235,135,12 reflected cabled lantern reaches
+O1235+exact35; SAMEoldO1245 UP1 over35; cyclicstartfresh34; actual34,O1235,O1245
+cyclic cabled lantern reaches STANDARD exterior+shortR125(-4,-3).
+
+EVERY actual input/output matches individually. Reflected pattern commonchart
+(-3,-1,2,1) retains original named unit lantern/internal interchange and ALL
+Delta5 generator reflections. Final commonchart(-3,-4,-3) retains complete
+D5/complementaryD4 daisies,shared petals,TWO internal commutes,TWO raw cyclic
+common conjugations and independently known output invariances. Raw free-word
+checks BEFORE individual normalized B5 presentations. THREE local signed PC
+balances(-1,-1,-1,0,0),(1,1,0,0,0),(0,0,1,1,0);full disk/sphere/+I and FULL
+local/normalized/endpoint NONABELIAN kernels AND B4shadows/reconstructions.
+
+BOTH STANDARD UNIT EXTERIORS stay distinct and visible,eachchosen-I. Residual
+boundary-square/+I is DIAGNOSTIC,NOT named closure/cap/usefulcompletejoin.
+Actual123 donor stays TWO13/23petals;12CONSUMED,notreturned. BOTH older125loans
+andfresh45 retained;fresh34 andbothfour-pointouters CONSUMED innewexterior.
+Nine shared source/endpoint records remain LITERAL. No half,negativefactor,
+SPHERE redraw,cap ornewpreferredphase. Preferred101moves/71steps stays SOLVED
+andUNCHANGED. Researchposthalf45listedmoves/31checks,sourceprefix88,NOTstep88.
+
+All main/atomic states positive,B5boundary^4,sphereI,total+I,localpeak9.
+Input14records,9/65,braid146,CLOSED320/20;intermediate15,7/64,146;final14,
+7/62,148,CLOSED240/14. Inventories DIFFER,so descriptive totals,NOTentrywise
+comparison/arc crossings/jointminimum/wholeproofbounds. Fullprefixpeaksunchanged.
+Prescribed inversefresh45/34 onreturned123 FAILS preciseoldtarget,support19,
+fullfaithfulmeridianwitness;UNAPPLIED,notagather. Do not rerun that probe.
+
+40 focused reflected/cyclic/outer/PC/kernel/intersection tests pass,including
+8newregressions. ALL6panels rendered/visuallyinspected,9sharedsupports identical;
+ALL90six-pointgrids/540dots UNNUMBERED24pxpitch/1.68pxradius,390pxgallery6panels
+nooverflow. JSON206132bytes,SHA256434469e48ce59c1c2682d6f53480415d6a4c47d4e2482e992c25586dde3cde05.
+Preferredproof/payload/PDF,allprioraudits/visuals/archives and8Boundaries.pdf
+untouched. See analyze_posthalf_reflected_lantern.py,itsMD/JSON and
+posthalf-reflected-lantern-comparison/index.html.
+
+NEXT: sourceNEW six-seven-posthalf-reflected-lantern.json:route.factors,NOTold
+cyclic135 or4moveintermediate. FIRST test exact ACTUAL ordered newR125,
+current124=alternative.prepare.F5.2,freshROUND45 cabled possibility;NO test,
+chart,gather orsubstitution yet. Sets/incidence alone insufficient. Require
+EVERY actual named input/output,raw bounded transports,full kernels anduseful
+positive completejoin. Keep BOTH exteriors-I,ALL remainingdonorpetals;no cap.
+Do not replay7moves/reflection/35gather oroldfailedfamilies. Newsourceconsumed
+S1,new135,returned123,oldO1245,fresh34;neveruse asifstillpresent.
+
 ## October29: ACTUAL cyclic35,15,13 PC rose contracts; preferred proof unchanged
 
 posthalf_cyclic_rose.contract_posthalf_cyclic_rose() starts at CHOSEN550f block
