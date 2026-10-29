@@ -2,6 +2,12 @@
 
 ## October29: rose-loan hybrid reaches a clearer third checkpoint and complete join
 
+The initial c825d0c CI caught stale report scope wording after a final prose
+correction (returned12 -> explicitly consumed12). Discovery-mode reproduction
+identified the exact mismatch. Regeneration changes ONLY that description;
+all mathematical witnesses and every graphic remain byte-identical. Corrected
+JSON 534225 bytes,SHA256d773c86cc9d760dd202f4760cc33f9925d9a9b0c9a563f10974b8bb294230eaf.
+
 New posthalf_hybrid_rose.expose_hybrid_third_exterior() starts at the SAME
 reached upper-cabled13-record/TWO-exterior source. NINE positiveDISKmoves/SIX
 externalchecks/FIVE namedsubstitutions reach a FIRST third standard exterior.

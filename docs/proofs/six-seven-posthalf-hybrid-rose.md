@@ -80,4 +80,4 @@ Reproduce with examples/analyze_posthalf_hybrid_rose.py and
 examples/build_posthalf_hybrid_rose_comparison.py. Twenty-nine focused tests
 pass,including10 new hybrid tests;all10 pass Python3.9 as well as3.12.
 
-JSON: 534213 bytes; SHA256 e98105b5f135a532783e0d6654eb6e1137c6fed5ede7380a3393d2da8b101117.
+JSON: 534225 bytes; SHA256 d773c86cc9d760dd202f4760cc33f9925d9a9b0c9a563f10974b8bb294230eaf.
