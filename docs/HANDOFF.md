@@ -1,5 +1,59 @@
 # Handoff: surface-diagrams
 
+## October29: COMPLETE named residual suffix; FOUR visible standard exteriors
+
+posthalf_residual_closure.close_posthalf_residual() reachesFOURstandardUNIT
+exteriors inSIXpositiveDISKmoves/TWOexternalchecks/FOURnamedsubstitutions.
+Actualadjacentolder15,older25,NEW12 CYCLICrose->R125;internal(+1)ACTUAL125rose
+suppliesNEW15;SAME15UP2changesBOTHdonorleftovers;actual134,old45,old35,NEW15
+modifiedcyclicPCdaisy(g1,2,3;internal1UP0,shift1)->O1345=(1)T2345;explicit
+cyclicstartold23;allFIVEactualresidualinputs matchmodifiedCYCLICD5daisy with
+TWOinternalforward(3,4)checks,shift3,chart(1,-4,-3,-2,-2,1,2,3,4,1,2,3,1,2,1).
+OutputSTANDARDfourthexteriorindividuallymatched,NOTaction-onlyrecognition.
+
+ALLactualnamedinputs/outputs,fullrawinternalcyclicwordsFIRST,independentlyknown
+outputinvariances,localPCbalances(1,1,0,0,1),(-1,-1,0,0,-1),(1,0,1,1,2),
+(1,3,1,1,1),FULLdisk/separatesphere/+I andFULLlocal/normalized/endpointNONABELIAN
+kernels AND B4shadows/reconstructionsretained. THREEinternalchecksremainlocal;
+TWOexternalchecksrawreconstructed. AllstatespositiveB5boundary^4,sphereI,total+I,
+localpeak7. THREEearlierexteriorsLITERAL;allresidualdonorunitsCONSUMEDinmatched
+namedpatterns. FOURUNITexteriorsremainvisible,each-I;combineandFOURTH-power
+sphere redraw/cleanupSEPARATE. No half,negativefactor,SPHEREredraw orcap here.
+
+Fullresearchposthalf61moves/41externalchecks,source-prefix104,NOTpreferredstep104.
+Input11,7/44,braid126,CLOSED118/14;endpoint4,5/20,80,CLOSED0/0. InventoriesDIFFER,
+descriptivetotalsNOTentrywise/arc/jointminimum/wholeproofbounds;prefixpeaksunchanged.
+Preferred101moves/71steps staysSOLVED/UNCHANGED. Thislongeralternativesuffixis
+NOWFULLYNAMED;no residualclosureopenhere. Do notcallitshorteroradopted.
+
+check_posthalf_route_join.py verifiesTENliteralcompletejoins:unchangedprefix43,
+9researchreports55,newclosure6. Everydisk/frameB6transitionand15fullframes
+retained. FOURterminalunits individuallymatched;explicitID-onlyancestrymap
+matchesoldterminaltuple. Regeneratedcombine ACTUALinputs joinsboundary.five.fourth
+andoldcapLITERALLY;FULLcapdiscrepancywordunchanged. Concretecomplete sourcePLAN106
+(43+55+6+combine+cap),104reachedincludes101disk+3oldrawsphere;terminalcapmakes4raw
+sphere asbefore. Expectedrefinement13genuineredrawwords/122listedmovesisPLANonly;
+parallelcountNOTcomputed. B5tailframesONLYuseterminalcentrality;earlyB6frames
+withsigma5remainexplicit/reversiblethroughfinalsphereidentity,NOTD5^4centralB6.
+Oldreportflags/sourcechartsneverrewritten. NewJSONroute_joinownsadoptionplan.
+
+NEXTwithfreshbudget: visuallycomparethislongercompletepost-halfrouteagainst
+preferredfromSAMEinput/fourD5endpoint;actualsupport/interactionclaritybeatscount.
+Onlyadoptifclearer. Ifadopting,generalizerefine_sphere_moves source-lengthwhitelist
+ANDearlylanternindividual-matchguard,retainALL13sphereWORDS/LEFTledger/separate
+redraw/substitution/cleanup. Addpresentation-onlybarrierFIRSTnewposthalfrose
+(source44) so itstaysAFTERhalvesgone. ExplicitSOURCErefs,allliteraljoins,
+actualfour-unitcombine,oldcapinput/word;recomputeindependentparallelgroups and
+inspectALLchangedpreferredgraphics/PDFs. No newphase/adoption/parallelcountyet.
+
+42focusedclosure/target/third/PC/kernel/intersectiontestspass;new10PASSBOTH
+Python3.12AND3.9. All6panelsrendered/visuallyinspected,THREEoldexteriorSVGsidentical;
+ALL51six-pointgrids/306dotsUNNUMBERED24pxpitch/1.68pxradius,390pxgallery6panels
+nooverflow,stableoutercanvasdecimals. JSON192187bytes,
+SHA25622a11f732bfd1c8e55f1b4e5fd8f472ece8ecfbf701eaaa7c189ba0a57b9f769. Preferredproof/payload/PDF,prioraudits/visuals/archives
+and8Boundaries.pdfuntouched. Seeanalyze_posthalf_residual_closure.py,itsMD/JSON,
+check_posthalf_route_join.pyandposthalf-residual-closure-comparison/index.html.
+
 ## October29: small residual-order audit; exact tail rose stays TARGET ONLY
 
 analyze_posthalf_residual_targets.py appliesZEROsource moves. ActualsourceSTILL
