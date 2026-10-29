@@ -1,5 +1,47 @@
 # Handoff: surface-diagrams
 
+## October 29: exact hybrid target, with no source move
+
+The proposed hybrid at the reached upper-cabled 13-record endpoint fails its
+necessary ordered test. For actual O1234, HYPOTHETICAL O1345=(1)T2345, actual
+older25, all THREE exact integral product/input commutators are nonzero. The
+full matrices and a faithful B5 output mismatch are saved. This excludes this
+unchanged proposed ordered product; it does not exclude outside transports,
+new curves, other named patterns or sphere changes. O1345 is NOT reached here.
+
+A complete target chart g=(-2,-3) matches BOTH outer curves individually in the
+retained named relation D4 Q45 Ominus = D5 R123. Its correct ordered inputs are
+O1234, REQUIRED25, O1345. REQUIRED25 is (-2,-3)T45, DIFFERENT from actual older25
+=(-4,-3)T23; a full meridian witness is retained. Outputs are gD5 and gT123,
+individually specified, not identified by enclosed sets. Opposite chart (2,3)
+matches actual O1234/older25 but FAILS the hypothetical outer. Thus neither
+chart supplies the actual three-input cluster. No gather or substitution.
+
+The immutable historical canonical proof remains SOURCE data with its original
+flags/charts. The new target owns its separate chart, signed PC balance
+(0,1,0,0,1), full disk discrepancy, separate sphere/+I checks and all 24 complete
+source/target/normalized nonabelian kernels AND B4 shadows/reconstructions.
+Both complete proofs remain SOLVED; preferred 101 moves/71 steps is unchanged.
+ZERO source moves, expansions, new graphics, phases, sphere redraws or caps.
+
+NEXT, unperformed: use six-seven-posthalf-upper-cabled.json:route.factors.
+Actual old23=reflected.loan.2 and I24=upper.I24 occur at zero-based positions
+12 and 1; they are NOT a gathered block. FIRST test BOTH signs of the FULL
+ordered product old23 then I24 on actual older25 against precise REQUIRED25
+=(-2,-3)T45, with exact class/support BEFORE any transport. Neither sign has
+been tested. If no match, do not gather merely to add rows. A match still needs
+every bounded crossing/context change, all actual named inputs/outputs,
+complete kernels/shadows, donor accounting and a useful positive COMPLETE join.
+Do not assume O1234 or older25 remains fixed during NEW15 supply. Keep both
+visible odd exteriors and every donor record. The previous NEXT triple test
+below is now historical/completed; do not repeat it.
+
+Nineteen focused hybrid/upper-cabled/point-pushing tests pass, including three
+new regressions; all three also pass Python 3.9. JSON 42162 bytes, SHA256
+1a9f2d80d099338f5306e262ed09d0eec13cdfdd9f411704ba7f67bd7959dff8.
+Only the new audit/test and handoff files change; all earlier proof, payload,
+PDF, audit, graphic/archive bytes and 8Boundaries.pdf are preserved.
+
 ## October29: FIXED-milestone clarity comparison; keep current preferred for now
 
 Bothcompletepost-halftails haveSAMEliteralinput(source43) andfourD5endpoint
