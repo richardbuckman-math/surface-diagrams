@@ -1,5 +1,60 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: ACTUAL cyclic35,15,13 PC rose contracts; preferred proof unchanged
+
+posthalf_cyclic_rose.contract_posthalf_cyclic_rose() starts at CHOSEN550f block
+endpoint. THREE positive DISK moves/ONE adjacent check: cyclicROUND345 rose
+lends35 while retaining45/34; SAME35 DOWN across COMMUTING S1; actual adjacent
+35,W15,P13 contract by CYCLIC PCrose. CommonchartH=(-1,-1,-3,-2,1,2,3),coreT345;
+EVERY actual input/output matched individually. Both internal cyclic FULLraw
+inverse-prefix common conjugations checked FIRST,then independently known root
+invariance. OutputR135 normalized(-3,-1,2),coreT345. Signed balances source
+(0,0,-1,-1,-1),contract(1,0,1,0,1);full disk/sphere/+I/kernel/shadow checks stay.
+Wcopy consumed,OTHER15 retained; donor345 staysTWO actual34/45 petals,NOTreturned.
+ELEVEN shared records inclS1,both125loans,O1245,oddexterior remain LITERAL.
+
+Allstatespositive,B5boundary^4,sphereI,total+I,support<=9;no half,negativefactor,
+SPHERE redraw,cap ornewpreferredphase.14records before/after,9/67->9/65,braid
+152->146,CLOSED346/20->320/20. InventoriesDIFFER,so descriptive totals,NOTentrywise
+dominance/arc/jointminimum/wholeproofbounds. Researchposthalf38listedmoves/28checks,
+sourceprefix81,NOTpreferredstep81. Preferred101/71 staysSOLVED/UNCHANGED;no useful
+complete suffixjoin. NewR135 is DIFFERENT fromoldmissingR135,do notequate sets.
+
+Originalround234,UNDER25,round345 actualAQC order is NONCENTRAL; correctACQ
+namedcabled order givesO2345/I34. Bounded1moveC-down-S1 comparison has5CLOSED
+reductions,1 returned123 pair2->4 increase;334/18,word9/67,braid150,UNSELECTED.
+Neededabove25 stillcrossesS1=4. A234 preconditions inverseR124 support11 but
+noncentral,inverseR124/R134 support67;R134-UP-R124 donor attempt35 rejectedbefore
+application. Scoped failures,no orbitexclusions,no repeated scans.
+
+NEW actual returned123,25,new135 curves ALL individually match canonical
+C123,Q34,Aupper124 in commonchart(-3,-3,2,-4). Correct cyclic orderC,Aupper,Q;
+ACTUALC,Q,Aupper productnoncentral. Full named upper-root relation/cyclicwords/
+outputinvariances/retainedinterchange/individualmatches saved,TARGETONLY.
+Requiredfirstroot = actual25 * returned123 * actual25^-1 makes correct ordered
+named target; NO actualoutside transport/gather/lantern/secondexterior reached.
+Fresh45/34 preconditions onnew135 fail11/9/5/11/7,UNAPPLIED;do not rerun.
+
+NEXT: sourceNEW six-seven-posthalf-cyclic-rose.json:route.factors,not550f orS1
+comparison. FIRST exact inverseordered(fresh45,fresh34) action onreturned123 vs
+saved preciseFIRSTROOT target; no suchprobe/transport yet. Onlyifmatched,verify
+everycrossing/context/support/fullnamedpayoff;no dummygathers. All donorpetals
+and oddexterior stayaccounted. Do not replaynew3move rose oroldfailedfamilies.
+
+32focused cyclicrose/outer/PC/kernel/intersection tests pass,including6new cases;
+final6 pass afterfinalreport/templatelegend. Four exactpanels rendered/inspected;
+11 shared supports'SVGs identical. ALL60six-point grids/360dots UNNUMBERED24px/
+1.68px;390pxgallery4panels/nooverflow. JSON197837bytes,
+SHA2564234a6b2d61b1244ef4fea8adca2612ff54f755daba22dba04c62e8db5a8f1e6. All preferredproof/payload/PDF/oldaudit/visual/archive
+bytes untouched;preserve8Boundaries.pdf. See analyze_posthalf_cyclic_rose.py,
+itsJSON/MD andposthalf-cyclic-rose-comparison/index.html.
+
+PACING: Richard'sNEW12:15PMEastern target(2026-10-29T16:15Z) supersedes prior
+12:58PM/15%weeklyholdback duringthisburst. SAMEhourlyautomation updated; maximize
+usefulwork across5hourwindows,avoid earlyprimary exhaustion,finishmathby12:00
+forfinalverification,restoreSIXhourcadence firstafter12:15 unlessnewinstruction.
+NEVERresetcredit/buycapacity without explicitconfirmation forindividualuse.
+
 ## October29: ordered125-loan block untangles four curves; longer route favored
 
 posthalf_block.transport_posthalf_loan_block() REACHES same14-record endpoint
