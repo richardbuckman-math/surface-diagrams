@@ -44,8 +44,8 @@ and oddexterior stayaccounted. Do not replaynew3move rose oroldfailedfamilies.
 32focused cyclicrose/outer/PC/kernel/intersection tests pass,including6new cases;
 final6 pass afterfinalreport/templatelegend. Four exactpanels rendered/inspected;
 11 shared supports'SVGs identical. ALL60six-point grids/360dots UNNUMBERED24px/
-1.68px;390pxgallery4panels/nooverflow. JSON197837bytes,
-SHA2564234a6b2d61b1244ef4fea8adca2612ff54f755daba22dba04c62e8db5a8f1e6. All preferredproof/payload/PDF/oldaudit/visual/archive
+1.68px;390pxgallery4panels/nooverflow. JSON210435bytes,
+SHA2569e4083a279d54d6a5ff322483538dadf12c85c86c9a7642b4298326a96d46324. All preferredproof/payload/PDF/oldaudit/visual/archive
 bytes untouched;preserve8Boundaries.pdf. See analyze_posthalf_cyclic_rose.py,
 itsJSON/MD andposthalf-cyclic-rose-comparison/index.html.
 
