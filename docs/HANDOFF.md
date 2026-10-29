@@ -1,5 +1,52 @@
 # Handoff: surface-diagrams
 
+## October 28: exact two-pair lantern target and13 supplier; no move applied
+
+New analyze_posthalf_lantern_targets.py audits SELECTED posthalf-outer endpoint.
+P13,old35,NEW15 fail ALL6 ordered centrality tests by exact NONZERO integral
+product/input commutators. CLOSED14,2,10. Selected-only unchangedUNIT-factor
+DISK Hurwitz/commonframe rose gathers excluded,NOT outside,newcurves,other
+substitutions,splitting or sphere changes. No gather attempted; do not repeat.
+
+NEW EXACT JOINT CHART G=(-3,-4,-3,-2) matches EACH ACTUALO1245/round234 input of
+the canonical two-pair cabled PC lantern T1234 R345 R125=D5 I34 I12. Reusable
+named_two_pair_cabled.two_pair_cabled_lantern() retains BOTH root PCdaisies,
+TWO internal inverse-prefix cyclic common conjugations/raw words/independently
+known output invariances,TWO actual commuting checks,EVERY expandedD5 input,
+signedPCbalance canonical(0,0,0,0,1)/inG(0,0,1,0,0),full disk/sphere/+I and FULL
+nonabelian kernels AND shadows. No action-only outer recognition. Source outer
+chart(-3,-4) stays SOURCE. Old normalized234 kernel(-4,2,3,4),shadow(2,2) and
+reconstruction remain separate from NEW joint chart normalization.
+
+RequiredR135 chartG+(-4,-3),coreT123 matchesNO current root; NONE of its canonical
+three petals matches a current pair. Root/currentP13,old35,NEW15,oldW CLOSED
+4,4,4,8,so no internal rechart makes those unchanged pairs its petals. NO third
+root,gather,lantern,second exterior or complete suffix join reached. Preferred
+101moves/71steps remains SOLVED/UNCHANGED. Actual newmoves/checks/sphere/caps=0.
+
+EXACT13 SUPPLIER TARGET: actual returned123 donor SOURCE chart(-3,-3),internal
+(-2,-2) preserves it and its MIDDLE PCrose petal is required13. Normalized B5
+kernel AND B4kernel EMPTY,B3shadow(-2,1,1,2),chart(-2)T12; BOTH full reconstructions.
+Every target output/signedbalance/localdisk/sphere/+I retained. NO expansion or
+13 transport. Required35 is IDENTICAL oldtarget chart(-3),coreT45. F8/S1 records
+LITERAL unchanged; REUSE prior exact intersection4 certificates,not new scans.
+Either round234 sign onold35 fails,support10/10,UNAPPLIED hypothetical candidates
+with fullmeridian witnesses. Do not repeat those2 probes ortriangle6orders.
+
+NEXT SPECIFIC UNPERFORMED: actual remaining25=outer.loan.2 as outside actor on
+old35. FIRST exact BOTH-sign class/support test vsrequired35 before ANY gather;
+no suchprobe/transport/supply yet. Only if matched,check every needed crossing
+at20 and preserve raw/normalized certificates and useful positive named payoff.
+Do not add rows from exact13 donor or exterior without concrete bounded payoff.
+Keep odd exterior-I and BOTH125 loan petals explicit; never infer curve fromID.
+Read newJSON target data; no actual factors change,so current14-record source
+stays posthalf-outer.json:route.factors. No new preferred phase or PDF.
+
+32focused target/outer/PC/point-pushing/intersection tests pass,including6new
+regressions. New auditJSON77821bytes,SHA25663c9f6a7190442a3ba77f0a86c8eea24eb62a31f52806db9841953ccfd0214ec. Only target/audit/handoff
+files change; ALL previous proof/payload/PDF/research/visual records untouched.
+Preserve8Boundaries.pdf; no unchanged browser/PDF/publication rechecks needed.
+
 ## October 28: a matched post-half daisy reaches one four-point outer
 
 posthalf_outer.contract_posthalf_daisy() starts at SELECTED posthalf-spare
