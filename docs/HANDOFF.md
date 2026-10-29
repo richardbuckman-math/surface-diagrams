@@ -1,5 +1,42 @@
 # Handoff: surface-diagrams
 
+## October29: FIXED-milestone clarity comparison; keep current preferred for now
+
+Bothcompletepost-halftails haveSAMEliteralinput(source43) andfourD5endpoint
+afterexplicitID-onlyalignment. Newanalyze_posthalf_route_comparison.py pinsFIRST
+actualone/two/threeSTANDARDunitexteriormilestones;firstreachverified,nocherrypicking.
+ALL6panelsvisuallyinspected. AlternativeSECONDexterior isclearer(14rows,maxword7
+vs16/18),butpreferredTHIRD iscleaner(8/6vs11/7). FIRSTmixed(16/17vs15/18).
+Keepcurrentpreferred101/71whiletargetingHYBRIDclearermiddle/cleanerlate,NOTbecause
+fewerlabels. Noadoption,newphase,shortening,half-arcsimplificationoruniformdominance.
+
+Matchedtailops40/61,EXTERNALchecks67/41,main+atomicrecords108/103,uniqueEXACT
+retainedtuples89/72(notclasscounts). Peakrows18/19,PEAKSUPPORT18/BOTH(not20->18),
+peaktotalsupport147/132,storedbraid258/290. Allmetricschart-specific;power-square
+isONEactualcurverow. GenericINTERNALnamedchecksretainedbutNOTtotalled;do notclaim
+fewertotalatomicverificationchecks. Whole-proof/earlyprefixpeaksnotimproved.
+SelectedCLOSEDsum/max:first1536/74vs862/36,second472/36vs240/14,THIRD20/2vs118/14.
+Differinginventories,NOentrywise/arc/jointminimum/wholeprooftangleclaims. Source
+HALFclassesareunchanged;allhalvesalreadygoneatcommoninput.519exactCLOSEDpair
+certs/80fullNONABELIANkernels+B4shadows/reconstructionsretained.
+
+NEXTspecificUNTESTEDhybrid: startREACHEDupper-cabled13recordendpoint,NOTcurrent
+fourD5endstate. STANDARD O1234,actualR125,actual134blockandolder25remainthere.
+Knownnamed134,old45,old35,NEW15patternwouldgiveHYPOTHETICALO1345=(1)T2345 if
+NEW15gathered. FIRSTtestexactNECESSARYORDEREDcabledrelation/fullcommonchartfor
+ACTUALO1234,HYPOTHETICALO1345,ACTUALolder25 BEFOREexpansion/gather;NOsuchtriple
+probeorhybridreached. Ifpasses,requireEVERYboundedcrossing/contextchange,EVERY
+actualorderedinput/output,fullkernels/shadowsandpositiveusefulcompletejoin.
+Do notassumeO1234/25stayfixedduringNEW15supply. Keepoldcompletealternativeroute
+asverifiedfallbackandpreferred101/71SOLVED/UNCHANGED. No fullpreferredartifact
+adoptionuntilactualclaritybenefitverifiedandWHOLEpublicationfitsbudget.
+
+19focusedcomparison/intersection/kerneltestspassincluding4new;new4passPython3.12
+AND3.9. ALL6panels80six-pointgrids/480dotsUNNUMBERED24pxpitch/1.68pxradius;
+390pxgallery6panels/nooverflow,stableoutercanvas. JSON473842bytes,
+SHA256c97f002e00769df156fa1b68cc47dd88e55f83dff8b53aab7e49170a7f73356b. Onlynewcomparison/test/handofffileschanged;ALLprior
+proof/payload/PDF/audit/visual/archivebytesand8Boundaries.pdfuntouched.
+
 ## October29: COMPLETE named residual suffix; FOUR visible standard exteriors
 
 posthalf_residual_closure.close_posthalf_residual() reachesFOURstandardUNIT

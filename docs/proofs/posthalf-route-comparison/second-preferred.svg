@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="1210.278222" viewBox="0 0 560 1210.278222" data-records="16"><rect width="100%" height="100%" fill="white"/><text x="18" y="30" font-family="sans-serif" font-size="19" fill="#18344a">Preferred: second visible exterior</text><text x="18" y="55" font-family="sans-serif" font-size="14">16 factor records; no half twists</text><text x="18" y="78" font-family="sans-serif" font-size="12">Gold = standard exterior. Unnumbered six-point grid; pitch 24px.</text><g data-factor="alternative.second.exterior"><rect x="8" y="100" width="544" height="71.307" fill="#fff3cf" stroke="white"/><text x="18" y="122" font-family="monospace" font-size="12">alternative.second.exte</text><text x="18" y="137" font-family="monospace" font-size="12">rior</text><text x="18" y="162.30700000000002" font-family="sans-serif" font-size="12">T5</text><svg x="312.24" y="106.0" width="142.79999999999998" height="59.307" viewBox="0 0 297.5 123.55625"><g transform="translate(-30.750000 -40.971875)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 292.75 102.75 A 127.125 54.028125 0 0 0 38.5 102.75 A 127.125 54.028125 0 0 0 292.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.second.I35"><rect x="8" y="171.30700000000002" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="193.30700000000002" font-family="monospace" font-size="12">alternative.second.I35</text><text x="18" y="228.30700000000002" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="190.38700000000003" width="130.07999999999998" height="27.84" viewBox="0 0 271.0 58.0"><g transform="translate(-57.250000 -73.750000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 192.75 102.75 A 50 21.25 0 0 0 92.75 102.75 A 50 21.25 0 0 0 192.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.second.I24"><rect x="8" y="237.30700000000002" width="544" height="71.307" fill="#f4f7fa" stroke="white"/><text x="18" y="259.307" font-family="monospace" font-size="12">alternative.second.I24</text><text x="18" y="299.61400000000003" font-family="sans-serif" font-size="12">T2</text><svg x="312.24" y="243.30700000000002" width="142.79999999999998" height="59.307" viewBox="0 0 297.5 123.55625"><g transform="translate(-30.750000 -40.971875)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 292.75 102.75 A 25 10.625 0 0 0 242.75 102.75 A 75 31.875 0 0 1 92.75 102.75 A 27.125 11.528125 0 0 0 38.5 102.75 A 127.125 54.028125 0 0 0 292.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.P13"><rect x="8" y="308.61400000000003" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="330.61400000000003" font-family="monospace" font-size="12">alternative.P13</text><text x="18" y="365.61400000000003" font-family="sans-serif" font-size="12">T2</text><svg x="312.24" y="317.06050000000005" width="142.79999999999998" height="49.107" viewBox="0 0 297.5 102.30625"><g transform="translate(-30.750000 -51.596875)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 242.75 102.75 A 25 10.625 0 0 0 192.75 102.75 A 50 21.25 0 0 1 92.75 102.75 A 27.125 11.528125 0 0 0 38.5 102.75 A 102.125 43.403125 0 0 0 242.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.exterior"><rect x="8" y="374.61400000000003" width="544" height="71.307" fill="#fff3cf" stroke="white"/><text x="18" y="396.61400000000003" font-family="monospace" font-size="12">alternative.exterior</text><text x="18" y="436.92100000000005" font-family="sans-serif" font-size="12">T5</text><svg x="312.24" y="380.61400000000003" width="142.79999999999998" height="59.307" viewBox="0 0 297.5 123.55625"><g transform="translate(-30.750000 -40.971875)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 292.75 102.75 A 127.125 54.028125 0 0 0 38.5 102.75 A 127.125 54.028125 0 0 0 292.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.residual.O1234"><rect x="8" y="445.92100000000005" width="544" height="89.35722240000001" fill="#f4f7fa" stroke="white"/><text x="18" y="467.92100000000005" font-family="monospace" font-size="12">alternative.residual.O1</text><text x="18" y="482.92100000000005" font-family="monospace" font-size="12">234</text><text x="18" y="526.2782224" font-family="sans-serif" font-size="12">T4</text><svg x="304.47999984" y="451.92100000000005" width="150.56000016000002" height="77.3572224" viewBox="0 0 313.666667 161.16088"><g transform="translate(-14.583333 -42.169560)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 302.75 122.75 A 53.5714285714 27.8273809524 0 0 0 195.607142857 122.75 A 58.0952380952 30.1772486772 0 0 1 79.4166666667 122.75 A 12.375 6.428125 0 0 0 54.6666666667 122.75 A 73.3273809524 38.0895006614 0 0 0 201.321428571 122.75 A 45.7142857143 23.746031746 0 0 1 292.75 122.75 A 131.166666667 68.1337962963 0 0 1 30.4166666667 122.75 A 34.5 17.9208333333 0 0 1 99.4166666667 122.75 A 39.5238095238 20.5304232804 0 0 0 178.464285714 122.75 A 17.8571428571 9.27579365079 0 0 0 142.75 122.75 A 18.3333333333 9.52314814815 0 0 1 106.083333333 122.75 A 39.0476190476 20.2830687831 0 0 1 184.178571429 122.75 A 45.7142857143 23.746031746 0 0 1 92.75 122.75 A 27.125 14.0899305556 0 0 0 38.5 122.75 A 122.125 63.4371527778 0 0 0 282.75 122.75 A 37.8571428571 19.6646825397 0 0 0 207.035714286 122.75 A 80.2261904762 41.6730489418 0 0 1 46.5833333333 122.75 A 19.75 10.2590277778 0 0 1 86.0833333333 122.75 A 51.9047619048 26.9616402116 0 0 0 189.892857143 122.75 A 83.7797619048 43.5189318783 0 0 0 22.3333333333 122.75 A 140.208333333 72.8304398148 0 0 0 302.75 122.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="122.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.residual.I12"><rect x="8" y="535.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="557.2782224" font-family="monospace" font-size="12">alternative.residual.I1</text><text x="18" y="572.2782224" font-family="monospace" font-size="12">2</text><text x="18" y="592.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="554.3582224" width="130.07999999999998" height="27.84" viewBox="0 0 271.0 58.0"><g transform="translate(-57.250000 -73.750000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 292.75 102.75 A 50 21.25 0 0 0 192.75 102.75 A 50 21.25 0 0 0 292.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.return.2"><rect x="8" y="601.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="623.2782224" font-family="monospace" font-size="12">alternative.return.2</text><text x="18" y="658.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="312.24" y="619.9247224" width="142.79999999999998" height="28.706999999999997" viewBox="0 0 297.5 59.80625"><g transform="translate(-30.750000 -72.846875)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 142.75 102.75 A 52.125 22.153125 0 0 0 38.5 102.75 A 52.125 22.153125 0 0 0 142.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.second.loan.1"><rect x="8" y="667.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="689.2782224" font-family="monospace" font-size="12">alternative.second.loan</text><text x="18" y="704.2782224" font-family="monospace" font-size="12">.1</text><text x="18" y="724.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="680.2382224" width="130.07999999999998" height="40.08" viewBox="0 0 271.0 83.5"><g transform="translate(-57.250000 -61.000000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 282.75 102.75 A 45 19.125 0 0 0 192.75 102.75 A 55 23.375 0 0 0 302.75 102.75 A 80 34 0 0 0 142.75 102.75 A 20 8.5 0 0 0 182.75 102.75 A 55 23.375 0 0 1 292.75 102.75 A 45 19.125 0 0 1 202.75 102.75 A 20 8.5 0 0 1 242.75 102.75 A 20 8.5 0 0 0 282.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.second.loan.2"><rect x="8" y="733.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="755.2782224" font-family="monospace" font-size="12">alternative.second.loan</text><text x="18" y="770.2782224" font-family="monospace" font-size="12">.2</text><text x="18" y="790.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="312.24" y="743.32393696" width="142.79999999999998" height="45.90857136" viewBox="0 0 297.5 95.642857"><g transform="translate(-30.750000 -74.928572)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 284.178571429 122.75 A 45.7142857143 23.746031746 0 0 0 192.75 122.75 A 57.1428571429 29.6825396825 0 0 0 307.035714286 122.75 A 77.1428571429 40.0714285714 0 0 0 152.75 122.75 A 12.5 6.49305555556 0 0 0 177.75 122.75 A 61.7857142857 32.0942460317 0 0 1 301.321428571 122.75 A 51.7857142857 26.8998015873 0 0 1 197.75 122.75 A 40.3571428571 20.9632936508 0 0 1 278.464285714 122.75 A 14.5238095238 7.54431216931 0 0 1 249.416666667 122.75 A 23.3333333333 12.1203703704 0 0 0 202.75 122.75 A 46.4285714286 24.1170634921 0 0 0 295.607142857 122.75 A 56.4285714286 29.3115079365 0 0 0 182.75 122.75 A 20 10.3888888889 0 0 1 142.75 122.75 A 52.125 27.0760416667 0 0 0 38.5 122.75 A 27.125 14.0899305556 0 0 0 92.75 122.75 A 20 10.3888888889 0 0 1 132.75 122.75 A 27.5 14.2847222222 0 0 0 187.75 122.75 A 51.0714285714 26.5287698413 0 0 1 289.892857143 122.75 A 41.0714285714 21.3343253968 0 0 1 207.75 122.75 A 14.1666666667 7.3587962963 0 0 1 236.083333333 122.75 A 24.0476190476 12.4914021164 0 0 0 284.178571429 122.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="122.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="122.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.second.loan.3"><rect x="8" y="799.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="821.2782224" font-family="monospace" font-size="12">alternative.second.loan</text><text x="18" y="836.2782224" font-family="monospace" font-size="12">.3</text><text x="18" y="856.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="812.0342224" width="130.07999999999998" height="40.48799999999999" viewBox="0 0 271.0 84.35"><g transform="translate(-57.250000 -60.575000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 288.75 102.75 A 50 21.25 0 0 0 188.75 102.75 A 58 24.65 0 0 0 304.75 102.75 A 81 34.425 0 0 0 142.75 102.75 A 19 8.075 0 0 0 180.75 102.75 A 58 24.65 0 0 1 296.75 102.75 A 50 21.25 0 0 1 196.75 102.75 A 42 17.85 0 0 1 280.75 102.75 A 19 8.075 0 0 1 242.75 102.75 A 19 8.075 0 0 0 204.75 102.75 A 42 17.85 0 0 0 288.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.P24"><rect x="8" y="865.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="887.2782224" font-family="monospace" font-size="12">alternative.P24</text><text x="18" y="922.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="873.1382224" width="130.07999999999998" height="50.28" viewBox="0 0 271.0 104.75"><g transform="translate(-57.250000 -50.375000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 302.75 102.75 A 58.3333333333 24.7916666667 0 0 0 186.083333333 102.75 A 48.3333333333 20.5416666667 0 0 0 282.75 102.75 A 20 8.5 0 0 0 242.75 102.75 A 21.6666666667 9.20833333333 0 0 1 199.416666667 102.75 A 46.6666666667 19.8333333333 0 0 1 292.75 102.75 A 75 31.875 0 0 1 142.75 102.75 A 25 10.625 0 0 0 92.75 102.75 A 105 44.625 0 0 0 302.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.shared.I25"><rect x="8" y="931.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="953.2782224" font-family="monospace" font-size="12">alternative.shared.I25</text><text x="18" y="988.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="324.96000000000004" y="940.1582224" width="130.07999999999998" height="48.239999999999995" viewBox="0 0 271.0 100.5"><g transform="translate(-57.250000 -52.500000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 292.75 102.75 A 25 10.625 0 0 0 242.75 102.75 A 50 21.25 0 0 1 142.75 102.75 A 25 10.625 0 0 0 92.75 102.75 A 100 42.5 0 0 0 292.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.T12.square"><rect x="8" y="997.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="1019.2782224" font-family="monospace" font-size="12">alternative.T12.square</text><text x="18" y="1054.2782224" font-family="sans-serif" font-size="12">T2^2</text><svg x="324.96000000000004" y="1011.2582224" width="130.07999999999998" height="38.04" viewBox="0 0 271.0 79.25"><g transform="translate(-57.250000 -63.125000)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 242.75 102.75 A 25 10.625 0 0 0 192.75 102.75 A 25 10.625 0 0 1 142.75 102.75 A 25 10.625 0 0 0 92.75 102.75 A 75 31.875 0 0 0 242.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.shared.1"><rect x="8" y="1063.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="1085.2782224" font-family="monospace" font-size="12">alternative.shared.1</text><text x="18" y="1120.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="308.36000016" y="1076.0002408" width="146.67999984" height="40.55600016" viewBox="0 0 305.583333 84.491667"><g transform="translate(-22.666667 -60.504205)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 192.75 102.75 A 81.1666666667 34.4958333333 0 0 0 30.4166666667 102.75 A 52.8333333333 22.4541666667 0 0 0 136.083333333 102.75 A 21.6666666667 9.20833333333 0 0 0 92.75 102.75 A 23.0833333333 9.81041666667 0 0 1 46.5833333333 102.75 A 51.4166666667 21.8520833333 0 0 1 149.416666667 102.75 A 21.6666666667 9.20833333333 0 0 0 192.75 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g><g data-factor="alternative.shared.2"><rect x="8" y="1129.2782224" width="544" height="66" fill="#f4f7fa" stroke="white"/><text x="18" y="1151.2782224" font-family="monospace" font-size="12">alternative.shared.2</text><text x="18" y="1186.2782224" font-family="sans-serif" font-size="12">T2</text><svg x="306.42" y="1140.90797248" width="148.62" height="42.74049984" viewBox="0 0 309.625 89.042708"><g transform="translate(-18.625000 -58.228646)">
+<title>Planar surface</title>
+<path class="closed-curve" d="M 199.416666667 102.75 A 86.5208333333 36.7713541667 0 0 0 26.375 102.75 A 53.1875 22.6046875 0 0 0 132.75 102.75 A 16.6666666667 7.08333333333 0 0 0 99.4166666667 102.75 A 30.4583333333 12.9447916667 0 0 1 38.5 102.75 A 73.7916666667 31.3614583333 0 0 1 186.083333333 102.75 A 16.6666666667 7.08333333333 0 0 1 152.75 102.75 A 51.0625 21.7015625 0 0 0 50.625 102.75 A 17.7291666667 7.53489583333 0 0 0 86.0833333333 102.75 A 28.3333333333 12.0416666667 0 0 1 142.75 102.75 A 28.3333333333 12.0416666667 0 0 0 199.416666667 102.75 Z " fill="none" stroke="#a21caf" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle class="marked-point" cx="67.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="117.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="167.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="217.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="267.75" cy="102.75" r="3.5" fill="#006fff"/>
+<circle class="marked-point" cx="317.75" cy="102.75" r="3.5" fill="#006fff"/>
+</g></svg></g></svg>
