@@ -1,5 +1,55 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: ordered125-loan block untangles four curves; longer route favored
+
+posthalf_block.transport_posthalf_loan_block() REACHES same14-record endpoint
+with FOUR actual curves shorter: F8 9->3(ROUND345),S1 15->9,W 8->4,P13 8->6.
+TEN other actual records including BOTH125 loan records stay LITERAL at endpoint.
+All28 changed CLOSED pairs decrease,63equal,sum524->346,max34->20;support15/85
+->9/67,braid200->152. TWO matching15copies stay separate;no merge/deletion.
+Endpoint improvement on research branch,NOT shorter/adopted complete proof.
+Preferred101moves/71steps staysSOLVED/UNCHANGED;no useful complete suffix join.
+
+Actual ordered block UP crosses exterior,O1245,P13,W,S1,F8. Every adjacent move
+listed. Direct13moves/12checks has trajectoryCLOSED536/52. Inverse donor prep
+and its undo addTWO actual positive interchanges:chosen15moves/14checks lowers
+trajectory532/46,wordpeak17both. Forwardprep552/48 unselected. All endpoints
+individually B5-exact;direct/forward P13 presentations differ,NOTliteraljoins.
+Full raw cyclic common conjugation/free equality BEFORE individual presentations;
+EVERY adjacent move reconstructed. Loan records restored LITERALLY. All states
+positive,B5boundary^4,sphere-exact,total+I,word<=20. Odd exterior-I visible;
+full NONABELIAN kernels AND shadows retained. No half,negativefactor,sphere,
+cap,named substitution orphase. Transient532/46 exceedsINPUT524/34;wordpeak17
+exceedsinput15. Do not claim joint minimum or whole-proof tangle bound. Research
+posthalf35listedmoves/27checks,sourceprefix78,NOTpreferredstep78.
+
+Required35 supplier is NOW REACHED as ROUND F8. Its PCrose MIDDLE petal exactly
+matches oldrequired35. Full parent/output/localdisk/sphere/+I/signedbalance/
+kernels saved,TARGETONLY/UNEXPANDED. Earlier exact13 SOURCE donor staysLITERAL.
+RequiredR135/current15stillmissing;no gatheredR135,lantern orsecondexterior.
+
+New25 signs onold35 FAILED14/16;required13-on-F8/S1 candidates33/33/59/71,
+35intersections16/8/32/24,allUNAPPLIED. Orderedloan PRODUCT fixesround12 and
+cannotrepair oldwrong35(whichdoesNOTfix12);reached route changesPARENT/supplies
+DIFFERENT35 via unappliedrose,so no scopecontradiction. Next block-extension
+FIRSTcandidate overold35 reaches40,REJECTED BEFOREapplication;not a partialroute.
+Do not repeat probes/preparations/transport or oldtriangle/frame families.
+
+NEXT: source is NEW six-seven-posthalf-block.json:route.factors(CHOSEN),not9dd
+orunselectedvariants. Actual round234,retained25,newROUND345 now available;
+FIRST exact ACTUAL ORDERED product/commonPCpattern BEFORE any gather. No such
+new cluster orneededpair/order is claimed. Requirebounded actual named payoff,
+EVERYinput,donor accounting/fulljoin. Do not combine duplicate15s or expand13/35
+suppliers/exterior merely to add rows. Both125 loan petals and odd exterior stay.
+
+26focused block/outer/intersection/point-pushing tests pass,including6new cases;
+final6 rerun after finalmetadata. Four source-exact panels rendered/visually
+inspected;exactly4supportSVGs differ. ALL56six-point grids/336dots UNNUMBERED
+24px/1.68px;390px gallery4panels/nooverflow. JSON887964bytes,
+SHA256ab4e534c03b46fc72ae8db76742fd6498a297e78eb24daf2ce9ac80a80b88587. Preferred proof/payload/PDF,prioraudits/visuals/archives
+and8Boundaries.pdf untouched. See analyze_posthalf_block.py/itsMD/JSON and
+posthalf-block-comparison/index.html. No new preferred graphical phase.
+
 ## October 28: exact two-pair lantern target and13 supplier; no move applied
 
 New analyze_posthalf_lantern_targets.py audits SELECTED posthalf-outer endpoint.
