@@ -12,6 +12,14 @@ def pictures():
 
 def picture(stage,title):
     svg=panel(stage,title).replace('two actual half twists','no half twists').replace('Gold = half-twist arc.','Highlight = lantern factors.')
+    # Python3.12 uses compensated float summation; keep this new panel's
+    # OUTER canvas dimension byte-stable with older supported runtimes.
+    # Every inner source support/grid remains unchanged.
+    def outer_canvas(match):
+        value=format(float(match.group(1)),'.6f').rstrip('0').rstrip('.')
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="560" height="'+value+'" viewBox="0 0 560 '+value+'"'
+    svg,count=re.subn(r'<svg xmlns="http://www.w3.org/2000/svg" width="560" height="([0-9.]+)" viewBox="0 0 560 [0-9.]+"',outer_canvas,svg,count=1)
+    if count!=1:raise ValueError('Stabilize only the outer comparison canvas')
     for raw in stage['factors']:
         name=raw['id']
         if name in ('reflected.loan.1','reflected.loan.2','alternative.prepare.F5.1','alternative.prepare.F5.2') or name.startswith('upper.'):
