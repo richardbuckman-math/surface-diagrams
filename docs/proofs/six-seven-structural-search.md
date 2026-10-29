@@ -1,5 +1,55 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: a petal interchange reaches the actual upper-root cabled lantern
+
+posthalf_upper_cabled.contract_posthalf_upper_cabled() starts at NEWtwo-exterior
+bc1endpoint. THREE positive DISKmoves/ONEexternalcheck: SAME23 UP13 changes
+ONLY13 toexactneededclass; explicitcyclicstartchanged13; actual13,234,124
+contractbyupper-rootPCcabledlantern in commonchart(-3,-3,-2). OutputsSTANDARD
+roundO1234 andshortI24(-3)T23. EVERYactualinput/outputindividuallymatched.
+Originalnamedunitlantern,ALL3Delta4generatorreflections,TWOfullrawinternal
+cyclicCOMMONconjugations/outputinvariances andpositiveupper-rootinterchange
+retained. RawfreewordsFIRST,beforepresentations;PCbalance(1,0,1,0,0),FULLlocal
+disk/sphere/+I andFULLlocal/normalized/endpointNONABELIANkernels AND shadows.
+
+BOTHunitexteriorsstayLITERALandvisible,each-I. Remaining23,BOTHolder125loans,
+fresh45 andELEVENsharedrecordsLITERAL.13,234,124CONSUMED;donotuseafterendpoint.
+No half,negativefactor,SPHEREredraw,cap ornewphase. Allmain/atomicstatespositive,
+B5boundary^4,sphereI,total+I,localpeak7. Preferred101moves/71steps staysSOLVED
+andUNCHANGED;no usefulcompletejoin. Researchposthalf48moves/32checks,sourceprefix91,
+NOTpreferredstep91. Input14,7/62,braid148,CLOSED240/14;endpoint13,7/52,136,170/14.
+Inventories DIFFER,so descriptive totals,NOTentrywise/arc/jointminimum/wholeproofbounds.
+FirstinterchangeSAME14records:13support6->4,CLOSED240->224,max14;FOURpairsdecrease,
+TWOincrease,85equal. Actualtradeoff,NOTentrywiseuntangling;fullprefixpeaksunchanged.
+
+Prescribed125/124/45andfiveothersourcepinnedunchangedfamilies failALL72orders
+byNONZEROexactintegralcommutators,fullmatrices/bothordersretained. Onlyunchanged
+UNITselected-onlyDISKHurwitz/commonframesexcluded;outside/newcurves/substitutions/
+splitting/spherechangesNOTexcluded. Reachedchanged13bypassesunchanged234/124/13failure.
+Fresh45-on124 support13/19;ordered123loanblocksigns on234/124/134 give13/19/39 and
+7/15/25,UNAPPLIEDspecificprobes,notroutes/orbitexclusions. Donotrerunfamilies.
+
+EXACTTARGETONLY: currentSTANDARD O1234,fresh45,older25 matchD5daisyinputs0,1,3.
+ActualR125 internal(+1)roseLASTpetal matchesneeded15,withfullparent/output/local
+disk/sphere/+I/PCbalance/kernels. BOTHnormalizedkernelsempty,B3shadow(1,2,2,-1),
+BOTHreconstructionsretained. Noexpansion/transport. Bothcurrent35failneeded35
+(-4)T34,fullmeridianwitnesses. NoorderedD5cluster,thirdexterior orcompletejoin.
+
+NEXTsourceNEW six-seven-posthalf-upper-cabled.json:route.factors,NOTbc1/old
+intermediate. FIRSTtest BOTHsigns of actualR125 on CHANGED35=reflected.output.1
+vs precise canonicalneeded35,withfaithfulclass/support BEFOREanygather;neither
+probeperformed. Ifnomatch,donotgather. Ifmatched,EVERYcrossing<=20/rawfirst,
+EVERYactualorderednamedinput/output,allkernel/shadow/donoraccounting anduseful
+positivefullpayoff. Keep BOTH exteriors-I. Donotexpand15supplier/exteriormerely
+addrows. Round234/current124/old13 havebeenCONSUMED innewouter.
+
+37focusedupper/reflected/PC/point-pushing/intersectiontestsPASS,including8new;
+final8rerunaftertarget/tradeoffmetadata. Fourpanelsrendered/visuallyinspected;
+11sharedsupportSVGsidentical. ALL55six-pointgrids/330dotsUNNUMBERED24pxpitch/
+1.68pxradius;390pxgallery4panels/nooverflow. JSON263245bytes,
+SHA256000d978db627243fbc4b6ac30e37e15281e57b8ebeb80a5f92cc3af51513c5fd. Onlynewresearch/comparison/handofffileschanged;
+preferredproof/payload/PDF,prioraudits/visuals/archivesand8Boundaries.pdfuntouched.
+
 ## October29: TWO visible exteriors reached by reflected/cyclic cabled lanterns
 
 posthalf_reflected_lantern.expose_posthalf_second_exterior() starts at the
