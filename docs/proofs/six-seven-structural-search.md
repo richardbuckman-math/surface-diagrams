@@ -1,5 +1,45 @@
 # Structural search for Richard's (6,7) derivation
 
+## October 28: the spare crossing simplifies F10; full gather is only a comparison
+
+posthalf_spare.gather_posthalf_spare() starts from the SELECTED shorter-P13
+endpoint in six-seven-posthalf-petal.json. First actual F10.2 crossing is
+checked at bound20 BEFORE application. The SAME transported15 spare W' stays
+LITERALLY fixed. Only F10 changes; all other records/curves are literal apart
+from the adjacent exchange. Support13->7 in the SAME chart, max stays15,
+total109->103,braid240->232. SAME15records/105CLOSEDpairs:ALL11 changed counts
+decrease,94 stay equal,sum770->700,max34 unchanged. This is a reached selected
+1DISKmove/1check; combined post-half branch16moves/12checks,source-prefix59.
+No useful complete suffix join; preferred101moves/71steps SOLVED/UNCHANGED.
+Full-prefix peaks unchanged; CLOSED minima are not arcs/joint-cut drawings.
+
+The second crossing is ALSO bounded/reached,not a failed partial drag. Full
+spare-UP gather changes14 support8->12,endpoint15/107,braid218,CLOSED764/34.
+Relative to source11counts decrease/10increase. It is UNSELECTED. Its first
+atomic state is LITERAL selected endpoint. All raw/normalized B5 checks,
+complete sphere/+I and full endpoint NONABELIAN kernels AND shadows remain.
+Odd exterior-I stays visible; no half,negativefactor,sphere move,cap orframe.
+Pairwise P13/W' intersection2 does NOT repair the excluded unchanged135 triangle.
+
+NEW TARGET ONLY: simpler actual F10 equals chart(-1,-1,2),coreT345; its PC rose
+last petal is individually ROUND45. Full named target/balance/disk/sphere/+I
+and kernels/shadows retained. Existing W/V individually still match the first
+TWO petals of the ORIGINAL145 supplier SOURCE witness. No expansion,45 supply,
+gather,return or full join reached. P13 separates W/V; transportedW' separates
+them from the new donor. NEXT: a SPECIFIC bounded45 loan/return with every input
+matched and a useful positive payoff; check crossings BEFORE application. Do
+not add rows merely to extend research. Use SELECTED route.factors in NEW
+six-seven-posthalf-spare.json,not the full-gather alternative or c7 endpoint.
+Do not repeat either crossed direction,old triangle orders or broader scans.
+
+Three source-exact panels in posthalf-spare-comparison/index.html are rendered
+and visually inspected. ONLY F10 SVG changes in the selected endpoint; full
+gather also changes14. All45six-point grids/270dots UNNUMBERED24px/1.68px;
+390px gallery loads3panels without overflow.25 focused spare/petal/intersection/
+point-pushing tests pass,including5new cases. Preferred payload/PDF/proof,
+all prior audits/archives and8Boundaries.pdf are untouched. Reproduce with
+analyze_posthalf_spare.py/build_posthalf_spare_comparison.py.
+
 ## October 28: one petal move untangles P13 on the research branch
 
 posthalf_petal.simplify_posthalf_P13() keeps W=posthalf.supply.0 FIXED and carries
