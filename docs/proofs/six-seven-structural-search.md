@@ -1,5 +1,50 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: a bounded short-side cyclic daisy reaches THIRD visible exterior
+
+posthalf_third_exterior.expose_posthalf_third_exterior() startsNEWupper-cabled
+13recordendpoint. SEVENpositiveDISKmoves/SEVENexternalchecks: SAME125 DOWN35
+positiveaction suppliesEXACTcanonical35(support6->2); internal(+1)ACTUAL125rose
+suppliesEXACT25/15,retains12; SAME12 UP3 acrossONLYcommuting35/exterior/45;
+SAME45 DOWNext; explicitcyclicstart45; SAMEround1234 UP2 throughONLYcommuting
+old23/otherexterior; ALL5actual45,35,25,15,outer individuallymatchCYCLICD5daisy.
+ApplynamedsubstitutiontoTHIRDdistinctVISIBLESTANDARD UNITexterior.
+
+EVERYactualnamedparent/input/outputmatched. FULLinternalinverseOcyclicword
+checkedFREEFIRST,independentlyknownSTANDARD D5invariance separately. Bothlocal
+signedPCbalancesrose(-1,-1,0,0,-1),daisy(1,1,1,1,3),FULLdisk/separatesphere/+I
+andFULLlocal/normalized/endpointNONABELIANkernels AND B4shadows/reconstructions.
+ALL7externalmovesrawreconstructedBEFOREpresentations. LongO-DOWNgatherrejects
+R134candidate23 BEFOREapplication;its boundedpreviewprefixisNOTreachedroute.
+SelectedSHORTSIDEfullpreview/replayLITERAL,bothcrossedneighborsLITERAL.
+
+THREEUNITexteriorsstayVISIBLE,each-I. Residual8records boundaryONE/-I diagnostic,
+NOTnamedclosure/cap/usefulcompletejoin.125CONSUMEDinrose;NEW25/15CONSUMEDindaisy;
+ONEnew12 remains. BOTHolder125loans,old23,BOTHolderexteriors andNINEsharedrecords
+LITERAL. No half,negativefactor,SPHEREredraw,cap ornewpreferredphase. Allstates
+positiveB5boundary^4,sphereI,total+I,localpeak7. Preferred101moves/71steps stays
+SOLVED/UNCHANGED. Researchposthalf55moves/39checks,source-prefix98,NOTstep98.
+Input13,7/52,braid136,CLOSED170/14;endpoint11,7/44,126,118/14. InventoriesDIFFER,
+so descriptivetotalsNOTentrywise/arc/jointminimum/wholeproofbounds;prefixpeaksunchanged.
+Initial35change SAME13records:THREECLOSEDcountsINCREASE,75equal,total170->182;
+shorterwordNOTlesscoupling. InverseR125signonchanged35FAILS12,fullmeridianwitness/kernel,UNAPPLIED;positive
+signAPPLIEDexact2. Do notrepeatsigns,longgatherfailureorcompletedrose/transports.
+
+NEXTsourceNEW six-seven-posthalf-third-exterior.json:route.factors,NOTupper/
+bc1/oldsource. AdjacentresidualR134,old45,old35,old15 hasfour-pointPCdaisy
+incidence. FIRSTexactNECESSARYORDEREDrelation/fullcommonchart BEFOREtransport;
+NOsuchtest/chart/gather/substitution/fourthexterior/namedresidualclosureyet.
+RequireEVERYactualinput/output,rawboundedcrossings,fullkernels andusefulpositive
+completejoin. KeepTHREEoddexteriors,ALLdonorleftovers;sets alone insufficient.
+
+45focusedthird/upper/reflected/PC/point-pushing/intersectiontestsPASSincluding8new;
+new8 PASSinPython3.12 ANDAnacondaPython3.9.7. All6panelsrendered/visuallyinspected,
+9sharedsupportSVGsidentical. ALL82six-pointgrids/492dotsUNNUMBERED24pxpitch/
+1.68pxradius;390pxgallery6panels/nooverflow. Outercanvasfloatformatstableacross
+versions. JSON242674bytes,SHA2568413500df635e557c373b1243ed60b71e8711f7c77cf6f2e3142db4184de8e80. Onlynewresearch/
+comparison/handofffileschanged;preferredproof/payload/PDF,prioraudits/visuals/
+archivesand8Boundaries.pdf untouched.
+
 ## October29: a petal interchange reaches the actual upper-root cabled lantern
 
 posthalf_upper_cabled.contract_posthalf_upper_cabled() starts at NEWtwo-exterior
