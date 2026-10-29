@@ -1,5 +1,33 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: small residual-order audit; exact tail rose stays TARGET ONLY
+
+analyze_posthalf_residual_targets.py appliesZEROsource moves. ActualsourceSTILL
+2d73third-exteriorendpoint. AdjacentunchangedR134,old45,old35,old15 failALLFOUR
+exactintegralproduct/inputcommutators;fullmatrices/bothordersretained. ONLY
+unchangedUNITselected-onlyDISKHurwitz/commonframe central-PCdaisy excluded;
+outside/newcurves/substitution/splitting/spherechangesNOTexcluded. Do notretest.
+
+ActualadjacentTAILpositions7..9 older15,older25,NEW12 individuallymatchCYCLIC
+PCrose ofR125 chart(-4,-3),coreT123. FULLinternalinverse-first-petal COMMON
+conjugation/rawfreeequalityFIRST,independentlyknownparentinvariance,EVERYactual
+input/output,disk/separatesphere/+I,PCbalance,FULLNONABELIANkernels AND shadows
+retained. TARGETONLY: NOcontraction/gather/transport/newroute/geometry/phase,
+fourthexterior ornamedresidualclosure. Distinctactualinputancestriesexplicit;
+originalconsumed12NOTsilentlyrestored. THREEoddexteriors/ALLleftoversremain.
+
+NEXTwithfreshbudget: sourceSAME six-seven-posthalf-third-exterior.json:route.factors.
+Use exacttailrosewitnessfromNEWsix-seven-posthalf-residual-targets.json. Oneactual
+namedcontractioncanrecover125 IFappliedandfullcontextcertified,then seekconcrete
+orderedpositivepayoffwithremaining134block. Do notexpandjustaddrows;EVERYinput,
+rawboundedcrossing,kernel/shadowandusefulcompletejoinrequired. Preferred101/71
+staysSOLVED/UNCHANGED. No preferred-payload/PDFadoption inthissmallpre-resetshare.
+
+19focusedresidual/third/kerneltestspassincluding3new;new3passPython3.12AND3.9.
+JSON15147bytes,SHA25671df6ec31f0eb967e4dfbd0d9c712639ed1c762ca163a9f27a6a131d8e887377. Onlysixnewaudit/test/handofffiles;
+ALLpriorproof/payload/PDF/audit/visual/archivebytes and8Boundaries.pdf untouched.
+No graphicalartifact;do notrepeatunchangedbrowser/PDFchecks.
+
 ## October29: a bounded short-side cyclic daisy reaches THIRD visible exterior
 
 posthalf_third_exterior.expose_posthalf_third_exterior() startsNEWupper-cabled
