@@ -1,5 +1,7 @@
 # Interactive factorization prototype
 
+Three complete source-pinned derivations now have a separate [graphical viewer and PDFs](proofs/fibration-derivations/index.html): (6,2), (4,3) and (10,10). The imported (10,10) construction uses the original exact algebraic source; four incompatible later drawing edits are archived separately. The older twenty-route transcription lab below remains unchanged and nonclosing.
+
 The [(10,10) transcription lab](https://richardbuckman-math.github.io/surface-diagrams/lab/ten-ten/index.html)
 contains Richard's twenty supplied routes in top-to-bottom order. Run it with
 `python -m surface_diagrams.factorization_lab --seed 10-10`. Its edits preserve

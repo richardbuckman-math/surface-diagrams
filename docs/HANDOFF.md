@@ -1,5 +1,113 @@
 # Handoff: surface-diagrams
 
+## October30: complete (6,2), (4,3) and imported (10,10) derivations
+
+Richard explicitly requested all three derivations and asked to transfer the
+(10,10) work from the other project. This supersedes the old defer-(10,10)
+and continue-only-(6,7) priority. Work is on codex/fibration-derivations, based
+on public main ae6231f. All three native relations are now COMPLETE with exact
+marked-sphere identity and separately checked chosen+I, not count-only claims.
+
+The source is C:/GitHub/Planar Mapping Class Groups. Its master had NO commits;
+all exact source bytes are therefore pinned by SHA256 under
+`docs/proofs/fibration-sources/planar-mcg-2026-10-30`. Eight original source/
+figure files, provenance.json and factor-records.json are copied. Narrow -text
+attributes preserve original CRLF bytes. The foreign project was READ ONLY.
+Generated native records and small_fibration_derivations.py have NO runtime
+dependency on that project. The importer is optional and requires an explicit
+--source-root. Original sheets remain unaltered historical source images.
+
+(6,2): A=T123,B=T456,H=H14 H25 H36,r=(5,4,3,2,1). Faithful B6 checks retain
+r^3=ABH and H exchanging A/B individually, givingD6=A^2 B^2 H^2. Actual
+three-half block carry across both roots has6 raw checks, disjoint root
+commute2, then two combines. Five recorded steps/5operations/8EXTERNALchecks;
+final8factors type6/2. Support trajectory maximum9,total54,rows10. No negative
+factor, sphere substitution, fixed-last deletion or added half twists.
+
+(4,3): complete canonical four-point PCdaisy plus3internal raw interchanges;
+explicit labeled parallel-copy map with zero internal spin and ALL induced
+Q45 corrections gives R=D5 Q45^2. Full actual formal-PC balance(1,1,1,0,0)
+is computed from the full curves; no half-hole convention. A transported
+cyclic variant gives R Rvar=Q45^4 D5^2. Keep this SAME positive compensation
+on BOTH sides. Two matched half lanterns expand the LATER root first; each
+positive correction moves to LEFT across ONLY commuting ordinary roots, never
+across a half arc. Combine toQ45^4, then cancel the SAME prefix from BOTH sides
+on its own bookkeeping step, not deletion from a fixed-product fibration or
+cap. Five final raw Hurwitz checks and a matched combine give all7 actual
+inputs individually equal originalA.15steps/15ops/15EXTERNALchecks; final4
+halves/3squaredtriples, D5^2, separate sphere/+I. Localmax12,total42,rows10.
+
+(10,10): use ORIGINAL EXACT algebraic A/B/C (each B5 D5^2), assemble B,A,C,
+then three disjoint seven-factor cyclic starts from SAME21input with ALL3
+literal two-order witnesses. Full central B5 cyclic start; original source
+pulls24raw adjacent checks; two actual matching-half combines. Embed into6
+by adding a point on the LEFT; target D(2..6)^6 remains explicit, NOT central
+inB6. Actual merged pair matches saved conversionword(-3,4,5,5,4,3,1,2).
+SPHERE STEP ONLY redraws same actualT12 as complementaryO3456;factorID/power
+unchanged, local AND complete-context350-letter disk discrepancy, exact
+sphere/+I. NEXT step is EXACT DISK relation T56 O3456=T456^2 H34routed H34.
+Its complete proof derives from canonicalPC half lantern, explicit internal
+raw cyclic word, labeled parallel copy with everyQ56 correction, and1internal
+rawHurwitz check; EVERY actual input/output individually matched. ALL17outside
+records literal through these last two operations. Final20factors10/10, sphere
+identity/chosen+I.11recordedsteps/13individualops/24EXTERNALchecks;internal
+named-rule checks separate. Localmax16,total135,rows21.
+
+CRITICAL IMPORT SCOPE: source later edited4half arcs at positions6,13,19,20.
+These are FOUR DIFFERENT disk classes; all21 complete faithful comparisons
+and first-meridian witnesses retained. Edited final lift is
+[[-36,83,83,-112],[-8,17,16,-24],[-23,54,55,-72],[37,-83,-83,113]],NOT+I.
+Those drawing edits remain UNADOPTED archives. The ORIGINAL algebraic source
+supports the SAME source transports and selected pair, so its completed
+construction is valid. Existing src/surface_diagrams/ten_ten.py is a THIRD,
+older20-route dictation; its nonclosure witness,F7clarification,lab/sessions/
+exports are UNCHANGED. Do not call it repaired by product-preserving edits.
+No literature fibration identification or framed section lift is inferred.
+
+ARTIFACTS: docs/proofs/fibration-derivations/index.html and3individualHTML
+viewers,3fullJSONcertificates,3precalculateddisplayJSONs,3readableMDproofs,
+3finalSVGs,sharedviewerJS/CSS and3PDFs. Native source/tests and4builders/importer
+are self-contained. Homepage/catalog/study links and documentation distinguish
+the new exact type relations from literature curve-chart/section claims.
+
+PDFs: output/pdf/derivation-6-2.pdf9pages/hash66766a8d5956dd38521b7fa5998da1c3cfec4f08c5fffc359c68f7175dfead38;
+derivation-4-3.pdf19pages/hashd175dcaa41f5ae2c85ce6f17a1efa1421a22410969dbdcb6d63c4ef4ab3436f0;
+derivation-10-10.pdf24pages/hash443bf87f891424b2d68b61b2a05d012c8963e5d1f69dc3b4bdebc975571ee47c.
+ALL52pages rendered/visually reviewed; final legend covers re-rendered, remaining
+49page bodies pixel-identical to reviewed versions.396factor grids/2376dots,
+ALL UNNUMBERED18ptpitch/1.26ptradius; connected braid style retained. Actual PDF
+audits9/19/24pages,5/15/13unique printed operation labels,42/98/256grids,all
+Letterportrait. Public copies equal outputbytes. PDFskill marker was called
+SUCCESSFULLY ONCE for this NEW create/expected3/pdf operation. Do NOT rerun it.
+The earlier PR4 PDF marker is separate and already complete.
+
+Chrome verifies ALL34mainstates/ALL47externaladjacentstates,one cold payload
+per proof,24px/1.68pxunnumbered grids with aligned actual dots,connected braid
+row heights,previous/next,allthree390pxmobilelayouts/noBODYoverflow. Wide
+support rows scroll INSIDE diagrams. ALL3finalSVGs rendered/visually inspected;
+compensation, sphere redraw and followingdisk step separately inspected.
+42focusedtests PASS Python3.12ANDAnaconda3.9.7 including13new; final13 rerun
+aftersource-PCbalance validation andsource-edit/outside-record assertions.
+Final local site build/linkcheck PASS. No new mathematical probes needed.
+Finish commit/push/reviewPR/NEWremoteCI, then publication approval if required.
+
+PRIOR SEPARATE CHECKPOINT: draftPR4,head4affbf8d1560fc9774300c6ac21e39fd9813fb4c
+on codex/posthalf-root-carry is ATTACHED, pushTests41014326529 andPRTests
+41014433729ALLGREEN. It proposes106moves/75steps/95PDFpages for(6,7), not
+merged/published. Publicpreferred remains85source/101moves/71steps SOLVED.
+PR3 is already approved,merged,ALLGREEN/LIVEverified;never reaskPR3 approval.
+PR4's finished PDF is preserved in writablevisualizationroot/late45-review.pdf.
+Do not mix new three-derivation work into PR4 or repeat its completedchecks.
+
+Keep SAMEACTIVE six-hourautomation. Richard says keep focusing hard, but
+never redeem a resetcredit without explicit confirmation for that individual
+use. Latestfreshusage primary34%/weekly31%,onecredit;naturalrenewaloccurred,
+noassistantresetredemption. Preserve8Boundaries.pdf,ALLpriorproof/payload/PDF/
+audit/archive/labbytes and allunrelatedprojects. Do not touchFoldingPuzzles or
+ValleyGuitarhosting/privacy. New grids are individual supports,notjointcuts,
+arcintersectioncounts or whole-proofminimumclaims. Notify meaningfulverified
+newderivations/clarity/progress or requiredinput. No quota-padding.
+
 ## October29: prepared split blocks close with local support peak8
 
 New close_hybrid_split_block() starts at EXACT hybrid-rose third_exterior_route:

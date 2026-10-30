@@ -1,5 +1,7 @@
 # Sections in the genus-two factorization labs
 
+New [complete graphical relation derivations and PDFs](proofs/fibration-derivations/index.html) certify explicit types (6,2), (4,3) and (10,10). These are proofs for the specified braid factors. The literature identifications and framed section claims in this note remain separate; a type count and a closed relation alone do not identify two fibrations or certify a section lift.
+
 A positive relation in the closed genus-two mapping class group gives a
 Lefschetz fibration, but does not specify a section. A lift of its ordered
 vanishing-cycle twists to a genus-two surface with boundary, with product
