@@ -75,9 +75,9 @@ def refine_sphere_moves(source_stages,factor_certificates):
     source=tuple(dict(s,factors=tuple(s['factors'])) for s in source_stages)
     positions=tuple(i for i,s in enumerate(source) if s['kind']=='sphere_rewrite')
     if len(source)==83 and positions==(14,16,17,82):first,rechart,cap,final=14,16,17,82
-    elif len(source) in (84,86) and positions==(14,16,17,len(source)-1) and all('_source_ref' in s for s in source):first,rechart,cap,final=14,16,17,len(source)-1
+    elif len(source)>=18 and positions==(14,16,17,len(source)-1) and all('_source_ref' in s for s in source):first,rechart,cap,final=14,16,17,len(source)-1
     elif len(source)==80 and positions==(11,13,14,79):first,rechart,cap,final=11,13,14,79
-    else:raise ValueError('Use the retained79, clearer82 or explicitly referenced83/85-operation source')
+    else:raise ValueError('Use a retained source with its exact sphere positions and complete explicit source references')
     def source_ref(i):
         if '_source_ref' in source[i]:return ((source[i]['_source_file']+':') if '_source_file' in source[i] else '')+source[i]['_source_ref']
         return ('early_boundary.stages.'+str(i) if i<=17 else 'named_full_route.stages.'+str(i-3)) if final==82 else 'named_full_route.stages.'+str(i)
@@ -111,8 +111,8 @@ def refine_sphere_moves(source_stages,factor_certificates):
             outputs=(old['local_after'][0],outer)
             fs=outputs+previous['factors'][3:]
             c=Factor('canonical.R123',g,1,3);q=Factor('canonical.P34',g,3,2);t=Factor('canonical.R124',g+(-3,),1,3)
-            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if final in (82,83,85) else ()
-            if final in (82,83,85) and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
+            parent=(c,q,t);matches=tuple(dict(actual=a,pattern=b,exact_disk_equal=exact_action(a.word,6)==exact_action(b.word,6)) for a,b in zip(previous['factors'][:3],parent)) if first==14 else ()
+            if first==14 and not all(m['exact_disk_equal'] for m in matches):raise ValueError('The clearer PC lantern lost its individual input match')
             balance=tuple(sum(f.power for f in previous['factors'][:3] if j in enclosed_boundaries(f.mapping_class,6))-sum(f.power for f in outputs if j in enclosed_boundaries(f.mapping_class,6)) for j in range(1,7))
             splits=tuple(dict(factor=f,split=split_fixed_last_strand(f.word,6)) for f in previous['factors'][:3]+outputs)
             for item in splits:
@@ -292,14 +292,16 @@ def delayed_clarity_source(certificate):
 
 
 
-def preferred_clarity_source(certificate,meeting_route=None):
+def preferred_clarity_source(certificate,meeting_route=None,late45_route=None):
     """Adopt the reached lower meeting when its explicit report is supplied.
 
     Omitting that report retains the historical83-operation delayed source.
     No archived source witness is overwritten or silently reinterpreted.
     """
     delayed=delayed_clarity_source(certificate)
-    if meeting_route is None:return delayed
+    if meeting_route is None:
+        if late45_route is not None:raise ValueError('Supply the retained lower meeting before the late45 adoption')
+        return delayed
     old=delayed['stages'];route=meeting_route
     def factors(data):return tuple(factor_from_data(f) for f in data)
     raw=route['stages'];new=[];checks=[];expected=exact_action(BOUNDARY*4,5)
@@ -353,7 +355,7 @@ def preferred_clarity_source(certificate,meeting_route=None):
             if exact_action(f.word,5)!=exact_action(split.reconstructed_word,5):raise ValueError('Keep the full neighborhood kernel and shadow')
             kernels.append(dict(checkpoint=name,actual_half_or_twist=factor_from_data(entry['actual']),closed_neighborhood=f,split=split))
     stages=old[:41]+tuple(new)+old[43:]
-    return dict(stages=stages,adoption=delayed['adoption'],meeting_adoption=dict(
+    result=dict(stages=stages,adoption=delayed['adoption'],meeting_adoption=dict(
         previous_source_operations=83,source_operations=len(stages)-1,previous_interval=(40,42),current_interval=(40,44),
         previous_local_moves=2,current_local_moves=4,previous_adjacent_checks=6,current_adjacent_checks=11,
         source_file='six-seven-fixed-half-meeting.json',source_refs=tuple(s['_source_ref'] for s in new),
@@ -363,3 +365,78 @@ def preferred_clarity_source(certificate,meeting_route=None):
         geometry=dict(original_closed_sum=1094,current_closed_sum=936,original_closed_maximum=48,current_closed_maximum=36,
             original_support_maximum=17,current_support_maximum=18,actual_half_classes_changed=False,old_endpoint_geometry_restored_after_combine=True),
         scope='Two MORE local moves and five MORE adjacent checks. Keep the actual half arcs unchanged and combine them where closed-neighborhood coupling is lower. Carry their full twist afterward, restoring the old endpoint. This is a clarity choice, not a shorter proof or lower whole-proof tangle claim.'))
+
+    if late45_route is None:return result
+    return _adopt_preferred_late45(result,late45_route)
+
+
+def _adopt_preferred_late45(preferred,report):
+    """Adopt only the recomputed source-exact loan, preserving historical reports."""
+    import json
+    from dataclasses import asdict
+    from hashlib import sha256
+    from .preferred_late45 import close_preferred_late45
+    old=preferred['stages']
+    start=next(i for i,s in enumerate(old) if s['_source_ref']=='named_full_route.stages.74')
+    finish=next(i for i,s in enumerate(old) if s['_source_ref']=='named_full_route.stages.77')
+    fs=lambda entries:tuple(factor_from_data(f) if isinstance(f,dict) else f for f in entries)
+    if old[start]['factors']!=fs(report['source_factors']) or old[start]['factors']!=fs(report['route']['stages'][0]['factors']):
+        raise ValueError('The late45 source needs its LITERAL complete input join')
+    trusted=close_preferred_late45(old[start]['factors'])
+    expected=json.loads(json.dumps(trusted,default=asdict))
+    def contains(actual,wanted):
+        if isinstance(wanted,dict):return isinstance(actual,dict) and all(k in actual and contains(actual[k],v) for k,v in wanted.items())
+        if isinstance(wanted,list):return isinstance(actual,list) and len(actual)==len(wanted) and all(contains(a,b) for a,b in zip(actual,wanted))
+        return actual==wanted
+    if not contains(report['route'],expected):
+        raise ValueError('Saved flags cannot replace recomputation of every actual late45 move and named pattern')
+    current=trusted['factors'];fourth=old[finish+1]['factors']
+    combine=report['terminal_plan']['combine']
+    if fs(combine['local_before'])!=current or fs(combine['local_after'])!=fourth or fs(combine['factors'])!=fourth:
+        raise ValueError('Regenerate the combine from the ACTUAL four terminal units')
+    raw=reduce_word(product(current)+inverse_word(product(fourth)))
+    if raw or tuple(report['terminal_plan']['full_cap_discrepancy_word'])!=product(fourth):
+        raise ValueError('Keep the full historical fourth-power cap word and literal input')
+    new=[]
+    for i,item in enumerate(report['route']['stages'][1:],1):
+        stage=dict(item,factors=fs(item['factors']),_source_file='six-seven-preferred-late45.json',_source_ref='route.stages.'+str(i))
+        for key in ('local_before','local_after'):
+            if key in stage:stage[key]=fs(stage[key])
+        if i==1:
+            stage['parallel_barrier']=True
+            stage['parallel_barrier_reason']='Presentation order: lend45 only after the third exterior is visible; no algebraic noncommutation is asserted.'
+        new.append(stage)
+    combined=dict(combine,factors=fourth,local_before=current,local_after=fourth,
+                  _source_file='six-seven-preferred-late45.json',_source_ref='terminal_plan.combine')
+    stages=old[:start+1]+tuple(new)+(combined,)+old[finish+2:]
+    if stages[start]['factors']!=old[start]['factors'] or stages[-2]['factors']!=old[-2]['factors'] or stages[-1]!=old[-1]:
+        raise ValueError('The complete prefix/fourth-power/cap joins must remain literal')
+    kernels=[]
+    for stage in trusted['stages']:
+        witness=stage.get('named_pattern_witness')
+        if not witness:continue
+        actual=stage['local_before']+stage['local_after']
+        normalized=tuple(replace(f,conjugator=reduce_word(inverse_word(witness['common_chart'])+f.conjugator)) for f in actual)
+        for f in actual+normalized:
+            split=split_fixed_last_strand(f.word,5)
+            if exact_action(f.word,5)!=exact_action(split.reconstructed_word,5):raise ValueError('Retain every actual/normalized nonabelian kernel AND shadow')
+            kernels.append(dict(actual=f,split=split))
+    geometry=dict(before_maximum=6,before_total=33,before_braid_letters=96,
+        after_maximum=5,after_total=27,after_braid_letters=88,local_trajectory_maximum=6,
+        temporary_rows_before=8,temporary_rows_peak=11,temporary_total_peak=42,
+        changed_curve_ids=trusted['changed_source_ids'],all_other_six_records_literal=True,
+        all_twenty_eight_closed_pair_counts_equal=not report['changed_closed_pairs'],
+        half_classes_changed=False,whole_proof_tangle_bound_claimed=False)
+    return dict(preferred,stages=stages,late45_adoption=dict(adopted=True,
+        previous_source_operations=len(old)-1,source_operations=len(stages)-1,
+        previous_interval=(start,finish),current_interval=(start,start+len(new)),
+        previous_local_moves=finish-start,current_local_moves=trusted['graphical_operations'],
+        previous_adjacent_checks=report['old_closure_adjacent_checks'],current_adjacent_checks=trusted['adjacent_checks'],
+        source_file='six-seven-preferred-late45.json',source_refs=tuple(s['_source_ref'] for s in new)+(combined['_source_ref'],),
+        source_sha256=sha256(json.dumps(report,separators=(',',':')).encode()).hexdigest(),
+        literal_input_join=True,literal_fourth_power_join=True,unchanged_cap_stage=old[-1],
+        actual_adjacent_matches=trusted['actual_adjacent_certificates'],
+        changed_state_checks=trusted['state_sphere_lift_certificates'],
+        actual_named_point_pushing=tuple(kernels),actual_four_unit_combine=combined,
+        raw_actual_four_unit_combine_discrepancy=raw,full_cap_discrepancy_word=product(fourth),
+        geometry=geometry,scope='Five MORE source moves. Two final pair curves straighten while six other source records remain literal. The temporary donor uses eleven rows,maximum6,total42. This is a local clarity choice; historical report flags/charts remain SOURCE and all sphere words/ledger/cleanup remain separate.'))

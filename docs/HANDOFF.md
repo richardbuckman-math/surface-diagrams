@@ -1,5 +1,90 @@
 # Handoff: surface-diagrams
 
+## October30 review proposal: return the retained outer and straighten two final pair curves
+
+The public main remains ae6231f / preferred85 source operations,101 listed moves,
+71 independent steps until this new proposal is merged. PR3 is already merged,
+ALL GREEN and LIVE verified; no PR3 permission or publication work remains.
+This review work is on `codex/posthalf-root-carry`, based on ae6231f.
+
+The specific four-input short15 target from the hybrid third source FAILS all
+four integral and faithful B5 commutators and was not gathered. A different
+actual consolidated125-root carry now closes that eleven-record source in
+11 positive DISK moves/12 external checks/4 named substitutions. All three
+12/15/25 donors are restored literally; all seven shared source/late records
+stay literal; local support peak6/40/108, late8 score5/29/92,CLOSED20/2.
+Its complete research SOURCE plan113 is not the new preferred source.
+The separate report retains all failed finite targets and exact witnesses.
+
+A smaller improvement starts directly at the preferred source80, immutable
+`certificate.json:named_full_route.stages.74`. The retained four-point outer
+lends actual ROUND45 in checked internal chart(-4,1). All factors remain full
+positive twists; the inverse chart generator is not a half-twist factor. Two
+explicit cyclic starts and an actual ten-neighbor carry precede a matched full
+donor-daisy contraction that RETURNS the original outer LITERALLY. Only actual
+P24 andE2 change: support6→2 and4→2. The other SIX source records stay literal.
+ALL28 same-ID CLOSED pair counts remain equal20/2. Late8 score5/27/88 versus
+old6/33/96. Temporary donor rows8→11,total33→42,braid peak110; max stays6.
+Old3moves/2checks becomes8/14, with THREE individually matched named rules.
+All actual/normalized NONABELIAN kernels AND B4 shadows/reconstructions,
+framing balances, local disk/sphere/+I and raw bounded adjacent proofs remain.
+Three finite donor charts are fully checked and join the same late tuple:
+original power0 peaks7/42/104, chosen-1 peaks6/42/110, power-2 peaks6/48/116.
+This is local clarity, not an arc/joint-minimum/whole-proof tangle bound.
+
+The review builder now computes90 SOURCE operations,106 listed moves in75
+GENUINELY independent steps,95 portraitLetter PDF pages. First65 numbered
+steps/displayed tuples stay identical to the pinned101/71 edition. Expansion066
+is a presentation barrier. Step070 has donor-return and short24 gather from the
+SAME11-record input, disjoint intervals and literal two-order certificates.
+Source wrapper owns adopted metadata; research SOURCE flags remain false.
+Omitting the new third wrapper argument reproduces historical85/101/71 exactly.
+Refinement accepts fully explicit SOURCE refs and the early-lantern INDIVIDUAL
+input-match guard still runs at the90-operation length. Tampering regressions
+exercise actual state checks, rather than trusting saved flags.
+
+Four terminal STANDARD unit exteriors remain distinct/visible, each-I; THREE
+old exteriors literal. Actual combine has rawEMPTY, joins oldfourth power
+literally; FULL historical cap word and ALL13 sphere-discrepancy WORDS unchanged.
+Combine073/redraw074/cleanup075 stay separate; explicit LEFT ledger stays.
+No new half,negative factor,sphere move,global frame or unchosen cap. EarlierB6
+frames remain explicit, never D5^4 centrality inB6/source centrality.
+
+Pinned101/71 edition: clarity-half-meeting-certificate.json961966/hashb7d253b9;
+display-half-meeting.json2782065/hash0010fce9;six-seven-named-half-meeting.pdf
+1386358/hashd2ed78a6. Archive manifest pins exact committed index47771/hash7f1d6665
+AND original Windows-worktree index47920/hash0209fb9e; two narrow -text attributes
+preserve both. Functional half-meeting.html uses pinned payload/cert/PDF only.
+All older delayed/early/base/pure/research/archive bytes stay unchanged.
+
+New root JSON314485/hash340e6e9bd7216273ae2883d4bfe109979eb2d203f08e9313cb4f4692d46e9fc9.
+New late45 JSON749341/hash3bff842b4564dfe32d817ff9007b44fda6585a36604e9588fccc0769c83de184.
+Current clarity cert1102250/hash37b379b4f4f8fbe64841c1479075016f517a24dc10afe72466d405dbdbef5359;
+current display2805649/hashaa110decb7d55188714f2ef56aea91117beb0b9d8b40fa427be11550a07fdca8.
+Current95-page PDF1433102/hash5ef36e265020743ca0c4945eb3ff6062b63a6d22d27c9d3d40695dd54b397246.
+
+Six final comparison panels were rendered/visually inspected; SIX shared
+source/returned supportSVGs identical apart from row position.50 unnumbered
+six-point grids/300dots,24px pitch/1.68px radius. Local Chrome tests all changed
+steps066..075,106-card/75-step/13-redraw metadata, common-input step070,
+separate cap074/075,cold clarity-only fetch,archive101/71,payload/blob cache
+switching and390px body/gallery without overflow. Final59 focused tests PASS on BOTH Python3.12 AND AnacondaPython3.9.7 after
+last wording regeneration. ALL13 new/changed PDF pages rendered/visually
+inspected; other82 page bodies are pixel-identical to inspected archive pages,
+ignoring only the date/page footer. Final PDF has946 factor grids/5676dots,
+ALL2.52pt diameter/18pt pitch,106 unique move labels/75 steps/13 appendices.
+All95 pages are portraitLetter. Revised explanation/labels were rerendered and
+reviewed. Review PR/remoteCI are next. Do not claim merged or LIVE yet.
+
+No further mathematical probing in this artifact increment. Finish final
+verification, commit/push a review branch, create/attach the draft PR and check
+its NEW CI. Main publication was previously auto-review-blocked pending human
+approval; Richard's explicitPR3 approval fulfilledPR3 only. Ask for this concrete
+new review's merge/publication approval if still needed. Preserve8Boundaries.pdf.
+Richard said "Keep focusing hard. I expect a reset any time today"; continue
+useful work, keep SAME ACTIVE six-hour automation, never redeem the remaining
+reset credit without individual explicit confirmation.
+
 ## October29: prepared split blocks close with local support peak8
 
 New close_hybrid_split_block() starts at EXACT hybrid-rose third_exterior_route:

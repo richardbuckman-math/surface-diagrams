@@ -5,13 +5,13 @@ needs more moves. Sphere changes now redraw one existing arc or closed curve;
 they never include a lantern substitution or peripheral deletion.
 
 The preferred [interactive derivation](six-seven-fifty-blocks/index.html?phase=clearfull&step=0)
-and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **101 listed moves in
-71 certified independent steps**. This organization is not a mathematical
+and [PDF](six-seven-fifty-blocks/six-seven-named.pdf) contain **106 listed moves in
+75 certified independent steps**. This organization is not a mathematical
 shortening. The complete named derivation remains solved.
 
 ## A longer, clearer source
 
-The view uses an 85-operation source with the clearer early prefix and a
+The view uses a 90-operation source with the clearer early prefix and a
 delayed petal expansion. The shorter 79-operation source remains archived. At the corresponding early half-twist checkpoint, the F2
 neighborhood word has length 4 rather than 12; the total for the six half-twist
 neighborhoods is 72 rather than 80. The maximum stays 30. These are support word
@@ -33,7 +33,7 @@ local witness remain unchanged.
    diagrams and every complete disk discrepancy. Some uncorrected local redraws
    have lift -I; their corrected discrepancies have +I. No correction is dropped.
 5. Step 014 redraws the six-powered ledger curve around the remaining point.
-   Step 015 separately clears the already-peripheral curve. Steps 070 and 071
+   Step 015 separately clears the already-peripheral curve. Steps 074 and 075
    similarly separate the terminal fourth-power redraw and its cleanup. A unit
    exterior has lift -I; only the checked even powers are cleared.
 
@@ -61,7 +61,7 @@ The complete tuple joins the previous source literally at both ends of the
 changed interval. Every actual disk daisy input/output matches its retained
 source chart separately, with its signed PC balance and full nonabelian
 point-pushing kernels, shadows and reconstructions. Source witness addresses
-are explicit throughout the new 85-operation source.
+are explicit throughout the retained 85-operation lower-meeting source and the new 90-operation source.
 
 ## A lower meeting for the same final half twists
 
@@ -86,6 +86,33 @@ transport's raw free-word certificate stay separate. Complete neighborhood
 kernels AND shadows, actual half words and exact reconstructions are retained.
 The original research report and its four comparison panels remain unchanged.
 
+## A retained outer straightens the last two pair curves
+
+Near the end, the retained four-point outer lends an actual round 45 in a
+fully checked internal chart. The SAME 45 crosses all ten actual neighbors;
+a second matched daisy returns the original outer literally. Only two pair
+curves change, with support lengths 6→2 and 4→2. The other six actual records
+remain literal, and all 28 pairwise minimal CLOSED counts remain equal.
+The eight-record ending has maximum/total support 5/27 and 88 stored braid
+letters, compared with6/33 and 96. The pictures show less nested winding in
+those two curves.
+
+The temporary donor has eleven rows instead of eight, total support 42 instead
+of 33, and largest support 6. Eight disk moves/fourteen external checks replace
+three/two. The chosen internal inverse-generator chart creates no half-twist
+factor. Every actual named input/output, raw crossing reconstruction, full
+cyclic common word, signed PC balance and nonabelian kernel AND shadow is
+retained. All thirteen sphere-discrepancy WORDS and the LEFT ledger are unchanged.
+
+The first expansion is a separate presentation step066. The later donor-return
+and short 24 gather share step070 with genuine disjoint-interval independence:
+each card starts from the SAME input and both orders agree literally.
+The final four standard units remain visible until combine073, redraw074 and
+cleanup075. The entire old 101/71 edition is pinned byte-for-byte and has a
+functional [interactive archive](six-seven-fifty-blocks/half-meeting.html?phase=clearfull&step=0).
+This is a local clarity choice, not a shorter proof, arc simplification or a
+joint/whole-proof tangle bound. [Full explanation and comparison](six-seven-preferred-late45.md).
+
 ## What “in parallel” means
 
 Each numbered step contains independent edits of disjoint factor intervals.
@@ -98,8 +125,11 @@ it does not assert a simultaneous ambient isotopy of an entire joint cut system.
 
 ## Files and rebuilding
 
-- `clarity-certificate.json` retains the 99-move trace, parallel cards, complete
+- `clarity-certificate.json` retains the 106-move trace, parallel cards, complete
   redraw discrepancies, framing ledger and independence witnesses.
+- `clarity-half-meeting-certificate.json`, `display-half-meeting.json` and
+  `six-seven-named-half-meeting.pdf` pin the previous 101/71 edition exactly.
+  `clarity-half-meeting-archive.json` also pins both raw page-source byte forms.
 - `clarity-delayed-certificate.json` pins the previous99-move/70-step
   delayed-expansion presentation byte-for-byte.
 - `clarity-early-certificate.json` pins the previous 98-move early-expansion
