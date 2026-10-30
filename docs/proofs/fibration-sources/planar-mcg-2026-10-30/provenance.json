@@ -1,0 +1,58 @@
+{
+  "source_project": "Planar Mapping Class Groups",
+  "original_root": "C:\\GitHub\\Planar Mapping Class Groups",
+  "source_commit": null,
+  "source_git_state": "master had no commits; these exact untracked source bytes are pinned",
+  "imported_date": "2026-10-30",
+  "files": [
+    {
+      "source_relative_path": "src/planar_mcg/ten_ten.py",
+      "archive_relative_path": "src/planar_mcg/ten_ten.py",
+      "bytes": 13444,
+      "sha256": "7d9ad7240b7500f9929b971e72341a31b5f2a65259a5520acd60348592a75f10"
+    },
+    {
+      "source_relative_path": "src/planar_mcg/examples.py",
+      "archive_relative_path": "src/planar_mcg/examples.py",
+      "bytes": 5751,
+      "sha256": "0175565c7205bfa722f7845b7867886b0532958ad4acf76e591f5818c8d0fd4d"
+    },
+    {
+      "source_relative_path": "src/planar_mcg/constructors.py",
+      "archive_relative_path": "src/planar_mcg/constructors.py",
+      "bytes": 3872,
+      "sha256": "35aed2cf2ce667ce4f6fc38a31b154b3176fe2fd9bf7ebfd29b8ed2de4798431"
+    },
+    {
+      "source_relative_path": "scratch/generate_four_three_derivation_sheet.py",
+      "archive_relative_path": "scratch/generate_four_three_derivation_sheet.py",
+      "bytes": 12796,
+      "sha256": "e627a0f6d6854fa2572caaf13f0e3c2f6d89093c31cf14d44f43323006d9dbcf"
+    },
+    {
+      "source_relative_path": "scratch/generate_tenten_half_lantern_figures.py",
+      "archive_relative_path": "scratch/generate_tenten_half_lantern_figures.py",
+      "bytes": 16292,
+      "sha256": "958dd9415cf453899fa4c6a957eb57342f873d8706a564c146ad9acca3135adb"
+    },
+    {
+      "source_relative_path": "scratch/generate_tenten_half_lantern_stepwise.py",
+      "archive_relative_path": "scratch/generate_tenten_half_lantern_stepwise.py",
+      "bytes": 12562,
+      "sha256": "711fa0c6dd916d96b72afa2afe831048e767024b4299197294d1784410510530"
+    },
+    {
+      "source_relative_path": "docs/assets/tenten-half-lantern.png",
+      "archive_relative_path": "docs/assets/tenten-half-lantern.png",
+      "bytes": 327347,
+      "sha256": "9eddd1a14dd8f9b953287e7fe803ae60627f0b912b05648e88b79d6a518efd27"
+    },
+    {
+      "source_relative_path": "docs/assets/four-three-daisy.png",
+      "archive_relative_path": "docs/assets/four-three-daisy.png",
+      "bytes": 1291777,
+      "sha256": "2d9efbd70913b2bb4f6c1cedcdc8eedee2aa800b1c9804f95df7d7d6869cf34c"
+    }
+  ],
+  "scope": "The reviewed drawing edits are imported as unadopted historical source, not assumed equal to the original exact construction. Native derivations separately verify every used word. No runtime dependency on the old project."
+}

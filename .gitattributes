@@ -1,3 +1,5 @@
 *.pdf binary
+/docs/proofs/fibration-sources/planar-mcg-2026-10-30/** -text
+/src/surface_diagrams/_fibration_source_records.py text eol=lf
 /docs/proofs/six-seven-fifty-blocks/half-meeting-index-source.html -text
 /docs/proofs/six-seven-fifty-blocks/half-meeting-index-worktree-source.html -text

@@ -1,5 +1,7 @@
 # Surface diagrams
 
+Complete graphical derivations for [(6,2), (4,3) and (10,10)](docs/proofs/fibration-derivations/index.html), with PDFs and full exact certificates, are now included. The (10,10) construction is imported from the other project; its original algebraic source and later drawing edits are kept distinct.
+
 The [interactive factorization prototype](docs/FACTORIZATION_LAB.md) opens with
 `python -m surface_diagrams.factorization_lab`: drag factors through Hurwitz moves,
 inspect a continuous braid, split checked twists, combine, and undo. Use
