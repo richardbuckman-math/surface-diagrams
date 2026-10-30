@@ -1,5 +1,66 @@
 # Structural search for Richard's (6,7) derivation
 
+## October30: new (10,10) fiber-sum question and isomorphism invariant
+
+Richard asks whether the checked imported(10,10) can be connected to SOME
+(6,7), with the Lefschetz fibration itself as the object. The precise reverse
+question is a fiber-sum decomposition(6,7)#_phi(4,3) up to fibration isomorphism.
+It is OPEN HERE: no complete reverse equivalence and no indecomposability proof.
+This NEW task supersedes the earlier wait-for-next-priority checkpoint.
+
+The published20-factor source is fibration-derivations/10-10.json:factors,
+hash2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e.
+New ten_ten_summand_audit.py,analyze_ten_ten_summand.py,8regressions and
+proofs/ten-ten-fiber-sum-audit.md/.json apply ZERO moves. All210 literal
+four-half subproducts have nonidentity fullSp4 matrices, excluding25200
+unchanged order-preserving seven-factor subsets, NOT their Hurwitz orbit.
+
+Actual vanishing-cycle lattice rank3 is saturated; coinvariantsZ, unique
+primitive common fixedvector(0,-1,1,0). On v-perp/Zv, actual parabolic widths
+are1,9,1,1,1,1,16,4,1,1 (total36). Full integral quotient basis/conjugators
+are retained. SL2Z abelianizationmod12 forces ANY possible4,3summand's FOUR
+nonseparating factors to have widths9,1,1,1. Thus the unique9-cycle B.3 is
+required; the new lantern's16/4 cycles belong on the6,7side. This necessary
+condition IS invariant under Hurwitz/global conjugation. It is NOT sufficient.
+
+Nakamura Section3's explicit homology consequences span allZ4, giving zero
+coinvariants. Hence that published monodromy and our imported one are NOT
+Hurwitz-equivalent up to global conjugation, so they do not define isomorphic
+fibrations. This does NOT compute our total-spaceH1/pi1 or any section lift;
+a non-section group presentation can have an extra capping relation. Do not
+transfer named literature identifications or count-based uniqueness claims.
+Huang2602.20451 identifies BK/Hamada/Xiao4,3examples, not every4,3fibration.
+Akhmedov-Monden1809.09542 forces6,7+4,3 types CONDITIONALLY on decomposition.
+
+One necessary homology target uses inverse adjacent-nonseparating interchanges
+at0-basedhalfpositions4 then5; selected halfIDs B.3,A.6,C.5,C.6. The three
+actual gap lifts are REJECTED BEFORE APPLICATION at27,28,46(bound20); raw
+reconstruction and every normalized prefix class-match remain. Prefixes are
+UNAPPLIED, not reached/gathered. An additional unselected unbounded lift has
+raw peaks16,16,27,47,140 and 120possible separating triples:23nonidentity
+sphere-chain witnesses,97UNKNOWN at50000,zero certified identities. That
+larger diagnostic is retained only in writablevisualizationroot as
+ten-ten-unapplied-class-target.json and its script; NEVER treat unknown as
+inequality or retry the same failed gap/sign family as new research.
+
+Next UNPERFORMED direction: a third actual Hurwitz preconditioner can change
+curves without changing this width restriction. First seek a precise new
+bounded actual seven-factor sphere/+I identity; only then gather and certify
+all crossings/context changes/full kernels/shadows and residual6,7 closure.
+No preconditioner or complete join is selected yet. No lantern substitution
+may be called a fibration isomorphism. A resulting6,7 need not be equivalent
+to our original6,7; that would require a separate Hurwitz/global certificate.
+
+Eight new tests PASS Python3.12 AND Anaconda3.9.7; no graphics/PDF changed.
+All three published proofs and preferred6,7(90source/106moves/75steps) remain
+UNCHANGED; main publicationff7eba5/PR4+5 already ALLGREEN/LIVEverified.
+Research branchcodex/ten-ten-fiber-sum-audit is separate; finish focused
+integration/build/commit/push/reviewPR/newCI. No new main-publication approval
+has been requested. Preserve8Boundaries.pdf and all unrelated projects.
+Keep SAME ACTIVEsix-hourautomation; the attempted completed-task deletion
+was automatic-review-rejected because Richard said keep active. Do NOT retry
+that deletion. The new research task now supplies a continuing purpose.
+
 ## October30: publication approved for PR4 and PR5
 
 Richard explicitly approved publication of BOTH PR4 and PR5. PR4 is merged as
