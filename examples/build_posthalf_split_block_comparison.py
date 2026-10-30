@@ -1,0 +1,28 @@
+"""Six source-exact panels for the prepared split-block closure."""
+from pathlib import Path
+import json
+from examples.build_posthalf_hybrid_rose_comparison import picture
+from examples.build_half_neighborhood_comparison import write_utf8
+ROOT=Path(__file__).resolve().parents[1]
+OUT=ROOT/'docs/proofs/posthalf-split-block-comparison'
+
+def pictures():
+    r=json.loads((ROOT/'docs/proofs/six-seven-posthalf-split-block.json').read_bytes())
+    s=r['route']['stages']
+    return r,(('before','Common input: three visible exteriors',s[0]),
+              ('preparation','Actual inverse preparation: two short actors',s[10]),
+              ('older','Older late closure: maximum support12',r['old_late_stage']),
+              ('opposite','Full opposite block: late35 winds more',r['opposite_late_stage']),
+              ('split','Split blocks: late maximum support8',s[-2]),
+              ('after','Four standard unit exteriors remain',s[-1]))
+
+def build():
+    r,items=pictures();OUT.mkdir(exist_ok=True)
+    figures=[]
+    for name,title,stage in items:
+        write_utf8(OUT/(name+'.svg'),picture(stage,title))
+        figures.append('<figure><figcaption>'+title+'</figcaption><a href="'+name+'.svg">Open full-size SVG</a><img src="'+name+'.svg" alt="'+title+'"></figure>')
+    html="""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Split blocks: a lower local support peak</title><style>*{box-sizing:border-box}body{margin:0;background:#eef3f6;color:#18344a;font:16px/1.5 system-ui}main{max-width:1200px;margin:auto;padding:20px}.panels{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0;background:white;padding:10px;min-width:0}img{width:100%;height:auto;display:block}figcaption{font-weight:700}.scope{border-left:5px solid #b9872d;background:#fff3cf;padding:14px}a{color:#086aa2}@media(max-width:850px){.panels{grid-template-columns:1fr}main{padding:12px}}</style><main><h1>Split the two blocks and keep late35 short</h1><p class="scope">Complete research comparison only. The preferred complete 101-move/71-step derivation remains unchanged. All closures start at the SAME reached eleven-record third-exterior tuple and end at four separately visible standard unit exteriors.</p><p>The actual R134 then round12 block moves DOWN across45, an exterior,15 and25. The actual old23/I24 block moves UP across the other exterior and35. For the last block, an explicit inverse interchange prepares two actors with support length2; after transport a separate interchange undoes the preparation. The restored old23 has the same faithful B5 class in a different normalized presentation. It is then consumed in the individually matched four-input D4 daisy.</p><p>A single commuting exterior carry exposes all five inputs of the final modified D5 daisy. Its named proof retains six canonical internal interchanges, every actual input/output, full framing balance, full disk discrepancy, separate sphere/lift certificate, and complete nonabelian kernel AND shadow. No local product recognition replaces those individual matches.</p><p>The prepared closure takes18 positive disk operations and18 external adjacent checks. Its main-and-external-atomic support-word peak is8, versus18 for the older full-block closure and12 for the opposite full-block closure. The unprepared split closure takes16/16 with peak12; the two extra actual preparation/undo moves lower that peak to8 and rejoin the SAME late tuple literally after the donor inputs are consumed. The forward preparation predicts a first35 crossing of length28 and is rejected before application; it is not another reached route.</p><p>The late eight-record maximum/total support and stored braid lengths are: older12/51 and108 letters; opposite12/49 and134; split8/41 and120. Four outside pair supports are old10,12,6,4; opposite6,8,4,12; split6,8,4,4. The first three split classes match the shorter opposite branch, while35 matches the shorter older branch. All28 late CLOSED pair counts agree under an explicit outer-ID alignment, with sum/maximum20/2.</p><p>These are chart-specific support comparisons. Individual pictures and pairwise minimal CLOSED intersections are not arc crossings, jointly minimal drawings or whole-proof tangle bounds. Stored braid lengths can rise while support words fall. All halves were already gone at the input.</p><p>All three earlier odd exteriors stay literal. Four terminal standard units remain visible, each-I. The actual four-unit combine has empty raw discrepancy and the historical fourth-power cap word is unchanged. Combine, FOURTH-power sphere redraw and cleanup remain separate and unapplied. No half, negative factor, sphere move, cap or global frame is introduced.</p><p>The50 six-point grids/300 dots are UNNUMBERED at24px pitch and1.68px effective radius.</p><p><a href="../six-seven-posthalf-split-block.json">Exact routes, source hashes and full kernels</a> · <a href="../six-seven-posthalf-split-block.md">Research explanation</a> · <a href="../six-seven-fifty-blocks/index.html?phase=clearfull&amp;step=0">Unchanged preferred derivation</a></p><div class="panels">"""
+    write_utf8(OUT/'index.html',html+''.join(figures)+'</div></main></html>')
+    print('Saved six panels,50 six-point grids,300 unnumbered points')
+if __name__=='__main__':build()

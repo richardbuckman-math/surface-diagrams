@@ -1,5 +1,49 @@
 # Structural search for Richard's (6,7) derivation
 
+## October29: prepared split blocks close with local support peak8
+
+New close_hybrid_split_block() starts at EXACT hybrid-rose third_exterior_route:
+11records/THREEexteriors. ActualR134/round12 DOWN over45,exterior,15,25;
+actualold23/I24 UP onlyoverotherexterior/35. INVERSE localpreparation makes
+TWOactors support2;first35 crossing6;explicitUNDO restoresB5classes beforeD4.
+Old23's normalizedpresentation is DIFFERENT,not a literal sourcejoin. Prepared
+actors remainliteral duringtransport;allTHREEexteriorsremainliteral throughout.
+Unpreparedsplit16moves/16externalchecks haspeak12. CHOSENprepared18/18 has
+main/externalatomic supportpeak8 andLITERALsame late8-recordtuple afterD4.
+Forwardprep predictsfirst35 support28 and isREJECTED BEFOREapplication;no prefix.
+
+Bothnamed substitutions retain EVERYactualinput/output:four-inputD4commonchart
+(1,-3,-3,1,2,3,1,2,1);exteriorDOWN4;five-inputmodifiedD5 inFULLinverseoriginal
+rightblock chart. SIXcanonicalinternalinterchanges retained. FullsignedPCbalance,
+localdisk/separatesphere/+I,FULLactual/normalizednonabeliankernels AND B4shadows/
+reconstructions retained. Everycrossing prebounded20/rawreconstructed FIRST.
+ExplicitrawcyclicCOMMONinverseprefix/freeword equality;no assumedcentrality.
+
+Late8records8/41support,120braid,CLOSED20/2 versusolder12/51,108 andopposite
+12/49,134. Pairwordlengths old10,12,6,4;opposite6,8,4,12;split6,8,4,4. FIRST
+THREEclasses equalshorteropposite;35 equalshorterold. ALL28CLOSEDpairsidentical
+underexplicitouter-ID-onlyalignment. This islocalchartclarity,notarc/jointminimum/
+wholeprooftanglebounds. Trajectorypeakmax/total8/50,braid130. FOURterminalD5
+unitsvisible,each-I;ID-onlyhistoricaljoin,actualcombine rawEMPTY,oldcapinput/
+FULLwordunchanged. Combine/fourthpowersphereredraw/cleanup separateUNAPPLIED.
+No half,negativefactor,sphere,cap orglobalframe. Preferred101/71SOLVED/UNCHANGED.
+Researchposthalf75operations/56externalchecks,source118atfourD5,completeSOURCE
+PLAN120;NOrefinedlisted/parallelcount. EarlyB6frames remainexplicit.
+
+Newmodule/analyzer/builder/test/proofJSON+MD/sixSVGs+index andtwohandoffs ONLY.
+FinalJSON677286bytes,SHA2569c0a4498c3dcf45111628094601daccf0e549332028de3412e06a20ad3e43ec7. 26focusedtests PASS;
+final7newPASS Python3.12AND3.9 afterfinalregeneration andmetadata. ALLsixpanelsrendered/
+visuallyinspected;50sixpointgrids/300dotsUNNUMBERED24pxpitch/1.68pxradius;local
+390px6images/nooverflow. Allpriorproof/payload/PDF/audit/graphic/archivebytes
+anduntracked8Boundaries.pdf untouched. Prior27f4595Tests40915726502 isALLGREEN;
+its sevenLIVEfiles andDocumentation40915726525 alreadyverified;do notrepeat.
+
+The split direction,two prep probes,unprepared16/16 andchosen18/18 closure are
+NOWCHECKED. Do not rerun these asnewresearch. Finishthischeckpointpublication
+beforeanotherincrement. Richard said"Keep focusing hard. I expect a reset any
+time today";freshsharedlimits guide usefulblocks,notdummywork/resetredemption.
+No further supplier/gather/substitution orpreferredadoption is yet claimed.
+
 ## October29: opposite ordered block completes a lower-peak local closure
 
 New `close_hybrid_opposite_block()` starts at the EXACT reached eleven-record
