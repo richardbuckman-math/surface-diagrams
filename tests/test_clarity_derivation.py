@@ -18,7 +18,9 @@ class ClarityDerivationTests(unittest.TestCase):
                 if k in t:t[k]=tuple(factor_from_data(f) for f in t[k])
             return t
         cls.meeting=json.loads((cls.folder.parent/'six-seven-fixed-half-meeting.json').read_text(encoding='utf-8'))
-        cls.preferred=preferred_clarity_source(cls.raw,cls.meeting);cls.source=cls.preferred['stages']
+        cls.meeting_preferred=preferred_clarity_source(cls.raw,cls.meeting)
+        cls.late45=json.loads((cls.folder.parent/'six-seven-preferred-late45.json').read_text(encoding='utf-8'))
+        cls.preferred=preferred_clarity_source(cls.raw,cls.meeting,cls.late45);cls.source=cls.preferred['stages']
         cls.result=refine_sphere_moves(cls.source,cls.raw['early_boundary']['chart']['factor_certificates'])
         cls.stages=cls.result['stages'];cls.rounds=parallel_rounds(cls.stages)
 
@@ -112,7 +114,7 @@ class ClarityDerivationTests(unittest.TestCase):
 
     def test_the_preferred_longer_prefix_has_a_simpler_F2_arc_in_this_chart(self):
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'));s=d['summary'];g=s['geometry_preference']
-        self.assertEqual((s['source_operations'],s['archived_source_operations']),(85,79))
+        self.assertEqual((s['source_operations'],s['archived_source_operations']),(90,79))
         self.assertEqual((g['shorter79']['lengths']['F2'],g['clearer82']['lengths']['F2']),(12,4))
         self.assertEqual((g['shorter79']['total'],g['clearer82']['total']),(80,72))
         self.assertEqual((g['shorter79']['maximum'],g['clearer82']['maximum']),(30,30))
@@ -122,11 +124,11 @@ class ClarityDerivationTests(unittest.TestCase):
         c=json.loads((self.folder/'clarity-certificate.json').read_text(encoding='utf-8'))
         self.assertEqual(json.loads(json.dumps(self.stages,default=asdict)),c['stages'])
         self.assertEqual(json.loads(json.dumps(self.rounds,default=asdict)),c['parallel_rounds'])
-        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(101,71,13))
+        self.assertEqual((len(self.stages)-1,len(self.rounds),self.result['sphere_redraw_moves']),(106,75,13))
         self.assertEqual(c['summary']['source_sha256'],hashlib.sha256((self.folder/'certificate.json').read_bytes()).hexdigest())
         d=json.loads((self.folder/'display-clear.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(d['routes']['clearfull']),72)
-        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),101)
+        self.assertEqual(len(d['routes']['clearfull']),76)
+        self.assertEqual(sum(len(s.get('parallel_moves',())) for s in d['routes']['clearfull']),106)
         self.assertEqual(self.raw['named_full_route']['summary']['graphical_steps'],79)
         self.assertTrue(all(not r['word'] for r in d['rows'] if r.get('peripheral')))
 
@@ -204,7 +206,7 @@ class ClarityDerivationTests(unittest.TestCase):
         # external meeting report as a different archived source witness.
         old=preferred_clarity_source(self.raw)
         self.assertEqual(len(old['stages'])-1,83)
-        self.assertEqual(old['stages'][:41],self.source[:41]);self.assertEqual(old['stages'][42]['factors'],self.source[44]['factors']);self.assertEqual(old['stages'][43:],self.source[45:])
+        self.assertEqual(old['stages'][:41],self.source[:41]);self.assertEqual(old['stages'][42]['factors'],self.source[44]['factors']);self.assertEqual(old['stages'][43:],self.meeting_preferred['stages'][45:]);self.assertEqual(self.source[:81],self.meeting_preferred['stages'][:81])
 
     def test_external_meeting_certificates_do_not_replace_actual_state_and_join_checks(self):
         from copy import deepcopy

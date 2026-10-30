@@ -27,7 +27,10 @@ def build():
             for f,j in zip(converted(raw)['factors'],view['factors']):pool[f]=(owner,owner['rows'][j])
     meeting_path=folder.parent/'six-seven-fixed-half-meeting.json';meeting=json.loads(meeting_path.read_text(encoding='utf-8'))
     if meeting['source_archive_sha256']!=hashlib.sha256(original).hexdigest():raise ValueError('Use the pinned source-exact meeting report')
-    preferred=preferred_clarity_source(c,meeting);source=preferred['stages']
+    late_path=folder.parent/'six-seven-preferred-late45.json';late=json.loads(late_path.read_text(encoding='utf-8'))
+    if late['source_archive_sha256']!=hashlib.sha256(original).hexdigest() or late['source_meeting_sha256']!=hashlib.sha256(meeting_path.read_bytes()).hexdigest():raise ValueError('Use the pinned source-exact late45 report')
+    preferred=preferred_clarity_source(c,meeting,late);source=preferred['stages']
+    if preferred['late45_adoption']['source_sha256']!=hashlib.sha256(late_path.read_bytes()).hexdigest():raise ValueError('Keep the exact external late45 source bytes')
     def half_score(records):
         fs=[factor_from_data(f) for f in records];values={f.id:len(supported_class(f.mapping_class,6)) for f in fs if f.half}
         return dict(lengths=values,total=sum(values.values()),maximum=max(values.values()))
@@ -78,9 +81,11 @@ def build():
     summary=dict(source_operations=len(source)-1,archived_source_operations=79,geometry_preference=preference,listed_moves=refined['clarified_moves'],parallel_steps=len(rounds),
         genuine_sphere_redraws=refined['sphere_redraw_moves'],sphere_redraws_mix_substitutions=False,
         framing_ledger_explicit=True,framing_corrections=6,peripheral_cleanup_separate=True,lower_half_meeting=preferred['meeting_adoption']['geometry'],
+        late45_return=preferred['late45_adoption']['geometry'],previous_preferred_source_operations=85,previous_preferred_listed_moves=101,previous_preferred_parallel_steps=71,
+        late45_source_sha256=hashlib.sha256(late_path.read_bytes()).hexdigest(),
         priority='Clarity and less tangled geometry before smaller step counts.',mathematical_shortening_claimed=False,
         source_sha256=hashlib.sha256(original).hexdigest())
-    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='preferred_clarity_source: delayed daisies and lower fixed-half meeting',delayed_daisy_adoption=preferred['adoption'],lower_half_meeting_adoption=preferred['meeting_adoption'],
+    certificate=dict(summary=summary,stages=stages,parallel_rounds=rounds,source_certificate='certificate.json',source_route='preferred_clarity_source: delayed daisies, lower fixed-half meeting, and returned45 late clarity',delayed_daisy_adoption=preferred['adoption'],lower_half_meeting_adoption=preferred['meeting_adoption'],late45_adoption=preferred['late45_adoption'],
         scope='Parallel means independent factor-interval edits with literal two-order certificates; it does not assert a simultaneous ambient isotopy of a joint cut system. The framing ledger is multiplied on the left and is never silently discarded.')
     (folder/'clarity-certificate.json').write_text(json.dumps(certificate,default=asdict,separators=(',',':')),encoding='utf-8')
     payload=dict(routes=dict(clearfull=shown),rows=rows,supports=supports,braids=braids,summary=summary)

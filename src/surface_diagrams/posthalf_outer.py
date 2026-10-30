@@ -21,7 +21,7 @@ def _source(factors):
     return fs
 
 
-def _certify(r):
+def _certify(r,exterior_id='posthalf.exterior'):
     states=[];adjacent=[]
     for i,s in enumerate(r.stages):
         for j,a in enumerate((s,)+s.get('atomic_steps',())):
@@ -34,7 +34,7 @@ def _certify(r):
     splits=tuple(dict(actual=f,split=split_fixed_last_strand(f.word,5)) for f in r.factors)
     for p in splits:
         if exact_action(p['actual'].word,5)!=exact_action(p['split'].reconstructed_word,5):raise ValueError('Keep full nonabelian kernels AND shadows')
-    exterior=next(f for f in r.factors if f.id=='posthalf.exterior');minus=tuple(tuple(-x for x in row) for row in IDENTITY)
+    exterior=next(f for f in r.factors if f.id==exterior_id);minus=tuple(tuple(-x for x in row) for row in IDENTITY)
     if homology_action(exterior.word)!=minus:raise ValueError('Keep the visible odd exterior')
     return dict(stages=tuple(r.stages),factors=r.factors,graphical_operations=len(r.stages)-1,adjacent_checks=len(adjacent),actual_adjacent_certificates=tuple(adjacent),state_sphere_lift_certificates=tuple(states),endpoint_point_pushing=splits,before_score=_score(r.stages[0]['factors']),after_score=_score(r.factors),exterior=exterior,exterior_chosen_lift=minus,peak_support_word=max(s['score']['max_support_word'] for s in states),all_factors_positive=True,disk_action_verified=True,boundary_power=4,half_factors=0,negative_factors=0,sphere_moves=0,exterior_caps=0,public_replay_changed=False,useful_complete_join_reached=False)
 
