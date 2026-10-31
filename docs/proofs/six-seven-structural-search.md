@@ -1,3 +1,54 @@
+## October31: full homological connection, particular curve lift excluded
+
+Richard's reverse fiber-sum question remains OPEN at the fibration level.
+New ten_ten_homology_connection.py gives an explicit connection in Sp4(Z)
+from the EXACT published20 factors to the ORIGINAL13-factor(6,7) plus a
+conjugate of the checked(4,3). All20 matrices remain in every one of134
+formal adjacent matrix Hurwitz checks; one common integral symplectic
+conjugation finishes the match. These are MATRIX checks, not134 bounded
+geometric moves or a new preferred route. Source pin remains
+2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e.
+Both block lattices are saturated rank2, with symplectic areas3 and4.
+Every actual target matrix individually matches; C4,C6 and full integral
+relative gluing G=C6*C4^-1 are retained, with complete symplectic checks.
+No actual curve gather, new(6,7), section lift or fibration isomorphism.
+
+A new PURE marked-sphere linking character resolves the SAME previously
+unselected unbounded class target. For distinct a,b,c,d,
+chi=L_ab+L_cd-L_ac-L_bd. The sphere relation and full-twist quotient have
+vertex-star/all-ones linking vectors, so chi annihilates their entire
+normal closure. A nonzero value PROVES nonidentity on the marked sphere;
+zero is INCONCLUSIVE and says nothing about the central spherical braid
+or genus-two lift sign. Source for the presentations is Bellingeri's
+lecture notes, linked in the new readable proof.
+
+ALL120 choices of three of the saved target's ten separating factors now
+have nonzero characters, despite fullSp4 productI. This resolves the old
+23nonidentity/97UNKNOWN family with a DIFFERENT quotient, without raising
+word bounds. Those raw historical UNKNOWN flags remain untouched. The
+particular B.1/B.2/B.4 choice has chi(1,2,3,5)=6. The five known unapplied
+crossings are only reconstructed algebraically as input to the character;
+they are NOT applied, newly selected or recounted as geometric progress.
+General changed half classes/separators/Hurwitz/global decompositions
+remain unexcluded. The homological connection does NOT lift via this
+particular saved curve target. Do not replay these120 words as open cases.
+
+New sphere_linking.py, native connection, reproducible builder,7regressions
+and ten-ten-homology-connection.md/.json preserve every prior proof,
+certificate, graphic, PDF, viewer and archive. No new graphics/PDF work.
+Research stays in draftPR6; PR4/5 approval does NOT authorize its merge.
+The source-pinned JSON is1005844bytes,
+SHA256166b99bc3d559f2e2eb3ae35f964fa06b5434924e3e9276f3f5e15b50e498193.
+No account reset redeemed. Preserve8Boundaries.pdf and SAME six-hour cadence.
+
+Next: a genuinely new candidate must pass BOTH Sp4 identity and the pure
+marked-sphere characters BEFORE expanding nonabelian sphere actions or
+selecting physical transport. No new finite candidate is selected. Do not
+repeat the failed A4 signs, erased-B localization, four single-half B
+repairs, rejected gap lifts, or this now-excluded120-word family. All
+bounded raw crossings/full contexts/kernels and residual13-factor closure
+are still required for any actual fibration equivalence.
+
 # Structural search for Richard's (6,7) derivation
 
 ## October30: new (10,10) fiber-sum question and isomorphism invariant
