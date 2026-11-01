@@ -1,3 +1,65 @@
+## November1: genuine bounded (4,3) target; extraction still open
+
+A NEW standalone seven-factor relation is complete: actual B.1 B.2 B.3
+B.4 Hstar actual C.5 C.6. SIX records are LITERAL published10-10 factors
+at zero-based positions3,4,5,6,18,19. Hstar=(sigma5^-4 sigma2^-2) C.5
+(sigma5^-4 sigma2^-2)^-1 is a positive half with exact disk support18
+and vector(1,-6,-2,-1). No current half has its Sp4 matrix. Proposed A.6
+ancestry is NOT supplied. ZERO actual20 moves/gather/residual closure.
+The reverse Lefschetz-fibration decomposition remains OPEN.
+
+Immutable original C from10-10.json:source_exact_blocks.2 embeds by adding
+a point on the LEFT. FOUR INTERNAL reference Hurwitz checks
+(4,5),(5,6),(4,5),(6,5), zero-based, have raw support maxima12,18,18,18.
+Every raw free discrepancy is EMPTY before all7 individual faithfulB6
+endpoint matches. Reference C.1/.2/.3/.4/.7 matches target B.1/.2/.3/.4/
+Hstar; C.5/C.6 match literally in the target. This is recognition, NOT
+source20 ancestry transfer. Direct proof rejects before first crossing22;
+inverse preparation previews18 then rejects106. Those prefixes are not
+selected/applied and the finite family is finished.
+
+Every chosen reference state and target have faithfulB6 product
+D(2..6)^2, separate full five-arc sphere identity and chosen+I. All30
+sphere characters vanish. Embedded D5^2 is NOT assumed central inB6.
+Complete actual/reference nonabelian kernels AND shadows/reconstructions
+remain: B6 F5 kernel, inverse-embedded B5 F4 kernel, each8letters with
+stored shadow44. Full inverse-embedding meridian checks retain literally
+vertical first strand; this is not an applied deletion/sphere move.
+Halves moving last strand retain full faithful actions, never false splits.
+
+Nearby C.2 B.1 B.3 B.4 Hstar C.5 C.6 passes Sp4/ALL30characters but
+FAILS full sphere arc(1,2), image5834letters. B.2/C.2 labeled support/
+linking equality is not disk-class equality; full meridian witness retained.
+Do not replay these two target words or internal reference proofs.
+
+New ten_ten_short_target.py, two builders,9tests, readableMD/fullJSON and
+twoSVG gallery. JSON176554bytes,SHA256
+bc349407881635661a5435a5c59f00377e8bf56484855b9830ec8dc10b827a4b.
+JSON/gallery/SVG reproduce BYTE-IDENTICALLY Python3.12/Anaconda3.9.7.
+24focused connection tests pass Python3.12; new9 pass BOTH versions.
+Both panels rendered/visually inspected; local390px2images/nooverflow/
+noerrors.14six-point grids/84dots UNNUMBERED24pxpitch/1.68pxradius.
+Target support max/total18/57, braid96; individual metrics/pictures are
+NOT arc crossings/joint minima/wholeproof bounds. Preferred106/75,
+allolderproof/certificate/graphics/PDF/archivebytes unchanged. No PDF work.
+ExistingPR6 stays DRAFT; no main merge/publication approval is inferred.
+
+The prescribed joint A.6/C.5 character relaxation was also finished in
+read-only raw data. Its rank3 space does not exceed the individual space.
+ONE necessary joint plan A.6<-B.2^-1, C.5<-B.1^2 B.4^2 passes Sp4/
+characters but exact supports668/172 exceed20, STOPPED/UNAPPLIED. No
+other joint sparse plan/order was class-tested. Do not repeat that plan.
+
+NEXT: use this exact new Hstar and SIX literal curves as the target, not
+old140support/44652support candidates. First derive an ancestry-preserving
+source20 supplier/gather with EVERY raw crossing bounded20 before applying,
+all20contexts/donors/fullkernels where applicable. Hstar copied from a
+reference C.7 is not a supplied source A.6. Do not assume unchanged source
+neighbors or that replacing A.6 alone preserves the whole product. A
+successful actual seven-block needs the residual13-factor closure and
+complete Hurwitz/global isomorphism certificate; no new lantern may be
+called an isomorphism. No new finite supplier/gather is selected.
+
 ## October31: full homological connection, particular curve lift excluded
 
 Richard's reverse fiber-sum question remains OPEN at the fibration level.
