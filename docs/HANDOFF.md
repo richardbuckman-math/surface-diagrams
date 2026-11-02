@@ -1,5 +1,60 @@
 # Handoff: surface-diagrams
 
+## November1 evening: exact B.7 conjugacy; positive supply still open
+
+NEW source_hstar_conjugacy() proves the exact Hstar is G-CONJUGATE to
+actual source B.7, faithfully in B6. This is stronger than membership,
+Sp4/characters or a finite quotient. It is NOT a reached source supplier,
+seven-factor gather, residual13 closure or reverse LF equivalence.
+
+Let a=actual B.7 at zero-based2; P=actual B.1 B.2 B.3 B.4 at3..6;
+M=actual C.5 C.6 at18,19. Exact SOURCE group conjugator
+R=M a M^-1 P^-1 has92 reduced braid letters and NINE factor occurrences:
+C.5,C.6,B.7,C.6^-1,C.5^-1,B.4^-1,B.3^-1,B.2^-1,B.1^-1.
+ALL actors are literal source records; negative powers only in conjugator.
+R a R^-1=Hstar FULL faithfulB6. The hypothetical raw half has189 stored
+letters but exact support18. These are NOT nine moves or a bound on any
+unperformed source20 trajectory. The normalized positive unit half matches
+the SAME immutable target individually. Proposed source ancestry is now
+B.7 for this proof, NOT the older A.6. Old report flags/charts stay untouched.
+
+Proof-only c=original embedded C.7 has support2 and is NOT an invented
+source actor. New faithful relations a c a=c a c, P M c=D(2..6)^2,
+D a=a D, R=(M a c)D^-1, and M c M^-1=Hstar prove the result.
+Only the explicit D/a commutation is used; never assume embedded D central
+inB6/sourceG. All7 faithful matches/fullmeridian images retained. Complete
+raw disk discrepancy, separate five-arc sphere/+I, full NONABELIAN kernels
+AND shadows/reconstructions for B6 and explicitly inverse-embedded B5 are
+saved; identity discrepancy has EMPTY F5/F4 kernels and full identity B5/B4
+shadows. Every inverse embedding checked on all meridians. Moving-last
+words retain faithful images, never false splits/deletion. No globalframe.
+
+Simply replacing source B.7 with Hstar leaves nineteen records literal but
+has NONIDENTITY fullSp4 product. That hypothetical countercheck is saved
+and UNAPPLIED. ZERO actualsource moves/changes. No donor invariance or
+whole-factorization preservation follows from individual conjugacy.
+
+New native module ten_ten_hstar_conjugacy.py, source-pinned builder,
+8regressions, ten-ten-hstar-source-conjugacy.md/.json and2handoffprefixes.
+JSON210367bytes,SHA256
+d1ce143a72d433f7ad402ec868958492a0cc396dd8dc2ab30583da4b9142a5f4.
+BYTE-IDENTICAL Python3.12/Anaconda3.9.7;32focused tests PASS3.12, new8
+PASS BOTH. No changed graphics/PDF/viewer/payload/phase or preferredproof.
+Source10-10 pin2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e;
+target pinbc349407881635661a5435a5c59f00377e8bf56484855b9830ec8dc10b827a4b.
+Both prior source/certificate bytes and all archived witnesses unchanged.
+Research stays on SAME DRAFT PR6; no new main merge/publication approved.
+
+NEXT: G-conjugacy for B.7 is now SOLVED and must not be reprobed. Need a
+SPECIFIC bounded positive Hurwitz realization of this source ancestry,
+retaining all20 contexts/donors, with every raw crossing bounded20 BEFORE
+application and raw reconstruction BEFORE normalization. Nine group-factor
+occurrences are not a gathered block. Do not assume a general G-conjugacy
+is realizable by an unchecked source route. Then require the actual seven
+inputs/gather and residual13-factor(6,7) sphere/+I closure and full Hurwitz/
+global isomorphism. No new physical supplier/gather is selected. No new
+lantern substitution as an isomorphism. Preferred106/75 remains unchanged.
+
 ## November1: genuine bounded (4,3) target; extraction still open
 
 A NEW standalone seven-factor relation is complete: actual B.1 B.2 B.3
