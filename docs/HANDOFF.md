@@ -1,5 +1,251 @@
 # Handoff: surface-diagrams
 
+## November 5 algebraic fiber sum of the imported (10,10)
+
+The imported fibration now has an exact algebraic positive Hurwitz split into
+a (4,3) and a (6,7), with identity gluing in the original marked fiber.
+See the [proof](proofs/ten-ten-algebraic-fiber-sum.md) and its
+[certificate](proofs/ten-ten-algebraic-fiber-sum.json).
+
+Eight block identities account for 46 adjacent identities and retain all
+twenty positive factors. The actual A.6 donor matches H56 on the sphere and
+chosen lift. The contiguous seven and remaining thirteen factors separately
+close. Both complete nonabelian disk kernels are retained in factored form,
+with their shadows and faithful local reconstruction checks.
+
+The bounded diagram route remains open. The first raw preview of the
+displayed algebraic sequence stops at A.2 with support 21 before the second
+crossing. No source diagram moves have been applied.
+
+## November1 evening: exact B.7 conjugacy; positive supply still open
+
+NEW source_hstar_conjugacy() proves the exact Hstar is G-CONJUGATE to
+actual source B.7, faithfully in B6. This is stronger than membership,
+Sp4/characters or a finite quotient. It is NOT a reached source supplier,
+seven-factor gather, residual13 closure or reverse LF equivalence.
+
+Let a=actual B.7 at zero-based2; P=actual B.1 B.2 B.3 B.4 at3..6;
+M=actual C.5 C.6 at18,19. Exact SOURCE group conjugator
+R=M a M^-1 P^-1 has92 reduced braid letters and NINE factor occurrences:
+C.5,C.6,B.7,C.6^-1,C.5^-1,B.4^-1,B.3^-1,B.2^-1,B.1^-1.
+ALL actors are literal source records; negative powers only in conjugator.
+R a R^-1=Hstar FULL faithfulB6. The hypothetical raw half has189 stored
+letters but exact support18. These are NOT nine moves or a bound on any
+unperformed source20 trajectory. The normalized positive unit half matches
+the SAME immutable target individually. Proposed source ancestry is now
+B.7 for this proof, NOT the older A.6. Old report flags/charts stay untouched.
+
+Proof-only c=original embedded C.7 has support2 and is NOT an invented
+source actor. New faithful relations a c a=c a c, P M c=D(2..6)^2,
+D a=a D, R=(M a c)D^-1, and M c M^-1=Hstar prove the result.
+Only the explicit D/a commutation is used; never assume embedded D central
+inB6/sourceG. All7 faithful matches/fullmeridian images retained. Complete
+raw disk discrepancy, separate five-arc sphere/+I, full NONABELIAN kernels
+AND shadows/reconstructions for B6 and explicitly inverse-embedded B5 are
+saved; identity discrepancy has EMPTY F5/F4 kernels and full identity B5/B4
+shadows. Every inverse embedding checked on all meridians. Moving-last
+words retain faithful images, never false splits/deletion. No globalframe.
+
+Simply replacing source B.7 with Hstar leaves nineteen records literal but
+has NONIDENTITY fullSp4 product. That hypothetical countercheck is saved
+and UNAPPLIED. ZERO actualsource moves/changes. No donor invariance or
+whole-factorization preservation follows from individual conjugacy.
+
+New native module ten_ten_hstar_conjugacy.py, source-pinned builder,
+8regressions, ten-ten-hstar-source-conjugacy.md/.json and2handoffprefixes.
+JSON210367bytes,SHA256
+d1ce143a72d433f7ad402ec868958492a0cc396dd8dc2ab30583da4b9142a5f4.
+BYTE-IDENTICAL Python3.12/Anaconda3.9.7;32focused tests PASS3.12, new8
+PASS BOTH. No changed graphics/PDF/viewer/payload/phase or preferredproof.
+Source10-10 pin2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e;
+target pinbc349407881635661a5435a5c59f00377e8bf56484855b9830ec8dc10b827a4b.
+Both prior source/certificate bytes and all archived witnesses unchanged.
+Research stays on SAME DRAFT PR6; no new main merge/publication approved.
+
+NEXT: G-conjugacy for B.7 is now SOLVED and must not be reprobed. Need a
+SPECIFIC bounded positive Hurwitz realization of this source ancestry,
+retaining all20 contexts/donors, with every raw crossing bounded20 BEFORE
+application and raw reconstruction BEFORE normalization. Nine group-factor
+occurrences are not a gathered block. Do not assume a general G-conjugacy
+is realizable by an unchecked source route. Then require the actual seven
+inputs/gather and residual13-factor(6,7) sphere/+I closure and full Hurwitz/
+global isomorphism. No new physical supplier/gather is selected. No new
+lantern substitution as an isomorphism. Preferred106/75 remains unchanged.
+
+## November1: genuine bounded (4,3) target; extraction still open
+
+A NEW standalone seven-factor relation is complete: actual B.1 B.2 B.3
+B.4 Hstar actual C.5 C.6. SIX records are LITERAL published10-10 factors
+at zero-based positions3,4,5,6,18,19. Hstar=(sigma5^-4 sigma2^-2) C.5
+(sigma5^-4 sigma2^-2)^-1 is a positive half with exact disk support18
+and vector(1,-6,-2,-1). No current half has its Sp4 matrix. Proposed A.6
+ancestry is NOT supplied. ZERO actual20 moves/gather/residual closure.
+The reverse Lefschetz-fibration decomposition remains OPEN.
+
+Immutable original C from10-10.json:source_exact_blocks.2 embeds by adding
+a point on the LEFT. FOUR INTERNAL reference Hurwitz checks
+(4,5),(5,6),(4,5),(6,5), zero-based, have raw support maxima12,18,18,18.
+Every raw free discrepancy is EMPTY before all7 individual faithfulB6
+endpoint matches. Reference C.1/.2/.3/.4/.7 matches target B.1/.2/.3/.4/
+Hstar; C.5/C.6 match literally in the target. This is recognition, NOT
+source20 ancestry transfer. Direct proof rejects before first crossing22;
+inverse preparation previews18 then rejects106. Those prefixes are not
+selected/applied and the finite family is finished.
+
+Every chosen reference state and target have faithfulB6 product
+D(2..6)^2, separate full five-arc sphere identity and chosen+I. All30
+sphere characters vanish. Embedded D5^2 is NOT assumed central inB6.
+Complete actual/reference nonabelian kernels AND shadows/reconstructions
+remain: B6 F5 kernel, inverse-embedded B5 F4 kernel, each8letters with
+stored shadow44. Full inverse-embedding meridian checks retain literally
+vertical first strand; this is not an applied deletion/sphere move.
+Halves moving last strand retain full faithful actions, never false splits.
+
+Nearby C.2 B.1 B.3 B.4 Hstar C.5 C.6 passes Sp4/ALL30characters but
+FAILS full sphere arc(1,2), image5834letters. B.2/C.2 labeled support/
+linking equality is not disk-class equality; full meridian witness retained.
+Do not replay these two target words or internal reference proofs.
+
+New ten_ten_short_target.py, two builders,9tests, readableMD/fullJSON and
+twoSVG gallery. JSON176554bytes,SHA256
+bc349407881635661a5435a5c59f00377e8bf56484855b9830ec8dc10b827a4b.
+JSON/gallery/SVG reproduce BYTE-IDENTICALLY Python3.12/Anaconda3.9.7.
+24focused connection tests pass Python3.12; new9 pass BOTH versions.
+Both panels rendered/visually inspected; local390px2images/nooverflow/
+noerrors.14six-point grids/84dots UNNUMBERED24pxpitch/1.68pxradius.
+Target support max/total18/57, braid96; individual metrics/pictures are
+NOT arc crossings/joint minima/wholeproof bounds. Preferred106/75,
+allolderproof/certificate/graphics/PDF/archivebytes unchanged. No PDF work.
+ExistingPR6 stays DRAFT; no main merge/publication approval is inferred.
+
+The prescribed joint A.6/C.5 character relaxation was also finished in
+read-only raw data. Its rank3 space does not exceed the individual space.
+ONE necessary joint plan A.6<-B.2^-1, C.5<-B.1^2 B.4^2 passes Sp4/
+characters but exact supports668/172 exceed20, STOPPED/UNAPPLIED. No
+other joint sparse plan/order was class-tested. Do not repeat that plan.
+
+NEXT: use this exact new Hstar and SIX literal curves as the target, not
+old140support/44652support candidates. First derive an ancestry-preserving
+source20 supplier/gather with EVERY raw crossing bounded20 before applying,
+all20contexts/donors/fullkernels where applicable. Hstar copied from a
+reference C.7 is not a supplied source A.6. Do not assume unchanged source
+neighbors or that replacing A.6 alone preserves the whole product. A
+successful actual seven-block needs the residual13-factor closure and
+complete Hurwitz/global isomorphism certificate; no new lantern may be
+called an isomorphism. No new finite supplier/gather is selected.
+
+## October31: full homological connection, particular curve lift excluded
+
+Richard's reverse fiber-sum question remains OPEN at the fibration level.
+New ten_ten_homology_connection.py gives an explicit connection in Sp4(Z)
+from the EXACT published20 factors to the ORIGINAL13-factor(6,7) plus a
+conjugate of the checked(4,3). All20 matrices remain in every one of134
+formal adjacent matrix Hurwitz checks; one common integral symplectic
+conjugation finishes the match. These are MATRIX checks, not134 bounded
+geometric moves or a new preferred route. Source pin remains
+2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e.
+Both block lattices are saturated rank2, with symplectic areas3 and4.
+Every actual target matrix individually matches; C4,C6 and full integral
+relative gluing G=C6*C4^-1 are retained, with complete symplectic checks.
+No actual curve gather, new(6,7), section lift or fibration isomorphism.
+
+A new PURE marked-sphere linking character resolves the SAME previously
+unselected unbounded class target. For distinct a,b,c,d,
+chi=L_ab+L_cd-L_ac-L_bd. The sphere relation and full-twist quotient have
+vertex-star/all-ones linking vectors, so chi annihilates their entire
+normal closure. A nonzero value PROVES nonidentity on the marked sphere;
+zero is INCONCLUSIVE and says nothing about the central spherical braid
+or genus-two lift sign. Source for the presentations is Bellingeri's
+lecture notes, linked in the new readable proof.
+
+ALL120 choices of three of the saved target's ten separating factors now
+have nonzero characters, despite fullSp4 productI. This resolves the old
+23nonidentity/97UNKNOWN family with a DIFFERENT quotient, without raising
+word bounds. Those raw historical UNKNOWN flags remain untouched. The
+particular B.1/B.2/B.4 choice has chi(1,2,3,5)=6. The five known unapplied
+crossings are only reconstructed algebraically as input to the character;
+they are NOT applied, newly selected or recounted as geometric progress.
+General changed half classes/separators/Hurwitz/global decompositions
+remain unexcluded. The homological connection does NOT lift via this
+particular saved curve target. Do not replay these120 words as open cases.
+
+New sphere_linking.py, native connection, reproducible builder,7regressions
+and ten-ten-homology-connection.md/.json preserve every prior proof,
+certificate, graphic, PDF, viewer and archive. No new graphics/PDF work.
+Research stays in draftPR6; PR4/5 approval does NOT authorize its merge.
+The source-pinned JSON is1005844bytes,
+SHA256166b99bc3d559f2e2eb3ae35f964fa06b5434924e3e9276f3f5e15b50e498193.
+No account reset redeemed. Preserve8Boundaries.pdf and SAME six-hour cadence.
+
+Next: a genuinely new candidate must pass BOTH Sp4 identity and the pure
+marked-sphere characters BEFORE expanding nonabelian sphere actions or
+selecting physical transport. No new finite candidate is selected. Do not
+repeat the failed A4 signs, erased-B localization, four single-half B
+repairs, rejected gap lifts, or this now-excluded120-word family. All
+bounded raw crossings/full contexts/kernels and residual13-factor closure
+are still required for any actual fibration equivalence.
+
+## October30: new (10,10) fiber-sum question and isomorphism invariant
+
+Richard asks whether the checked imported(10,10) can be connected to SOME
+(6,7), with the Lefschetz fibration itself as the object. The precise reverse
+question is a fiber-sum decomposition(6,7)#_phi(4,3) up to fibration isomorphism.
+It is OPEN HERE: no complete reverse equivalence and no indecomposability proof.
+This NEW task supersedes the earlier wait-for-next-priority checkpoint.
+
+The published20-factor source is fibration-derivations/10-10.json:factors,
+hash2fd554824c44c1db0e2c570c61e91562677338796ad7f5f559f8d485e8a7c06e.
+New ten_ten_summand_audit.py,analyze_ten_ten_summand.py,8regressions and
+proofs/ten-ten-fiber-sum-audit.md/.json apply ZERO moves. All210 literal
+four-half subproducts have nonidentity fullSp4 matrices, excluding25200
+unchanged order-preserving seven-factor subsets, NOT their Hurwitz orbit.
+
+Actual vanishing-cycle lattice rank3 is saturated; coinvariantsZ, unique
+primitive common fixedvector(0,-1,1,0). On v-perp/Zv, actual parabolic widths
+are1,9,1,1,1,1,16,4,1,1 (total36). Full integral quotient basis/conjugators
+are retained. SL2Z abelianizationmod12 forces ANY possible4,3summand's FOUR
+nonseparating factors to have widths9,1,1,1. Thus the unique9-cycle B.3 is
+required; the new lantern's16/4 cycles belong on the6,7side. This necessary
+condition IS invariant under Hurwitz/global conjugation. It is NOT sufficient.
+
+Nakamura Section3's explicit homology consequences span allZ4, giving zero
+coinvariants. Hence that published monodromy and our imported one are NOT
+Hurwitz-equivalent up to global conjugation, so they do not define isomorphic
+fibrations. This does NOT compute our total-spaceH1/pi1 or any section lift;
+a non-section group presentation can have an extra capping relation. Do not
+transfer named literature identifications or count-based uniqueness claims.
+Huang2602.20451 identifies BK/Hamada/Xiao4,3examples, not every4,3fibration.
+Akhmedov-Monden1809.09542 forces6,7+4,3 types CONDITIONALLY on decomposition.
+
+One necessary homology target uses inverse adjacent-nonseparating interchanges
+at0-basedhalfpositions4 then5; selected halfIDs B.3,A.6,C.5,C.6. The three
+actual gap lifts are REJECTED BEFORE APPLICATION at27,28,46(bound20); raw
+reconstruction and every normalized prefix class-match remain. Prefixes are
+UNAPPLIED, not reached/gathered. An additional unselected unbounded lift has
+raw peaks16,16,27,47,140 and 120possible separating triples:23nonidentity
+sphere-chain witnesses,97UNKNOWN at50000,zero certified identities. That
+larger diagnostic is retained only in writablevisualizationroot as
+ten-ten-unapplied-class-target.json and its script; NEVER treat unknown as
+inequality or retry the same failed gap/sign family as new research.
+
+Next UNPERFORMED direction: a third actual Hurwitz preconditioner can change
+curves without changing this width restriction. First seek a precise new
+bounded actual seven-factor sphere/+I identity; only then gather and certify
+all crossings/context changes/full kernels/shadows and residual6,7 closure.
+No preconditioner or complete join is selected yet. No lantern substitution
+may be called a fibration isomorphism. A resulting6,7 need not be equivalent
+to our original6,7; that would require a separate Hurwitz/global certificate.
+
+Eight new tests PASS Python3.12 AND Anaconda3.9.7; no graphics/PDF changed.
+All three published proofs and preferred6,7(90source/106moves/75steps) remain
+UNCHANGED; main publicationff7eba5/PR4+5 already ALLGREEN/LIVEverified.
+Research branchcodex/ten-ten-fiber-sum-audit is separate; finish focused
+integration/build/commit/push/reviewPR/newCI. No new main-publication approval
+has been requested. Preserve8Boundaries.pdf and all unrelated projects.
+Keep SAME ACTIVEsix-hourautomation; the attempted completed-task deletion
+was automatic-review-rejected because Richard said keep active. Do NOT retry
+that deletion. The new research task now supplies a continuing purpose.
+
 ## October30: publication approved for PR4 and PR5
 
 Richard explicitly approved publication of BOTH PR4 and PR5. PR4 is merged as
