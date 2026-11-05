@@ -1,5 +1,22 @@
 # Handoff: surface-diagrams
 
+## November 5 algebraic fiber sum of the imported (10,10)
+
+The imported fibration now has an exact algebraic positive Hurwitz split into
+a (4,3) and a (6,7), with identity gluing in the original marked fiber.
+See the [proof](proofs/ten-ten-algebraic-fiber-sum.md) and its
+[certificate](proofs/ten-ten-algebraic-fiber-sum.json).
+
+Eight block identities account for 46 adjacent identities and retain all
+twenty positive factors. The actual A.6 donor matches H56 on the sphere and
+chosen lift. The contiguous seven and remaining thirteen factors separately
+close. Both complete nonabelian disk kernels are retained in factored form,
+with their shadows and faithful local reconstruction checks.
+
+The bounded diagram route remains open. The first raw preview of the
+displayed algebraic sequence stops at A.2 with support 21 before the second
+crossing. No source diagram moves have been applied.
+
 ## November1 evening: exact B.7 conjugacy; positive supply still open
 
 NEW source_hstar_conjugacy() proves the exact Hstar is G-CONJUGATE to
